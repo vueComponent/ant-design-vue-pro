@@ -4,6 +4,27 @@
             mode="inline"
             :defaultSelectedKeys="['1']">
 
+        <template v-for="menu in menus">
+            <a-menu-item :key="menu.id" :name="menu.id" v-if="!menu.children && $router.matcher.match({ name: menu.permission }).matched.length">
+                <router-link :to="{ name: menu.name, params: { pageNo: '1' } }">
+                    <a-icon v-if="menu.meta.icon" :type="menu.meta.icon"></a-icon>
+                    <span>{{ menu.meta.title }}</span>
+                </router-link>
+            </a-menu-item>
+            <a-sub-menu :key="menu.id" :name="menu.id" v-else>
+                <span slot="title"><a-icon :type="menu.meta.icon" v-if="menu.meta.icon" /><span>{{ menu.meta.title }}</span></span>
+                <template v-for="(submenu, index) in menu.children">
+                    <a-menu-item :key="submenu.id" :name="submenu.id">
+                        <router-link :to="{ name: submenu.name, params: { pageNo: '1' } }">
+                            <a-icon v-if="submenu.meta.icon" :type="submenu.meta.icon"></a-icon>
+                            <span>{{ submenu.meta.title }}</span>
+                        </router-link>
+                    </a-menu-item>
+                </template>
+            </a-sub-menu>
+
+        </template>
+        <!--
         <a-sub-menu key="1">
             <span slot="title"><a-icon type="dashboard" /><span>dashboard</span></span>
             <a-menu-item key="11">分析页</a-menu-item>
@@ -43,13 +64,28 @@
             <a-menu-item key="61">成功</a-menu-item>
             <a-menu-item key="62">失败</a-menu-item>
         </a-sub-menu>
+        -->
     </a-menu>
 </template>
 
 <script>
-  export default {
-    name: "Navmenu"
+import SubMenu from './SubMenu'
+import { asyncRouterMap } from '../router/'
+
+export default {
+  name: "Navmenu",
+  components: {
+      "s-submenu": SubMenu
+  },
+  data() {
+    return {
+      menus: []
+    }
+  },
+  created() {
+    this.menus = asyncRouterMap
   }
+}
 </script>
 
 <style scoped>

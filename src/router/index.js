@@ -18,7 +18,7 @@ Vue.use(Router)
 export const constantRouterMap = [
   {
     path: '/login',
-    component: () => import('../views/About')
+    component: () => import('../views/Login')
   },
   {
     path: '/404',
@@ -45,7 +45,8 @@ export const asyncRouterMap = [
     path: '/dashboard',
     component: Layout,
     name: 'dashboard',
-    meta: { title: 'dashboard' },
+    redirect: '/dashboard/analysis',
+    meta: { title: 'dashboard', icon: 'dashboard' },
     children: [
       {
         path: 'analysis',
@@ -71,7 +72,7 @@ export const asyncRouterMap = [
     path: '/form',
     component: Layout,
     name: 'form',
-    meta: { title: '表单页' },
+    meta: { title: '表单页', icon: 'form' },
     children: [
       {
         path: 'base-form',
@@ -97,21 +98,52 @@ export const asyncRouterMap = [
     path: '/list',
     component: Layout,
     name: 'list',
-    meta: { title: '列表页' },
+    meta: { title: '列表页', icon: 'table' },
     children: [
       {
         path: 'table-list',
         name: 'TableList',
         component: () => import('../views/list/TableList'),
         meta: { title: '查询表格' }
-      }
+      },
+      {
+        path: 'basic-list',
+        name: 'BasicList',
+        component: () => import('../views/list/TableList'),
+        meta: { title: '标准列表' }
+      },
+      {
+        path: 'card-list',
+        name: 'CardList',
+        component: () => import('../views/list/TableList'),
+        meta: { title: '卡片列表' }
+      },
+      {
+        path: 'search',
+        name: 'SearchList',
+        meta: { title: '搜索列表' },
+        children: [
+          {
+            path: 'articles',
+            name: 'Articles',
+            component: () => import('../views/list/TableList'),
+            meta: { title: '搜索列表（文章）' }
+          },
+          {
+            path: 'articles',
+            name: 'Articles',
+            component: () => import('../views/list/TableList'),
+            meta: { title: '搜索列表（文章）' }
+          },
+        ]
+      },
     ]
   },
   {
     path: '/profile',
     component: Layout,
     name: 'profile',
-    meta: { title: '详情页' },
+    meta: { title: '详情页', icon: 'profile' },
     children: [
       {
         path: 'basic',
@@ -131,7 +163,7 @@ export const asyncRouterMap = [
     path: '/result',
     component: Layout,
     name: 'result',
-    meta: { title: '结果页' },
+    meta: { title: '结果页', icon: 'check-circle-o' },
     children: [
       {
         path: 'success',
@@ -154,7 +186,7 @@ export const asyncRouterMap = [
     path: '/exception',
     component: Layout,
     name: 'exception',
-    meta: { title: '异常页' },
+    meta: { title: '异常页', icon: 'warning' },
     children: [
       {
         path: '403',

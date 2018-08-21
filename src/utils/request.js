@@ -4,7 +4,7 @@ import { VueAxios } from './axios'
 
 // 创建 axios 实例
 const service = axios.create({
-    baseURL: process.env.BASE_API, // api base_url
+    baseURL: '/api', // api base_url
     timeout: 5000 // 请求超时时间
 })
 
