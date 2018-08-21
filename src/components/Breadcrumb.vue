@@ -22,13 +22,14 @@ export default {
   },
   methods: {
     getBreadcrumb() {
-      this.breadList = this.$route.matched
+
+      this.breadList = []
+      this.breadList.push({ name: 'index', path: '/dashboard/', meta: { title: '首页' } })
+
       this.name = this.$route.name
       this.$route.matched.forEach((item) => {
         // item.meta.name === 'dashboard' ? item.path = '/dashboard' : this.$route.path === item.path
-        if (item.name === undefined) {
-          item.meta.title = '首页'
-        }
+          this.breadList.push(item)
       })
     }
   },

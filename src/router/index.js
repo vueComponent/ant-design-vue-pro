@@ -49,19 +49,19 @@ export const asyncRouterMap = [
     meta: { title: 'dashboard', icon: 'dashboard' },
     children: [
       {
-        path: 'analysis',
+        path: '/dashboard/analysis',
         name: 'Analysis',
         component: () => import('../views/dashboard/Analysis'),
         meta: { title: '分析页', hideHeader: true }
       },
       {
-        path: 'monitor',
+        path: '/dashboard/monitor',
         name: 'Monitor',
         component: () => import('../views/dashboard/Monitor'),
         meta: { title: '监控页', hideHeader: true }
       },
       {
-        path: 'workplace',
+        path: '/dashboard/workplace',
         name: 'Workplace',
         component: () => import('../views/dashboard/Workplace'),
         meta: { title: '工作台', hideHeader: true }
@@ -72,22 +72,23 @@ export const asyncRouterMap = [
     path: '/form',
     component: Layout,
     name: 'form',
+    redirect: '/form/base-form',
     meta: { title: '表单页', icon: 'form' },
     children: [
       {
-        path: 'base-form',
+        path: '/form/base-form',
         name: 'BaseForm',
         component: () => import('../views/form/BasicForm'),
         meta: { title: '基础表单' }
       },
       {
-        path: 'step-form',
+        path: '/form/step-form',
         name: 'StepForm',
         component: () => import('../views/form/BasicForm'),
         meta: { title: '分步表单' }
       },
       {
-        path: 'advanced-form',
+        path: '/form/advanced-form',
         name: 'AdvanceForm',
         component: () => import('../views/form/BasicForm'),
         meta: { title: '高级表单' }
@@ -98,42 +99,50 @@ export const asyncRouterMap = [
     path: '/list',
     component: Layout,
     name: 'list',
+    redirect: '/list/query',
     meta: { title: '列表页', icon: 'table' },
     children: [
       {
-        path: 'table-list',
-        name: 'TableList',
+        path: '/list/query',
+        name: 'QueryList',
         component: () => import('../views/list/TableList'),
         meta: { title: '查询表格' }
       },
       {
-        path: 'basic-list',
+        path: '/list/basic',
         name: 'BasicList',
         component: () => import('../views/list/TableList'),
         meta: { title: '标准列表' }
       },
       {
-        path: 'card-list',
+        path: '/list/card',
         name: 'CardList',
         component: () => import('../views/list/TableList'),
         meta: { title: '卡片列表' }
       },
       {
-        path: 'search',
+        path: '/list/search',
         name: 'SearchList',
+        redirect: '/list/search/articles',
         meta: { title: '搜索列表' },
         children: [
           {
-            path: 'articles',
-            name: 'Articles',
+            path: '/list/search/articles',
+            name: 'SearchArticles',
             component: () => import('../views/list/TableList'),
             meta: { title: '搜索列表（文章）' }
           },
           {
-            path: 'articles',
-            name: 'Articles',
-            component: () => import('../views/list/TableList'),
-            meta: { title: '搜索列表（文章）' }
+              path: '/list/search/projects',
+              name: 'SearchProjects',
+              component: () => import('../views/list/TableList'),
+              meta: { title: '搜索列表（项目）' }
+          },
+          {
+              path: '/list/search/applications',
+              name: 'SearchApplications',
+              component: () => import('../views/list/TableList'),
+              meta: { title: '搜索列表（应用）' }
           },
         ]
       },
@@ -143,16 +152,17 @@ export const asyncRouterMap = [
     path: '/profile',
     component: Layout,
     name: 'profile',
+    redirect: '/profile/basic',
     meta: { title: '详情页', icon: 'profile' },
     children: [
       {
-        path: 'basic',
+        path: '/profile/basic',
         name: 'ProfileBasic',
         component: () => import('../views/list/TableList'),
         meta: { title: '基础详情页' }
       },
       {
-        path: 'advanced',
+        path: '/profile/advanced',
         name: 'ProfileAdvanced',
         component: () => import('../views/list/TableList'),
         meta: { title: '高级详情页' }
@@ -163,16 +173,17 @@ export const asyncRouterMap = [
     path: '/result',
     component: Layout,
     name: 'result',
+    redirect: '/result/success',
     meta: { title: '结果页', icon: 'check-circle-o' },
     children: [
       {
-        path: 'success',
+        path: '/result/success',
         name: 'ResultSuccess',
         component: () => import('../views/result/Success'),
         meta: { title: '成功' }
       },
       {
-        path: 'fail',
+        path: '/result/fail',
         name: 'ResultFail',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
@@ -186,16 +197,17 @@ export const asyncRouterMap = [
     path: '/exception',
     component: Layout,
     name: 'exception',
+    redirect: '/exception/403',
     meta: { title: '异常页', icon: 'warning' },
     children: [
       {
-        path: '403',
+        path: '/exception/403',
         name: 'Exception403',
         component: () => import('../views/result/Success'),
         meta: { title: '403' }
       },
       {
-        path: '404',
+        path: '/exception/404',
         name: 'Exception404',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
@@ -204,7 +216,7 @@ export const asyncRouterMap = [
         meta: { title: '404' }
       },
       {
-        path: '500',
+        path: '/exception/500',
         name: 'Exception500',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route

@@ -1,5 +1,12 @@
 import { asyncRouterMap, constantRouterMap } from "@/router"
 
+/**
+ * 过滤账户是否拥有某一个权限，并将菜单从加载列表移除
+ *
+ * @param permission
+ * @param route
+ * @returns {boolean}
+ */
 function hasPermission(permission, route) {
   if (route.meta && route.meta.permission) {
     let flag = -1
@@ -10,8 +17,17 @@ function hasPermission(permission, route) {
       }
     }
   }
+  return true
 }
 
+/**
+ * 单账户多角色时，使用该方法可过滤角色不存在的菜单
+ *
+ * @param roles
+ * @param route
+ * @returns {*}
+ */
+// eslint-disable-next-line
 function hasRole(roles, route) {
   if (route.meta && route.meta.roles) {
     return route.meta.roles.indexOf(roles.id)
@@ -21,9 +37,6 @@ function hasRole(roles, route) {
 }
 
 function filterAsyncRouter(asyncRouterMap, roles) {
-  console.log(asyncRouterMap, roles)
-  return asyncRouterMap
-/*
   const accessedRouters = asyncRouterMap.filter(route => {
     if (hasPermission(roles.permissionList, route)) {
       if (route.children && route.children.length) {
@@ -34,7 +47,6 @@ function filterAsyncRouter(asyncRouterMap, roles) {
     return false
   })
   return accessedRouters
-  */
 }
 
 const permission = {

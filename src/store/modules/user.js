@@ -1,8 +1,9 @@
-import { login, getInfo, logout } from "@/api/login";
+import { login, getInfo, logout } from "@/api/login"
+import { setToken, getToken, removeToken } from '@/utils/auth'
 
 const user = {
   state: {
-    token: '',
+    token: getToken(),
     name: '',
     avatar: '',
     roles: []
@@ -26,13 +27,9 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-      const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
+        login(userInfo).then(response => {
           const result = response.result
-
-          console.log('login:', result)
-
           setToken(result.token)
           commit('SET_TOKEN', result.token)
           resolve()
@@ -43,7 +40,7 @@ const user = {
     },
 
     // 获取用户信息
-    GetInfo({ commit, state }) {
+    GetInfo({ commit }) {
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
           const result = response.result
@@ -79,7 +76,7 @@ const user = {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
-          // removeToken()
+          removeToken()
           resolve()
         }).catch(error => {
           reject(error)
@@ -91,7 +88,7 @@ const user = {
     FedLogout({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
-        // removeToken()
+        removeToken()
         resolve()
       })
     }

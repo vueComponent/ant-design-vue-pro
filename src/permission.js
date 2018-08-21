@@ -24,18 +24,15 @@ router.beforeEach((to, from, next) => {
       if (store.getters.roles.length === 0) {
 
         store.dispatch('GetInfo').then(res => {
-          const roles = ['editor', 'develop']
+          const roles = res.result && res.result.role
           store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
-
-            console.log( 'dispatch::GenerateRoutes succeeded.' )
-
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
           })
         }).catch((err) => {
           store.dispatch('FedLogout').then(() => {
-            console.log(err)
             Vue.$message.error('This is a message of error');
+            Vue.$message.error(err.message)
           })
         })
 

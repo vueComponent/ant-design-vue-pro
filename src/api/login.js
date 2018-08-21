@@ -1,13 +1,21 @@
 import { axios } from '@/utils/request'
 
-export function login(username, password) {
+/**
+ * login func
+ * parameter: {
+ *     username: '',
+ *     password: '',
+ *     remember_me: true,
+ *     captcha: '12345'
+ * }
+ * @param parameter
+ * @returns {*}
+ */
+export function login(parameter) {
   return axios({
     url: '/auth/login',
     method: 'post',
-    data: {
-      username,
-      password
-    }
+    data: parameter
   })
 }
 
