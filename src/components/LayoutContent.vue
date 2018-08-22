@@ -4,7 +4,9 @@
 
             <!-- pageHeader , route meta hideHeader:true on hide -->
             <s-page-header></s-page-header>
-            <s-route-view></s-route-view>
+            <div class="content">
+                <s-route-view></s-route-view>
+            </div>
         </div>
 
         <s-route-view v-else></s-route-view>

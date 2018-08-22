@@ -8,6 +8,9 @@
             <s-layout-header :collapsed="collapsed" @toggle="toggle"></s-layout-header>
             <!-- layout content -->
             <s-layout-content></s-layout-content>
+            <a-layout-footer style="padding: 0px">
+                <s-layout-footer />
+            </a-layout-footer>
         </a-layout>
     </a-layout>
 </template>
@@ -16,6 +19,7 @@
 import SiderMenu from '@/components/menu/SiderMenu'
 import LayoutHeader from '@/components/LayoutHeader'
 import LayoutContent from '@/components/LayoutContent'
+import LayoutFooter from '@/components/LayoutFooter'
 import { asyncRouterMap } from '@/router/index'
 
 export default {
@@ -23,7 +27,8 @@ export default {
   components: {
     "s-sider-menu": SiderMenu,
     "s-layout-header": LayoutHeader,
-    "s-layout-content": LayoutContent
+    "s-layout-content": LayoutContent,
+    "s-layout-footer": LayoutFooter
   },
   data() {
     return {

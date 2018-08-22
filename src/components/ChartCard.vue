@@ -1,5 +1,5 @@
 <template>
-    <a-card :body-style="{ padding: '20px 24px 8px' }" :bordered="false">
+    <a-card :loading="loading" :body-style="{ padding: '20px 24px 8px' }" :bordered="false">
         <div class="chart-card-header">
             <div class="meta">
                 <span class="chart-card-title">{{ title }}</span>
@@ -23,7 +23,7 @@
 <script>
   export default {
     name: "ChartCard",
-    props: ['title', 'total']
+    props: ['title', 'total', 'loading']
   }
 </script>
 

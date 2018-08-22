@@ -22,7 +22,7 @@
                       fieldDecoratorId="username"
                       :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: this.handleUsernameOrEmail }], validateTrigger: 'blur'}"
               >
-                <a-input size="large" type="text" v-model="formLogin.username" placeholder="帐户名或邮箱地址">
+                <a-input size="large" type="text" v-model="formLogin.username" placeholder="帐户名或邮箱地址 / admin">
                   <a-icon slot="prefix" type='user' :style="{ color: 'rgba(0,0,0,.25)' }" />
                 </a-input>
               </a-form-item>
@@ -30,7 +30,7 @@
               <a-form-item
                       fieldDecoratorId="password"
                       :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}">
-                <a-input size="large" type="password" v-model="formLogin.password" placeholder="密码">
+                <a-input size="large" type="password" v-model="formLogin.password" placeholder="密码 / admin">
                   <a-icon slot="prefix" type='lock' :style="{ color: 'rgba(0,0,0,.25)' }" />
                 </a-input>
               </a-form-item>
@@ -207,6 +207,7 @@
                                   this.$notification['success']({
                                       message: '提示',
                                       description: '验证码获取成功，您的验证码为：' + res.result.captcha,
+                                      duration: 8
                                   })
                               })
                               .catch(err => {
