@@ -7,46 +7,23 @@
             <!-- layout header -->
             <s-layout-header :collapsed="collapsed" @toggle="toggle"></s-layout-header>
             <!-- layout content -->
-            <a-layout-content class="layout-content">
-                <div style="margin: -24px -24px 0px;">
-                    <!-- pageHeader , route meta hideHeader:true on hide -->
-                    <div class="pageHeader" v-if="!$route.meta.hideHeader">
-
-                        <s-breadcrumb></s-breadcrumb>
-
-                        <div class="detail">
-                            <div class="main">
-                                <div class="row">
-                                    <h1 class="title" v-text="$route.meta.title"></h1>
-                                </div>
-                                <div class="row"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <keep-alive v-if="$route.meta.keepAlive">
-                        <router-view></router-view>
-                    </keep-alive>
-                    <router-view v-else></router-view>
-                </div>
-            </a-layout-content>
+            <s-layout-content></s-layout-content>
         </a-layout>
     </a-layout>
 </template>
 
 <script>
-// import NavMenu from '@/components/NavMenu'
 import SiderMenu from '@/components/menu/SiderMenu'
-import Breadcrumb from '@/components/Breadcrumb'
 import LayoutHeader from '@/components/LayoutHeader'
+import LayoutContent from '@/components/LayoutContent'
 import { asyncRouterMap } from '@/router/index'
 
 export default {
   name: "Layout",
   components: {
     "s-sider-menu": SiderMenu,
-    "s-breadcrumb": Breadcrumb,
-    "s-layout-header": LayoutHeader
+    "s-layout-header": LayoutHeader,
+    "s-layout-content": LayoutContent
   },
   data() {
     return {

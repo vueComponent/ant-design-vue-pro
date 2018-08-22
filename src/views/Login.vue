@@ -132,7 +132,7 @@
           },
           handleTabClick(key) {
               this.customActiveKey = key
-              this.form.resetFields()
+              // this.form.resetFields()
           },
           handleSubmit() {
               let flag = false

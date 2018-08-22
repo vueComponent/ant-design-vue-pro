@@ -6,7 +6,7 @@
                 <h1>Ant Design Pro</h1>
             </router-link>
         </div>
-        <s-menu :collapsed="collapsed" :menu="menus" @select="onSelect"></s-menu>
+        <s-menu :collapsed="collapsed" :menu="menus" @select="onSelect" style="padding: 16px 0px;"></s-menu>
     </a-layout-sider>
 </template>
 
