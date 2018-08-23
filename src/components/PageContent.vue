@@ -1,5 +1,5 @@
 <template>
-    <page-layout :desc="desc" :title="title" :link-list="linkList">
+    <page-layout :desc="desc" :title="getTitle" :link-list="linkList">
         <div slot="extra" class="extra-img">
             <img :src="extraImage"/>
         </div>
@@ -31,6 +31,13 @@
     },
     updated () {
       this.getPageHeaderInfo()
+    },
+    computed: {
+
+      getTitle () {
+        return this.$route.meta.title
+      }
+
     },
     methods: {
       getPageHeaderInfo () {
