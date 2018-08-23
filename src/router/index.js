@@ -47,7 +47,7 @@ export const asyncRouterMap = [
     path: '/dashboard',
     component: Layout,
     name: 'dashboard',
-    redirect: '/dashboard/analysis',
+    redirect: '/dashboard/workplace',
     meta: { title: '仪表盘', icon: 'dashboard' },
     children: [
       {
@@ -102,7 +102,6 @@ export const asyncRouterMap = [
     component: LayoutBase,
     name: 'list',
     redirect: '/list/query-list',
-    hidden: true,
     meta: { title: '列表页', icon: 'table' },
     children: [
       {
@@ -120,7 +119,7 @@ export const asyncRouterMap = [
       {
         path: '/list/card',
         name: 'CardList',
-        component: () => import('../views/list/TableList'),
+        component: () => import('../views/list/CardList'),
         meta: { title: '卡片列表' }
       },
       {

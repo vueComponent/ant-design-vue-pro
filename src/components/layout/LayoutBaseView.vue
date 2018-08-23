@@ -1,18 +1,18 @@
 <template>
   <layout-main>
-    <route-view/>
+    <page-view />
   </layout-main>
 </template>
 
 <script>
   import LayoutMain from './LayoutMain'
-  import RouteView from './RouteView'
+  import PageView from './PageView'
 
   export default {
     name: "GlobalView",
     components: {
       LayoutMain,
-      RouteView
+      PageView
     }
   }
 </script>

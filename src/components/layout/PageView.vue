@@ -1,10 +1,10 @@
 <template>
-    <page-layout :desc="desc" :title="getTitle" :link-list="linkList">
+    <page-layout :desc="description" :title="getTitle" :link-list="linkList">
         <div slot="extra" class="extra-img">
             <img :src="extraImage"/>
         </div>
         <!-- keep-alive  -->
-        <route-view></route-view>
+        <route-view ref="content"></route-view>
     </page-layout>
 </template>
 
@@ -21,7 +21,7 @@
     data () {
       return {
         title: '',
-        desc: '',
+        description: '',
         linkList: [],
         extraImage: ''
       }
@@ -42,12 +42,11 @@
     methods: {
       getPageHeaderInfo () {
         // eslint-disable-next-line
-        console.log('route title:', this.$route.meta.title)
-
         this.title = this.$route.meta.title
-        const content = this.$refs.content
+        // 因为套用了一层 route-view 所以要取 ref 对象下的子节点的第一个对象
+        const content = this.$refs.content.$children[0]
         if (content) {
-          this.desc = content.desc
+          this.description = content.description
           this.linkList = content.linkList
           this.extraImage = content.extraImage
         }

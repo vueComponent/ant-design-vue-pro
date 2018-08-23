@@ -135,7 +135,9 @@
           line-height: 28px;
           font-weight: 500;
           color: rgba(0,0,0,.85);
-          margin-bottom: 12px;
+          margin-bottom: 16px;
+          flex: auto;
+
         }
         .logo {
           width: 28px;
@@ -160,6 +162,9 @@
           min-width: 266px;
           flex: 0 1 auto;
           text-align: right;
+          &:empty {
+            display: none;
+          }
         }
       }
     }

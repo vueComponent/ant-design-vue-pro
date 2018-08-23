@@ -5,18 +5,18 @@
             <slot slot="action" name="action"></slot>
             <slot slot="content" name="headerContent"></slot>
             <div slot="content" v-if="!this.$slots.headerContent && desc">
-                <p style="font-size: 14px;line-height: 1.5;color: rgba(0,0,0,.65)">{{ desc }}</p>
+                <p style="font-size: 14px;color: rgba(0,0,0,.65)">{{ desc }}</p>
                 <div class="link">
                     <template  v-for="(link, index) in linkList">
                         <a :key="index" :href="link.href">
-                          <a-icon :type="link.icon" />{{ link.title }}
+                          <a-icon :type="link.icon" /><span>{{ link.title }}</span>
                         </a>
                     </template>
                 </div>
             </div>
             <slot slot="extra" name="extra"></slot>
         </page-header>
-        <div ref="content" class="content">
+        <div class="content">
             <slot></slot>
         </div>
     </div>
@@ -34,8 +34,31 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .content {
         margin: 24px 24px 0;
+
+      .link {
+        margin-top: 16px;
+
+        a {
+          margin-right: 32px;
+          height: 24px;
+          line-height: 24px;
+          display: inline-block;
+
+          i {
+            font-size: 24px;
+            margin-right: 8px;
+            vertical-align: middle;
+          }
+          span {
+            height: 24px;
+            line-height: 24px;
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
+      }
     }
 </style>

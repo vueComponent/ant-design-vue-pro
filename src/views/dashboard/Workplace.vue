@@ -47,8 +47,13 @@
               <a-list-item :key="index" v-for="(item, index) in activities">
                 <a-list-item-meta>
                   <a-avatar slot="avatar" :src="item.user.avatar" />
-                  <div slot="title" v-html="item.template" />
-                  <div slot="description">9小时前</div>
+                  <div slot="title">
+                    <span>{{ item.user.nickname }}</span>&nbsp;
+                    在&nbsp;<a href="#">{{ item.project.name }}</a>&nbsp;
+                    <span>{{ item.project.action }}</span>&nbsp;
+                    <a href="#">{{ item.project.event }}</a>
+                  </div>
+                  <div slot="description">{{ item.time }}</div>
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
@@ -169,6 +174,8 @@
     },
     mounted() {
       this.getProjects()
+      this.getActivity()
+      this.getTeams()
       this.initRadar()
     },
     methods: {
@@ -180,6 +187,18 @@
             this.loading = false
           })
       },
+      getActivity() {
+        this.$http.get('/workplace/activity')
+          .then(res => {
+            this.activities = res.result
+          })
+      },
+      getTeams() {
+        this.$http.get('/workplace/teams')
+          .then(res => {
+            this.teams = res.result
+          })
+      },
       initRadar() {
         const dv = new DataSet.View().source(this.axisData)
 
@@ -189,8 +208,6 @@
           key: 'user',
           value: 'score'
         })
-
-        console.log('dv.rows', dv.rows)
 
         this.radarData = dv.rows
       }
