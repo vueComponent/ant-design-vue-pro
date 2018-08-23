@@ -95,141 +95,148 @@
 <script>
   import md5 from "md5";
   import api from '../api/'
-  import { mapActions } from "vuex";
+  import {mapActions} from "vuex";
 
   export default {
-      data() {
-          return {
-              customActiveKey: "tab1",
-              loginBtn: false,
-              // login type: 0 email, 1 username, 2 telephone
-              loginType: 0,
-              form: null,
-              state: {
-                  time: 60,
-                  smsSendBtn: false,
-              },
-              formLogin: {
-                  username: "",
-                  password: "",
-                  captcha: "",
-                  mobile: "",
-                  rememberMe: true
-              },
-          }
-      },
-      methods: {
-          ...mapActions(["Login"]),
-          // handler
-          handleUsernameOrEmail(rule, value, callback) {
-              const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
-              if (regex.test(value)) {
-                  this.loginType = 0
-              } else {
-                  this.loginType = 1
-              }
-              callback()
-          },
-          handleTabClick(key) {
-              this.customActiveKey = key
-              // this.form.resetFields()
-          },
-          handleSubmit() {
-              let flag = false
-
-              if (this.customActiveKey === 'tab1') {
-                  this.form.validateFields(['username', 'password'], { force: true }, (err) => {
-                      if (!err) {
-                          flag = true
-                      }
-                  })
-              } else {
-                  this.form.validateFields(['mobile', 'captcha'], { force: true }, (err) => {
-                      if (!err) {
-                          flag = true
-                          this.loginType = 2 // 登录类型修改为手机登录
-                      }
-                  })
-              }
-
-              if (!flag) return
-
-              this.loginBtn = true
-
-              let loginParams = {
-                  password: md5(this.formLogin.password),
-                  remember_me: this.formLogin.rememberMe
-              };
-
-              switch (this.loginType) {
-                  case 0:
-                      loginParams.email = this.formLogin.username
-                      break;
-                  case 1:
-                      loginParams.username = this.formLogin.username
-                      break;
-                  case 2:
-                  default:
-                      loginParams.mobile = this.formLogin.mobile
-                      loginParams.captcha = this.formLogin.captcha
-                      break;
-              }
-
-              this.Login(loginParams).then(() => {
-                  this.loginBtn = false
-                  this.$router.push({ name: "dashboard" })
-              }).catch((err) => {
-                  this.requestFailed(err);
-              })
-
-          },
-          getCaptcha(e) {
-              e.preventDefault()
-              let that = this
-
-              this.form.validateFields(['mobile'], { force: true },
-                  (err) => {
-                      if (!err) {
-                          this.state.smsSendBtn = true;
-
-                          let interval = window.setInterval(() => {
-                              if (that.state.time-- <= 0) {
-                                  that.state.time = 60;
-                                  that.state.smsSendBtn = false;
-                                  window.clearInterval(interval);
-                              }
-                          }, 1000);
-
-                          const hide = this.$message.loading('验证码发送中..', 0);
-                          this.$http.post(api.SendSms, { mobile: that.formLogin.mobile })
-                              .then(res => {
-                                  setTimeout(hide, 2500);
-                                  this.$notification['success']({
-                                      message: '提示',
-                                      description: '验证码获取成功，您的验证码为：' + res.result.captcha,
-                                      duration: 8
-                                  })
-                              })
-                              .catch(err => {
-                                  setTimeout(hide, 1);
-                                  clearInterval(interval);
-                                  that.state.time = 60;
-                                  that.state.smsSendBtn = false;
-                                  this.requestFailed(err);
-                              });
-                      }
-                  }
-              );
-          },
-          requestFailed(err) {
-              this.$notification['error']({
-                  message: '错误',
-                  description: ((err.response || {}).data || {}).message || "请求出现错误，请稍后再试",
-                  duration: 4,
-              });
-              this.loginBtn = false;
-          },
+    data() {
+      return {
+        customActiveKey: "tab1",
+        loginBtn: false,
+        // login type: 0 email, 1 username, 2 telephone
+        loginType: 0,
+        form: null,
+        state: {
+          time: 60,
+          smsSendBtn: false,
+        },
+        formLogin: {
+          username: "",
+          password: "",
+          captcha: "",
+          mobile: "",
+          rememberMe: true
+        },
       }
+    },
+    methods: {
+      ...mapActions(["Login"]),
+      // handler
+      handleUsernameOrEmail(rule, value, callback) {
+        const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+        if (regex.test(value)) {
+          this.loginType = 0
+        } else {
+          this.loginType = 1
+        }
+        callback()
+      },
+      handleTabClick(key) {
+        this.customActiveKey = key
+        // this.form.resetFields()
+      },
+      handleSubmit() {
+        let that = this
+        let flag = false
+
+        if (that.customActiveKey === 'tab1') {
+          that.form.validateFields(['username', 'password'], {force: true}, (err) => {
+            if (!err) {
+              flag = true
+            }
+          })
+        } else {
+          that.form.validateFields(['mobile', 'captcha'], {force: true}, (err) => {
+            if (!err) {
+              flag = true
+              that.loginType = 2 // 登录类型修改为手机登录
+            }
+          })
+        }
+
+        if (!flag) return
+
+        that.loginBtn = true
+
+        let loginParams = {
+          password: md5(that.formLogin.password),
+          remember_me: that.formLogin.rememberMe
+        };
+
+        switch (that.loginType) {
+          case 0:
+            loginParams.email = that.formLogin.username
+            break;
+          case 1:
+            loginParams.username = that.formLogin.username
+            break;
+          case 2:
+          default:
+            loginParams.mobile = that.formLogin.mobile
+            loginParams.captcha = that.formLogin.captcha
+            break;
+        }
+
+        that.Login(loginParams).then(() => {
+          that.loginBtn = false
+          that.$router.push({name: "dashboard"})
+          that.$message.success(that.timefix() +'，欢迎回来', 3)
+        }).catch((err) => {
+          that.requestFailed(err);
+        })
+
+      },
+      getCaptcha(e) {
+        e.preventDefault()
+        let that = this
+
+        this.form.validateFields(['mobile'], {force: true},
+          (err) => {
+            if (!err) {
+              this.state.smsSendBtn = true;
+
+              let interval = window.setInterval(() => {
+                if (that.state.time-- <= 0) {
+                  that.state.time = 60;
+                  that.state.smsSendBtn = false;
+                  window.clearInterval(interval);
+                }
+              }, 1000);
+
+              const hide = this.$message.loading('验证码发送中..', 0);
+              this.$http.post(api.SendSms, {mobile: that.formLogin.mobile})
+                .then(res => {
+                  setTimeout(hide, 2500);
+                  this.$notification['success']({
+                    message: '提示',
+                    description: '验证码获取成功，您的验证码为：' + res.result.captcha,
+                    duration: 8
+                  })
+                })
+                .catch(err => {
+                  setTimeout(hide, 1);
+                  clearInterval(interval);
+                  that.state.time = 60;
+                  that.state.smsSendBtn = false;
+                  this.requestFailed(err);
+                });
+            }
+          }
+        );
+      },
+      timefix() {
+        const time = new Date()
+        const hour = time.getHours()
+        return hour < 9 ? '早上好' : (hour <= 11 ? '上午好' : (hour <= 13 ? '中午好' : (hour <= 20 ? '下午好' : '晚上好')))
+      },
+      requestFailed(err) {
+        this.$notification['error']({
+          message: '错误',
+          description: ((err.response || {}).data || {}).message || "请求出现错误，请稍后再试",
+          duration: 4,
+        });
+        this.loginBtn = false;
+      },
+    }
   }
 </script>
 

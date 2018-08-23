@@ -99,19 +99,19 @@ export const asyncRouterMap = [
     path: '/list',
     component: Layout,
     name: 'list',
-    redirect: '/list/query',
+    redirect: '/list/query-list',
     meta: { title: '列表页', icon: 'table' },
     children: [
       {
-        path: '/list/query',
+        path: '/list/query-list',
         name: 'QueryList',
         component: () => import('../views/list/TableList'),
         meta: { title: '查询表格' }
       },
       {
-        path: '/list/basic',
+        path: '/list/basic-list',
         name: 'BasicList',
-        component: () => import('../views/list/TableList'),
+        component: () => import('../views/list/StandardList'),
         meta: { title: '标准列表' }
       },
       {

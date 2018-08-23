@@ -180,10 +180,6 @@ export default {
 
             .content {
                 margin: 24px 24px 0;
-
-                .ant-card {
-                    min-height: 400px;
-                }
             }
 
         }
