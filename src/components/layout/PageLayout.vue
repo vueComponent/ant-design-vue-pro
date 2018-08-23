@@ -9,28 +9,26 @@
                 <div class="link">
                     <template  v-for="(link, index) in linkList">
                         <a :key="index" :href="link.href">
-                            <a-icon :type="link.icon" />{{ link.title }}</a>
+                          <a-icon :type="link.icon" />{{ link.title }}
+                        </a>
                     </template>
                 </div>
             </div>
             <slot slot="extra" name="extra"></slot>
         </page-header>
-        <div v-if="!$route.meta.hideHeader" ref="content" class="content">
+        <div ref="content" class="content">
             <slot></slot>
         </div>
-        <slot v-else></slot>
     </div>
 </template>
 
 <script>
   import PageHeader from './PageHeader'
-  import RouteView from './RouteView'
 
   export default {
     name: "LayoutContent",
     components: {
-      PageHeader,
-      "s-route-view": RouteView
+      PageHeader
     },
     props: ['desc', 'logo', 'title', 'avatar', 'linkList', 'extraImage'],
   }

@@ -13,7 +13,7 @@
                 </span>
                 <a-dropdown>
                     <span class="action ant-dropdown-link user-dropdown-menu">
-                      <a-avatar class="avatar" size="small" src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"/>
+                      <a-avatar class="avatar" size="small" :src="avatar()"/>
                       <span>{{ nickname() }}</span>
                     </span>
                     <a-menu slot="overlay" class="user-dropdown-menu-wrapper">
@@ -22,8 +22,10 @@
                             <span>个人中心</span>
                         </a-menu-item>
                         <a-menu-item key="1">
-                            <a-icon type="setting"/>
-                            <span>账户设置</span>
+                            <router-link :to="{ name: 'my' }">
+                              <a-icon type="setting"/>
+                              <span>账户设置</span>
+                            </router-link>
                         </a-menu-item>
                         <a-menu-item key="2" disabled>
                             <a-icon type="setting"/>
@@ -63,7 +65,7 @@
     },
     methods: {
       ...mapActions(["Logout"]),
-      ...mapGetters(["nickname"]),
+      ...mapGetters(["nickname", "avatar"]),
       handleLogout() {
         this.Logout({}).then(() => {
           window.location.reload()

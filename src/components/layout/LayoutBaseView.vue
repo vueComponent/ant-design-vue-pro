@@ -1,17 +1,17 @@
 <template>
-    <layout-view>
-        <route-view />
-    </layout-view>
+  <layout-main>
+    <route-view/>
+  </layout-main>
 </template>
 
 <script>
-  import LayoutView from './LayoutView'
+  import LayoutMain from './LayoutMain'
   import RouteView from './RouteView'
 
   export default {
     name: "GlobalView",
     components: {
-      LayoutView,
+      LayoutMain,
       RouteView
     }
   }

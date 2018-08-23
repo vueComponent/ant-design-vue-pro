@@ -10,9 +10,12 @@ module.exports = {
     loaderOptions: {
       less: {
         modifyVars: {
-/*          'primary-color': '#1DA57A',
-          'link-color': '#1DA57A',*/
+          /* less 变量覆盖，用于自定义 ant design 主题 */
+          /*
+          'primary-color': '#1DA57A',
+          'link-color': '#1DA57A',
           'border-radius-base': '2px',
+          */
         },
         javascriptEnabled: true,
       }

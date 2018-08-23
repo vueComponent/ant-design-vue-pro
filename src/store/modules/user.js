@@ -1,27 +1,34 @@
 import { login, getInfo, logout } from "@/api/login"
 import { setToken, getToken, removeToken } from '@/utils/auth'
+import { welcome } from "@/utils/util"
 
 const user = {
   state: {
     token: getToken(),
     name: '',
+    welcome: '',
     avatar: '',
-    roles: []
+    roles: [],
+    info: {}
   },
 
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token
     },
-    SET_NAME: (state, name) => {
+    SET_NAME: (state, { name, welcome }) => {
       state.name = name
+      state.welcome = welcome
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
-    }
+    },
+    SET_INFO: (state, info) => {
+      state.info = info
+    },
   },
 
   actions: {
@@ -56,12 +63,13 @@ const user = {
             })
             role.permissionList = role.permissions.map(permission => { return permission.permissionId });
             commit('SET_ROLES', result.role)
+            commit('SET_INFO', result)
           } else {
             reject('getInfo: roles must be a non-null array !')
           }
 
-          commit('SET_NAME', result.name)
-          commit('SET_AVATAR', '')
+          commit('SET_NAME', { name: result.name, welcome: welcome() })
+          commit('SET_AVATAR', result.avatar)
 
           resolve(response)
         }).catch(error => {

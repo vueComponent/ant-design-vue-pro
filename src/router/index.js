@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Layout from '../components/LayoutView'
+import Layout from '../components/layout/LayoutView'
+import LayoutBase from '../components/layout/LayoutBaseView'
 
 Vue.use(Router)
 /**
@@ -27,9 +28,10 @@ export const constantRouterMap = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/login',
     name: '首页',
-    hidden: true
+    hidden: true,
+    children: []
   }
 ]
 
@@ -70,7 +72,7 @@ export const asyncRouterMap = [
   },
   {
     path: '/form',
-    component: Layout,
+    component: LayoutBase,
     name: 'form',
     redirect: '/form/base-form',
     meta: { title: '表单页', icon: 'form' },
@@ -97,9 +99,10 @@ export const asyncRouterMap = [
   },
   {
     path: '/list',
-    component: Layout,
+    component: LayoutBase,
     name: 'list',
     redirect: '/list/query-list',
+    hidden: true,
     meta: { title: '列表页', icon: 'table' },
     children: [
       {
@@ -150,7 +153,7 @@ export const asyncRouterMap = [
   },
   {
     path: '/profile',
-    component: Layout,
+    component: LayoutBase,
     name: 'profile',
     redirect: '/profile/basic',
     meta: { title: '详情页', icon: 'profile' },
@@ -171,7 +174,7 @@ export const asyncRouterMap = [
   },
   {
     path: '/result',
-    component: Layout,
+    component: LayoutBase,
     name: 'result',
     redirect: '/result/success',
     meta: { title: '结果页', icon: 'check-circle-o' },
@@ -225,5 +228,11 @@ export const asyncRouterMap = [
         meta: { title: '500' }
       }
     ]
+  },
+  {
+    path: '/my',
+    component: () => import('../views/user/Index'),
+    name: 'my',
+    meta: { title: '用户设置', icon: 'profile' }
   }
 ]

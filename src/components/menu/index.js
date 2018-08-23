@@ -98,7 +98,9 @@ export default {
             var this2_ = this
             var menuArr = []
             menuTree.forEach(function (menu, i) {
-                menuArr.push(this2_.renderItem(h, menu, '0', i))
+                if (!menu.hidden) {
+                  menuArr.push(this2_.renderItem(h, menu, '0', i))
+                }
             })
             return menuArr
         },

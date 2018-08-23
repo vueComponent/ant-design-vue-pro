@@ -5,16 +5,15 @@
 
         <a-layout>
             <!-- layout header -->
-            <s-layout-header :collapsed="collapsed" @toggle="toggle"></s-layout-header>
+            <layout-header :collapsed="collapsed" @toggle="toggle"></layout-header>
             <!-- layout content -->
             <a-layout-content :style="{ margin: '24px 24px 0', height: '100%' }">
-                <page-content>
-                    <slot></slot>
-                </page-content>
+              <!-- content -->
+              <slot></slot>
             </a-layout-content>
 
             <a-layout-footer style="padding: 0px">
-                <s-layout-footer />
+                <layout-footer />
             </a-layout-footer>
         </a-layout>
     </a-layout>
@@ -22,18 +21,16 @@
 
 <script>
   import SiderMenu from '@/components/menu/SiderMenu'
-  import LayoutHeader from '@/components/LayoutHeader'
-  import LayoutFooter from '@/components/LayoutFooter'
-  import PageContent from '@/components/PageContent'
+  import LayoutHeader from './LayoutHeader'
+  import LayoutFooter from './LayoutFooter'
   import { asyncRouterMap } from '@/router/index'
 
   export default {
     name: "LayoutView",
     components: {
       SiderMenu,
-      PageContent,
-      "s-layout-header": LayoutHeader,
-      "s-layout-footer": LayoutFooter
+      LayoutHeader,
+      LayoutFooter
     },
     data() {
       return {
@@ -166,7 +163,9 @@
         }
 
         .ant-dropdown-menu-item>.anticon:first-child,
-        .ant-dropdown-menu-submenu-title>.anticon:first-child {
+        .ant-dropdown-menu-item>a>.anticon:first-child,
+        .ant-dropdown-menu-submenu-title>.anticon:first-child
+        .ant-dropdown-menu-submenu-title>a>.anticon:first-child {
             min-width: 12px;
             margin-right: 8px;
         }

@@ -93,9 +93,11 @@
 </template>
 
 <script>
-  import md5 from "md5";
+  import md5 from "md5"
   import api from '../api/'
-  import {mapActions} from "vuex";
+  import { mapActions } from "vuex"
+
+  import { timeFix } from "../utils/util"
 
   export default {
     data() {
@@ -179,7 +181,7 @@
         that.Login(loginParams).then(() => {
           that.loginBtn = false
           that.$router.push({name: "dashboard"})
-          that.$message.success(that.timefix() +'，欢迎回来', 3)
+          that.$message.success(timeFix() +'，欢迎回来', 3)
         }).catch((err) => {
           that.requestFailed(err);
         })
@@ -222,11 +224,6 @@
             }
           }
         );
-      },
-      timefix() {
-        const time = new Date()
-        const hour = time.getHours()
-        return hour < 9 ? '早上好' : (hour <= 11 ? '上午好' : (hour <= 13 ? '中午好' : (hour <= 20 ? '下午好' : '晚上好')))
       },
       requestFailed(err) {
         this.$notification['error']({
