@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Layout from '../views/Layout'
+import Layout from '../components/LayoutView'
 
 Vue.use(Router)
 /**
@@ -46,7 +46,7 @@ export const asyncRouterMap = [
     component: Layout,
     name: 'dashboard',
     redirect: '/dashboard/analysis',
-    meta: { title: 'dashboard', icon: 'dashboard' },
+    meta: { title: '仪表盘', icon: 'dashboard' },
     children: [
       {
         path: '/dashboard/analysis',
@@ -64,7 +64,7 @@ export const asyncRouterMap = [
         path: '/dashboard/workplace',
         name: 'Workplace',
         component: () => import('../views/dashboard/Workplace'),
-        meta: { title: '工作台', hideHeader: true }
+        meta: { title: '工作台' }
       }
     ]
   },

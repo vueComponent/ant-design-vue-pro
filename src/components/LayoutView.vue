@@ -1,13 +1,18 @@
 <template>
     <a-layout class="layout">
 
-        <s-sider-menu :menus="menus" :collapsed="collapsed" :collapsible="true"></s-sider-menu>
+        <sider-menu :menus="menus" :collapsed="collapsed" :collapsible="true"></sider-menu>
 
         <a-layout>
             <!-- layout header -->
             <s-layout-header :collapsed="collapsed" @toggle="toggle"></s-layout-header>
             <!-- layout content -->
-            <s-layout-content></s-layout-content>
+            <a-layout-content :style="{ margin: '24px 24px 0', height: '100%' }">
+                <page-content>
+                    <slot></slot>
+                </page-content>
+            </a-layout-content>
+
             <a-layout-footer style="padding: 0px">
                 <s-layout-footer />
             </a-layout-footer>
@@ -16,36 +21,36 @@
 </template>
 
 <script>
-import SiderMenu from '@/components/menu/SiderMenu'
-import LayoutHeader from '@/components/LayoutHeader'
-import LayoutContent from '@/components/LayoutContent'
-import LayoutFooter from '@/components/LayoutFooter'
-import { asyncRouterMap } from '@/router/index'
+  import SiderMenu from '@/components/menu/SiderMenu'
+  import LayoutHeader from '@/components/LayoutHeader'
+  import LayoutFooter from '@/components/LayoutFooter'
+  import PageContent from '@/components/PageContent'
+  import { asyncRouterMap } from '@/router/index'
 
-export default {
-  name: "Layout",
-  components: {
-    "s-sider-menu": SiderMenu,
-    "s-layout-header": LayoutHeader,
-    "s-layout-content": LayoutContent,
-    "s-layout-footer": LayoutFooter
-  },
-  data() {
-    return {
-      collapsed: false,
-      menus: []
-    }
-  },
-  created () {
-      this.menus = asyncRouterMap
-  },
-  methods: {
-    toggle() {
-      this.collapsed = !this.collapsed;
+  export default {
+    name: "LayoutView",
+    components: {
+      SiderMenu,
+      PageContent,
+      "s-layout-header": LayoutHeader,
+      "s-layout-footer": LayoutFooter
     },
+    data() {
+      return {
+        collapsed: false,
+        menus: []
+      }
+    },
+    created () {
+      this.menus = asyncRouterMap
+    },
+    methods: {
+      toggle() {
+        this.collapsed = !this.collapsed;
+      },
 
+    }
   }
-}
 </script>
 
 <style lang="scss">
@@ -148,40 +153,6 @@ export default {
         .layout-content {
             margin: 24px 24px 0px;
             height: 100%;
-
-            .pageHeader {
-                background: #fff;
-                padding: 16px 32px 0;
-                border-bottom: 1px solid #e8e8e8;
-
-                .breadcrumb {
-                    margin-bottom: 16px;
-                }
-                .detail {
-                    display: flex;
-
-                    .main {
-                        width: 100%;
-                        .row {
-                            display: flex;
-                            width: 100%;
-                        }
-                    }
-                    .title {
-                        font-size: 20px;
-                        font-weight: 500;
-                    }
-                }
-                .title {
-                    margin-bottom: 16px;
-                    flex: auto;
-                }
-            }
-
-            .content {
-                margin: 24px 24px 0;
-            }
-
         }
 
     }
