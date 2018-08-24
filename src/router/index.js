@@ -5,6 +5,9 @@ import LayoutBase from '../components/layout/LayoutBaseView'
 
 Vue.use(Router)
 /**
+ * 路由配置说明：
+ * 建议：sider menu 请不要超过三级菜单，若超过三级菜单，则应该设计为顶部主菜单 配合左侧次级菜单
+ *
  * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
  * alwaysShow: true               if set true, will always show the root menu, whatever its child routes length
  *                                if not set alwaysShow, only more than one route under the children
@@ -14,6 +17,7 @@ Vue.use(Router)
  * meta : {
     title: 'title'               the name show in submenu and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar,
+    keepAlive: true              keep alive component
     hiddenPageHeader: true       if `hiddenPageHeader: true` will not show page-header(details)
   }
  **/
@@ -60,6 +64,7 @@ export const asyncRouterMap = [
       {
         path: '/dashboard/monitor',
         name: 'Monitor',
+        hidden: true,
         component: () => import('../views/dashboard/Monitor'),
         meta: { title: '监控页', hideHeader: true }
       },

@@ -90,7 +90,7 @@ export default {
             )
         },
         renderItem: function (h, menu, pIndex, index) {
-            if (!menu.invisible) {
+            if (!menu.hidden) {
                 return menu.children ? this.renderSubMenu(h, menu, pIndex, index) : this.renderMenuItem(h, menu, pIndex, index)
             }
         },
