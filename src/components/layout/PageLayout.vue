@@ -41,6 +41,9 @@
       .link {
         margin-top: 16px;
 
+        &:not(:empty) {
+          margin-bottom: 16px;
+        }
         a {
           margin-right: 32px;
           height: 24px;

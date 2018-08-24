@@ -11,10 +11,6 @@
     </a-breadcrumb>
 
     <div class="detail">
-
-      <div v-if="avatar" class="avatar">
-        <a-avatar :src="avatar"/>
-      </div>
       <div class="main">
         <div class="row">
           <img v-if="logo" :src="logo" class="logo"/>
@@ -24,6 +20,9 @@
           </div>
         </div>
         <div class="row">
+          <div v-if="avatar" class="avatar">
+            <a-avatar :src="avatar"/>
+          </div>
           <div v-if="this.$slots.content" class="content">
             <slot name="content"></slot>
           </div>
@@ -105,11 +104,12 @@
 
     .detail {
       display: flex;
-      margin-bottom: 16px;
+      /*margin-bottom: 16px;*/
 
       .avatar {
         flex: 0 1 72px;
         margin: 0 24px 8px 0;
+
         & > span {
           border-radius: 72px;
           display: block;
@@ -125,6 +125,10 @@
         .row {
           display: flex;
           width: 100%;
+
+          .avatar {
+            margin-bottom: 16px;
+          }
         }
 
         .title {
@@ -146,7 +150,6 @@
           margin-right: 16px;
         }
         .content {
-          margin-bottom: 16px;
           flex: auto;
           color: rgba(0,0,0,.45);
           line-height: 22px;
