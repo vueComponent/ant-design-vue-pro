@@ -6,6 +6,9 @@ module.exports = {
       chunks: ['chunk-vendors', 'chunk-common', 'index']
     }
   },
+  configureWebpack: {
+
+  },
   css: {
     loaderOptions: {
       less: {

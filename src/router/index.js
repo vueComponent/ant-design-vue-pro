@@ -98,7 +98,7 @@ export const asyncRouterMap = [
       {
         path: '/form/advanced-form',
         name: 'AdvanceForm',
-        component: () => import('../views/form/BasicForm'),
+        component: () => import('../views/form/advancedForm/AdvancedForm'),
         meta: { title: '高级表单' }
       }
     ]

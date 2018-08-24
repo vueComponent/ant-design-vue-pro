@@ -6,11 +6,7 @@
                 <span class="action">
                     <a-icon type="question-circle-o"></a-icon>
                 </span>
-                <span class="action">
-                    <a-badge count="12">
-                        <a-icon class="icon" type="bell"></a-icon>
-                    </a-badge>
-                </span>
+              <header-notice class="action"/>
                 <a-dropdown>
                     <span class="action ant-dropdown-link user-dropdown-menu">
                       <a-avatar class="avatar" size="small" :src="avatar()"/>
@@ -44,10 +40,14 @@
 </template>
 
 <script>
+  import HeaderNotice from './HeaderNotice'
   import { mapActions, mapGetters } from 'vuex'
 
   export default {
     name: "LayoutHeader",
+    components: {
+      HeaderNotice
+    },
     props: {
       collapsed: {
         type: Boolean,
