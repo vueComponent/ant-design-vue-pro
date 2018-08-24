@@ -75,7 +75,7 @@
     },
     data () {
       return {
-        desc: '高级表单常见于一次性输入和提交大批量数据的场景。',
+        description: '高级表单常见于一次性输入和提交大批量数据的场景。',
         loading: false,
 
         // table
