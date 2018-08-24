@@ -206,7 +206,7 @@ export const asyncRouterMap = [
       {
         path: '/exception/403',
         name: 'Exception403',
-        component: () => import('../views/result/Success'),
+        component: () => import(/* webpackChunkName: "fail" */ '../views/exception/403'),
         meta: { title: '403' }
       },
       {
@@ -215,7 +215,7 @@ export const asyncRouterMap = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "fail" */ '../views/result/Success'),
+        component: () => import(/* webpackChunkName: "fail" */ '../views/exception/404'),
         meta: { title: '404' }
       },
       {
@@ -224,7 +224,7 @@ export const asyncRouterMap = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "fail" */ '../views/result/Success'),
+        component: () => import(/* webpackChunkName: "fail" */ '../views/exception/500'),
         meta: { title: '500' }
       }
     ]
