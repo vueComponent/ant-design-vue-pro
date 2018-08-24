@@ -11,7 +11,7 @@
     </a-breadcrumb>
 
     <div class="detail">
-      <div class="main">
+      <div class="main" v-if="!$route.meta.hiddenPageHeader">
         <div class="row">
           <img v-if="logo" :src="logo" class="logo"/>
           <h1 v-if="title" class="title">{{ title }}</h1>

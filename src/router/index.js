@@ -14,6 +14,7 @@ Vue.use(Router)
  * meta : {
     title: 'title'               the name show in submenu and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar,
+    hiddenPageHeader: true       if `hiddenPageHeader: true` will not show page-header(details)
   }
  **/
 export const constantRouterMap = [
@@ -181,8 +182,8 @@ export const asyncRouterMap = [
       {
         path: '/result/success',
         name: 'ResultSuccess',
-        component: () => import('../views/result/Success'),
-        meta: { title: '成功' }
+        component: () => import(/* webpackChunkName: "result" */ '../views/result/Success'),
+        meta: { title: '成功', hiddenPageHeader: true }
       },
       {
         path: '/result/fail',
@@ -190,8 +191,8 @@ export const asyncRouterMap = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "fail" */ '../views/result/Success'),
-        meta: { title: '失败' }
+        component: () => import(/* webpackChunkName: "result" */ '../views/result/Error'),
+        meta: { title: '失败', hiddenPageHeader: true }
       }
     ]
   },
