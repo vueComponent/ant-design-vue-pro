@@ -22,6 +22,30 @@
 
       <a-card>
         <a-form>
+          <a-row :gutter="24" :style="{ marginBottom: '24px' }">
+            <a-col :sm="12" :xs="24" :style="{ height: '250px' }">
+              <vue-cropper
+                style="width: 300px;position: absolute; left: 50%"
+                ref="cropper"
+                :img="option.img"
+                :outputSize="option.size"
+                :outputType="option.outputType"
+                :info="option.info"
+                :autoCrop="option.autoCrop"
+                :autoCropWidth="option.autoCropWidth"
+                :autoCropHeight="option.autoCropHeight"
+                :fixedBox="option.fixedBox"
+                @realTime="realTime"
+              >
+              </vue-cropper>
+            </a-col>
+            <a-col :sm="12" :xs="24" :style="{ height: '250px' }">
+              <div class="ant-upload-preview">
+                <img :src="preview.url" :style="preview.img"/>
+              </div>
+            </a-col>
+          </a-row>
+
           <a-form-item
             label="昵称"
             :labelCol="{span: 7}"
@@ -93,10 +117,14 @@
 
   import HeadInfo from '@/components/tools/HeadInfo'
   import ASelect from "ant-design-vue/es/select";
+  import AForm from "ant-design-vue/es/form/Form";
+  import VueCropper from "vue-cropper/example/src/vue-cropper/vue-cropper";
 
   export default {
     name: "Index",
     components: {
+      VueCropper,
+      AForm,
       ASelect,
       LayoutMain,
       PageLayout,
@@ -108,6 +136,24 @@
         welcome: welcome(),
         avatar: '',
         user: {},
+
+        // cropper
+        preview: {},
+        option: {
+          img: 'https://gw.alipayobjects.com/zos/rmsportal/jZUIxmJycoymBprLOUbT.png',
+          info: true,
+          size: 1,
+          outputType: 'jpeg',
+          canScale: false,
+          autoCrop: true,
+          // 只有自动截图开启 宽度高度才生效
+          autoCropWidth: 180,
+          autoCropHeight: 180,
+          fixedBox: true,
+          // 开启宽度和高度比例
+          fixed: true,
+          fixedNumber: [1, 1]
+        }
       }
     },
     computed: {
@@ -119,9 +165,30 @@
       this.user = this.userInfo
       this.avatar = this.userInfo.avatar
     },
+    methods: {
+
+      realTime (data) {
+        this.preview = data
+      }
+    }
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .avatar-upload-wrapper {
+    height: 200px;
+    width: 100%;
+  }
 
+  .ant-upload-preview {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    box-shadow: 0 0 4px #ccc;
+    position: absolute;
+    top: 50%;
+    left: 15%;
+    margin-top: -90px;
+    overflow: hidden;
+  }
 </style>
