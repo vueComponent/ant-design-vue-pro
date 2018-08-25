@@ -27,10 +27,13 @@
             <div>
               <a-card-grid :key="i" v-for="(item, i) in projects">
                 <a-card :bordered="false" :body-style="{ padding: 0 }">
-                  <a-card-meta :description="item.description">
+                  <a-card-meta>
                     <div slot="title" class="card-title">
                       <a-avatar size="small" :src="item.cover"/>
                       <a>{{ item.title }}</a>
+                    </div>
+                    <div slot="description" class="card-description">
+                      {{ item.description }}
                     </div>
                   </a-card-meta>
                   <div class="project-item">
@@ -71,9 +74,10 @@
               <a-button size="small" type="primary" ghost icon="plus">添加</a-button>
             </div>
           </a-card>
-          <a-card title="XX 指数" style="margin-bottom: 24px" :loading="loading" :bordered="false" :body-style="{ padding: 0 }">
+          <a-card title="XX 指数" style="margin-bottom: 24px" :loading="radarLoading" :bordered="false" :body-style="{ padding: 0 }">
             <div style="min-height: 400px;">
-              <radar :data="axisData" :scale="scale" :axis1Opts="axis1Opts" :axis2Opts="axis2Opts" />
+              <!-- :scale="scale" :axis1Opts="axis1Opts" :axis2Opts="axis2Opts"  -->
+              <radar :data="radarData" />
             </div>
           </a-card>
           <a-card :loading="loading" title="团队" :bordered="false">
@@ -200,16 +204,22 @@
           })
       },
       initRadar() {
-        const dv = new DataSet.View().source(this.axisData)
+        this.radarLoading = true
 
-        dv.transform({
-          type: 'flod',
-          fields: ['a', 'b', 'c'],
-          key: 'user',
-          value: 'score'
-        })
+        this.$http.get('/workplace/radar')
+          .then(res => {
 
-        this.radarData = dv.rows
+            const dv = new DataSet.View().source(res.result)
+            dv.transform({
+              type: 'fold',
+              fields: ['个人', '团队', '部门'],
+              key: 'user',
+              value: 'score'
+            })
+
+            this.radarData = dv.rows
+            this.radarLoading = false
+          })
       }
     }
   }
@@ -217,6 +227,7 @@
 
 <style lang="scss" scoped>
   .project-list {
+
     .card-title {
       font-size: 0;
 
@@ -233,6 +244,12 @@
           color: #1890ff;
         }
       }
+    }
+    .card-description {
+      color: rgba(0, 0, 0, 0.45);
+      height: 44px;
+      line-height: 22px;
+      overflow: hidden;
     }
     .project-item {
       display: flex;
@@ -256,12 +273,7 @@
         float: right;
       }
     }
-    .ant-card-meta-description {
-      color: rgba(0, 0, 0, 0.45);
-      height: 44px;
-      line-height: 22px;
-      overflow: hidden;
-    }
+
   }
 
   .item-group {

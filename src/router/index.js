@@ -28,15 +28,14 @@ export const constantRouterMap = [
   },
   {
     path: '/404',
-    component: () => import('../views/404')
+    component: () => import(/* webpackChunkName: "fail" */ '../views/exception/404')
   },
   {
     path: '/',
     component: Layout,
     redirect: '/login',
     name: '首页',
-    hidden: true,
-    children: []
+    hidden: true
   }
 ]
 
@@ -235,9 +234,14 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/my',
+    path: '/settings',
     component: () => import('../views/user/Index'),
-    name: 'my',
+    name: 'settings',
+    hidden: true,
     meta: { title: '用户设置', icon: 'profile' }
+  },
+
+  {
+    path: '*', redirect: '/404', hidden: true
   }
 ]

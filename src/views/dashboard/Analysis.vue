@@ -89,7 +89,7 @@
                     <a-tab-pane loading="true" tab="销售额" key="1">
                         <a-row>
                             <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                                <bar title="销售额趋势" />
+                                <bar title="销售额排行" />
                             </a-col>
                             <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                                 <rank-list title="门店销售排行榜" :list="rankList"/>
