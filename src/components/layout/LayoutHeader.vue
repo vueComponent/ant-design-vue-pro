@@ -18,7 +18,7 @@
                             <span>个人中心</span>
                         </a-menu-item>
                         <a-menu-item key="1">
-                            <router-link :to="{ name: 'my' }">
+                            <router-link :to="{ name: 'settings' }">
                               <a-icon type="setting"/>
                               <span>账户设置</span>
                             </router-link>
