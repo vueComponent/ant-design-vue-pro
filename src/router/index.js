@@ -116,6 +116,12 @@ export const asyncRouterMap = [
         meta: { title: '查询表格' }
       },
       {
+        path: '/list/edit-table',
+        name: 'EditList',
+        component: () => import('@/views/list/TableInnerEditList'),
+        meta: { title: '内联编辑表格' }
+      },
+      {
         path: '/list/basic-list',
         name: 'BasicList',
         component: () => import('../views/list/StandardList'),
@@ -130,23 +136,24 @@ export const asyncRouterMap = [
       {
         path: '/list/search',
         name: 'SearchList',
-        redirect: '/list/search/articles',
+        component: () => import('@/views/list/search/SearchLayout'),
+        redirect: '/list/search/article',
         meta: { title: '搜索列表' },
         children: [
           {
-            path: '/list/search/articles',
+            path: '/list/search/article',
             name: 'SearchArticles',
             component: () => import('../views/list/TableList'),
             meta: { title: '搜索列表（文章）' }
           },
           {
-              path: '/list/search/projects',
+              path: '/list/search/project',
               name: 'SearchProjects',
               component: () => import('../views/list/TableList'),
               meta: { title: '搜索列表（项目）' }
           },
           {
-              path: '/list/search/applications',
+              path: '/list/search/application',
               name: 'SearchApplications',
               component: () => import('../views/list/TableList'),
               meta: { title: '搜索列表（应用）' }

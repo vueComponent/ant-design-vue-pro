@@ -3,6 +3,10 @@ export default {
   data() {
     return {
       needTotalList: [],
+
+      selectedRows: [],
+      selectedRowKeys: [],
+
       localLoading: false,
       localDataSource: [],
       localPagination: Object.assign({}, T.props.pagination)
@@ -24,7 +28,11 @@ export default {
     showSizeChanger: {
       type: Boolean,
       default: true
-    }
+    },
+    showAlertInfo: {
+      type: Boolean,
+      default: true
+    },
   }),
   watch: {
     'localPagination.current' (val) {
@@ -49,7 +57,18 @@ export default {
       this.localPagination = Object.assign({}, this.localPagination, {
         showSizeChanger: val
       });
-    }
+    },
+    /*
+    'selectedRows': function (selectedRows) {
+      this.needTotalList = this.needTotalList.map(item => {
+        return {
+          ...item,
+          total: selectedRows.reduce( (sum, val) => {
+            return sum + val[item.dataIndex]
+          }, 0)
+        }
+      })
+    }*/
   },
   created() {
     this.localPagination = Object.assign({}, this.localPagination, {
@@ -115,6 +134,7 @@ export default {
     },
     updateSelect (selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
+      this.selectedRows = selectedRows
       let list = this.needTotalList
       this.needTotalList = list.map(item => {
         return {
@@ -124,16 +144,42 @@ export default {
           }, 0)
         }
       })
-      this.$emit('change', selectedRowKeys, selectedRows)
+      // this.$emit('change', selectedRowKeys, selectedRows)
+    },
+    updateEdit() {
+      this.selectedRows = []
     },
     onClearSelected () {
       this.selectedRowKeys = []
       this.updateSelect([], [])
     },
     renderMsg(h) {
-      let d = this.needTotalList.map(item => {
-        return h('span', `${item.title} 总计 ${item.customRender ? item.customRender(item.total) : item.total}`)
-      })
+      const _vm = this
+      let d = []
+      // 构建 已选择
+      d.push(
+        h('span', { style: { marginRight: '12px' } }, ['已选择 ', h('a', { style: { fontWeight: 600 }}, this.selectedRows.length)])
+      );
+
+      // 构建 列统计
+      this.needTotalList.map(item => {
+        d.push( h('span',
+          { style: { marginRight: '12px' } },
+          [
+            `${ item.title }总计 `,
+            h('a', { style: { fontWeight: 600 }}, `${ item.customRender ? item.customRender(item.total) : item.total }`)
+          ] )
+        )
+      });
+
+      // 构建 清空选择
+      d.push( h('a', {
+        style: { marginLeft: '24px' },
+        on: {
+          click: _vm.onClearSelected
+        }
+      }, '清空') )
+
       return d
     },
     renderAlert(h) {
@@ -141,7 +187,7 @@ export default {
       return h('span', {
         slot: 'message'
       }, this.renderMsg(h))
-    }
+    },
   },
   render(h) {
     const _vm = this
@@ -157,37 +203,39 @@ export default {
       return props[k] = _vm[k];
     })
 
-    /*return h("a-table", {
+    // 显示信息提示
+    if (this.showAlertInfo) {
+
+      props.rowSelection = { selectedRowKeys: this.selectedRowKeys, onChange: this.updateSelect };
+
+      return h('div', {}, [
+        h("a-alert", {
+          style: {
+            marginBottom: '16px'
+          },
+          props: {
+            type: 'info',
+            showIcon: true
+          }
+        }, [ _vm.renderAlert(h) ]),
+        h("a-table", {
+          tag: "component",
+          attrs: props,
+          on: {
+            change: _vm.loadData
+          },
+          scopedSlots: this.$scopedSlots
+        })
+      ]);
+    }
+
+    return h("a-table", {
       tag: "component",
       attrs: props,
       on: {
         change: _vm.loadData
       },
       scopedSlots: this.$scopedSlots
-    });*/
-
-    return h('div', {
-
-    }, [
-      h("a-alert", {
-        style: {
-          marginBottom: '16px'
-        },
-        props: {
-          type: 'info',
-          showIcon: true
-        }
-      }, [ _vm.renderAlert(h) ]),
-      h("a-table", {
-        tag: "component",
-        attrs: props,
-        on: {
-          change: _vm.loadData
-        },
-        scopedSlots: this.$scopedSlots
-      })
-    ]);
-
-
+    });
   }
 };

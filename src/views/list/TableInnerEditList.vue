@@ -80,31 +80,36 @@
     </div>
 
     <s-table
+      ref="table"
       size="default"
       :columns="columns"
       :data="loadData"
       :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onChange }"
     >
-      <span slot="action" slot-scope="text, record">
-        <a>编辑</a>
-        <a-divider type="vertical" />
-        <a-dropdown>
-          <a class="ant-dropdown-link">
-            更多 <a-icon type="down" />
-          </a>
-          <a-menu slot="overlay">
-            <a-menu-item>
-              <a href="javascript:;">1st menu item</a>
-            </a-menu-item>
-            <a-menu-item>
-              <a href="javascript:;">2nd menu item</a>
-            </a-menu-item>
-            <a-menu-item>
-              <a href="javascript:;">3rd menu item</a>
-            </a-menu-item>
-          </a-menu>
-        </a-dropdown>
-      </span>
+      <template v-for="col in columns" v-if="col.scopedSlots" :slot="col.dataIndex" slot-scope="text, record, index">
+        <div>
+          <a-input
+            v-if="record.editable"
+            style="margin: -5px 0"
+            :value="text"
+            @change="e => handleChange(e.target.value, record.key, col)"
+          />
+          <template v-else>{{text}}</template>
+        </div>
+      </template>
+      <template slot="action" slot-scope="text, record, index">
+        <div class='editable-row-operations'>
+          <span v-if="record.editable">
+            <a @click="() => save(record)" style="margin-right: 12px">Save</a>
+            <a-popconfirm title='Sure to cancel?' @confirm="() => cancel(record)">
+              <a>Cancel</a>
+            </a-popconfirm>
+          </span>
+          <span v-else>
+            <a @click="() => edit(record, index)">Edit</a>
+          </span>
+        </div>
+      </template>
     </s-table>
 
   </a-card>
@@ -132,24 +137,28 @@
           },
           {
             title: '描述',
-            dataIndex: 'description'
+            dataIndex: 'description',
+            scopedSlots: { customRender: 'description' },
           },
           {
             title: '服务调用次数',
             dataIndex: 'callNo',
             sorter: true,
             needTotal: true,
-            customRender: (text) => text + ' 次'
+            scopedSlots: { customRender: 'callNo' },
+            // customRender: (text) => text + ' 次'
           },
           {
             title: '状态',
             dataIndex: 'status',
-            needTotal: true
+            needTotal: true,
+            scopedSlots: { customRender: 'status' },
           },
           {
             title: '更新时间',
             dataIndex: 'updatedAt',
-            sorter: true
+            sorter: true,
+            scopedSlots: { customRender: 'updatedAt' },
           },
           {
             table: '操作',
@@ -172,6 +181,23 @@
       }
     },
     methods: {
+
+      handleChange (value, key, column) {
+        console.log(value, key, column)
+      },
+      edit (row) {
+        row.editable = true
+        row = Object.assign({}, row)
+        this.$refs.table.updateEdit()
+      },
+      save (row) {
+        delete row.editable
+        this.$refs.table.updateEdit()
+      },
+      cancel (row) {
+        delete row.editable
+        this.$refs.table.updateEdit()
+      },
 
       onChange (selectedRowKeys, selectedRows) {
         this.selectedRowKeys = selectedRowKeys
