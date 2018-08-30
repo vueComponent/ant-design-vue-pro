@@ -175,37 +175,7 @@
   }
 
   // 数据列表 样式
-  .tableList {
-
-    .table-search {
-
-      &.open-more-condition {
-        .more-condition {
-          display: block;
-        }
-      }
-
-      .more-condition {
-        display: none;
-      }
-
-      .ant-form-item {
-        display: flex;
-        margin-bottom: 24px;
-
-        & > .ant-form-item-label {
-          flex: unset;
-        }
-
-        .ant-form-item-control-wrapper {
-          flex: 1 1;
-        }
-      }
-    }
-
-    .ant-alert, .table-operator {
-      margin-bottom: 16px;
-    }
-
+  .table-alert {
+    margin-bottom: 16px;
   }
 </style>

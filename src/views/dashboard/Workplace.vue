@@ -273,7 +273,12 @@
         float: right;
       }
     }
-
+    .ant-card-meta-description {
+      color: rgba(0, 0, 0, 0.45);
+      height: 44px;
+      line-height: 22px;
+      overflow: hidden;
+    }
   }
 
   .item-group {
