@@ -27,7 +27,10 @@
             <div>
               <a-card-grid :key="i" v-for="(item, i) in projects">
                 <a-card :bordered="false" :body-style="{ padding: 0 }">
-                  <a-card-meta :description="item.description">
+                  <a-card-meta>
+                    <div slot="description" class="card-description">
+                      {{ item.description }}
+                    </div>
                     <div slot="title" class="card-title">
                       <a-avatar size="small" :src="item.cover"/>
                       <a>{{ item.title }}</a>
@@ -256,7 +259,7 @@
         float: right;
       }
     }
-    .ant-card-meta-description {
+    .ant-card-meta-description, .card-description {
       color: rgba(0, 0, 0, 0.45);
       height: 44px;
       line-height: 22px;
