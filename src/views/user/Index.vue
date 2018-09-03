@@ -20,89 +20,68 @@
         </a-row>
       </div>
 
-      <a-card>
-        <a-form>
-          <a-row :gutter="24" :style="{ marginBottom: '24px' }">
-            <a-col :sm="12" :xs="24" :style="{ height: '250px' }">
-              <vue-cropper
-                style="width: 300px;position: absolute; left: 50%"
-                ref="cropper"
-                :img="option.img"
-                :outputSize="option.size"
-                :outputType="option.outputType"
-                :info="option.info"
-                :autoCrop="option.autoCrop"
-                :autoCropWidth="option.autoCropWidth"
-                :autoCropHeight="option.autoCropHeight"
-                :fixedBox="option.fixedBox"
-                @realTime="realTime"
-              >
-              </vue-cropper>
-            </a-col>
-            <a-col :sm="12" :xs="24" :style="{ height: '250px' }">
-              <div class="ant-upload-preview">
-                <img :src="preview.url" :style="preview.img"/>
+      <a-card :style="{ padding: '0 15%' }">
+        <a-row :gutter="16">
+          <a-col :md="24" :lg="8" :style="{ minHeight: '180px' }">
+            <div class="ant-upload-preview" >
+              <a-icon type="cloud-upload-o" class="upload-icon"/>
+              <div class="mask">
+                <a-icon type="plus" />
               </div>
-            </a-col>
-          </a-row>
+              <img :src="option.img"/>
+            </div>
+          </a-col>
+          <a-col :md="24" :lg="16">
 
-          <a-form-item
-            label="昵称"
-            :labelCol="{span: 7}"
-            :wrapperCol="{span: 10}"
-          >
-            <a-input placeholder="给自己起个名字" />
-          </a-form-item>
-          <a-form-item
-            label="Bio"
-            :labelCol="{span: 7}"
-            :wrapperCol="{span: 10}"
-          >
-            <a-textarea rows="4" placeholder="You are not alone."/>
-          </a-form-item>
+            <a-form layout="vertical">
+              <a-form-item
+                label="昵称"
+              >
+                <a-input placeholder="给自己起个名字" />
+              </a-form-item>
+              <a-form-item
+                label="Bio"
+              >
+                <a-textarea rows="4" placeholder="You are not alone."/>
+              </a-form-item>
 
-          <a-form-item
-            label="电子邮件"
-            :labelCol="{span: 7}"
-            :wrapperCol="{span: 10}"
-            :required="false"
-          >
-            <a-input placeholder="exp@admin.com"/>
-          </a-form-item>
-          <a-form-item
-            label="加密方式"
-            :labelCol="{span: 7}"
-            :wrapperCol="{span: 10}"
-            :required="false"
-          >
-            <a-select defaultValue="aes-256-cfb">
-              <a-select-option value="aes-256-cfb">aes-256-cfb</a-select-option>
-              <a-select-option value="aes-128-cfb">aes-128-cfb</a-select-option>
-              <a-select-option value="chacha20">chacha20</a-select-option>
-            </a-select>
-          </a-form-item>
-          <a-form-item
-            label="连接密码"
-            :labelCol="{span: 7}"
-            :wrapperCol="{span: 10}"
-            :required="false"
-          >
-            <a-input placeholder="h3gSbecd"/>
-          </a-form-item>
-          <a-form-item
-            label="登陆密码"
-            :labelCol="{span: 7}"
-            :wrapperCol="{span: 10}"
-            :required="false"
-          >
-            <a-input placeholder="密码"/>
-          </a-form-item>
+              <a-form-item
+                label="电子邮件"
+                :required="false"
+              >
+                <a-input placeholder="exp@admin.com"/>
+              </a-form-item>
+              <a-form-item
+                label="加密方式"
+                :required="false"
+              >
+                <a-select defaultValue="aes-256-cfb">
+                  <a-select-option value="aes-256-cfb">aes-256-cfb</a-select-option>
+                  <a-select-option value="aes-128-cfb">aes-128-cfb</a-select-option>
+                  <a-select-option value="chacha20">chacha20</a-select-option>
+                </a-select>
+              </a-form-item>
+              <a-form-item
+                label="连接密码"
+                :required="false"
+              >
+                <a-input placeholder="h3gSbecd"/>
+              </a-form-item>
+              <a-form-item
+                label="登陆密码"
+                :required="false"
+              >
+                <a-input placeholder="密码"/>
+              </a-form-item>
 
-          <a-form-item :wrapperCol="{span: 10, offset: 7}">
-            <a-button type="primary">提交</a-button>
-            <a-button style="margin-left: 8px">保存</a-button>
-          </a-form-item>
-        </a-form>
+              <a-form-item>
+                <a-button type="primary">提交</a-button>
+                <a-button style="margin-left: 8px">保存</a-button>
+              </a-form-item>
+            </a-form>
+
+          </a-col>
+        </a-row>
       </a-card>
 
     </page-layout>
@@ -140,7 +119,7 @@
         // cropper
         preview: {},
         option: {
-          img: 'https://gw.alipayobjects.com/zos/rmsportal/jZUIxmJycoymBprLOUbT.png',
+          img: '/avatar2.jpg',
           info: true,
           size: 1,
           outputType: 'jpeg',
@@ -181,14 +160,51 @@
   }
 
   .ant-upload-preview {
-    width: 180px;
-    height: 180px;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 180px;
     border-radius: 50%;
     box-shadow: 0 0 4px #ccc;
-    position: absolute;
-    top: 50%;
-    left: 15%;
-    margin-top: -90px;
-    overflow: hidden;
+
+    .upload-icon {
+      position: absolute;
+      top: 0;
+      right: 10px;
+      font-size: 1.4rem;
+      padding: 0.5rem;
+      background: rgba(222, 221, 221, 0.7);
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+    .mask {
+      opacity: 0;
+      position: absolute;
+      background: rgba(0,0,0,0.4);
+      cursor: pointer;
+      transition: opacity 0.4s;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      i {
+        font-size: 2rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -1rem;
+        margin-top: -1rem;
+        color: #d6d6d6;
+      }
+    }
+
+    img, .mask {
+      width: 100%;
+      max-width: 180px;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+    }
   }
 </style>
