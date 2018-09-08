@@ -15,7 +15,7 @@
     import SMenu from './index'
     export default {
         name: "SiderMenu",
-        components: {ALayoutSider, SMenu },
+        components: { ALayoutSider, SMenu },
         props: {
             collapsible: {
                 type: Boolean,
