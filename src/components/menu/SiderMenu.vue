@@ -6,7 +6,7 @@
                 <h1>Ant Design Pro</h1>
             </router-link>
         </div>
-        <s-menu :collapsed="collapsed" :menu="menus" :theme="theme" @select="onSelect" style="padding: 16px 0px;"></s-menu>
+        <s-menu :collapsed="collapsed" :menu="menus" :theme="theme" @select="onSelect" :mode="mode" style="padding: 16px 0px;"></s-menu>
     </a-layout-sider>
 </template>
 
@@ -17,6 +17,11 @@
         name: "SiderMenu",
         components: { ALayoutSider, SMenu },
         props: {
+            mode: {
+              type: String,
+              required: false,
+              default: 'inline'
+            },
             theme: {
               type: String,
               required: false,

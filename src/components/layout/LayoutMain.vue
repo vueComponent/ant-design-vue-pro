@@ -1,11 +1,13 @@
 <template>
   <a-layout class="layout">
 
-    <sider-menu :menus="menus" theme="light" :collapsed="!siderOpen || collapsed" :collapsible="true"></sider-menu>
+    <sider-menu :menus="menus" :theme="menuTheme" v-if="menuMode === 'inline'" :mode="menuMode" :collapsed="!siderOpen || collapsed" :collapsible="true"></sider-menu>
 
     <a-layout>
       <!-- layout header -->
-      <layout-header :collapsed="collapsed" @toggle="toggle"></layout-header>
+      <layout-header :collapsed="collapsed" @toggle="toggle">
+
+      </layout-header>
       <!-- layout content -->
       <a-layout-content :style="{ margin: '24px 24px 0', height: '100%' }">
         <!-- content -->
@@ -35,6 +37,10 @@
     },
     data() {
       return {
+        // light, dark
+        menuTheme: 'light',
+        // inline, horizontal
+        menuMode: 'inline',
         collapsed: false,
         menus: []
       }
