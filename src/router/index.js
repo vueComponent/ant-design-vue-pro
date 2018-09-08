@@ -241,11 +241,24 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/settings',
-    component: () => import('../views/user/Index'),
-    name: 'settings',
-    hidden: true,
-    meta: { title: '用户设置', icon: 'profile' }
+    path: '/account',
+    component: Layout,
+    name: 'account',
+    meta: { title: '个人页', icon: 'user' },
+    children: [
+      {
+        path: 'center',
+        name: 'center',
+        component: () => import('@/views/user/Index'),
+        meta: { title: '个人中心' }
+      },
+      {
+        path: 'settings',
+        name: 'settings',
+        component: () => import('@/views/user/Index'),
+        meta: { title: '个人设置' }
+      }
+    ]
   },
 
   {

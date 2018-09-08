@@ -1,8 +1,8 @@
 <template>
   <page-layout :avatar="avatar">
     <div slot="headerContent">
-      <div class="title">{{ timeFix }}，{{ user.name }}，{{ welcome }}</div>
-      <div>打酱油工程师 | 白鹭学园-打酱油组事业群-VUE平台</div>
+      <div class="title">{{ timeFix }}，{{ user.name }}，{{ welcome() }}</div>
+      <div>前端工程师 | 蚂蚁金服 - 某某某事业群 - VUE平台</div>
     </div>
     <div slot="extra">
       <a-row>
@@ -99,7 +99,7 @@
 </template>
 
 <script>
-  import {timeFix, welcome} from "../../utils/util"
+  import { timeFix } from "@/utils/util"
   import {mapGetters} from "vuex"
 
   import PageLayout from '@/components/layout/PageLayout'
@@ -118,7 +118,6 @@
     data() {
       return {
         timeFix: timeFix(),
-        welcome: welcome(),
         avatar: '',
         user: {},
 
@@ -183,7 +182,7 @@
       this.initRadar()
     },
     methods: {
-      ...mapGetters(["nickname"]),
+      ...mapGetters(["nickname", "welcome"]),
       getProjects() {
         this.$http.get('/list/search/projects')
           .then(res => {
