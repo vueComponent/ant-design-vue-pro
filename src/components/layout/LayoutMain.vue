@@ -122,6 +122,7 @@
 
         .logo {
           background: #fff;
+          box-shadow: 1px 1px 0px 0px #e8e8e8;
 
           h1 {
             color: #1890ff;
