@@ -1,7 +1,7 @@
 <template>
   <a-layout class="layout">
 
-    <sider-menu :menus="menus" theme="light" :collapsed="collapsed" :collapsible="true"></sider-menu>
+    <sider-menu :menus="menus" theme="light" :collapsed="!siderOpen || collapsed" :collapsible="true"></sider-menu>
 
     <a-layout>
       <!-- layout header -->
@@ -24,6 +24,7 @@
   import LayoutHeader from './LayoutHeader'
   import LayoutFooter from './LayoutFooter'
   import {asyncRouterMap} from '@/router/index'
+  import { mapState } from 'vuex'
 
   export default {
     name: "LayoutView",
@@ -41,11 +42,15 @@
     created() {
       this.menus = asyncRouterMap
     },
+    computed: {
+      ...mapState({
+        siderOpen: state => state.app.sidebar.opened
+      })
+    },
     methods: {
       toggle() {
         this.collapsed = !this.collapsed;
       },
-
     }
   }
 </script>

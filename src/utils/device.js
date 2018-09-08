@@ -1,15 +1,23 @@
 import enquireJs from 'enquire.js'
 
 const enquireScreen = function (call) {
-  const hanlder = {
+  // tablet
+  const handler = {
     match: function () {
-      call && call(true)
+      call && call(0)
     },
     unmatch: function () {
-      call && call(false)
+      call && call(-1)
     }
   }
-  enquireJs.register('only screen and (max-width: 767.99px)', hanlder)
+  // mobile
+  const handler2 = {
+    match: () => {
+      call && call(1)
+    }
+  }
+  enquireJs.register('screen and (max-width: 980.99px)', handler)
+  enquireJs.register('screen and (max-width: 767.99px)', handler2)
 }
 
 export default enquireScreen

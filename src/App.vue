@@ -17,11 +17,21 @@
     },
     created () {
       let that = this
-      enquireScreen(isMobile => {
-        if (isMobile) {
-          that.$store.commit('app/TOGGLE_DEVICE', true)
-        } else {
-          that.$store.commit('app/TOGGLE_SIDEBAR', true)
+      enquireScreen(deviceType => {
+        console.log('deviceType', deviceType)
+        // tablet
+        if (deviceType === 0) {
+          that.$store.commit('TOGGLE_DEVICE', 'tablet')
+          that.$store.commit('CLOSE_SIDEBAR', false)
+        }
+        // mobile
+        else if (deviceType === 1) {
+          that.$store.commit('TOGGLE_DEVICE', 'mobile')
+          that.$store.commit('CLOSE_SIDEBAR', false)
+        }
+        else {
+          that.$store.commit('TOGGLE_DEVICE', 'desktop')
+          that.$store.commit('TOGGLE_SIDEBAR', true)
         }
 
       })
