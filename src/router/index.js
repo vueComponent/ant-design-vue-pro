@@ -249,13 +249,13 @@ export const asyncRouterMap = [
       {
         path: 'center',
         name: 'center',
-        component: () => import('@/views/user/Index'),
+        component: () => import('@/views/account/Index'),
         meta: { title: '个人中心' }
       },
       {
         path: 'settings',
         name: 'settings',
-        component: () => import('@/views/user/Index'),
+        component: () => import('@/views/account/Index'),
         meta: { title: '个人设置' }
       }
     ]

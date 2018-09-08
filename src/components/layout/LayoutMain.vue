@@ -1,7 +1,7 @@
 <template>
   <a-layout class="layout">
 
-    <sider-menu :menus="menus" :collapsed="collapsed" :collapsible="true"></sider-menu>
+    <sider-menu :menus="menus" theme="light" :collapsed="collapsed" :collapsible="true"></sider-menu>
 
     <a-layout>
       <!-- layout header -->
@@ -77,38 +77,58 @@
       }
     }
 
-    .logo {
-      height: 64px;
-      position: relative;
-      line-height: 64px;
-      padding-left: 24px;
-      -webkit-transition: all .3s;
-      transition: all .3s;
-      background: #002140;
-      overflow: hidden;
-
-      img, h1 {
-        display: inline-block;
-        vertical-align: middle;
-      }
-
-      img {
-        height: 32px;
-      }
-
-      h1 {
-        color: #fff;
-        font-size: 20px;
-        margin: 0 0 0 12px;
-        font-family: "Myriad Pro", "Helvetica Neue", Arial, Helvetica, sans-serif;
-        font-weight: 600;
-      }
-    }
-
     .sider {
       box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
       position: relative;
       z-index: 10;
+
+
+      .logo {
+        height: 64px;
+        position: relative;
+        line-height: 64px;
+        padding-left: 24px;
+        -webkit-transition: all .3s;
+        transition: all .3s;
+        background: #002140;
+        overflow: hidden;
+
+        img, h1 {
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        img {
+          height: 32px;
+        }
+
+        h1 {
+          color: #fff;
+          font-size: 20px;
+          margin: 0 0 0 12px;
+          font-family: "Myriad Pro", "Helvetica Neue", Arial, Helvetica, sans-serif;
+          font-weight: 600;
+        }
+      }
+
+      &.light {
+        background-color: #fff;
+        box-shadow: 2px 0px 8px 0px rgba(29,35,41,0.05);
+
+        .logo {
+          background: #fff;
+
+          h1 {
+            color: #1890ff;
+          }
+        }
+
+        .ant-menu-light {
+          border-right-color: transparent;
+        }
+      }
+
+
     }
 
     .header {

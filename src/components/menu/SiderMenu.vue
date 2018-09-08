@@ -1,12 +1,12 @@
 <template>
-    <a-layout-sider :class="['sider', isMobile ? null : 'shadow' ]" width="256px" :collapsible="collapsible" v-model="collapsed" :trigger="null">
+    <a-layout-sider :class="['sider', isMobile ? null : 'shadow', theme ]" width="256px" :collapsible="collapsible" v-model="collapsed" :trigger="null">
         <div class="logo">
             <router-link :to="{name:'dashboard'}">
                 <img src="~@/assets/logo.svg" alt="logo">
                 <h1>Ant Design Pro</h1>
             </router-link>
         </div>
-        <s-menu :collapsed="collapsed" :menu="menus" @select="onSelect" style="padding: 16px 0px;"></s-menu>
+        <s-menu :collapsed="collapsed" :menu="menus" :theme="theme" @select="onSelect" style="padding: 16px 0px;"></s-menu>
     </a-layout-sider>
 </template>
 
@@ -17,6 +17,11 @@
         name: "SiderMenu",
         components: { ALayoutSider, SMenu },
         props: {
+            theme: {
+              type: String,
+              required: false,
+              default: 'dark'
+            },
             collapsible: {
                 type: Boolean,
                 required: false,
@@ -47,7 +52,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>
