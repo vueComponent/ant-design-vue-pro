@@ -21,7 +21,12 @@
     <div>
       <a-row :gutter="24">
         <a-col :xl="16" :lg="24" :md="24" :sm="24" :xs="24">
-          <a-card class="project-list" :loading="loading" style="margin-bottom: 24px;" :bordered="false" title="进行中的项目"
+          <a-card 
+class="project-list" 
+:loading="loading" 
+style="margin-bottom: 24px;" 
+:bordered="false" 
+title="进行中的项目"
                   :body-style="{ padding: 0 }">
             <a slot="extra">全部项目</a>
             <div>
@@ -62,7 +67,13 @@
             </a-list>
           </a-card>
         </a-col>
-        <a-col style="padding: 0 12px" :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+        <a-col 
+style="padding: 0 12px" 
+:xl="8" 
+:lg="24" 
+:md="24" 
+:sm="24" 
+:xs="24">
           <a-card title="快速开始 / 便捷导航" style="margin-bottom: 24px" :bordered="false" :body-style="{padding: 0}">
             <div class="item-group">
               <a>操作一</a>

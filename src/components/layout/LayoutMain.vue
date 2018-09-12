@@ -1,7 +1,13 @@
 <template>
   <a-layout class="layout">
 
-    <sider-menu :menus="menus" :theme="menuTheme" v-if="menuMode === 'inline'" :mode="menuMode" :collapsed="!siderOpen || collapsed" :collapsible="true"></sider-menu>
+    <sider-menu
+      :menus="menus"
+      :theme="menuTheme"
+      v-if="menuMode === 'inline'"
+      :mode="menuMode"
+      :collapsed="!siderOpen || collapsed"
+      :collapsible="true"></sider-menu>
 
     <a-layout>
       <!-- layout header -->
@@ -25,7 +31,7 @@
   import SiderMenu from '@/components/menu/SiderMenu'
   import LayoutHeader from './LayoutHeader'
   import LayoutFooter from './LayoutFooter'
-  import {asyncRouterMap} from '@/router/index'
+  import { asyncRouterMap } from '@/router/index'
   import { mapState } from 'vuex'
 
   export default {
@@ -35,7 +41,7 @@
       LayoutHeader,
       LayoutFooter
     },
-    data() {
+    data () {
       return {
         // light, dark
         menuTheme: 'light',
@@ -45,7 +51,7 @@
         menus: []
       }
     },
-    created() {
+    created () {
       this.menus = asyncRouterMap
     },
     computed: {
@@ -54,7 +60,7 @@
       })
     },
     methods: {
-      toggle() {
+      toggle () {
         this.collapsed = !this.collapsed;
       },
     }
@@ -93,7 +99,6 @@
       position: relative;
       z-index: 10;
 
-
       .logo {
         height: 64px;
         position: relative;
@@ -124,14 +129,14 @@
 
       &.light {
         background-color: #fff;
-        box-shadow: 2px 0px 8px 0px rgba(29,35,41,0.05);
+        box-shadow: 2px 0px 8px 0px rgba(29, 35, 41, 0.05);
 
         .logo {
           background: #fff;
           box-shadow: 1px 1px 0px 0px #e8e8e8;
 
           h1 {
-            color: #1890ff;
+            color: unset;
           }
         }
 
@@ -139,7 +144,6 @@
           border-right-color: transparent;
         }
       }
-
 
     }
 

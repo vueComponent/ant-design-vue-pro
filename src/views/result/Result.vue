@@ -25,7 +25,6 @@
   .result {
     text-align: center;
     width: 72%;
-    max-width: 560px;
     margin: 0 auto;
     padding: 24px 0 8px;
 
