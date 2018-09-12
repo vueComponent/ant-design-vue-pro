@@ -15,52 +15,53 @@
       <div class="main">
         <a-form ref="formLogin" :autoFormCreate="(form)=>{this.form = form}" id="formLogin">
 
-          <a-tabs :activeKey="customActiveKey" :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }" @change="handleTabClick">
+          <a-tabs :activeKey="customActiveKey" :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }"
+                  @change="handleTabClick">
             <a-tab-pane key="tab1" tab="账号密码登陆">
 
               <a-form-item
-                      fieldDecoratorId="username"
-                      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: this.handleUsernameOrEmail }], validateTrigger: 'blur'}"
+                fieldDecoratorId="username"
+                :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: this.handleUsernameOrEmail }], validateTrigger: 'blur'}"
               >
                 <a-input size="large" type="text" v-model="formLogin.username" placeholder="帐户名或邮箱地址 / admin">
-                  <a-icon slot="prefix" type='user' :style="{ color: 'rgba(0,0,0,.25)' }" />
+                  <a-icon slot="prefix" type='user' :style="{ color: 'rgba(0,0,0,.25)' }"/>
                 </a-input>
               </a-form-item>
 
               <a-form-item
-                      fieldDecoratorId="password"
-                      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}">
+                fieldDecoratorId="password"
+                :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}">
                 <a-input size="large" type="password" v-model="formLogin.password" placeholder="密码 / admin">
-                  <a-icon slot="prefix" type='lock' :style="{ color: 'rgba(0,0,0,.25)' }" />
+                  <a-icon slot="prefix" type='lock' :style="{ color: 'rgba(0,0,0,.25)' }"/>
                 </a-input>
               </a-form-item>
             </a-tab-pane>
             <a-tab-pane key="tab2" tab="手机号登陆">
               <a-form-item
-                      fieldDecoratorId="mobile"
-                      :fieldDecoratorOptions="{rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'blur'}">
+                fieldDecoratorId="mobile"
+                :fieldDecoratorOptions="{rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'blur'}">
                 <a-input size="large" type="text" v-model="formLogin.mobile" placeholder="手机号">
-                  <a-icon slot="prefix" type='mobile' :style="{ color: 'rgba(0,0,0,.25)' }" />
+                  <a-icon slot="prefix" type='mobile' :style="{ color: 'rgba(0,0,0,.25)' }"/>
                 </a-input>
               </a-form-item>
 
               <a-row :gutter="16">
                 <a-col class="gutter-row" :span="16">
                   <a-form-item
-                          fieldDecoratorId="captcha"
-                          :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}">
+                    fieldDecoratorId="captcha"
+                    :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}">
                     <a-input size="large" type="text" v-model="formLogin.captcha" placeholder="验证码">
-                      <a-icon slot="prefix" type='mail' :style="{ color: 'rgba(0,0,0,.25)' }" />
+                      <a-icon slot="prefix" type='mail' :style="{ color: 'rgba(0,0,0,.25)' }"/>
                     </a-input>
                   </a-form-item>
                 </a-col>
                 <a-col class="gutter-row" :span="8">
                     <span class="ivu-input-prefix">
-                      <a-button 
-class="getCaptcha" 
-:disabled="state.smsSendBtn"
-                                @click.stop.prevent="getCaptcha" 
-v-text="!state.smsSendBtn&&'获取验证码'||(state.time+' s')"></a-button>
+                      <a-button
+                        class="getCaptcha"
+                        :disabled="state.smsSendBtn"
+                        @click.stop.prevent="getCaptcha"
+                        v-text="!state.smsSendBtn&&'获取验证码'||(state.time+' s')"></a-button>
                     </span>
                 </a-col>
               </a-row>
@@ -70,18 +71,21 @@ v-text="!state.smsSendBtn&&'获取验证码'||(state.time+' s')"></a-button>
 
           <a-form-item>
             <a-checkbox v-model="formLogin.rememberMe">自动登陆</a-checkbox>
-            <router-link :to="{ name: 'recover', params: { user: 'aaa'} }" class="forge-password" style="float: right;">忘记密码</router-link>
+            <router-link :to="{ name: 'recover', params: { user: 'aaa'} }" class="forge-password" style="float: right;">
+              忘记密码
+            </router-link>
           </a-form-item>
 
           <a-form-item style="margin-top:24px">
-            <a-button 
-size="large" 
-type="primary"
-                      htmlType="submit" 
-class="login-button" 
-:loading="loginBtn"
-                      @click.stop.prevent="handleSubmit" 
-v-bind:disabled="loginBtn" >确定</a-button>
+            <a-button
+              size="large"
+              type="primary"
+              htmlType="submit"
+              class="login-button"
+              :loading="loginBtn"
+              @click.stop.prevent="handleSubmit"
+              v-bind:disabled="loginBtn">确定
+            </a-button>
           </a-form-item>
 
         </a-form>
@@ -108,7 +112,7 @@ v-bind:disabled="loginBtn" >确定</a-button>
   import { timeFix } from "../utils/util"
 
   export default {
-    data() {
+    data () {
       return {
         customActiveKey: "tab1",
         loginBtn: false,
@@ -129,9 +133,9 @@ v-bind:disabled="loginBtn" >确定</a-button>
       }
     },
     methods: {
-      ...mapActions(["Login"]),
+      ...mapActions([ "Login" ]),
       // handler
-      handleUsernameOrEmail(rule, value, callback) {
+      handleUsernameOrEmail (rule, value, callback) {
         const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
         if (regex.test(value)) {
           this.loginType = 0
@@ -140,22 +144,22 @@ v-bind:disabled="loginBtn" >确定</a-button>
         }
         callback()
       },
-      handleTabClick(key) {
+      handleTabClick (key) {
         this.customActiveKey = key
         // this.form.resetFields()
       },
-      handleSubmit() {
+      handleSubmit () {
         let that = this
         let flag = false
 
         if (that.customActiveKey === 'tab1') {
-          that.form.validateFields(['username', 'password'], {force: true}, (err) => {
+          that.form.validateFields([ 'username', 'password' ], { force: true }, (err) => {
             if (!err) {
               flag = true
             }
           })
         } else {
-          that.form.validateFields(['mobile', 'captcha'], {force: true}, (err) => {
+          that.form.validateFields([ 'mobile', 'captcha' ], { force: true }, (err) => {
             if (!err) {
               flag = true
               that.loginType = 2 // 登录类型修改为手机登录
@@ -188,18 +192,18 @@ v-bind:disabled="loginBtn" >确定</a-button>
 
         that.Login(loginParams).then(() => {
           that.loginBtn = false
-          that.$router.push({name: "dashboard"})
-          that.$message.success(timeFix() +'，欢迎回来', 3)
+          that.$router.push({ name: "dashboard" })
+          that.$message.success(timeFix() + '，欢迎回来', 3)
         }).catch((err) => {
           that.requestFailed(err);
         })
 
       },
-      getCaptcha(e) {
+      getCaptcha (e) {
         e.preventDefault()
         let that = this
 
-        this.form.validateFields(['mobile'], {force: true},
+        this.form.validateFields([ 'mobile' ], { force: true },
           (err) => {
             if (!err) {
               this.state.smsSendBtn = true;
@@ -213,10 +217,10 @@ v-bind:disabled="loginBtn" >确定</a-button>
               }, 1000);
 
               const hide = this.$message.loading('验证码发送中..', 0);
-              this.$http.post(api.SendSms, {mobile: that.formLogin.mobile})
+              this.$http.post(api.SendSms, { mobile: that.formLogin.mobile })
                 .then(res => {
                   setTimeout(hide, 2500);
-                  this.$notification['success']({
+                  this.$notification[ 'success' ]({
                     message: '提示',
                     description: '验证码获取成功，您的验证码为：' + res.result.captcha,
                     duration: 8
@@ -233,8 +237,8 @@ v-bind:disabled="loginBtn" >确定</a-button>
           }
         );
       },
-      requestFailed(err) {
-        this.$notification['error']({
+      requestFailed (err) {
+        this.$notification[ 'error' ]({
           message: '错误',
           description: ((err.response || {}).data || {}).message || "请求出现错误，请稍后再试",
           duration: 4,
@@ -288,8 +292,8 @@ v-bind:disabled="loginBtn" >确定</a-button>
 
           .title {
             font-size: 33px;
-            color: rgba(0,0,0,.85);
-            font-family: "Myriad Pro","Helvetica Neue",Arial,Helvetica,sans-serif;
+            color: rgba(0, 0, 0, .85);
+            font-family: "Myriad Pro", "Helvetica Neue", Arial, Helvetica, sans-serif;
             font-weight: 600;
             position: relative;
             top: 2px;

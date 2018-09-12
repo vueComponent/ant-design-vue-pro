@@ -86,7 +86,7 @@
       :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onChange }"
     >
       <span slot="action" slot-scope="text, record">
-        <a>编辑</a>
+        <a @click="handleEdit(record)">编辑</a>
         <a-divider type="vertical" />
         <a-dropdown>
           <a class="ant-dropdown-link">
@@ -94,32 +94,116 @@
           </a>
           <a-menu slot="overlay">
             <a-menu-item>
-              <a href="javascript:;">1st menu item</a>
+              <a href="javascript:;">详情</a>
             </a-menu-item>
             <a-menu-item>
-              <a href="javascript:;">2nd menu item</a>
+              <a href="javascript:;">禁用</a>
             </a-menu-item>
             <a-menu-item>
-              <a href="javascript:;">3rd menu item</a>
+              <a href="javascript:;">删除</a>
             </a-menu-item>
           </a-menu>
         </a-dropdown>
       </span>
     </s-table>
 
+    <a-modal
+      title="操作"
+      :width="800"
+      v-model="visible"
+      @ok="handleOk"
+    >
+      <a-form :autoFormCreate="(form)=>{this.form = form}">
+
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label='规则编号'
+          hasFeedback
+          validateStatus='success'
+        >
+          <a-input placeholder='规则编号' v-model="mdl.no" id='no' />
+        </a-form-item>
+
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label='服务调用次数'
+          hasFeedback
+          validateStatus='success'
+        >
+          <a-input-number :min="1" id="callNo" v-model="mdl.callNo" style="width: 100%" />
+        </a-form-item>
+
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label='状态'
+          hasFeedback
+          validateStatus='warning'
+        >
+          <a-select defaultValue='1' v-model="mdl.status">
+            <a-select-option value='1'>Option 1</a-select-option>
+            <a-select-option value='2'>Option 2</a-select-option>
+            <a-select-option value='3'>Option 3</a-select-option>
+          </a-select>
+        </a-form-item>
+
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label='描述'
+          hasFeedback
+          help='请填写一段描述'
+        >
+          <a-textarea :rows="5" v-model="mdl.description" placeholder="..." id='description'/>
+        </a-form-item>
+
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label='更新时间'
+          hasFeedback
+          validateStatus='error'
+        >
+          <a-date-picker
+            style="width: 100%"
+            showTime
+            format="YYYY-MM-DD HH:mm:ss"
+            placeholder="Select Time"
+          />
+        </a-form-item>
+
+      </a-form>
+    </a-modal>
+
   </a-card>
 </template>
 
 <script>
   import STable from '@/components/table/'
+  import ATextarea from "ant-design-vue/es/input/TextArea";
 
   export default {
     name: "TableList",
     components: {
+      ATextarea,
       STable
     },
     data () {
       return {
+        visible: false,
+        labelCol: {
+          xs: { span: 24 },
+          sm: { span: 5 },
+        },
+        wrapperCol: {
+          xs: { span: 24 },
+          sm: { span: 12 },
+        },
+        form: null,
+        mdl: {},
+
         // 高级搜索 展开/关闭
         advanced: false,
         // 查询参数
@@ -172,7 +256,14 @@
       }
     },
     methods: {
+      handleEdit (record) {
+        this.mdl = Object.assign({}, record)
+        console.log(this.mdl)
+        this.visible = true
+      },
+      handleOk () {
 
+      },
       onChange (selectedRowKeys, selectedRows) {
         this.selectedRowKeys = selectedRowKeys
         this.selectedRows = selectedRows
@@ -197,24 +288,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-  .search {
-    margin-bottom: 54px;
-  }
-
-  .fold {
-    width: calc(100% - 216px);
-    display: inline-block
-  }
-
-  .operator {
-    margin-bottom: 18px;
-  }
-
-  @media screen and (max-width: 900px) {
-    .fold {
-      width: 100%;
-    }
-  }
-</style>

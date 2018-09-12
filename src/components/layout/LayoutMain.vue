@@ -69,7 +69,7 @@
 
 <style lang="scss">
 
-  html {
+  body {
     // 打开滚动条固定显示
     overflow-y: scroll;
   }
@@ -213,5 +213,26 @@
   // 数据列表 样式
   .table-alert {
     margin-bottom: 16px;
+  }
+  .content {
+
+    .search {
+      margin-bottom: 54px;
+    }
+
+    .fold {
+      width: calc(100% - 216px);
+      display: inline-block
+    }
+
+    .operator {
+      margin-bottom: 18px;
+    }
+
+    @media screen and (max-width: 900px) {
+      .fold {
+        width: 100%;
+      }
+    }
   }
 </style>
