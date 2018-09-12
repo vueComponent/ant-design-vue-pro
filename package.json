@@ -38,10 +38,15 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
+      "plugin:vue/strongly-recommended",
       "eslint:recommended"
     ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
     "rules": {
+      "generator-star-spacing": "off",
+      "no-mixed-operators": 0,
       "vue/max-attributes-per-line": [2, {
         "singleline": 5,
         "multiline": {
@@ -49,10 +54,8 @@
           "allowFirstLine": false
         }
       }],
+      "vue/attribute-hyphenation": 0,
       "no-console": 0
-    },
-    "parserOptions": {
-      "parser": "babel-eslint"
     }
   },
   "postcss": {
