@@ -56,8 +56,11 @@
                 </a-col>
                 <a-col class="gutter-row" :span="8">
                     <span class="ivu-input-prefix">
-                      <a-button class="getCaptcha" :disabled="state.smsSendBtn"
-                                @click.stop.prevent="getCaptcha" v-text="!state.smsSendBtn&&'获取验证码'||(state.time+' s')"></a-button>
+                      <a-button 
+class="getCaptcha" 
+:disabled="state.smsSendBtn"
+                                @click.stop.prevent="getCaptcha" 
+v-text="!state.smsSendBtn&&'获取验证码'||(state.time+' s')"></a-button>
                     </span>
                 </a-col>
               </a-row>
@@ -71,9 +74,14 @@
           </a-form-item>
 
           <a-form-item style="margin-top:24px">
-            <a-button size="large" type="primary"
-                      htmlType="submit" class="login-button" :loading="loginBtn"
-                      @click.stop.prevent="handleSubmit" v-bind:disabled="loginBtn" >确定</a-button>
+            <a-button 
+size="large" 
+type="primary"
+                      htmlType="submit" 
+class="login-button" 
+:loading="loginBtn"
+                      @click.stop.prevent="handleSubmit" 
+v-bind:disabled="loginBtn" >确定</a-button>
           </a-form-item>
 
         </a-form>
