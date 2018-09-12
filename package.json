@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@antv/data-set": "^0.8.9",
-    "ant-design-vue": "^1.0.3",
+    "ant-design-vue": "^1.1.0",
     "axios": "^0.18.0",
     "dayjs": "^1.7.5",
     "enquire.js": "^2.1.6",
@@ -41,7 +41,16 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "vue/max-attributes-per-line": [2, {
+        "singleline": 5,
+        "multiline": {
+          "max": 1,
+          "allowFirstLine": false
+        }
+      }],
+      "no-console": 0
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
