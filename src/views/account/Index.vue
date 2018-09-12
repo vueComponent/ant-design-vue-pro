@@ -1,117 +1,62 @@
 <template>
-  <page-layout :avatar="avatar">
-    <div slot="headerContent">
-      <div class="title">{{ timeFix }}，{{ user.name }}，{{ welcome }}</div>
-      <div>You are not alone.</div>
+  <a-card :bordered="false" :bodyStyle="{ padding: '16px 0' }">
+    <div class="account-settings-info-main">
+      <div class="account-settings-info-left">
+        <a-menu
+          mode="inline"
+          :defaultSelectedKeys="['1']"
+          type="inner"
+          @openChange="onOpenChange"
+        >
+          <a-menu-item key="1">
+            <router-link :to="{ name: 'BaseSettings' }">
+              <a-icon type="mail" />
+              基本设置
+            </router-link>
+          </a-menu-item>
+          <a-menu-item key="2">
+            <router-link :to="{ name: 'SecuritySettings' }">
+              <a-icon type="mail" />
+              安全设置
+            </router-link>
+          </a-menu-item>
+          <a-menu-item key="3">
+            <router-link :to="{ name: 'CustomSettings' }">
+              <a-icon type="mail" />
+              个性化
+            </router-link>
+          </a-menu-item>
+          <a-menu-item key="4">
+            <a-icon type="mail" />
+            账户绑定
+          </a-menu-item>
+          <a-menu-item key="5">
+            <a-icon type="mail" />
+            新消息通知
+          </a-menu-item>
+        </a-menu>
+      </div>
+      <div class="account-settings-info-right">
+        <div class="account-settings-info-title">
+          <span>{{ $route.meta.title }}</span>
+        </div>
+        <route-view></route-view>
+      </div>
     </div>
-    <div slot="extra">
-      <a-row>
-        <a-col :sm="8" :xs="24">
-          <head-info title="可用节点" content="16" :bordered="true"/>
-        </a-col>
-        <a-col :sm="8" :xs="24">
-          <head-info title="高级节点" content="7/16" :bordered="true"/>
-        </a-col>
-        <a-col :sm="8" :xs="24">
-          <head-info title="剩余流量" content="2,23Gb"/>
-        </a-col>
-      </a-row>
-    </div>
-
-    <a-card :style="{ padding: '0 15%' }">
-      <a-row :gutter="16">
-        <a-col :md="24" :lg="8" :style="{ minHeight: '180px' }">
-          <div class="ant-upload-preview" >
-            <a-icon type="cloud-upload-o" class="upload-icon"/>
-            <div class="mask">
-              <a-icon type="plus" />
-            </div>
-            <img :src="option.img"/>
-          </div>
-        </a-col>
-        <a-col :md="24" :lg="16">
-
-          <a-form layout="vertical">
-            <a-form-item
-              label="昵称"
-            >
-              <a-input placeholder="给自己起个名字" />
-            </a-form-item>
-            <a-form-item
-              label="Bio"
-            >
-              <a-textarea rows="4" placeholder="You are not alone."/>
-            </a-form-item>
-
-            <a-form-item
-              label="电子邮件"
-              :required="false"
-            >
-              <a-input placeholder="exp@admin.com"/>
-            </a-form-item>
-            <a-form-item
-              label="加密方式"
-              :required="false"
-            >
-              <a-select defaultValue="aes-256-cfb">
-                <a-select-option value="aes-256-cfb">aes-256-cfb</a-select-option>
-                <a-select-option value="aes-128-cfb">aes-128-cfb</a-select-option>
-                <a-select-option value="chacha20">chacha20</a-select-option>
-              </a-select>
-            </a-form-item>
-            <a-form-item
-              label="连接密码"
-              :required="false"
-            >
-              <a-input placeholder="h3gSbecd"/>
-            </a-form-item>
-            <a-form-item
-              label="登陆密码"
-              :required="false"
-            >
-              <a-input placeholder="密码"/>
-            </a-form-item>
-
-            <a-form-item>
-              <a-button type="primary">提交</a-button>
-              <a-button style="margin-left: 8px">保存</a-button>
-            </a-form-item>
-          </a-form>
-
-        </a-col>
-      </a-row>
-    </a-card>
-
-  </page-layout>
+  </a-card>
 </template>
 
 <script>
-  import {timeFix, welcome} from "../../utils/util"
-  import LayoutMain from '@/components/layout/LayoutMain'
   import PageLayout from '@/components/layout/PageLayout'
-
-  import HeadInfo from '@/components/tools/HeadInfo'
-  import ASelect from "ant-design-vue/es/select";
-  import AForm from "ant-design-vue/es/form/Form";
-  import VueCropper from "vue-cropper/example/src/vue-cropper/vue-cropper";
+  import RouteView from "@/components/layout/RouteView";
 
   export default {
-    name: "Index",
     components: {
-      VueCropper,
-      AForm,
-      ASelect,
-      LayoutMain,
-      PageLayout,
-      HeadInfo
+      RouteView,
+      PageLayout
     },
     data () {
       return {
-        timeFix: timeFix(),
-        welcome: welcome(),
-        avatar: '',
-        user: {},
-
         // cropper
         preview: {},
         option: {
@@ -128,79 +73,48 @@
           // 开启宽度和高度比例
           fixed: true,
           fixedNumber: [1, 1]
-        }
+        },
+
+        pageTitle: ''
       }
     },
-    computed: {
-      userInfo() {
-        return this.$store.getters.userInfo
-      }
-    },
-    created() {
-      this.user = this.userInfo
-      this.avatar = this.userInfo.avatar
+    created () {
+
     },
     methods: {
+      onOpenChange (openKeys) {
 
-      realTime (data) {
-        this.preview = data
-      }
-    }
+      },
+    },
   }
 </script>
 
 <style lang="scss" scoped>
-  .avatar-upload-wrapper {
-    height: 200px;
+  .account-settings-info-main {
     width: 100%;
-  }
+    display: flex;
+    height: 100%;
+    overflow: auto;
 
-  .ant-upload-preview {
-    position: relative;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 180px;
-    border-radius: 50%;
-    box-shadow: 0 0 4px #ccc;
-
-    .upload-icon {
-      position: absolute;
-      top: 0;
-      right: 10px;
-      font-size: 1.4rem;
-      padding: 0.5rem;
-      background: rgba(222, 221, 221, 0.7);
-      border-radius: 50%;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-    }
-    .mask {
-      opacity: 0;
-      position: absolute;
-      background: rgba(0,0,0,0.4);
-      cursor: pointer;
-      transition: opacity 0.4s;
-
-      &:hover {
-        opacity: 1;
-      }
-
-      i {
-        font-size: 2rem;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-left: -1rem;
-        margin-top: -1rem;
-        color: #d6d6d6;
-      }
+    .account-settings-info-left {
+      border-right: 1px solid #e8e8e8;
+      width: 224px;
     }
 
-    img, .mask {
-      width: 100%;
-      max-width: 180px;
-      height: 100%;
-      border-radius: 50%;
-      overflow: hidden;
+    .account-settings-info-right {
+      flex: 1 1;
+      padding: 8px 40px;
+
+      .account-settings-info-title {
+        color: rgba(0,0,0,.85);
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 28px;
+        margin-bottom: 12px;
+      }
+      .account-settings-info-view {
+        padding-top: 12px;
+      }
     }
   }
 </style>

@@ -2,6 +2,7 @@ import axios from 'axios'
 import store from '../store'
 import { VueAxios } from './axios'
 import notification from 'ant-design-vue/es/notification'
+import { getToken } from "@/utils/auth"
 
 
 // 创建 axios 实例
@@ -27,8 +28,9 @@ const err = (error) => {
 
 // request 拦截器
 service.interceptors.request.use(config => {
-  if (store.getters.token) {
-    config.headers[ 'Access-Token' ] = store.getters.token // 让每个请求携带自定义 token 请根据实际情况自行修改
+  const token = getToken()
+  if (token) {
+    config.headers[ 'Access-Token' ] = token // 让每个请求携带自定义 token 请根据实际情况自行修改
   }
   return config
 }, err)

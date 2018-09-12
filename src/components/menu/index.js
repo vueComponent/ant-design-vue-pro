@@ -86,9 +86,11 @@ export default {
       ) ]
       let itemArr = []
       let pIndex_ = pIndex + '_' + index
-      menu.children.forEach(function (item, i) {
-        itemArr.push(this2_.renderItem(h, item, pIndex_, i))
-      })
+      if (!menu.alwaysShow) {
+        menu.children.forEach(function (item, i) {
+          itemArr.push(this2_.renderItem(h, item, pIndex_, i))
+        })
+      }
       return h(
         SubMenu,
         { key: menu.path ? menu.path : 'submenu_' + pIndex + '_' + index },
@@ -97,7 +99,7 @@ export default {
     },
     renderItem: function (h, menu, pIndex, index) {
       if (!menu.hidden) {
-        return menu.children ? this.renderSubMenu(h, menu, pIndex, index) : this.renderMenuItem(h, menu, pIndex, index)
+        return menu.children && !menu.alwaysShow ? this.renderSubMenu(h, menu, pIndex, index) : this.renderMenuItem(h, menu, pIndex, index)
       }
     },
     renderMenu: function (h, menuTree) {

@@ -16,7 +16,7 @@ router.beforeEach((to, from, next) => {
   if (getToken()) {
     /* has token */
     if (to.path === '/login') {
-      next({ path: '/' })
+      next({ path: '/dashboard/workplace' })
       NProgress.done()
     } else {
       if (store.getters.roles.length === 0) {
@@ -37,7 +37,6 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
-
     if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
       next()
     } else {
