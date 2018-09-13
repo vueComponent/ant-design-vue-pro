@@ -18,7 +18,7 @@
     "nprogress": "^0.2.0",
     "viser-vue": "^2.3.0",
     "vue": "^2.5.17",
-    "vue-cropper": "^0.3.6",
+    "vue-cropper": "^0.4.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },

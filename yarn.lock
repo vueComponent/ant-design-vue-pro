@@ -7505,9 +7505,9 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-cropper@^0.3.6:
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/vue-cropper/-/vue-cropper-0.3.6.tgz#d83de3d18ed2ab72e092c93850acd5f7b6d8fe36"
+vue-cropper@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/vue-cropper/-/vue-cropper-0.4.0.tgz#f9c2affd94f69826f032c4023701b2cb0772c94b"
   dependencies:
     exif-js "^2.3.0"
 
