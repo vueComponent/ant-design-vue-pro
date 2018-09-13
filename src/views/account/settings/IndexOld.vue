@@ -86,7 +86,7 @@
 </template>
 
 <script>
-  import {timeFix, welcome} from "../../utils/util"
+  import {timeFix, welcome} from "../../../utils/util"
   import LayoutMain from '@/components/layout/LayoutMain'
   import PageLayout from '@/components/layout/PageLayout'
 
