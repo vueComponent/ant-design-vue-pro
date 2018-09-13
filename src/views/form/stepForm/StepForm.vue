@@ -6,9 +6,9 @@
       <a-step title="完成" />
     </a-steps>
     <div class="content">
-      <step1 v-if="currentTab === 0" @nextStep="nextStep"></step1>
-      <step2 v-if="currentTab === 1" @nextStep="nextStep" @prevStep="prevStep"></step2>
-      <step3 v-if="currentTab === 2" @prevStep="prevStep" @finish="finish"></step3>
+      <step1 v-if="currentTab === 0" @nextStep="nextStep"/>
+      <step2 v-if="currentTab === 1" @nextStep="nextStep" @prevStep="prevStep"/>
+      <step3 v-if="currentTab === 2" @prevStep="prevStep" @finish="finish"/>
     </div>
   </a-card>
 </template>

@@ -11,13 +11,11 @@
 
     <a-layout>
       <!-- layout header -->
-      <layout-header :collapsed="collapsed" @toggle="toggle">
-
-      </layout-header>
+      <layout-header :collapsed="collapsed" @toggle="toggle"/>
       <!-- layout content -->
       <a-layout-content :style="{ margin: '24px 24px 0', height: '100%' }">
         <!-- content -->
-        <slot></slot>
+        <slot/>
       </a-layout-content>
 
       <a-layout-footer style="padding: 0px">

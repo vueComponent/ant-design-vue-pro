@@ -55,6 +55,7 @@
         }
       }],
       "vue/attribute-hyphenation": 0,
+      "vue/html-self-closing": 0,
       "no-console": 0
     }
   },
