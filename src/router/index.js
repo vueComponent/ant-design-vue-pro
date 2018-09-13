@@ -244,42 +244,51 @@ export const asyncRouterMap = [
     path: '/account',
     component: Layout,
     name: 'account',
-    meta: { title: '个人页', icon: 'user' },
+    meta: { title: '个人页', icon: 'user', keepAlive: true },
     children: [
       {
-        path: 'center',
+        path: '/account/center',
         name: 'center',
         component: () => import('@/views/account/Index'),
-        meta: { title: '个人中心' }
+        meta: { title: '个人中心', keepAlive: true }
       },
       {
-        path: 'settings',
+        path: '/account/settings',
         name: 'settings',
         component: () => import('@/views/account/Index'),
-        meta: { title: '个人设置', hideHeader: true },
+        meta: { title: '个人设置', hideHeader: true, keepAlive: true },
         redirect: '/account/settings/base',
         alwaysShow: true,
         children: [
           {
-            path: 'base',
+            path: '/account/settings/base',
             name: 'BaseSettings',
             component: () => import('@/views/account/BaseSetting'),
-            hidden: true,
-            meta: { title: '基本设置' }
+            meta: { title: '基本设置', hidden: true, keepAlive: true }
           },
           {
-            path: 'security',
+            path: '/account/settings/security',
             name: 'SecuritySettings',
             component: () => import('@/views/account/Security'),
-            hidden: true,
-            meta: { title: '安全设置' }
+            meta: { title: '安全设置', hidden: true, keepAlive: true }
           },
           {
-            path: 'custom',
+            path: '/account/settings/custom',
             name: 'CustomSettings',
             component: () => import('@/views/account/Custom'),
-            hidden: true,
-            meta: { title: '个性化设置' }
+            meta: { title: '个性化设置', hidden: true, keepAlive: true }
+          },
+          {
+            path: '/account/settings/binding',
+            name: 'BindingSettings',
+            component: () => import('@/views/account/Binding'),
+            meta: { title: '账户绑定', hidden: true, keepAlive: true }
+          },
+          {
+            path: '/account/settings/notification',
+            name: 'NotificationSettings',
+            component: () => import('@/views/account/Notification'),
+            meta: { title: '新消息通知', hidden: true, keepAlive: true }
           },
         ]
       },

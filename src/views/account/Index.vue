@@ -1,33 +1,38 @@
 <template>
-  <a-card :bordered="false" :bodyStyle="{ padding: '16px 0' }">
+  <a-card :bordered="false" :bodyStyle="{ padding: '16px 0', height: '100%' }" :style="{ height: '100%' }">
     <div class="account-settings-info-main">
       <div class="account-settings-info-left">
         <a-menu
           mode="inline"
-          :defaultSelectedKeys="['1']"
+          :style="{ border: '0' }"
+          :defaultSelectedKeys="defaultSelectedKeys"
           type="inner"
           @openChange="onOpenChange"
         >
-          <a-menu-item key="1">
+          <a-menu-item key="/account/settings/base">
             <router-link :to="{ name: 'BaseSettings' }">
               基本设置
             </router-link>
           </a-menu-item>
-          <a-menu-item key="2">
+          <a-menu-item key="/account/settings/security">
             <router-link :to="{ name: 'SecuritySettings' }">
               安全设置
             </router-link>
           </a-menu-item>
-          <a-menu-item key="3">
+          <a-menu-item key="/account/settings/custom">
             <router-link :to="{ name: 'CustomSettings' }">
               个性化
             </router-link>
           </a-menu-item>
-          <a-menu-item key="4">
-            账户绑定
+          <a-menu-item key="/account/settings/binding">
+            <router-link :to="{ name: 'BindingSettings' }">
+              账户绑定
+            </router-link>
           </a-menu-item>
-          <a-menu-item key="5">
-            新消息通知
+          <a-menu-item key="/account/settings/notification">
+            <router-link :to="{ name: 'NotificationSettings' }">
+              新消息通知
+            </router-link>
           </a-menu-item>
         </a-menu>
       </div>
@@ -52,6 +57,8 @@
     },
     data () {
       return {
+        defaultSelectedKeys: [],
+
         // cropper
         preview: {},
         option: {
@@ -74,12 +81,16 @@
       }
     },
     created () {
-
+      this.updateMenu()
     },
     methods: {
       onOpenChange (openKeys) {
 
       },
+      updateMenu () {
+        let routes = this.$route.matched.concat()
+        this.defaultSelectedKeys = [ routes.pop().path ]
+      }
     },
   }
 </script>

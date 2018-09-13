@@ -122,7 +122,12 @@ export default {
     },
     updateMenu () {
       let routes = this.$route.matched.concat()
-      this.selectedKeys = [ routes.pop().path ]
+      if (routes.length >= 3 && this.$route.meta.hidden) {
+        routes.pop()
+        this.selectedKeys = [ routes[1].path ]
+      } else {
+        this.selectedKeys = [ routes.pop().path ]
+      }
       let openKeys = []
       routes.forEach((item) => {
         openKeys.push(item.path)
