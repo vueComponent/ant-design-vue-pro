@@ -10,28 +10,23 @@
         >
           <a-menu-item key="1">
             <router-link :to="{ name: 'BaseSettings' }">
-              <a-icon type="mail" />
               基本设置
             </router-link>
           </a-menu-item>
           <a-menu-item key="2">
             <router-link :to="{ name: 'SecuritySettings' }">
-              <a-icon type="mail" />
               安全设置
             </router-link>
           </a-menu-item>
           <a-menu-item key="3">
             <router-link :to="{ name: 'CustomSettings' }">
-              <a-icon type="mail" />
               个性化
             </router-link>
           </a-menu-item>
           <a-menu-item key="4">
-            <a-icon type="mail" />
             账户绑定
           </a-menu-item>
           <a-menu-item key="5">
-            <a-icon type="mail" />
             新消息通知
           </a-menu-item>
         </a-menu>
