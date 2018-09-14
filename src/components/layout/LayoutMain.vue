@@ -3,7 +3,7 @@
 
     <sider-menu
       :menus="menus"
-      :theme="menuTheme"
+      :theme="theme"
       v-if="menuMode === 'inline'"
       :mode="menuMode"
       :collapsed="!siderOpen || collapsed"
@@ -54,7 +54,8 @@
     },
     computed: {
       ...mapState({
-        siderOpen: state => state.app.sidebar.opened
+        siderOpen: state => state.app.sidebar.opened,
+        theme: state => state.app.theme
       })
     },
     methods: {

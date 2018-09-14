@@ -2,8 +2,9 @@
   <div class="footer">
     <div class="links">
       <a href="#">Pro 首页</a>
-      <a href="#"><a-icon type="github"/></a>
-      <a href="#">Ant Design</a>
+      <a href="https://github.com/ant-design/ant-design-pro"><a-icon type="github"/></a>
+      <a href="https://ant.design/">Ant Design</a>
+      <a href="https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/">Vue Antd</a>
     </div>
     <div class="copyright">
       Copyright <a-icon type="copyright" /> 2018 <span>白鹭学园技术组出品</span>

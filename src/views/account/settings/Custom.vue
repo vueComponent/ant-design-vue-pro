@@ -1,36 +1,26 @@
-<template>
-  <a-list
-    itemLayout="horizontal"
-    :dataSource="data"
-  >
-    <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
-      <a-list-item-meta>
-        <a slot="title" href="https://vuecomponent.github.io/ant-design-vue/">{{ item.title }}</a>
-        <span slot="description">
-          <span class="security-list-description">{{ item.description }}</span>
-          <span v-if="item.value"> : </span>
-          <span class="security-list-value">{{ item.value }}</span>
-        </span>
-      </a-list-item-meta>
-      <template v-if="item.actions">
-        <a slot="actions" @click="item.actions.callback">{{ item.actions.title }}</a>
-      </template>
-
-    </a-list-item>
-  </a-list>
-</template>
-
 <script>
+  import { mapState } from "vuex"
+  import ASwitch from 'ant-design-vue/es/switch'
+  import AList from "ant-design-vue/es/list"
+  import AListItem from "ant-design-vue/es/list/Item"
+
+  const Meta = AListItem.Meta
+
   export default {
-    name: "Security",
+    components: {
+      AListItem,
+      AList,
+      ASwitch,
+      Meta
+    },
     data () {
       return {
-        theme: 'dark',
-
-        data: [
-          { title: '主题色' , description: '设置全局主题色', value: this.theme, actions: { title: '修改', callback: () => { this.$message.info('This is a normal message'); } } },
-        ]
       }
+    },
+    computed: {
+      ...mapState({
+        theme: state => state.app.theme
+      })
     },
     filters: {
       themeFilter(theme) {
@@ -43,12 +33,39 @@
     },
     methods: {
       onChange (checked) {
+
+        console.log('click:', checked)
         if (checked) {
-          this.theme = 'dark'
+          this.$store.dispatch('ToggleTheme',  'dark')
         } else {
-          this.theme = 'light'
+          this.$store.dispatch('ToggleTheme',  'light')
         }
       }
+    },
+    render () {
+      return (
+        <AList itemLayout="horizontal">
+          <AListItem>
+            <Meta>
+              <a slot="title">风格配色</a>
+              <span slot="description">
+                整体风格配色设置
+              </span>
+            </Meta>
+            <div slot="actions">
+              <ASwitch checkedChildren="暗色" unCheckedChildren="白色" defaultChecked={this.theme === 'dark' && true || false} onChange={this.onChange} />
+            </div>
+          </AListItem>
+          <AListItem>
+            <Meta>
+              <a slot="title">主题色</a>
+              <span slot="description">
+                页面风格配色： <a>红</a>
+              </span>
+            </Meta>
+          </AListItem>
+        </AList>
+      )
     }
   }
 </script>
