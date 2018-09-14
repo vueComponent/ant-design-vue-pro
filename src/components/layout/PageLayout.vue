@@ -49,7 +49,7 @@
         default: null
       },
       linkList: {
-        type: String,
+        type: Array,
         default: null
       },
       extraImage: {

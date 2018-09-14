@@ -172,7 +172,7 @@ export const asyncRouterMap = [
       {
         path: '/profile/basic',
         name: 'ProfileBasic',
-        component: () => import('../views/list/TableList'),
+        component: () => import('../views/profile/basic/Index'),
         meta: { title: '基础详情页' }
       },
       {

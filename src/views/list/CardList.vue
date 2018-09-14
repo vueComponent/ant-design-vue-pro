@@ -18,10 +18,10 @@
               <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large"/>
               <div class="meta-content" slot="description">{{ item.content }}</div>
             </a-card-meta>
-            <ul class="ant-card-actions" slot="actions">
-              <li><a>操作一</a></li>
-              <li><a>操作二</a></li>
-            </ul>
+            <template class="ant-card-actions" slot="actions">
+              <a>操作一</a>
+              <a>操作二</a>
+            </template>
           </a-card>
         </template>
       </a-list-item>
