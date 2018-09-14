@@ -1165,9 +1165,9 @@ ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ant-design-vue@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.1.0.tgz#b4d629f9edbc77b8349ba8c1077c8b17826fa775"
+ant-design-vue@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.1.1.tgz#dbd221c002de06a741a17455d9f1e3677de88f31"
   dependencies:
     add-dom-event-listener "^1.0.2"
     array-tree-filter "^2.1.0"
