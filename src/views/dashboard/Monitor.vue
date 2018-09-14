@@ -1,7 +1,7 @@
 <template>
-    <div>
-        Monitor
-    </div>
+  <div>
+    Monitor
+  </div>
 </template>
 
 <script>

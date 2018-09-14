@@ -17,7 +17,21 @@
 <script>
   export default {
     name: "Result",
-    props: ['isSuccess', 'title', 'description']
+    // 'isSuccess', 'title', 'description'
+    props: {
+      isSuccess: {
+        type: Boolean,
+        default: false
+      },
+      title: {
+        type: String,
+        default: ''
+      },
+      description: {
+        type: String,
+        default: ''
+      }
+    }
   }
 </script>
 

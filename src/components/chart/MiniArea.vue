@@ -1,12 +1,12 @@
 <template>
-    <div class="antv-mini-chart">
-        <div class="chart-content" :style="{ height: 46 }">
-            <v-chart :force-fit="true" :height="height" :data="data" :padding="[36, 5, 18, 5]">
-                <v-tooltip />
-                <v-smooth-area position="x*y" />
-            </v-chart>
-        </div>
+  <div class="antv-mini-chart">
+    <div class="chart-content" :style="{ height: 46 }">
+      <v-chart :force-fit="true" :height="height" :data="data" :padding="[36, 5, 18, 5]">
+        <v-tooltip />
+        <v-smooth-area position="x*y" />
+      </v-chart>
     </div>
+  </div>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
   <v-chart :forceFit="true" height="400" :data="data" :padding="[20, 20, 95, 20]" :scale="scale">
-    <v-tooltip  />
+    <v-tooltip></v-tooltip>
     <v-axis :dataKey="axis1Opts.dataKey" :line="axis1Opts.line" :tickLine="axis1Opts.tickLine" :grid="axis1Opts.grid" />
     <v-axis :dataKey="axis2Opts.dataKey" :line="axis2Opts.line" :tickLine="axis2Opts.tickLine" :grid="axis2Opts.grid" />
     <v-legend dataKey="user" marker="circle" :offset="30" />
@@ -47,7 +47,12 @@
 
   export default {
     name: 'Radar',
-    props: ['data'],
+    props: {
+      data: {
+        type: Array,
+        default: null,
+      }
+    },
     data () {
       return {
         axis1Opts,

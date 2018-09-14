@@ -57,6 +57,7 @@
     },
     data () {
       return {
+        openKeys: [],
         defaultSelectedKeys: [],
 
         // cropper
@@ -85,7 +86,7 @@
     },
     methods: {
       onOpenChange (openKeys) {
-
+        this.openKeys = openKeys
       },
       updateMenu () {
         let routes = this.$route.matched.concat()

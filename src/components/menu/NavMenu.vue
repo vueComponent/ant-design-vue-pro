@@ -1,14 +1,14 @@
 <template>
-    <a-menu
-            theme="dark"
-            mode="inline"
-            :defaultSelectedKeys="['1']">
+  <a-menu
+    theme="dark"
+    mode="inline"
+    :defaultSelectedKeys="['1']">
 
-        <template v-for="menu in menus">
-            <s-submenu :menu="menu" :key="menu.id"></s-submenu>
-        </template>
+    <template v-for="menu in menus">
+      <s-submenu :menu="menu" :key="menu.id"></s-submenu>
+    </template>
 
-    </a-menu>
+  </a-menu>
 </template>
 
 <script>

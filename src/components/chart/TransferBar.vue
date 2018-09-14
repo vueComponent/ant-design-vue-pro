@@ -1,17 +1,17 @@
 <template>
-    <div :style="{ padding: '0 0 32px 32px' }">
-        <h4 :style="{ marginBottom: '20px' }">{{ title }}</h4>
-        <v-chart
-                height="254"
-                :data="data"
-                :scale="scale"
-                :forceFit="true"
-                :padding="['auto', 'auto', '40', '50']">
-            <v-tooltip />
-            <v-axis />
-            <v-bar position="x*y"/>
-        </v-chart>
-    </div>
+  <div :style="{ padding: '0 0 32px 32px' }">
+    <h4 :style="{ marginBottom: '20px' }">{{ title }}</h4>
+    <v-chart
+      height="254"
+      :data="data"
+      :scale="scale"
+      :forceFit="true"
+      :padding="['auto', 'auto', '40', '50']">
+      <v-tooltip />
+      <v-axis />
+      <v-bar position="x*y"/>
+    </v-chart>
+  </div>
 </template>
 
 <script>

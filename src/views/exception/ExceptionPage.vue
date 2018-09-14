@@ -4,8 +4,8 @@
       <img :src="config[type].img"/>
     </div>
     <div class="content">
-      <h1>{{config[type].title}}</h1>
-      <div class="desc">{{config[type].desc}}</div>
+      <h1>{{ config[type].title }}</h1>
+      <div class="desc">{{ config[type].desc }}</div>
       <div class="action">
         <a-button type="primary" @click="handleToHome">返回首页</a-button>
       </div>
@@ -18,7 +18,12 @@
 
   export default {
     name: "Exception",
-    props: ['type'],
+    props: {
+      type: {
+        type: Number,
+        default: 404
+      }
+    },
     data() {
       return {
         config: types

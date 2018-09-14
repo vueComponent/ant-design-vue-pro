@@ -1,11 +1,11 @@
 <template>
-    <page-layout :desc="description" :title="getTitle" :link-list="linkList">
-        <div slot="extra" class="extra-img">
-            <img :src="extraImage"/>
-        </div>
-        <!-- keep-alive  -->
-        <route-view ref="content"></route-view>
-    </page-layout>
+  <page-layout :desc="description" :title="getTitle" :link-list="linkList">
+    <div slot="extra" class="extra-img">
+      <img :src="extraImage"/>
+    </div>
+    <!-- keep-alive  -->
+    <route-view ref="content"></route-view>
+  </page-layout>
 </template>
 
 <script>

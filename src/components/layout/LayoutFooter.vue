@@ -1,14 +1,14 @@
 <template>
-    <div class="footer">
-        <div class="links">
-            <a href="#">Pro 首页</a>
-            <a href="#"><a-icon type="github"/></a>
-            <a href="#">Ant Design</a>
-        </div>
-        <div class="copyright">
-            Copyright <a-icon type="copyright" /> 2018 <span>白鹭学园技术组出品</span>
-        </div>
+  <div class="footer">
+    <div class="links">
+      <a href="#">Pro 首页</a>
+      <a href="#"><a-icon type="github"/></a>
+      <a href="#">Ant Design</a>
     </div>
+    <div class="copyright">
+      Copyright <a-icon type="copyright" /> 2018 <span>白鹭学园技术组出品</span>
+    </div>
+  </div>
 </template>
 
 <script>

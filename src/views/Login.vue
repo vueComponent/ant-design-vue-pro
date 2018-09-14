@@ -15,8 +15,10 @@
       <div class="main">
         <a-form ref="formLogin" :autoFormCreate="(form)=>{this.form = form}" id="formLogin">
 
-          <a-tabs :activeKey="customActiveKey" :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }"
-                  @change="handleTabClick">
+          <a-tabs 
+            :activeKey="customActiveKey" 
+            :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }"
+            @change="handleTabClick">
             <a-tab-pane key="tab1" tab="账号密码登陆">
 
               <a-form-item
@@ -56,13 +58,13 @@
                   </a-form-item>
                 </a-col>
                 <a-col class="gutter-row" :span="8">
-                    <span class="ivu-input-prefix">
-                      <a-button
-                        class="getCaptcha"
-                        :disabled="state.smsSendBtn"
-                        @click.stop.prevent="getCaptcha"
-                        v-text="!state.smsSendBtn&&'获取验证码'||(state.time+' s')"></a-button>
-                    </span>
+                  <span class="ivu-input-prefix">
+                    <a-button
+                      class="getCaptcha"
+                      :disabled="state.smsSendBtn"
+                      @click.stop.prevent="getCaptcha"
+                      v-text="!state.smsSendBtn&&'获取验证码'||(state.time+' s')"></a-button>
+                  </span>
                 </a-col>
               </a-row>
 
@@ -84,7 +86,7 @@
               class="login-button"
               :loading="loginBtn"
               @click.stop.prevent="handleSubmit"
-              v-bind:disabled="loginBtn">确定
+              :disabled="loginBtn">确定
             </a-button>
           </a-form-item>
 

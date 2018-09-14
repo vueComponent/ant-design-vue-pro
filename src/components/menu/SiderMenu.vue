@@ -1,6 +1,10 @@
 <template>
-  <a-layout-sider :class="['sider', isMobile ? null : 'shadow', theme ]" width="256px" :collapsible="collapsible"
-                  v-model="collapsed" :trigger="null">
+  <a-layout-sider 
+    :class="['sider', isMobile ? null : 'shadow', theme ]" 
+    width="256px" 
+    :collapsible="collapsible"
+    v-model="collapsed" 
+    :trigger="null">
     <div class="logo">
       <router-link :to="{name:'dashboard'}">
         <img src="~@/assets/logo.svg" alt="logo">

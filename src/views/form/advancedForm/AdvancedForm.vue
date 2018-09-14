@@ -1,64 +1,64 @@
 <template>
-    <div>
-      <a-card class="card" title="仓库管理" :bordered="false">
-        <repository-form ref="repository" :showSubmit="false" />
-      </a-card>
-      <a-card class="card" title="任务管理" :bordered="false">
-        <task-form ref="task" :showSubmit="false" />
-      </a-card>
+  <div>
+    <a-card class="card" title="仓库管理" :bordered="false">
+      <repository-form ref="repository" :showSubmit="false" />
+    </a-card>
+    <a-card class="card" title="任务管理" :bordered="false">
+      <task-form ref="task" :showSubmit="false" />
+    </a-card>
 
-      <!-- table -->
-      <a-card>
-        <form :autoFormCreate="(form) => this.form = form">
-          <a-table
-            :columns="columns"
-            :dataSource="data"
-            :pagination="false"
-          >
-            <template  v-for="(col, i) in ['name', 'workId', 'department']" :slot="col" slot-scope="text, record, index">
-              <a-input
-                :key="col"
-                v-if="record.editable"
-                style="margin: -5px 0"
-                :value="text"
-                :placeholder="columns[i].title"
-                @change="e => handleChange(e.target.value, record.key, col)"
-              />
-              <template v-else>{{text}}</template>
-            </template>
-            <template slot="operation" slot-scope="text, record, index">
-              <template v-if="record.editable">
-          <span v-if="record.isNew">
-            <a @click="saveRow(record.key)">添加</a>
-            <a-divider type="vertical" />
-            <a-popconfirm title="是否要删除此行？" @confirm="remove(record.key)">
-              <a>删除</a>
-            </a-popconfirm>
-          </span>
-                <span v-else>
-            <a @click="saveRow(record.key)">保存</a>
-            <a-divider type="vertical" />
-            <a @click="cancle(record.key)">取消</a>
-          </span>
-              </template>
+    <!-- table -->
+    <a-card>
+      <form :autoFormCreate="(form) => this.form = form">
+        <a-table
+          :columns="columns"
+          :dataSource="data"
+          :pagination="false"
+        >
+          <template v-for="(col, i) in ['name', 'workId', 'department']" :slot="col" slot-scope="text, record, index">
+            <a-input
+              :key="col"
+              v-if="record.editable"
+              style="margin: -5px 0"
+              :value="text"
+              :placeholder="columns[i].title"
+              @change="e => handleChange(e.target.value, record.key, col)"
+            />
+            <template v-else>{{ text }}</template>
+          </template>
+          <template slot="operation" slot-scope="text, record, index">
+            <template v-if="record.editable">
+              <span v-if="record.isNew">
+                <a @click="saveRow(record.key)">添加</a>
+                <a-divider type="vertical" />
+                <a-popconfirm title="是否要删除此行？" @confirm="remove(record.key)">
+                  <a>删除</a>
+                </a-popconfirm>
+              </span>
               <span v-else>
-          <a @click="toggle(record.key)">编辑</a>
-          <a-divider type="vertical" />
-          <a-popconfirm title="是否要删除此行？" @confirm="remove(record.key)">
-            <a>删除</a>
-          </a-popconfirm>
-        </span>
+                <a @click="saveRow(record.key)">保存</a>
+                <a-divider type="vertical" />
+                <a @click="cancle(record.key)">取消</a>
+              </span>
             </template>
-          </a-table>
-          <a-button style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newMeber">新增成员</a-button>
-        </form>
-      </a-card>
+            <span v-else>
+              <a @click="toggle(record.key)">编辑</a>
+              <a-divider type="vertical" />
+              <a-popconfirm title="是否要删除此行？" @confirm="remove(record.key)">
+                <a>删除</a>
+              </a-popconfirm>
+            </span>
+          </template>
+        </a-table>
+        <a-button style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newMeber">新增成员</a-button>
+      </form>
+    </a-card>
 
-      <!-- fixed footer toolbar -->
-      <footer-tool-bar>
-        <a-button type="primary" @click="validate" :loading="loading">提交</a-button>
-      </footer-tool-bar>
-    </div>
+    <!-- fixed footer toolbar -->
+    <footer-tool-bar>
+      <a-button type="primary" @click="validate" :loading="loading">提交</a-button>
+    </footer-tool-bar>
+  </div>
 </template>
 
 <script>

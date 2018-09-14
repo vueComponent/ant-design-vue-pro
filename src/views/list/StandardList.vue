@@ -1,73 +1,73 @@
 <template>
-    <div>
-        <a-card :bordered="false">
-            <a-row>
-                <a-col :sm="8" :xs="24">
-                    <head-info title="我的待办" content="8个任务" :bordered="true"/>
-                </a-col>
-                <a-col :sm="8" :xs="24">
-                    <head-info title="本周任务平均处理时间" content="32分钟" :bordered="true"/>
-                </a-col>
-                <a-col :sm="8" :xs="24">
-                    <head-info title="本周完成任务数" content="24个"/>
-                </a-col>
-            </a-row>
-        </a-card>
+  <div>
+    <a-card :bordered="false">
+      <a-row>
+        <a-col :sm="8" :xs="24">
+          <head-info title="我的待办" content="8个任务" :bordered="true"/>
+        </a-col>
+        <a-col :sm="8" :xs="24">
+          <head-info title="本周任务平均处理时间" content="32分钟" :bordered="true"/>
+        </a-col>
+        <a-col :sm="8" :xs="24">
+          <head-info title="本周完成任务数" content="24个"/>
+        </a-col>
+      </a-row>
+    </a-card>
 
-        <a-card
-                style="margin-top: 24px"
-                :bordered="false"
-                title="标准列表">
+    <a-card
+      style="margin-top: 24px"
+      :bordered="false"
+      title="标准列表">
 
-            <div slot="extra">
-                <a-radio-group>
-                    <a-radio-button>全部</a-radio-button>
-                    <a-radio-button>进行中</a-radio-button>
-                    <a-radio-button>等待中</a-radio-button>
-                </a-radio-group>
-                <a-input-search style="margin-left: 16px; width: 272px;" />
+      <div slot="extra">
+        <a-radio-group>
+          <a-radio-button>全部</a-radio-button>
+          <a-radio-button>进行中</a-radio-button>
+          <a-radio-button>等待中</a-radio-button>
+        </a-radio-group>
+        <a-input-search style="margin-left: 16px; width: 272px;" />
+      </div>
+
+      <div class="operate">
+        <a-button type="dashed" style="width: 100%" icon="plus">添加</a-button>
+      </div>
+
+      <a-list size="large" :pagination="{showSizeChanger: true, showQuickJumper: true, pageSize: 5, total: 50}">
+        <a-list-item :key="index" v-for="(item, index) in data">
+          <a-list-item-meta :description="item.description">
+            <a-avatar slot="avatar" size="large" shape="square" :src="item.avatar"/>
+            <a slot="title">{{ item.title }}</a>
+          </a-list-item-meta>
+          <div slot="actions">
+            <a>编辑</a>
+          </div>
+          <div slot="actions">
+            <a-dropdown>
+              <a-menu slot="overlay">
+                <a-menu-item><a>编辑</a></a-menu-item>
+                <a-menu-item><a>删除</a></a-menu-item>
+              </a-menu>
+              <a>更多<a-icon type="down"/></a>
+            </a-dropdown>
+          </div>
+          <div class="list-content">
+            <div class="list-content-item">
+              <span>Owner</span>
+              <p>{{ item.owner }}</p>
             </div>
-
-            <div class="operate">
-                <a-button type="dashed" style="width: 100%" icon="plus">添加</a-button>
+            <div class="list-content-item">
+              <span>开始时间</span>
+              <p>{{ item.startAt }}</p>
             </div>
+            <div class="list-content-item">
+              <a-progress :percent="item.progress.value" :status="!item.progress.status ? null : item.progress.status" style="width: 180px" />
+            </div>
+          </div>
+        </a-list-item>
+      </a-list>
 
-            <a-list size="large" :pagination="{showSizeChanger: true, showQuickJumper: true, pageSize: 5, total: 50}">
-                <a-list-item :key="index" v-for="(item, index) in data">
-                    <a-list-item-meta :description="item.description">
-                        <a-avatar slot="avatar" size="large" shape="square" :src="item.avatar"/>
-                        <a slot="title">{{ item.title }}</a>
-                    </a-list-item-meta>
-                    <div slot="actions">
-                        <a>编辑</a>
-                    </div>
-                    <div slot="actions">
-                        <a-dropdown>
-                            <a-menu slot="overlay">
-                                <a-menu-item><a>编辑</a></a-menu-item>
-                                <a-menu-item><a>删除</a></a-menu-item>
-                            </a-menu>
-                            <a>更多<a-icon type="down"/></a>
-                        </a-dropdown>
-                    </div>
-                    <div class="list-content">
-                        <div class="list-content-item">
-                            <span>Owner</span>
-                            <p>{{ item.owner }}</p>
-                        </div>
-                        <div class="list-content-item">
-                            <span>开始时间</span>
-                            <p>{{ item.startAt }}</p>
-                        </div>
-                        <div class="list-content-item">
-                            <a-progress :percent="item.progress.value" :status="!item.progress.status ? null : item.progress.status" style="width: 180px" />
-                        </div>
-                    </div>
-                </a-list-item>
-            </a-list>
-
-        </a-card>
-    </div>
+    </a-card>
+  </div>
 </template>
 
 <script>

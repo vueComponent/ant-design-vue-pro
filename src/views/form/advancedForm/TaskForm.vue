@@ -76,7 +76,12 @@
 <script>
   export default {
     name: "TaskForm",
-    props: ['showSubmit'],
+    props: {
+      showSubmit: {
+        type: Boolean,
+        default: false
+      }
+    },
     methods: {
       handleSubmit (e) {
         e.preventDefault()

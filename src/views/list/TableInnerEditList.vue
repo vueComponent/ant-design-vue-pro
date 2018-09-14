@@ -94,7 +94,7 @@
             :value="text"
             @change="e => handleChange(e.target.value, record.key, col)"
           />
-          <template v-else>{{text}}</template>
+          <template v-else>{{ text }}</template>
         </div>
       </template>
       <template slot="action" slot-scope="text, record, index">

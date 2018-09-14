@@ -14,9 +14,9 @@
         <template v-else>
           <a-card :hoverable="true">
             <a-card-meta>
-              <div style="margin-bottom: 3px" slot="title">{{item.title}}</div>
+              <div style="margin-bottom: 3px" slot="title">{{ item.title }}</div>
               <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large"/>
-              <div class="meta-content" slot="description">{{item.content}}</div>
+              <div class="meta-content" slot="description">{{ item.content }}</div>
             </a-card-meta>
             <ul class="ant-card-actions" slot="actions">
               <li><a>操作一</a></li>

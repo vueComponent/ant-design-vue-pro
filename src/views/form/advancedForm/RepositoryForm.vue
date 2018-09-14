@@ -77,7 +77,12 @@
 <script>
   export default {
     name: "RepositoryForm",
-    props: ['showSubmit'],
+    props: {
+      showSubmit: {
+        type: Boolean,
+        default: false
+      }
+    },
     methods: {
       handleSubmit (e) {
         e.preventDefault()

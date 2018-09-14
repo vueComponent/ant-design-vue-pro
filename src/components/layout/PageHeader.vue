@@ -47,18 +47,22 @@
     props: {
       title: {
         type: String,
+        default: '',
         required: false
       },
       breadcrumb: {
         type: Array,
+        default: null,
         required: false
       },
       logo: {
         type: String,
+        default: '',
         required: false
       },
       avatar: {
         type: String,
+        default: '',
         required: false
       }
     },

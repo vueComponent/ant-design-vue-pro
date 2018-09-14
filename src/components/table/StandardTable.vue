@@ -1,31 +1,31 @@
 <template>
-    <div class="standard-table">
-        <div class="alert">
-            <a-alert type="info" :show-icon="true">
-                <div slot="message">
-                    已选择&nbsp;<a style="font-weight: 600">{{ selectedRows.length }}</a>&nbsp;&nbsp;
-                    <template v-for="(item, index) in needTotalList" v-if="item.needTotal">
-                        {{ item.title }} 总计&nbsp;
-                        <a :key="index" style="font-weight: 600">
-                            {{ item.customRender ? item.customRender(item.total) : item.total }}
-                        </a>&nbsp;&nbsp;
-                    </template>
-                    <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-                </div>
-            </a-alert>
+  <div class="standard-table">
+    <div class="alert">
+      <a-alert type="info" :show-icon="true">
+        <div slot="message">
+          已选择&nbsp;<a style="font-weight: 600">{{ selectedRows.length }}</a>&nbsp;&nbsp;
+          <template v-for="(item, index) in needTotalList" v-if="item.needTotal">
+            {{ item.title }} 总计&nbsp;
+            <a :key="index" style="font-weight: 600">
+              {{ item.customRender ? item.customRender(item.total) : item.total }}
+            </a>&nbsp;&nbsp;
+          </template>
+          <a style="margin-left: 24px" @click="onClearSelected">清空</a>
         </div>
-        <a-table
-           :size="size"
-           :bordered="bordered"
-           :loading="loading"
-           :columns="columns"
-           :dataSource="current"
-           :rowKey="rowKey"
-           :pagination="pagination"
-           :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: updateSelect }"
-        >
-        </a-table>
+      </a-alert>
     </div>
+    <a-table
+      :size="size"
+      :bordered="bordered"
+      :loading="loading"
+      :columns="columns"
+      :dataSource="current"
+      :rowKey="rowKey"
+      :pagination="pagination"
+      :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: updateSelect }"
+    >
+    </a-table>
+  </div>
 </template>
 
 <script>
