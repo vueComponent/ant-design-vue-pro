@@ -100,13 +100,16 @@
       <template slot="action" slot-scope="text, record, index">
         <div class='editable-row-operations'>
           <span v-if="record.editable">
-            <a @click="() => save(record)" style="margin-right: 12px">Save</a>
-            <a-popconfirm title='Sure to cancel?' @confirm="() => cancel(record)">
-              <a>Cancel</a>
+            <a @click="() => save(record)">保存</a>
+            <a-divider type="vertical" />
+            <a-popconfirm title='真的放弃编辑吗?' @confirm="() => cancel(record)">
+              <a>取消</a>
             </a-popconfirm>
           </span>
           <span v-else>
-            <a @click="() => edit(record, index)">Edit</a>
+            <a @click="() => edit(record, index)">修改</a>
+            <a-divider type="vertical" />
+            <a @click="() => delete(record, index)">删除</a>
           </span>
         </div>
       </template>
@@ -133,7 +136,8 @@
         columns: [
           {
             title: '规则编号',
-            dataIndex: 'no'
+            dataIndex: 'no',
+            width: 90
           },
           {
             title: '描述',
@@ -143,6 +147,7 @@
           {
             title: '服务调用次数',
             dataIndex: 'callNo',
+            width: '150px',
             sorter: true,
             needTotal: true,
             scopedSlots: { customRender: 'callNo' },
@@ -151,12 +156,14 @@
           {
             title: '状态',
             dataIndex: 'status',
+            width: '120px',
             needTotal: true,
             scopedSlots: { customRender: 'status' },
           },
           {
             title: '更新时间',
             dataIndex: 'updatedAt',
+            width: '180px',
             sorter: true,
             scopedSlots: { customRender: 'updatedAt' },
           },

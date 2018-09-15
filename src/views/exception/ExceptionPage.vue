@@ -20,8 +20,8 @@
     name: "Exception",
     props: {
       type: {
-        type: Number,
-        default: 404
+        type: String,
+        default: '404'
       }
     },
     data() {
