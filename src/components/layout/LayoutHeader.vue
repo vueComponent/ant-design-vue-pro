@@ -1,7 +1,9 @@
 <template>
   <a-layout-header style="padding: 0px;">
     <div class="header">
-      <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click.native="toggle"/>
+      <a-icon class="trigger" v-if="device==='mobile'" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click.native="toggle"></a-icon>
+      <a-icon class="trigger" v-else :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click.native="toggle"/>
+
       <div class="user-wrapper">
         <span class="action">
           <a-icon type="question-circle-o"></a-icon>
@@ -56,6 +58,11 @@
         required: false,
         default: false
       },
+      device: {
+        type: String,
+        required: false,
+        default: 'desktop'
+      }
     },
     data() {
       return {

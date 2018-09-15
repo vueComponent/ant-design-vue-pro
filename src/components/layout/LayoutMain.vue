@@ -1,17 +1,31 @@
 <template>
   <a-layout class="layout">
 
+    <a-drawer v-if="device === 'mobile'"
+              wrapClassName="drawer-sider"
+              placement="left"
+              @close="() => this.collapsed = false"
+              :closable="false"
+              :visible="collapsed"
+      >
+      <sider-menu
+        mode="inline"
+        :menus="menus"
+        :theme="theme"
+        :collapsed="false"
+        :collapsible="true"></sider-menu>
+    </a-drawer>
     <sider-menu
+      v-else
       :menus="menus"
       :theme="theme"
-      v-if="menuMode === 'inline'"
       :mode="menuMode"
       :collapsed="!siderOpen || collapsed"
       :collapsible="true"></sider-menu>
 
     <a-layout>
       <!-- layout header -->
-      <layout-header :collapsed="collapsed" @toggle="toggle"/>
+      <layout-header :collapsed="collapsed" :device="device" @toggle="toggle"/>
       <!-- layout content -->
       <a-layout-content :style="{ margin: '24px 24px 0', height: '100%' }">
         <!-- content -->
@@ -51,11 +65,14 @@
     },
     created () {
       this.menus = asyncRouterMap
+
+      console.log( this.collapsed )
     },
     computed: {
       ...mapState({
         siderOpen: state => state.app.sidebar.opened,
-        theme: state => state.app.theme
+        theme: state => state.app.theme,
+        device: state => state.app.device,
       })
     },
     methods: {
@@ -91,59 +108,6 @@
         color: #1890ff;
         background: #e6f7ff;
       }
-    }
-
-    .sider {
-      box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
-      position: relative;
-      z-index: 10;
-
-      .logo {
-        height: 64px;
-        position: relative;
-        line-height: 64px;
-        padding-left: 24px;
-        -webkit-transition: all .3s;
-        transition: all .3s;
-        background: #002140;
-        overflow: hidden;
-
-        img, h1 {
-          display: inline-block;
-          vertical-align: middle;
-        }
-
-        img {
-          height: 32px;
-        }
-
-        h1 {
-          color: #fff;
-          font-size: 20px;
-          margin: 0 0 0 12px;
-          font-family: "Myriad Pro", "Helvetica Neue", Arial, Helvetica, sans-serif;
-          font-weight: 600;
-        }
-      }
-
-      &.light {
-        background-color: #fff;
-        box-shadow: 2px 0px 8px 0px rgba(29, 35, 41, 0.05);
-
-        .logo {
-          background: #fff;
-          box-shadow: 1px 1px 0px 0px #e8e8e8;
-
-          h1 {
-            color: unset;
-          }
-        }
-
-        .ant-menu-light {
-          border-right-color: transparent;
-        }
-      }
-
     }
 
     .header {
@@ -187,6 +151,67 @@
     .layout-content {
       margin: 24px 24px 0px;
       height: 100%;
+    }
+
+  }
+
+  // drawer-sider 自定义
+  .ant-drawer.drawer-sider {
+    .ant-drawer-body {
+      padding: 0
+    }
+  }
+
+  // 菜单样式
+  .sider {
+    box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
+    position: relative;
+    z-index: 10;
+
+    .logo {
+      height: 64px;
+      position: relative;
+      line-height: 64px;
+      padding-left: 24px;
+      -webkit-transition: all .3s;
+      transition: all .3s;
+      background: #002140;
+      overflow: hidden;
+
+      img, h1 {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      img {
+        height: 32px;
+      }
+
+      h1 {
+        color: #fff;
+        font-size: 20px;
+        margin: 0 0 0 12px;
+        font-family: "Myriad Pro", "Helvetica Neue", Arial, Helvetica, sans-serif;
+        font-weight: 600;
+      }
+    }
+
+    &.light {
+      background-color: #fff;
+      box-shadow: 2px 0px 8px 0px rgba(29, 35, 41, 0.05);
+
+      .logo {
+        background: #fff;
+        box-shadow: 1px 1px 0px 0px #e8e8e8;
+
+        h1 {
+          color: unset;
+        }
+      }
+
+      .ant-menu-light {
+        border-right-color: transparent;
+      }
     }
 
   }

@@ -164,7 +164,7 @@ export const asyncRouterMap = [
   },
   {
     path: '/profile',
-    component: LayoutBase,
+    component: Layout,
     name: 'profile',
     redirect: '/profile/basic',
     meta: { title: '详情页', icon: 'profile' },
@@ -172,13 +172,13 @@ export const asyncRouterMap = [
       {
         path: '/profile/basic',
         name: 'ProfileBasic',
-        component: () => import('../views/profile/basic/Index'),
+        component: () => import('@/views/profile/basic/Index'),
         meta: { title: '基础详情页' }
       },
       {
         path: '/profile/advanced',
         name: 'ProfileAdvanced',
-        component: () => import('../views/list/TableList'),
+        component: () => import('@/views/profile/advanced/Advanced'),
         meta: { title: '高级详情页' }
       }
     ]

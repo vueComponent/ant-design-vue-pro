@@ -31,7 +31,7 @@ export default {
     },
     showAlertInfo: {
       type: Boolean,
-      default: true
+      default: false
     },
   }),
   watch: {
