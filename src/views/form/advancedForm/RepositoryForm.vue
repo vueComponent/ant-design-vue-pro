@@ -1,6 +1,6 @@
 <template>
   <a-form @submit="handleSubmit" :autoFormCreate="(form) => this.form = form" class="form">
-    <a-row class="form-row">
+    <a-row class="form-row" :gutter="16">
       <a-col :lg="6" :md="12" :sm="24">
         <a-form-item
           label="仓库名"
@@ -16,7 +16,7 @@
           fieldDecoratorId="repository.domain"
           :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入仓库域名', whitespace: true}, {validator: validate}]}"
         >
-          <a-input addonBefore="http://" addonAfter=".github.io" placeholder="请输入"/>
+          <a-input addonBefore="http://" addonAfter=".com" placeholder="请输入"/>
         </a-form-item>
       </a-col>
       <a-col :xl="{span: 9, offset: 1}" :lg="{span: 10}" :md="{span: 24}" :sm="24">
@@ -33,7 +33,7 @@
         </a-form-item>
       </a-col>
     </a-row>
-    <a-row class="form-row">
+    <a-row class="form-row" :gutter="16">
       <a-col :lg="6" :md="12" :sm="24">
         <a-form-item
           label="审批人"
