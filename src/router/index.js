@@ -128,6 +128,12 @@ export const asyncRouterMap = [
         meta: { title: '角色列表' }
       },
       {
+        path: '/list/permission-list',
+        name: 'PermissionList',
+        component: () => import('@/views/list/PermissionList'),
+        meta: { title: '权限列表' }
+      },
+      {
         path: '/list/basic-list',
         name: 'BasicList',
         component: () => import('@/views/list/StandardList'),
