@@ -112,7 +112,7 @@ export const asyncRouterMap = [
       {
         path: '/list/query-list',
         name: 'QueryList',
-        component: () => import('../views/list/TableList'),
+        component: () => import('@/views/list/TableList'),
         meta: { title: '查询表格' }
       },
       {
@@ -122,15 +122,21 @@ export const asyncRouterMap = [
         meta: { title: '内联编辑表格' }
       },
       {
+        path: '/list/role-list',
+        name: 'RoleList',
+        component: () => import('@/views/list/RoleList'),
+        meta: { title: '角色列表' }
+      },
+      {
         path: '/list/basic-list',
         name: 'BasicList',
-        component: () => import('../views/list/StandardList'),
+        component: () => import('@/views/list/StandardList'),
         meta: { title: '标准列表' }
       },
       {
         path: '/list/card',
         name: 'CardList',
-        component: () => import('../views/list/CardList'),
+        component: () => import('@/views/list/CardList'),
         meta: { title: '卡片列表' }
       },
       {
