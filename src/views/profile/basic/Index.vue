@@ -19,13 +19,17 @@
 
       <div class="title">退货商品</div>
       <s-table
-        style="margin-bottom: 24px" :columns="goodsColumns" :data="loadGoodsData">
+        style="margin-bottom: 24px" 
+        :columns="goodsColumns" 
+        :data="loadGoodsData">
 
       </s-table>
 
       <div class="title">退货进度</div>
       <s-table
-        style="margin-bottom: 24px" :columns="scheduleColumns" :data="loadScheduleData">
+        style="margin-bottom: 24px" 
+        :columns="scheduleColumns" 
+        :data="loadScheduleData">
 
         <template
           slot="status"
@@ -91,7 +95,7 @@
           }
         ],
         // 加载数据方法 必须为 Promise 对象
-        loadGoodsData: parameter => {
+        loadGoodsData: () => {
           return new Promise((resolve => {
             resolve({
               data: [
@@ -166,7 +170,7 @@
             key: 'cost'
           }
         ],
-        loadScheduleData: parameter => {
+        loadScheduleData: () => {
           return new Promise((resolve => {
             resolve({
               data: [

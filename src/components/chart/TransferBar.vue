@@ -36,7 +36,12 @@
 
   export default {
     name: "Bar",
-    props: ['title'],
+    props: {
+      title: {
+        type: String,
+        default: ''
+      }
+    },
     data () {
       return {
         data: [],

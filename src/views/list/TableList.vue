@@ -83,6 +83,7 @@
       size="default"
       :columns="columns"
       :data="loadData"
+      :showAlertInfo="true"
       :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onChange }"
     >
       <span slot="action" slot-scope="text, record">

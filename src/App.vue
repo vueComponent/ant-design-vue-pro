@@ -18,7 +18,6 @@
     created () {
       let that = this
       enquireScreen(deviceType => {
-        console.log('deviceType', deviceType)
         // tablet
         if (deviceType === 0) {
           that.$store.commit('TOGGLE_DEVICE', 'tablet')

@@ -94,10 +94,12 @@
         default: 'default'
       },
       rowKey: {
-        type: String
+        type: String,
+        default: ''
       },
       selectedRows: {
-        type: Array
+        type: Array,
+        default: null
       }
     },
     data () {

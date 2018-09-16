@@ -1,13 +1,14 @@
 <template>
   <a-layout class="layout">
 
-    <a-drawer v-if="device === 'mobile'"
-              wrapClassName="drawer-sider"
-              placement="left"
-              @close="() => this.collapsed = false"
-              :closable="false"
-              :visible="collapsed"
-      >
+    <a-drawer 
+      v-if="device === 'mobile'"
+      wrapClassName="drawer-sider"
+      placement="left"
+      @close="() => this.collapsed = false"
+      :closable="false"
+      :visible="collapsed"
+    >
       <sider-menu
         mode="inline"
         :menus="menus"
@@ -43,8 +44,8 @@
   import SiderMenu from '@/components/menu/SiderMenu'
   import LayoutHeader from './LayoutHeader'
   import LayoutFooter from './LayoutFooter'
-  import { asyncRouterMap } from '@/router/index'
-  import { mapState } from 'vuex'
+  import {asyncRouterMap} from '@/router/index'
+  import {mapState} from 'vuex'
 
   export default {
     name: "LayoutView",
@@ -53,7 +54,7 @@
       LayoutHeader,
       LayoutFooter
     },
-    data () {
+    data() {
       return {
         // light, dark
         menuTheme: 'light',
@@ -63,10 +64,8 @@
         menus: []
       }
     },
-    created () {
+    created() {
       this.menus = asyncRouterMap
-
-      console.log( this.collapsed )
     },
     computed: {
       ...mapState({
@@ -76,7 +75,7 @@
       })
     },
     methods: {
-      toggle () {
+      toggle() {
         this.collapsed = !this.collapsed;
       },
     }
@@ -238,6 +237,7 @@
   .table-alert {
     margin-bottom: 16px;
   }
+
   .content {
 
     .search {

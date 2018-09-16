@@ -84,6 +84,7 @@
       size="default"
       :columns="columns"
       :data="loadData"
+      :showAlertInfo="true"
       :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onChange }"
     >
       <template v-for="(col, index) in columns" v-if="col.scopedSlots" :slot="col.dataIndex" slot-scope="text, record, index">
@@ -107,9 +108,9 @@
             </a-popconfirm>
           </span>
           <span v-else>
-            <a @click="() => edit(record, index)">修改</a>
+            <a class="edit" @click="() => edit(record)">修改</a>
             <a-divider type="vertical" />
-            <a @click="() => delete(record, index)">删除</a>
+            <a class="delete" @click="() => del(record)">删除</a>
           </span>
         </div>
       </template>
@@ -194,8 +195,28 @@
       },
       edit (row) {
         row.editable = true
-        row = Object.assign({}, row)
+        // row = Object.assign({}, row)
         this.$refs.table.updateEdit()
+      },
+      // eslint-disable-next-line
+      del (row) {
+        this.$confirm({
+          title: '警告',
+          content: '真的要删除吗?',
+          okText: '删除',
+          okType: 'danger',
+          cancelText: '取消',
+          onOk() {
+            console.log('OK');
+            // 在这里调用删除接口
+            return new Promise((resolve, reject) => {
+              setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+            }).catch(() => console.log('Oops errors!'));
+          },
+          onCancel() {
+            console.log('Cancel');
+          },
+        });
       },
       save (row) {
         delete row.editable
