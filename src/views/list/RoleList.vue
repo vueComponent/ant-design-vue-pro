@@ -140,15 +140,13 @@
           label='拥有权限'
           hasFeedback
         >
-          <a-row :gutter="16">
-            <template v-for="(permission, index) in mdl.permissions">
-              <a-col :span="4">
-                {{ permission.permissionName }}：
-              </a-col>
-              <a-col :span="20">
-                <a-checkbox-group :options="permission.actionsOptions"/>
-              </a-col>
-            </template>
+          <a-row :gutter="16" v-for="(permission, index) in mdl.permissions" :key="index">
+            <a-col :span="4">
+              {{ permission.permissionName }}：
+            </a-col>
+            <a-col :span="20">
+              <a-checkbox-group :options="permission.actionsOptions"/>
+            </a-col>
           </a-row>
 
         </a-form-item>

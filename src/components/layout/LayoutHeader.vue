@@ -76,11 +76,23 @@
       ...mapActions(["Logout"]),
       ...mapGetters(["nickname", "avatar"]),
       handleLogout() {
-        this.Logout({}).then(() => {
-          window.location.reload()
-        }).catch(err => {
-          this.$message.error(err.message)
-        })
+        const that = this
+
+        this.$confirm({
+          title: '提示',
+          content: '真的要注销登录吗 ?',
+          onOk() {
+            return that.Logout({}).then(() => {
+              window.location.reload()
+            }).catch(err => {
+              that.$message.error({
+                title: '错误',
+                description: err.message
+              })
+            })
+          },
+          onCancel() {},
+        });
       },
       toggle() {
         this.$emit('toggle')
