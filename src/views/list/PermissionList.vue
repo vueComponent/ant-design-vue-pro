@@ -18,16 +18,17 @@
             </a-form-item>
           </a-col>
           <a-col :md="8" :sm="24">
-              <span class="table-page-search-submitButtons">
-                <a-button type="primary">查询</a-button>
-                <a-button style="margin-left: 8px">重置</a-button>
-              </span>
+            <span class="table-page-search-submitButtons">
+              <a-button type="primary">查询</a-button>
+              <a-button style="margin-left: 8px">重置</a-button>
+            </span>
           </a-col>
         </a-row>
       </a-form>
     </div>
 
     <s-table :columns="columns" :data="loadData">
+
       <span slot="actions" slot-scope="text, record">
         <a-tag v-for="(action, index) in record.actionList" :key="index">{{ action.describe }}</a-tag>
       </span>
