@@ -1,82 +1,78 @@
 <template>
   <a-card :bordered="false">
-    <div :class="advanced ? 'search' : null">
-      <a-form layout="horizontal">
-        <div :class="advanced ? null : 'fold'">
-          <a-row :gutter="48">
+    <div class="table-page-search-wrapper">
+      <a-form layout="inline">
+        <a-row :gutter="48">
+          <a-col :md="8" :sm="24">
+            <a-form-item label="规则编号">
+              <a-input placeholder=""/>
+            </a-form-item>
+          </a-col>
+          <a-col :md="8" :sm="24">
+            <a-form-item label="使用状态">
+              <a-select placeholder="请选择" default-value="0">
+                <a-select-option value="0">全部</a-select-option>
+                <a-select-option value="1">关闭</a-select-option>
+                <a-select-option value="2">运行中</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <template v-if="advanced">
             <a-col :md="8" :sm="24">
-              <a-form-item
-                label="规则编号"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}"
-              >
-                <a-input placeholder="请输入"/>
+              <a-form-item label="调用次数">
+                <a-input-number style="width: 100%"/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
-              <a-form-item
-                label="使用状态"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}"
-              >
-                <a-select placeholder="请选择">
-                  <a-select-option value="1">关闭</a-select-option>
-                  <a-select-option value="2">运行中</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item
-                label="调用次数"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}"
-              >
-                <a-input-number style="width: 100%" placeholder="请输入"/>
-              </a-form-item>
-            </a-col>
-          </a-row>
-
-          <a-row :gutter="48" v-if="advanced">
-            <a-col :md="8" :sm="24">
-              <a-form-item
-                label="更新日期"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
+              <a-form-item label="更新日期">
                 <a-date-picker style="width: 100%" placeholder="请输入更新日期"/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
-              <a-form-item
-                label="使用状态"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
-                <a-select placeholder="请选择">
+              <a-form-item label="使用状态">
+                <a-select placeholder="请选择" default-value="0">
+                  <a-select-option value="0">全部</a-select-option>
                   <a-select-option value="1">关闭</a-select-option>
                   <a-select-option value="2">运行中</a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
-              <a-form-item
-                label="描述"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}"
-              >
-                <a-input placeholder="请输入"/>
+              <a-form-item label="使用状态">
+                <a-select placeholder="请选择" default-value="0">
+                  <a-select-option value="0">全部</a-select-option>
+                  <a-select-option value="1">关闭</a-select-option>
+                  <a-select-option value="2">运行中</a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
-          </a-row>
-        </div>
-
-        <span style="float: right; margin-top: 3px;">
-          <a-button type="primary">查询</a-button>
-          <a-button style="margin-left: 8px">重置</a-button>
-          <a @click="toggleAdvanced" style="margin-left: 8px">
-            {{ advanced ? '收起' : '展开' }}
-            <a-icon :type="advanced ? 'up' : 'down'"/>
-          </a>
-        </span>
+          </template>
+          <a-col :md="!advanced && 8 || 24" :sm="24">
+              <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
+                <a-button type="primary">查询</a-button>
+                <a-button style="margin-left: 8px">重置</a-button>
+                <a @click="toggleAdvanced" style="margin-left: 8px">
+                  {{ advanced ? '收起' : '展开' }}
+                  <a-icon :type="advanced ? 'up' : 'down'"/>
+                </a>
+              </span>
+          </a-col>
+        </a-row>
       </a-form>
+    </div>
+
+    <div class="table-operator">
+      <a-button type="primary" icon="plus">新建</a-button>
+      <a-dropdown v-if="selectedRowKeys.length > 0">
+        <a-menu slot="overlay">
+          <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
+          <!-- lock | unlock -->
+          <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
+        </a-menu>
+        <a-button style="margin-left: 8px">
+          批量操作 <a-icon type="down" />
+        </a-button>
+      </a-dropdown>
     </div>
 
     <s-table
@@ -84,7 +80,7 @@
       :columns="columns"
       :data="loadData"
       :showAlertInfo="true"
-      :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onChange }"
+      @onSelect="onChange"
     >
       <span slot="action" slot-scope="text, record">
         <a @click="handleEdit(record)">编辑</a>
@@ -184,10 +180,12 @@
 <script>
   import STable from '@/components/table/'
   import ATextarea from "ant-design-vue/es/input/TextArea";
+  import AInput from "ant-design-vue/es/input/Input";
 
   export default {
     name: "TableList",
     components: {
+      AInput,
       ATextarea,
       STable
     },
@@ -206,7 +204,7 @@
         mdl: {},
 
         // 高级搜索 展开/关闭
-        advanced: false,
+        advanced: true,
         // 查询参数
         queryParam: {},
         // 表头
@@ -265,9 +263,9 @@
       handleOk () {
 
       },
-      onChange (selectedRowKeys, selectedRows) {
-        this.selectedRowKeys = selectedRowKeys
-        this.selectedRows = selectedRows
+      onChange (row) {
+        this.selectedRowKeys = row.selectedRowKeys
+        this.selectedRows = row.selectedRows
       },
       toggleAdvanced () {
         this.advanced = !this.advanced

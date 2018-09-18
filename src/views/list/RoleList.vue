@@ -1,38 +1,29 @@
 <template>
   <a-card :bordered="false">
-    <div>
-      <a-form layout="horizontal">
-        <div :class="advanced ? null : 'fold'">
-          <a-row :gutter="48">
-            <a-col :md="8" :sm="24">
-              <a-form-item
-                label="角色ID"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}"
-              >
-                <a-input placeholder="请输入"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item
-                label="状态"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}"
-              >
-                <a-select placeholder="请选择">
-                  <a-select-option value="1">正常</a-select-option>
-                  <a-select-option value="2">禁用</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-
-            <span style="margin-top: 3px;">
-              <a-button type="primary">查询</a-button>
-              <a-button style="margin-left: 8px">重置</a-button>
-            </span>
-          </a-row>
-
-        </div>
+    <div class="table-page-search-wrapper">
+      <a-form layout="inline">
+        <a-row :gutter="48">
+          <a-col :md="8" :sm="24">
+            <a-form-item label="角色ID">
+              <a-input placeholder="请输入"/>
+            </a-form-item>
+          </a-col>
+          <a-col :md="8" :sm="24">
+            <a-form-item label="状态">
+              <a-select placeholder="请选择" default-value="0">
+                <a-select-option value="0">全部</a-select-option>
+                <a-select-option value="1">关闭</a-select-option>
+                <a-select-option value="2">运行中</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :md="8" :sm="24">
+              <span class="table-page-search-submitButtons">
+                <a-button type="primary">查询</a-button>
+                <a-button style="margin-left: 8px">重置</a-button>
+              </span>
+          </a-col>
+        </a-row>
       </a-form>
     </div>
 

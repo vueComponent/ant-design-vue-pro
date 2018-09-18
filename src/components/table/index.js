@@ -1,4 +1,5 @@
 import T from "ant-design-vue/es/table/Table";
+import get from "lodash.get"
 export default {
   data() {
     return {
@@ -13,6 +14,10 @@ export default {
     };
   },
   props: Object.assign({}, T.props, {
+    rowKey: {
+      type: String,
+      default: 'id'
+    },
     data: {
       type: Function,
       required: true
@@ -33,9 +38,12 @@ export default {
       type: Boolean,
       default: false
     },
+    showPagination: {
+      default: 'auto'
+    }
   }),
   watch: {
-    'localPagination.current' (val) {
+    'localPagination.current'(val) {
       this.$router.push({
         name: this.$route.name,
         params: Object.assign({}, this.$route.params, {
@@ -44,41 +52,28 @@ export default {
       });
     },
     pageNum(val) {
-      this.localPagination = Object.assign({}, this.localPagination, {
+      Object.assign(this.localPagination, {
         current: val
       });
     },
     pageSize(val) {
-      this.localPagination = Object.assign({}, this.localPagination, {
+      Object.assign(this.localPagination, {
         pageSize: val
       });
     },
     showSizeChanger(val) {
-      this.localPagination = Object.assign({}, this.localPagination, {
+      Object.assign(this.localPagination, {
         showSizeChanger: val
       });
-    },
-    /*
-    'selectedRows': function (selectedRows) {
-      this.needTotalList = this.needTotalList.map(item => {
-        return {
-          ...item,
-          total: selectedRows.reduce( (sum, val) => {
-            return sum + val[item.dataIndex]
-          }, 0)
-        }
-      })
-    }*/
+    }
   },
   created() {
-    this.localPagination = Object.assign({}, this.localPagination, {
+    this.localPagination = ['auto', true].includes(this.showPagination) && Object.assign({}, this.localPagination, {
       current: this.pageNum,
       pageSize: this.pageSize,
       showSizeChanger: this.showSizeChanger
     });
-
     this.needTotalList = this.initTotalList(this.columns)
-
     this.loadData();
   },
   methods: {
@@ -87,13 +82,11 @@ export default {
     },
     loadData(pagination, filters, sorter) {
       this.localLoading = true
-      const result = this.data(
+      var result = this.data(
         Object.assign({
-            pageNo:
-              (pagination && pagination.current) ||
+            pageNo: (pagination && pagination.current) ||
               this.localPagination.current,
-            pageSize:
-              (pagination && pagination.pageSize) ||
+            pageSize: (pagination && pagination.pageSize) ||
               this.localPagination.pageSize
           },
           (sorter && sorter.field && {
@@ -116,23 +109,26 @@ export default {
             pageSize: (pagination && pagination.pageSize) ||
               this.localPagination.pageSize
           });
+
+          !r.totalCount && ['auto', false].includes(this.showPagination) && (this.localPagination = false)
+          console.log(this.localPagination);
           this.localDataSource = r.data; // 返回结果中的数组数据
-          this.localLoading = false
-        }).catch(() => {
           this.localLoading = false
         });
       }
     },
-    initTotalList (columns) {
+    initTotalList(columns) {
       const totalList = []
-      columns.forEach(column => {
+      columns && columns instanceof Array && columns.forEach(column => {
         if (column.needTotal) {
-          totalList.push({ ...column, total: 0 })
+          totalList.push({ ...column,
+            total: 0
+          })
         }
       })
       return totalList
     },
-    updateSelect (selectedRowKeys, selectedRows) {
+    updateSelect(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
       let list = this.needTotalList
@@ -140,7 +136,8 @@ export default {
         return {
           ...item,
           total: selectedRows.reduce((sum, val) => {
-            return sum + val[item.dataIndex]
+            let total = sum + get(val, item.dataIndex)
+            return isNaN(total) ? 0 : total
           }, 0)
         }
       })
@@ -149,7 +146,7 @@ export default {
     updateEdit() {
       this.selectedRows = []
     },
-    onClearSelected () {
+    onClearSelected() {
       this.selectedRowKeys = []
       this.updateSelect([], [])
     },
@@ -158,37 +155,53 @@ export default {
       let d = []
       // 构建 已选择
       d.push(
-        h('span', { style: { marginRight: '12px' } }, ['已选择 ', h('a', { style: { fontWeight: 600 }}, this.selectedRows.length)])
+        h('span', {
+          style: {
+            marginRight: '12px'
+          }
+        }, ['已选择 ', h('a', {
+          style: {
+            fontWeight: 600
+          }
+        }, this.selectedRows.length)])
       );
 
       // 构建 列统计
       this.needTotalList.map(item => {
-        d.push( h('span',
-          { style: { marginRight: '12px' } },
+        d.push(h('span', {
+            style: {
+              marginRight: '12px'
+            }
+          },
           [
             `${ item.title }总计 `,
-            h('a', { style: { fontWeight: 600 }}, `${ item.customRender ? item.customRender(item.total) : item.total }`)
-          ] )
-        )
+            h('a', {
+              style: {
+                fontWeight: 600
+              }
+            }, `${ !item.customRender ? item.total : item.customRender(item.total) }`)
+          ]))
       });
 
       // 构建 清空选择
-      d.push( h('a', {
-        style: { marginLeft: '24px' },
+      d.push(h('a', {
+        style: {
+          marginLeft: '24px'
+        },
         on: {
           click: _vm.onClearSelected
         }
-      }, '清空') )
+      }, '清空'))
 
       return d
     },
     renderAlert(h) {
-
       return h('span', {
         slot: 'message'
       }, this.renderMsg(h))
     },
   },
+
   render(h) {
     const _vm = this
 
@@ -206,7 +219,13 @@ export default {
     // 显示信息提示
     if (this.showAlertInfo) {
 
-      props.rowSelection = { selectedRowKeys: this.selectedRowKeys, onChange: this.updateSelect };
+      props.rowSelection = {
+        selectedRowKeys: this.selectedRowKeys,
+        onChange: (selectedRowKeys, selectedRows) => {
+          _vm.updateSelect(selectedRowKeys, selectedRows)
+          _vm.$emit('onSelect', { selectedRowKeys: selectedRowKeys, selectedRows: selectedRows })
+        }
+      };
 
       return h('div', {}, [
         h("a-alert", {
@@ -217,7 +236,7 @@ export default {
             type: 'info',
             showIcon: true
           }
-        }, [ _vm.renderAlert(h) ]),
+        }, [_vm.renderAlert(h)]),
         h("a-table", {
           tag: "component",
           attrs: props,
@@ -225,8 +244,9 @@ export default {
             change: _vm.loadData
           },
           scopedSlots: this.$scopedSlots
-        })
+        }, this.$slots.default)
       ]);
+
     }
 
     return h("a-table", {
@@ -236,6 +256,6 @@ export default {
         change: _vm.loadData
       },
       scopedSlots: this.$scopedSlots
-    });
+    }, this.$slots.default);
   }
 };
