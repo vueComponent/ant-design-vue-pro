@@ -1,18 +1,18 @@
 <template>
   <page-layout :avatar="avatar">
     <div slot="headerContent">
-      <div class="title">{{ timeFix }}，{{ user.name }}，{{ welcome() }}</div>
+      <div class="title">{{ timeFix }}，{{ user.name }}<span class="welcome-text">，{{ welcome() }}</span></div>
       <div>前端工程师 | 蚂蚁金服 - 某某某事业群 - VUE平台</div>
     </div>
     <div slot="extra">
-      <a-row>
-        <a-col :sm="8" :xs="24">
+      <a-row class="more-info">
+        <a-col :span="8">
           <head-info title="项目数" content="56" :bordered="true"/>
         </a-col>
-        <a-col :sm="8" :xs="24">
+        <a-col :span="8">
           <head-info title="团队排名" content="8/24" :bordered="true"/>
         </a-col>
-        <a-col :sm="8" :xs="24">
+        <a-col :span="8">
           <head-info title="项目访问" content="2,223"/>
         </a-col>
       </a-row>
@@ -326,4 +326,18 @@
       }
     }
   }
+
+  .mobile {
+
+    .more-info {
+      border-top: 1px solid #e8e8e8;
+      padding-top: 16px;
+      margin: 16px 0 16px;
+    }
+
+    .content .title .welcome-text {
+      display: none;
+    }
+  }
+
 </style>

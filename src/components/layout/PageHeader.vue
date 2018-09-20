@@ -176,4 +176,21 @@
       }
     }
   }
+
+  .mobile .page-header {
+
+    .main {
+
+      .row {
+        flex-wrap: wrap;
+      }
+
+      .extra {
+        flex: 1 1 auto;
+        margin-left: 0;
+        min-width: 0;
+        text-align: right;
+      }
+    }
+  }
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <a-layout class="layout">
+  <a-layout class="layout" :class="device">
 
     <a-drawer 
       v-if="device === 'mobile'"
-      wrapClassName="drawer-sider"
+      :wrapClassName="'drawer-sider ' + theme"
       placement="left"
       @close="() => this.collapsed = false"
       :closable="false"
@@ -93,6 +93,14 @@
     min-height: 100vh;
     overflow-x: hidden;
 
+    &.mobile {
+      .ant-table-wrapper {
+        .ant-table-body {
+          overflow-y: auto;
+        }
+      }
+    }
+
     &.ant-layout-has-sider {
       flex-direction: row;
     }
@@ -156,6 +164,22 @@
 
   // drawer-sider 自定义
   .ant-drawer.drawer-sider {
+    .sider {
+      box-shadow: none;
+    }
+
+    &.dark {
+      .ant-drawer-content {
+        background-color: rgb(0, 21, 41);
+      }
+    }
+    &.light {
+      box-shadow: none;
+      .ant-drawer-content {
+        background-color: #fff;
+      }
+    }
+
     .ant-drawer-body {
       padding: 0
     }
