@@ -183,13 +183,20 @@
 
       .row {
         flex-wrap: wrap;
-      }
 
-      .extra {
-        flex: 1 1 auto;
-        margin-left: 0;
-        min-width: 0;
-        text-align: right;
+        .avatar {
+          flex: 0 1 25%;
+          margin: 0 2% 8px 0;
+        }
+        .content {
+          flex: 0 1 70%;
+        }
+        .extra {
+          flex: 1 1 auto;
+          margin-left: 0;
+          min-width: 0;
+          text-align: right;
+        }
       }
     }
   }
