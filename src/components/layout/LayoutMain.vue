@@ -12,6 +12,7 @@
       <sider-menu
         mode="inline"
         :menus="menus"
+        @menuSelect="menuSelect"
         :theme="theme"
         :collapsed="false"
         :collapsible="true"></sider-menu>
@@ -78,6 +79,13 @@
       toggle() {
         this.collapsed = !this.collapsed;
       },
+      menuSelect() {
+
+        if (this.device !== 'desktop') {
+          console.log('selected')
+          this.collapsed = false
+        }
+      }
     }
   }
 </script>
@@ -94,6 +102,14 @@
     overflow-x: hidden;
 
     &.mobile {
+
+      .ant-layout-content {
+
+        .content {
+          margin: 24px 0 0;
+        }
+      }
+
       .ant-table-wrapper {
         .ant-table-body {
           overflow-y: auto;

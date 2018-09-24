@@ -3,8 +3,8 @@
     <a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}">
       <a-form-item
         label="标题"
-        :labelCol="{span: 7}"
-        :wrapperCol="{span: 10}"
+        :labelCol="{lg: {span: 7}, sm: {span: 7}}"
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
         fieldDecoratorId="name"
         :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入标题' }]}"
       >
@@ -12,8 +12,8 @@
       </a-form-item>
       <a-form-item
         label="起止日期"
-        :labelCol="{span: 7}"
-        :wrapperCol="{span: 10}"
+        :labelCol="{lg: {span: 7}, sm: {span: 7}}"
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
         fieldDecoratorId="buildTime"
         :fieldDecoratorOptions="{rules: [{ required: true, message: '请选择起止日期' }]}"
       >
@@ -21,8 +21,8 @@
       </a-form-item>
       <a-form-item
         label="目标描述"
-        :labelCol="{span: 7}"
-        :wrapperCol="{span: 10}"
+        :labelCol="{lg: {span: 7}, sm: {span: 7}}"
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
         fieldDecoratorId="description"
         :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入目标描述' }]}"
       >
@@ -30,8 +30,8 @@
       </a-form-item>
       <a-form-item
         label="衡量标准"
-        :labelCol="{span: 7}"
-        :wrapperCol="{span: 10}"
+        :labelCol="{lg: {span: 7}, sm: {span: 7}}"
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
         fieldDecoratorId="type"
         :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入衡量标准' }]}"
       >
@@ -39,24 +39,24 @@
       </a-form-item>
       <a-form-item
         label="客户"
-        :labelCol="{span: 7}"
-        :wrapperCol="{span: 10}"
+        :labelCol="{lg: {span: 7}, sm: {span: 7}}"
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
         :required="false"
       >
         <a-input placeholder="请描述你服务的客户，内部客户直接 @姓名／工号"/>
       </a-form-item>
       <a-form-item
         label="邀评人"
-        :labelCol="{span: 7}"
-        :wrapperCol="{span: 10}"
+        :labelCol="{lg: {span: 7}, sm: {span: 7}}"
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
         :required="false"
       >
         <a-input placeholder="请直接 @姓名／工号，最多可邀请 5 人"/>
       </a-form-item>
       <a-form-item
         label="权重"
-        :labelCol="{span: 7}"
-        :wrapperCol="{span: 10}"
+        :labelCol="{lg: {span: 7}, sm: {span: 7}}"
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
         :required="false"
       >
         <a-input-number :min="0" :max="100"/>
@@ -64,8 +64,8 @@
       </a-form-item>
       <a-form-item
         label="目标公开"
-        :labelCol="{span: 7}"
-        :wrapperCol="{span: 10}"
+        :labelCol="{lg: {span: 7}, sm: {span: 7}}"
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
         :required="false"
         help="客户、邀评人默认被分享"
       >
@@ -82,7 +82,10 @@
           </a-select>
         </a-form-item>
       </a-form-item>
-      <a-form-item :wrapperCol="{span: 10, offset: 7}">
+      <a-form-item
+        :wrapperCol="{ span: 24 }"
+        style="text-align: center"
+      >
         <a-button htmlType="submit" type="primary">提交</a-button>
         <a-button style="margin-left: 8px">保存</a-button>
       </a-form-item>

@@ -1,5 +1,5 @@
 <template>
-  <div class="head-info">
+  <div class="head-info" :class="center && 'center'">
     <span>{{ title }}</span>
     <p>{{ content }}</p>
     <em v-if="bordered"/>
@@ -21,6 +21,10 @@
       bordered: {
         type: Boolean,
         default: false
+      },
+      center: {
+        type: Boolean,
+        default: true
       }
     }
   }
@@ -29,9 +33,14 @@
 <style lang="scss" scoped>
   .head-info {
     position: relative;
-    text-align: center;
-    padding: 0 32px;
+    text-align: left;
+    padding: 0 32px 0 0;
     min-width: 125px;
+
+    &.center {
+      text-align: center;
+      padding: 0 32px;
+    }
 
     span {
       color: rgba(0, 0, 0, .45);
