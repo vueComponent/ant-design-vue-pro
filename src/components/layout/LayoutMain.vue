@@ -66,10 +66,11 @@
       }
     },
     created() {
-      this.menus = asyncRouterMap
+      this.menus = this.mainMenu
     },
     computed: {
       ...mapState({
+        mainMenu: state => state.permission.addRouters,
         siderOpen: state => state.app.sidebar.opened,
         theme: state => state.app.theme,
         device: state => state.app.device,
