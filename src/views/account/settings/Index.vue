@@ -1,10 +1,10 @@
 <template>
   <a-card :bordered="false" :bodyStyle="{ padding: '16px 0', height: '100%' }" :style="{ height: '100%' }">
-    <div class="account-settings-info-main">
+    <div class="account-settings-info-main" :class="device">
       <div class="account-settings-info-left">
         <a-menu
-          mode="inline"
-          :style="{ border: '0' }"
+          :mode="device == 'mobile' ? 'horizontal' : 'inline'"
+          :style="{ border: '0', width: device == 'mobile' ? '560px' : 'auto'}"
           :defaultSelectedKeys="defaultSelectedKeys"
           type="inner"
           @openChange="onOpenChange"
@@ -48,7 +48,8 @@
 
 <script>
   import PageLayout from '@/components/layout/PageLayout'
-  import RouteView from "@/components/layout/RouteView";
+  import RouteView from "@/components/layout/RouteView"
+  import { mapState } from 'vuex'
 
   export default {
     components: {
@@ -57,6 +58,9 @@
     },
     data () {
       return {
+        // horizontal  inline
+        mode: 'inline',
+
         openKeys: [],
         defaultSelectedKeys: [],
 
@@ -81,6 +85,11 @@
         pageTitle: ''
       }
     },
+    computed: {
+      ...mapState({
+        device: state => state.app.device,
+      })
+    },
     created () {
       this.updateMenu()
     },
@@ -103,6 +112,22 @@
     height: 100%;
     overflow: auto;
 
+    &.mobile {
+      display: block;
+
+      .account-settings-info-left {
+        border-right: unset;
+        border-bottom: 1px solid #e8e8e8;
+        width: 100%;
+        height: 48px;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      .account-settings-info-right {
+        padding: 20px 40px;
+      }
+    }
+
     .account-settings-info-left {
       border-right: 1px solid #e8e8e8;
       width: 224px;
@@ -124,4 +149,5 @@
       }
     }
   }
+
 </style>
