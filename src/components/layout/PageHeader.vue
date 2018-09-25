@@ -153,10 +153,20 @@
           border-radius: 4px;
           margin-right: 16px;
         }
-        .content {
+        .content, .headerContent {
           flex: auto;
           color: rgba(0,0,0,.45);
           line-height: 22px;
+
+          .link {
+            margin-top: 16px;
+            line-height: 24px;
+
+            a {
+              font-size: 14px;
+              margin-right: 32px;
+            }
+          }
         }
         .extra {
           flex: 0 1 auto;
@@ -188,8 +198,18 @@
           flex: 0 1 25%;
           margin: 0 2% 8px 0;
         }
-        .content {
+        .content, .headerContent {
           flex: 0 1 70%;
+
+          .link {
+            margin-top: 16px;
+            line-height: 24px;
+
+            a {
+              font-size: 14px;
+              margin-right: 10px;
+            }
+          }
         }
         .extra {
           flex: 1 1 auto;

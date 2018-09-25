@@ -2,7 +2,7 @@
   <div>
     <div class="search-head">
       <div class="search-input">
-        <a-input-search style="width: 522px" placeholder="请输入..." size="large" enterButton="搜索" />
+        <a-input-search style="width: 80%; max-width: 522px;" placeholder="请输入..." size="large" enterButton="搜索" />
       </div>
       <div style="padding: 0 24px">
         <a-tabs :tabBarStyle="{margin: 0}" @change="callback" :activeKey="activeKey">
