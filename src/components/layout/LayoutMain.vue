@@ -45,7 +45,6 @@
   import SiderMenu from '@/components/menu/SiderMenu'
   import LayoutHeader from './LayoutHeader'
   import LayoutFooter from './LayoutFooter'
-  import {asyncRouterMap} from '@/router/index'
   import {mapState} from 'vuex'
 
   export default {
