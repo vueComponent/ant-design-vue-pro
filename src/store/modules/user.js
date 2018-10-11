@@ -1,10 +1,11 @@
+import Vue from 'vue'
 import { login, getInfo, logout } from "@/api/login"
-import { setToken, getToken, removeToken } from '@/utils/auth'
+import { ACCESS_TOKEN } from "@/store/mutation-types"
 import { welcome } from "@/utils/util"
 
 const user = {
   state: {
-    token: getToken(),
+    token: '',
     name: '',
     welcome: '',
     avatar: '',
@@ -37,7 +38,7 @@ const user = {
       return new Promise((resolve, reject) => {
         login(userInfo).then(response => {
           const result = response.result
-          setToken(result.token)
+          Vue.ls.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000)
           commit('SET_TOKEN', result.token)
           resolve()
         }).catch(error => {
@@ -83,7 +84,7 @@ const user = {
       return new Promise((resolve) => {
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
-        removeToken()
+        Vue.ls.remove(ACCESS_TOKEN)
 
         logout(state.token).then(() => {
           resolve()

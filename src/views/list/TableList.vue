@@ -76,6 +76,7 @@
     </div>
 
     <s-table
+      ref="table"
       size="default"
       :columns="columns"
       :data="loadData"
@@ -266,6 +267,8 @@
       onChange (row) {
         this.selectedRowKeys = row.selectedRowKeys
         this.selectedRows = row.selectedRows
+
+        console.log(this.$refs.table)
       },
       toggleAdvanced () {
         this.advanced = !this.advanced
