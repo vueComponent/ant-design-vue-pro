@@ -22,7 +22,7 @@
       :menus="menus"
       :theme="theme"
       :mode="menuMode"
-      :collapsed="!siderOpen || collapsed"
+      :collapsed="collapsed"
       :collapsible="true"></sider-menu>
 
     <a-layout>
@@ -45,7 +45,7 @@
   import SiderMenu from '@/components/menu/SiderMenu'
   import LayoutHeader from './LayoutHeader'
   import LayoutFooter from './LayoutFooter'
-  import {mapState} from 'vuex'
+  import { mapState, mapActions } from 'vuex'
 
   export default {
     name: "LayoutView",
@@ -70,19 +70,22 @@
     computed: {
       ...mapState({
         mainMenu: state => state.permission.addRouters,
-        siderOpen: state => state.app.sidebar.opened,
+        sidebarOpened: state => state.app.sidebar.opened,
         theme: state => state.app.theme,
         device: state => state.app.device,
       })
     },
+    mounted() {
+      this.collapsed = this.sidebarOpened
+    },
     methods: {
+      ...mapActions(['setSidebar']),
       toggle() {
         this.collapsed = !this.collapsed;
+        this.setSidebar(this.collapsed)
       },
       menuSelect() {
-
         if (this.device !== 'desktop') {
-          console.log('selected')
           this.collapsed = false
         }
       }

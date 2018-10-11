@@ -57,11 +57,13 @@ export default {
       });
     },
     pageSize(val) {
+      console.log('pageSize:', val)
       Object.assign(this.localPagination, {
         pageSize: val
       });
     },
     showSizeChanger(val) {
+      console.log('showSizeChanger', val)
       Object.assign(this.localPagination, {
         showSizeChanger: val
       });
@@ -111,7 +113,6 @@ export default {
           });
 
           !r.totalCount && ['auto', false].includes(this.showPagination) && (this.localPagination = false)
-          console.log(this.localPagination);
           this.localDataSource = r.data; // 返回结果中的数组数据
           this.localLoading = false
         });
@@ -216,6 +217,7 @@ export default {
       return props[k] = _vm[k];
     })
 
+
     // 显示信息提示
     if (this.showAlertInfo) {
 
@@ -248,7 +250,7 @@ export default {
       ]);
 
     }
-
+/*
     return h("a-table", {
       tag: "component",
       attrs: props,
@@ -257,5 +259,7 @@ export default {
       },
       scopedSlots: this.$scopedSlots
     }, this.$slots.default);
+    */
+
   }
 };
