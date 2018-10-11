@@ -250,7 +250,7 @@ export default {
       ]);
 
     }
-/*
+
     return h("a-table", {
       tag: "component",
       attrs: props,
@@ -259,7 +259,6 @@ export default {
       },
       scopedSlots: this.$scopedSlots
     }, this.$slots.default);
-    */
 
   }
 };
