@@ -30,7 +30,7 @@
     </template>
 
     <a-card :bordered="false" title="流程进度">
-      <a-steps :current="1" progressDot>
+      <a-steps :direction="device==='mobile' && 'vertical' || 'horizontal'" :current="1" progressDot>
         <a-step title="创建项目">
         </a-step>
         <a-step title="部门初审">
@@ -133,6 +133,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import PageLayout from '@/components/layout/PageLayout'
   import DetailList from '@/components/tools/DetailList'
 
@@ -294,6 +295,11 @@
         }
         return statusTypeMap[type]
       }
+    },
+    computed: {
+      ...mapState({
+        device: state => state.app.device,
+      })
     },
   }
 </script>
