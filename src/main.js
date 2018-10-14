@@ -14,7 +14,7 @@ import * as dayjs from 'dayjs' // 日期时间支持库
 
 import '@/permission' // permission control
 
-import { ACCESS_TOKEN, DEFAULT_THEME, SIDEBAR_TYPE } from "@/store/mutation-types"
+import {ACCESS_TOKEN, DEFAULT_COLOR, DEFAULT_THEME, SIDEBAR_TYPE} from "@/store/mutation-types"
 
 Vue.filter('dayjs', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
   return dayjs(dataStr).format(pattern)
@@ -39,6 +39,7 @@ new Vue({
   mounted () {
     store.commit('SET_SIDEBAR_TYPE', Vue.ls.get(SIDEBAR_TYPE, true))
     store.commit('TOGGLE_THEME', Vue.ls.get(DEFAULT_THEME, 'dark'))
+    store.commit('TOGGLE_COLOR', Vue.ls.get(DEFAULT_COLOR, { key: 'daybreak', color: '#1890FF' }))
     store.commit('SET_TOKEN', Vue.ls.get(ACCESS_TOKEN))
 
   },

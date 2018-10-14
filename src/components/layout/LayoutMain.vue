@@ -38,6 +38,8 @@
         <layout-footer/>
       </a-layout-footer>
     </a-layout>
+
+    <setting-drawer ref="settingdw"></setting-drawer>
   </a-layout>
 </template>
 
@@ -45,14 +47,17 @@
   import SiderMenu from '@/components/menu/SiderMenu'
   import LayoutHeader from './LayoutHeader'
   import LayoutFooter from './LayoutFooter'
+  import SettingDrawer from '@/components/tools/SettingDrawer'
   import { mapState, mapActions } from 'vuex'
+
 
   export default {
     name: "LayoutView",
     components: {
       SiderMenu,
       LayoutHeader,
-      LayoutFooter
+      LayoutFooter,
+      SettingDrawer
     },
     data() {
       return {
@@ -77,6 +82,9 @@
     },
     mounted() {
       this.collapsed = this.sidebarOpened
+
+      // this.$refs.settingdw.showDrawer()
+      // this.$refs.settingdw.onClose()
     },
     methods: {
       ...mapActions(['setSidebar']),
