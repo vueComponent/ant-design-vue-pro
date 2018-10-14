@@ -180,8 +180,10 @@
 
 <script>
   import STable from '@/components/table/'
-  import ATextarea from "ant-design-vue/es/input/TextArea";
-  import AInput from "ant-design-vue/es/input/Input";
+  import ATextarea from "ant-design-vue/es/input/TextArea"
+  import AInput from "ant-design-vue/es/input/Input"
+
+  import { getRoleList, getServiceList } from '@/api/manage'
 
   export default {
     name: "TableList",
@@ -244,16 +246,18 @@
         ],
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
-          return this.$http.get('/service', {
-            params: Object.assign(parameter, this.queryParam)
-          }).then(res => {
-            return res.result
-          })
+          return getServiceList(Object.assign(parameter, this.queryParam))
+            .then(res => {
+              return res.result
+            })
         },
 
         selectedRowKeys: [],
         selectedRows: []
       }
+    },
+    created () {
+      getRoleList({ t: new Date()})
     },
     methods: {
       handleEdit (record) {

@@ -46,7 +46,7 @@
   import PageLayout from '@/components/layout/PageLayout'
   import STable from '@/components/table/'
   import DetailList from '@/components/tools/DetailList'
-  import ABadge from "ant-design-vue/es/badge/Badge";
+  import ABadge from "ant-design-vue/es/badge/Badge"
   const DetailListItem = DetailList.Item
 
   export default {

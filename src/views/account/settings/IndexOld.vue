@@ -91,9 +91,9 @@
   import PageLayout from '@/components/layout/PageLayout'
 
   import HeadInfo from '@/components/tools/HeadInfo'
-  import ASelect from "ant-design-vue/es/select";
-  import AForm from "ant-design-vue/es/form/Form";
-  import VueCropper from "vue-cropper/example/src/vue-cropper/vue-cropper";
+  import ASelect from "ant-design-vue/es/select"
+  import AForm from "ant-design-vue/es/form/Form"
+  import VueCropper from "vue-cropper/example/src/vue-cropper/vue-cropper"
 
   export default {
     name: "Index",
