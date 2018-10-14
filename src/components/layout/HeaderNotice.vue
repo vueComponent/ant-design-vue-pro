@@ -1,5 +1,5 @@
 <template>
-  <a-popover trigger="click" placement="bottomRight">
+  <a-popover trigger="click" placement="bottomRight" :overlayStyle="{ width: '300px' }">
     <template slot="content">
       <a-spin :spinning="loadding">
         <a-tabs>

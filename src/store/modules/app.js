@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { SIDEBAR_TYPE, DEFAULT_THEME } from "@/store/mutation-types"
+import {SIDEBAR_TYPE, DEFAULT_THEME, DEFAULT_COLOR} from "@/store/mutation-types"
 
 const app = {
   state: {
@@ -8,7 +8,8 @@ const app = {
       withoutAnimation: false
     },
     device: 'desktop',
-    theme: ''
+    theme: '',
+    color: null
   },
   mutations: {
     SET_SIDEBAR_TYPE: (state, type) => {
@@ -27,6 +28,10 @@ const app = {
       // setStore('_DEFAULT_THEME', theme)
       Vue.ls.set(DEFAULT_THEME, theme)
       state.theme = theme
+    },
+    TOGGLE_COLOR: (state, color) => {
+      Vue.ls.set(DEFAULT_COLOR, color)
+      state.color = color
     }
   },
   actions: {
@@ -41,6 +46,9 @@ const app = {
     },
     ToggleTheme({ commit }, theme) {
       commit('TOGGLE_THEME', theme)
+    },
+    ToggleColor({ commit }, color) {
+      commit('TOGGLE_COLOR', color)
     }
   }
 }
