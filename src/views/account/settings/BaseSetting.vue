@@ -52,7 +52,7 @@
 
       </a-col>
       <a-col :md="24" :lg="8" :style="{ minHeight: '180px' }">
-        <div class="ant-upload-preview" >
+        <div class="ant-upload-preview" @click="$refs.modal.edit(1)" >
           <a-icon type="cloud-upload-o" class="upload-icon"/>
           <div class="mask">
             <a-icon type="plus" />
@@ -62,15 +62,19 @@
       </a-col>
 
     </a-row>
+
+    <avatar-modal ref="modal">
+
+    </avatar-modal>
   </div>
 </template>
 
 <script>
-  import VueCropper from "vue-cropper/example/src/vue-cropper/vue-cropper"
+  import AvatarModal from './AvatarModal'
 
   export default {
     components: {
-      VueCropper
+      AvatarModal
     },
     data () {
       return {
@@ -92,6 +96,9 @@
           fixedNumber: [1, 1]
         }
       }
+    },
+    methods: {
+
     }
   }
 </script>
