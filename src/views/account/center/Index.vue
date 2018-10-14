@@ -6,7 +6,7 @@
 
 <script>
   import PageLayout from '@/components/layout/PageLayout'
-  import RouteView from "@/components/layout/RouteView";
+  import RouteView from "@/components/layout/RouteView"
 
   export default {
     components: {
