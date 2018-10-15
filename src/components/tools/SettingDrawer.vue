@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="setting-drawer">
     <a-drawer
       width="300"
-      :destroyOnClose="false"
       placement="right"
       :closable="false"
       @close="onClose"
       :visible="visible"
+      :style="{}"
     >
       <div class="setting-drawer-index-content">
 
@@ -45,16 +45,17 @@
           </div>
         </div>
       </div>
+      <div class="setting-drawer-index-handle" @click="toggle">
+        <a-icon type="setting" v-if="!visible"/>
+        <a-icon type="close" v-else/>
+      </div>
     </a-drawer>
-    <div class="setting-drawer-index-handle" :style="{ right: visible && '283px' || '0' }" @click="toggle">
-      <a-icon type="setting" v-if="!visible"/>
-      <a-icon type="close" v-else/>
-    </div>
   </div>
 </template>
 
 <script>
   import DetailList from '@/components/tools/DetailList'
+  import config from '@/defaultConfig'
   import { updateTheme } from '@/components/tools/setting'
 
   import { mapState } from 'vuex'
@@ -100,7 +101,7 @@
     },
     data() {
       return {
-        visible: false,
+        visible: true,
         colorList,
       }
     },
@@ -112,8 +113,13 @@
     },
     mounted () {
       const vm = this
-
-      updateTheme(this.colorObj.color)
+      setTimeout(() => {
+        vm.visible = false
+      }, 1)
+      // 当主题色不是默认色时，才进行主题编译
+      if (this.colorObj.color !== config.color.color) {
+        updateTheme(this.colorObj.color)
+      }
     },
     methods: {
       showDrawer() {
@@ -129,8 +135,10 @@
         this.$store.dispatch('ToggleTheme', theme)
       },
       changeColor(color) {
-        updateTheme(color.color)
-        this.$store.dispatch('ToggleColor', color)
+        if (this.colorObj.color !== color.color) {
+          this.$store.dispatch('ToggleColor', color)
+          updateTheme(color.color)
+        }
       }
     },
   }
@@ -198,7 +206,7 @@
     background: #1890ff;
     width: 48px;
     height: 48px;
-    right: 0;
+    right: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
