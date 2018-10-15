@@ -5,9 +5,9 @@ let lessNodesAppended;
 
 const updateTheme = primaryColor => {
   // Don't compile less in production!
-  if (process.env.NODE_ENV === 'production') {
+  /* if (process.env.NODE_ENV === 'production') {
     return;
-  }
+  } */
   // Determine if the component is remounted
   if (!primaryColor) {
     return;

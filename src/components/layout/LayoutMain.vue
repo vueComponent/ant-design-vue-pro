@@ -39,7 +39,7 @@
       </a-layout-footer>
     </a-layout>
 
-    <setting-drawer ref="settingdw"></setting-drawer>
+    <setting-drawer></setting-drawer>
   </a-layout>
 </template>
 
@@ -82,9 +82,6 @@
     },
     mounted() {
       this.collapsed = this.sidebarOpened
-
-      // this.$refs.settingdw.showDrawer()
-      // this.$refs.settingdw.onClose()
     },
     methods: {
       ...mapActions(['setSidebar']),
