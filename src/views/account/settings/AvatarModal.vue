@@ -41,7 +41,7 @@
         confirmLoading: false,
 
         options: {
-          img: 'http://ofyaji162.bkt.clouddn.com/bg1.jpg',
+          img: '/avatar2.jpg',
           autoCrop: true,
           autoCropWidth: 200,
           autoCropHeight: 200,
