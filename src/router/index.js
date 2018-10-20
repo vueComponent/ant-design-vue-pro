@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '../components/layout/LayoutView'
 import LayoutBase from '../components/layout/LayoutBaseView'
+import LayoutUser from '@/components/layout/UserLayout'
 
 Vue.use(Router)
 /**
@@ -14,17 +15,31 @@ Vue.use(Router)
 
 export const constantRouterMap = [
   {
-    path: '/login',
-    component: () => import('../views/Login')
+    path: '/user',
+    component: LayoutUser,
+    redirect: '/user/login',
+    hidden: true,
+    children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: () => import(/* webpackChunkName: "user" */ '@/views/Login')
+      },
+      {
+        path: 'register',
+        name: 'register',
+        component: () => import(/* webpackChunkName: "user" */ '@/views/Register')
+      }
+    ]
   },
   {
     path: '/404',
-    component: () => import(/* webpackChunkName: "fail" */ '../views/exception/404')
+    component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404')
   },
   {
     path: '/',
     component: Layout,
-    redirect: '/login',
+    redirect: { name: 'login' },
     name: 'home',
     hidden: true
   }
@@ -48,20 +63,20 @@ export const asyncRouterMap = [
       {
         path: '/dashboard/analysis',
         name: 'Analysis',
-        component: () => import('../views/dashboard/Analysis'),
+        component: () => import('@/views/dashboard/Analysis'),
         meta: { title: '分析页', hideHeader: true, permission: [ 'dashboard' ] }
       },
       {
         path: '/dashboard/monitor',
         name: 'Monitor',
         hidden: true,
-        component: () => import('../views/dashboard/Monitor'),
+        component: () => import('@/views/dashboard/Monitor'),
         meta: { title: '监控页', hideHeader: true, permission: [ 'dashboard' ] }
       },
       {
         path: '/dashboard/workplace',
         name: 'Workplace',
-        component: () => import('../views/dashboard/Workplace'),
+        component: () => import('@/views/dashboard/Workplace'),
         meta: { title: '工作台', permission: [ 'dashboard' ] }
       }
     ]
@@ -76,19 +91,19 @@ export const asyncRouterMap = [
       {
         path: '/form/base-form',
         name: 'BaseForm',
-        component: () => import('../views/form/BasicForm'),
+        component: () => import('@/views/form/BasicForm'),
         meta: { title: '基础表单', permission: [ 'form' ] }
       },
       {
         path: '/form/step-form',
         name: 'StepForm',
-        component: () => import('../views/form/stepForm/StepForm'),
+        component: () => import('@/views/form/stepForm/StepForm'),
         meta: { title: '分步表单', permission: [ 'form' ] }
       },
       {
         path: '/form/advanced-form',
         name: 'AdvanceForm',
-        component: () => import('../views/form/advancedForm/AdvancedForm'),
+        component: () => import('@/views/form/advancedForm/AdvancedForm'),
         meta: { title: '高级表单', permission: [ 'form' ] }
       }
     ]
