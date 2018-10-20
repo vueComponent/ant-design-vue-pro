@@ -13,17 +13,10 @@ import 'ant-design-vue/dist/antd.less';  // or 'ant-design-vue/dist/antd.less'
 import * as dayjs from 'dayjs' // 日期时间支持库
 
 import '@/permission' // permission control
+import '@/utils/filter' // base filter
 
 import { ACCESS_TOKEN, DEFAULT_COLOR, DEFAULT_THEME, SIDEBAR_TYPE } from "@/store/mutation-types"
 import config from '@/defaultConfig'
-
-Vue.filter('dayjs', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
-  return dayjs(dataStr).format(pattern)
-})
-
-Vue.filter('moment', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
-  return dayjs(dataStr).format(pattern)
-})
 
 Vue.config.productionTip = false
 
