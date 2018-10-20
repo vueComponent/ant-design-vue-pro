@@ -43,16 +43,13 @@
             </a-form-item>
           </a-col>
           <a-col class="gutter-row" :span="8">
-                  <span class="ivu-input-prefix">
-                    <a-button
-                      class="getCaptcha"
-                      :disabled="state.smsSendBtn"
-                      @click.stop.prevent="getCaptcha"
-                      v-text="!state.smsSendBtn&&'获取验证码'||(state.time+' s')"></a-button>
-                  </span>
+            <a-button
+              class="getCaptcha"
+              :disabled="state.smsSendBtn"
+              @click.stop.prevent="getCaptcha"
+              v-text="!state.smsSendBtn&&'获取验证码'||(state.time+' s')"></a-button>
           </a-col>
         </a-row>
-
       </a-tab-pane>
     </a-tabs>
 
@@ -239,11 +236,6 @@
       font-size: 14px;
     }
 
-/*    .ivu-input-prefix {
-      left: 12px;
-      font-size: 14px;
-      color: rgba(0, 0, 0, 0.25);
-    }*/
     .getCaptcha {
       display: block;
       width: 100%;
@@ -253,6 +245,7 @@
     .forge-password {
       font-size: 14px;
     }
+
     button.login-button {
       padding: 0 15px;
       font-size: 16px;
