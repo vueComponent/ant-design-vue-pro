@@ -1,7 +1,9 @@
-#### Table 重封装组件说明
+Table 重封装组件说明
+====
 
 
-说明：
+封装说明
+----
 
 >  基础的使用方式与 API 与 [官方版(Table)](https://vuecomponent.github.io/ant-design-vue/components/table-cn/) 本一致，在其基础上，封装了加载数据的方法。
 >
@@ -9,7 +11,9 @@
 
 
 
-例子1（基础使用）：
+例子1
+----
+（基础使用）
 
 ```vue
 <template>
@@ -74,7 +78,10 @@
 
 
 
-例子2（简单的表格，最后一列是各种操作。）：
+例子2
+----
+
+（简单的表格，最后一列是各种操作）
 
 ```vue
 <template>
@@ -160,25 +167,30 @@
 
 
 
-### 注意事项：
+注意事项
+----
 
-你可能需要为了与后端提供的接口返回结果一致而去修改以下代码：
+> 你可能需要为了与后端提供的接口返回结果一致而去修改以下代码：
 (需要注意的是，这里的修改是全局性的，意味着整个项目所有使用该 table 组件都需要遵守这个返回结果定义的字段。)
-`@/components/table/index.js`  第 89 行起
+
+修改 `@/components/table/index.js`  第 106 行起
 
 
 
 ```javascript
 result.then(r => {
-  this.localPagination = Object.assign({}, this.localPagination, {
-      current: r.pageNo, // 返回结果中的当前分页数
-      total: r.totalCount, // 返回结果中的总记录数
-      showSizeChanger: this.showSizeChanger,
-      pageSize: (pagination && pagination.pageSize) ||
-      this.localPagination.pageSize
-  });
-  this.localDataSource = r.data; // 返回结果中的数组数据
-})
+          this.localPagination = Object.assign({}, this.localPagination, {
+            current: r.pageNo,  // 返回结果中的当前分页数
+            total: r.totalCount, // 返回结果中的总记录数
+            showSizeChanger: this.showSizeChanger,
+            pageSize: (pagination && pagination.pageSize) ||
+              this.localPagination.pageSize
+          });
+
+          !r.totalCount && ['auto', false].includes(this.showPagination) && (this.localPagination = false)
+          this.localDataSource = r.data; // 返回结果中的数组数据
+          this.localLoading = false
+        });
 ```
 返回 JSON 例子：
 ```json
@@ -246,4 +258,7 @@ result.then(r => {
 
 
 
-最后更新于： 2018-08-30 AM
+更新时间
+----
+
+该文档最后更新于： 2018-10-20 PM 3:36

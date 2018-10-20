@@ -1,3 +1,13 @@
+/**
+ * 项目默认配置项
+ * primaryColor - 默认主题色
+ * navTheme - sidebar theme ['dark', 'light'] 两种主题
+ * colorWeak - 色盲模式
+ *
+ * storageOptions: {} - Vue-ls 插件配置项 (localStorage/sessionStorage)
+ *
+ */
+
 export default {
   primaryColor: '#1890FF', // primary color of ant design
   navTheme: 'dark', // theme for nav menu
