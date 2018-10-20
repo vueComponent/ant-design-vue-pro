@@ -21,15 +21,13 @@ Vue.filter('dayjs', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
   return dayjs(dataStr).format(pattern)
 })
 
-const options = {
-  namespace: 'ant__', // key prefix
-  name: 'ls', // name variable Vue.[ls] or this.[$ls],
-  storage: 'local', // storage name session, local, memory
-}
+Vue.filter('moment', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
+  return dayjs(dataStr).format(pattern)
+})
 
 Vue.config.productionTip = false
 
-Vue.use(Storage, options)
+Vue.use(Storage, config.storageOptions)
 Vue.use(Antd)
 Vue.use(VueAxios, router)
 Vue.use(Viser)
@@ -39,10 +37,9 @@ new Vue({
   store,
   mounted () {
     store.commit('SET_SIDEBAR_TYPE', Vue.ls.get(SIDEBAR_TYPE, false))
-    store.commit('TOGGLE_THEME', Vue.ls.get(DEFAULT_THEME, config.theme))
-    store.commit('TOGGLE_COLOR', Vue.ls.get(DEFAULT_COLOR, config.color))
+    store.commit('TOGGLE_THEME', Vue.ls.get(DEFAULT_THEME, config.navTheme))
+    store.commit('TOGGLE_COLOR', Vue.ls.get(DEFAULT_COLOR, config.primaryColor))
     store.commit('SET_TOKEN', Vue.ls.get(ACCESS_TOKEN))
-
   },
   render: h => h(App)
 }).$mount('#app')
