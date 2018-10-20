@@ -1,7 +1,8 @@
 <template>
   <div class="app-list">
-    <a-list :grid="{gutter: 24, lg: 3, md: 2, sm: 1, xs: 1}"
-            :dataSource="dataSource">
+    <a-list
+      :grid="{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }"
+      :dataSource="dataSource">
       <a-list-item slot="renderItem" slot-scope="item, index">
         <a-card :hoverable="true">
           <a-card-meta>

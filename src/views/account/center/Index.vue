@@ -3,7 +3,6 @@
 
     <a-row :gutter="24">
       <a-col :md="24" :lg="7">
-        <!-- :bodyStyle="{ padding: '16px 0', height: '100%' }" :style="{ height: '100%' }" -->
         <a-card :bordered="false">
           <div class="account-center-avatarHolder">
             <div class="avatar">
@@ -31,12 +30,10 @@
               <template v-for="(tag, index) in tags">
                 <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
                   <a-tag :key="tag" :closable="index !== 0" :afterClose="() => handleTagClose(tag)">
-                    {{`${tag.slice(0, 20)}...`}}
+                    {{ `${tag.slice(0, 20)}...` }}
                   </a-tag>
                 </a-tooltip>
-                <a-tag v-else :key="tag" :closable="index !== 0" :afterClose="() => handleTagClose(tag)">
-                  {{tag}}
-                </a-tag>
+                <a-tag v-else :key="tag" :closable="index !== 0" :afterClose="() => handleTagClose(tag)">{{ tag }}</a-tag>
               </template>
               <a-input
                 v-if="tagInputVisible"
@@ -83,7 +80,7 @@
         >
           <article-page v-if="noTitleKey === 'article'"></article-page>
           <app-page v-else-if="noTitleKey === 'app'"></app-page>
-          <project-page v-else="noTitleKey === 'project'"></project-page>
+          <project-page v-else-if="noTitleKey === 'project'"></project-page>
         </a-card>
       </a-col>
     </a-row>
