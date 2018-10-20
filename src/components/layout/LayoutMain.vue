@@ -103,6 +103,10 @@
   body {
     // 打开滚动条固定显示
     overflow-y: scroll;
+
+    &.userLayout {
+      overflow-y: auto;
+    }
   }
 
   .layout {

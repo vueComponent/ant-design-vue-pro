@@ -8,14 +8,14 @@ import { ACCESS_TOKEN } from "@/store/mutation-types"
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
-const whiteList = ['/login']// no redirect whitelist
+const whiteList = ['/user/login', '/user/register']// no redirect whitelist
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
 
   if (Vue.ls.get(ACCESS_TOKEN)) {
     /* has token */
-    if (to.path === '/login') {
+    if (to.path === '/user/login') {
       next({ path: '/dashboard/workplace' })
       NProgress.done()
     } else {
@@ -28,7 +28,7 @@ router.beforeEach((to, from, next) => {
           })
         }).catch(() => {
           store.dispatch('Logout').then(() => {
-            next({ path: '/login' })
+            next({ path: '/user/login' })
           })
         })
 
@@ -40,7 +40,7 @@ router.beforeEach((to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
       next()
     } else {
-      next('/login')
+      next('/user/login')
       NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
     }
 
