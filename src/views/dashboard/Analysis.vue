@@ -7,69 +7,46 @@
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
-            <div style="display: inline-block; font-size: 14px; line-height: 22px; margin-right: 16px">
-              同周比
-              <span>12%</span>
-              <span style="color: #f5222d; font-size: 12px"><a-icon type="caret-up" /></span>
-            </div>
-            <div style="display: inline-block; font-size: 14px; line-height: 22px;">
-              日环比
-              <span>11%</span>
-              <span style="color: #52c41a; font-size: 12px"><a-icon type="caret-down" /></span>
-            </div>
+            <trend style="margin-right: 16px;" term="同周比" :percentage="12" :type="true" :fixed="0" />
+            <trend term="日环比" :target="100" :value="89" :fixed="0" />
           </div>
-          <div slot="footer">日均销售额<span>￥ 234.56</span></div>
+          <template slot="footer">日均销售额<span>￥ 234.56</span></template>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="总销售额" total="￥126,560">
+        <chart-card :loading="loading" title="访问量" :total="8846 | NumberFormat">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
             <mini-area />
           </div>
-          <div slot="footer">日均销售额<span>￥ 234.56</span></div>
+          <template slot="footer">日访问量<span> {{ '1234' | NumberFormat }}</span></template>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="总销售额" total="￥126,560">
+        <chart-card :loading="loading" title="支付笔数" :total="6560 | NumberFormat">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
-            <div style="display: inline-block; font-size: 14px; line-height: 22px; margin-right: 16px">
-              同周比
-              <span>12%</span>
-              <span style="color: #f5222d; font-size: 12px"><a-icon type="caret-up" /></span>
-            </div>
-            <div style="display: inline-block; font-size: 14px; line-height: 22px;">
-              日环比
-              <span>11%</span>
-              <span style="color: #52c41a; font-size: 12px"><a-icon type="caret-down" /></span>
-            </div>
+            <mini-bar />
           </div>
-          <div slot="footer">日均销售额<span>￥ 234.56</span></div>
+          <template slot="footer">转化率 <span>60%</span></template>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="总销售额" total="￥126,560">
+        <chart-card :loading="loading" title="运营活动效果" total="78%">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
-            <div style="display: inline-block; font-size: 14px; line-height: 22px; margin-right: 16px">
-              同周比
-              <span>12%</span>
-              <span style="color: #f5222d; font-size: 12px"><a-icon type="caret-up" /></span>
-            </div>
-            <div style="display: inline-block; font-size: 14px; line-height: 22px;">
-              日环比
-              <span>11%</span>
-              <span style="color: #52c41a; font-size: 12px"><a-icon type="caret-down" /></span>
-            </div>
+            <mini-progress color="rgb(19, 194, 194)" :target="80" :percentage="78" height="8px" />
           </div>
-          <div slot="footer">日均销售额<span>￥ 234.56</span></div>
+          <template slot="footer">
+            <trend style="margin-right: 16px;" term="同周比" :percentage="12" :type="true" :fixed="0" />
+            <trend term="日环比" :target="80" :value="78" :fixed="0" />
+          </template>
         </chart-card>
       </a-col>
     </a-row>
@@ -96,14 +73,16 @@
               </a-col>
             </a-row>
           </a-tab-pane>
-          <a-tab-pane tab="访问量" key="2"><a-row>
-            <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-              <bar title="销售额趋势" />
-            </a-col>
-            <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-              <rank-list title="门店销售排行榜" :list="rankList"/>
-            </a-col>
-          </a-row></a-tab-pane>
+          <a-tab-pane tab="访问量" key="2">
+            <a-row>
+              <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
+                <bar title="销售额趋势" />
+              </a-col>
+              <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
+                <rank-list title="门店销售排行榜" :list="rankList"/>
+              </a-col>
+            </a-row>
+          </a-tab-pane>
         </a-tabs>
       </div>
     </a-card>
@@ -154,13 +133,15 @@
 </template>
 
 <script>
-  import moment from "moment"
   import ChartCard from '@/components/ChartCard'
   import ACol from "ant-design-vue/es/grid/Col"
   import ATooltip from "ant-design-vue/es/tooltip/Tooltip"
   import MiniArea from '@/components/chart/MiniArea'
+  import MiniBar from '@/components/chart/MiniBar'
+  import MiniProgress from '@/components/chart/MiniProgress'
   import RankList from '@/components/chart/RankList'
   import Bar from '@/components/chart/Bar'
+  import Trend from '@/components/chart/Trend'
 
   const rankList = []
   for (let i = 0; i < 7; i++) {
@@ -177,12 +158,14 @@
       ACol,
       ChartCard,
       MiniArea,
+      MiniBar,
+      MiniProgress,
       RankList,
-      Bar
+      Bar,
+      Trend
     },
     data() {
       return {
-        moment,
         loading: true,
         rankList
       }
@@ -196,17 +179,17 @@
 </script>
 
 <style lang="scss" scoped>
-    .extra-wrapper {
-        line-height: 55px;
-        padding-right: 24px;
+  .extra-wrapper {
+    line-height: 55px;
+    padding-right: 24px;
 
-        .extra-item{
-            display: inline-block;
-            margin-right: 24px;
+    .extra-item {
+      display: inline-block;
+      margin-right: 24px;
 
-            a {
-                margin-left: 24px;
-            }
-        }
+      a {
+        margin-left: 24px;
+      }
     }
+  }
 </style>

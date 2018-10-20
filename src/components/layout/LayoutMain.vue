@@ -48,8 +48,8 @@
   import LayoutHeader from './LayoutHeader'
   import LayoutFooter from './LayoutFooter'
   import SettingDrawer from '@/components/tools/SettingDrawer'
+  import { triggerResize } from '@/utils/util'
   import { mapState, mapActions } from 'vuex'
-
 
   export default {
     name: "LayoutView",
@@ -86,7 +86,8 @@
     methods: {
       ...mapActions(['setSidebar']),
       toggle() {
-        this.collapsed = !this.collapsed;
+        this.collapsed = !this.collapsed
+        triggerResize()
         this.setSidebar(this.collapsed)
       },
       menuSelect() {
