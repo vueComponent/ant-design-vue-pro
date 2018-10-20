@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@antv/data-set": "^0.8.9",
+    "@antv/data-set": "^0.9.6",
     "ant-design-vue": "^1.1.6",
     "axios": "^0.18.0",
     "dayjs": "^1.7.5",
@@ -17,7 +17,7 @@
     "lodash.get": "^4.4.2",
     "md5": "^2.2.1",
     "nprogress": "^0.2.0",
-    "viser-vue": "^2.3.0",
+    "viser-vue": "^2.3.3",
     "vue": "^2.5.17",
     "vue-cropper": "^0.4.0",
     "vue-ls": "^3.2.0",
