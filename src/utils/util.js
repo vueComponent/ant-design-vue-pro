@@ -1,4 +1,3 @@
-
 export function timeFix() {
   const time = new Date()
   const hour = time.getHours()
@@ -9,4 +8,14 @@ export function welcome() {
   const arr = ['休息一会儿吧', '准备吃什么呢?', '要不要打一把 DOTA', '我猜你可能累了']
   let index = Math.floor((Math.random()*arr.length))
   return arr[index]
+}
+
+/**
+ * 触发 window.resize
+ */
+export function triggerResize() {
+  let event = document.createEvent('HTMLEvents')
+  event.initEvent('resize', true, true)
+  event.eventType = 'message'
+  window.dispatchEvent(event)
 }
