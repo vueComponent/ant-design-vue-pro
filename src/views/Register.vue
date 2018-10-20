@@ -47,14 +47,12 @@
           </a-form-item>
         </a-col>
         <a-col class="gutter-row" :span="8">
-          <span class="ivu-input-prefix">
-            <a-button
-              class="getCaptcha"
-              size="large"
-              :disabled="state.smsSendBtn"
-              @click.stop.prevent="getCaptcha"
-              v-text="!state.smsSendBtn && '获取验证码'||(state.time+' s')"></a-button>
-          </span>
+          <a-button
+            class="getCaptcha"
+            size="large"
+            :disabled="state.smsSendBtn"
+            @click.stop.prevent="getCaptcha"
+            v-text="!state.smsSendBtn && '获取验证码'||(state.time+' s')"></a-button>
         </a-col>
       </a-row>
 
