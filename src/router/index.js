@@ -34,7 +34,7 @@ export const constantRouterMap = [
     path: '/',
     component: Layout,
     redirect: '/login',
-    name: '首页',
+    name: 'home',
     hidden: true
   }
 ]

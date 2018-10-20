@@ -14,35 +14,55 @@
           <h3 class="setting-drawer-index-title">整体风格设置</h3>
 
           <div class="setting-drawer-index-blockChecbox">
-            <div class="setting-drawer-index-item" @click="changeMenuTheme('dark')">
-              <img src="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg" alt="dark">
-              <div class="setting-drawer-index-selectIcon" v-if="theme === 'dark'">
-                <a-icon type="check"/>
+            <a-tooltip>
+              <template slot="title">
+                暗色菜单风格
+              </template>
+              <div class="setting-drawer-index-item" @click="changeMenuTheme('dark')">
+                <img src="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg" alt="dark">
+                <div class="setting-drawer-index-selectIcon" v-if="navTheme === 'dark'">
+                  <a-icon type="check"/>
+                </div>
               </div>
-            </div>
-            <div class="setting-drawer-index-item" @click="changeMenuTheme('light')">
-              <img src="https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg" alt="light">
-              <div class="setting-drawer-index-selectIcon" v-if="theme !== 'dark'">
-                <a-icon type="check"/>
+            </a-tooltip>
+
+            <a-tooltip>
+              <template slot="title">
+                亮色菜单风格
+              </template>
+              <div class="setting-drawer-index-item" @click="changeMenuTheme('light')">
+                <img src="https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg" alt="light">
+                <div class="setting-drawer-index-selectIcon" v-if="navTheme !== 'dark'">
+                  <a-icon type="check"/>
+                </div>
               </div>
-            </div>
+            </a-tooltip>
           </div>
         </div>
 
         <div :style="{ marginBottom: '24px' }">
           <h3 class="setting-drawer-index-title">主题色</h3>
 
-          <div>
+          <div style="height: 20px">
             <a-tooltip class="setting-drawer-theme-color-colorBlock" v-for="(item, index) in colorList" :key="index">
               <template slot='title'>
                 {{ item.key }}
               </template>
-              <a-tag :color="item.color" @click="changeColor(item)">
-                <a-icon type="check" v-if="item.color === colorObj.color"></a-icon>
+              <a-tag :color="item.color" @click="changeColor(item.color)">
+                <a-icon type="check" v-if="item.color === primaryColor"></a-icon>
               </a-tag>
             </a-tooltip>
 
           </div>
+        </div>
+        <a-divider />
+        <div :style="{ marginBottom: '24px' }">
+          <a-alert type="warning">
+            <span slot="message">
+              配置栏只在开发环境用于预览，生产环境不会展现，请手动修改配置文件
+              <a href="https://github.com/sendya/ant-design-pro-vue/blob/master/src/defaultConfig.js" target="_blank">src/defaultConfig.js</a>
+            </span>
+          </a-alert>
         </div>
       </div>
       <div class="setting-drawer-index-handle" @click="toggle">
@@ -62,35 +82,35 @@
 
   const colorList = [
     {
-      key: 'dust',
+      key: '薄暮',
       color: '#F5222D',
     },
     {
-      key: 'volcano',
+      key: '火山',
       color: '#FA541C',
     },
     {
-      key: 'sunset',
+      key: '日暮',
       color: '#FAAD14',
     },
     {
-      key: 'cyan',
+      key: '明青',
       color: '#13C2C2',
     },
     {
-      key: 'green',
+      key: '极光绿',
       color: '#52C41A',
     },
     {
-      key: 'daybreak',
+      key: '拂晓蓝（默认）',
       color: '#1890FF',
     },
     {
-      key: 'geekblue',
+      key: '极客蓝',
       color: '#2F54EB',
     },
     {
-      key: 'purple',
+      key: '酱紫',
       color: '#722ED1',
     },
   ];
@@ -107,8 +127,8 @@
     },
     computed: {
       ...mapState({
-        theme: state => state.app.theme,
-        colorObj: state => state.app.color,
+        navTheme: state => state.app.theme,
+        primaryColor: state => state.app.color,
       })
     },
     mounted () {
@@ -117,8 +137,8 @@
         vm.visible = false
       }, 1)
       // 当主题色不是默认色时，才进行主题编译
-      if (this.colorObj.color !== config.color.color) {
-        updateTheme(this.colorObj.color)
+      if (this.primaryColor !== config.primaryColor) {
+        updateTheme(this.primaryColor)
       }
     },
     methods: {
@@ -135,9 +155,9 @@
         this.$store.dispatch('ToggleTheme', theme)
       },
       changeColor(color) {
-        if (this.colorObj.color !== color.color) {
+        if (this.primaryColor !== color) {
           this.$store.dispatch('ToggleColor', color)
-          updateTheme(color.color)
+          updateTheme(color)
         }
       }
     },
