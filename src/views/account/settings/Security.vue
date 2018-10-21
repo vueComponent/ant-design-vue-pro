@@ -5,7 +5,7 @@
   >
     <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
       <a-list-item-meta>
-        <a slot="title" href="https://vuecomponent.github.io/ant-design-vue/">{{ item.title }}</a>
+        <a slot="title">{{ item.title }}</a>
         <span slot="description">
           <span class="security-list-description">{{ item.description }}</span>
           <span v-if="item.value"> : </span>
