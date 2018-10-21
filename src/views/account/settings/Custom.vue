@@ -1,5 +1,6 @@
 <script>
   import { mapState } from "vuex"
+  import { colorList } from '@/components/tools/setting'
   import ASwitch from 'ant-design-vue/es/switch'
   import AList from "ant-design-vue/es/list"
   import AListItem from "ant-design-vue/es/list/Item"
@@ -19,7 +20,8 @@
     },
     computed: {
       ...mapState({
-        theme: state => state.app.theme
+        theme: state => state.app.theme,
+        color: state => state.app.color
       })
     },
     filters: {
@@ -29,12 +31,15 @@
           'light': '白色'
         }
         return themeMap[theme]
-      }
+      },
     },
     methods: {
-      onChange (checked) {
+      colorFilter(color) {
+        const c = colorList.filter(o => o.color === color)[0]
+        return c && c.key
+      },
 
-        console.log('click:', checked)
+      onChange (checked) {
         if (checked) {
           this.$store.dispatch('ToggleTheme',  'dark')
         } else {
@@ -60,7 +65,7 @@
             <Meta>
               <a slot="title">主题色</a>
               <span slot="description">
-                页面风格配色： <a>红</a>
+                页面风格配色： <a domPropsInnerHTML={ this.colorFilter(this.color) }/>
               </span>
             </Meta>
           </AListItem>

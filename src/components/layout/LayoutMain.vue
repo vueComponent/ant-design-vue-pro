@@ -108,6 +108,10 @@
     &.userLayout {
       overflow-y: auto;
     }
+
+    &.colorWeak {
+      filter: invert(80%);
+    }
   }
 
   .layout {
