@@ -11,7 +11,7 @@
             fieldDecoratorId="username"
             :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: this.handleUsernameOrEmail }], validateTrigger: 'blur'}"
           >
-            <a-input size="large" type="text" v-model="formLogin.username" placeholder="帐户名或邮箱地址 / admin">
+            <a-input size="large" type="text" placeholder="帐户名或邮箱地址 / admin">
               <a-icon slot="prefix" type='user' :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>
@@ -19,7 +19,7 @@
           <a-form-item
             fieldDecoratorId="password"
             :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}">
-            <a-input size="large" type="password" v-model="formLogin.password" placeholder="密码 / admin">
+            <a-input size="large" type="password" placeholder="密码 / admin">
               <a-icon slot="prefix" type='lock' :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>
@@ -28,7 +28,7 @@
           <a-form-item
             fieldDecoratorId="mobile"
             :fieldDecoratorOptions="{rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'blur'}">
-            <a-input size="large" type="text" v-model="formLogin.mobile" placeholder="手机号">
+            <a-input size="large" type="text" placeholder="手机号">
               <a-icon slot="prefix" type='mobile' :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>
@@ -38,7 +38,7 @@
               <a-form-item
                 fieldDecoratorId="captcha"
                 :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}">
-                <a-input size="large" type="text" v-model="formLogin.captcha" placeholder="验证码">
+                <a-input size="large" type="text" placeholder="验证码">
                   <a-icon slot="prefix" type='mail' :style="{ color: 'rgba(0,0,0,.25)' }"/>
                 </a-input>
               </a-form-item>
@@ -48,7 +48,7 @@
                 class="getCaptcha"
                 :disabled="state.smsSendBtn"
                 @click.stop.prevent="getCaptcha"
-                v-text="!state.smsSendBtn&&'获取验证码'||(state.time+' s')"></a-button>
+                v-text="!state.smsSendBtn && '获取验证码' || (state.time+' s')"></a-button>
             </a-col>
           </a-row>
         </a-tab-pane>
@@ -153,17 +153,25 @@
         let that = this
         let flag = false
 
+        let loginParams = {
+          remember_me: that.formLogin.rememberMe
+        };
+
+        // 使用账户密码登陆
         if (that.customActiveKey === 'tab1') {
-          that.form.validateFields([ 'username', 'password' ], { force: true }, (err) => {
+          that.form.validateFields([ 'username', 'password' ], { force: true }, (err, values) => {
             if (!err) {
               flag = true
+              loginParams[!that.loginType ? 'email' : 'username'] = values.username
+              loginParams.password = md5(values.password)
             }
           })
+        // 使用手机号登陆
         } else {
-          that.form.validateFields([ 'mobile', 'captcha' ], { force: true }, (err) => {
+          that.form.validateFields([ 'mobile', 'captcha' ], { force: true }, (err, values) => {
             if (!err) {
               flag = true
-              that.loginType = 2 // 登录类型修改为手机登录
+              loginParams = Object.assign(loginParams, values)
             }
           })
         }
@@ -171,25 +179,6 @@
         if (!flag) return
 
         that.loginBtn = true
-
-        let loginParams = {
-          password: md5(that.formLogin.password),
-          remember_me: that.formLogin.rememberMe
-        };
-
-        switch (that.loginType) {
-          case 0:
-            loginParams.email = that.formLogin.username
-            break;
-          case 1:
-            loginParams.username = that.formLogin.username
-            break;
-          case 2:
-          default:
-            loginParams.mobile = that.formLogin.mobile
-            loginParams.captcha = that.formLogin.captcha
-            break;
-        }
 
         that.Login(loginParams).then(() => {
           if (that.requiredTwoStepCaptcha) {
