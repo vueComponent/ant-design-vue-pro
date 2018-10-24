@@ -55,6 +55,21 @@
 
           </div>
         </div>
+
+        <a-divider />
+        <div :style="{ marginBottom: '24px' }">
+          <h3 class="setting-drawer-index-title">其他设置</h3>
+          <div>
+            <a-list :split="false">
+              <a-list-item>
+                <a-switch slot="actions" size="small" :defaultChecked="colorWeak" @change="onColorWeak" />
+                <a-list-item-meta>
+                  <div slot="title">色弱模式</div>
+                </a-list-item-meta>
+              </a-list-item>
+            </a-list>
+          </div>
+        </div>
         <a-divider />
         <div :style="{ marginBottom: '24px' }">
           <a-alert type="warning">
@@ -75,13 +90,15 @@
 
 <script>
   import DetailList from '@/components/tools/DetailList'
+  import SettingItem from '@/components/setting/SettingItem'
   import config from '@/defaultConfig'
-  import { updateTheme, colorList } from '@/components/tools/setting'
+  import { updateTheme, updateColorWeak, colorList } from '@/components/tools/setting'
   import { mapState } from 'vuex'
 
   export default {
     components: {
-      DetailList
+      DetailList,
+      SettingItem
     },
     data() {
       return {
@@ -93,16 +110,23 @@
       ...mapState({
         navTheme: state => state.app.theme,
         primaryColor: state => state.app.color,
+        colorWeak: state => state.app.weak,
       })
     },
     mounted () {
       const vm = this
+      /*this.$nextTick(() => {
+        vm.visible = false
+      })*/
       setTimeout(() => {
         vm.visible = false
-      }, 1)
+      }, 16)
       // 当主题色不是默认色时，才进行主题编译
       if (this.primaryColor !== config.primaryColor) {
         updateTheme(this.primaryColor)
+      }
+      if (this.colorWeak !== config.colorWeak) {
+        updateColorWeak(this.colorWeak)
       }
     },
     methods: {
@@ -115,10 +139,14 @@
       toggle() {
         this.visible = !this.visible
       },
-      changeMenuTheme(theme) {
+      onColorWeak (checked) {
+        this.$store.dispatch('ToggleWeak', checked)
+        updateColorWeak(checked)
+      },
+      changeMenuTheme (theme) {
         this.$store.dispatch('ToggleTheme', theme)
       },
-      changeColor(color) {
+      changeColor (color) {
         if (this.primaryColor !== color) {
           this.$store.dispatch('ToggleColor', color)
           updateTheme(color)
@@ -132,12 +160,6 @@
 
   .setting-drawer-index-content {
 
-    .setting-drawer-index-title {
-      font-size: 14px;
-      color: rgba(0, 0, 0, .85);
-      line-height: 22px;
-      margin-bottom: 12px;
-    }
     .setting-drawer-index-blockChecbox {
       display: flex;
 

@@ -37,6 +37,7 @@
       <a-layout-footer style="padding: 0px">
         <layout-footer/>
       </a-layout-footer>
+
     </a-layout>
 
     <setting-drawer></setting-drawer>
@@ -47,7 +48,7 @@
   import SiderMenu from '@/components/menu/SiderMenu'
   import LayoutHeader from './LayoutHeader'
   import LayoutFooter from './LayoutFooter'
-  import SettingDrawer from '@/components/tools/SettingDrawer'
+  import SettingDrawer from '@/components/setting/SettingDrawer'
   import { triggerResize } from '@/utils/util'
   import { mapState, mapActions } from 'vuex'
 

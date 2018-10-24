@@ -122,15 +122,13 @@
       }
     },
     created () {
-      /* 
       this.$http.get('/auth/2step-code')
         .then(res => {
-          this.requiredTwoStepCaptcha = res.result
+          this.requiredTwoStepCaptcha = res.result.stepCode
         }).catch(err => {
           console.log('2step-code:', err)
         })
-      */
-     this.requiredTwoStepCaptcha = true
+     // this.requiredTwoStepCaptcha = true
       
     },
     methods: {
