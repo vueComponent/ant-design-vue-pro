@@ -15,7 +15,7 @@ export default {
   },
   props: Object.assign({}, T.props, {
     rowKey: {
-      type: String,
+      type: [String, Function],
       default: 'id'
     },
     data: {
@@ -83,6 +83,23 @@ export default {
       this.loadData();
     },
     loadData(pagination, filters, sorter) {
+
+      /* region
+       * 由于 Pagination 修改分页下拉选项触发了 showSizeChange 和 change 事件 ,
+       * 而 a-table 中将 showSizeChange 转为 change 事件 , 导致 change 事件重复触发了 2 次 ,
+       * 此处临时处理 , 待作者修复后移除  */
+      let _paramStr = JSON.stringify({
+        pagination,
+        filters,
+        sorter
+      })
+      if (this._lastChangeParamStr === _paramStr && (Date.now() - this._lastChangeTimestamp) < 10) {
+        return
+      }
+      this._lastChangeParamStr = _paramStr;
+      this._lastChangeTimestamp = Date.now();
+      /* regionend */
+
       this.localLoading = true
       var result = this.data(
         Object.assign({
