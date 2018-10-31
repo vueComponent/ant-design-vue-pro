@@ -12,9 +12,9 @@
           Ant Design 是西湖区最具影响力的 Web 设计规范
         </div>
       </div>
-      <div class="main">
-        <route-view></route-view>
-      </div>
+
+      <route-view></route-view>
+
       <div class="footer">
         <div class="links">
           <a href="_self">帮助</a>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import RouteView from "@/components/layout/RouteView"
+  import RouteView from "@/components/layouts/RouteView"
 
   export default {
     name: "UserLayout",

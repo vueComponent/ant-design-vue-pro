@@ -1,5 +1,5 @@
 <template>
-  <div class="user-layout-register">
+  <div class="main user-layout-register">
     <h3><span>注册</span></h3>
     <a-form ref="formRegister" :autoFormCreate="(form)=>{this.form = form}" id="formRegister">
       <a-form-item
@@ -18,7 +18,7 @@
 
       <a-form-item
         fieldDecoratorId="password2"
-        :fieldDecoratorOptions="{rules: [{ required: true, message: '至少6位密码，区分大小写' }], validateTrigger: 'blur'}">
+        :fieldDecoratorOptions="{rules: [{ required: true, message: '至少6位密码，区分大小写' }, { validator: this.handlePasswordCheck }], validateTrigger: 'blur'}">
 
         <a-input size="large" type="password" placeholder="确认密码"></a-input>
       </a-form-item>
@@ -74,15 +74,13 @@
 </template>
 
 <script>
-  import api from '@/api/'
-  import UserLayout from '@/components/layout/UserLayout'
+  import { getSmsCaptcha } from '@/api/login'
 
   export default {
     name: "Register",
     components: {
-      UserLayout
     },
-    data () {
+    data() {
       return {
         form: null,
 
@@ -95,20 +93,28 @@
     },
     methods: {
 
-      handleSubmit () {
+      handlePasswordCheck (rule, value, callback) {
+        let password = this.form.getFieldValue('password')
+        if (value && password && value.trim() !== password.trim()) {
+          callback(new Error('两次密码不一致'))
+        }
+        callback()
+      },
+
+      handleSubmit() {
         this.form.validateFields((err, values) => {
           if (!err) {
-            console.log('form data', values)
+            this.$router.push({ name: 'registerResult', params: {...values} })
           }
         })
       },
 
-      getCaptcha (e) {
+      getCaptcha(e) {
         e.preventDefault()
         let that = this
 
-        this.form.validateFields([ 'mobile' ], { force: true },
-          (err) => {
+        this.form.validateFields(['mobile'], {force: true},
+          (err, values) => {
             if (!err) {
               this.state.smsSendBtn = true;
 
@@ -121,28 +127,27 @@
               }, 1000);
 
               const hide = this.$message.loading('验证码发送中..', 0);
-              this.$http.post(api.SendSms, { mobile: that.formRegister.mobile })
-                .then(res => {
-                  setTimeout(hide, 2500);
-                  this.$notification[ 'success' ]({
-                    message: '提示',
-                    description: '验证码获取成功，您的验证码为：' + res.result.captcha,
-                    duration: 8
-                  })
+
+              getSmsCaptcha({mobile: values.mobile}).then(res => {
+                setTimeout(hide, 2500);
+                this.$notification['success']({
+                  message: '提示',
+                  description: '验证码获取成功，您的验证码为：' + res.result.captcha,
+                  duration: 8
                 })
-                .catch(err => {
-                  setTimeout(hide, 1);
-                  clearInterval(interval);
-                  that.state.time = 60;
-                  that.state.smsSendBtn = false;
-                  this.requestFailed(err);
-                });
+              }).catch(err => {
+                setTimeout(hide, 1);
+                clearInterval(interval);
+                that.state.time = 60;
+                that.state.smsSendBtn = false;
+                this.requestFailed(err);
+              });
             }
           }
         );
       },
-      requestFailed (err) {
-        this.$notification[ 'error' ]({
+      requestFailed(err) {
+        this.$notification['error']({
           message: '错误',
           description: ((err.response || {}).data || {}).message || "请求出现错误，请稍后再试",
           duration: 4,
@@ -156,7 +161,7 @@
 <style lang="scss" scoped>
   .user-layout-register {
 
-    &> h3 {
+    & > h3 {
       font-size: 16px;
       margin-bottom: 20px;
     }

@@ -1,4 +1,4 @@
-import { asyncRouterMap, constantRouterMap } from "@/router"
+import { asyncRouterMap, constantRouterMap } from "@/config/router.config"
 
 /**
  * 过滤账户是否拥有某一个权限，并将菜单从加载列表移除
@@ -16,8 +16,9 @@ function hasPermission(permission, route) {
         return true
       }
     }
+    return false
   }
-  return false
+  return true
 }
 
 /**
@@ -36,8 +37,8 @@ function hasRole(roles, route) {
   }
 }
 
-function filterAsyncRouter(asyncRouterMap, roles) {
-  const accessedRouters = asyncRouterMap.filter(route => {
+function filterAsyncRouter(routerMap, roles) {
+  const accessedRouters = routerMap.filter(route => {
     if (hasPermission(roles.permissionList, route)) {
       if (route.children && route.children.length) {
         route.children = filterAsyncRouter(route.children, roles)

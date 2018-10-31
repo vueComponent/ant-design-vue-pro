@@ -18,6 +18,7 @@ Table 重封装组件说明
 ```vue
 <template>
     <s-table
+      ref="table"
       size="default"
       :columns="columns"
       :data="loadData"
@@ -70,7 +71,7 @@ Table 重封装组件说明
                     return res.result
                   })
                 },
-            }
+            },
     }
 </script>
 
@@ -86,6 +87,7 @@ Table 重封装组件说明
 ```vue
 <template>
     <s-table
+      ref="table"
       size="default"
       :columns="columns"
       :data="loadData"
@@ -158,12 +160,33 @@ Table 重封装组件说明
                     return res.result
                   })
                 },
-            }
+        	},
+        },
+		methods: {
+			edit (row) {
+				// axios 发送数据到后端 修改数据成功后
+				// 调用 refresh() 重新加载列表数据
+				// 这里 setTimeout 模拟发起请求的网络延迟..
+				setTimeout (() => {
+                    this.$refs.table.refresh()
+				}, 1500)
+
+			}
+		}
     }
 </script>
 ```
 
 
+
+内置方法
+----
+
+通过 `this.$refs.table` 调用
+
+`this.$refs.table.refresh()` 刷新列表 (用户新增/修改数据后，重载列表数据)
+
+> 注意：要调用 `refresh()` 需要给表格组件设定 `ref` 值
 
 
 
@@ -261,4 +284,4 @@ result.then(r => {
 更新时间
 ----
 
-该文档最后更新于： 2018-10-20 PM 3:36
+该文档最后更新于： 2018-10-31 PM 08:15

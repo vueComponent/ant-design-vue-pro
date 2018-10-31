@@ -23,6 +23,8 @@ export default {
   methods: {
     getBreadcrumb() {
 
+      console.log('this.$route.matched', this.$route.matched)
+
       this.breadList = []
       this.breadList.push({ name: 'index', path: '/dashboard/', meta: { title: '首页' } })
 

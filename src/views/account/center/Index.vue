@@ -90,8 +90,8 @@
 </template>
 
 <script>
-  import PageLayout from '@/components/layout/PageLayout'
-  import RouteView from "@/components/layout/RouteView"
+  import PageLayout from '@/components/page/PageLayout'
+  import RouteView from "@/components/layouts/RouteView"
   import { AppPage, ArticlePage, ProjectPage } from './page'
 
 

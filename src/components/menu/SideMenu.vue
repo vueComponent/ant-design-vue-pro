@@ -1,6 +1,6 @@
 <template>
-  <a-layout-sider 
-    :class="['sider', isMobile ? null : 'shadow', theme ]" 
+  <a-layout-sider
+    :class="['sider', device === 'desktop' ? null : 'shadow', theme ]"
     width="256px" 
     :collapsible="collapsible"
     v-model="collapsed" 
@@ -19,14 +19,16 @@
       :mode="mode"
       style="padding: 16px 0px;"></s-menu>
   </a-layout-sider>
+
 </template>
 
 <script>
   import ALayoutSider from "ant-design-vue/es/layout/Sider"
   import SMenu from './index'
+  import { mapState } from 'vuex'
 
   export default {
-    name: "SiderMenu",
+    name: "SideMenu",
     components: { ALayoutSider, SMenu },
     props: {
       mode: {
@@ -58,9 +60,9 @@
 
     },
     computed: {
-      isMobile () {
-        return this.$store.state.app.device !== 'desktop'
-      }
+      ...mapState({
+        device: state => state.app.device,
+      })
     },
     methods: {
       onSelect (obj) {

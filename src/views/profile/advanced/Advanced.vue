@@ -134,7 +134,7 @@
 
 <script>
   import { mapState } from 'vuex'
-  import PageLayout from '@/components/layout/PageLayout'
+  import PageLayout from '@/components/page/PageLayout'
   import DetailList from '@/components/tools/DetailList'
 
   const DetailListItem = DetailList.Item

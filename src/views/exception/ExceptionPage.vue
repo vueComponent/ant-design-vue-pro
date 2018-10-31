@@ -72,4 +72,17 @@
     }
   }
 
+  .mobile {
+    .exception {
+      margin-top: 30px;
+      .img {
+        padding-right: unset;
+
+        img {
+          height: 40%;
+          max-width: 80%;
+        }
+      }
+    }
+  }
 </style>

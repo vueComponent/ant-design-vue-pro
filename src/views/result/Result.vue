@@ -5,7 +5,7 @@
     </div>
     <div class="title" v-if="title">{{ title }}</div>
     <div class="description" v-if="description">{{ description }}</div>
-    <div class="content">
+    <div class="content" v-if="content">
       <slot></slot>
     </div>
     <div class="action">
@@ -30,6 +30,10 @@
       description: {
         type: String,
         default: ''
+      },
+      content: {
+        type: Boolean,
+        default: true
       }
     }
   }

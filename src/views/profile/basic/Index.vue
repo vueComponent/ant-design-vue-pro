@@ -1,5 +1,5 @@
 <template>
-  <page-layout>
+  <page-layout :title="title">
     <a-card :bordered="false">
       <detail-list title="退款申请">
         <detail-list-item term="取货单号">1000000000</detail-list-item>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-  import PageLayout from '@/components/layout/PageLayout'
+  import PageLayout from '@/components/page/PageLayout'
   import STable from '@/components/table/'
   import DetailList from '@/components/tools/DetailList'
   import ABadge from "ant-design-vue/es/badge/Badge"
@@ -235,7 +235,12 @@
         }
         return statusMap[status]
       }
-    }
+    },
+    computed: {
+      title () {
+        return this.$route.meta.title
+      }
+    },
 
   }
 </script>

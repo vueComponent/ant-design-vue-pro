@@ -113,7 +113,7 @@
   import { timeFix } from "@/utils/util"
   import {mapGetters} from "vuex"
 
-  import PageLayout from '@/components/layout/PageLayout'
+  import PageLayout from '@/components/page/PageLayout'
   import HeadInfo from '@/components/tools/HeadInfo'
   import Radar from '@/components/chart/Radar'
 

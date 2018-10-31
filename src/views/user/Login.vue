@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <a-form class="user-layout-login" ref="formLogin" :autoFormCreate="(form)=>{this.form = form}" id="formLogin">
       <a-tabs
         :activeKey="customActiveKey"
@@ -90,7 +90,7 @@
 
 <script>
   import md5 from "md5"
-  import api from '@/api/'
+  import api from '@/api'
   import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
   import { mapActions } from "vuex"
   import { timeFix } from "@/utils/util"

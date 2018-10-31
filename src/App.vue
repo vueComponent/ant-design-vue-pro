@@ -30,7 +30,7 @@
         }
         else {
           that.$store.commit('TOGGLE_DEVICE', 'desktop')
-          that.$store.commit('TOGGLE_SIDEBAR', true)
+          that.$store.commit('SET_SIDEBAR_TYPE', true)
         }
 
       })
