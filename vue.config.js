@@ -6,12 +6,20 @@ function resolve (dir) {
 
 // vue.config.js
 module.exports = {
+  /*
+    Vue-cli3:
+    Crashed when using Webpack `import()` #2463
+    https://github.com/vuejs/vue-cli/issues/2463
+
+   */
+  /*
   pages: {
     index: {
       entry: 'src/main.js',
       chunks: ['chunk-vendors', 'chunk-common', 'index']
     }
   },
+  */
   configureWebpack: {
 
   },
