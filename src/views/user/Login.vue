@@ -9,7 +9,7 @@
 
           <a-form-item
             fieldDecoratorId="username"
-            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: this.handleUsernameOrEmail }], validateTrigger: 'blur'}"
+            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: this.handleUsernameOrEmail }], validateTrigger: 'change'}"
           >
             <a-input size="large" type="text" placeholder="帐户名或邮箱地址 / admin">
               <a-icon slot="prefix" type='user' :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -27,7 +27,7 @@
         <a-tab-pane key="tab2" tab="手机号登陆">
           <a-form-item
             fieldDecoratorId="mobile"
-            :fieldDecoratorOptions="{rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'blur'}">
+            :fieldDecoratorOptions="{rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'change'}">
             <a-input size="large" type="text" placeholder="手机号">
               <a-icon slot="prefix" type='mobile' :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>

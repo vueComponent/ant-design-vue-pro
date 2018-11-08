@@ -11,12 +11,12 @@
 
       <a-form-item
         fieldDecoratorId="password"
-        :fieldDecoratorOptions="{rules: [{ required: true, message: '至少6位密码，区分大小写' }, { validator: this.handlePasswordLevel }], validateTrigger: 'change'}">
-        <a-popover placement="right">
+        :fieldDecoratorOptions="{rules: [{ required: true, message: '至少6位密码，区分大小写' }, { validator: this.handlePasswordLevel }], validateTrigger: ['change', 'blur']}">
+        <a-popover placement="right" trigger="click" :visible="clicked" @visibleChange="clicked = true">
           <template slot="content">
             <div :style="{ width: '240px' }">
-              <div :class="['user-register', getPasswordLevelClass()]">强度：<span>低</span></div>
-              <a-progress :percent="30" :showInfo="false" strokeColor="#FF0000" />
+              <div :class="['user-register', passwordLevelClass]">强度：<span>{{ passwordLevelName }}</span></div>
+              <a-progress :percent="state.percent" :showInfo="false" strokeColor="#FF0000" />
               <div style="margin-top: 10px;">
                 <span>请至少输入 6 个字符。请不要使用容易被猜到的密码。</span>
               </div>
@@ -86,6 +86,18 @@
 <script>
   import { getSmsCaptcha } from '@/api/login'
 
+  const levelNames = {
+    0: '低',
+    1: '低',
+    2: '中',
+    3: '强'
+  }
+  const levelClass = {
+    0: 'error',
+    1: 'error',
+    2: 'warning',
+    3: 'success'
+  }
   export default {
     name: "Register",
     components: {
@@ -94,12 +106,22 @@
       return {
         form: null,
 
+        clicked: false,
         state: {
           time: 60,
           smsSendBtn: false,
-          passwordLevel: 0
+          passwordLevel: 0,
+          percent: 0,
         },
         registerBtn: false
+      }
+    },
+    computed: {
+      passwordLevelClass () {
+        return levelClass[this.state.passwordLevel]
+      },
+      passwordLevelName () {
+        return levelNames[this.state.passwordLevel]
       }
     },
     methods: {
@@ -120,7 +142,12 @@
           level++
         }
         this.state.passwordLevel = level
+        this.state.percent = level * 30
+        console.log('passwordLevel', this.state.passwordLevel, 'level', level)
         if (level >= 2) {
+          if (level >= 3) {
+            this.state.percent = 100
+          }
           callback()
         } else {
           callback(new Error('密码强度不够'))
@@ -141,16 +168,6 @@
             this.$router.push({ name: 'registerResult', params: {...values} })
           }
         })
-      },
-
-      getPasswordLevelClass () {
-        const c = {
-          0: 'error',
-          1: 'error',
-          2: 'warning',
-          3: 'success'
-        }
-        return c[this.state.passwordLevel]
       },
 
       getCaptcha(e) {
@@ -201,6 +218,7 @@
     },
     watch: {
       'state.passwordLevel' (val) {
+        console.log(val)
 
       }
     }

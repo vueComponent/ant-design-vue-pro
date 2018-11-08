@@ -4,6 +4,7 @@ import store from './store'
 
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
+import notification from 'ant-design-vue/es/notification'
 import { ACCESS_TOKEN } from "@/store/mutation-types"
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
@@ -27,6 +28,7 @@ router.beforeEach((to, from, next) => {
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
           })
         }).catch(() => {
+          notification.error({ message: '错误', description: '请求用户信息失败，请重试' })
           store.dispatch('Logout').then(() => {
             next({ path: '/user/login' })
           })
