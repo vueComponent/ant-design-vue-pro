@@ -11,9 +11,19 @@
 
       <a-form-item
         fieldDecoratorId="password"
-        :fieldDecoratorOptions="{rules: [{ required: true, message: '至少6位密码，区分大小写' }], validateTrigger: 'blur'}">
-
-        <a-input size="large" type="password" placeholder="至少6位密码，区分大小写"></a-input>
+        :fieldDecoratorOptions="{rules: [{ required: true, message: '至少6位密码，区分大小写' }, { validator: this.handlePasswordLevel }], validateTrigger: 'change'}">
+        <a-popover placement="right">
+          <template slot="content">
+            <div :style="{ width: '240px' }">
+              <div :class="['user-register', getPasswordLevelClass()]">强度：<span>低</span></div>
+              <a-progress :percent="30" :showInfo="false" strokeColor="#FF0000" />
+              <div style="margin-top: 10px;">
+                <span>请至少输入 6 个字符。请不要使用容易被猜到的密码。</span>
+              </div>
+            </div>
+          </template>
+          <a-input size="large" type="password" placeholder="至少6位密码，区分大小写"></a-input>
+        </a-popover>
       </a-form-item>
 
       <a-form-item
@@ -87,11 +97,35 @@
         state: {
           time: 60,
           smsSendBtn: false,
+          passwordLevel: 0
         },
         registerBtn: false
       }
     },
     methods: {
+
+      handlePasswordLevel (rule, value, callback) {
+        let level = 0
+
+        // 判断这个字符串中有没有数字
+        if (/[0-9]/.test(value)) {
+          level++
+        }
+        // 判断字符串中有没有字母
+        if (/[a-zA-Z]/.test(value)) {
+          level++
+        }
+        // 判断字符串中有没有特殊符号
+        if (/[^0-9a-zA-Z_]/.test(value)) {
+          level++
+        }
+        this.state.passwordLevel = level
+        if (level >= 2) {
+          callback()
+        } else {
+          callback(new Error('密码强度不够'))
+        }
+      },
 
       handlePasswordCheck (rule, value, callback) {
         let password = this.form.getFieldValue('password')
@@ -107,6 +141,16 @@
             this.$router.push({ name: 'registerResult', params: {...values} })
           }
         })
+      },
+
+      getPasswordLevelClass () {
+        const c = {
+          0: 'error',
+          1: 'error',
+          2: 'warning',
+          3: 'success'
+        }
+        return c[this.state.passwordLevel]
       },
 
       getCaptcha(e) {
@@ -154,10 +198,30 @@
         });
         this.registerBtn = false;
       },
+    },
+    watch: {
+      'state.passwordLevel' (val) {
+
+      }
     }
   }
 </script>
+<style lang="scss">
+  .user-register {
 
+    &.error {
+      color: #ff0000;
+    }
+
+    &.warning {
+      color: #ff7e05;
+    }
+
+    &.success {
+      color: #52c41a;
+    }
+  }
+</style>
 <style lang="scss" scoped>
   .user-layout-register {
 
@@ -165,6 +229,8 @@
       font-size: 16px;
       margin-bottom: 20px;
     }
+
+
 
     .getCaptcha {
       display: block;

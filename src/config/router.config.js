@@ -88,6 +88,12 @@ export const asyncRouterMap = [
             meta: { title: '内联编辑表格', permission: [ 'table' ] }
           },
           {
+            path: '/list/user-list',
+            name: 'UserList',
+            component: () => import('@/views/list/UserList'),
+            meta: { title: '用户列表', permission: [ 'table' ] }
+          },
+          {
             path: '/list/role-list',
             name: 'RoleList',
             component: () => import('@/views/list/RoleList'),
