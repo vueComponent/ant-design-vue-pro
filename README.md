@@ -10,6 +10,8 @@ Overview
 
 [预览地址](https://pro.loacg.com/)  **附带一些后台基础用到的列表展示例子**
 
+![工作台+设置菜单](https://static-2.loacg.com/open/static/github/2018-11-10_19-23-39.png)
+
 ![工作台](https://static-2.loacg.com/open/static/github/20180916-134306.png)
 
 ![个人设置](https://static-2.loacg.com/open/static/github/20180916-134251.png)
