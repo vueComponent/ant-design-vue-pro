@@ -1,5 +1,5 @@
 <template>
-  <a-popover trigger="click" placement="bottomRight" :overlayStyle="{ width: '300px' }">
+  <a-popover trigger="click" placement="bottomRight" :autoAdjustOverflow="false" overlayClassName="header-notice-wrapper" :overlayStyle="{ width: '300px', top: '50px' }">
     <template slot="content">
       <a-spin :spinning="loadding">
         <a-tabs>
@@ -62,10 +62,16 @@
   }
 </script>
 
+<style lang="css">
+  .header-notice-wrapper {
+    top: 50px !important;
+  }
+</style>
 <style lang="scss" scoped>
   .header-notice{
     display: inline-block;
     transition: all 0.3s;
+
     span {
       vertical-align: initial;
     }

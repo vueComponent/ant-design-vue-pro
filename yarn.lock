@@ -1901,7 +1901,7 @@ ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ant-design-vue@^1.1.6:
+ant-design-vue@^1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.1.7.tgz#19a9e1d53070cba93225c80145829898b003580b"
   integrity sha512-3lhP0rAY4v3ZwzBFqSJaBJ6Wmo1E6Z4kQ2m4+ph1OuN4DAW2oDw2KZZrZcqT9GscYUgdn1A7dCiV6MO+aJU5tw==

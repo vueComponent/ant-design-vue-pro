@@ -128,10 +128,14 @@ export default {
       } else {
         this.selectedKeys = [ routes.pop().path ]
       }
+
       let openKeys = []
-      routes.forEach((item) => {
-        openKeys.push(item.path)
-      })
+      if (this.mode === 'inline') {
+        routes.forEach((item) => {
+          openKeys.push(item.path)
+        })
+      }
+
       this.collapsed ? this.cachedOpenKeys = openKeys : this.openKeys = openKeys
     }
   },
@@ -142,7 +146,6 @@ export default {
         props: {
           theme: this.$props.theme,
           mode: this.$props.mode,
-          inlineCollapsed: false,
           openKeys: this.openKeys,
           selectedKeys: this.selectedKeys
         },

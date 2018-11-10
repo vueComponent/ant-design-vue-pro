@@ -16,9 +16,22 @@
         </div>
       </div>
       <slot slot="extra" name="extra"></slot>
+      <div slot="pageMenu">
+        <div class="page-menu-search" v-if="search">
+          <a-input-search style="width: 80%; max-width: 522px;" placeholder="请输入..." size="large" enterButton="搜索" />
+        </div>
+        <div class="page-menu-tabs" v-if="tabs && tabs.items">
+          <!-- @change="callback" :activeKey="activeKey" -->
+          <a-tabs :tabBarStyle="{margin: 0}" @change="tabs.callback" :activeKey="tabs.active()">
+            <a-tab-pane v-for="item in tabs.items" :tab="item.title" :key="item.key"></a-tab-pane>
+          </a-tabs>
+        </div>
+      </div>
     </page-header>
     <div class="content">
-      <slot></slot>
+      <div :class="['page-header-index-wide']">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -56,8 +69,18 @@
       extraImage: {
         type: String,
         default: null
+      },
+      search: {
+        type: Boolean,
+        default: false
+      },
+      tabs: {
+        type: Object,
+        default: () => {}
       }
     },
+    methods: {
+    }
   }
 </script>
 
@@ -90,5 +113,12 @@
         }
       }
     }
+  }
+  .page-menu-search {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .page-menu-tabs {
+    margin-top: 48px;
   }
 </style>

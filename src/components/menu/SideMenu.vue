@@ -5,12 +5,7 @@
     :collapsible="collapsible"
     v-model="collapsed" 
     :trigger="null">
-    <div class="logo">
-      <router-link :to="{name:'dashboard'}">
-        <img src="~@/assets/logo.svg" alt="logo">
-        <h1>Ant Design Pro</h1>
-      </router-link>
-    </div>
+    <logo />
     <s-menu
       :collapsed="collapsed"
       :menu="menus"
@@ -24,12 +19,13 @@
 
 <script>
   import ALayoutSider from "ant-design-vue/es/layout/Sider"
+  import Logo from '../tools/Logo'
   import SMenu from './index'
   import { mapState } from 'vuex'
 
   export default {
     name: "SideMenu",
-    components: { ALayoutSider, SMenu },
+    components: { ALayoutSider, Logo, SMenu },
     props: {
       mode: {
         type: String,

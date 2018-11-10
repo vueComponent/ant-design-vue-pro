@@ -1,6 +1,6 @@
 <template>
   <a-layout-header style="padding: 0px;">
-    <div class="header">
+    <div v-if="mode === 'sidemenu'" class="header">
       <a-icon
         v-if="device==='mobile'"
         class="trigger"
@@ -12,57 +12,52 @@
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click.native="toggle"/>
 
-      <div class="user-wrapper">
-        <span class="action">
-          <a-icon type="question-circle-o"></a-icon>
-        </span>
-        <header-notice class="action"/>
-        <a-dropdown>
-          <span class="action ant-dropdown-link user-dropdown-menu">
-            <a-avatar class="avatar" size="small" :src="avatar()"/>
-            <span>{{ nickname() }}</span>
-          </span>
-          <a-menu slot="overlay" class="user-dropdown-menu-wrapper">
-            <a-menu-item key="0">
-              <router-link :to="{ name: 'center' }">
-                <a-icon type="user"/>
-                <span>个人中心</span>
-              </router-link>
-            </a-menu-item>
-            <a-menu-item key="1">
-              <router-link :to="{ name: 'settings' }">
-                <a-icon type="setting"/>
-                <span>账户设置</span>
-              </router-link>
-            </a-menu-item>
-            <a-menu-item key="2" disabled>
-              <a-icon type="setting"/>
-              <span>测试</span>
-            </a-menu-item>
-            <a-menu-divider/>
-            <a-menu-item key="3">
-              <a href="javascript:;" @click="handleLogout">
-                <a-icon type="logout"/>
-                <span>退出登录</span>
-              </a>
-            </a-menu-item>
-          </a-menu>
-        </a-dropdown>
+      <user-menu></user-menu>
+    </div>
+    <div v-else :class="['top-nav-header-index', theme]">
+      <div class="header-index-wide">
+        <div class="header-index-left">
+          <logo class="top-nav-header" />
+          <s-menu
+            mode="horizontal"
+            :menu="menus"
+            :theme="theme"
+          ></s-menu>
+        </div>
+        <user-menu class="header-index-right">
+
+        </user-menu>
       </div>
     </div>
+
   </a-layout-header>
 </template>
 
 <script>
-  import HeaderNotice from './HeaderNotice'
-  import {mapActions, mapGetters} from 'vuex'
+  import UserMenu from '../tools/UserMenu'
+  import SMenu from '../menu/'
+  import Logo from '../tools/Logo'
+
+  import { mapState } from 'vuex'
 
   export default {
     name: "LayoutHeader",
     components: {
-      HeaderNotice
+      UserMenu,
+      SMenu,
+      Logo
     },
     props: {
+      mode: {
+        type: String,
+        // sidemenu, topmenu
+        default: 'sidemenu'
+      },
+      theme: {
+        type: String,
+        required: false,
+        default: 'dark'
+      },
       collapsed: {
         type: Boolean,
         required: false,
@@ -75,34 +70,20 @@
       }
     },
     data() {
-      return {}
+      return {
+        menus: [],
+      }
     },
     created() {
-
+      this.menus = this.mainMenu.find((item) => item.path === '/').children
+    },
+    computed: {
+      ...mapState({
+        mainMenu: state => state.permission.addRouters,
+      }),
     },
     methods: {
-      ...mapActions(["Logout"]),
-      ...mapGetters(["nickname", "avatar"]),
-      handleLogout() {
-        const that = this
 
-        this.$confirm({
-          title: '提示',
-          content: '真的要注销登录吗 ?',
-          onOk() {
-            return that.Logout({}).then(() => {
-              window.location.reload()
-            }).catch(err => {
-              that.$message.error({
-                title: '错误',
-                description: err.message
-              })
-            })
-          },
-          onCancel() {
-          },
-        });
-      },
       toggle() {
         this.$emit('toggle')
       }
@@ -110,6 +91,6 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

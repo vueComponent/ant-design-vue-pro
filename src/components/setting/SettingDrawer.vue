@@ -18,7 +18,7 @@
               <template slot="title">
                 暗色菜单风格
               </template>
-              <div class="setting-drawer-index-item" @click="changeMenuTheme('dark')">
+              <div class="setting-drawer-index-item" @click="handleMenuTheme('dark')">
                 <img src="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg" alt="dark">
                 <div class="setting-drawer-index-selectIcon" v-if="navTheme === 'dark'">
                   <a-icon type="check"/>
@@ -30,7 +30,7 @@
               <template slot="title">
                 亮色菜单风格
               </template>
-              <div class="setting-drawer-index-item" @click="changeMenuTheme('light')">
+              <div class="setting-drawer-index-item" @click="handleMenuTheme('light')">
                 <img src="https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg" alt="light">
                 <div class="setting-drawer-index-selectIcon" v-if="navTheme !== 'dark'">
                   <a-icon type="check"/>
@@ -55,8 +55,39 @@
 
           </div>
         </div>
-
         <a-divider />
+
+        <div :style="{ marginBottom: '24px' }">
+          <h3 class="setting-drawer-index-title">导航模式</h3>
+
+          <div class="setting-drawer-index-blockChecbox">
+            <a-tooltip>
+              <template slot="title">
+                侧边栏导航
+              </template>
+              <div class="setting-drawer-index-item" @click="handleLayout('sidemenu')">
+                <img src="https://gw.alipayobjects.com/zos/rmsportal/JopDzEhOqwOjeNTXkoje.svg" alt="sidemenu">
+                <div class="setting-drawer-index-selectIcon" v-if="layoutMode === 'sidemenu'">
+                  <a-icon type="check"/>
+                </div>
+              </div>
+            </a-tooltip>
+
+            <a-tooltip>
+              <template slot="title">
+                顶部栏导航
+              </template>
+              <div class="setting-drawer-index-item" @click="handleLayout('topmenu')">
+                <img src="https://gw.alipayobjects.com/zos/rmsportal/KDNDBbriJhLwuqMoxcAr.svg" alt="topmenu">
+                <div class="setting-drawer-index-selectIcon" v-if="layoutMode !== 'sidemenu'">
+                  <a-icon type="check"/>
+                </div>
+              </div>
+            </a-tooltip>
+          </div>
+        </div>
+        <a-divider />
+
         <div :style="{ marginBottom: '24px' }">
           <h3 class="setting-drawer-index-title">其他设置</h3>
           <div>
@@ -109,6 +140,7 @@
     computed: {
       ...mapState({
         navTheme: state => state.app.theme,
+        layoutMode: state => state.app.layout,
         primaryColor: state => state.app.color,
         colorWeak: state => state.app.weak,
       })
@@ -143,8 +175,11 @@
         this.$store.dispatch('ToggleWeak', checked)
         updateColorWeak(checked)
       },
-      changeMenuTheme (theme) {
+      handleMenuTheme (theme) {
         this.$store.dispatch('ToggleTheme', theme)
+      },
+      handleLayout (mode) {
+        this.$store.dispatch('ToggleLayoutMode', mode)
       },
       changeColor (color) {
         if (this.primaryColor !== color) {

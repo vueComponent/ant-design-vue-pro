@@ -1,34 +1,36 @@
 <template>
   <a-layout class="layout" :class="device">
 
-    <a-drawer
-      v-if="device === 'mobile'"
-      :wrapClassName="'drawer-sider ' + theme"
-      placement="left"
-      @close="() => this.collapsed = false"
-      :closable="false"
-      :visible="collapsed"
-    >
+    <template v-if="layoutMode === 'sidemenu'">
+      <a-drawer
+        v-if="device === 'mobile'"
+        :wrapClassName="'drawer-sider ' + theme"
+        placement="left"
+        @close="() => this.collapsed = false"
+        :closable="false"
+        :visible="collapsed"
+      >
+        <side-menu
+          mode="inline"
+          :menus="menus"
+          @menuSelect="menuSelect"
+          :theme="theme"
+          :collapsed="false"
+          :collapsible="true"></side-menu>
+      </a-drawer>
+
       <side-menu
-        mode="inline"
+        v-else
         :menus="menus"
-        @menuSelect="menuSelect"
         :theme="theme"
-        :collapsed="false"
+        :mode="menuMode"
+        :collapsed="collapsed"
         :collapsible="true"></side-menu>
-    </a-drawer>
+    </template>
 
-    <side-menu
-      v-else
-      :menus="menus"
-      :theme="theme"
-      :mode="menuMode"
-      :collapsed="collapsed"
-      :collapsible="true"></side-menu>
-
-    <a-layout>
+    <a-layout :class="[layoutMode]">
       <!-- layout header -->
-      <global-header :collapsed="collapsed" :device="device" @toggle="toggle"/>
+      <global-header :mode="layoutMode" :theme="theme" :collapsed="collapsed" :device="device" @toggle="toggle"/>
 
       <!-- layout content -->
       <a-layout-content :style="{ margin: '24px 24px 0', height: '100%' }">
@@ -73,6 +75,7 @@
     computed: {
       ...mapState({
         mainMenu: state => state.permission.addRouters,
+        layoutMode: state => state.app.layout,
         sidebarOpened: state => state.app.sidebar.opened,
         theme: state => state.app.theme,
         device: state => state.app.device,
@@ -100,11 +103,7 @@
 <style lang="scss">
   body {
     // 打开滚动条固定显示
-    overflow-y: auto;
-
-    &.userLayout {
-      overflow-y: auto;
-    }
+    overflow-y: scroll;
 
     &.colorWeak {
       filter: invert(80%);
@@ -142,8 +141,7 @@
       cursor: pointer;
       transition: color .3s;
       &:hover {
-        color: #1890ff;
-        background: #e6f7ff;
+        background: rgba(0, 0, 0, 0.025);
       }
     }
 
@@ -153,6 +151,9 @@
       background: #fff;
       box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
       position: relative;
+    }
+
+    .header, .top-nav-header-index {
 
       .user-wrapper {
         float: right;
@@ -166,7 +167,7 @@
           height: 100%;
 
           &:hover {
-            background: #e6f7ff;
+            background: rgba(0, 0, 0, 0.025);
           }
 
           .avatar {
@@ -176,20 +177,113 @@
             vertical-align: middle;
           }
 
+
           .icon {
             font-size: 16px;
             padding: 4px;
           }
         }
       }
+
+      &.dark {
+        .user-wrapper {
+
+          .action {
+            color: rgba(255, 255, 255, 0.85);
+
+            &:hover {
+              background: rgba(255, 255, 255, 0.16);
+            }
+          }
+        }
+      }
     }
+
+    .top-nav-header-index {
+      box-shadow: 0 1px 4px rgba(0,21,41,.08);
+      position: relative;
+      transition: background .3s,width .2s;
+
+      .header-index-wide {
+        max-width: 1200px;
+        margin: auto;
+        padding-left: 0;
+        display: flex;
+        height: 64px;
+
+        .ant-menu.ant-menu-horizontal {
+          border: none;
+          height: 64px;
+          line-height: 64px;
+        }
+
+        .header-index-left {
+          flex: 1 1;
+          display: flex;
+
+          .logo.top-nav-header {
+            width: 165px;
+            height: 64px;
+            position: relative;
+            line-height: 64px;
+            transition: all .3s;
+            overflow: hidden;
+
+            img {
+              display: inline-block;
+              vertical-align: middle;
+              height: 32px;
+            }
+
+            h1 {
+              color: #fff;
+              display: inline-block;
+              vertical-align: top;
+              font-size: 16px;
+              margin: 0 0 0 12px;
+              font-weight: 400;
+            }
+          }
+        }
+
+        .header-index-right {
+          float: right;
+          height: 64px;
+          overflow: hidden;
+        }
+      }
+
+      &.light {
+        background-color: #fff;
+
+        .header-index-wide {
+          .header-index-left {
+            .logo {
+              h1 {
+                color: #002140;
+              }
+            }
+          }
+        }
+      }
+    }
+
 
     // 内容区
     .layout-content {
       margin: 24px 24px 0px;
       height: 100%;
+      height: 64px;
+      padding: 0 12px 0 0;
     }
 
+  }
+
+  .topmenu {
+    .page-header-index-wide {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
   }
 
   // drawer-sider 自定义

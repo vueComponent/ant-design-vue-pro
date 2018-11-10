@@ -26,7 +26,7 @@
           fieldDecoratorId="stepCode"
           :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入 6 位动态码!', pattern: /^\d{6}$/, len: 6 }]}"
         >
-          <a-input :style="{ textAlign: 'center' }" placeholder="000000" />
+          <a-input :style="{ textAlign: 'center' }" @keyup.enter.native="handleStepOk" placeholder="000000" />
         </a-form-item>
         <p style="text-align: center">
           <a @click="onForgeStepCode">遗失手机?</a>

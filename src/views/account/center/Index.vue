@@ -1,5 +1,5 @@
 <template>
-  <div class="page-header-wrapper-grid-content-main">
+  <div class="page-header-index-wide page-header-wrapper-grid-content-main">
 
     <a-row :gutter="24">
       <a-col :md="24" :lg="7">
