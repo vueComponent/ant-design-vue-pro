@@ -27,6 +27,25 @@
         :collapsed="collapsed"
         :collapsible="true"></side-menu>
     </template>
+    <!-- 下次优化这些代码 -->
+    <template v-else>
+      <a-drawer
+        v-if="device === 'mobile'"
+        :wrapClassName="'drawer-sider ' + theme"
+        placement="left"
+        @close="() => this.collapsed = false"
+        :closable="false"
+        :visible="collapsed"
+      >
+        <side-menu
+          mode="inline"
+          :menus="menus"
+          @menuSelect="menuSelect"
+          :theme="theme"
+          :collapsed="false"
+          :collapsible="true"></side-menu>
+      </a-drawer>
+    </template>
 
     <a-layout :class="[layoutMode]">
       <!-- layout header -->
@@ -128,6 +147,9 @@
           overflow-y: auto;
         }
       }
+
+
+
     }
 
     &.ant-layout-has-sider {
@@ -195,6 +217,41 @@
               background: rgba(255, 255, 255, 0.16);
             }
           }
+        }
+      }
+    }
+
+    &.mobile {
+      .top-nav-header-index {
+
+        .header-index-wide {
+
+          .header-index-left {
+
+            .trigger {
+              color: rgba(255, 255, 255, 0.85);
+              padding: 0 12px;
+            }
+
+            .logo.top-nav-header {
+              text-align: center;
+              width: 56px;
+              line-height: 58px;
+            }
+          }
+        }
+
+        &.light {
+
+          .header-index-wide {
+
+            .header-index-left {
+              .trigger {
+                color: rgba(0, 0, 0, 0.65);
+              }
+            }
+          }
+          //
         }
       }
     }
