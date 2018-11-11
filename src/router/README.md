@@ -80,20 +80,45 @@ const asyncRouterMap = [
             path: '/dashboard/analysis',
             name: 'Analysis',
             component: () => import('@/views/dashboard/Analysis'),
-            meta: {title: '分析页', hideHeader: true, permission: ['dashboard']}
+            meta: {title: '分析页', permission: ['dashboard']}
           },
           {
             path: '/dashboard/monitor',
             name: 'Monitor',
             hidden: true,
             component: () => import('@/views/dashboard/Monitor'),
-            meta: {title: '监控页', hideHeader: true, permission: ['dashboard']}
+            meta: {title: '监控页', permission: ['dashboard']}
           },
           {
             path: '/dashboard/workplace',
             name: 'Workplace',
             component: () => import('@/views/dashboard/Workplace'),
             meta: {title: '工作台', permission: ['dashboard']}
+          }
+        ]
+      },
+
+      // result
+      {
+        path: '/result',
+        name: 'result',
+        component: PageView,
+        redirect: '/result/success',
+        meta: { title: '结果页', icon: 'check-circle-o', permission: [ 'result' ] },
+        children: [
+          {
+            path: '/result/success',
+            name: 'ResultSuccess',
+            component: () => import(/* webpackChunkName: "result" */ '@/views/result/Success'),
+            // 该页面隐藏面包屑和页面标题栏
+            meta: { title: '成功', hiddenHeaderContent: true, permission: [ 'result' ] }
+          },
+          {
+            path: '/result/fail',
+            name: 'ResultFail',
+            component: () => import(/* webpackChunkName: "result" */ '@/views/result/Error'),
+            // 该页面隐藏面包屑和页面标题栏
+            meta: { title: '失败', hiddenHeaderContent: true, permission: [ 'result' ] }
           }
         ]
       },
@@ -105,5 +130,4 @@ const asyncRouterMap = [
 
 > 1. 请注意 `component: () => import('..') ` 方式引入路由的页面组件为 懒加载模式。具体可以看 [Vue 官方文档](https://router.vuejs.org/zh/guide/advanced/lazy-loading.html)
 > 2. 增加新的路由应该增加在 '/' (index) 路由的 `children` 内
->
-
+> 3. `permission` 可以进行自定义修改，只需要对这个模块进行自定义修改即可 [src/store/modules/permission.js#L10](https://github.com/sendya/ant-design-pro-vue/blob/master/src/store/modules/permission.js#L10)
