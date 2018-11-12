@@ -3,6 +3,7 @@
  * primaryColor - 默认主题色
  * navTheme - sidebar theme ['dark', 'light'] 两种主题
  * colorWeak - 色盲模式
+ * layout - 整体布局方式 ['sidemenu', 'topmenu'] 两种布局
  *
  * storageOptions: {} - Vue-ls 插件配置项 (localStorage/sessionStorage)
  *

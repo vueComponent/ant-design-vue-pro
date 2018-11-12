@@ -256,6 +256,25 @@
       }
     }
 
+    &.tablet {
+      // overflow: hidden; text-overflow:ellipsis; white-space: nowrap;
+      .top-nav-header-index {
+
+        .header-index-wide {
+
+          .header-index-left {
+            .logo > a {
+              overflow: hidden;
+              text-overflow:ellipsis;
+              white-space: nowrap;
+            }
+          }
+        }
+      }
+
+    }
+
+
     .top-nav-header-index {
       box-shadow: 0 1px 4px rgba(0,21,41,.08);
       position: relative;

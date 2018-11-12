@@ -84,7 +84,11 @@
       </div>
     </a-form>
 
-    <two-step-captcha v-if="requiredTwoStepCaptcha" :visible="stepCaptchaVisible" @success="stepCaptchaSuccess"></two-step-captcha>
+    <two-step-captcha
+      v-if="requiredTwoStepCaptcha"
+      :visible="stepCaptchaVisible"
+      @success="stepCaptchaSuccess"
+      @cancel="stepCaptchaCancel"></two-step-captcha>
   </div>
 </template>
 
@@ -132,7 +136,7 @@
       
     },
     methods: {
-      ...mapActions([ "Login" ]),
+      ...mapActions([ "Login", "Logout" ]),
       // handler
       handleUsernameOrEmail (rule, value, callback) {
         const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
@@ -229,6 +233,12 @@
       },
       stepCaptchaSuccess () {
         this.loginSuccess()
+      },
+      stepCaptchaCancel () {
+        this.Logout().then(() => {
+          this.loginBtn = false
+          this.stepCaptchaVisible = false
+        })
       },
       loginSuccess () {
         this.loginBtn = false
