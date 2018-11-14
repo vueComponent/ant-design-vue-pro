@@ -131,3 +131,9 @@ const asyncRouterMap = [
 > 1. 请注意 `component: () => import('..') ` 方式引入路由的页面组件为 懒加载模式。具体可以看 [Vue 官方文档](https://router.vuejs.org/zh/guide/advanced/lazy-loading.html)
 > 2. 增加新的路由应该增加在 '/' (index) 路由的 `children` 内
 > 3. `permission` 可以进行自定义修改，只需要对这个模块进行自定义修改即可 [src/store/modules/permission.js#L10](https://github.com/sendya/ant-design-pro-vue/blob/master/src/store/modules/permission.js#L10)
+
+
+
+附权限路由结构：
+
+![权限结构](https://static-2.loacg.com/open/static/github/permissions.png)

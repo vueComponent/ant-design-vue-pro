@@ -28,6 +28,9 @@ Overview
 
 ![权限编辑](https://static-2.loacg.com/open/static/github/20180916-154950.png)
 
+权限路由控制流程
+
+![权限结构](https://static-2.loacg.com/open/static/github/permissions.png)
 
 
 环境和依赖
