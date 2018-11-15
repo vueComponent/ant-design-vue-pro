@@ -46,6 +46,7 @@
             <a-col class="gutter-row" :span="8">
               <a-button
                 class="getCaptcha"
+                tabindex="-1"
                 :disabled="state.smsSendBtn"
                 @click.stop.prevent="getCaptcha"
                 v-text="!state.smsSendBtn && '获取验证码' || (state.time+' s')"></a-button>
