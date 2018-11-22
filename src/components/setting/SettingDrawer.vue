@@ -85,6 +85,31 @@
               </div>
             </a-tooltip>
           </div>
+          <div :style="{ marginTop: '24px' }">
+            <a-list :split="false">
+              <a-list-item>
+                <a-select slot="actions" defaultValue="auto" size="small">
+                  <a-select-option value="fixed">固定</a-select-option>
+                  <a-select-option value="auto">流式</a-select-option>
+                </a-select>
+                <a-list-item-meta>
+                  <div slot="title">内容区域宽度</div>
+                </a-list-item-meta>
+              </a-list-item>
+              <a-list-item>
+                <a-switch slot="actions" size="small" :defaultChecked="fixedHeader" @change="handleFixedHeader" />
+                <a-list-item-meta>
+                  <div slot="title">固定 Header</div>
+                </a-list-item-meta>
+              </a-list-item>
+              <a-list-item>
+                <a-switch slot="actions" size="small" :defaultChecked="swipeDownHiddenHeader" @change="handleFixedHeaderHidden" />
+                <a-list-item-meta>
+                  <div slot="title">下滑时隐藏 Header</div>
+                </a-list-item-meta>
+              </a-list-item>
+            </a-list>
+          </div>
         </div>
         <a-divider />
 
@@ -143,6 +168,8 @@
         layoutMode: state => state.app.layout,
         primaryColor: state => state.app.color,
         colorWeak: state => state.app.weak,
+        fixedHeader: state => state.app.fixedHeader,
+        swipeDownHiddenHeader: state => state.app.swipeDownHiddenHeader,
       })
     },
     mounted () {
@@ -186,6 +213,12 @@
           this.$store.dispatch('ToggleColor', color)
           updateTheme(color)
         }
+      },
+      handleFixedHeader (fixed) {
+        this.$store.dispatch('ToggleFixedHeader', fixed)
+      },
+      handleFixedHeaderHidden (autoHidden) {
+        this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
       }
     },
   }

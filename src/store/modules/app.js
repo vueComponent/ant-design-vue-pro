@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { SIDEBAR_TYPE, DEFAULT_THEME, DEFAULT_LAYOUT_MODE, DEFAULT_COLOR, DEFAULT_COLOR_WEAK } from "@/store/mutation-types"
+import { SIDEBAR_TYPE, DEFAULT_THEME, DEFAULT_LAYOUT_MODE, DEFAULT_COLOR, DEFAULT_COLOR_WEAK, DEFAULT_FIXED_HEADER, DEFAULT_FIXED_HEADER_HIDDEN } from "@/store/mutation-types"
 
 const app = {
   state: {
@@ -10,6 +10,8 @@ const app = {
     device: 'desktop',
     theme: '',
     layout: '',
+    fixedHeader: false,
+    swipeDownHiddenHeader: false,
     color: null,
     weak: false
   },
@@ -35,6 +37,15 @@ const app = {
       Vue.ls.set(DEFAULT_LAYOUT_MODE, layout)
       state.layout = layout
     },
+    TOGGLE_FIXED_HEADER: (state, fixed) => {
+      Vue.ls.set(DEFAULT_FIXED_HEADER, fixed)
+      state.fixedHeader = fixed
+    },
+    TOGGLE_FIXED_HEADER_HIDDEN: (state, show) => {
+      Vue.ls.set(DEFAULT_FIXED_HEADER_HIDDEN, show)
+      state.swipeDownHiddenHeader = show
+    },
+
     TOGGLE_COLOR: (state, color) => {
       Vue.ls.set(DEFAULT_COLOR, color)
       state.color = color
@@ -59,6 +70,12 @@ const app = {
     },
     ToggleLayoutMode({ commit }, mode) {
       commit('TOGGLE_LAYOUT_MODE', mode)
+    },
+    ToggleFixedHeader({ commit }, fixedHeader) {
+      commit('TOGGLE_FIXED_HEADER', fixedHeader)
+    },
+    ToggleFixedHeaderHidden({ commit }, show) {
+      commit('TOGGLE_FIXED_HEADER_HIDDEN', show)
     },
     ToggleColor({ commit }, color) {
       commit('TOGGLE_COLOR', color)

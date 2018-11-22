@@ -52,7 +52,7 @@
       <global-header :mode="layoutMode" :theme="theme" :collapsed="collapsed" :device="device" @toggle="toggle"/>
 
       <!-- layout content -->
-      <a-layout-content :style="{ margin: '24px 24px 0', height: '100%' }">
+      <a-layout-content :style="{ margin: '24px 24px 0', height: '100%', paddingTop: fixedHeader ? '64px' : '0' }">
         <slot></slot>
       </a-layout-content>
 
@@ -96,6 +96,7 @@
         mainMenu: state => state.permission.addRouters,
         layoutMode: state => state.app.layout,
         sidebarOpened: state => state.app.sidebar.opened,
+        fixedHeader: state => state.app.fixedHeader,
         theme: state => state.app.theme,
         device: state => state.app.device,
       })
@@ -108,7 +109,7 @@
       toggle() {
         this.collapsed = !this.collapsed
         triggerResize()
-        this.setSidebar(this.collapsed)
+        this.setSidebar(!this.collapsed)
       },
       menuSelect() {
         if (this.device !== 'desktop') {
@@ -165,6 +166,14 @@
       &:hover {
         background: rgba(0, 0, 0, 0.025);
       }
+    }
+    .ant-header-fixedHeader {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 9;
+      width: 100%;
+      transition: width .2s;
     }
 
     .header {

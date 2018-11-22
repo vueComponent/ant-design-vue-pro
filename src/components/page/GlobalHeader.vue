@@ -1,5 +1,5 @@
 <template>
-  <a-layout-header style="padding: 0px;">
+  <a-layout-header v-if="!headerBarFixed" :class="[fixedHeader && 'ant-header-fixedHeader']" :style="{ padding: '0', width: fixedHeader ? `calc(100% - ${sidebarOpened ? 256 : 80}px)` : '100%' }">
     <div v-if="mode === 'sidemenu'" class="header">
       <a-icon
         v-if="device==='mobile'"
@@ -76,7 +76,11 @@
     data() {
       return {
         menus: [],
+        headerBarFixed: false,
       }
+    },
+    mounted () {
+      window.addEventListener('scroll', this.handleScroll)
     },
     created() {
       this.menus = this.mainMenu.find((item) => item.path === '/').children
@@ -84,10 +88,24 @@
     computed: {
       ...mapState({
         mainMenu: state => state.permission.addRouters,
+        sidebarOpened: state => state.app.sidebar.opened,
+        fixedHeader: state => state.app.fixedHeader,
+        swipeDownHiddenHeader: state => state.app.swipeDownHiddenHeader,
       }),
     },
     methods: {
-
+      handleScroll () {
+        if (this.swipeDownHiddenHeader) {
+          let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+          if (scrollTop > 100) {
+            this.headerBarFixed = true
+          } else {
+            this.headerBarFixed = false
+          }
+        } else {
+          this.headerBarFixed = false
+        }
+      },
       toggle() {
         this.$emit('toggle')
       }

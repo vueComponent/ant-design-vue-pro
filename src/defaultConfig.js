@@ -4,6 +4,7 @@
  * navTheme - sidebar theme ['dark', 'light'] 两种主题
  * colorWeak - 色盲模式
  * layout - 整体布局方式 ['sidemenu', 'topmenu'] 两种布局
+ * fixedHeader - 固定 Header : boolean
  *
  * storageOptions: {} - Vue-ls 插件配置项 (localStorage/sessionStorage)
  *
@@ -13,6 +14,8 @@ export default {
   primaryColor: '#1890FF', // primary color of ant design
   navTheme: 'dark', // theme for nav menu
   layout: 'sidemenu',
+  fixedHeader: false, // fixed header
+  swipeDownHiddenHeader: false,
   colorWeak: false,
   // vue-ls options
   storageOptions: {

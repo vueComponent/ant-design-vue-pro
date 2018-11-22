@@ -13,7 +13,7 @@ import 'ant-design-vue/dist/antd.less';  // or 'ant-design-vue/dist/antd.less'
 import '@/permission' // permission control
 import '@/utils/filter' // base filter
 
-import { ACCESS_TOKEN, DEFAULT_COLOR, DEFAULT_THEME, DEFAULT_LAYOUT_MODE, DEFAULT_COLOR_WEAK, SIDEBAR_TYPE } from "@/store/mutation-types"
+import { ACCESS_TOKEN, DEFAULT_COLOR, DEFAULT_THEME, DEFAULT_LAYOUT_MODE, DEFAULT_COLOR_WEAK, SIDEBAR_TYPE, DEFAULT_FIXED_HEADER, DEFAULT_FIXED_HEADER_HIDDEN } from "@/store/mutation-types"
 import config from '@/defaultConfig'
 
 Vue.config.productionTip = false
@@ -30,6 +30,8 @@ new Vue({
     store.commit('SET_SIDEBAR_TYPE', Vue.ls.get(SIDEBAR_TYPE, false))
     store.commit('TOGGLE_THEME', Vue.ls.get(DEFAULT_THEME, config.navTheme))
     store.commit('TOGGLE_LAYOUT_MODE', Vue.ls.get(DEFAULT_LAYOUT_MODE, config.layout))
+    store.commit('TOGGLE_FIXED_HEADER', Vue.ls.get(DEFAULT_FIXED_HEADER, config.fixedHeader))
+    store.commit('TOGGLE_FIXED_HEADER_HIDDEN', Vue.ls.get(DEFAULT_FIXED_HEADER_HIDDEN, config.swipeDownHiddenHeader))
     store.commit('TOGGLE_WEAK', Vue.ls.get(DEFAULT_COLOR_WEAK, config.colorWeak))
     store.commit('TOGGLE_COLOR', Vue.ls.get(DEFAULT_COLOR, config.primaryColor))
     store.commit('SET_TOKEN', Vue.ls.get(ACCESS_TOKEN))

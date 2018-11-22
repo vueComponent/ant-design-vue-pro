@@ -19,7 +19,7 @@
           <a-form-item
             fieldDecoratorId="password"
             :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}">
-            <a-input size="large" type="password" placeholder="密码 / admin">
+            <a-input size="large" type="password" autocomplete="false" placeholder="密码 / admin">
               <a-icon slot="prefix" type='lock' :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>

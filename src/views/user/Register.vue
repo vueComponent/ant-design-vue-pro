@@ -11,7 +11,7 @@
 
       <a-popover placement="right" trigger="click" :visible="state.passwordLevelChecked">
         <template slot="content">
-          <div :style="{ width: '240px' }">
+          <div :style="{ width: '240px' }" >
             <div :class="['user-register', passwordLevelClass]">强度：<span>{{ passwordLevelName }}</span></div>
             <a-progress :percent="state.percent" :showInfo="false" :strokeColor=" passwordLevelColor " />
             <div style="margin-top: 10px;">
@@ -21,15 +21,11 @@
         </template>
         <a-form-item
           fieldDecoratorId="password"
-          :fieldDecoratorOptions="{rules: [
-          { required: true, message: '至少6位密码，区分大小写'},
-          { validator: this.handlePasswordLevel }
-        ]}"
-        >
-          <a-input size="large" type="password" @click="state.passwordLevelChecked = true" autocomplete="false" placeholder="至少6位密码，区分大小写"></a-input>
+          :fieldDecoratorOptions="{rules: [{ required: true, message: '至少6位密码，区分大小写'}, { validator: this.handlePasswordLevel }
+        ]}">
+          <a-input size="large" type="password" @click="handlePasswordInputClick" autocomplete="false" placeholder="至少6位密码，区分大小写"></a-input>
         </a-form-item>
       </a-popover>
-
 
       <a-form-item
         fieldDecoratorId="password2"
@@ -89,6 +85,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import { getSmsCaptcha } from '@/api/login'
 
   const levelNames = {
@@ -129,6 +126,9 @@
       }
     },
     computed: {
+      ...mapState({
+        isMobile: state => state.app.device === 'mobile',
+      }),
       passwordLevelClass () {
         return levelClass[this.state.passwordLevel]
       },
@@ -159,14 +159,13 @@
         }
         this.state.passwordLevel = level
         this.state.percent = level * 30
-        console.log('passwordLevel', this.state.passwordLevel, 'level', level)
         if (level >= 2) {
           if (level >= 3) {
             this.state.percent = 100
           }
           callback()
         } else {
-          if (level == 0) {
+          if (level === 0) {
             this.state.percent = 10
           }
           callback(new Error('密码强度不够'))
@@ -179,6 +178,14 @@
           callback(new Error('两次密码不一致'))
         }
         callback()
+      },
+
+      handlePasswordInputClick () {
+        if (!this.isMobile) {
+          this.state.passwordLevelChecked = true
+          return;
+        }
+        this.state.passwordLevelChecked = false
       },
 
       handleSubmit() {
