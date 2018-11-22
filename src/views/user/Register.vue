@@ -4,33 +4,38 @@
     <a-form ref="formRegister" :autoFormCreate="(form)=>{this.form = form}" id="formRegister">
       <a-form-item
         fieldDecoratorId="email"
-        :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入邮箱地址' }], validateTrigger: 'blur'}">
+        :fieldDecoratorOptions="{rules: [{ required: true, type: 'email', message: '请输入邮箱地址' }]}">
 
         <a-input size="large" type="text" placeholder="邮箱"></a-input>
       </a-form-item>
 
-      <a-form-item
-        fieldDecoratorId="password"
-        :fieldDecoratorOptions="{rules: [{ required: true, message: '至少6位密码，区分大小写' }, { validator: this.handlePasswordLevel }], validateTrigger: ['change', 'blur']}">
-        <a-popover placement="right" trigger="click" :visible="clicked" @visibleChange="clicked = true">
-          <template slot="content">
-            <div :style="{ width: '240px' }">
-              <div :class="['user-register', passwordLevelClass]">强度：<span>{{ passwordLevelName }}</span></div>
-              <a-progress :percent="state.percent" :showInfo="false" strokeColor="#FF0000" />
-              <div style="margin-top: 10px;">
-                <span>请至少输入 6 个字符。请不要使用容易被猜到的密码。</span>
-              </div>
+      <a-popover placement="right" trigger="click" :visible="state.passwordLevelChecked">
+        <template slot="content">
+          <div :style="{ width: '240px' }">
+            <div :class="['user-register', passwordLevelClass]">强度：<span>{{ passwordLevelName }}</span></div>
+            <a-progress :percent="state.percent" :showInfo="false" :strokeColor=" passwordLevelColor " />
+            <div style="margin-top: 10px;">
+              <span>请至少输入 6 个字符。请不要使用容易被猜到的密码。</span>
             </div>
-          </template>
-          <a-input size="large" type="password" placeholder="至少6位密码，区分大小写"></a-input>
-        </a-popover>
-      </a-form-item>
+          </div>
+        </template>
+        <a-form-item
+          fieldDecoratorId="password"
+          :fieldDecoratorOptions="{rules: [
+          { required: true, message: '至少6位密码，区分大小写'},
+          { validator: this.handlePasswordLevel }
+        ]}"
+        >
+          <a-input size="large" type="password" @click="state.passwordLevelChecked = true" autocomplete="false" placeholder="至少6位密码，区分大小写"></a-input>
+        </a-form-item>
+      </a-popover>
+
 
       <a-form-item
         fieldDecoratorId="password2"
-        :fieldDecoratorOptions="{rules: [{ required: true, message: '至少6位密码，区分大小写' }, { validator: this.handlePasswordCheck }], validateTrigger: 'blur'}">
+        :fieldDecoratorOptions="{rules: [{ required: true, message: '至少6位密码，区分大小写' }, { validator: this.handlePasswordCheck }]}">
 
-        <a-input size="large" type="password" placeholder="确认密码"></a-input>
+        <a-input size="large" type="password" autocomplete="false" placeholder="确认密码"></a-input>
       </a-form-item>
 
       <a-form-item
@@ -98,6 +103,12 @@
     2: 'warning',
     3: 'success'
   }
+  const levelColor = {
+    0: '#ff0000',
+    1: '#ff0000',
+    2: '#ff7e05',
+    3: '#52c41a',
+  }
   export default {
     name: "Register",
     components: {
@@ -106,12 +117,13 @@
       return {
         form: null,
 
-        clicked: false,
         state: {
           time: 60,
           smsSendBtn: false,
           passwordLevel: 0,
-          percent: 0,
+          passwordLevelChecked: false,
+          percent: 10,
+          progressColor: '#FF0000'
         },
         registerBtn: false
       }
@@ -122,11 +134,15 @@
       },
       passwordLevelName () {
         return levelNames[this.state.passwordLevel]
+      },
+      passwordLevelColor () {
+        return levelColor[this.state.passwordLevel]
       }
     },
     methods: {
 
       handlePasswordLevel (rule, value, callback) {
+
         let level = 0
 
         // 判断这个字符串中有没有数字
@@ -150,6 +166,9 @@
           }
           callback()
         } else {
+          if (level == 0) {
+            this.state.percent = 10
+          }
           callback(new Error('密码强度不够'))
         }
       },
