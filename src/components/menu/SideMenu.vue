@@ -1,6 +1,6 @@
 <template>
   <a-layout-sider
-    :class="['sider', device === 'desktop' ? null : 'shadow', theme ]"
+    :class="['sider', device === 'desktop' ? null : 'shadow', theme, fixedSideMenu ? 'ant-fixed-sidemenu' : null ]"
     width="256px" 
     :collapsible="collapsible"
     v-model="collapsed" 
@@ -58,6 +58,7 @@
     computed: {
       ...mapState({
         device: state => state.app.device,
+        fixedSideMenu: state => state.app.fixedSideMenu,
       })
     },
     methods: {

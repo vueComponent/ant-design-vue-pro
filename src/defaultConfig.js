@@ -15,6 +15,7 @@ export default {
   navTheme: 'dark', // theme for nav menu
   layout: 'sidemenu',
   fixedHeader: false, // fixed header
+  fixedSideMenu: false,
   swipeDownHiddenHeader: false,
   colorWeak: false,
   // vue-ls options

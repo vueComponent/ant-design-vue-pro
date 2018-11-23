@@ -89,7 +89,7 @@
             <a-list :split="false">
               <a-list-item>
                 <a-select slot="actions" defaultValue="auto" size="small">
-                  <a-select-option value="fixed">固定</a-select-option>
+                  <a-select-option value="fixed" v-if="layoutMode !== 'sidemenu'" disabled>固定</a-select-option>
                   <a-select-option value="auto">流式</a-select-option>
                 </a-select>
                 <a-list-item-meta>
@@ -106,6 +106,12 @@
                 <a-switch slot="actions" size="small" :defaultChecked="swipeDownHiddenHeader" @change="handleFixedHeaderHidden" />
                 <a-list-item-meta>
                   <div slot="title">下滑时隐藏 Header</div>
+                </a-list-item-meta>
+              </a-list-item>
+              <a-list-item>
+                <a-switch slot="actions" size="small" :defaultChecked="fixedSideMenu" @change="handleFixedSideMenu" />
+                <a-list-item-meta>
+                  <div slot="title">固定侧边菜单</div>
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
@@ -169,6 +175,7 @@
         primaryColor: state => state.app.color,
         colorWeak: state => state.app.weak,
         fixedHeader: state => state.app.fixedHeader,
+        fixedSideMenu: state => state.app.fixedSideMenu,
         swipeDownHiddenHeader: state => state.app.swipeDownHiddenHeader,
       })
     },
@@ -219,6 +226,9 @@
       },
       handleFixedHeaderHidden (autoHidden) {
         this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
+      },
+      handleFixedSideMenu (fixed) {
+        this.$store.dispatch('ToggleFixedSidemenu', fixed)
       }
     },
   }

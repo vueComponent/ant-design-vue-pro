@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { SIDEBAR_TYPE, DEFAULT_THEME, DEFAULT_LAYOUT_MODE, DEFAULT_COLOR, DEFAULT_COLOR_WEAK, DEFAULT_FIXED_HEADER, DEFAULT_FIXED_HEADER_HIDDEN } from "@/store/mutation-types"
+import { SIDEBAR_TYPE, DEFAULT_THEME, DEFAULT_LAYOUT_MODE, DEFAULT_COLOR, DEFAULT_COLOR_WEAK, DEFAULT_FIXED_HEADER, DEFAULT_FIXED_SIDEMENU, DEFAULT_FIXED_HEADER_HIDDEN } from "@/store/mutation-types"
 
 const app = {
   state: {
@@ -11,6 +11,7 @@ const app = {
     theme: '',
     layout: '',
     fixedHeader: false,
+    fixedSideMenu: false,
     swipeDownHiddenHeader: false,
     color: null,
     weak: false
@@ -40,6 +41,10 @@ const app = {
     TOGGLE_FIXED_HEADER: (state, fixed) => {
       Vue.ls.set(DEFAULT_FIXED_HEADER, fixed)
       state.fixedHeader = fixed
+    },
+    TOGGLE_FIXED_SIDEMENU: (state, fixed) => {
+      Vue.ls.set(DEFAULT_FIXED_SIDEMENU, fixed)
+      state.fixedSideMenu = fixed
     },
     TOGGLE_FIXED_HEADER_HIDDEN: (state, show) => {
       Vue.ls.set(DEFAULT_FIXED_HEADER_HIDDEN, show)
@@ -73,6 +78,9 @@ const app = {
     },
     ToggleFixedHeader({ commit }, fixedHeader) {
       commit('TOGGLE_FIXED_HEADER', fixedHeader)
+    },
+    ToggleFixedSidemenu({ commit }, fixedSideMenu) {
+      commit( 'TOGGLE_FIXED_SIDEMENU', fixedSideMenu)
     },
     ToggleFixedHeaderHidden({ commit }, show) {
       commit('TOGGLE_FIXED_HEADER_HIDDEN', show)
