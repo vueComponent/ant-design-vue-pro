@@ -20,7 +20,7 @@
       enquireScreen(deviceType => {
         // tablet
         if (deviceType === 0) {
-          that.$store.commit('TOGGLE_DEVICE', 'tablet')
+          that.$store.commit('TOGGLE_DEVICE', 'mobile')
           that.$store.dispatch('setSidebar', false)
         }
         // mobile
