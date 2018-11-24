@@ -13,7 +13,7 @@ export const asyncRouterMap = [
       {
         path: '/dashboard',
         name: 'dashboard',
-        redirect: '/dashboard/analysis',
+        redirect: '/dashboard/workplace',
         component: RouteView,
         meta: { title: '仪表盘', icon: 'dashboard', permission: [ 'dashboard' ] },
         children: [

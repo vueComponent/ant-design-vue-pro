@@ -110,7 +110,7 @@
         loginBtn: false,
         // login type: 0 email, 1 username, 2 telephone
         loginType: 0,
-        requiredTwoStepCaptcha: true,
+        requiredTwoStepCaptcha: false,
         stepCaptchaVisible: false,
         form: null,
         state: {

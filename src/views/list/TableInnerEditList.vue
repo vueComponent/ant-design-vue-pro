@@ -153,21 +153,21 @@
           {
             title: '状态',
             dataIndex: 'status',
-            width: '120px',
+            width: '100px',
             needTotal: true,
             scopedSlots: { customRender: 'status' },
           },
           {
             title: '更新时间',
             dataIndex: 'updatedAt',
-            width: '180px',
+            width: '150px',
             sorter: true,
             scopedSlots: { customRender: 'updatedAt' },
           },
           {
             table: '操作',
             dataIndex: 'action',
-            width: '150px',
+            width: '120px',
             scopedSlots: { customRender: 'action' },
           }
         ],

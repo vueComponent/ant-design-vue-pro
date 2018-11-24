@@ -102,6 +102,12 @@
         device: state => state.app.device,
       })
     },
+    watch: {
+      sidebarOpened(val) {
+        console.log('watch',val)
+        this.collapsed = !val
+      },
+    },
     created() {
       this.menus = this.mainMenu.find((item) => item.path === '/').children
     },
@@ -144,9 +150,16 @@
         }
       }
 
+      /**
+       * ant-table-wrapper
+       * 覆盖的表格手机模式样式，如果想修改在手机上表格最低宽度，可以在这里改动
+       */
       .ant-table-wrapper {
-        .ant-table-body {
+        .ant-table-content {
           overflow-y: auto;
+        }
+        .ant-table-body {
+          min-width: 800px;
         }
       }
       .sidemenu {

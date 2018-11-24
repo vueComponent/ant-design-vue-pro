@@ -21,16 +21,16 @@
         // tablet
         if (deviceType === 0) {
           that.$store.commit('TOGGLE_DEVICE', 'tablet')
-          that.$store.commit('CLOSE_SIDEBAR', false)
+          that.$store.dispatch('setSidebar', false)
         }
         // mobile
         else if (deviceType === 1) {
           that.$store.commit('TOGGLE_DEVICE', 'mobile')
-          that.$store.commit('CLOSE_SIDEBAR', false)
+          that.$store.dispatch('setSidebar', false)
         }
         else {
           that.$store.commit('TOGGLE_DEVICE', 'desktop')
-          that.$store.commit('SET_SIDEBAR_TYPE', true)
+          that.$store.dispatch('setSidebar', true)
         }
 
       })
