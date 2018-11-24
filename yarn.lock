@@ -1901,10 +1901,10 @@ ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ant-design-vue@^1.1.7:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.1.7.tgz#19a9e1d53070cba93225c80145829898b003580b"
-  integrity sha512-3lhP0rAY4v3ZwzBFqSJaBJ6Wmo1E6Z4kQ2m4+ph1OuN4DAW2oDw2KZZrZcqT9GscYUgdn1A7dCiV6MO+aJU5tw==
+ant-design-vue@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.1.8.tgz#e0f205a5766ffc42646716b877c9f6690ec2881e"
+  integrity sha512-/chhcV5qJoBJbcd5zCfHLFemVxKW9/nsOCZxWlT42zbgZT6mK7L96YUO2Hz8YjD5PzGMafJKKjLKBs9IYjqmwg==
   dependencies:
     add-dom-event-listener "^1.0.2"
     array-tree-filter "^2.1.0"
