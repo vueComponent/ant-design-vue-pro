@@ -108,10 +108,10 @@
                   <div slot="title">下滑时隐藏 Header</div>
                 </a-list-item-meta>
               </a-list-item>
-              <a-list-item>
-                <a-switch slot="actions" size="small" :defaultChecked="fixedSideMenu" @change="handleFixedSideMenu" />
+              <a-list-item >
+                <a-switch slot="actions" size="small" :disabled="(layoutMode === 'topmenu')" :defaultChecked="fixedSideMenu" @change="handleFixedSideMenu" />
                 <a-list-item-meta>
-                  <div slot="title">固定侧边菜单</div>
+                  <div slot="title" :style="{ textDecoration: layoutMode === 'topmenu' ? 'line-through' : 'unset' }">固定侧边菜单</div>
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
@@ -214,6 +214,8 @@
       },
       handleLayout (mode) {
         this.$store.dispatch('ToggleLayoutMode', mode)
+        // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
+        this.handleFixedSideMenu(false);
       },
       changeColor (color) {
         if (this.primaryColor !== color) {
@@ -228,6 +230,10 @@
         this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
       },
       handleFixedSideMenu (fixed) {
+        if (this.layoutMode === 'topmenu') {
+          this.$store.dispatch('ToggleFixedSidemenu', false)
+          return;
+        }
         this.$store.dispatch('ToggleFixedSidemenu', fixed)
       }
     },
