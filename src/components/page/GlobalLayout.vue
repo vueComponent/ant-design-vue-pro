@@ -47,7 +47,7 @@
       </a-drawer>
     </template>
 
-    <a-layout :class="[layoutMode]" :style="{ paddingLeft: fixedSideMenu ? `${sidebarOpened ? 256 : 80}px` : '0' }">
+    <a-layout :class="[layoutMode]" :style="{ paddingLeft: fixedSideMenu && device === 'desktop' ? `${sidebarOpened ? 256 : 80}px` : '0' }">
       <!-- layout header -->
       <global-header :mode="layoutMode" :theme="theme" :collapsed="collapsed" :device="device" @toggle="toggle"/>
 
@@ -149,8 +149,14 @@
           overflow-y: auto;
         }
       }
+      .sidemenu {
+        .ant-header-fixedHeader {
 
-
+          &.ant-header-side-opened, &.ant-header-side-closed  {
+            width: 100%
+          }
+        }
+      }
 
     }
 
