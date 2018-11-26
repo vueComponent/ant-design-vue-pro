@@ -137,7 +137,7 @@
           <a-alert type="warning">
             <span slot="message">
               配置栏只在开发环境用于预览，生产环境不会展现，请手动修改配置文件
-              <a href="https://github.com/sendya/ant-design-pro-vue/blob/master/src/defaultConfig.js" target="_blank">src/defaultConfig.js</a>
+              <a href="https://github.com/sendya/ant-design-pro-vue/blob/master/src/defaultSettings.js" target="_blank">src/defaultSettings.js</a>
             </span>
           </a-alert>
         </div>
@@ -153,7 +153,7 @@
 <script>
   import DetailList from '@/components/tools/DetailList'
   import SettingItem from '@/components/setting/SettingItem'
-  import config from '@/defaultConfig'
+  import config from '@/defaultSettings'
   import { updateTheme, updateColorWeak, colorList } from '@/components/tools/setting'
   import { mapState } from 'vuex'
 
