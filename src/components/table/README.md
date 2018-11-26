@@ -16,63 +16,67 @@ Table 重封装组件说明
 （基础使用）
 
 ```vue
+
 <template>
-    <s-table
-      ref="table"
-      size="default"
-      :columns="columns"
-      :data="loadData"
-    >
-    </s-table>
+  <s-table
+    ref="table"
+    :rowKey="(record) => record.data.id"
+    size="default"
+    :columns="columns"
+    :data="loadData"
+  >
+  </s-table>
 </template>
 
 <script>
-  	import STable from '@/components/table/'
-    export default {
-    	components: {
-    		STable
-    	},
-        data () {
-            return {
-                columns: [
-                  {
-                    title: '规则编号',
-                    dataIndex: 'no'
-                  },
-                  {
-                    title: '描述',
-                    dataIndex: 'description'
-                  },
-                  {
-                    title: '服务调用次数',
-                    dataIndex: 'callNo',
-                    sorter: true,
-                    needTotal: true,
-                    customRender: (text) => text + ' 次'
-                  },
-                  {
-                    title: '状态',
-                    dataIndex: 'status',
-                    needTotal: true
-                  },
-                  {
-                    title: '更新时间',
-                    dataIndex: 'updatedAt',
-                    sorter: true
-                  }
-                ],
-                // 查询条件参数
-                queryParam: {},
-                // 加载数据方法 必须为 Promise 对象
-                loadData: parameter => {
-                  return this.$http.get('/service', {
-                    params: Object.assign(parameter, this.queryParam)
-                  }).then(res => {
-                    return res.result
-                  })
-                },
-            },
+  import STable from '@/components/table/'
+
+  export default {
+    components: {
+      STable
+    },
+    data() {
+      return {
+        columns: [
+          {
+            title: '规则编号',
+            dataIndex: 'no'
+          },
+          {
+            title: '描述',
+            dataIndex: 'description'
+          },
+          {
+            title: '服务调用次数',
+            dataIndex: 'callNo',
+            sorter: true,
+            needTotal: true,
+            customRender: (text) => text + ' 次'
+          },
+          {
+            title: '状态',
+            dataIndex: 'status',
+            needTotal: true
+          },
+          {
+            title: '更新时间',
+            dataIndex: 'updatedAt',
+            sorter: true
+          }
+        ],
+        // 查询条件参数
+        queryParam: {},
+        // 加载数据方法 必须为 Promise 对象
+        loadData: parameter => {
+          return this.$http.get('/service', {
+            params: Object.assign(parameter, this.queryParam)
+          }).then(res => {
+            return res.result
+          })
+        },
+      }
     }
+  }
 </script>
 
 ```
@@ -86,94 +90,95 @@ Table 重封装组件说明
 
 ```vue
 <template>
-    <s-table
-      ref="table"
-      size="default"
-      :columns="columns"
-      :data="loadData"
-    >
-        <span slot="action" slot-scope="text, record">
-          <a>编辑</a>
-          <a-divider type="vertical" />
-          <a-dropdown>
-            <a class="ant-dropdown-link">
-              更多 <a-icon type="down" />
-            </a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a href="javascript:;">1st menu item</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a href="javascript:;">2nd menu item</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a href="javascript:;">3rd menu item</a>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
-        </span>
-    </s-table>
+  <s-table
+    ref="table"
+    size="default"
+    :columns="columns"
+    :data="loadData"
+  >
+    <span slot="action" slot-scope="text, record">
+      <a>编辑</a>
+      <a-divider type="vertical"/>
+      <a-dropdown>
+        <a class="ant-dropdown-link">
+          更多 <a-icon type="down"/>
+        </a>
+        <a-menu slot="overlay">
+          <a-menu-item>
+            <a href="javascript:;">1st menu item</a>
+          </a-menu-item>
+          <a-menu-item>
+            <a href="javascript:;">2nd menu item</a>
+          </a-menu-item>
+          <a-menu-item>
+            <a href="javascript:;">3rd menu item</a>
+          </a-menu-item>
+        </a-menu>
+      </a-dropdown>
+    </span>
+  </s-table>
 </template>
 
 <script>
-  	import STable from '@/components/table/'
-    export default {
-    	components: {
-    		STable
-    	},
-        data () {
-            return {
-                columns: [
-                    {
-                        title: '规则编号',
-                        dataIndex: 'no'
-                    },
-                    {
-                        title: '描述',
-                        dataIndex: 'description'
-                    },
-                    {
-                        title: '服务调用次数',
-                        dataIndex: 'callNo',
-                    },
-                    {
-                        title: '状态',
-                        dataIndex: 'status',
-                    },
-                    {
-                        title: '更新时间',
-                        dataIndex: 'updatedAt',
-                    },
-                    {
-						table: '操作',
-                        dataIndex: 'action',
-                        scopedSlots: { customRender: 'action' },
-                    }
-                ],
-                // 查询条件参数
-                queryParam: {},
-                // 加载数据方法 必须为 Promise 对象
-                loadData: parameter => {
-                  return this.$http.get('/service', {
-                    params: Object.assign(parameter, this.queryParam)
-                  }).then(res => {
-                    return res.result
-                  })
-                },
-        	},
-        },
-		methods: {
-			edit (row) {
-				// axios 发送数据到后端 修改数据成功后
-				// 调用 refresh() 重新加载列表数据
-				// 这里 setTimeout 模拟发起请求的网络延迟..
-				setTimeout (() => {
-                    this.$refs.table.refresh()
-				}, 1500)
+  import STable from '@/components/table/'
 
-			}
-		}
+  export default {
+    components: {
+      STable
+    },
+    data() {
+      return {
+        columns: [
+          {
+            title: '规则编号',
+            dataIndex: 'no'
+          },
+          {
+            title: '描述',
+            dataIndex: 'description'
+          },
+          {
+            title: '服务调用次数',
+            dataIndex: 'callNo',
+          },
+          {
+            title: '状态',
+            dataIndex: 'status',
+          },
+          {
+            title: '更新时间',
+            dataIndex: 'updatedAt',
+          },
+          {
+            table: '操作',
+            dataIndex: 'action',
+            scopedSlots: {customRender: 'action'},
+          }
+        ],
+        // 查询条件参数
+        queryParam: {},
+        // 加载数据方法 必须为 Promise 对象
+        loadData: parameter => {
+          return this.$http.get('/service', {
+            params: Object.assign(parameter, this.queryParam)
+          }).then(res => {
+            return res.result
+          })
+        },
+      }
+    },
+    methods: {
+      edit(row) {
+        // axios 发送数据到后端 修改数据成功后
+        // 调用 refresh() 重新加载列表数据
+        // 这里 setTimeout 模拟发起请求的网络延迟..
+        setTimeout(() => {
+          this.$refs.table.refresh()
+        }, 1500)
+
+      }
     }
+  }
 </script>
 ```
 
@@ -202,18 +207,18 @@ Table 重封装组件说明
 
 ```javascript
 result.then(r => {
-          this.localPagination = Object.assign({}, this.localPagination, {
-            current: r.pageNo,  // 返回结果中的当前分页数
-            total: r.totalCount, // 返回结果中的总记录数
-            showSizeChanger: this.showSizeChanger,
-            pageSize: (pagination && pagination.pageSize) ||
-              this.localPagination.pageSize
-          });
+  this.localPagination = Object.assign({}, this.localPagination, {
+    current: r.pageNo,  // 返回结果中的当前分页数
+    total: r.totalCount, // 返回结果中的总记录数
+    showSizeChanger: this.showSizeChanger,
+    pageSize: (pagination && pagination.pageSize) ||
+      this.localPagination.pageSize
+  });
 
-          !r.totalCount && ['auto', false].includes(this.showPagination) && (this.localPagination = false)
-          this.localDataSource = r.data; // 返回结果中的数组数据
-          this.localLoading = false
-        });
+  !r.totalCount && ['auto', false].includes(this.showPagination) && (this.localPagination = false)
+  this.localDataSource = r.data; // 返回结果中的数组数据
+  this.localLoading = false
+});
 ```
 返回 JSON 例子：
 ```json
