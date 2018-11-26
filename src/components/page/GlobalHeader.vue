@@ -91,12 +91,12 @@
         mainMenu: state => state.permission.addRouters,
         sidebarOpened: state => state.app.sidebar.opened,
         fixedHeader: state => state.app.fixedHeader,
-        swipeDownHiddenHeader: state => state.app.swipeDownHiddenHeader,
+        autoHideHeader: state => state.app.autoHideHeader,
       }),
     },
     methods: {
       handleScroll () {
-        if (this.swipeDownHiddenHeader) {
+        if (this.autoHideHeader) {
           let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
           if (scrollTop > 100) {
             this.headerBarFixed = true

@@ -47,7 +47,7 @@
       </a-drawer>
     </template>
 
-    <a-layout :class="[layoutMode]" :style="{ paddingLeft: fixedSideMenu && device === 'desktop' ? `${sidebarOpened ? 256 : 80}px` : '0' }">
+    <a-layout :class="[layoutMode]" :style="{ paddingLeft: fixSiderbar && device === 'desktop' ? `${sidebarOpened ? 256 : 80}px` : '0' }">
       <!-- layout header -->
       <global-header :mode="layoutMode" :theme="theme" :collapsed="collapsed" :device="device" @toggle="toggle"/>
 
@@ -97,7 +97,7 @@
         layoutMode: state => state.app.layout,
         sidebarOpened: state => state.app.sidebar.opened,
         fixedHeader: state => state.app.fixedHeader,
-        fixedSideMenu: state => state.app.fixedSideMenu,
+        fixSiderbar: state => state.app.fixSiderbar,
         theme: state => state.app.theme,
         device: state => state.app.device,
       })

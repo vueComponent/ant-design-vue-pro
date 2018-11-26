@@ -103,13 +103,13 @@
                 </a-list-item-meta>
               </a-list-item>
               <a-list-item>
-                <a-switch slot="actions" size="small" :defaultChecked="swipeDownHiddenHeader" @change="handleFixedHeaderHidden" />
+                <a-switch slot="actions" size="small" :defaultChecked="autoHideHeader" @change="handleFixedHeaderHidden" />
                 <a-list-item-meta>
                   <div slot="title">下滑时隐藏 Header</div>
                 </a-list-item-meta>
               </a-list-item>
               <a-list-item >
-                <a-switch slot="actions" size="small" :disabled="(layoutMode === 'topmenu')" :defaultChecked="fixedSideMenu" @change="handleFixedSideMenu" />
+                <a-switch slot="actions" size="small" :disabled="(layoutMode === 'topmenu')" :defaultChecked="fixSiderbar" @change="handleFixSiderbar" />
                 <a-list-item-meta>
                   <div slot="title" :style="{ textDecoration: layoutMode === 'topmenu' ? 'line-through' : 'unset' }">固定侧边菜单</div>
                 </a-list-item-meta>
@@ -175,8 +175,8 @@
         primaryColor: state => state.app.color,
         colorWeak: state => state.app.weak,
         fixedHeader: state => state.app.fixedHeader,
-        fixedSideMenu: state => state.app.fixedSideMenu,
-        swipeDownHiddenHeader: state => state.app.swipeDownHiddenHeader,
+        fixSiderbar: state => state.app.fixSiderbar,
+        autoHideHeader: state => state.app.autoHideHeader,
       })
     },
     mounted () {
@@ -215,7 +215,8 @@
       handleLayout (mode) {
         this.$store.dispatch('ToggleLayoutMode', mode)
         // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
-        this.handleFixedSideMenu(false);
+        //
+        this.handleFixSiderbar(false);
       },
       changeColor (color) {
         if (this.primaryColor !== color) {
@@ -229,12 +230,12 @@
       handleFixedHeaderHidden (autoHidden) {
         this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
       },
-      handleFixedSideMenu (fixed) {
+      handleFixSiderbar (fixed) {
         if (this.layoutMode === 'topmenu') {
-          this.$store.dispatch('ToggleFixedSidemenu', false)
+          this.$store.dispatch('ToggleFixSiderbar', false)
           return;
         }
-        this.$store.dispatch('ToggleFixedSidemenu', fixed)
+        this.$store.dispatch('ToggleFixSiderbar', fixed)
       }
     },
   }

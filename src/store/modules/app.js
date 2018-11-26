@@ -11,8 +11,8 @@ const app = {
     theme: '',
     layout: '',
     fixedHeader: false,
-    fixedSideMenu: false,
-    swipeDownHiddenHeader: false,
+    fixSiderbar: false,
+    autoHideHeader: false,
     color: null,
     weak: false
   },
@@ -42,13 +42,13 @@ const app = {
       Vue.ls.set(DEFAULT_FIXED_HEADER, fixed)
       state.fixedHeader = fixed
     },
-    TOGGLE_FIXED_SIDEMENU: (state, fixed) => {
+    TOGGLE_FIXED_SIDERBAR: (state, fixed) => {
       Vue.ls.set(DEFAULT_FIXED_SIDEMENU, fixed)
-      state.fixedSideMenu = fixed
+      state.fixSiderbar = fixed
     },
     TOGGLE_FIXED_HEADER_HIDDEN: (state, show) => {
       Vue.ls.set(DEFAULT_FIXED_HEADER_HIDDEN, show)
-      state.swipeDownHiddenHeader = show
+      state.autoHideHeader = show
     },
 
     TOGGLE_COLOR: (state, color) => {
@@ -79,8 +79,8 @@ const app = {
     ToggleFixedHeader({ commit }, fixedHeader) {
       commit('TOGGLE_FIXED_HEADER', fixedHeader)
     },
-    ToggleFixedSidemenu({ commit }, fixedSideMenu) {
-      commit( 'TOGGLE_FIXED_SIDEMENU', fixedSideMenu)
+    ToggleFixSiderbar({ commit }, fixSiderbar) {
+      commit( 'TOGGLE_FIXED_SIDERBAR', fixSiderbar)
     },
     ToggleFixedHeaderHidden({ commit }, show) {
       commit('TOGGLE_FIXED_HEADER_HIDDEN', show)
