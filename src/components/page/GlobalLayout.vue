@@ -1,5 +1,5 @@
 <template>
-  <a-layout class="layout" :class="device">
+  <a-layout class="layout" :class="[device]">
 
     <template v-if="layoutMode === 'sidemenu'">
       <a-drawer
@@ -47,7 +47,7 @@
       </a-drawer>
     </template>
 
-    <a-layout :class="[layoutMode]" :style="{ paddingLeft: fixSiderbar && device === 'desktop' ? `${sidebarOpened ? 256 : 80}px` : '0' }">
+    <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: fixSiderbar && device === 'desktop' ? `${sidebarOpened ? 256 : 80}px` : '0' }">
       <!-- layout header -->
       <global-header :mode="layoutMode" :theme="theme" :collapsed="collapsed" :device="device" @toggle="toggle"/>
 
@@ -98,6 +98,7 @@
         sidebarOpened: state => state.app.sidebar.opened,
         fixedHeader: state => state.app.fixedHeader,
         fixSiderbar: state => state.app.fixSiderbar,
+        contentWidth: state => state.app.contentWidth,
         theme: state => state.app.theme,
         device: state => state.app.device,
       })
@@ -205,6 +206,18 @@
           width: 100%;
         }
       }
+      /* 必须为 topmenu  才能启用流式布局 */
+      &.content-width-Fluid {
+        .header-index-wide {
+          max-width: unset;
+          margin-left: 24px;
+        }
+
+        .page-header-index-wide {
+          max-width: unset;
+        }
+      }
+
     }
 
     .sidemenu {

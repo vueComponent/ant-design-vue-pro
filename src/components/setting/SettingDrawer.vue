@@ -88,10 +88,15 @@
           <div :style="{ marginTop: '24px' }">
             <a-list :split="false">
               <a-list-item>
-                <a-select slot="actions" defaultValue="auto" size="small">
-                  <a-select-option value="fixed" v-if="layoutMode !== 'sidemenu'" disabled>固定</a-select-option>
-                  <a-select-option value="auto">流式</a-select-option>
-                </a-select>
+                <a-tooltip slot="actions">
+                  <template slot='title'>
+                    该设定仅 [顶部栏导航] 时有效
+                  </template>
+                  <a-select  size="small" style="width: 80px;" :defaultValue="contentWidth" @change="handleContentWidthChange">
+                    <a-select-option value="Fixed">固定</a-select-option>
+                    <a-select-option value="Fluid" v-if="layoutMode !== 'sidemenu'">流式</a-select-option>
+                  </a-select>
+                </a-tooltip>
                 <a-list-item-meta>
                   <div slot="title">内容区域宽度</div>
                 </a-list-item-meta>
@@ -103,9 +108,9 @@
                 </a-list-item-meta>
               </a-list-item>
               <a-list-item>
-                <a-switch slot="actions" size="small" :defaultChecked="autoHideHeader" @change="handleFixedHeaderHidden" />
+                <a-switch slot="actions" size="small" :disabled="!fixedHeader" :defaultChecked="autoHideHeader" @change="handleFixedHeaderHidden" />
                 <a-list-item-meta>
-                  <div slot="title">下滑时隐藏 Header</div>
+                  <div slot="title" :style="{ textDecoration: !fixedHeader ? 'line-through' : 'unset' }">下滑时隐藏 Header</div>
                 </a-list-item-meta>
               </a-list-item>
               <a-list-item >
@@ -177,7 +182,11 @@
         fixedHeader: state => state.app.fixedHeader,
         fixSiderbar: state => state.app.fixSiderbar,
         autoHideHeader: state => state.app.autoHideHeader,
-      })
+        contentWidth: state => state.app.contentWidth,
+      }),
+    },
+    watch: {
+
     },
     mounted () {
       const vm = this
@@ -217,6 +226,9 @@
         // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
         //
         this.handleFixSiderbar(false);
+      },
+      handleContentWidthChange (type) {
+        this.$store.dispatch('ToggleContentWidth', type)
       },
       changeColor (color) {
         if (this.primaryColor !== color) {
