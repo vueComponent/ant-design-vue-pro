@@ -80,4 +80,12 @@
       margin-top: 32px;
     }
   }
+
+  .mobile {
+    .result {
+      width: 100%;
+      margin: 0 auto;
+      padding: unset;
+    }
+  }
 </style>

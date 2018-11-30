@@ -172,6 +172,14 @@
         }
       }
 
+      .topmenu {
+        /* 必须为 topmenu  才能启用流式布局 */
+        &.content-width-Fluid {
+          .header-index-wide {
+            margin-left: 0;
+          }
+        }
+      }
     }
 
     &.ant-layout-has-sider {

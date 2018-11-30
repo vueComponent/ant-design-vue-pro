@@ -1,7 +1,7 @@
 <template>
   <page-layout title="单号：234231029431" logo="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png">
 
-    <detail-list slot="headerContent" size="small" :col="2" style="margin-left: 44px;">
+    <detail-list slot="headerContent" size="small" :col="2" class="detail-layout">
       <detail-list-item term="创建人">曲丽丽</detail-list-item>
       <detail-list-item term="订购产品">XX服务</detail-list-item>
       <detail-list-item term="创建时间">2018-08-07</detail-list-item>
@@ -9,12 +9,12 @@
       <detail-list-item term="生效日期">2018-08-07 ~ 2018-12-11</detail-list-item>
       <detail-list-item term="备注">请于两个工作日内确认</detail-list-item>
     </detail-list>
-    <a-row slot="extra">
-      <a-col :xs="24" :sm="12">
+    <a-row slot="extra" class="status-list">
+      <a-col :xs="12" :sm="12">
         <div class="text">状态</div>
         <div class="heading">待审批</div>
       </a-col>
-      <a-col :xs="24" :sm="12">
+      <a-col :xs="12" :sm="12">
         <div class="text">订单金额</div>
         <div class="heading">¥ 568.08</div>
       </a-col>
@@ -305,6 +305,10 @@
 </script>
 
 <style lang="scss" scoped>
+
+  .detail-layout {
+    margin-left: 44px;
+  }
   .text {
     color: rgba(0, 0, 0, .45);
   }
@@ -325,6 +329,18 @@
       margin-right: 16px;
       position: relative;
       top: 3px;
+    }
+  }
+
+  .mobile {
+    .detail-layout {
+      margin-left: unset;
+    }
+    .text {
+
+    }
+    .status-list {
+      text-align: left;
     }
   }
 </style>

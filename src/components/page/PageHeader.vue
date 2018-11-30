@@ -222,6 +222,16 @@
           min-width: 0;
           text-align: right;
         }
+        .action {
+          margin-left: unset;
+          min-width: 266px;
+          flex: 0 1 auto;
+          text-align: left;
+          margin-bottom: 12px;
+          &:empty {
+            display: none;
+          }
+        }
       }
     }
   }

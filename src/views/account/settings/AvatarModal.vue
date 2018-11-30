@@ -1,7 +1,7 @@
 <template>
   <a-modal :visible="visible" title="修改头像" :maskClosable="false" :confirmLoading="confirmLoading" :width="800">
     <a-row>
-      <a-col :span="12" :style="{height: '350px'}">
+      <a-col :xs="24" :md="12" :style="{height: '350px'}">
         <vue-cropper
           ref="cropper"
           :img="options.img"
@@ -14,7 +14,7 @@
         >
         </vue-cropper>
       </a-col>
-      <a-col :span="12" :style="{height: '350px'}">
+      <a-col :xs="24" :md="12" :style="{height: '350px'}">
         <div class="avatar-upload-preview">
           <img :src="previews.url" :style="previews.img"/>
         </div>

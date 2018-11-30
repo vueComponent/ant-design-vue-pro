@@ -1,5 +1,11 @@
 <template>
-  <a-popover trigger="click" placement="bottomRight" :autoAdjustOverflow="false" overlayClassName="header-notice-wrapper" :overlayStyle="{ width: '300px', top: '50px' }">
+  <a-popover
+    trigger="click"
+    placement="bottomRight"
+    :autoAdjustOverflow="true"
+    :arrowPointAtCenter="true"
+    overlayClassName="header-notice-wrapper"
+    :overlayStyle="{ width: '300px', top: '50px' }">
     <template slot="content">
       <a-spin :spinning="loadding">
         <a-tabs>
