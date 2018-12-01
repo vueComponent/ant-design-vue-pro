@@ -51,13 +51,14 @@
 <script>
   import PageLayout from '@/components/page/PageLayout'
   import RouteView from "@/components/layouts/RouteView"
-  import { mapState } from 'vuex'
+  import { mixinDevice } from '@/utils/mixin.js'
 
   export default {
     components: {
       RouteView,
       PageLayout
     },
+    mixins: [mixinDevice],
     data () {
       return {
         // horizontal  inline
@@ -86,11 +87,6 @@
 
         pageTitle: ''
       }
-    },
-    computed: {
-      ...mapState({
-        device: state => state.app.device,
-      })
     },
     created () {
       this.updateMenu()
@@ -121,9 +117,9 @@
         border-right: unset;
         border-bottom: 1px solid #e8e8e8;
         width: 100%;
-        height: 48px;
-        overflow-x: hidden;
-        overflow-y: auto;
+        height: 50px;
+        overflow-x: auto;
+        overflow-y: scroll;
       }
       .account-settings-info-right {
         padding: 20px 40px;

@@ -30,7 +30,7 @@
     </template>
 
     <a-card :bordered="false" title="流程进度">
-      <a-steps :direction="device==='mobile' && 'vertical' || 'horizontal'" :current="1" progressDot>
+      <a-steps :direction="isMobile() && 'vertical' || 'horizontal'" :current="1" progressDot>
         <a-step title="创建项目">
         </a-step>
         <a-step title="部门初审">
@@ -133,7 +133,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mixinDevice } from '@/utils/mixin.js'
   import PageLayout from '@/components/page/PageLayout'
   import DetailList from '@/components/tools/DetailList'
 
@@ -146,6 +146,7 @@
       DetailList,
       DetailListItem
     },
+    mixins: [mixinDevice],
     data () {
       return {
         tabList: [
@@ -295,12 +296,7 @@
         }
         return statusTypeMap[type]
       }
-    },
-    computed: {
-      ...mapState({
-        device: state => state.app.device,
-      })
-    },
+    }
   }
 </script>
 

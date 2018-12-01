@@ -4,7 +4,7 @@
     <template v-if="layoutMode === 'sidemenu'">
       <a-drawer
         v-if="device === 'mobile'"
-        :wrapClassName="'drawer-sider ' + theme"
+        :wrapClassName="'drawer-sider ' + navTheme"
         placement="left"
         @close="() => this.collapsed = false"
         :closable="false"
@@ -14,16 +14,16 @@
           mode="inline"
           :menus="menus"
           @menuSelect="menuSelect"
-          :theme="theme"
+          :theme="navTheme"
           :collapsed="false"
           :collapsible="true"></side-menu>
       </a-drawer>
 
       <side-menu
         v-else
+        mode="inline"
         :menus="menus"
-        :theme="theme"
-        :mode="menuMode"
+        :theme="navTheme"
         :collapsed="collapsed"
         :collapsible="true"></side-menu>
     </template>
@@ -31,7 +31,7 @@
     <template v-else>
       <a-drawer
         v-if="device === 'mobile'"
-        :wrapClassName="'drawer-sider ' + theme"
+        :wrapClassName="'drawer-sider ' + navTheme"
         placement="left"
         @close="() => this.collapsed = false"
         :closable="false"
@@ -41,7 +41,7 @@
           mode="inline"
           :menus="menus"
           @menuSelect="menuSelect"
-          :theme="theme"
+          :theme="navTheme"
           :collapsed="false"
           :collapsible="true"></side-menu>
       </a-drawer>
@@ -49,7 +49,14 @@
 
     <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: fixSiderbar && device === 'desktop' ? `${sidebarOpened ? 256 : 80}px` : '0' }">
       <!-- layout header -->
-      <global-header :mode="layoutMode" :theme="theme" :collapsed="collapsed" :device="device" @toggle="toggle"/>
+      <global-header 
+        :mode="layoutMode" 
+        :menus="menus" 
+        :theme="navTheme" 
+        :collapsed="collapsed" 
+        :device="device" 
+        @toggle="toggle"
+      />
 
       <!-- layout content -->
       <a-layout-content :style="{ margin: '24px 24px 0', height: '100%', paddingTop: fixedHeader ? '64px' : '0' }">
@@ -71,41 +78,33 @@
   import GlobalHeader from '@/components/page/GlobalHeader'
   import GlobalFooter from '@/components/page/GlobalFooter'
   import SettingDrawer from '@/components/setting/SettingDrawer'
-  import { triggerResize } from '@/utils/util'
+  import { triggerWindowResizeEvent } from '@/utils/util'
   import { mapState, mapActions } from 'vuex'
+  import { mixin, mixinDevice } from '@/utils/mixin.js'
+
   export default {
-    name: "BasicLayout",
+    name: "GlobalLayout",
     components: {
       SideMenu,
       GlobalHeader,
       GlobalFooter,
       SettingDrawer
     },
+    mixins: [mixin, mixinDevice],
     data () {
       return {
-        // light, dark
-        menuTheme: 'light',
-        // inline, horizontal
-        menuMode: 'inline',
         collapsed: false,
         menus: []
       }
     },
     computed: {
       ...mapState({
+        // 主路由
         mainMenu: state => state.permission.addRouters,
-        layoutMode: state => state.app.layout,
-        sidebarOpened: state => state.app.sidebar.opened,
-        fixedHeader: state => state.app.fixedHeader,
-        fixSiderbar: state => state.app.fixSiderbar,
-        contentWidth: state => state.app.contentWidth,
-        theme: state => state.app.theme,
-        device: state => state.app.device,
       })
     },
     watch: {
       sidebarOpened(val) {
-        console.log('watch',val)
         this.collapsed = !val
       },
     },
@@ -116,11 +115,11 @@
       ...mapActions(['setSidebar']),
       toggle() {
         this.collapsed = !this.collapsed
-        triggerResize()
         this.setSidebar(!this.collapsed)
+        triggerWindowResizeEvent()
       },
       menuSelect() {
-        if (this.device !== 'desktop') {
+        if (!this.isDesktop()) {
           this.collapsed = false
         }
       }

@@ -1,9 +1,9 @@
 <script>
-  import { mapState } from "vuex"
   import { colorList } from '@/components/tools/setting'
   import ASwitch from 'ant-design-vue/es/switch'
   import AList from "ant-design-vue/es/list"
   import AListItem from "ant-design-vue/es/list/Item"
+  import { mixin } from '@/utils/mixin.js'
 
   const Meta = AListItem.Meta
 
@@ -14,15 +14,10 @@
       ASwitch,
       Meta
     },
+    mixins: [mixin],
     data () {
       return {
       }
-    },
-    computed: {
-      ...mapState({
-        theme: state => state.app.theme,
-        color: state => state.app.color
-      })
     },
     filters: {
       themeFilter(theme) {
@@ -58,14 +53,14 @@
               </span>
             </Meta>
             <div slot="actions">
-              <ASwitch checkedChildren="暗色" unCheckedChildren="白色" defaultChecked={this.theme === 'dark' && true || false} onChange={this.onChange} />
+              <ASwitch checkedChildren="暗色" unCheckedChildren="白色" defaultChecked={this.navTheme === 'dark' && true || false} onChange={this.onChange} />
             </div>
           </AListItem>
           <AListItem>
             <Meta>
               <a slot="title">主题色</a>
               <span slot="description">
-                页面风格配色： <a domPropsInnerHTML={ this.colorFilter(this.color) }/>
+                页面风格配色： <a domPropsInnerHTML={ this.colorFilter(this.primaryColor) }/>
               </span>
             </Meta>
           </AListItem>

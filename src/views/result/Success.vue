@@ -22,7 +22,7 @@
             2016-12-12 ~ 2017-12-12
           </a-col>
         </a-row>
-        <a-steps :current="1" :direction="device === 'mobile' && directionType.vertical || directionType.horizontal" progressDot>
+        <a-steps :current="1" :direction="isMobile() && directionType.vertical || directionType.horizontal" progressDot>
           <a-step >
             <span style="font-size: 14px" slot="title">创建项目</span>
             <template slot="description">
@@ -61,7 +61,7 @@
 
 <script>
   import Result from './Result'
-  import { mapState } from 'vuex'
+  import { mixinDevice } from '@/utils/mixin.js'
 
   const directionType = {
     horizontal: 'horizontal',
@@ -73,6 +73,7 @@
     components: {
       Result
     },
+    mixins: [mixinDevice],
     data () {
       return {
         title: '提交成功',
@@ -82,11 +83,6 @@
           ' “单据”的需求，下面这个灰色区域可以呈现比较复杂的内容。',
         directionType
       }
-    },
-    computed: {
-      ...mapState({
-        device: state => state.app.device,
-      })
     }
   }
 </script>

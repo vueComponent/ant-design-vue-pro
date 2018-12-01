@@ -43,20 +43,25 @@
   import SMenu from '../menu/'
   import Logo from '../tools/Logo'
 
-  import { mapState } from 'vuex'
+  import { mixin } from '@/utils/mixin.js'
 
   export default {
-    name: "LayoutHeader",
+    name: "GlobalHeader",
     components: {
       UserMenu,
       SMenu,
       Logo
     },
+    mixins: [mixin],
     props: {
       mode: {
         type: String,
         // sidemenu, topmenu
         default: 'sidemenu'
+      },
+      menus: {
+        type: Array,
+        required: true
       },
       theme: {
         type: String,
@@ -76,23 +81,11 @@
     },
     data() {
       return {
-        menus: [],
         headerBarFixed: false,
       }
     },
     mounted () {
       window.addEventListener('scroll', this.handleScroll)
-    },
-    created() {
-      this.menus = this.mainMenu.find((item) => item.path === '/').children
-    },
-    computed: {
-      ...mapState({
-        mainMenu: state => state.permission.addRouters,
-        sidebarOpened: state => state.app.sidebar.opened,
-        fixedHeader: state => state.app.fixedHeader,
-        autoHideHeader: state => state.app.autoHideHeader,
-      }),
     },
     methods: {
       handleScroll () {

@@ -1,6 +1,6 @@
 <template>
   <a-layout-sider
-    :class="['sider', device === 'desktop' ? null : 'shadow', theme, fixSiderbar ? 'ant-fixed-sidemenu' : null ]"
+    :class="['sider', isDesktop() ? null : 'shadow', theme, fixSiderbar ? 'ant-fixed-sidemenu' : null ]"
     width="256px" 
     :collapsible="collapsible"
     v-model="collapsed" 
@@ -21,11 +21,12 @@
   import ALayoutSider from "ant-design-vue/es/layout/Sider"
   import Logo from '../tools/Logo'
   import SMenu from './index'
-  import { mapState } from 'vuex'
+  import { mixin, mixinDevice } from '@/utils/mixin.js'
 
   export default {
     name: "SideMenu",
     components: { ALayoutSider, Logo, SMenu },
+    mixins: [mixin, mixinDevice],
     props: {
       mode: {
         type: String,
@@ -51,15 +52,6 @@
         type: Array,
         required: true
       }
-    },
-    created () {
-
-    },
-    computed: {
-      ...mapState({
-        device: state => state.app.device,
-        fixSiderbar: state => state.app.fixSiderbar,
-      })
     },
     methods: {
       onSelect (obj) {
