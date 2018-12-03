@@ -39,7 +39,7 @@ Overview
 - yarn
 - webpack
 - eslint
-- @vue/cli 3.0.1
+- @vue/cli 3.2.1
 - [ant-design-vue](https://github.com/vueComponent/ant-design-vue) - Ant Design Of Vue 实现
 - [vue-cropper](https://github.com/xyxiao001/vue-cropper) - 头像裁剪组件
 - [@antv/g2](https://antv.alipay.com/zh-cn/index.html) - Alipay AntV 数据可视化图表
@@ -118,3 +118,8 @@ yarn run lint
 
 - 其他待补充...
 
+
+备注
+----
+
+> @vue/cli 升级后，eslint 规则更新了。由于影响到全部 .vue 文件，需要逐个验证。既暂时关闭部分原本不验证的规则，后期维护时，在逐步修正这些 rules
