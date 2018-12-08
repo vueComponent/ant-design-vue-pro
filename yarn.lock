@@ -1366,10 +1366,10 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ant-design-vue@^1.1.10-beta:
-  version "1.1.10-beta"
-  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.1.10-beta.tgz#6f0aeb3db2d512de8ab447a74ab7e51d39fcd434"
-  integrity sha512-Vj5y9RCCpKkGCsRVqUaXighvEfAAMkQlir+uBCO08FgfBWM73Q8NYJ8RSehpt55ucdb3RE1fHmowzio3p6glnQ==
+ant-design-vue@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.1.10.tgz#b9ebcbab6dc72e0576920f8dc3fe7498e9d4bf61"
+  integrity sha512-NJefmFr1WZO6HQVtENDyIquTYMx+3NLKgQdb0PY/U1+VYfnCw21TBl3eOLJTFDC7YKamnCH3pz0Ok0OKr7IVfw==
   dependencies:
     add-dom-event-listener "^1.0.2"
     array-tree-filter "^2.1.0"
@@ -1392,7 +1392,7 @@ ant-design-vue@^1.1.10-beta:
     resize-observer-polyfill "^1.5.0"
     shallow-equal "^1.0.0"
     shallowequal "^1.0.2"
-    vue-ref "^1.0.2"
+    vue-ref "^1.0.3"
     warning "^3.0.0"
 
 anymatch@^2.0.0:
@@ -9056,10 +9056,10 @@ vue-ls@^3.2.0:
   resolved "https://registry.yarnpkg.com/vue-ls/-/vue-ls-3.2.0.tgz#33356ad3ec9c30dac203757cf4036abe4ff767b3"
   integrity sha512-39FGQMrT9NbG5WGDJfxWj19ZD1tsVoBBN1n8qvq6/+uRB9BansQ9NSyclQ9TzZatRkkM/VEQo5oTsijdM5hGFw==
 
-vue-ref@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/vue-ref/-/vue-ref-1.0.2.tgz#8822640ece91665f01e958bd1fde4038c75e0f34"
-  integrity sha512-VQ9/uWlELEaFO7Qws94BAvr83tx4H310nvE32PUaMgHwLqIFtE9tmvxA6G0dUdegUeOrWXSgkg2HGUpqSMjYPw==
+vue-ref@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/vue-ref/-/vue-ref-1.0.3.tgz#5b7bbfc6f5833e13f5a9155ac686fafdb03dbcad"
+  integrity sha512-6t9bwx6qJGKF+Mo6wEQWMzBAwx+h/oiEKuTC4+eiKzLdIRDPbbvTpsemWFsOKBOUwRGi6WKKqMzVQkkE8QcEfg==
 
 vue-router@^3.0.1:
   version "3.0.2"

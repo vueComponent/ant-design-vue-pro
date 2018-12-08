@@ -13,20 +13,26 @@ const service = axios.create({
 
 const err = (error) => {
   if (error.response) {
-    if (error.status === 403) {
-      notification.error({ message: '拒绝访问', description: '无权限，拒绝访问' })
+    let data = error.response.data
+    const token = Vue.ls.get(ACCESS_TOKEN)
+    if (error.response.status === 403) {
+      notification.error({ message: 'Forbidden', description: data.message})
     }
-    if (error.status === 401) {
-      notification.error({ message: '未授权', description: '授权验证失败' })
-      store.dispatch('Logout').then(() => {
-        location.reload()
-      })
+    if (error.response.status === 401) {
+      notification.error({ message: 'Unauthorized', description: 'Authorization verification failed' })
+      if (token) {
+        store.dispatch('Logout').then(() => {
+          setTimeout(() => {
+            window.location.reload()
+          }, 1500)
+        })
+      }
     }
   }
   return Promise.reject(error)
 };
 
-// request 拦截器
+// request interceptor
 service.interceptors.request.use(config => {
   const token = Vue.ls.get(ACCESS_TOKEN)
   if (token) {
@@ -35,7 +41,7 @@ service.interceptors.request.use(config => {
   return config
 }, err)
 
-// response 拦截器
+// response interceptor
 service.interceptors.response.use((response) => {
     return response.data
   }, err)
