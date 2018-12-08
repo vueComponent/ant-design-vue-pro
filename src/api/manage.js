@@ -5,6 +5,7 @@ const api = {
   role: '/role',
   service: '/service',
   permission: '/permission',
+  permissionNoPager: '/permission/no-pager',
 }
 
 export default api
@@ -28,6 +29,14 @@ export function getRoleList(parameter) {
 export function getServiceList(parameter) {
   return axios({
     url: api.service,
+    method: 'get',
+    params: parameter
+  })
+}
+
+export function getPermissions(parameter) {
+  return axios({
+    url: api.permissionNoPager,
     method: 'get',
     params: parameter
   })
