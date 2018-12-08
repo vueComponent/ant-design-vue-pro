@@ -12,8 +12,8 @@
             <a-form-item label="状态">
               <a-select placeholder="请选择" default-value="0">
                 <a-select-option value="0">全部</a-select-option>
-                <a-select-option value="1">关闭</a-select-option>
-                <a-select-option value="2">运行中</a-select-option>
+                <a-select-option value="1">正常</a-select-option>
+                <a-select-option value="2">禁用</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -28,6 +28,7 @@
     </div>
 
     <s-table
+      ref="table"
       size="default"
       :columns="columns"
       :data="loadData"
@@ -72,7 +73,7 @@
       </span>
     </s-table>
 
-    <role-modal ref="modal"></role-modal>
+    <role-modal ref="modal" @ok="handleOk"></role-modal>
 
   </a-card>
 </template>
@@ -152,7 +153,8 @@
         this.visible = true
       },
       handleOk () {
-
+        // 新增/修改 成功时，重载列表
+        this.$refs.table.refresh()
       },
       onChange (selectedRowKeys, selectedRows) {
         this.selectedRowKeys = selectedRowKeys
