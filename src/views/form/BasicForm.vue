@@ -6,10 +6,10 @@
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
         :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
         <a-input
-          v-decorator="{
-            id: 'name',
-            options: {rules: [{ required: true, message: '请输入标题' }]}
-          }"
+          v-decorator="[
+            'name',
+            {rules: [{ required: true, message: '请输入标题' }]}
+          ]"
           name="name"
           placeholder="给目标起个名字" />
       </a-form-item>
@@ -20,34 +20,34 @@
         <a-range-picker
           name="buildTime"
           style="width: 100%"
-          v-decorator="{
-            id: 'buildTime',
-            options: {rules: [{ required: true, message: '请选择起止日期' }]}
-          }" />
+          v-decorator="[
+            'buildTime',
+            {rules: [{ required: true, message: '请选择起止日期' }]}
+          ]" />
       </a-form-item>
       <a-form-item
         label="目标描述"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
         :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
         <a-textarea
-          v-decorator="{
-            id: 'description',
-            options: {rules: [{ required: true, message: '请输入目标描述' }]}
-          }"
           rows="4"
-          placeholder="请输入你阶段性工作目标" />
+          placeholder="请输入你阶段性工作目标"
+          v-decorator="[
+            'description',
+            {rules: [{ required: true, message: '请输入目标描述' }]}
+          ]" />
       </a-form-item>
       <a-form-item
         label="衡量标准"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
         :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
         <a-textarea
-          v-decorator="{
-            id: 'type',
-            options: {rules: [{ required: true, message: '请输入衡量标准' }]}
-          }"
           rows="4"
-          placeholder="请输入衡量标准" />
+          placeholder="请输入衡量标准"
+          v-decorator="[
+            'type',
+            {rules: [{ required: true, message: '请输入衡量标准' }]}
+          ]" />
       </a-form-item>
       <a-form-item
         label="客户"
@@ -55,10 +55,10 @@
         :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
         <a-input 
           placeholder="请描述你服务的客户，内部客户直接 @姓名／工号"
-          v-decorator="{
-            id: 'customer',
-            options: {rules: [{ required: true, message: '请描述你服务的客户' }]}
-          }" />
+          v-decorator="[
+            'customer',
+            {rules: [{ required: true, message: '请描述你服务的客户' }]}
+          ]" />
       </a-form-item>
       <a-form-item
         label="邀评人"
