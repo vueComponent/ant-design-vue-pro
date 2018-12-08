@@ -15,6 +15,7 @@
     "enquire.js": "^2.1.6",
     "js-cookie": "^2.2.0",
     "lodash.get": "^4.4.2",
+    "lodash.pick": "^4.4.0",
     "md5": "^2.2.1",
     "nprogress": "^0.2.0",
     "viser-vue": "^2.3.3",
