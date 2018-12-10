@@ -1,4 +1,4 @@
-import { UserLayout, BasicLayout, RouteView, PageView } from '@/components/layouts'
+import { UserLayout, BasicLayout, RouteView, BlankLayout, PageView } from '@/components/layouts'
 
 export const asyncRouterMap = [
 
@@ -309,6 +309,19 @@ export const constantRouterMap = [
         path: 'register-result',
         name: 'registerResult',
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/RegisterResult')
+      }
+    ]
+  },
+
+  {
+    path: '/test',
+    component: BlankLayout,
+    redirect: '/test/home',
+    children: [
+      {
+        path: 'home',
+        name: 'TestHome',
+        component: () => import('@/views/Home')
       }
     ]
   },

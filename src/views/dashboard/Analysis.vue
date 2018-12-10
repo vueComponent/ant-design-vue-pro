@@ -7,8 +7,14 @@
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
-            <trend style="margin-right: 16px;" term="同周比" :percentage="12" :type="true" :fixed="0" />
-            <trend term="日环比" :target="100" :value="89" :fixed="0" />
+            <trend flag="up" style="margin-right: 16px;">
+              <span slot="term">周同比</span>
+              12%
+            </trend>
+            <trend flag="down">
+              <span slot="term">日同比</span>
+              11%
+            </trend>
           </div>
           <template slot="footer">日均销售额<span>￥ 234.56</span></template>
         </chart-card>
@@ -141,7 +147,7 @@
   import MiniProgress from '@/components/chart/MiniProgress'
   import RankList from '@/components/chart/RankList'
   import Bar from '@/components/chart/Bar'
-  import Trend from '@/components/chart/Trend'
+  import Trend from '@/components/Trend'
 
   const rankList = []
   for (let i = 0; i < 7; i++) {
