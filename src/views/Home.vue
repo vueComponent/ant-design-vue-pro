@@ -43,8 +43,27 @@
 
     </a-card>
 
-    <a-divider> 例子 </a-divider>
+    <a-divider> AvatarList </a-divider>
 
+    <a-card>
+      <avatar-list :max-length="3">
+        <avatar-list-item tips="Jake" src="https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png" />
+        <avatar-list-item tips="Andy" src="https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png" />
+        <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png" />
+        <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png" />
+        <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png" />
+        <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png" />
+        <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png" />
+      </avatar-list>
+
+      <a-divider type="vertical" style="margin: 0 16px" />
+
+      <avatar-list size="mini">
+        <avatar-list-item tips="Jake" src="https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png" />
+        <avatar-list-item tips="Andy" src="https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png" />
+        <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png" />
+      </avatar-list>
+    </a-card>
   </div>
 </template>
 
@@ -52,11 +71,16 @@
   // @ is an alias to /src
 
   import Trend from '@/components/Trend'
+  import AvatarList from '@/components/AvatarList'
+
+  const AvatarListItem = AvatarList.AvatarItem
 
   export default {
     name: 'Home',
     components: {
-      Trend
+      Trend,
+      AvatarList,
+      AvatarListItem
     }
   }
 </script>

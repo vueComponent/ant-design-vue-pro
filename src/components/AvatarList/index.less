@@ -7,8 +7,10 @@
   display: inline-block;
 
   ul {
+    list-style: none;
     display: inline-block;
-    margin-left: 8px;
+    padding: 0;
+    margin: 0 0 0 8px;
     font-size: 0;
   }
 }
@@ -23,20 +25,21 @@
   :global {
     .ant-avatar {
       border: 1px solid #fff;
+      cursor: pointer;
     }
   }
 
-  .large {
+  &.large {
     width: @avatar-size-lg;
     height: @avatar-size-lg;
   }
 
-  .small {
+  &.small {
     width: @avatar-size-sm;
     height: @avatar-size-sm;
   }
 
-  .mini {
+  &.mini {
     width: 20px;
     height: 20px;
 
@@ -54,3 +57,4 @@
     }
   }
 }
+
