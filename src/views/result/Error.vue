@@ -1,6 +1,6 @@
 <template>
   <a-card :bordered="false">
-    <result style="margin-bottom: 16px; margin-top: 48px" :is-success="false" :title="title" :description="description">
+    <result :is-success="false" :title="title" :description="description">
       <template slot="action">
         <a-button type="primary" >返回修改</a-button>
       </template>
