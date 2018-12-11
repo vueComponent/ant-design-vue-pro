@@ -1,8 +1,12 @@
+<!--
 <template>
   <div :class="[prefixCls]">
     <ul>
       <slot></slot>
-      <template v-if="maxLength > 0 && slotsSize > maxLength">
+      <template v-for="item in filterEmpty($slots.default).slice(0, 3)"></template>
+
+
+      <template v-if="maxLength > 0 && filterEmpty($slots.default).length > maxLength">
         <avatar-item :size="size">
           <avatar :size="size !== 'mini' && size || 20" :style="excessItemsStyle">{{ `+${maxLength}` }}</avatar>
         </avatar-item>
@@ -10,10 +14,12 @@
     </ul>
   </div>
 </template>
+-->
 
 <script>
   import Avatar from 'ant-design-vue/es/avatar'
   import AvatarItem from './Item'
+  import { filterEmpty } from '@/components/_util/util'
 
   export default {
     AvatarItem,
@@ -56,24 +62,39 @@
       }
     },
     data () {
-      return {
-        slotsSize: 0
-      }
-    },
-    created () {
-      this.slotsSize = this.$slots.default.length
-      this.splitSlots()
+      return {}
     },
     methods: {
-      splitSlots () {
-        if (this.maxLength !== 0 && this.slotsSize > this.maxLength) {
-          this.$slots.default = this.$slots.default.slice(0, this.maxLength)
+      getItems(items) {
+        const classString = {
+          [`${this.prefixCls}-item`]: true,
+          [`${this.size}`]: true
         }
+
+        if (this.maxLength > 0) {
+          items = items.slice(0, this.maxLength)
+          items.push((<Avatar size={ this.size } style={ this.excessItemsStyle }>{`+${this.maxLength}`}</Avatar>))
+        }
+        const itemList = items.map((item) => (
+          <li class={ classString }>{ item }</li>
+        ))
+        return itemList
       }
+    },
+    render () {
+      const { prefixCls, size } = this.$props
+      const classString = {
+        [`${prefixCls}`]: true,
+        [`${size}`]: true,
+      }
+      const items = filterEmpty(this.$slots.default)
+      const itemsDom = items && items.length ? <ul class={`${prefixCls}-items`}>{ this.getItems(items) }</ul> : null
+
+      return (
+        <div class={ classString }>
+          { itemsDom }
+        </div>
+      )
     }
   }
 </script>
-
-<style lang="less" scoped>
-
-</style>

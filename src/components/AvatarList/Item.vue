@@ -1,12 +1,9 @@
 <template>
-  <li :class="[prefixCls, size]">
-    <slot>
-      <tooltip>
-        <template slot="title">{{ tips }}</template>
-        <avatar :size="size !== 'mini' && size || 20" :src="src" />
-      </tooltip>
-    </slot>
-  </li>
+  <tooltip v-if="tips !== ''">
+    <template slot="title">{{ tips }}</template>
+    <avatar :size="avatarSize" :src="src" />
+  </tooltip>
+  <avatar v-else :size="avatarSize" :src="src" />
 </template>
 
 <script>
@@ -20,10 +17,6 @@
       Tooltip
     },
     props: {
-      prefixCls: {
-        type: String,
-        default: 'ant-pro-avatar-list-item'
-      },
       tips: {
         type: String,
         default: '',
@@ -37,6 +30,11 @@
     data () {
       return {
         size: this.$parent.size
+      }
+    },
+    computed: {
+      avatarSize () {
+        return this.size !== 'mini' && this.size || 20
       }
     },
     watch: {
