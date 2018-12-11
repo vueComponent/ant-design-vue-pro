@@ -54,6 +54,7 @@
         <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png" />
         <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png" />
         <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png" />
+
       </avatar-list>
 
       <a-divider type="vertical" style="margin: 0 16px" />
@@ -64,6 +65,16 @@
         <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png" />
       </avatar-list>
     </a-card>
+
+    <a-divider> CountDown </a-divider>
+
+    <a-card>
+      <count-down
+        style="font-size: 2rem"
+        :target="new Date().getTime() + 3000"
+        :on-end="onEndHandle">
+      </count-down>
+    </a-card>
   </div>
 </template>
 
@@ -72,15 +83,27 @@
 
   import Trend from '@/components/Trend'
   import AvatarList from '@/components/AvatarList'
+  import CountDown from '@/components/CountDown/CountDown'
 
   const AvatarListItem = AvatarList.AvatarItem
 
   export default {
     name: 'Home',
     components: {
+      CountDown,
       Trend,
       AvatarList,
       AvatarListItem
+    },
+    data () {
+      return {
+        targetTime: new Date().getTime() + 3900000
+      }
+    },
+    methods: {
+      onEndHandle () {
+        this.$message.success('CountDown callback!!!')
+      }
     }
   }
 </script>
@@ -89,10 +112,11 @@
   .home {
     width: 900px;
     margin: 0 auto;
+    padding: 25px 0;
   }
   .home > .banner {
     text-align: center;
-    padding-top: 25px;
+    padding: 25px 0;
     margin: 25px 0;
   }
 </style>
