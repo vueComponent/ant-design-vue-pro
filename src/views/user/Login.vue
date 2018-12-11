@@ -244,7 +244,10 @@
       loginSuccess () {
         this.loginBtn = false
         this.$router.push({ name: "dashboard" })
-        this.$message.success(timeFix() + '，欢迎回来', 3)
+        this.$notification.success({
+          message: '欢迎',
+          description: `${timeFix()}，欢迎回来`,
+        });
       },
       requestFailed (err) {
         this.$notification[ 'error' ]({
