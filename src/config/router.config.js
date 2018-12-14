@@ -169,6 +169,21 @@ export const asyncRouterMap = [
           }
         ]
       },
+      {
+        path: '/system',
+        name: 'system',
+        component: RouteView,
+        redirect: '/system/role',
+        meta: { title: '系统管理', icon: 'setting', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/system/role',
+            name: 'SystemRole',
+            component: () => import('@/views/role/RoleList'),
+            meta: { title: '角色列表', permission: [ 'table' ]}
+          }
+        ]
+      },
 
       // result
       {
