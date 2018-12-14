@@ -12,6 +12,7 @@ import 'ant-design-vue/dist/antd.less';  // or 'ant-design-vue/dist/antd.less'
 
 import '@/permission' // permission control
 import '@/utils/filter' // base filter
+import PermissionHelper from '@/utils/helper/permission'
 
 import {
   ACCESS_TOKEN,
@@ -33,6 +34,7 @@ Vue.use(Storage, config.storageOptions)
 Vue.use(Antd)
 Vue.use(VueAxios, router)
 Vue.use(Viser)
+Vue.use(PermissionHelper)
 
 new Vue({
   router,
