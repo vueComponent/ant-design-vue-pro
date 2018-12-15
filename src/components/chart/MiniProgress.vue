@@ -12,7 +12,7 @@
 
 <script>
   export default {
-    name: "MiniProgress",
+    name: 'MiniProgress',
     props: {
       target: {
         type: Number,

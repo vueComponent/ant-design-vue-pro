@@ -17,7 +17,7 @@
   import types from './type'
 
   export default {
-    name: "Exception",
+    name: 'Exception',
     props: {
       type: {
         type: String,

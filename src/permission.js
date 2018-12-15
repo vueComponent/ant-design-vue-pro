@@ -9,7 +9,7 @@ import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/user/login', '/user/register', '/user/register-result'] // no redirect whitelist
+const whiteList = ['login', 'register', 'registerResult'] // no redirect whitelist
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
@@ -53,7 +53,7 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
-    if (whiteList.indexOf(to.path) !== -1) {
+    if (whiteList.includes(to.name)) {
       // 在免登录白名单，直接进入
       next()
     } else {

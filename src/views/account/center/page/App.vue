@@ -69,7 +69,7 @@
   }
 
   export default {
-    name: "Article",
+    name: 'Article',
     components: {},
     data() {
       return {

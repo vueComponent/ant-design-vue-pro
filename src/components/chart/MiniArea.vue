@@ -39,7 +39,7 @@
   }]
 
   export default {
-    name: "MiniArea",
+    name: 'MiniArea',
     data () {
       return {
         data,

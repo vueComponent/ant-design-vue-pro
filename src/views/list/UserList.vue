@@ -153,7 +153,7 @@
   import { getRoleList, getServiceList } from '@/api/manage'
 
   export default {
-    name: "TableList",
+    name: 'TableList',
     components: {
       STable
     },

@@ -137,7 +137,7 @@
   import STable from '@/components/table/'
 
   export default {
-    name: "TableList",
+    name: 'TableList',
     components: {
       STable
     },
@@ -195,7 +195,7 @@
           return this.$http.get('/permission', {
             params: Object.assign(parameter, this.queryParam)
           }).then(res => {
-            let result = res.result
+            const result = res.result
             result.data.map(permission => {
                 permission.actionList = JSON.parse(permission.actionData)
                 return permission

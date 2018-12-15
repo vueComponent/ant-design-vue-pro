@@ -17,7 +17,7 @@
   import Result from '@/views/result/Result'
 
   export default {
-    name: "RegisterResult",
+    name: 'RegisterResult',
     components: {
       Result
     },
@@ -29,8 +29,8 @@
     },
     computed: {
       email () {
-        let v = this.form && this.form.email || 'xxx'
-        let title = `你的账户：${v} 注册成功`
+        const v = this.form && this.form.email || 'xxx'
+        const title = `你的账户：${v} 注册成功`
         return title
       }
     },

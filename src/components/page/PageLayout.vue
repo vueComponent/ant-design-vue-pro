@@ -40,7 +40,7 @@
   import PageHeader from './PageHeader'
 
   export default {
-    name: "LayoutContent",
+    name: 'LayoutContent',
     components: {
       PageHeader
     },

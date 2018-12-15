@@ -74,7 +74,7 @@
 
 <script>
   export default {
-    name: "TaskForm",
+    name: 'TaskForm',
     props: {
       showSubmit: {
         type: Boolean,

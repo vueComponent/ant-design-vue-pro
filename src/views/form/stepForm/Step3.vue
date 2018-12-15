@@ -33,7 +33,7 @@
   import Result from '../../result/Result'
 
   export default {
-    name: "Step3",
+    name: 'Step3',
     components: {
       Result
     },

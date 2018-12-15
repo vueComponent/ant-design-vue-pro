@@ -48,7 +48,7 @@
 
 <script>
   export default {
-    name: "Step2",
+    name: 'Step2',
     data () {
       return {
         loading: false
@@ -56,7 +56,7 @@
     },
     methods: {
       nextStep () {
-        let that = this
+        const that = this
         that.loading = true
         setTimeout(function () {
           that.$emit('nextStep')

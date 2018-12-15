@@ -114,7 +114,7 @@ yarn run lint
 
 - [Table 重封装组件](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/table/README.md)
 
-- [ANTD 默认配置项](https://github.com/sendya/ant-design-pro-vue/blob/master/src/defaultConfig.js)
+- [ANTD 默认配置项](https://github.com/sendya/ant-design-pro-vue/blob/master/src/defaultSettings.js)
 
 - 其他待补充...
 

@@ -140,7 +140,7 @@
   const DetailListItem = DetailList.Item
 
   export default {
-    name: "Advanced",
+    name: 'Advanced',
     components: {
       PageLayout,
       DetailList,
