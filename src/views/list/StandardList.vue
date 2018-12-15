@@ -127,7 +127,7 @@
   })
 
   export default {
-    name: "StandardList",
+    name: 'StandardList',
     components: {
       HeadInfo
     },

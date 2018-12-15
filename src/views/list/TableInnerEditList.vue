@@ -119,7 +119,7 @@
   import STable from '@/components/table/'
 
   export default {
-    name: "TableList",
+    name: 'TableList',
     components: {
       STable
     },
@@ -203,16 +203,16 @@
           okType: 'danger',
           cancelText: '取消',
           onOk() {
-            console.log('OK');
+            console.log('OK')
             // 在这里调用删除接口
             return new Promise((resolve, reject) => {
-              setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-            }).catch(() => console.log('Oops errors!'));
+              setTimeout(Math.random() > 0.5 ? resolve : reject, 1000)
+            }).catch(() => console.log('Oops errors!'))
           },
           onCancel() {
-            console.log('Cancel');
+            console.log('Cancel')
           },
-        });
+        })
       },
       save (row) {
         delete row.editable

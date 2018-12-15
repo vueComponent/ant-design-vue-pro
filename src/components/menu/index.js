@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     rootSubmenuKeys: (vm) => {
-      let keys = []
+      const keys = []
       vm.menu.forEach(item => keys.push(item.path))
       return keys
     }
@@ -76,16 +76,16 @@ export default {
       )
     },
     renderSubMenu: function (h, menu, pIndex, index) {
-      const this2_ = this;
-      let subItem = [ h('span',
+      const this2_ = this
+      const subItem = [ h('span',
         { slot: 'title' },
         [
           this.renderIcon(h, menu.meta.icon),
           h('span', [ menu.meta.title ])
         ]
       ) ]
-      let itemArr = []
-      let pIndex_ = pIndex + '_' + index
+      const itemArr = []
+      const pIndex_ = pIndex + '_' + index
       if (!menu.alwaysShow) {
         menu.children.forEach(function (item, i) {
           itemArr.push(this2_.renderItem(h, item, pIndex_, i))
@@ -104,7 +104,7 @@ export default {
     },
     renderMenu: function (h, menuTree) {
       const this2_ = this
-      let menuArr = []
+      const menuArr = []
       menuTree.forEach(function (menu, i) {
         if (!menu.hidden) {
           menuArr.push(this2_.renderItem(h, menu, '0', i))
@@ -121,7 +121,7 @@ export default {
       }
     },
     updateMenu () {
-      let routes = this.$route.matched.concat()
+      const routes = this.$route.matched.concat()
       if (routes.length >= 4 && this.$route.meta.hidden) {
         routes.pop()
         this.selectedKeys = [ routes[2].path ]
@@ -129,7 +129,7 @@ export default {
         this.selectedKeys = [ routes.pop().path ]
       }
 
-      let openKeys = []
+      const openKeys = []
       if (this.mode === 'inline') {
         routes.forEach((item) => {
           openKeys.push(item.path)

@@ -40,7 +40,7 @@
   }]
 
   export default {
-    name: "MiniBar",
+    name: 'MiniBar',
     data () {
       return {
         data,

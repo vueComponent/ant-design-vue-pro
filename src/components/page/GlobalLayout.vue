@@ -83,7 +83,7 @@
   import { mixin, mixinDevice } from '@/utils/mixin.js'
 
   export default {
-    name: "GlobalLayout",
+    name: 'GlobalLayout',
     components: {
       SideMenu,
       GlobalHeader,

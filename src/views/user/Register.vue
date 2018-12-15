@@ -111,7 +111,7 @@
     3: '#52c41a',
   }
   export default {
-    name: "Register",
+    name: 'Register',
     components: {
     },
     mixins: [mixinDevice],
@@ -175,7 +175,7 @@
       },
 
       handlePasswordCheck (rule, value, callback) {
-        let password = this.form.getFieldValue('password')
+        const password = this.form.getFieldValue('password')
         console.log('value', value)
         if (value === undefined) {
           callback(new Error('请输入密码'))
@@ -197,7 +197,7 @@
       handlePasswordInputClick () {
         if (!this.isMobile()) {
           this.state.passwordLevelChecked = true
-          return;
+          return
         }
         this.state.passwordLevelChecked = false
       },
@@ -212,48 +212,48 @@
 
       getCaptcha(e) {
         e.preventDefault()
-        let that = this
+        const that = this
 
         this.form.validateFields(['mobile'], {force: true},
           (err, values) => {
             if (!err) {
-              this.state.smsSendBtn = true;
+              this.state.smsSendBtn = true
 
-              let interval = window.setInterval(() => {
+              const interval = window.setInterval(() => {
                 if (that.state.time-- <= 0) {
-                  that.state.time = 60;
-                  that.state.smsSendBtn = false;
-                  window.clearInterval(interval);
+                  that.state.time = 60
+                  that.state.smsSendBtn = false
+                  window.clearInterval(interval)
                 }
-              }, 1000);
+              }, 1000)
 
-              const hide = this.$message.loading('验证码发送中..', 0);
+              const hide = this.$message.loading('验证码发送中..', 0)
 
               getSmsCaptcha({mobile: values.mobile}).then(res => {
-                setTimeout(hide, 2500);
+                setTimeout(hide, 2500)
                 this.$notification['success']({
                   message: '提示',
                   description: '验证码获取成功，您的验证码为：' + res.result.captcha,
                   duration: 8
                 })
               }).catch(err => {
-                setTimeout(hide, 1);
-                clearInterval(interval);
-                that.state.time = 60;
-                that.state.smsSendBtn = false;
-                this.requestFailed(err);
-              });
+                setTimeout(hide, 1)
+                clearInterval(interval)
+                that.state.time = 60
+                that.state.smsSendBtn = false
+                this.requestFailed(err)
+              })
             }
           }
-        );
+        )
       },
       requestFailed(err) {
         this.$notification['error']({
           message: '错误',
-          description: ((err.response || {}).data || {}).message || "请求出现错误，请稍后再试",
+          description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
           duration: 4,
-        });
-        this.registerBtn = false;
+        })
+        this.registerBtn = false
       },
     },
     watch: {

@@ -9,7 +9,7 @@ import {
   DEFAULT_FIXED_SIDEMENU,
   DEFAULT_FIXED_HEADER_HIDDEN,
   DEFAULT_CONTENT_WIDTH_TYPE
-} from "@/store/mutation-types"
+} from '@/store/mutation-types'
 
 const app = {
   state: {

@@ -1,8 +1,8 @@
 <script>
   import { colorList } from '@/components/tools/setting'
   import ASwitch from 'ant-design-vue/es/switch'
-  import AList from "ant-design-vue/es/list"
-  import AListItem from "ant-design-vue/es/list/Item"
+  import AList from 'ant-design-vue/es/list'
+  import AListItem from 'ant-design-vue/es/list/Item'
   import { mixin } from '@/utils/mixin.js'
 
   const Meta = AListItem.Meta

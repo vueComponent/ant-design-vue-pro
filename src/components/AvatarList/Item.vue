@@ -11,7 +11,7 @@
   import Tooltip from 'ant-design-vue/es/tooltip'
 
   export default {
-    name: "AvatarItem",
+    name: 'AvatarItem',
     components: {
       Avatar,
       Tooltip

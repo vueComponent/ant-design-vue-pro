@@ -11,7 +11,7 @@
 
 <script>
   export default {
-    name: "FooterToolBar"
+    name: 'FooterToolBar'
   }
 </script>
 
