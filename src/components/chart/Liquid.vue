@@ -48,7 +48,7 @@
 
 <script>
   export default {
-    name: "Liquid",
+    name: 'Liquid',
     props: {
       height: {
         type: Number,

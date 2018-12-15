@@ -16,7 +16,7 @@
 
 <script>
   export default {
-    name: "Result",
+    name: 'Result',
     // 'isSuccess', 'title', 'description'
     props: {
       isSuccess: {

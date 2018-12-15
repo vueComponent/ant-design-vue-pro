@@ -91,7 +91,7 @@
 
 <script>
   import PageLayout from '@/components/page/PageLayout'
-  import RouteView from "@/components/layouts/RouteView"
+  import RouteView from '@/components/layouts/RouteView'
   import { AppPage, ArticlePage, ProjectPage } from './page'
 
 
@@ -133,7 +133,7 @@
       this.getTeams()
     },
     methods: {
-      ...mapGetters(["nickname", "avatar"]),
+      ...mapGetters(['nickname', 'avatar']),
 
       getTeams() {
         this.$http.get('/workplace/teams')

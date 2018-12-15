@@ -30,11 +30,11 @@
 </template>
 
 <script>
-  import RouteView from "@/components/layouts/RouteView"
+  import RouteView from '@/components/layouts/RouteView'
   import { mixinDevice } from '@/utils/mixin.js'
 
   export default {
-    name: "UserLayout",
+    name: 'UserLayout',
     components: { RouteView },
     mixins: [mixinDevice],
     data () {

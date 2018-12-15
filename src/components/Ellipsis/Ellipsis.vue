@@ -53,8 +53,8 @@
     },
     render () {
       const { tooltip, length } = this.$props
-      let str = this.$slots.default.map(vNode => vNode.text).join("")
-      const strDom = tooltip && getStrFullLength(str) > length ? this.getTooltip(str) : this.getStrDom(str);
+      const str = this.$slots.default.map(vNode => vNode.text).join('')
+      const strDom = tooltip && getStrFullLength(str) > length ? this.getTooltip(str) : this.getStrDom(str)
       return (
         strDom
       )

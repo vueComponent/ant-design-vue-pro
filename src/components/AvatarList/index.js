@@ -1,4 +1,4 @@
 import AvatarList from './List'
-import "./index.less"
+import './index.less'
 
 export default AvatarList

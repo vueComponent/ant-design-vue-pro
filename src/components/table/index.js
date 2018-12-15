@@ -1,5 +1,5 @@
-import T from "ant-design-vue/es/table/Table";
-import get from "lodash.get"
+import T from 'ant-design-vue/es/table/Table'
+import get from 'lodash.get'
 export default {
   data() {
     return {
@@ -11,7 +11,7 @@ export default {
       localLoading: false,
       localDataSource: [],
       localPagination: Object.assign({}, T.props.pagination)
-    };
+    }
   },
   props: Object.assign({}, T.props, {
     rowKey: {
@@ -49,24 +49,24 @@ export default {
         params: Object.assign({}, this.$route.params, {
           pageNo: val
         }),
-      });
+      })
     },
     pageNum(val) {
       Object.assign(this.localPagination, {
         current: val
-      });
+      })
     },
     pageSize(val) {
       console.log('pageSize:', val)
       Object.assign(this.localPagination, {
         pageSize: val
-      });
+      })
     },
     showSizeChanger(val) {
       console.log('showSizeChanger', val)
       Object.assign(this.localPagination, {
         showSizeChanger: val
-      });
+      })
     }
   },
   created() {
@@ -74,13 +74,13 @@ export default {
       current: this.pageNum,
       pageSize: this.pageSize,
       showSizeChanger: this.showSizeChanger
-    });
+    })
     this.needTotalList = this.initTotalList(this.columns)
-    this.loadData();
+    this.loadData()
   },
   methods: {
     refresh() {
-      this.loadData();
+      this.loadData()
     },
     loadData(pagination, filters, sorter) {
 
@@ -101,7 +101,7 @@ export default {
             ...filters
           }
         )
-      );
+      )
 
       if (result instanceof Promise) {
         result.then(r => {
@@ -111,12 +111,12 @@ export default {
             showSizeChanger: this.showSizeChanger,
             pageSize: (pagination && pagination.pageSize) ||
               this.localPagination.pageSize
-          });
+          })
 
           !r.totalCount && ['auto', false].includes(this.showPagination) && (this.localPagination = false)
-          this.localDataSource = r.data; // 返回结果中的数组数据
+          this.localDataSource = r.data // 返回结果中的数组数据
           this.localLoading = false
-        });
+        })
       }
     },
     initTotalList(columns) {
@@ -133,12 +133,12 @@ export default {
     updateSelect(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
-      let list = this.needTotalList
+      const list = this.needTotalList
       this.needTotalList = list.map(item => {
         return {
           ...item,
           total: selectedRows.reduce((sum, val) => {
-            let total = sum + get(val, item.dataIndex)
+            const total = sum + get(val, item.dataIndex)
             return isNaN(total) ? 0 : total
           }, 0)
         }
@@ -154,7 +154,7 @@ export default {
     },
     renderMsg(h) {
       const _vm = this
-      let d = []
+      const d = []
       // 构建 已选择
       d.push(
         h('span', {
@@ -166,7 +166,7 @@ export default {
             fontWeight: 600
           }
         }, this.selectedRows.length)])
-      );
+      )
 
       // 构建 列统计
       this.needTotalList.map(item => {
@@ -183,7 +183,7 @@ export default {
               }
             }, `${ !item.customRender ? item.total : item.customRender(item.total) }`)
           ]))
-      });
+      })
 
       // 构建 清空选择
       d.push(h('a', {
@@ -207,15 +207,15 @@ export default {
   render(h) {
     const _vm = this
 
-    let props = {},
-      localKeys = Object.keys(this.$data);
+    const props = {},
+      localKeys = Object.keys(this.$data)
 
     Object.keys(T.props).forEach(k => {
-      let localKey = `local${k.substring(0,1).toUpperCase()}${k.substring(1)}`;
+      const localKey = `local${k.substring(0,1).toUpperCase()}${k.substring(1)}`
       if (localKeys.includes(localKey)) {
-        return props[k] = _vm[localKey];
+        return props[k] = _vm[localKey]
       }
-      return props[k] = _vm[k];
+      return props[k] = _vm[k]
     })
 
 
@@ -228,10 +228,10 @@ export default {
           _vm.updateSelect(selectedRowKeys, selectedRows)
           _vm.$emit('onSelect', { selectedRowKeys: selectedRowKeys, selectedRows: selectedRows })
         }
-      };
+      }
 
       return h('div', {}, [
-        h("a-alert", {
+        h('a-alert', {
           style: {
             marginBottom: '16px'
           },
@@ -240,26 +240,26 @@ export default {
             showIcon: true
           }
         }, [_vm.renderAlert(h)]),
-        h("a-table", {
-          tag: "component",
+        h('a-table', {
+          tag: 'component',
           attrs: props,
           on: {
             change: _vm.loadData
           },
           scopedSlots: this.$scopedSlots
         }, this.$slots.default)
-      ]);
+      ])
 
     }
 
-    return h("a-table", {
-      tag: "component",
+    return h('a-table', {
+      tag: 'component',
       attrs: props,
       on: {
         change: _vm.loadData
       },
       scopedSlots: this.$scopedSlots
-    }, this.$slots.default);
+    }, this.$slots.default)
 
   }
-};
+}

@@ -7,7 +7,7 @@
 
 <script>
   export default {
-    name: "RouteView",
+    name: 'RouteView',
     computed: {
       keepAlive () {
         return this.$route.meta.keepAlive

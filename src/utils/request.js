@@ -3,7 +3,7 @@ import axios from 'axios'
 import store from '@/store'
 import { VueAxios } from './axios'
 import notification from 'ant-design-vue/es/notification'
-import { ACCESS_TOKEN } from "@/store/mutation-types"
+import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 // 创建 axios 实例
 const service = axios.create({
@@ -13,7 +13,7 @@ const service = axios.create({
 
 const err = (error) => {
   if (error.response) {
-    let data = error.response.data
+    const data = error.response.data
     const token = Vue.ls.get(ACCESS_TOKEN)
     if (error.response.status === 403) {
       notification.error({ message: 'Forbidden', description: data.message})
@@ -30,7 +30,7 @@ const err = (error) => {
     }
   }
   return Promise.reject(error)
-};
+}
 
 // request interceptor
 service.interceptors.request.use(config => {
