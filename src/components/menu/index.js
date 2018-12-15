@@ -26,7 +26,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       openKeys: [],
       selectedKeys: [],
@@ -34,17 +34,17 @@ export default {
     }
   },
   computed: {
-    rootSubmenuKeys: (vm) => {
+    rootSubmenuKeys: vm => {
       const keys = []
       vm.menu.forEach(item => keys.push(item.path))
       return keys
     }
   },
-  created () {
+  created() {
     this.updateMenu()
   },
   watch: {
-    collapsed (val) {
+    collapsed(val) {
       if (val) {
         this.cachedOpenKeys = this.openKeys
         this.openKeys = []
@@ -52,94 +52,79 @@ export default {
         this.openKeys = this.cachedOpenKeys
       }
     },
-    '$route': function () {
+    $route: function() {
       this.updateMenu()
     }
   },
   methods: {
-    renderIcon: function (h, icon) {
-      return icon === 'none' || icon === undefined ? null
-        : h(Icon, { props: { type: icon !== undefined ? icon : '' } })
+    renderIcon: function(h, icon) {
+      return icon === 'none' || icon === undefined ? null : h(Icon, { props: { type: icon !== undefined ? icon : '' } })
     },
-    renderMenuItem: function (h, menu, pIndex, index) {
-      return h(Item, { key: menu.path ? menu.path : 'item_' + pIndex + '_' + index },
-        [
-          h(
-            'router-link',
-            { attrs: { to: { name: menu.name } } },
-            [
-              this.renderIcon(h, menu.meta.icon),
-              h('span', [ menu.meta.title ])
-            ]
-          )
-        ]
-      )
-    },
-    renderSubMenu: function (h, menu, pIndex, index) {
-      const this2_ = this
-      const subItem = [ h('span',
-        { slot: 'title' },
-        [
+    renderMenuItem: function(h, menu, pIndex, index) {
+      return h(Item, { key: menu.path ? menu.path : 'item_' + pIndex + '_' + index }, [
+        h('router-link', { attrs: { to: { name: menu.name } } }, [
           this.renderIcon(h, menu.meta.icon),
-          h('span', [ menu.meta.title ])
-        ]
-      ) ]
+          h('span', [menu.meta.title])
+        ])
+      ])
+    },
+    renderSubMenu: function(h, menu, pIndex, index) {
+      const this2_ = this
+      const subItem = [h('span', { slot: 'title' }, [this.renderIcon(h, menu.meta.icon), h('span', [menu.meta.title])])]
       const itemArr = []
       const pIndex_ = pIndex + '_' + index
       if (!menu.alwaysShow) {
-        menu.children.forEach(function (item, i) {
+        menu.children.forEach(function(item, i) {
           itemArr.push(this2_.renderItem(h, item, pIndex_, i))
         })
       }
-      return h(
-        SubMenu,
-        { key: menu.path ? menu.path : 'submenu_' + pIndex + '_' + index },
-        subItem.concat(itemArr)
-      )
+      return h(SubMenu, { key: menu.path ? menu.path : 'submenu_' + pIndex + '_' + index }, subItem.concat(itemArr))
     },
-    renderItem: function (h, menu, pIndex, index) {
+    renderItem: function(h, menu, pIndex, index) {
       if (!menu.hidden) {
-        return menu.children && !menu.alwaysShow ? this.renderSubMenu(h, menu, pIndex, index) : this.renderMenuItem(h, menu, pIndex, index)
+        return menu.children && !menu.alwaysShow
+          ? this.renderSubMenu(h, menu, pIndex, index)
+          : this.renderMenuItem(h, menu, pIndex, index)
       }
     },
-    renderMenu: function (h, menuTree) {
+    renderMenu: function(h, menuTree) {
       const this2_ = this
       const menuArr = []
-      menuTree.forEach(function (menu, i) {
+      menuTree.forEach(function(menu, i) {
         if (!menu.hidden) {
           menuArr.push(this2_.renderItem(h, menu, '0', i))
         }
       })
       return menuArr
     },
-    onOpenChange (openKeys) {
-      const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1)
-      if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    onOpenChange(openKeys) {
+      const latestOpenKey = openKeys.find(key => !this.openKeys.includes(key))
+      if (!this.rootSubmenuKeys.includes(latestOpenKey)) {
         this.openKeys = openKeys
       } else {
-        this.openKeys = latestOpenKey ? [ latestOpenKey ] : []
+        this.openKeys = latestOpenKey ? [latestOpenKey] : []
       }
     },
-    updateMenu () {
+    updateMenu() {
       const routes = this.$route.matched.concat()
       if (routes.length >= 4 && this.$route.meta.hidden) {
         routes.pop()
-        this.selectedKeys = [ routes[2].path ]
+        this.selectedKeys = [routes[2].path]
       } else {
-        this.selectedKeys = [ routes.pop().path ]
+        this.selectedKeys = [routes.pop().path]
       }
 
       const openKeys = []
       if (this.mode === 'inline') {
-        routes.forEach((item) => {
+        routes.forEach(item => {
           openKeys.push(item.path)
         })
       }
 
-      this.collapsed ? this.cachedOpenKeys = openKeys : this.openKeys = openKeys
+      this.collapsed ? (this.cachedOpenKeys = openKeys) : (this.openKeys = openKeys)
     }
   },
-  render (h) {
+  render(h) {
     return h(
       Menu,
       {
@@ -151,12 +136,13 @@ export default {
         },
         on: {
           openChange: this.onOpenChange,
-          select: (obj) => {
+          select: obj => {
             this.selectedKeys = obj.selectedKeys
             this.$emit('select', obj)
           }
         }
-      }, this.renderMenu(h, this.menu)
+      },
+      this.renderMenu(h, this.menu)
     )
   }
 }
