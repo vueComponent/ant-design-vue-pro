@@ -83,7 +83,7 @@
   import RoleModal from './modules/RoleModal'
 
   export default {
-    name: "TableList",
+    name: 'TableList',
     components: {
       STable,
       RoleModal

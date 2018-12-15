@@ -19,7 +19,7 @@
 
 <script>
   export default {
-    name: "HeaderNotice",
+    name: 'HeaderNotice',
     props: {
       tabs: {
         type: Array,

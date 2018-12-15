@@ -42,7 +42,7 @@
   }
 
   export default {
-    name: "DetailList",
+    name: 'DetailList',
     Item: Item,
     components: {
       Col

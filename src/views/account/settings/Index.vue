@@ -50,7 +50,7 @@
 
 <script>
   import PageLayout from '@/components/page/PageLayout'
-  import RouteView from "@/components/layouts/RouteView"
+  import RouteView from '@/components/layouts/RouteView'
   import { mixinDevice } from '@/utils/mixin.js'
 
   export default {
@@ -96,7 +96,7 @@
         this.openKeys = openKeys
       },
       updateMenu () {
-        let routes = this.$route.matched.concat()
+        const routes = this.$route.matched.concat()
         this.defaultSelectedKeys = [ routes.pop().path ]
       }
     },

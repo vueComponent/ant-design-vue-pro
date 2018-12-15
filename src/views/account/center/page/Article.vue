@@ -11,7 +11,7 @@
   import AListItem from 'ant-design-vue/es/list/Item'
 
   export default {
-    name: "Article",
+    name: 'Article',
     components: {
       AList,
       AListItem

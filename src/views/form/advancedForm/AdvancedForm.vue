@@ -67,7 +67,7 @@
   import FooterToolBar from '@/components/tools/FooterToolBar'
 
   export default {
-    name: "AdvancedForm",
+    name: 'AdvancedForm',
     components: {
       FooterToolBar,
       RepositoryForm,
@@ -151,12 +151,12 @@
         this.data = newData
       },
       saveRow (key) {
-        let target = this.data.filter(item => item.key === key)[0]
+        const target = this.data.filter(item => item.key === key)[0]
         target.editable = false
         target.isNew = false
       },
       toggle (key) {
-        let target = this.data.filter(item => item.key === key)[0]
+        const target = this.data.filter(item => item.key === key)[0]
         target.editable = !target.editable
       },
       getRowByKey (key, newData) {
@@ -164,7 +164,7 @@
         return (newData || data).filter(item => item.key === key)[0]
       },
       cancel (key) {
-        let target = this.data.filter(item => item.key === key)[0]
+        const target = this.data.filter(item => item.key === key)[0]
         target.editable = false
       },
       handleChange (value, key, column) {

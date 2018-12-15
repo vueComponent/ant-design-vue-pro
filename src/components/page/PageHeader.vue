@@ -44,9 +44,9 @@
   import Breadcrumb from '@/components/tools/Breadcrumb'
 
   export default {
-    name: "PageHeader",
+    name: 'PageHeader',
     components: {
-      "s-breadcrumb": Breadcrumb
+      's-breadcrumb': Breadcrumb
     },
     props: {
       title: {
