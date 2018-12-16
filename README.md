@@ -104,7 +104,21 @@ yarn run lint
     }
   }
 ```
-
+- 按需加载  修改文件 `babel.config.js` 并且引入 `babel-plugin-import` 开发依赖
+```ecmascript 6
+module.exports = {
+  presets: [
+    '@vue/app'
+  ],
+  plugins: [
+    [ "import", {
+      "libraryName": "ant-design-vue",
+      "libraryDirectory": "es",
+      "style": "css"
+    } ]
+  ]
+}
+```
 
 
 附属文档
