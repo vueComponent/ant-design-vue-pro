@@ -110,19 +110,19 @@
 </template>
 
 <script>
-  import { timeFix } from "@/utils/util"
-  import {mapGetters} from "vuex"
+  import { timeFix } from '@/utils/util'
+  import {mapGetters} from 'vuex'
 
   import PageLayout from '@/components/page/PageLayout'
   import HeadInfo from '@/components/tools/HeadInfo'
   import Radar from '@/components/chart/Radar'
 
-  import { getRoleList, getServiceList } from "@/api/manage"
+  import { getRoleList, getServiceList } from '@/api/manage'
 
   const DataSet = require('@antv/data-set')
 
   export default {
-    name: "Workplace",
+    name: 'Workplace',
     components: {
       PageLayout,
       HeadInfo,
@@ -203,7 +203,7 @@
       this.initRadar()
     },
     methods: {
-      ...mapGetters(["nickname", "welcome"]),
+      ...mapGetters(['nickname', 'welcome']),
       getProjects() {
         this.$http.get('/list/search/projects')
           .then(res => {

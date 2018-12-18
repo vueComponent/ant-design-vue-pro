@@ -62,8 +62,8 @@
     </div>
 
     <div class="table-operator">
-      <a-button type="primary" icon="plus">新建</a-button>
-      <a-dropdown v-if="selectedRowKeys.length > 0">
+      <a-button type="primary" icon="plus" v-if="$auth('table.add')">新建</a-button>
+      <a-dropdown v-if="$auth('table.edit') && selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
           <!-- lock | unlock -->
@@ -84,8 +84,10 @@
       @onSelect="onChange"
     >
       <span slot="action" slot-scope="text, record">
-        <a @click="handleEdit(record)">编辑</a>
-        <a-divider type="vertical" />
+        <template v-if="$auth('table.update')">
+          <a @click="handleEdit(record)">编辑</a>
+          <a-divider type="vertical" />
+        </template>
         <a-dropdown>
           <a class="ant-dropdown-link">
             更多 <a-icon type="down" />
@@ -94,10 +96,10 @@
             <a-menu-item>
               <a href="javascript:;">详情</a>
             </a-menu-item>
-            <a-menu-item>
+            <a-menu-item v-if="$auth('table.disable')">
               <a href="javascript:;">禁用</a>
             </a-menu-item>
-            <a-menu-item>
+            <a-menu-item v-if="$auth('table.delete')">
               <a href="javascript:;">删除</a>
             </a-menu-item>
           </a-menu>
@@ -180,14 +182,14 @@
 
 <script>
   import STable from '@/components/table/'
-  import ATextarea from "ant-design-vue/es/input/TextArea"
-  import AInput from "ant-design-vue/es/input/Input"
-  import moment from "moment"
+  import ATextarea from 'ant-design-vue/es/input/TextArea'
+  import AInput from 'ant-design-vue/es/input/Input'
+  import moment from 'moment'
 
   import { getRoleList, getServiceList } from '@/api/manage'
 
   export default {
-    name: "TableList",
+    name: 'TableList',
     components: {
       AInput,
       ATextarea,

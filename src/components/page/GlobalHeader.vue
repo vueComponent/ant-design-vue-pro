@@ -46,7 +46,7 @@
   import { mixin } from '@/utils/mixin.js'
 
   export default {
-    name: "GlobalHeader",
+    name: 'GlobalHeader',
     components: {
       UserMenu,
       SMenu,
@@ -90,7 +90,7 @@
     methods: {
       handleScroll () {
         if (this.autoHideHeader) {
-          let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
           if (scrollTop > 100) {
             this.headerBarFixed = true
           } else {

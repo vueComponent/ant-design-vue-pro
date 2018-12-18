@@ -35,7 +35,7 @@
   }]
 
   export default {
-    name: "Bar",
+    name: 'Bar',
     props: {
       title: {
         type: String,

@@ -13,7 +13,7 @@
 
 <script>
   export default {
-    name: "RankList",
+    name: 'RankList',
     // ['title', 'list']
     props: {
       title: {

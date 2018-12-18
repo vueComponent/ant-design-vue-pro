@@ -27,7 +27,7 @@
   import Result from './Result'
 
   export default {
-    name: "Error",
+    name: 'Error',
     components: {
       Result
     },
