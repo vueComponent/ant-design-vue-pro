@@ -1,79 +1,48 @@
 <template>
-  <page-layout title="角色管理">
-    <a-card :bordered="false" :style="{ height: '100%' }">
-      <!--<a-tabs defaultActiveKey="1" tabPosition="left" size="large" :style="{ height: '400px'}" :tabBarStyle="{ textAlign: 'left' }" @prevClick="callback" @nextClick="callback">
-        <a-tab-pane tab="管理员" key="1">Content of tab 1</a-tab-pane>
-        <a-tab-pane tab="销售组长" key="2">Content of tab 2</a-tab-pane>
-        <a-tab-pane tab="销售总负责人" key="3">Content of tab 3</a-tab-pane>
-        <a-tab-pane tab="总经理" key="4">Content of tab 4</a-tab-pane>
-        <a-tab-pane tab="普通销售" key="5">Content of tab 5</a-tab-pane>
-        <a-tab-pane tab="客服" key="6">Content of tab 6</a-tab-pane>
-        <a-tab-pane tab="会员" key="7">Content of tab 7</a-tab-pane>
-        <a-tab-pane tab="增加角色" key="-1">Content of tab 7</a-tab-pane>
-      </a-tabs>-->
-
-      <a-row :gutter="24">
-        <a-col :md="4">
-          <a-list itemLayout="vertical" :dataSource="roles">
-            <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
-              <a-list-item-meta :style="{ marginBottom: '0' }">
-                <span slot="description" style="text-align: center; display: block">{{ item.describe }}</span>
-                <a slot="title" style="text-align: center; display: block" @click="edit(item)">{{ item.name }}</a>
-              </a-list-item-meta>
-            </a-list-item>
-          </a-list>
-        </a-col>
-        <a-col :md="20">
-          <a-row v-if="mdl.id">
-            <a-col :span="5"><h3 style="text-align: right">角色：</h3></a-col>
-            <a-col :span="19"><h3>{{ mdl.name }}</h3></a-col>
-          </a-row>
-          <a-form :form="form">
-            <a-form-item
-              label="唯一键"
-              :labelCol="{ span: 5 }"
-              :wrapperCol="{ span: 18 }"
-            >
+  <a-card :bordered="false" :style="{ height: '100%' }">
+    <a-row :gutter="24">
+      <a-col :md="4">
+        <a-list itemLayout="vertical" :dataSource="roles">
+          <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
+            <a-list-item-meta :style="{ marginBottom: '0' }">
+              <span slot="description" style="text-align: center; display: block">{{ item.describe }}</span>
+              <a slot="title" style="text-align: center; display: block" @click="edit(item)">{{ item.name }}</a>
+            </a-list-item-meta>
+          </a-list-item>
+        </a-list>
+      </a-col>
+      <a-col :md="20">
+        <div style="max-width: 800px">
+          <a-divider v-if="isMobile()" />
+          <div v-if="mdl.id">
+            <h3>角色：{{ mdl.name }}</h3>
+          </div>
+          <a-form :form="form" :layout="isMobile() ? 'vertical' : 'horizontal'">
+            <a-form-item label="唯一键">
               <a-input v-decorator="[ 'id', {rules: [{ required: true, message: 'Please input unique key!' }]} ]" placeholder="请填写唯一键" />
             </a-form-item>
 
-            <a-form-item
-              label="角色名称"
-              :labelCol="{ span: 5 }"
-              :wrapperCol="{ span: 18 }"
-            >
+            <a-form-item label="角色名称">
               <a-input v-decorator="[ 'name', {rules: [{ required: true, message: 'Please input role name!' }]} ]" placeholder="请填写角色名称" />
             </a-form-item>
 
-            <a-form-item
-              label="状态"
-              :labelCol="{ span: 5 }"
-              :wrapperCol="{ span: 18 }"
-            >
+            <a-form-item label="状态">
               <a-select v-decorator="[ 'status', {rules: []} ]">
                 <a-select-option :value="1">正常</a-select-option>
                 <a-select-option :value="2">禁用</a-select-option>
               </a-select>
             </a-form-item>
 
-            <a-form-item
-              label="备注说明"
-              :labelCol="{ span: 5 }"
-              :wrapperCol="{ span: 18 }"
-            >
+            <a-form-item label="备注说明">
               <a-textarea :row="3" v-decorator="[ 'describe', {rules: [{ required: true, message: 'Please input role name!' }]} ]" placeholder="请填写角色名称" />
             </a-form-item>
 
-            <a-form-item
-              label="拥有权限"
-              :labelCol="{ span: 5 }"
-              :wrapperCol="{ span: 18 }"
-            >
+            <a-form-item label="拥有权限">
               <a-row :gutter="16" v-for="(permission, index) in permissions" :key="index">
-                <a-col :span="4">
+                <a-col :xl="4" :lg="24">
                   {{ permission.name }}：
                 </a-col>
-                <a-col :span="20">
+                <a-col :xl="20" :lg="24">
                   <a-checkbox
                     v-if="permission.actionsOptions.length > 0"
                     :indeterminate="permission.indeterminate"
@@ -87,23 +56,22 @@
             </a-form-item>
 
           </a-form>
-        </a-col>
-      </a-row>
-    </a-card>
-  </page-layout>
+        </div>
+      </a-col>
+    </a-row>
+  </a-card>
 </template>
 
 <script>
-  import PageLayout from '@/components/page/PageLayout'
-  import { getRoleList, getPermissions } from "@/api/manage"
+  import { getRoleList, getPermissions } from '@/api/manage'
+  import { mixinDevice } from '@/utils/mixin'
   import { actionToObject } from '@/utils/permissions'
   import pick from 'lodash.pick'
 
   export default {
-    name: "RoleList",
-    components: {
-      PageLayout
-    },
+    name: 'RoleList',
+    mixins: [mixinDevice],
+    components: {},
     data () {
       return {
         form: this.$form.createForm(this),
@@ -168,7 +136,7 @@
       },
       loadPermissions () {
         getPermissions().then(res => {
-          let result = res.result
+          const result = res.result
           this.permissions = result.map(permission => {
             const options = actionToObject(permission.actionData)
             permission.checkedAll = false

@@ -100,6 +100,12 @@ export const asyncRouterMap = [
             meta: { title: '角色列表', permission: [ 'table' ] }
           },
           {
+            path: '/list/system-role',
+            name: 'SystemRole',
+            component: () => import('@/views/role/RoleList'),
+            meta: { title: '角色列表2', permission: [ 'table' ]}
+          },
+          {
             path: '/list/permission-list',
             name: 'PermissionList',
             component: () => import('@/views/list/PermissionList'),
@@ -166,21 +172,6 @@ export const asyncRouterMap = [
             name: 'ProfileAdvanced',
             component: () => import('@/views/profile/advanced/Advanced'),
             meta: { title: '高级详情页', permission: [ 'profile' ] }
-          }
-        ]
-      },
-      {
-        path: '/system',
-        name: 'system',
-        component: RouteView,
-        redirect: '/system/role',
-        meta: { title: '系统管理', icon: 'setting', permission: [ 'table' ] },
-        children: [
-          {
-            path: '/system/role',
-            name: 'SystemRole',
-            component: () => import('@/views/role/RoleList'),
-            meta: { title: '角色列表', permission: [ 'table' ]}
           }
         ]
       },
