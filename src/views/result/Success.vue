@@ -69,7 +69,7 @@
   }
 
   export default {
-    name: "Success",
+    name: 'Success',
     components: {
       Result
     },

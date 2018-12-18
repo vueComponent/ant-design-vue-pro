@@ -46,7 +46,7 @@
 
 <script>
   export default {
-    name: "Step1",
+    name: 'Step1',
     methods: {
       nextStep () {
         this.$emit('nextStep')

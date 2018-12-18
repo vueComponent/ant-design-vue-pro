@@ -7,11 +7,11 @@
 <script>
 
   function fixedZero(val) {
-    return val * 1 < 10 ? `0${val}` : val;
+    return val * 1 < 10 ? `0${val}` : val
   }
 
   export default {
-    name: "CountDown",
+    name: 'CountDown',
     props: {
       format: {
         type: Function,
@@ -38,12 +38,12 @@
     },
     filters: {
       format(time) {
-        const hours = 60 * 60 * 1000;
-        const minutes = 60 * 1000;
+        const hours = 60 * 60 * 1000
+        const minutes = 60 * 1000
 
-        const h = Math.floor(time / hours);
-        const m = Math.floor((time - h * hours) / minutes);
-        const s = Math.floor((time - h * hours - m * minutes) / 1000);
+        const h = Math.floor(time / hours)
+        const m = Math.floor((time - h * hours) / minutes)
+        const s = Math.floor((time - h * hours - m * minutes) / 1000)
         return `${fixedZero(h)}:${fixedZero(m)}:${fixedZero(s)}`
       }
     },
@@ -53,8 +53,8 @@
     },
     methods: {
       initTime() {
-        let lastTime = 0;
-        let targetTime = 0;
+        let lastTime = 0
+        let targetTime = 0
         this.originTargetTime = this.target
         try {
           if (Object.prototype.toString.call(this.target) === '[object Date]') {
@@ -66,7 +66,7 @@
           throw new Error('invalid target prop')
         }
 
-        lastTime = targetTime - new Date().getTime();
+        lastTime = targetTime - new Date().getTime()
 
         this.lastTime = lastTime < 0 ? 0 : lastTime
       },
@@ -78,7 +78,7 @@
             clearTimeout(this.timer)
             this.lastTime = 0
             if (typeof onEnd === 'function') {
-              onEnd();
+              onEnd()
             }
           } else {
             this.lastTime -= this.interval

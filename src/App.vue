@@ -16,7 +16,7 @@
       }
     },
     created () {
-      let that = this
+      const that = this
       enquireScreen(deviceType => {
         // tablet
         if (deviceType === 0) {

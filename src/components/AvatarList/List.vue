@@ -23,7 +23,7 @@
 
   export default {
     AvatarItem,
-    name: "AvatarList",
+    name: 'AvatarList',
     components: {
       Avatar,
       AvatarItem

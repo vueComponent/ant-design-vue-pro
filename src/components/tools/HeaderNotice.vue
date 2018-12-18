@@ -47,7 +47,7 @@
 
 <script>
   export default {
-    name: "HeaderNotice",
+    name: 'HeaderNotice',
     data () {
       return {
         loadding: false

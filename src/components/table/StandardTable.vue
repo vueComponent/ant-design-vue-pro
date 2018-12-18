@@ -30,7 +30,7 @@
 
 <script>
   export default {
-    name: "StandardTable",
+    name: 'StandardTable',
     // props: ['bordered', 'loading', 'columns', 'data', 'rowKey', 'pagination', 'selectedRows'],
     props: {
 
@@ -125,14 +125,14 @@
       this.paramsName = Object.assign(
         {},
         {
-          pageNumber: "pageNo",
-          pageSize: "pageSize",
-          total: "totalCount",
-          results: "data",
-          sortColumns: "sortColumns"
+          pageNumber: 'pageNo',
+          pageSize: 'pageSize',
+          total: 'totalCount',
+          results: 'data',
+          sortColumns: 'sortColumns'
         },
         this.responseParamsName
-      );
+      )
 
       this.needTotalList = this.initTotalList(this.columns)
 
@@ -142,7 +142,7 @@
     methods: {
       updateSelect (selectedRowKeys, selectedRows) {
         this.selectedRowKeys = selectedRowKeys
-        let list = this.needTotalList
+        const list = this.needTotalList
         this.needTotalList = list.map(item => {
           return {
             ...item,
@@ -164,7 +164,7 @@
       },
 
       loadData (params) {
-        let that = this
+        const that = this
         that.loading = true
         params = Object.assign({}, params)
         const remoteParams = Object.assign({}, that.sortParams)
@@ -178,7 +178,7 @@
           that.currentPageSize = params.pageSize
         }
 
-        let dataPromise = that.data(remoteParams)
+        const dataPromise = that.data(remoteParams)
 
         dataPromise.then( response => {
           if (!response) {
@@ -190,8 +190,8 @@
 
           that.current = results
 
-          that.$emit("update:currentData", that.current.slice())
-          that.$emit("dataloaded", that.current.slice())
+          that.$emit('update:currentData', that.current.slice())
+          that.$emit('dataloaded', that.current.slice())
 
           that.total = response[that.paramsName.total] * 1
           that.pagination = that.pager()

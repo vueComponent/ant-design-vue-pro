@@ -12,7 +12,7 @@
 
 <script>
   export default {
-    name: "Trend",
+    name: 'Trend',
     props: {
       prefixCls: {
         type: String,

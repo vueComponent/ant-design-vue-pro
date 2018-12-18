@@ -1,7 +1,7 @@
 /**
  * 弃用
  */
-import { setStore, getStore, clearStore } from "@/utils/storage"
+import { setStore, getStore, clearStore } from '@/utils/storage'
 
 export const TokenKey = 'Access-Token'
 

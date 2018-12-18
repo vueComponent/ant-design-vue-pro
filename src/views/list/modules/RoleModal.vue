@@ -83,7 +83,7 @@
   import pick from 'lodash.pick'
 
   export default {
-    name: "RoleModal",
+    name: 'RoleModal',
     data () {
       return {
         labelCol: {
@@ -177,7 +177,7 @@
       },
       loadPermissions () {
         getPermissions().then(res => {
-          let result = res.result
+          const result = res.result
           this.permissions = result.map(permission => {
             const options = actionToObject(permission.actionData)
             permission.checkedAll = false

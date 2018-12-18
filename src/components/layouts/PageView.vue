@@ -13,7 +13,7 @@
   import RouteView from './RouteView'
 
   export default {
-    name: "PageContent",
+    name: 'PageContent',
     components: {
       RouteView,
       PageLayout
