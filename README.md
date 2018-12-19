@@ -1,7 +1,7 @@
 <h1 align="center">Ant Design Pro Vue</h1>
 
 <div align="center">
-An out-of-box UI solution for enterprise applications as a Vue boilerplate. based on  [Ant Design of Vue](https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/)
+An out-of-box UI solution for enterprise applications as a Vue boilerplate. based on  <a href="https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/" target="_blank">Ant Design of Vue</a>
 </div>
 
 
