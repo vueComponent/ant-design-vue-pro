@@ -44,14 +44,16 @@ export default {
     this.updateMenu()
   },
   watch: {
+    /*
     collapsed(val) {
       if (val) {
-        this.cachedOpenKeys = this.openKeys
+        this.cachedOpenKeys = this.openKeys.concat()
         this.openKeys = []
       } else {
         this.openKeys = this.cachedOpenKeys
       }
     },
+    */
     $route: function() {
       this.updateMenu()
     }
@@ -107,6 +109,7 @@ export default {
     },
     updateMenu() {
       const routes = this.$route.matched.concat()
+
       if (routes.length >= 4 && this.$route.meta.hidden) {
         routes.pop()
         this.selectedKeys = [routes[2].path]
@@ -131,7 +134,7 @@ export default {
         props: {
           theme: this.$props.theme,
           mode: this.$props.mode,
-          openKeys: this.openKeys,
+          // openKeys: this.openKeys,
           selectedKeys: this.selectedKeys
         },
         on: {
