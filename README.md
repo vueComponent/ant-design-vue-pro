@@ -1,6 +1,8 @@
-Ant Design Pro Vue
-====
+<h1 align="center">Ant Design Pro Vue</h1>
 
+<div align="center">
+An out-of-box UI solution for enterprise applications as a Vue boilerplate. based on  [Ant Design of Vue](https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/)
+</div>
 
 
 Overview
@@ -33,8 +35,10 @@ Overview
 ![权限结构](https://static-2.loacg.com/open/static/github/permissions.png)
 
 
+
 环境和依赖
 ----
+
 - node
 - yarn
 - webpack
@@ -44,6 +48,8 @@ Overview
 - [vue-cropper](https://github.com/xyxiao001/vue-cropper) - 头像裁剪组件
 - [@antv/g2](https://antv.alipay.com/zh-cn/index.html) - Alipay AntV 数据可视化图表
 - [Viser-vue](https://viserjs.github.io/docs.html#/viser/guide/installation)  - antv/g2 封装实现
+
+> 请注意，我们强烈建议本项目使用 [Yarn](https://yarnpkg.com/) 包管理工具，这样可以与本项目演示站所加载完全相同的依赖版本 (yarn.lock) 。由于我们没有对依赖进行强制的版本控制，采用非 yarn 包管理进行引入时，可能由于 Pro 所依赖的库已经升级版本，而引入了新版本所照成的问题。本作者可能会由于时间问题无法及时排查而导致您采用本项目作为基项目而出现问题。
 
 
 
@@ -81,11 +87,13 @@ yarn run lint
 其他说明
 ----
 
+- **关于 Issue 反馈 (重要!重要!重要!) 请在开 *Issue* 时，描述清楚您的使用环境，所使用 Pro 版本或分支，出现的情况等...** 另外，若有疑问也可加入 QQ群 （Ant Design Vue 原作者使用讨论群 217490093），本项目的几位维护者也在该群
+
 - 项目使用的 [vue-cli3](https://cli.vuejs.org/guide/), 请更新您的 cli
 
 - 关闭 Eslint (不推荐) 移除 `package.json` 中 `eslintConfig` 整个节点代码
 
-- 项目使用了在线 mock，[easy-mock](https://www.easy-mock.com/)  项目所用的 mock 数据 [点击查看(请勿改动接口返回数据)](https://www.easy-mock.com/project/5b7bce071f130e5b7fe8cd7d)
+- 项目使用了在线 mock，[easy-mock](https://www.easy-mock.com/)  项目所用的 mock 数据 [点击查看(请勿改动接口返回数据)](https://www.easy-mock.com/project/5b7bce071f130e5b7fe8cd7d)，也可以下载 [ANTD-PRO-Easy-Mock-API.zip](https://github.com/sendya/ant-design-pro-vue/files/2682711/ANTD-PRO-Easy-Mock-API.zip) 然后自行导入到自己的 mock 服务上
 
 - 修改 Ant Design 配色，在文件 `vue.config.js` 中，其他 less 变量覆盖参考 [ant design](https://ant.design/docs/react/customize-theme-cn) 官方说明
 ```ecmascript 6
@@ -104,21 +112,6 @@ yarn run lint
     }
   }
 ```
-- 按需加载  修改文件 `babel.config.js` 并且引入 `babel-plugin-import` 开发依赖
-```ecmascript 6
-module.exports = {
-  presets: [
-    '@vue/app'
-  ],
-  plugins: [
-    [ "import", {
-      "libraryName": "ant-design-vue",
-      "libraryDirectory": "es",
-      "style": "css"
-    } ]
-  ]
-}
-```
 
 
 附属文档
@@ -129,6 +122,8 @@ module.exports = {
 - [Table 重封装组件](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/table/README.md)
 
 - [ANTD 默认配置项](https://github.com/sendya/ant-design-pro-vue/blob/master/src/defaultSettings.js)
+
+- [按需加载/减少打包大小](https://github.com/sendya/ant-design-pro-vue/blob/master/docs/LoadOnDemand.md)
 
 - 其他待补充...
 
