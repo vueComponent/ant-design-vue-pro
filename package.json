@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@antv/data-set": "^0.10.1",
-    "ant-design-vue": "~1.2.1",
+    "ant-design-vue": "~1.2.2",
     "axios": "^0.18.0",
     "dayjs": "^1.7.5",
     "enquire.js": "^2.1.6",
