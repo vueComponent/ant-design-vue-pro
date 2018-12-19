@@ -8,15 +8,18 @@
 <script>
   import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
   import enquireScreen from '@/utils/device'
+  import { version } from 'ant-design-vue'
 
   export default {
     data () {
       return {
         locale: zhCN,
+        version
       }
     },
     created () {
       const that = this
+      console.log('use Ant-Design Of Vue:', version)
       enquireScreen(deviceType => {
         // tablet
         if (deviceType === 0) {
