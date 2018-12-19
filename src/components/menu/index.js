@@ -46,7 +46,7 @@ export default {
   watch: {
     collapsed(val) {
       if (val) {
-        this.cachedOpenKeys = this.openKeys
+        this.cachedOpenKeys = this.openKeys.concat()
         this.openKeys = []
       } else {
         this.openKeys = this.cachedOpenKeys
@@ -107,6 +107,7 @@ export default {
     },
     updateMenu() {
       const routes = this.$route.matched.concat()
+
       if (routes.length >= 4 && this.$route.meta.hidden) {
         routes.pop()
         this.selectedKeys = [routes[2].path]

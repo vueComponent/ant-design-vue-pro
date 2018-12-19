@@ -10,8 +10,8 @@
       :collapsed="collapsed"
       :menu="menus"
       :theme="theme"
-      @select="onSelect"
       :mode="mode"
+      @select="onSelect"
       style="padding: 16px 0px;"></s-menu>
   </a-layout-sider>
 
