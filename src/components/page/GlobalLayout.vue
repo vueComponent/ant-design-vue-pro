@@ -137,7 +137,7 @@
     }
   }
 
-  .layout {
+  .layout.ant-layout {
     min-height: 100vh;
     overflow-x: hidden;
 

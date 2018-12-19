@@ -111,10 +111,15 @@
           this.mdl.permissions.forEach(permission => {
             permissionsAction[permission.permissionId] = permission.actionEntitySet.map(entity => entity.action)
           })
+
+          console.log('permissionsAction', permissionsAction)
           // 把权限表遍历一遍，设定要勾选的权限 action
           this.permissions.forEach(permission => {
-            permission.selected = permissionsAction[permission.id]
+            const selected = permissionsAction[permission.id]
+            permission.selected =  selected || []
           })
+
+          console.log('this.permissions', this.permissions)
         }
 
         this.$nextTick(() => {
@@ -128,6 +133,9 @@
         permission.checkedAll = permission.selected.length === permission.actionsOptions.length
       },
       onChangeCheckAll (e, permission) {
+
+        console.log('permission:', permission)
+
         Object.assign(permission, {
           selected: e.target.checked ? permission.actionsOptions.map(obj => obj.value) : [],
           indeterminate: false,

@@ -2,6 +2,19 @@
 # yarn lockfile v1
 
 
+"@ant-design/icons-vue@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@ant-design/icons-vue/-/icons-vue-1.0.1.tgz#343579219c04190831c9ca3826aec7361bb8b4d4"
+  integrity sha512-WRlfa3t9/e2wwVw9FPRgJ/pan4Ttzd+JvgounFsXdpuyDm0q6djAwhjj7W/ZxWWU3XkArbcaXTMSslnn25804w==
+  dependencies:
+    ant-design-palettes "^1.1.3"
+    babel-runtime "^6.26.0"
+
+"@ant-design/icons@^1.1.15":
+  version "1.1.16"
+  resolved "https://registry.yarnpkg.com/@ant-design/icons/-/icons-1.1.16.tgz#ac6426216934e3f4bc108f2f48f92ed66789235e"
+  integrity sha512-0zNVP5JYBJkfMi9HotN6QBQjF3SFmUlumJNJXZIH+pZWp/5EbrCczzlG3YTmBWoyRHAsuOGIjSFIy8v/76DTPg==
+
 "@antv/adjust@~0.1.0":
   version "0.1.0"
   resolved "http://registry.npm.taobao.org/@antv/adjust/download/@antv/adjust-0.1.0.tgz#c4bce8ba0aef7cd5b3bf271f75f434c07bd215a0"
@@ -1366,11 +1379,20 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ant-design-vue@^1.1.10:
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.1.10.tgz#b9ebcbab6dc72e0576920f8dc3fe7498e9d4bf61"
-  integrity sha512-NJefmFr1WZO6HQVtENDyIquTYMx+3NLKgQdb0PY/U1+VYfnCw21TBl3eOLJTFDC7YKamnCH3pz0Ok0OKr7IVfw==
+ant-design-palettes@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/ant-design-palettes/-/ant-design-palettes-1.1.3.tgz#84119b1a4d86363adc52a38d587e65336a0a27dd"
+  integrity sha512-UpkkTp8egEN21KZNvY7sTcabLlkHvLvS71EVPk4CYi77Z9AaGGCaVn7i72tbOgWDrQp2wjIg8WgMbKBdK7GtWA==
   dependencies:
+    tinycolor2 "^1.4.1"
+
+ant-design-vue@~1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.2.2.tgz#6c55c7236fc26a251c02cb839f02892c358ebf08"
+  integrity sha512-8xUCymEbYf6i0dmF6lVg4BpIdbj01jEqfp+u/ZTn2XLGbIuOJYnE6aDmjkWEeejyM5/XuJx0cvapVBZXJKgtHg==
+  dependencies:
+    "@ant-design/icons" "^1.1.15"
+    "@ant-design/icons-vue" "^1.0.1"
     add-dom-event-listener "^1.0.2"
     array-tree-filter "^2.1.0"
     async-validator "^1.8.2"
@@ -1387,6 +1409,7 @@ ant-design-vue@^1.1.10:
     json2mq "^0.2.0"
     lodash "^4.17.5"
     moment "^2.21.0"
+    mutationobserver-shim "^0.3.2"
     omit.js "^1.0.0"
     raf "^3.4.0"
     resize-observer-polyfill "^1.5.0"
@@ -6018,6 +6041,11 @@ multicast-dns@^6.0.1:
     dns-packet "^1.3.1"
     thunky "^1.0.2"
 
+mutationobserver-shim@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/mutationobserver-shim/-/mutationobserver-shim-0.3.2.tgz#f4d5dae7a4971a2207914fb5a90ebd514b65acca"
+  integrity sha1-9NXa56SXGiIHkU+1qQ69UUtlrMo=
+
 mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
@@ -8602,6 +8630,11 @@ timsort@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
+
+tinycolor2@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
+  integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
 
 tmp@^0.0.33:
   version "0.0.33"
