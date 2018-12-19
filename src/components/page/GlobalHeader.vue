@@ -6,12 +6,12 @@
         v-if="device==='mobile'"
         class="trigger"
         :type="collapsed ? 'menu-fold' : 'menu-unfold'"
-        @click.native="toggle"></a-icon>
+        @click="toggle"></a-icon>
       <a-icon
         v-else
         class="trigger"
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
-        @click.native="toggle"/>
+        @click="toggle"/>
 
       <user-menu></user-menu>
     </div>
@@ -29,7 +29,7 @@
             v-else
             class="trigger"
             :type="collapsed ? 'menu-fold' : 'menu-unfold'"
-            @click.native="toggle"></a-icon>
+            @click="toggle"></a-icon>
         </div>
         <user-menu class="header-index-right"></user-menu>
       </div>
