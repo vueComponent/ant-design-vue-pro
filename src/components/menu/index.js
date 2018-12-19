@@ -44,7 +44,6 @@ export default {
     this.updateMenu()
   },
   watch: {
-    /*
     collapsed(val) {
       if (val) {
         this.cachedOpenKeys = this.openKeys.concat()
@@ -53,7 +52,6 @@ export default {
         this.openKeys = this.cachedOpenKeys
       }
     },
-    */
     $route: function() {
       this.updateMenu()
     }
@@ -134,7 +132,7 @@ export default {
         props: {
           theme: this.$props.theme,
           mode: this.$props.mode,
-          // openKeys: this.openKeys,
+          openKeys: this.openKeys,
           selectedKeys: this.selectedKeys
         },
         on: {
