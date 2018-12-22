@@ -55,7 +55,7 @@
     </a-card>
 
     <!-- fixed footer toolbar -->
-    <footer-tool-bar>
+    <footer-tool-bar :style="{ width: isSideMenu() && isDesktop() ? `calc(100% - ${sidebarOpened ? 256 : 80}px)` : '100%'}">
       <a-button type="primary" @click="validate" :loading="loading">提交</a-button>
     </footer-tool-bar>
   </div>
@@ -64,10 +64,12 @@
 <script>
   import RepositoryForm from './RepositoryForm'
   import TaskForm from './TaskForm'
-  import FooterToolBar from '@/components/tools/FooterToolBar'
+  import FooterToolBar from '@/components/FooterToolbar'
+  import { mixin, mixinDevice } from '@/utils/mixin'
 
   export default {
     name: 'AdvancedForm',
+    mixins: [mixin, mixinDevice],
     components: {
       FooterToolBar,
       RepositoryForm,

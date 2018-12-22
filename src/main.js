@@ -13,6 +13,7 @@ import 'ant-design-vue/dist/antd.less'  // or 'ant-design-vue/dist/antd.less'
 import '@/permission' // permission control
 import '@/utils/filter' // base filter
 import PermissionHelper from '@/utils/helper/permission'
+import { removeLoadingAnimate } from '@/utils/util'
 
 import {
   ACCESS_TOKEN,
@@ -50,6 +51,8 @@ new Vue({
     store.commit('TOGGLE_WEAK', Vue.ls.get(DEFAULT_COLOR_WEAK, config.colorWeak))
     store.commit('TOGGLE_COLOR', Vue.ls.get(DEFAULT_COLOR, config.primaryColor))
     store.commit('SET_TOKEN', Vue.ls.get(ACCESS_TOKEN))
+
+    removeLoadingAnimate('preloadingWrapper')
   },
   render: h => h(App)
 }).$mount('#app')
