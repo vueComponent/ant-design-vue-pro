@@ -1,11 +1,12 @@
 <template>
-  <div class="setting-drawer">
+  <div class="setting-drawer" ref="settingDrawer">
     <a-drawer
       width="300"
       placement="right"
       :closable="false"
       @close="onClose"
       :visible="visible"
+      :getContainer="() => $refs.settingDrawer"
       :style="{}"
     >
       <div class="setting-drawer-index-content">

@@ -7,6 +7,7 @@
       </a>
       <a href="https://ant.design/">Ant Design</a>
       <a href="https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/">Vue Antd</a>
+      <a>Antd-Vue Version@{{ version }}</a>
     </div>
     <div class="copyright">
       Copyright
@@ -17,8 +18,14 @@
 </template>
 
 <script>
+  import { version } from 'ant-design-vue'
   export default {
-    name: 'LayoutFooter'
+    name: 'LayoutFooter',
+    data () {
+      return {
+        version
+      }
+    }
   }
 </script>
 

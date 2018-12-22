@@ -17,6 +17,14 @@ const mixin = {
       autoHideHeader: state => state.app.autoHideHeader,
       sidebarOpened: state => state.app.sidebar.opened
     })
+  },
+  methods: {
+    isTopmenu () {
+      return this.layoutMode === 'topmenu'
+    },
+    isSideMenu () {
+      return !this.isTopmenu()
+    }
   }
 }
 
