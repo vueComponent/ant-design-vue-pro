@@ -67,9 +67,8 @@
       <a-layout-footer style="padding: 0px">
         <global-footer />
       </a-layout-footer>
+      <setting-drawer></setting-drawer>
     </a-layout>
-
-    <setting-drawer></setting-drawer>
   </a-layout>
 </template>
 
