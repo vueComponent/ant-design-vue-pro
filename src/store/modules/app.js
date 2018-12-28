@@ -13,10 +13,7 @@ import {
 
 const app = {
   state: {
-    sidebar: {
-      opened: true,
-      withoutAnimation: false
-    },
+    sidebar: true,
     device: 'desktop',
     theme: '',
     layout: '',
@@ -29,13 +26,14 @@ const app = {
   },
   mutations: {
     SET_SIDEBAR_TYPE: (state, type) => {
-      state.sidebar.opened = type
+      state.sidebar = type
       Vue.ls.set(SIDEBAR_TYPE, type)
+
+      console.log('SET_SIDEBAR_TYPE', type)
     },
-    CLOSE_SIDEBAR: (state, withoutAnimation) => {
+    CLOSE_SIDEBAR: (state) => {
       Vue.ls.set(SIDEBAR_TYPE, true)
-      state.sidebar.opened = false
-      state.sidebar.withoutAnimation = withoutAnimation
+      state.sidebar = false
     },
     TOGGLE_DEVICE: (state, device) => {
       state.device = device
@@ -75,11 +73,11 @@ const app = {
     }
   },
   actions: {
-    setSidebar: ({ commit }, type) => {
+    setSidebar({ commit }, type) {
       commit('SET_SIDEBAR_TYPE', type)
     },
-    CloseSidebar({ commit }, { withoutAnimation }) {
-      commit('CLOSE_SIDEBAR', withoutAnimation)
+    CloseSidebar({ commit }) {
+      commit('CLOSE_SIDEBAR')
     },
     ToggleDevice({ commit }, device) {
       commit('TOGGLE_DEVICE', device)
