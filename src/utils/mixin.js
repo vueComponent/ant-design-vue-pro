@@ -1,4 +1,5 @@
 // import Vue from 'vue'
+import { DEVICE_TYPE } from '@/utils/device'
 import { mapState } from 'vuex'
 
 // const mixinsComputed = Vue.config.optionMergeStrategies.computed
@@ -15,15 +16,15 @@ const mixin = {
       fixSiderbar: state => state.app.fixSiderbar,
       contentWidth: state => state.app.contentWidth,
       autoHideHeader: state => state.app.autoHideHeader,
-      sidebarOpened: state => state.app.sidebar.opened
+      sidebarOpened: state => state.app.sidebar
     })
   },
   methods: {
-    isTopmenu () {
+    isTopMenu () {
       return this.layoutMode === 'topmenu'
     },
     isSideMenu () {
-      return !this.isTopmenu()
+      return !this.isTopMenu()
     }
   }
 }
@@ -36,10 +37,13 @@ const mixinDevice = {
   },
   methods: {
     isMobile () {
-      return this.device === 'mobile'
+      return this.device === DEVICE_TYPE.MOBILE
     },
     isDesktop () {
-      return this.device === 'desktop'
+      return this.device === DEVICE_TYPE.DESKTOP
+    },
+    isTablet () {
+      return this.device === DEVICE_TYPE.TABLET
     }
   }
 }
