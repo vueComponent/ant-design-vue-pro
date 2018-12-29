@@ -1,22 +1,22 @@
 <template>
   <a-layout class="layout" :class="[device]">
 
-    <template v-if="layoutMode === 'sidemenu'">
+    <template v-if="isSideMenu()">
       <a-drawer
-        v-if="device === 'mobile'"
+        v-if="isMobile()"
         :wrapClassName="'drawer-sider ' + navTheme"
-        placement="left"
-        @close="() => this.collapsed = false"
         :closable="false"
         :visible="collapsed"
+        placement="left"
+        @close="() => this.collapsed = false"
       >
         <side-menu
-          mode="inline"
           :menus="menus"
-          @menuSelect="menuSelect"
           :theme="navTheme"
           :collapsed="false"
-          :collapsible="true"></side-menu>
+          :collapsible="true"
+          mode="inline"
+          @menuSelect="menuSelect"></side-menu>
       </a-drawer>
 
       <side-menu
@@ -30,7 +30,7 @@
     <!-- 下次优化这些代码 -->
     <template v-else>
       <a-drawer
-        v-if="device === 'mobile'"
+        v-if="isMobile()"
         :wrapClassName="'drawer-sider ' + navTheme"
         placement="left"
         @close="() => this.collapsed = false"
@@ -38,23 +38,23 @@
         :visible="collapsed"
       >
         <side-menu
-          mode="inline"
           :menus="menus"
-          @menuSelect="menuSelect"
           :theme="navTheme"
           :collapsed="false"
-          :collapsible="true"></side-menu>
+          :collapsible="true"
+          mode="inline"
+          @menuSelect="menuSelect"></side-menu>
       </a-drawer>
     </template>
 
     <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: fixSiderbar && isDesktop() ? `${sidebarOpened ? 256 : 80}px` : '0' }">
       <!-- layout header -->
-      <global-header 
-        :mode="layoutMode" 
-        :menus="menus" 
-        :theme="navTheme" 
-        :collapsed="collapsed" 
-        :device="device" 
+      <global-header
+        :mode="layoutMode"
+        :menus="menus"
+        :theme="navTheme"
+        :collapsed="collapsed"
+        :device="device"
         @toggle="toggle"
       />
 
@@ -104,11 +104,14 @@
     },
     watch: {
       sidebarOpened(val) {
+        console.log('sidebarOpened', val)
         this.collapsed = !val
       },
     },
     created() {
       this.menus = this.mainMenu.find((item) => item.path === '/').children
+      console.log('created/sidebarOpened', this.sidebarOpened)
+      this.collapsed = !this.sidebarOpened
     },
     methods: {
       ...mapActions(['setSidebar']),
@@ -140,7 +143,7 @@
     min-height: 100vh;
     overflow-x: hidden;
 
-    &.mobile {
+    &.mobile,&.tablet {
 
       .ant-layout-content {
 
@@ -301,7 +304,7 @@
       }
     }
 
-    &.mobile {
+    &.mobile,&.tablet {
       .top-nav-header-index {
 
         .header-index-wide {
