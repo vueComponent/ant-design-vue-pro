@@ -1,7 +1,7 @@
 <template>
   <page-layout :desc="description" :title="getTitle" :link-list="linkList" :search="search" :tabs="tabs">
     <div slot="extra" class="extra-img">
-      <img :src="extraImage"/>
+      <img v-if="typeof extraImage !== 'undefined'" :src="extraImage"/>
     </div>
     <!-- keep-alive  -->
     <route-view ref="content"></route-view>
