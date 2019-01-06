@@ -10,6 +10,7 @@ import Antd from 'ant-design-vue'
 import Viser from 'viser-vue'
 import 'ant-design-vue/dist/antd.less'  // or 'ant-design-vue/dist/antd.less'
 
+import VueClipboard from 'vue-clipboard2'
 import '@/permission' // permission control
 import '@/utils/filter' // base filter
 import PermissionHelper from '@/utils/helper/permission'
@@ -29,12 +30,14 @@ import {
 } from '@/store/mutation-types'
 import config from '@/defaultSettings'
 
+VueClipboard.config.autoSetContainer = true
 Vue.config.productionTip = false
 
 Vue.use(Storage, config.storageOptions)
 Vue.use(Antd)
 Vue.use(VueAxios, router)
 Vue.use(Viser)
+Vue.use(VueClipboard)
 Vue.use(PermissionHelper)
 
 new Vue({

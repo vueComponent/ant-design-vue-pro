@@ -140,7 +140,12 @@
         </div>
         <a-divider />
         <div :style="{ marginBottom: '24px' }">
-          <a-alert type="warning">
+          <a-button
+            @click="doCopy"
+            icon="copy"
+            block
+          >拷贝设置</a-button>
+          <a-alert type="warning" :style="{ marginTop: '24px' }">
             <span slot="message">
               配置栏只在开发环境用于预览，生产环境不会展现，请手动修改配置文件
               <a href="https://github.com/sendya/ant-design-pro-vue/blob/master/src/defaultSettings.js" target="_blank">src/defaultSettings.js</a>
@@ -161,7 +166,7 @@
   import SettingItem from '@/components/setting/SettingItem'
   import config from '@/defaultSettings'
   import { updateTheme, updateColorWeak, colorList } from '@/components/tools/setting'
-  import { mixin, mixinDevice } from '@/utils/mixin.js'
+  import { mixin, mixinDevice } from '@/utils/mixin'
 
   export default {
     components: {
@@ -173,6 +178,7 @@
       return {
         visible: true,
         colorList,
+        baseConfig: Object.assign({}, config)
       }
     },
     watch: {
@@ -202,38 +208,72 @@
         this.visible = !this.visible
       },
       onColorWeak (checked) {
+        this.baseConfig.colorWeak = checked
         this.$store.dispatch('ToggleWeak', checked)
         updateColorWeak(checked)
       },
       handleMenuTheme (theme) {
+        this.baseConfig.navTheme = theme
         this.$store.dispatch('ToggleTheme', theme)
       },
+      doCopy () {
+        const text = `export default {
+  primaryColor: '${this.baseConfig.primaryColor}', // primary color of ant design
+  navTheme: '${this.baseConfig.navTheme}', // theme for nav menu
+  layout: '${this.baseConfig.layout}', // nav menu position: sidemenu or topmenu
+  contentWidth: '${this.baseConfig.contentWidth}', // layout of content: Fluid or Fixed, only works when layout is topmenu
+  fixedHeader: ${this.baseConfig.fixedHeader}, // sticky header
+  fixSiderbar: ${this.baseConfig.fixSiderbar}, // sticky siderbar
+  autoHideHeader: ${this.baseConfig.autoHideHeader}, //  auto hide header
+  colorWeak: ${this.baseConfig.colorWeak},
+  // vue-ls options
+  storageOptions: {
+    namespace: 'pro__',
+    name: 'ls',
+    storage: 'local',
+  }
+}`
+        this.$copyText(text).then(message => {
+          console.log('copy', message)
+          this.$message.success('复制完毕')
+        }).catch(err => {
+          console.log('copy.err', err)
+          this.$message.error('复制失败')
+        })
+      },
       handleLayout (mode) {
+        this.baseConfig.layout = mode
         this.$store.dispatch('ToggleLayoutMode', mode)
         // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
         //
         this.handleFixSiderbar(false)
       },
       handleContentWidthChange (type) {
+        this.baseConfig.contentWidth = type
         this.$store.dispatch('ToggleContentWidth', type)
       },
       changeColor (color) {
+        this.baseConfig.primaryColor = color
         if (this.primaryColor !== color) {
           this.$store.dispatch('ToggleColor', color)
           updateTheme(color)
         }
       },
       handleFixedHeader (fixed) {
+        this.baseConfig.fixedHeader = fixed
         this.$store.dispatch('ToggleFixedHeader', fixed)
       },
       handleFixedHeaderHidden (autoHidden) {
+        this.baseConfig.autoHideHeader = autoHidden
         this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
       },
       handleFixSiderbar (fixed) {
         if (this.layoutMode === 'topmenu') {
+          this.baseConfig.fixSiderbar = false
           this.$store.dispatch('ToggleFixSiderbar', false)
           return
         }
+        this.baseConfig.fixSiderbar = fixed
         this.$store.dispatch('ToggleFixSiderbar', fixed)
       }
     },
