@@ -47,7 +47,7 @@
       </a-drawer>
     </template>
 
-    <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: fixSiderbar && isDesktop() ? `${sidebarOpened ? 256 : 80}px` : '0' }">
+    <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: fixSiderbar && isDesktop() ? `${sidebarOpened ? 256 : 80}px` : '0', minHeight: '100vh' }">
       <!-- layout header -->
       <global-header
         :mode="layoutMode"
@@ -140,8 +140,6 @@
   }
 
   .layout.ant-layout {
-    height: 100%;
-    min-height: 100vh;
     overflow-x: hidden;
 
     &.mobile,&.tablet {
