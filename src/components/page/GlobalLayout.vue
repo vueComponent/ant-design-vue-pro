@@ -47,7 +47,7 @@
       </a-drawer>
     </template>
 
-    <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: fixSiderbar && isDesktop() ? `${sidebarOpened ? 256 : 80}px` : '0', minHeight: '100vh' }">
+    <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: contentPaddingLeft, minHeight: '100vh' }">
       <!-- layout header -->
       <global-header
         :mode="layoutMode"
@@ -64,7 +64,7 @@
       </a-layout-content>
 
       <!-- layout footer -->
-      <a-layout-footer style="padding: 0px">
+      <a-layout-footer style="padding: 0">
         <global-footer />
       </a-layout-footer>
       <setting-drawer></setting-drawer>
@@ -100,7 +100,16 @@
       ...mapState({
         // 主路由
         mainMenu: state => state.permission.addRouters,
-      })
+      }),
+      contentPaddingLeft () {
+        if(!this.fixSidebar || this.isMobile()){
+          return '0'
+        }
+        if(this.sidebarOpened){
+          return '256px'
+        }
+        return '80px'
+      }
     },
     watch: {
       sidebarOpened(val) {
@@ -110,7 +119,6 @@
     },
     created() {
       this.menus = this.mainMenu.find((item) => item.path === '/').children
-      console.log('created/sidebarOpened', this.sidebarOpened)
       this.collapsed = !this.sidebarOpened
     },
     methods: {
@@ -119,6 +127,16 @@
         this.collapsed = !this.collapsed
         this.setSidebar(!this.collapsed)
         triggerWindowResizeEvent()
+      },
+      paddingCalc () {
+        let left = ''
+        if (this.sidebarOpened) {
+          left = this.isDesktop() ? '256px' : '80px'
+        } else {
+          left = this.isMobile() && '0' || (this.fixSidebar && '80px' || '0')
+        }
+        console.log('left', left)
+        return left
       },
       menuSelect() {
         if (!this.isDesktop()) {
