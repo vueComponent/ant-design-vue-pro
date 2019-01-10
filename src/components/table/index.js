@@ -34,6 +34,15 @@ export default {
       type: Boolean,
       default: true
     },
+    size: {
+      type: String,
+      default: 'default'
+    },
+    alert: {
+      type: Object,
+      default: null
+    },
+    /** @Deprecated */
     showAlertInfo: {
       type: Boolean,
       default: false
