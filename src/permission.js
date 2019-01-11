@@ -66,3 +66,37 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
   NProgress.done() // finish progress bar
 })
+
+
+
+
+/**Action 权限指令**/
+const action = Vue.directive('action', {
+  bind: function (el, binding, vnode) {
+    const actionName = binding.arg
+    const roles = store.getters.roles
+    const permissionId = vnode.context.$route.meta.permission
+    let actions = []
+    roles.permissions.forEach(p => {
+      if (p.permissionId != permissionId) {
+        return
+      }
+      actions = p.actionList
+    })
+    if (actions.indexOf(actionName) < 0) {
+      setTimeout(() => {
+        if(el.parentNode == null){
+          el.style.display = 'none'
+        }
+        else{
+            el.parentNode.removeChild(el)
+        }
+      }, 10)
+
+    }
+  }
+})
+
+export {
+  action
+}
