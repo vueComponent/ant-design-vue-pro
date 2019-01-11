@@ -5,37 +5,37 @@
     </div>
   </a-locale-provider>
 </template>
+
 <script>
   import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
-  import enquireScreen from '@/utils/device'
-  import { version } from 'ant-design-vue'
+  import { deviceEnquire, DEVICE_TYPE } from '@/utils/device'
 
   export default {
     data () {
       return {
-        locale: zhCN,
-        version
+        locale: zhCN
       }
     },
-    created () {
-      const that = this
-      console.log('use Ant-Design Of Vue:', version)
-      enquireScreen(deviceType => {
-        // tablet
-        if (deviceType === 0) {
-          that.$store.commit('TOGGLE_DEVICE', 'mobile')
-          that.$store.dispatch('setSidebar', false)
-        }
-        // mobile
-        else if (deviceType === 1) {
-          that.$store.commit('TOGGLE_DEVICE', 'mobile')
-          that.$store.dispatch('setSidebar', false)
-        }
-        else {
-          that.$store.commit('TOGGLE_DEVICE', 'desktop')
-          that.$store.dispatch('setSidebar', true)
-        }
+    mounted () {
+      const { $store } = this
+      deviceEnquire(deviceType => {
 
+        switch (deviceType) {
+          case DEVICE_TYPE.DESKTOP:
+            $store.commit('TOGGLE_DEVICE', 'desktop')
+            $store.dispatch('setSidebar', true)
+            break
+          case DEVICE_TYPE.TABLET:
+            $store.commit('TOGGLE_DEVICE', 'tablet')
+            $store.dispatch('setSidebar', false)
+            break
+          case DEVICE_TYPE.MOBILE:
+          default:
+            $store.commit('TOGGLE_DEVICE', 'mobile')
+            $store.dispatch('setSidebar', true)
+            break
+        }
+        console.log('deviceType', deviceType)
       })
     }
   }

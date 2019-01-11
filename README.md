@@ -89,7 +89,7 @@ yarn run lint
 其他说明
 ----
 
-- **关于 Issue 反馈 (重要!重要!重要!) 请在开 *Issue* 时，描述清楚您的使用环境，所使用 Pro 版本或分支，出现的情况等...** 另外，若有疑问也可加入 QQ群 （Ant Design Vue 原作者使用讨论群 217490093），本项目的几位维护者也在该群
+- **关于 Issue 反馈 (重要!重要!重要!) 请在开 *Issue* 时，描述清楚您的使用环境，所使用 Pro 版本或分支，出现的情况等...** 另外，若有疑问也可加入 QQ群 （Ant Design Vue 原作者使用讨论群 217490093，**非 Pro 群**），本项目的几位维护者也在该群
 
 - 项目使用的 [vue-cli3](https://cli.vuejs.org/guide/), 请更新您的 cli
 
@@ -123,7 +123,8 @@ yarn run lint
 - [Table 重封装组件](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/table/README.md)
 - [ANTD 默认配置项](https://github.com/sendya/ant-design-pro-vue/blob/master/src/defaultSettings.js)
 - [按需加载/减少打包大小](https://github.com/sendya/ant-design-pro-vue/blob/master/docs/LoadOnDemand.md)  
-- [为首屏增加 Loading 动画](https://github.com/sendya/ant-design-pro-vue/blob/master/docs/Add-Page-Loading-Animate.md)  
+- [为首屏增加 Loading 动画](https://github.com/sendya/ant-design-pro-vue/blob/master/docs/Add-Page-Loading-Animate.md)
+- [为项目增加依赖项分析工具 analyzer](https://github.com/sendya/ant-design-pro-vue/blob/master/docs/webpack-bundle-analyzer.md)  
 - ANTD PRO 额外组件
   - Trend 趋势标记 [Trend.md](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/Trend/index.md)
   - AvatarList 用户头像列表 [AvatarList.md](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/AvatarList/index.md)
