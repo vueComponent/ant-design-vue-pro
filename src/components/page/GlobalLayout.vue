@@ -491,6 +491,10 @@
     position: relative;
     z-index: 10;
 
+    .ant-layout-sider-children {
+      overflow-y: auto;
+    }
+
     &.ant-fixed-sidemenu {
       position: fixed;
       height: 100%;
