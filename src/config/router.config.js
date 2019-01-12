@@ -283,6 +283,23 @@ export const asyncRouterMap = [
             ]
           },
         ]
+      },
+
+      // 扩展组件
+      {
+        path: '/views/blocks',
+        name: 'viewsBlocks',
+        component: RouteView,
+        redirect: '/views/blocks/login1',
+        meta: { title: '扩展组件', icon: 'share-alt' },
+        children: [
+          {
+            path: '/login1',
+            name: 'login1',
+            component: () => import(/* webpackChunkName: "blocks" */ '@/views/blocks/login'),
+            meta: { title: 'Login' }
+          }
+        ]
       }
     ]
   },
@@ -316,6 +333,18 @@ export const constantRouterMap = [
         path: 'register-result',
         name: 'registerResult',
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/RegisterResult')
+      }
+    ]
+  },
+  {
+    path: '/blocks',
+    component: RouteView,
+    children: [
+      {
+        path: 'login1',
+        name: 'login1',
+        component: () => import(/* webpackChunkName: "blocks" */ '@/views/blocks/login'),
+        meta: { title: 'Login' }
       }
     ]
   },
