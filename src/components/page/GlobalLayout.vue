@@ -279,7 +279,7 @@
 
     .header, .top-nav-header-index {
 
-      .user-wrapper {
+      .global-header-wrapper {
         float: right;
         height: 100%;
 
@@ -301,16 +301,23 @@
             vertical-align: middle;
           }
 
-
           .icon {
             font-size: 16px;
             padding: 4px;
           }
         }
-      }
 
+        .nickname {
+          user-select: none;
+        }
+
+        .global-lang {
+
+        }
+      }
+      
       &.dark {
-        .user-wrapper {
+        .global-header-wrapper {
 
           .action {
             color: rgba(255, 255, 255, 0.85);

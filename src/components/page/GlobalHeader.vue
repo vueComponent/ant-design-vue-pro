@@ -13,7 +13,7 @@
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click="toggle"/>
 
-      <user-menu></user-menu>
+      <head-menu />
     </div>
     <div v-else :class="['top-nav-header-index', theme]">
       <div class="header-index-wide">
@@ -31,7 +31,9 @@
             :type="collapsed ? 'menu-fold' : 'menu-unfold'"
             @click="toggle"></a-icon>
         </div>
-        <user-menu class="header-index-right"></user-menu>
+        <div class="header-index-right">
+          <head-menu />
+        </div>
       </div>
     </div>
 
@@ -39,16 +41,15 @@
 </template>
 
 <script>
-  import UserMenu from '../tools/UserMenu'
+  import HeadMenu from '../tools/HeadMenu'
   import SMenu from '../menu/'
   import Logo from '../tools/Logo'
-
   import { mixin } from '@/utils/mixin.js'
 
   export default {
     name: 'GlobalHeader',
     components: {
-      UserMenu,
+      HeadMenu,
       SMenu,
       Logo
     },

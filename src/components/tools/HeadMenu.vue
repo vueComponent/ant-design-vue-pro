@@ -1,5 +1,5 @@
 <template>
-  <div class="user-wrapper">
+  <div class="global-header-wrapper">
     <span class="action">
       <a-icon type="question-circle-o"></a-icon>
     </span>
@@ -7,7 +7,7 @@
     <a-dropdown>
       <span class="action ant-dropdown-link user-dropdown-menu">
         <a-avatar class="avatar" size="small" :src="avatar()"/>
-        <span>{{ nickname() }}</span>
+        <span class="nickname">{{ nickname() }}</span>
       </span>
       <a-menu slot="overlay" class="user-dropdown-menu-wrapper">
         <a-menu-item key="0">
@@ -35,17 +35,21 @@
         </a-menu-item>
       </a-menu>
     </a-dropdown>
+    <!-- select lang component -->
+    <lang-select />
   </div>
 </template>
 
 <script>
   import HeaderNotice from './HeaderNotice'
+  import LangSelect from '@/components/tools/LangSelect'
   import { mapActions, mapGetters } from 'vuex'
 
   export default {
-    name: 'UserMenu',
+    name: 'HeadMenu',
     components: {
-      HeaderNotice
+      HeaderNotice,
+      LangSelect
     },
     methods: {
       ...mapActions(['Logout']),
