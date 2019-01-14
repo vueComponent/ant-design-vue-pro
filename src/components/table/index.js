@@ -112,6 +112,7 @@ export default {
         )
       )
 
+      // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data 
       if (result instanceof Promise) {
         result.then(r => {
           this.localPagination = Object.assign({}, this.localPagination, {
@@ -121,7 +122,16 @@ export default {
             pageSize: (pagination && pagination.pageSize) ||
               this.localPagination.pageSize
           })
+          
+          // 为防止删除数据后导致页面当前页面数据长度为 0 ,自动翻页到上一页
+          if (r.data.length == 0 && this.localPagination.current != 1) {
+            this.localPagination.current--
+            this.loadData()
+            return
+          }
 
+          // 这里用于判断接口是否有返回 r.totalCount 或 this.showPagination = false 
+          // 当情况满足时，表示数据不满足分页大小，关闭 table 分页功能
           !r.totalCount && ['auto', false].includes(this.showPagination) && (this.localPagination = false)
           this.localDataSource = r.data // 返回结果中的数组数据
           this.localLoading = false
