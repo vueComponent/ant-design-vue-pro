@@ -30,6 +30,6 @@ export function removeLoadingAnimate(id = '', timeout = 1500) {
     return
   }
   setTimeout(() => {
-    document.getElementById(id).remove()
+    document.body.removeChild(document.getElementById(id))
   }, timeout)
 }
