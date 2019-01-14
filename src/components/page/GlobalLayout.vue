@@ -181,20 +181,22 @@
           min-width: 800px;
         }
       }
-      .sidemenu {
-        .ant-header-fixedHeader {
-
-          &.ant-header-side-opened, &.ant-header-side-closed  {
-            width: 100%
-          }
-        }
-      }
-
       .topmenu {
         /* 必须为 topmenu  才能启用流式布局 */
         &.content-width-Fluid {
           .header-index-wide {
             margin-left: 0;
+          }
+        }
+      }
+    }
+
+    &.mobile {
+      .sidemenu {
+        .ant-header-fixedHeader {
+
+          &.ant-header-side-opened, &.ant-header-side-closed  {
+            width: 100%
           }
         }
       }
