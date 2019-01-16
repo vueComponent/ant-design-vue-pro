@@ -16,26 +16,26 @@ export const asyncRouterMap = [
         name: 'dashboard',
         redirect: '/dashboard/workplace',
         component: RouteView,
-        meta: { title: '仪表盘', icon: 'dashboard', permission: [ 'dashboard' ] },
+        meta: { title: '仪表盘', keepAlive: true, icon: 'dashboard', permission: [ 'dashboard' ] },
         children: [
           {
             path: '/dashboard/analysis',
             name: 'Analysis',
             component: () => import('@/views/dashboard/Analysis'),
-            meta: { title: '分析页', permission: [ 'dashboard' ] }
+            meta: { title: '分析页', keepAlive: true, permission: [ 'dashboard' ] }
           },
           {
             path: '/dashboard/monitor',
             name: 'Monitor',
             hidden: true,
             component: () => import('@/views/dashboard/Monitor'),
-            meta: { title: '监控页', permission: [ 'dashboard' ] }
+            meta: { title: '监控页', keepAlive: true, permission: [ 'dashboard' ] }
           },
           {
             path: '/dashboard/workplace',
             name: 'Workplace',
             component: () => import('@/views/dashboard/Workplace'),
-            meta: { title: '工作台', permission: [ 'dashboard' ] }
+            meta: { title: '工作台', keepAlive: true, permission: [ 'dashboard' ] }
           }
         ]
       },
@@ -51,19 +51,19 @@ export const asyncRouterMap = [
             path: '/form/base-form',
             name: 'BaseForm',
             component: () => import('@/views/form/BasicForm'),
-            meta: { title: '基础表单', permission: [ 'form' ] }
+            meta: { title: '基础表单', keepAlive: true, permission: [ 'form' ] }
           },
           {
             path: '/form/step-form',
             name: 'StepForm',
             component: () => import('@/views/form/stepForm/StepForm'),
-            meta: { title: '分步表单', permission: [ 'form' ] }
+            meta: { title: '分步表单', keepAlive: true, permission: [ 'form' ] }
           },
           {
             path: '/form/advanced-form',
             name: 'AdvanceForm',
             component: () => import('@/views/form/advancedForm/AdvancedForm'),
-            meta: { title: '高级表单', permission: [ 'form' ] }
+            meta: { title: '高级表单', keepAlive: true, permission: [ 'form' ] }
           }
         ]
       },
@@ -80,56 +80,56 @@ export const asyncRouterMap = [
             path: '/list/query-list',
             name: 'QueryList',
             component: () => import('@/views/list/TableList'),
-            meta: { title: '查询表格', permission: [ 'table' ] }
+            meta: { title: '查询表格', keepAlive: true, permission: [ 'table' ] }
           },
           {
             path: '/list/edit-table',
             name: 'EditList',
             component: () => import('@/views/list/TableInnerEditList'),
-            meta: { title: '内联编辑表格', permission: [ 'table' ] }
+            meta: { title: '内联编辑表格', keepAlive: true, permission: [ 'table' ] }
           },
           {
             path: '/list/user-list',
             name: 'UserList',
             component: () => import('@/views/list/UserList'),
-            meta: { title: '用户列表', permission: [ 'table' ] }
+            meta: { title: '用户列表', keepAlive: true, permission: [ 'table' ] }
           },
           {
             path: '/list/role-list',
             name: 'RoleList',
             component: () => import('@/views/list/RoleList'),
-            meta: { title: '角色列表', permission: [ 'table' ] }
+            meta: { title: '角色列表', keepAlive: true, permission: [ 'table' ] }
           },
           {
             path: '/list/system-role',
             name: 'SystemRole',
             component: () => import('@/views/role/RoleList'),
-            meta: { title: '角色列表2', permission: [ 'table' ]}
+            meta: { title: '角色列表2', keepAlive: true, permission: [ 'table' ]}
           },
           {
             path: '/list/permission-list',
             name: 'PermissionList',
             component: () => import('@/views/list/PermissionList'),
-            meta: { title: '权限列表', permission: [ 'table' ] }
+            meta: { title: '权限列表', keepAlive: true, permission: [ 'table' ] }
           },
           {
             path: '/list/basic-list',
             name: 'BasicList',
             component: () => import('@/views/list/StandardList'),
-            meta: { title: '标准列表', permission: [ 'table' ] }
+            meta: { title: '标准列表', keepAlive: true, permission: [ 'table' ] }
           },
           {
             path: '/list/card',
             name: 'CardList',
             component: () => import('@/views/list/CardList'),
-            meta: { title: '卡片列表', permission: [ 'table' ] }
+            meta: { title: '卡片列表', keepAlive: true, permission: [ 'table' ] }
           },
           {
             path: '/list/search',
             name: 'SearchList',
             component: () => import('@/views/list/search/SearchLayout'),
             redirect: '/list/search/article',
-            meta: { title: '搜索列表', permission: [ 'table' ] },
+            meta: { title: '搜索列表', keepAlive: true, permission: [ 'table' ] },
             children: [
               {
                 path: '/list/search/article',

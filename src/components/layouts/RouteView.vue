@@ -1,17 +1,21 @@
-<template>
-  <keep-alive v-if="keepAlive">
-    <router-view />
-  </keep-alive>
-  <router-view v-else />
-</template>
-
 <script>
   export default {
     name: 'RouteView',
-    computed: {
-      keepAlive () {
-        return this.$route.meta.keepAlive
-      }
+    data () {
+      return {}
     },
+    render () {
+      const { $route: { meta } } = this
+
+      const inKeep = (
+        <keep-alive>
+          <router-view />
+        </keep-alive>
+      )
+      const notKeep = (
+        <router-view />
+      )
+      return meta.keepAlive ? inKeep : notKeep
+    }
   }
 </script>
