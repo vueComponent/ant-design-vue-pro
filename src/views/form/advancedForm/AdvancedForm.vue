@@ -201,7 +201,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .card{
     margin-bottom: 24px;
   }

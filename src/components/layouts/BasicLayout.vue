@@ -22,7 +22,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="less">
 
   /*
  * The following styles are auto-applied to elements with

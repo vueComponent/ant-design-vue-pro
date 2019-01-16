@@ -89,7 +89,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 
   .avatar-upload-preview {
     position: absolute;
