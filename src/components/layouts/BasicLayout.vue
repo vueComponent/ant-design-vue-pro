@@ -1,35 +1,24 @@
 <template>
   <global-layout>
     <transition name="page-transition">
-      <keep-alive v-if="keepAlive">
-        <router-view />
-      </keep-alive>
-      <router-view v-else />
+      <route-view />
     </transition>
   </global-layout>
 </template>
 
 <script>
+  import RouteView from '@/components/layouts/RouteView'
   import GlobalLayout from '@/components/page/GlobalLayout'
 
   export default {
     name: 'BasicLayout',
     components: {
+      RouteView,
       GlobalLayout
     },
     data () {
-      return {
-
-      }
-    },
-    computed: {
-      keepAlive () {
-        return this.$route.meta.keepAlive
-      }
-    },
-    methods: {
-
-    },
+      return {}
+    }
   }
 </script>
 
