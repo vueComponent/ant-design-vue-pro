@@ -50,7 +50,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .chart-trend {
     display: inline-block;
     font-size: 14px;

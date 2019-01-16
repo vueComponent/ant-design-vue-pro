@@ -19,16 +19,16 @@
 
       <div class="title">退货商品</div>
       <s-table
-        style="margin-bottom: 24px" 
-        :columns="goodsColumns" 
+        style="margin-bottom: 24px"
+        :columns="goodsColumns"
         :data="loadGoodsData">
 
       </s-table>
 
       <div class="title">退货进度</div>
       <s-table
-        style="margin-bottom: 24px" 
-        :columns="scheduleColumns" 
+        style="margin-bottom: 24px"
+        :columns="scheduleColumns"
         :data="loadScheduleData">
 
         <template
@@ -245,7 +245,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .title {
     color: rgba(0,0,0,.85);
     font-size: 16px;

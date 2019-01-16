@@ -1300,9 +1300,10 @@ ant-design-palettes@^1.1.3:
   dependencies:
     tinycolor2 "^1.4.1"
 
-ant-design-vue@~1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.2.2.tgz#6c55c7236fc26a251c02cb839f02892c358ebf08"
+ant-design-vue@~1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.3.1.tgz#1a66b6929ce285400cb5c16a3bc884d5fdab1afa"
+  integrity sha512-5vaGBbpWgJ1Nc6hZq/rVWsnO8gj/78w1aupYWyiF30txIGMyxGOlFvJ2ZY04i6Uz4Mlhti1ckvhi9n3CMyaqGw==
   dependencies:
     "@ant-design/icons" "^1.1.15"
     "@ant-design/icons-vue" "^1.0.1"
@@ -1319,16 +1320,17 @@ ant-design-vue@~1.2.2:
     enquire.js "^2.1.6"
     intersperse "^1.0.0"
     is-negative-zero "^2.0.0"
+    ismobilejs "^0.5.1"
     json2mq "^0.2.0"
     lodash "^4.17.5"
     moment "^2.21.0"
     mutationobserver-shim "^0.3.2"
     omit.js "^1.0.0"
     raf "^3.4.0"
-    resize-observer-polyfill "^1.5.0"
+    resize-observer-polyfill "^1.5.1"
     shallow-equal "^1.0.0"
     shallowequal "^1.0.2"
-    vue-ref "^1.0.3"
+    vue-ref "^1.0.4"
     warning "^3.0.0"
 
 anymatch@^2.0.0:
@@ -5256,6 +5258,11 @@ isexe@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/isexe/download/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
 
+ismobilejs@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/ismobilejs/-/ismobilejs-0.5.1.tgz#0e3f825e29e32f84ad5ddbb60e9e04a894046488"
+  integrity sha512-QX4STsOcBYqlTjVGuAdP1MiRVxtiUbRHOKH0v7Gn1EvfUVIQnrSdgCM4zB4VCZuIejnb2NUMUx0Bwd3EIG6yyA==
+
 isobject@^2.0.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/isobject/download/isobject-2.1.0.tgz#f065561096a3f1da2ef46272f815c840d87e0c89"
@@ -7989,9 +7996,10 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
 
-resize-observer-polyfill@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.0.tgz#660ff1d9712a2382baa2cad450a4716209f9ca69"
+resize-observer-polyfill@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
 
 resolve-cwd@^2.0.0:
   version "2.0.0"
@@ -9393,9 +9401,10 @@ vue-ls@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/vue-ls/-/vue-ls-3.2.0.tgz#33356ad3ec9c30dac203757cf4036abe4ff767b3"
 
-vue-ref@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/vue-ref/-/vue-ref-1.0.3.tgz#5b7bbfc6f5833e13f5a9155ac686fafdb03dbcad"
+vue-ref@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/vue-ref/-/vue-ref-1.0.4.tgz#c27862b15a2720cff6b792566d824d1c3ac53320"
+  integrity sha512-DDyR/HlHeeNSkEi4Uj/F/7rER9ma0lnqqx8j9uEhdh0UyBWUCI1HJnX01OjTpLMB4F4TZHlK/6H2I6lqq3QC3Q==
 
 vue-router@^3.0.1:
   version "3.0.2"

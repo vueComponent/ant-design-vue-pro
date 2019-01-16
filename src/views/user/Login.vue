@@ -279,7 +279,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .user-layout-login {
   label {
     font-size: 14px;
