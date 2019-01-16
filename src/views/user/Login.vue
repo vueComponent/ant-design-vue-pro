@@ -1,10 +1,10 @@
 <template>
   <div class="main">
     <a-form
+      id="formLogin"
       class="user-layout-login"
       ref="formLogin"
-      :autoFormCreate="(form)=>{this.form = form}"
-      id="formLogin"
+      :form="form"
     >
       <a-tabs
         :activeKey="customActiveKey"
@@ -12,41 +12,46 @@
         @change="handleTabClick"
       >
         <a-tab-pane key="tab1" tab="账号密码登陆">
-          <a-form-item
-            fieldDecoratorId="username"
-            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: this.handleUsernameOrEmail }], validateTrigger: 'change'}"
-          >
-            <a-input size="large" type="text" placeholder="帐户名或邮箱地址 / admin">
+          <a-form-item>
+            <a-input
+              size="large"
+              type="text"
+              placeholder="帐户名或邮箱地址 / admin"
+              v-decorator="[
+                'username',
+                {rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
+              ]"
+            >
               <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>
 
-          <a-form-item
-            fieldDecoratorId="password"
-            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}"
-          >
-            <a-input size="large" type="password" autocomplete="false" placeholder="密码 / admin">
+          <a-form-item>
+            <a-input
+              size="large"
+              type="password"
+              autocomplete="false"
+              placeholder="密码 / admin"
+              v-decorator="[
+                'password',
+                {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
+              ]"
+            >
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>
         </a-tab-pane>
         <a-tab-pane key="tab2" tab="手机号登陆">
-          <a-form-item
-            fieldDecoratorId="mobile"
-            :fieldDecoratorOptions="{rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'change'}"
-          >
-            <a-input size="large" type="text" placeholder="手机号">
+          <a-form-item>
+            <a-input size="large" type="text" placeholder="手机号" v-decorator="['mobile', {rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'change'}]">
               <a-icon slot="prefix" type="mobile" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>
 
           <a-row :gutter="16">
             <a-col class="gutter-row" :span="16">
-              <a-form-item
-                fieldDecoratorId="captcha"
-                :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}"
-              >
-                <a-input size="large" type="text" placeholder="验证码">
+              <a-form-item>
+                <a-input size="large" type="text" placeholder="验证码" v-decorator="['captcha', {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}]">
                   <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
                 </a-input>
               </a-form-item>
@@ -65,7 +70,7 @@
       </a-tabs>
 
       <a-form-item>
-        <a-checkbox v-model="formLogin.rememberMe">自动登陆</a-checkbox>
+        <a-checkbox v-decorator="['rememberMe']">自动登陆</a-checkbox>
         <router-link
           :to="{ name: 'recover', params: { user: 'aaa'} }"
           class="forge-password"
@@ -77,11 +82,10 @@
         <a-button
           size="large"
           type="primary"
-          htmlType="submit"
           class="login-button"
-          :loading="loginBtn"
+          :loading="state.loginBtn"
+          :disabled="state.loginBtn"
           @click.stop.prevent="handleSubmit"
-          :disabled="loginBtn"
         >确定</a-button>
       </a-form-item>
 
@@ -111,10 +115,10 @@
 
 <script>
 import md5 from 'md5'
-import api from '@/api'
 import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
+import { getSmsCaptcha, get2step } from '@/api/login'
 
 export default {
   components: {
@@ -128,28 +132,23 @@ export default {
       loginType: 0,
       requiredTwoStepCaptcha: false,
       stepCaptchaVisible: false,
-      form: null,
+      form: this.$form.createForm(this),
       state: {
         time: 60,
+        loginBtn: false,
+        // login type: 0 email, 1 username, 2 telephone
+        loginType: 0,
         smsSendBtn: false
-      },
-      formLogin: {
-        username: '',
-        password: '',
-        captcha: '',
-        mobile: '',
-        rememberMe: true
       }
     }
   },
   created() {
-    this.$http
-      .get('/auth/2step-code')
+    get2step({ })
       .then(res => {
         this.requiredTwoStepCaptcha = res.result.stepCode
       })
-      .catch(err => {
-        console.log('2step-code:', err)
+      .catch(() => {
+        this.requiredTwoStepCaptcha = false
       })
     // this.requiredTwoStepCaptcha = true
   },
@@ -157,11 +156,12 @@ export default {
     ...mapActions(['Login', 'Logout']),
     // handler
     handleUsernameOrEmail(rule, value, callback) {
+      const { state } = this
       const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
       if (regex.test(value)) {
-        this.loginType = 0
+        state.loginType = 0
       } else {
-        this.loginType = 1
+        state.loginType = 1
       }
       callback()
     },
@@ -170,83 +170,68 @@ export default {
       // this.form.resetFields()
     },
     handleSubmit() {
-      const that = this
-      let flag = false
+      const {
+        form: { validateFields },
+        state,
+        customActiveKey,
+        Login
+      } = this
 
-      let loginParams = {
-        remember_me: that.formLogin.rememberMe
-      }
+      state.loginBtn = true
 
-      // 使用账户密码登陆
-      if (that.customActiveKey === 'tab1') {
-        that.form.validateFields(['username', 'password'], { force: true }, (err, values) => {
-          if (!err) {
-            flag = true
-            loginParams[!that.loginType ? 'email' : 'username'] = values.username
-            loginParams.password = md5(values.password)
-          }
-        })
-        // 使用手机号登陆
-      } else {
-        that.form.validateFields(['mobile', 'captcha'], { force: true }, (err, values) => {
-          if (!err) {
-            flag = true
-            loginParams = Object.assign(loginParams, values)
-          }
-        })
-      }
+      const validateFieldsKey = customActiveKey === 'tab1' ? ['username', 'password'] : ['mobile', 'captcha']
 
-      if (!flag) return
-
-      that.loginBtn = true
-
-      that
-        .Login(loginParams)
-        .then(() => {
-          if (that.requiredTwoStepCaptcha) {
-            that.stepCaptchaVisible = true
-          } else {
-            that.loginSuccess()
-          }
-        })
-        .catch(err => {
-          that.requestFailed(err)
-        })
+      validateFields(validateFieldsKey, { force: true }, (err, values) => {
+        if (!err) {
+          console.log('login form', values)
+          const loginParams = {...values}
+          delete loginParams.username
+          loginParams[!state.loginType ? 'email' : 'username'] = values.username
+          loginParams.password = md5(values.password)
+          Login(loginParams)
+            .then((res) => this.loginSuccess(res))
+            .catch(err => this.requestFailed(err))
+            .finally(() => {
+              state.loginBtn = false
+            })
+        } else {
+          setTimeout(() => {
+            state.loginBtn = false
+          }, 600)
+        }
+      })
     },
     getCaptcha(e) {
       e.preventDefault()
-      const that = this
+      const { form: { validateFields }, state } = this
 
-      this.form.validateFields(['mobile'], { force: true }, err => {
+      validateFields(['mobile'], { force: true }, (err, values) => {
         if (!err) {
-          this.state.smsSendBtn = true
+          state.smsSendBtn = true
 
           const interval = window.setInterval(() => {
-            if (that.state.time-- <= 0) {
-              that.state.time = 60
-              that.state.smsSendBtn = false
+            if (state.time-- <= 0) {
+              state.time = 60
+              state.smsSendBtn = false
               window.clearInterval(interval)
             }
           }, 1000)
 
           const hide = this.$message.loading('验证码发送中..', 0)
-          this.$http
-            .post(api.SendSms, { mobile: that.formLogin.mobile })
-            .then(res => {
-              setTimeout(hide, 2500)
-              this.$notification['success']({
-                message: '提示',
-                description: '验证码获取成功，您的验证码为：' + res.result.captcha,
-                duration: 8
-              })
+          getSmsCaptcha({ mobile: values.mobile }).then(res => {
+            setTimeout(hide, 2500)
+            this.$notification['success']({
+              message: '提示',
+              description: '验证码获取成功，您的验证码为：' + res.result.captcha,
+              duration: 8
             })
-            .catch(err => {
-              setTimeout(hide, 1)
-              clearInterval(interval)
-              that.state.time = 60
-              that.state.smsSendBtn = false
-              this.requestFailed(err)
-            })
+          }).catch(err => {
+            setTimeout(hide, 1)
+            clearInterval(interval)
+            state.time = 60
+            state.smsSendBtn = false
+            this.requestFailed(err)
+          })
         }
       })
     },
@@ -259,8 +244,8 @@ export default {
         this.stepCaptchaVisible = false
       })
     },
-    loginSuccess() {
-      this.loginBtn = false
+    loginSuccess(res) {
+      console.log(res)
       this.$router.push({ name: 'dashboard' })
       this.$notification.success({
         message: '欢迎',
@@ -273,7 +258,6 @@ export default {
         description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
         duration: 4
       })
-      this.loginBtn = false
     }
   }
 }
