@@ -3,12 +3,13 @@ import App from './App.vue'
 import Storage from 'vue-ls'
 import router from './router'
 import store from './store/'
+import i18n from './lang'
 
 import { VueAxios } from '@/utils/request'
 
 import Antd from 'ant-design-vue'
 import Viser from 'viser-vue'
-import 'ant-design-vue/dist/antd.less'  // or 'ant-design-vue/dist/antd.less'
+import 'ant-design-vue/dist/antd.less' // or 'ant-design-vue/dist/antd.less'
 
 import VueClipboard from 'vue-clipboard2'
 import '@/permission' // permission control
@@ -43,7 +44,8 @@ Vue.use(PermissionHelper)
 new Vue({
   router,
   store,
-  created () {
+  i18n,
+  created() {
     store.commit('SET_SIDEBAR_TYPE', Vue.ls.get(SIDEBAR_TYPE, true))
     store.commit('TOGGLE_THEME', Vue.ls.get(DEFAULT_THEME, config.navTheme))
     store.commit('TOGGLE_LAYOUT_MODE', Vue.ls.get(DEFAULT_LAYOUT_MODE, config.layout))
