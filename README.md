@@ -129,6 +129,7 @@ yarn run lint
 - [为首屏增加 Loading 动画](https://github.com/sendya/ant-design-pro-vue/blob/master/docs/add-page-loading-animate.md)
 - [多标签页组件 feature/multi-tabs](https://github.com/sendya/ant-design-pro-vue/tree/feature/multi-tabs)
 - [按需加载用例 feature/demand_load](https://github.com/sendya/ant-design-pro-vue/tree/feature/demand_load)
+- [多语言使用案例 feature/lang](https://github.com/sendya/ant-design-pro-vue/tree/feature/lang) [@musnow](https://github.com/musnow) 提供
 - [为项目增加依赖项分析工具 analyzer](https://github.com/sendya/ant-design-pro-vue/blob/master/docs/webpack-bundle-analyzer.md)  
 - ANTD PRO 额外组件
   - Trend 趋势标记 [Trend.md](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/Trend/index.md)
