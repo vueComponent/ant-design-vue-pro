@@ -1,5 +1,6 @@
 import T from 'ant-design-vue/es/table/Table'
 import get from 'lodash.get'
+
 export default {
   data() {
     return {
@@ -38,8 +39,14 @@ export default {
       type: String,
       default: 'default'
     },
+    /**
+     * {
+     *   show: true,
+     *   clear: Function
+     * }
+     */
     alert: {
-      type: Object,
+      type: [Object, Boolean],
       default: null
     },
     /** @Deprecated */
@@ -57,7 +64,7 @@ export default {
         name: this.$route.name,
         params: Object.assign({}, this.$route.params, {
           pageNo: val
-        }),
+        })
       })
     },
     pageNum(val) {
@@ -66,13 +73,11 @@ export default {
       })
     },
     pageSize(val) {
-      console.log('pageSize:', val)
       Object.assign(this.localPagination, {
         pageSize: val
       })
     },
     showSizeChanger(val) {
-      console.log('showSizeChanger', val)
       Object.assign(this.localPagination, {
         showSizeChanger: val
       })
@@ -112,7 +117,7 @@ export default {
         )
       )
 
-      // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data 
+      // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data
       if (result instanceof Promise) {
         result.then(r => {
           this.localPagination = Object.assign({}, this.localPagination, {
@@ -122,7 +127,7 @@ export default {
             pageSize: (pagination && pagination.pageSize) ||
               this.localPagination.pageSize
           })
-          
+
           // 为防止删除数据后导致页面当前页面数据长度为 0 ,自动翻页到上一页
           if (r.data.length == 0 && this.localPagination.current != 1) {
             this.localPagination.current--
@@ -130,7 +135,7 @@ export default {
             return
           }
 
-          // 这里用于判断接口是否有返回 r.totalCount 或 this.showPagination = false 
+          // 这里用于判断接口是否有返回 r.totalCount 或 this.showPagination = false
           // 当情况满足时，表示数据不满足分页大小，关闭 table 分页功能
           !r.totalCount && ['auto', false].includes(this.showPagination) && (this.localPagination = false)
           this.localDataSource = r.data // 返回结果中的数组数据
@@ -142,15 +147,20 @@ export default {
       const totalList = []
       columns && columns instanceof Array && columns.forEach(column => {
         if (column.needTotal) {
-          totalList.push({ ...column,
+          totalList.push({
+            ...column,
             total: 0
           })
         }
       })
       return totalList
     },
+    /**
+     * 用于更新已选中的列表数据 total 统计
+     * @param selectedRowKeys
+     * @param selectedRows
+     */
     updateSelect(selectedRowKeys, selectedRows) {
-      this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
       const list = this.needTotalList
       this.needTotalList = list.map(item => {
@@ -162,123 +172,91 @@ export default {
           }, 0)
         }
       })
-      // this.$emit('change', selectedRowKeys, selectedRows)
     },
-    updateEdit() {
-      this.selectedRows = []
+    /**
+     * 清空 table 已选中项
+     */
+    clearSelected () {
+      if (this.rowSelection) {
+        this.rowSelection.onChange([], [])
+        this.updateSelect([], [])
+      }
     },
-    onClearSelected() {
-      this.selectedRowKeys = []
-      this.updateSelect([], [])
-    },
-    renderMsg(h) {
-      const _vm = this
-      const d = []
-      // 构建 已选择
-      d.push(
-        h('span', {
-          style: {
-            marginRight: '12px'
-          }
-        }, ['已选择 ', h('a', {
-          style: {
-            fontWeight: 600
-          }
-        }, this.selectedRows.length)])
+    /**
+     * 处理交给 table 使用者去处理 clear 事件时，内部选中统计同时调用
+     * @param callback
+     * @returns {*}
+     */
+    renderClear (callback) {
+      return (
+        <a style="margin-left: 24px" onClick={() => {
+          callback()
+          this.clearSelected()
+        }}>清空</a>
       )
-
-      // 构建 列统计
-      this.needTotalList.map(item => {
-        d.push(h('span', {
-            style: {
-              marginRight: '12px'
-            }
-          },
-          [
-            `${ item.title }总计 `,
-            h('a', {
-              style: {
-                fontWeight: 600
-              }
-            }, `${ !item.customRender ? item.total : item.customRender(item.total) }`)
-          ]))
+    },
+    renderAlert () {
+      // 绘制统计列数据
+      const needTotalItems = this.needTotalList.map((item) => {
+        return (<span style="margin-right: 12px">
+          {item.title}总计 <a style="font-weight: 600">{!item.customRender ? item.total : item.customRender(item.total)}</a>
+        </span>)
       })
 
-      // 构建 清空选择
-      d.push(h('a', {
-        style: {
-          marginLeft: '24px'
-        },
-        on: {
-          click: _vm.onClearSelected
-        }
-      }, '清空'))
+      // 绘制 清空 按钮
+      const clearItem = (typeof this.alert.clear === 'boolean' && this.alert.clear) ? (
+        this.renderClear(this.clearSelected)
+      ) : (this.alert !== null && typeof this.alert.clear === 'function') ? (
+        this.renderClear(this.alert.clear)
+      ) : null
 
-      return d
-    },
-    renderAlert(h) {
-      return h('span', {
-        slot: 'message'
-      }, this.renderMsg(h))
-    },
+      // 绘制 alert 组件
+      return (
+        <a-alert showIcon={true} style="margin-bottom: 16px">
+          <template slot="message">
+            <span style="margin-right: 12px">已选择: <a style="font-weight: 600">{this.selectedRows.length}</a></span>
+            {needTotalItems}
+            {clearItem}
+          </template>
+        </a-alert>
+      )
+    }
   },
 
-  render(h) {
-    const _vm = this
-
-    const props = {},
-      localKeys = Object.keys(this.$data)
+  render() {
+    const props = {}
+    const localKeys = Object.keys(this.$data)
+    const showAlert = (typeof this.alert === 'object' && this.alert !== null && this.alert.show) || this.alert
 
     Object.keys(T.props).forEach(k => {
-      const localKey = `local${k.substring(0,1).toUpperCase()}${k.substring(1)}`
+      const localKey = `local${k.substring(0, 1).toUpperCase()}${k.substring(1)}`
       if (localKeys.includes(localKey)) {
-        return props[k] = _vm[localKey]
+        return props[k] = this[localKey]
       }
-      return props[k] = _vm[k]
-    })
-
-
-    // 显示信息提示
-    if (this.showAlertInfo) {
-
-      props.rowSelection = {
-        selectedRowKeys: this.selectedRowKeys,
-        onChange: (selectedRowKeys, selectedRows) => {
-          _vm.updateSelect(selectedRowKeys, selectedRows)
-          _vm.$emit('onSelect', { selectedRowKeys: selectedRowKeys, selectedRows: selectedRows })
+      if (showAlert && k === 'rowSelection') {
+        // 重新绑定 rowSelection 事件
+        return props[k] = {
+          selectedRowKeys: this[k].selectedRowKeys,
+          onChange: (selectedRowKeys, selectedRows) => {
+            this.updateSelect(selectedRowKeys, selectedRows)
+            this[k].onChange(selectedRowKeys, selectedRows)
+          }
         }
       }
+      return props[k] = this[k]
+    })
 
-      return h('div', {}, [
-        h('a-alert', {
-          style: {
-            marginBottom: '16px'
-          },
-          props: {
-            type: 'info',
-            showIcon: true
-          }
-        }, [_vm.renderAlert(h)]),
-        h('a-table', {
-          tag: 'component',
-          attrs: props,
-          on: {
-            change: _vm.loadData
-          },
-          scopedSlots: this.$scopedSlots
-        }, this.$slots.default)
-      ])
+    const table = (
+      <a-table {...{ props, scopedSlots: {...this.$scopedSlots}}} onChange={this.loadData}>
+        {this.$slots.default}
+      </a-table>
+    )
 
-    }
-
-    return h('a-table', {
-      tag: 'component',
-      attrs: props,
-      on: {
-        change: _vm.loadData
-      },
-      scopedSlots: this.$scopedSlots
-    }, this.$slots.default)
-
+    return (
+      <div class="table-wrapper">
+        { showAlert ? this.renderAlert() : null }
+        { table }
+      </div>
+    )
   }
 }
