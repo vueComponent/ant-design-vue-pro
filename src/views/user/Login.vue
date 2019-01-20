@@ -5,6 +5,7 @@
       class="user-layout-login"
       ref="formLogin"
       :form="form"
+      @submit="handleSubmit"
     >
       <a-tabs
         :activeKey="customActiveKey"
@@ -82,10 +83,10 @@
         <a-button
           size="large"
           type="primary"
+          htmlType="submit"
           class="login-button"
           :loading="state.loginBtn"
           :disabled="state.loginBtn"
-          @click.stop.prevent="handleSubmit"
         >确定</a-button>
       </a-form-item>
 
@@ -169,7 +170,8 @@ export default {
       this.customActiveKey = key
       // this.form.resetFields()
     },
-    handleSubmit() {
+    handleSubmit(e) {
+      e.preventDefault()
       const {
         form: { validateFields },
         state,

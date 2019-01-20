@@ -551,6 +551,11 @@
   }
 
   // 外置的样式控制
+  .user-dropdown-menu {
+    span {
+      user-select: none;
+    }
+  }
   .user-dropdown-menu-wrapper.ant-dropdown-menu {
     padding: 4px 0;
 
