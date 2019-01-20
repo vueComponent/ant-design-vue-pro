@@ -21,10 +21,11 @@ Table 重封装组件说明
 <template>
   <s-table
     ref="table"
-    :rowKey="(record) => record.data.id"
     size="default"
+    :rowKey="(record) => record.data.id"
     :columns="columns"
     :data="loadData"
+    :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
   >
   </s-table>
 </template>
@@ -75,7 +76,15 @@ Table 重封装组件说明
             return res.result
           })
         },
+        selectedRowKeys: [],
+        selectedRows: []
       }
+    },
+    methods: {
+      onSelectChange (selectedRowKeys, selectedRows) {
+         this.selectedRowKeys = selectedRowKeys
+         this.selectedRows = selectedRows
+       }
     }
   }
 </script>
@@ -195,6 +204,15 @@ Table 重封装组件说明
 > 注意：要调用 `refresh()` 需要给表格组件设定 `ref` 值
 
 
+内置属性
+----
+> 除去 `a-table` 自带属性外，还而外提供了 `alert` `props` 属性
+```javascript
+alert: {
+  show: Boolean, 
+  clear: [Function, Boolean]
+}
+```
 
 注意事项
 ----
@@ -202,7 +220,7 @@ Table 重封装组件说明
 > 你可能需要为了与后端提供的接口返回结果一致而去修改以下代码：
 (需要注意的是，这里的修改是全局性的，意味着整个项目所有使用该 table 组件都需要遵守这个返回结果定义的字段。)
 
-修改 `@/components/table/index.js`  第 106 行起
+修改 `@/components/table/index.js`  第 124 行起
 
 
 
@@ -214,10 +232,19 @@ result.then(r => {
     showSizeChanger: this.showSizeChanger,
     pageSize: (pagination && pagination.pageSize) ||
       this.localPagination.pageSize
-  });
+  })
 
+  // 为防止删除数据后导致页面当前页面数据长度为 0 ,自动翻页到上一页
+  if (r.data.length == 0 && this.localPagination.current != 1) {
+    this.localPagination.current--
+    this.loadData()
+    return
+  }
+
+  // 这里用于判断接口是否有返回 r.totalCount 或 this.showPagination = false
+  // 当情况满足时，表示数据不满足分页大小，关闭 table 分页功能
   !r.totalCount && ['auto', false].includes(this.showPagination) && (this.localPagination = false)
-  this.localDataSource = r.data; // 返回结果中的数组数据
+  this.localDataSource = r.data // 返回结果中的数组数据
   this.localLoading = false
 });
 ```
