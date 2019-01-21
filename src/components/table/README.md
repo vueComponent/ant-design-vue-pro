@@ -183,7 +183,7 @@ Table 重封装组件说明
         // 调用 refresh() 重新加载列表数据
         // 这里 setTimeout 模拟发起请求的网络延迟..
         setTimeout(() => {
-          this.$refs.table.refresh()
+          this.$refs.table.refresh() // refresh() 不传参默认值 false 不刷新到分页第一页
         }, 1500)
 
       }
@@ -199,14 +199,26 @@ Table 重封装组件说明
 
 通过 `this.$refs.table` 调用
 
-`this.$refs.table.refresh()` 刷新列表 (用户新增/修改数据后，重载列表数据)
+`this.$refs.table.refresh(true)` 刷新列表 (用户新增/修改数据后，重载列表数据)
 
-> 注意：要调用 `refresh()` 需要给表格组件设定 `ref` 值
+> 注意：要调用 `refresh(bool)` 需要给表格组件设定 `ref` 值
+>
+> `refresh()` 方法可以传一个 `bool` 值，当有传值 或值为 `true` 时，则刷新时会强制刷新到第一页（常用户页面 搜索 按钮进行搜索时，结果从第一页开始分页）
 
 
 内置属性
 ----
-> 除去 `a-table` 自带属性外，还而外提供了 `alert` `props` 属性
+> 除去 `a-table` 自带属性外，还而外提供了一些额外属性属性
+| 属性           | 说明                                            | 类型              | 默认值 |
+| -------------- | ----------------------------------------------- | ----------------- | ------ |
+| alert          | 设置是否显示表格信息栏                          | [object, boolean] | null   |
+| showPagination | 显示分页选择器，可传 'auto' \| boolean          | [string, boolean] | 'auto' |
+| data           | 加载数据方法 必须为 `Promise` 对象 **必须绑定** | Promise           | -      |
+
+
+
+`alert` 属性对象：
+
 ```javascript
 alert: {
   show: Boolean, 
@@ -220,7 +232,7 @@ alert: {
 > 你可能需要为了与后端提供的接口返回结果一致而去修改以下代码：
 (需要注意的是，这里的修改是全局性的，意味着整个项目所有使用该 table 组件都需要遵守这个返回结果定义的字段。)
 
-修改 `@/components/table/index.js`  第 124 行起
+修改 `@/components/table/index.js`  第 132 行起
 
 
 
@@ -317,4 +329,4 @@ result.then(r => {
 更新时间
 ----
 
-该文档最后更新于： 2018-10-31 PM 08:15
+该文档最后更新于： 2019-01-21 AM 08:37
