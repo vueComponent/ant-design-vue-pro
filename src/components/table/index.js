@@ -2,7 +2,7 @@ import T from 'ant-design-vue/es/table/Table'
 import get from 'lodash.get'
 
 export default {
-  data() {
+  data () {
     return {
       needTotalList: [],
 
@@ -55,11 +55,12 @@ export default {
       default: false
     },
     showPagination: {
+      type: String,
       default: 'auto'
     }
   }),
   watch: {
-    'localPagination.current'(val) {
+    'localPagination.current' (val) {
       this.$router.push({
         name: this.$route.name,
         params: Object.assign({}, this.$route.params, {
@@ -67,23 +68,23 @@ export default {
         })
       })
     },
-    pageNum(val) {
+    pageNum (val) {
       Object.assign(this.localPagination, {
         current: val
       })
     },
-    pageSize(val) {
+    pageSize (val) {
       Object.assign(this.localPagination, {
         pageSize: val
       })
     },
-    showSizeChanger(val) {
+    showSizeChanger (val) {
       Object.assign(this.localPagination, {
         showSizeChanger: val
       })
     }
   },
-  created() {
+  created () {
     this.localPagination = ['auto', true].includes(this.showPagination) && Object.assign({}, this.localPagination, {
       current: this.pageNum,
       pageSize: this.pageSize,
@@ -93,29 +94,38 @@ export default {
     this.loadData()
   },
   methods: {
-    refresh() {
-      this.loadData()
+    /**
+     * 表格重新加载方法
+     * 如果参数为 true, 则强制刷新到第一页
+     * @param Boolean bool 
+     */
+    refresh(bool = false) {
+      this.loadData(bool ? { current: 1 }: {})
     },
-    loadData(pagination, filters, sorter) {
+    /**
+     * 加载数据方法
+     * @param {Object} pagination 分页选项器
+     * @param {Object} filters 过滤条件
+     * @param {Object} sorter 排序条件
+     */
+    loadData (pagination, filters, sorter) {
 
       this.localLoading = true
-      var result = this.data(
-        Object.assign({
-            pageNo: (pagination && pagination.current) ||
-              this.localPagination.current,
-            pageSize: (pagination && pagination.pageSize) ||
-              this.localPagination.pageSize
-          },
-          (sorter && sorter.field && {
-            sortField: sorter.field
-          }) || {},
-          (sorter && sorter.order && {
-            sortOrder: sorter.order
-          }) || {}, {
-            ...filters
-          }
-        )
-      )
+      var result = this.data(Object.assign({
+        pageNo: (pagination && pagination.current) ||
+          this.localPagination.current,
+        pageSize: (pagination && pagination.pageSize) ||
+          this.localPagination.pageSize
+        },
+        (sorter && sorter.field && {
+          sortField: sorter.field
+        }) || {},
+        (sorter && sorter.order && {
+          sortOrder: sorter.order
+        }) || {}, {
+          ...filters
+        }
+      ))
 
       // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data
       if (result instanceof Promise) {
@@ -143,7 +153,7 @@ export default {
         })
       }
     },
-    initTotalList(columns) {
+    initTotalList (columns) {
       const totalList = []
       columns && columns instanceof Array && columns.forEach(column => {
         if (column.needTotal) {
@@ -160,7 +170,7 @@ export default {
      * @param selectedRowKeys
      * @param selectedRows
      */
-    updateSelect(selectedRowKeys, selectedRows) {
+    updateSelect (selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows
       const list = this.needTotalList
       this.needTotalList = list.map(item => {
@@ -223,7 +233,7 @@ export default {
     }
   },
 
-  render() {
+  render () {
     const props = {}
     const localKeys = Object.keys(this.$data)
     const showAlert = (typeof this.alert === 'object' && this.alert !== null && this.alert.show) || this.alert
