@@ -1,76 +1,10 @@
 <template>
   <a-card :bordered="false">
     <a-row :gutter="8">
-      <a-col :span="6">
-        <a-menu
-          class="custom-tree"
-          @click="handleClick"
-          style="width: 200px"
-          :defaultSelectedKeys="['1']"
-          :openKeys.sync="openKeys"
-          mode="inline"
-        >
-          <a-sub-menu key="sub1" @titleClick="titleClick">
-            <span slot="title"><a-icon type="mail" /><span>研发中心</span></span>
-            <a-menu-item-group key="g1">
-              <template slot="title">
-                <span>后端组</span>
-                <a-dropdown>
-                  <a class="btn"><a-icon type="ellipsis" /></a>
-                  <a-menu slot="overlay">
-                    <a-menu-item key="1">新增</a-menu-item>
-                    <a-menu-item key="2">合并</a-menu-item>
-                    <a-menu-item key="3">移除</a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </template>
-              <a-menu-item key="1">
-                爪哇组
-                <a class="btn"><a-icon type="plus" /></a>
-              </a-menu-item>
-              <a-menu-item key="2">
-                拍黄片组
-                <a class="btn"><a-icon type="plus" /></a>
-              </a-menu-item>
-            </a-menu-item-group>
-            <a-menu-item-group key="g2">
-              <template slot="title">
-                <span>前端组</span>
-                <a class="btn"><a-icon type="ellipsis" /></a>
-              </template>
-              <a-menu-item key="2-1">
-                React
-                <a class="btn"><a-icon type="plus" /></a>
-              </a-menu-item>
-              <a-menu-item key="2-2">
-                Vue
-                <a class="btn"><a-icon type="plus" /></a>
-              </a-menu-item>
-              <a-menu-item key="2-3">
-                Angular
-                <a class="btn"><a-icon type="plus" /></a>
-              </a-menu-item>
-            </a-menu-item-group>
-          </a-sub-menu>
-          <a-sub-menu key="sub2" @titleClick="titleClick">
-            <span slot="title"><a-icon type="appstore" /><span>财务部</span></span>
-            <a-menu-item key="3-1">会计核算</a-menu-item>
-            <a-menu-item key="3-2">成本控制</a-menu-item>
-            <a-sub-menu key="sub3" title="内部控制">
-              <a-menu-item key="3-3-1">财务制度建设</a-menu-item>
-              <a-menu-item key="3-3-2">会计核算</a-menu-item>
-            </a-sub-menu>
-          </a-sub-menu>
-          <a-sub-menu key="sub4">
-            <span slot="title"><a-icon type="setting" /><span>Navigation Three</span></span>
-            <a-menu-item key="9">Option 9</a-menu-item>
-            <a-menu-item key="10">Option 10</a-menu-item>
-            <a-menu-item key="11">Option 11</a-menu-item>
-            <a-menu-item key="12">Option 12</a-menu-item>
-          </a-sub-menu>
-        </a-menu>
+      <a-col :span="5">
+        <s-tree :dataSource="orgTree" :search="true" @click="handleClick"></s-tree>
       </a-col>
-      <a-col :span="18">
+      <a-col :span="19">
         <s-table
           ref="table"
           size="default"
@@ -108,13 +42,15 @@
 </template>
 
 <script>
+import STree from '@/components/Tree/Tree'
 import STable from '@/components/table/'
-import { getServiceList } from '@/api/manage'
+import { getOrgTree, getServiceList } from '@/api/manage'
 
 export default {
   name: 'TreeList',
   components: {
-    STable
+    STable,
+    STree
   },
   data () {
     return {
@@ -125,15 +61,15 @@ export default {
       // 表头
       columns: [
         {
-          title: '规则编号',
+          title: '#',
           dataIndex: 'no'
         },
         {
-          title: '描述',
+          title: '成员名称',
           dataIndex: 'description'
         },
         {
-          title: '服务调用次数',
+          title: '登陆次数',
           dataIndex: 'callNo',
           sorter: true,
           needTotal: true,
@@ -162,15 +98,25 @@ export default {
           .then(res => {
             return res.result
           })
+          
       },
-
+      orgTree: [],
       selectedRowKeys: [],
       selectedRows: []
     }
   },
+  created () {
+    getOrgTree().then(res => {
+      this.orgTree = res.result
+    })
+  },
   methods: {
     handleClick (e) {
-      console.log('click', e)
+      console.log('handleClick', e)
+      this.queryParam = {
+        key: e.key
+      }
+      this.$refs.table.refresh(true)
     },
     titleClick (e) {
       console.log('titleClick', e)
@@ -184,7 +130,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   .custom-tree {
 
     /deep/ .ant-menu-item-group-title {
@@ -212,6 +158,7 @@ export default {
       width: 20px;
       height: 40px;
       line-height: 40px;
+      z-index: 1050;
 
       &:hover {
         transform: scale(1.2);
