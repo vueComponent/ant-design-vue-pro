@@ -493,7 +493,7 @@
     position: relative;
     z-index: 10;
 
-    .ant-layout-sider-children {
+    .ant-layout-sider-children:hover {
       overflow-y: auto;
     }
 
