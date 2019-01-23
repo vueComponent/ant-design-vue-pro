@@ -83,6 +83,12 @@ export const asyncRouterMap = [
             meta: { title: '查询表格', keepAlive: true, permission: [ 'table' ] }
           },
           {
+            path: '/list/tree-list',
+            name: 'TreeList',
+            component: () => import('@/views/list/TreeList'),
+            meta: { title: '树目录表格', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
             path: '/list/edit-table',
             name: 'EditList',
             component: () => import('@/views/list/TableInnerEditList'),
