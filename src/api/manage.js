@@ -6,6 +6,7 @@ const api = {
   service: '/service',
   permission: '/permission',
   permissionNoPager: '/permission/no-pager',
+  orgTree: '/org/tree'
 }
 
 export default api
@@ -37,6 +38,14 @@ export function getServiceList(parameter) {
 export function getPermissions(parameter) {
   return axios({
     url: api.permissionNoPager,
+    method: 'get',
+    params: parameter
+  })
+}
+
+export function getOrgTree(parameter) {
+  return axios({
+    url: api.orgTree,
     method: 'get',
     params: parameter
   })
