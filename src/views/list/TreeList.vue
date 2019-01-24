@@ -2,7 +2,7 @@
   <a-card :bordered="false">
     <a-row :gutter="8">
       <a-col :span="5">
-        <s-tree :dataSource="orgTree" :search="true" @click="handleClick"></s-tree>
+        <s-tree :dataSource="orgTree" :search="true" @click="handleClick" @add="handleAdd" @titleClick="handleTitleClick"></s-tree>
       </a-col>
       <a-col :span="19">
         <s-table
@@ -38,19 +38,23 @@
         </s-table>
       </a-col>
     </a-row>
+
+    <org-modal ref="modal" @ok="handleSaveOk" @close="handleSaveClose" />
   </a-card>
 </template>
 
 <script>
 import STree from '@/components/Tree/Tree'
 import STable from '@/components/table/'
+import OrgModal from './modules/OrgModal'
 import { getOrgTree, getServiceList } from '@/api/manage'
 
 export default {
   name: 'TreeList',
   components: {
     STable,
-    STree
+    STree,
+    OrgModal
   },
   data () {
     return {
@@ -118,8 +122,22 @@ export default {
       }
       this.$refs.table.refresh(true)
     },
+    handleAdd (item) {
+      console.log('add button, item', item)
+      this.$message.info(`提示：你点了 ${item.key} - ${item.title} ` )
+      this.$refs.modal.add(item.key)
+    },
+    handleTitleClick (item) {
+      console.log('handleTitleClick', item)
+    },
     titleClick (e) {
       console.log('titleClick', e)
+    },
+    handleSaveOk () {
+
+    },
+    handleSaveClose () {
+
     },
 
     onSelectChange (selectedRowKeys, selectedRows) {
