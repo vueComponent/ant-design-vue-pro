@@ -21,8 +21,8 @@ export default {
     }
   },
   methods: {
-    handlePlus (...args) {
-      this.$emit('onAdd', { args })
+    handlePlus (item) {
+      this.$emit('add', item)
     },
     handleTitleClick (...args) {
       this.$emit('titleClick', { args })
@@ -44,7 +44,7 @@ export default {
         <Item key={item.key}>
           { this.renderIcon(item.icon) }
           { item.title }
-          <a class="btn"><a-icon type="plus" onClick={() => this.handlePlus(item)} /></a>
+          <a class="btn" style="width: 20px;z-index:1300" {...{ on: { click: () => this.handlePlus(item) } }}><a-icon type="plus"/></a>
         </Item>
       )
     },
