@@ -118,19 +118,19 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='规则编号'
+          label="规则编号"
           hasFeedback
-          validateStatus='success'
+          validateStatus="success"
         >
-          <a-input placeholder='规则编号' v-model="mdl.no" id='no' />
+          <a-input placeholder="规则编号" v-model="mdl.no" id="no" />
         </a-form-item>
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='服务调用次数'
+          label="服务调用次数"
           hasFeedback
-          validateStatus='success'
+          validateStatus="success"
         >
           <a-input-number :min="1" id="callNo" v-model="mdl.callNo" style="width: 100%" />
         </a-form-item>
@@ -138,33 +138,33 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='状态'
+          label="状态"
           hasFeedback
-          validateStatus='warning'
+          validateStatus="warning"
         >
-          <a-select defaultValue='1' v-model="mdl.status">
-            <a-select-option value='1'>Option 1</a-select-option>
-            <a-select-option value='2'>Option 2</a-select-option>
-            <a-select-option value='3'>Option 3</a-select-option>
+          <a-select defaultValue="1" v-model="mdl.status">
+            <a-select-option value="1">Option 1</a-select-option>
+            <a-select-option value="2">Option 2</a-select-option>
+            <a-select-option value="3">Option 3</a-select-option>
           </a-select>
         </a-form-item>
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='描述'
+          label="描述"
           hasFeedback
-          help='请填写一段描述'
+          help="请填写一段描述"
         >
-          <a-textarea :rows="5" v-model="mdl.description" placeholder="..." id='description'/>
+          <a-textarea :rows="5" v-model="mdl.description" placeholder="..." id="description"/>
         </a-form-item>
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='更新时间'
+          label="更新时间"
           hasFeedback
-          validateStatus='error'
+          validateStatus="error"
         >
           <a-date-picker
             style="width: 100%"

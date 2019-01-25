@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import moment from 'dayjs'
+  import moment from 'moment'
   const data = []
   const beginDay = new Date().getTime()
 

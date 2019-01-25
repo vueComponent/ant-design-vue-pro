@@ -13,24 +13,24 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='唯一识别码'
+          label="唯一识别码"
           hasFeedback
         >
-          <a-input placeholder='唯一识别码' disabled="disabled" v-decorator="[ 'id', {rules: []} ]" />
+          <a-input placeholder="唯一识别码" disabled="disabled" v-decorator="[ 'id', {rules: []} ]" />
         </a-form-item>
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='角色名称'
+          label="角色名称"
           hasFeedback >
-          <a-input placeholder='起一个名字' v-decorator="[ 'name', {rules: [{ required: true, message: '不起一个名字吗？' }] }]" />
+          <a-input placeholder="起一个名字" v-decorator="[ 'name', {rules: [{ required: true, message: '不起一个名字吗？' }] }]" />
         </a-form-item>
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='状态'
+          label="状态"
           hasFeedback >
           <a-select v-decorator="[ 'status', {rules: []} ]">
             <a-select-option :value="1">正常</a-select-option>
@@ -41,7 +41,7 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='描述'
+          label="描述"
           hasFeedback
         >
           <a-textarea :rows="5" placeholder="..." v-decorator="[ 'describe', { rules: [] } ]" />
@@ -52,7 +52,7 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='拥有权限'
+          label="拥有权限"
           hasFeedback
         >
           <a-row :gutter="16" v-for="(permission, index) in permissions" :key="index">
