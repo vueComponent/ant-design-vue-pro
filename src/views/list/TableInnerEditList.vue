@@ -95,11 +95,11 @@
         </div>
       </template>
       <template slot="action" slot-scope="text, record, index">
-        <div class='editable-row-operations'>
+        <div class="editable-row-operations">
           <span v-if="record.editable">
             <a @click="() => save(record)">保存</a>
             <a-divider type="vertical" />
-            <a-popconfirm title='真的放弃编辑吗?' @confirm="() => cancel(record)">
+            <a-popconfirm title="真的放弃编辑吗?" @confirm="() => cancel(record)">
               <a>取消</a>
             </a-popconfirm>
           </span>

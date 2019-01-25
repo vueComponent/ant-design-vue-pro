@@ -71,7 +71,7 @@ router.afterEach(() => {
  * Action 权限指令
  * 指令用法：
  *  - 在需要控制 action 级别权限的组件上使用 v-action:[method] , 如下：
- *    <a-button v-action:add >添加用户</a-button>
+ *    <i-button v-action:add >添加用户</a-button>
  *    <a-button v-action:delete>删除用户</a-button>
  *    <a v-action:edit @click="edit(record)">修改</a>
  *

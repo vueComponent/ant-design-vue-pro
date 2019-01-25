@@ -70,43 +70,43 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='唯一识别码'
+          label="唯一识别码"
           hasFeedback
-          validateStatus='success'
+          validateStatus="success"
         >
-          <a-input placeholder='唯一识别码' v-model="mdl.id" id='no' disabled="disabled" />
+          <a-input placeholder="唯一识别码" v-model="mdl.id" id="no" disabled="disabled" />
         </a-form-item>
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='权限名称'
+          label="权限名称"
           hasFeedback
-          validateStatus='success'
+          validateStatus="success"
         >
-          <a-input placeholder='起一个名字' v-model="mdl.name" id='permission_name' />
+          <a-input placeholder="起一个名字" v-model="mdl.name" id="permission_name" />
         </a-form-item>
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='状态'
+          label="状态"
           hasFeedback
-          validateStatus='warning'
+          validateStatus="warning"
         >
           <a-select v-model="mdl.status">
-            <a-select-option value='1'>正常</a-select-option>
-            <a-select-option value='2'>禁用</a-select-option>
+            <a-select-option value="1">正常</a-select-option>
+            <a-select-option value="2">禁用</a-select-option>
           </a-select>
         </a-form-item>
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='描述'
+          label="描述"
           hasFeedback
         >
-          <a-textarea :rows="5" v-model="mdl.describe" placeholder="..." id='describe'/>
+          <a-textarea :rows="5" v-model="mdl.describe" placeholder="..." id="describe"/>
         </a-form-item>
 
         <a-divider />
@@ -114,7 +114,7 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='赋予权限'
+          label="赋予权限"
           hasFeedback
         >
           <a-select
