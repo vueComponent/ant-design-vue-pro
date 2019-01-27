@@ -49,6 +49,10 @@ export default {
       type: [Object, Boolean],
       default: null
     },
+    rowSelection: {
+      type: Object,
+      default: () => ({})
+    },
     /** @Deprecated */
     showAlertInfo: {
       type: Boolean,
@@ -97,7 +101,7 @@ export default {
     /**
      * 表格重新加载方法
      * 如果参数为 true, 则强制刷新到第一页
-     * @param Boolean bool 
+     * @param Boolean bool
      */
     refresh(bool = false) {
       this.loadData(bool ? { current: 1 }: {})
@@ -172,12 +176,13 @@ export default {
      */
     updateSelect (selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows
+      this.selectedRowKeys = selectedRowKeys
       const list = this.needTotalList
       this.needTotalList = list.map(item => {
         return {
           ...item,
           total: selectedRows.reduce((sum, val) => {
-            const total = sum + get(val, item.dataIndex)
+            const total = sum + parseInt(get(val, item.dataIndex))
             return isNaN(total) ? 0 : total
           }, 0)
         }
@@ -198,6 +203,7 @@ export default {
      * @returns {*}
      */
     renderClear (callback) {
+      if (this.selectedRowKeys.length <= 0) return null
       return (
         <a style="margin-left: 24px" onClick={() => {
           callback()
@@ -236,7 +242,7 @@ export default {
   render () {
     const props = {}
     const localKeys = Object.keys(this.$data)
-    const showAlert = (typeof this.alert === 'object' && this.alert !== null && this.alert.show) || this.alert
+    const showAlert = (typeof this.alert === 'object' && this.alert !== null && this.alert.show) && typeof this.rowSelection.selectedRowKeys !== 'undefined' || this.alert
 
     Object.keys(T.props).forEach(k => {
       const localKey = `local${k.substring(0, 1).toUpperCase()}${k.substring(1)}`
@@ -246,10 +252,11 @@ export default {
       if (showAlert && k === 'rowSelection') {
         // 重新绑定 rowSelection 事件
         return props[k] = {
-          selectedRowKeys: this[k].selectedRowKeys,
+          selectedRows: this.selectedRows,
+          selectedRowKeys: this.selectedRowKeys,
           onChange: (selectedRowKeys, selectedRows) => {
             this.updateSelect(selectedRowKeys, selectedRows)
-            this[k].onChange(selectedRowKeys, selectedRows)
+            typeof this[k].onChange !== 'undefined' && this[k].onChange(selectedRowKeys, selectedRows)
           }
         }
       }

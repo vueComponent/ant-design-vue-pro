@@ -2,7 +2,7 @@
   <a-card :bordered="false">
     <a-row :gutter="8">
       <a-col :span="5">
-        <s-tree :dataSource="orgTree" :search="true" @click="handleClick" @add="handleAdd" @titleClick="handleTitleClick"></s-tree>
+        <s-tree :dataSource="orgTree" :openKeys.sync="openKeys" :search="true" @click="handleClick" @add="handleAdd" @titleClick="handleTitleClick"></s-tree>
       </a-col>
       <a-col :span="19">
         <s-table
@@ -58,7 +58,7 @@ export default {
   },
   data () {
     return {
-      openKeys: ['sub1'],
+      openKeys: ['key-01'],
 
       // 查询参数
       queryParam: {},
@@ -102,7 +102,7 @@ export default {
           .then(res => {
             return res.result
           })
-          
+
       },
       orgTree: [],
       selectedRowKeys: [],

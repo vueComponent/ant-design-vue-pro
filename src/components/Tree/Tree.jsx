@@ -10,14 +10,21 @@ export default {
       type: Array,
       required: true
     },
+    openKeys: {
+      type: Array,
+      default: () => []
+    },
     search: {
       type: Boolean,
       default: false
     }
   },
+  created () {
+    this.localOpenKeys = this.openKeys.slice(0)
+  },
   data () {
     return {
-      openKeys: []
+      localOpenKeys: []
     }
   },
   methods: {
@@ -99,7 +106,8 @@ export default {
   },
   render () {
     const { dataSource, search } = this.$props
-    
+
+    // this.localOpenKeys = openKeys.slice(0)
     const list = dataSource.map(item => {
       return this.renderItem(item)
     })
@@ -107,7 +115,7 @@ export default {
     return (
       <div class="tree-wrapper">
         { search ? this.renderSearch() : null }
-        <Menu mode="inline" class="custom-tree" {...{ on: { click: item =>  this.$emit('click', item) } }}>
+        <Menu mode="inline" class="custom-tree" {...{ on: { click: item =>  this.$emit('click', item), 'update:openKeys': val => { this.localOpenKeys = val } }}} openKeys={this.localOpenKeys}>
           { list }
         </Menu>
       </div>
