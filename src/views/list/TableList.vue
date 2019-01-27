@@ -210,7 +210,7 @@
         mdl: {},
 
         // 高级搜索 展开/关闭
-        advanced: true,
+        advanced: false,
         // 查询参数
         queryParam: {},
         // 表头

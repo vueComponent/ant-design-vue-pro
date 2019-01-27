@@ -76,7 +76,7 @@
       },
       tabs: {
         type: Object,
-        default: () => {}
+        default: () => ({})
       }
     },
     methods: {

@@ -80,8 +80,7 @@
       size="default"
       :columns="columns"
       :data="loadData"
-      :showAlertInfo="true"
-      @onSelect="onChange"
+      :alert="{ show: true, clear: true }"
     >
       <template v-for="(col, index) in columns" v-if="col.scopedSlots" :slot="col.dataIndex" slot-scope="text, record, index">
         <div :key="index">
@@ -89,7 +88,7 @@
             v-if="record.editable"
             style="margin: -5px 0"
             :value="text"
-            @change="e => handleChange(e.target.value, record.key, col)"
+            @change="e => handleChange(e.target.value, record.key, col, record)"
           />
           <template v-else>{{ text }}</template>
         </div>
@@ -160,7 +159,7 @@
           {
             title: '更新时间',
             dataIndex: 'updatedAt',
-            width: '150px',
+            width: '200px',
             sorter: true,
             scopedSlots: { customRender: 'updatedAt' },
           },
@@ -186,19 +185,19 @@
     },
     methods: {
 
-      handleChange (value, key, column) {
+      handleChange (value, key, column, record) {
         console.log(value, key, column)
+        record[column.dataIndex] = value
       },
       edit (row) {
         row.editable = true
         // row = Object.assign({}, row)
-        this.$refs.table.updateEdit()
       },
       // eslint-disable-next-line
       del (row) {
         this.$confirm({
           title: '警告',
-          content: '真的要删除吗?',
+          content: `真的要删除 ${row.no} 吗?`,
           okText: '删除',
           okType: 'danger',
           cancelText: '取消',
@@ -215,12 +214,10 @@
         })
       },
       save (row) {
-        delete row.editable
-        this.$refs.table.updateEdit()
+        row.editable = false
       },
       cancel (row) {
-        delete row.editable
-        this.$refs.table.updateEdit()
+        row.editable = false
       },
 
       onChange (row) {

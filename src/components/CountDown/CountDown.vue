@@ -23,8 +23,7 @@
       },
       onEnd: {
         type: Function,
-        default: () => {
-        }
+        default: () => ({})
       }
     },
     data() {
