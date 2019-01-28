@@ -181,113 +181,113 @@
 </template>
 
 <script>
-  import STable from '@/components/table/'
-  import ATextarea from 'ant-design-vue/es/input/TextArea'
-  import AInput from 'ant-design-vue/es/input/Input'
-  import moment from 'moment'
+import STable from '@/components/table/'
+import ATextarea from 'ant-design-vue/es/input/TextArea'
+import AInput from 'ant-design-vue/es/input/Input'
+import moment from 'moment'
 
-  import { getRoleList, getServiceList } from '@/api/manage'
+import { getRoleList, getServiceList } from '@/api/manage'
 
-  export default {
-    name: 'TableList',
-    components: {
-      AInput,
-      ATextarea,
-      STable
-    },
-    data () {
-      return {
-        visible: false,
-        labelCol: {
-          xs: { span: 24 },
-          sm: { span: 5 },
+export default {
+  name: 'TableList',
+  components: {
+    AInput,
+    ATextarea,
+    STable
+  },
+  data () {
+    return {
+      visible: false,
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 5 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 12 }
+      },
+      form: null,
+      mdl: {},
+
+      // 高级搜索 展开/关闭
+      advanced: false,
+      // 查询参数
+      queryParam: {},
+      // 表头
+      columns: [
+        {
+          title: '规则编号',
+          dataIndex: 'no'
         },
-        wrapperCol: {
-          xs: { span: 24 },
-          sm: { span: 12 },
+        {
+          title: '描述',
+          dataIndex: 'description'
         },
-        form: null,
-        mdl: {},
-
-        // 高级搜索 展开/关闭
-        advanced: false,
-        // 查询参数
-        queryParam: {},
-        // 表头
-        columns: [
-          {
-            title: '规则编号',
-            dataIndex: 'no'
-          },
-          {
-            title: '描述',
-            dataIndex: 'description'
-          },
-          {
-            title: '服务调用次数',
-            dataIndex: 'callNo',
-            sorter: true,
-            needTotal: true,
-            customRender: (text) => text + ' 次'
-          },
-          {
-            title: '状态',
-            dataIndex: 'status',
-            needTotal: true
-          },
-          {
-            title: '更新时间',
-            dataIndex: 'updatedAt',
-            sorter: true
-          },
-          {
-            table: '操作',
-            dataIndex: 'action',
-            width: '150px',
-            scopedSlots: { customRender: 'action' },
-          }
-        ],
-        // 加载数据方法 必须为 Promise 对象
-        loadData: parameter => {
-          return getServiceList(Object.assign(parameter, this.queryParam))
-            .then(res => {
-              return res.result
-            })
+        {
+          title: '服务调用次数',
+          dataIndex: 'callNo',
+          sorter: true,
+          needTotal: true,
+          customRender: (text) => text + ' 次'
         },
-
-        selectedRowKeys: [],
-        selectedRows: []
-      }
-    },
-    created () {
-      getRoleList({ t: new Date()})
-    },
-    methods: {
-      handleEdit (record) {
-        this.mdl = Object.assign({}, record)
-        console.log(this.mdl)
-        this.visible = true
-      },
-      handleOk () {
-
-      },
-
-      onSelectChange (selectedRowKeys, selectedRows) {
-        this.selectedRowKeys = selectedRowKeys
-        this.selectedRows = selectedRows
-      },
-      toggleAdvanced () {
-        this.advanced = !this.advanced
-      },
-
-      resetSearchForm () {
-        this.queryParam = {
-          date: moment(new Date())
+        {
+          title: '状态',
+          dataIndex: 'status',
+          needTotal: true
+        },
+        {
+          title: '更新时间',
+          dataIndex: 'updatedAt',
+          sorter: true
+        },
+        {
+          table: '操作',
+          dataIndex: 'action',
+          width: '150px',
+          scopedSlots: { customRender: 'action' }
         }
-      }
+      ],
+      // 加载数据方法 必须为 Promise 对象
+      loadData: parameter => {
+        return getServiceList(Object.assign(parameter, this.queryParam))
+          .then(res => {
+            return res.result
+          })
+      },
+
+      selectedRowKeys: [],
+      selectedRows: []
+    }
+  },
+  created () {
+    getRoleList({ t: new Date() })
+  },
+  methods: {
+    handleEdit (record) {
+      this.mdl = Object.assign({}, record)
+      console.log(this.mdl)
+      this.visible = true
     },
-    watch: {
-      /*
+    handleOk () {
+
+    },
+
+    onSelectChange (selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys
+      this.selectedRows = selectedRows
+    },
+    toggleAdvanced () {
+      this.advanced = !this.advanced
+    },
+
+    resetSearchForm () {
+      this.queryParam = {
+        date: moment(new Date())
+      }
+    }
+  },
+  watch: {
+    /*
       'selectedRows': function (selectedRows) {
         this.needTotalList = this.needTotalList.map(item => {
           return {
@@ -299,6 +299,6 @@
         })
       }
       */
-    }
   }
+}
 </script>

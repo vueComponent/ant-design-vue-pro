@@ -18,33 +18,33 @@
 </template>
 
 <script>
-  export default {
-    name: 'HeaderNotice',
-    props: {
-      tabs: {
-        type: Array,
-        default: null,
-        required: true
+export default {
+  name: 'HeaderNotice',
+  props: {
+    tabs: {
+      type: Array,
+      default: null,
+      required: true
+    }
+  },
+  data () {
+    return {
+      loadding: false
+    }
+  },
+  methods: {
+    fetchNotice () {
+      if (this.loadding) {
+        this.loadding = false
+        return
       }
-    },
-    data () {
-      return {
-        loadding: false
-      }
-    },
-    methods: {
-      fetchNotice () {
-        if (this.loadding) {
-          this.loadding = false
-          return
-        }
-        this.loadding = true
-        setTimeout(() => {
-          this.loadding = false
-        }, 2000)
-      }
+      this.loadding = true
+      setTimeout(() => {
+        this.loadding = false
+      }, 2000)
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

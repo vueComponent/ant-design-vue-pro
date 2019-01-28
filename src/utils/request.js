@@ -16,7 +16,7 @@ const err = (error) => {
     const data = error.response.data
     const token = Vue.ls.get(ACCESS_TOKEN)
     if (error.response.status === 403) {
-      notification.error({ message: 'Forbidden', description: data.message})
+      notification.error({ message: 'Forbidden', description: data.message })
     }
     if (error.response.status === 401) {
       notification.error({ message: 'Unauthorized', description: 'Authorization verification failed' })
@@ -43,8 +43,8 @@ service.interceptors.request.use(config => {
 
 // response interceptor
 service.interceptors.response.use((response) => {
-    return response.data
-  }, err)
+  return response.data
+}, err)
 
 const installer = {
   vm: {},

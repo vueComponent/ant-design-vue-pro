@@ -115,7 +115,7 @@ export default {
     return (
       <div class="tree-wrapper">
         { search ? this.renderSearch() : null }
-        <Menu mode="inline" class="custom-tree" {...{ on: { click: item =>  this.$emit('click', item), 'update:openKeys': val => { this.localOpenKeys = val } }}} openKeys={this.localOpenKeys}>
+        <Menu mode="inline" class="custom-tree" {...{ on: { click: item => this.$emit('click', item), 'update:openKeys': val => { this.localOpenKeys = val } } }} openKeys={this.localOpenKeys}>
           { list }
         </Menu>
       </div>

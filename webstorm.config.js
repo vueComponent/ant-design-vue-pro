@@ -6,15 +6,15 @@ function resolve (dir) {
 }
 
 module.exports = {
-    context: path.resolve(__dirname, './'),
-    resolve: {
-        extensions: ['.js', '.vue', '.json'],
-        alias: {
-            '@': resolve('src'),
-            '@views': resolve('src/views'),
-            '@comp': resolve('src/components'),
-            '@core': resolve('src/core'),
-            '@utils': resolve('src/utils')
-        }
-    },
+  context: path.resolve(__dirname, './'),
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': resolve('src'),
+      '@views': resolve('src/views'),
+      '@comp': resolve('src/components'),
+      '@core': resolve('src/core'),
+      '@utils': resolve('src/utils')
+    }
+  }
 }

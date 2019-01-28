@@ -134,128 +134,128 @@
 </template>
 
 <script>
-  import STable from '@/components/table/'
+import STable from '@/components/table/'
 
-  export default {
-    name: 'TableList',
-    components: {
-      STable
-    },
-    data () {
-      return {
-        description: '列表使用场景：后台管理中的权限管理以及角色管理，可用于基于 RBAC 设计的角色权限控制，颗粒度细到每一个操作类型。',
+export default {
+  name: 'TableList',
+  components: {
+    STable
+  },
+  data () {
+    return {
+      description: '列表使用场景：后台管理中的权限管理以及角色管理，可用于基于 RBAC 设计的角色权限控制，颗粒度细到每一个操作类型。',
 
-        visible: false,
-        labelCol: {
-          xs: { span: 24 },
-          sm: { span: 5 },
+      visible: false,
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 5 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 }
+      },
+      form: null,
+      mdl: {},
+
+      // 高级搜索 展开/关闭
+      advanced: false,
+      // 查询参数
+      queryParam: {},
+      // 表头
+      columns: [
+        {
+          title: '唯一识别码',
+          dataIndex: 'id'
         },
-        wrapperCol: {
-          xs: { span: 24 },
-          sm: { span: 16 },
+        {
+          title: '权限名称',
+          dataIndex: 'name'
         },
-        form: null,
-        mdl: {},
-
-        // 高级搜索 展开/关闭
-        advanced: false,
-        // 查询参数
-        queryParam: {},
-        // 表头
-        columns: [
-          {
-            title: '唯一识别码',
-            dataIndex: 'id'
-          },
-          {
-            title: '权限名称',
-            dataIndex: 'name',
-          },
-          {
-            title: '可操作权限',
-            dataIndex: 'actions',
-            scopedSlots: { customRender: 'actions' },
-          },
-          {
-            title: '状态',
-            dataIndex: 'status',
-            scopedSlots: { customRender: 'status' },
-          },
-          {
-            title: '操作',
-            width: '150px',
-            dataIndex: 'action',
-            scopedSlots: { customRender: 'action' },
-          }
-        ],
-        // 向后端拉取可以用的操作列表
-        permissionList: null,
-        // 加载数据方法 必须为 Promise 对象
-        loadData: parameter => {
-          return this.$http.get('/permission', {
-            params: Object.assign(parameter, this.queryParam)
-          }).then(res => {
-            const result = res.result
-            result.data.map(permission => {
-                permission.actionList = JSON.parse(permission.actionData)
-                return permission
-              })
-            return result
-          })
+        {
+          title: '可操作权限',
+          dataIndex: 'actions',
+          scopedSlots: { customRender: 'actions' }
         },
-
-        selectedRowKeys: [],
-        selectedRows: []
-      }
-    },
-    filters: {
-      statusFilter(status) {
-        const statusMap = {
-          1: '正常',
-          2: '禁用'
+        {
+          title: '状态',
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'status' }
+        },
+        {
+          title: '操作',
+          width: '150px',
+          dataIndex: 'action',
+          scopedSlots: { customRender: 'action' }
         }
-        return statusMap[status]
-      }
-    },
-    created () {
-      this.loadPermissionList()
-    },
-    methods: {
-      loadPermissionList () {
-        // permissionList
-        new Promise((resolve => {
-          const data = [
-            { label: '新增', value: 'add', defaultChecked: false },
-            { label: '查询', value: 'get', defaultChecked: false },
-            { label: '修改', value: 'update', defaultChecked: false },
-            { label: '列表', value: 'query', defaultChecked: false },
-            { label: '删除', value: 'delete', defaultChecked: false },
-            { label: '导入', value: 'import', defaultChecked: false },
-            { label: '导出', value: 'export', defaultChecked: false }
-          ]
-          setTimeout(resolve(data), 1500)
-        })).then(res => {
-          this.permissionList = res
+      ],
+      // 向后端拉取可以用的操作列表
+      permissionList: null,
+      // 加载数据方法 必须为 Promise 对象
+      loadData: parameter => {
+        return this.$http.get('/permission', {
+          params: Object.assign(parameter, this.queryParam)
+        }).then(res => {
+          const result = res.result
+          result.data.map(permission => {
+            permission.actionList = JSON.parse(permission.actionData)
+            return permission
+          })
+          return result
         })
       },
-      handleEdit (record) {
-        this.mdl = Object.assign({}, record)
-        console.log(this.mdl)
-        this.visible = true
-      },
-      handleOk () {
 
-      },
-      onChange (selectedRowKeys, selectedRows) {
-        this.selectedRowKeys = selectedRowKeys
-        this.selectedRows = selectedRows
-      },
-      toggleAdvanced () {
-        this.advanced = !this.advanced
-      },
+      selectedRowKeys: [],
+      selectedRows: []
+    }
+  },
+  filters: {
+    statusFilter (status) {
+      const statusMap = {
+        1: '正常',
+        2: '禁用'
+      }
+      return statusMap[status]
+    }
+  },
+  created () {
+    this.loadPermissionList()
+  },
+  methods: {
+    loadPermissionList () {
+      // permissionList
+      new Promise(resolve => {
+        const data = [
+          { label: '新增', value: 'add', defaultChecked: false },
+          { label: '查询', value: 'get', defaultChecked: false },
+          { label: '修改', value: 'update', defaultChecked: false },
+          { label: '列表', value: 'query', defaultChecked: false },
+          { label: '删除', value: 'delete', defaultChecked: false },
+          { label: '导入', value: 'import', defaultChecked: false },
+          { label: '导出', value: 'export', defaultChecked: false }
+        ]
+        setTimeout(resolve(data), 1500)
+      }).then(res => {
+        this.permissionList = res
+      })
     },
-    watch: {
-      /*
+    handleEdit (record) {
+      this.mdl = Object.assign({}, record)
+      console.log(this.mdl)
+      this.visible = true
+    },
+    handleOk () {
+
+    },
+    onChange (selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys
+      this.selectedRows = selectedRows
+    },
+    toggleAdvanced () {
+      this.advanced = !this.advanced
+    }
+  },
+  watch: {
+    /*
       'selectedRows': function (selectedRows) {
         this.needTotalList = this.needTotalList.map(item => {
           return {
@@ -267,6 +267,6 @@
         })
       }
       */
-    }
   }
+}
 </script>

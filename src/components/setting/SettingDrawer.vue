@@ -162,62 +162,62 @@
 </template>
 
 <script>
-  import DetailList from '@/components/tools/DetailList'
-  import SettingItem from '@/components/setting/SettingItem'
-  import config from '@/config/defaultSettings'
-  import { updateTheme, updateColorWeak, colorList } from '@/components/tools/setting'
-  import { mixin, mixinDevice } from '@/utils/mixin'
+import DetailList from '@/components/tools/DetailList'
+import SettingItem from '@/components/setting/SettingItem'
+import config from '@/config/defaultSettings'
+import { updateTheme, updateColorWeak, colorList } from '@/components/tools/setting'
+import { mixin, mixinDevice } from '@/utils/mixin'
 
-  export default {
-    components: {
-      DetailList,
-      SettingItem
-    },
-    mixins: [mixin, mixinDevice],
-    data() {
-      return {
-        visible: true,
-        colorList,
-        baseConfig: Object.assign({}, config)
-      }
-    },
-    watch: {
+export default {
+  components: {
+    DetailList,
+    SettingItem
+  },
+  mixins: [mixin, mixinDevice],
+  data () {
+    return {
+      visible: true,
+      colorList,
+      baseConfig: Object.assign({}, config)
+    }
+  },
+  watch: {
 
+  },
+  mounted () {
+    const vm = this
+    setTimeout(() => {
+      vm.visible = false
+    }, 16)
+    // 当主题色不是默认色时，才进行主题编译
+    if (this.primaryColor !== config.primaryColor) {
+      updateTheme(this.primaryColor)
+    }
+    if (this.colorWeak !== config.colorWeak) {
+      updateColorWeak(this.colorWeak)
+    }
+  },
+  methods: {
+    showDrawer () {
+      this.visible = true
     },
-    mounted () {
-      const vm = this
-      setTimeout(() => {
-        vm.visible = false
-      }, 16)
-      // 当主题色不是默认色时，才进行主题编译
-      if (this.primaryColor !== config.primaryColor) {
-        updateTheme(this.primaryColor)
-      }
-      if (this.colorWeak !== config.colorWeak) {
-        updateColorWeak(this.colorWeak)
-      }
+    onClose () {
+      this.visible = false
     },
-    methods: {
-      showDrawer() {
-        this.visible = true
-      },
-      onClose() {
-        this.visible = false
-      },
-      toggle() {
-        this.visible = !this.visible
-      },
-      onColorWeak (checked) {
-        this.baseConfig.colorWeak = checked
-        this.$store.dispatch('ToggleWeak', checked)
-        updateColorWeak(checked)
-      },
-      handleMenuTheme (theme) {
-        this.baseConfig.navTheme = theme
-        this.$store.dispatch('ToggleTheme', theme)
-      },
-      doCopy () {
-        const text = `export default {
+    toggle () {
+      this.visible = !this.visible
+    },
+    onColorWeak (checked) {
+      this.baseConfig.colorWeak = checked
+      this.$store.dispatch('ToggleWeak', checked)
+      updateColorWeak(checked)
+    },
+    handleMenuTheme (theme) {
+      this.baseConfig.navTheme = theme
+      this.$store.dispatch('ToggleTheme', theme)
+    },
+    doCopy () {
+      const text = `export default {
   primaryColor: '${this.baseConfig.primaryColor}', // primary color of ant design
   navTheme: '${this.baseConfig.navTheme}', // theme for nav menu
   layout: '${this.baseConfig.layout}', // nav menu position: sidemenu or topmenu
@@ -233,51 +233,51 @@
     storage: 'local',
   }
 }`
-        this.$copyText(text).then(message => {
-          console.log('copy', message)
-          this.$message.success('复制完毕')
-        }).catch(err => {
-          console.log('copy.err', err)
-          this.$message.error('复制失败')
-        })
-      },
-      handleLayout (mode) {
-        this.baseConfig.layout = mode
-        this.$store.dispatch('ToggleLayoutMode', mode)
-        // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
-        //
-        this.handleFixSiderbar(false)
-      },
-      handleContentWidthChange (type) {
-        this.baseConfig.contentWidth = type
-        this.$store.dispatch('ToggleContentWidth', type)
-      },
-      changeColor (color) {
-        this.baseConfig.primaryColor = color
-        if (this.primaryColor !== color) {
-          this.$store.dispatch('ToggleColor', color)
-          updateTheme(color)
-        }
-      },
-      handleFixedHeader (fixed) {
-        this.baseConfig.fixedHeader = fixed
-        this.$store.dispatch('ToggleFixedHeader', fixed)
-      },
-      handleFixedHeaderHidden (autoHidden) {
-        this.baseConfig.autoHideHeader = autoHidden
-        this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
-      },
-      handleFixSiderbar (fixed) {
-        if (this.layoutMode === 'topmenu') {
-          this.baseConfig.fixSiderbar = false
-          this.$store.dispatch('ToggleFixSiderbar', false)
-          return
-        }
-        this.baseConfig.fixSiderbar = fixed
-        this.$store.dispatch('ToggleFixSiderbar', fixed)
+      this.$copyText(text).then(message => {
+        console.log('copy', message)
+        this.$message.success('复制完毕')
+      }).catch(err => {
+        console.log('copy.err', err)
+        this.$message.error('复制失败')
+      })
+    },
+    handleLayout (mode) {
+      this.baseConfig.layout = mode
+      this.$store.dispatch('ToggleLayoutMode', mode)
+      // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
+      //
+      this.handleFixSiderbar(false)
+    },
+    handleContentWidthChange (type) {
+      this.baseConfig.contentWidth = type
+      this.$store.dispatch('ToggleContentWidth', type)
+    },
+    changeColor (color) {
+      this.baseConfig.primaryColor = color
+      if (this.primaryColor !== color) {
+        this.$store.dispatch('ToggleColor', color)
+        updateTheme(color)
       }
     },
+    handleFixedHeader (fixed) {
+      this.baseConfig.fixedHeader = fixed
+      this.$store.dispatch('ToggleFixedHeader', fixed)
+    },
+    handleFixedHeaderHidden (autoHidden) {
+      this.baseConfig.autoHideHeader = autoHidden
+      this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
+    },
+    handleFixSiderbar (fixed) {
+      if (this.layoutMode === 'topmenu') {
+        this.baseConfig.fixSiderbar = false
+        this.$store.dispatch('ToggleFixSiderbar', false)
+        return
+      }
+      this.baseConfig.fixSiderbar = fixed
+      this.$store.dispatch('ToggleFixSiderbar', fixed)
+    }
   }
+}
 </script>
 
 <style lang="less" scoped>

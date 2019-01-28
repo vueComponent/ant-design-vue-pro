@@ -1,9 +1,9 @@
 <template>
   <a-layout-sider
     :class="['sider', isDesktop() ? null : 'shadow', theme, fixSiderbar ? 'ant-fixed-sidemenu' : null ]"
-    width="256px" 
+    width="256px"
     :collapsible="collapsible"
-    v-model="collapsed" 
+    v-model="collapsed"
     :trigger="null">
     <logo />
     <s-menu
@@ -18,45 +18,45 @@
 </template>
 
 <script>
-  import ALayoutSider from 'ant-design-vue/es/layout/Sider'
-  import Logo from '../tools/Logo'
-  import SMenu from './index'
-  import { mixin, mixinDevice } from '@/utils/mixin.js'
+import ALayoutSider from 'ant-design-vue/es/layout/Sider'
+import Logo from '../tools/Logo'
+import SMenu from './index'
+import { mixin, mixinDevice } from '@/utils/mixin.js'
 
-  export default {
-    name: 'SideMenu',
-    components: { ALayoutSider, Logo, SMenu },
-    mixins: [mixin, mixinDevice],
-    props: {
-      mode: {
-        type: String,
-        required: false,
-        default: 'inline'
-      },
-      theme: {
-        type: String,
-        required: false,
-        default: 'dark'
-      },
-      collapsible: {
-        type: Boolean,
-        required: false,
-        default: false
-      },
-      collapsed: {
-        type: Boolean,
-        required: false,
-        default: false
-      },
-      menus: {
-        type: Array,
-        required: true
-      }
+export default {
+  name: 'SideMenu',
+  components: { ALayoutSider, Logo, SMenu },
+  mixins: [mixin, mixinDevice],
+  props: {
+    mode: {
+      type: String,
+      required: false,
+      default: 'inline'
     },
-    methods: {
-      onSelect (obj) {
-        this.$emit('menuSelect', obj)
-      }
+    theme: {
+      type: String,
+      required: false,
+      default: 'dark'
+    },
+    collapsible: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    collapsed: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    menus: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    onSelect (obj) {
+      this.$emit('menuSelect', obj)
     }
   }
+}
 </script>

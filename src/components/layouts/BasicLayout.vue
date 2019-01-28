@@ -7,19 +7,19 @@
 </template>
 
 <script>
-  import RouteView from '@/components/layouts/RouteView'
-  import GlobalLayout from '@/components/page/GlobalLayout'
+import RouteView from '@/components/layouts/RouteView'
+import GlobalLayout from '@/components/page/GlobalLayout'
 
-  export default {
-    name: 'BasicLayout',
-    components: {
-      RouteView,
-      GlobalLayout
-    },
-    data () {
-      return {}
-    }
+export default {
+  name: 'BasicLayout',
+  components: {
+    RouteView,
+    GlobalLayout
+  },
+  data () {
+    return {}
   }
+}
 </script>
 
 <style lang="less">

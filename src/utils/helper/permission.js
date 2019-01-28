@@ -7,18 +7,17 @@ const PERMISSION_ENUM = {
   'enable': { key: 'enable', label: '启用' },
   'disable': { key: 'disable', label: '禁用' },
   'import': { key: 'import', label: '导入' },
-  'export': { key: 'export', label: '导出' },
+  'export': { key: 'export', label: '导出' }
 }
 
-function plugin(Vue) {
-
+function plugin (Vue) {
   if (plugin.installed) {
     return
   }
 
   !Vue.prototype.$auth && Object.defineProperties(Vue.prototype, {
     $auth: {
-      get() {
+      get () {
         const _this = this
         return (permissions) => {
           const [permission, action] = permissions.split('.')
@@ -36,7 +35,7 @@ function plugin(Vue) {
 
   !Vue.prototype.$enum && Object.defineProperties(Vue.prototype, {
     $enum: {
-      get() {
+      get () {
         // const _this = this;
         return (val) => {
           let result = PERMISSION_ENUM

@@ -62,143 +62,143 @@
 </template>
 
 <script>
-  import RepositoryForm from './RepositoryForm'
-  import TaskForm from './TaskForm'
-  import FooterToolBar from '@/components/FooterToolbar'
-  import { mixin, mixinDevice } from '@/utils/mixin'
+import RepositoryForm from './RepositoryForm'
+import TaskForm from './TaskForm'
+import FooterToolBar from '@/components/FooterToolbar'
+import { mixin, mixinDevice } from '@/utils/mixin'
 
-  export default {
-    name: 'AdvancedForm',
-    mixins: [mixin, mixinDevice],
-    components: {
-      FooterToolBar,
-      RepositoryForm,
-      TaskForm
-    },
-    data () {
-      return {
-        description: '高级表单常见于一次性输入和提交大批量数据的场景。',
-        loading: false,
+export default {
+  name: 'AdvancedForm',
+  mixins: [mixin, mixinDevice],
+  components: {
+    FooterToolBar,
+    RepositoryForm,
+    TaskForm
+  },
+  data () {
+    return {
+      description: '高级表单常见于一次性输入和提交大批量数据的场景。',
+      loading: false,
 
-        // table
-        columns: [
-          {
-            title: '成员姓名',
-            dataIndex: 'name',
-            key: 'name',
-            width: '20%',
-            scopedSlots: { customRender: 'name' }
-          },
-          {
-            title: '工号',
-            dataIndex: 'workId',
-            key: 'workId',
-            width: '20%',
-            scopedSlots: { customRender: 'workId' }
-          },
-          {
-            title: '所属部门',
-            dataIndex: 'department',
-            key: 'department',
-            width: '40%',
-            scopedSlots: { customRender: 'department' }
-          },
-          {
-            title: '操作',
-            key: 'action',
-            scopedSlots: { customRender: 'operation' }
-          }
-        ],
-        data: [
-          {
-            key: '1',
-            name: '小明',
-            workId: '001',
-            editable: false,
-            department: '行政部'
-          },
-          {
-            key: '2',
-            name: '李莉',
-            workId: '002',
-            editable: false,
-            department: 'IT部'
-          },
-          {
-            key: '3',
-            name: '王小帅',
-            workId: '003',
-            editable: false,
-            department: '财务部'
-          }
-        ]
-      }
-    },
-    methods: {
-      handleSubmit (e) {
-        e.preventDefault()
-      },
-      newMember () {
-        this.data.push({
-          key: '-1',
-          name: '',
-          workId: '',
-          department: '',
-          editable: true,
-          isNew: true
-        })
-      },
-      remove (key) {
-        const newData = this.data.filter(item => item.key !== key)
-        this.data = newData
-      },
-      saveRow (key) {
-        const target = this.data.filter(item => item.key === key)[0]
-        target.editable = false
-        target.isNew = false
-      },
-      toggle (key) {
-        const target = this.data.filter(item => item.key === key)[0]
-        target.editable = !target.editable
-      },
-      getRowByKey (key, newData) {
-        const data = this.data
-        return (newData || data).filter(item => item.key === key)[0]
-      },
-      cancel (key) {
-        const target = this.data.filter(item => item.key === key)[0]
-        target.editable = false
-      },
-      handleChange (value, key, column) {
-        const newData = [...this.data]
-        const target = newData.filter(item => key === item.key)[0]
-        if (target) {
-          target[column] = value
-          this.data = newData
+      // table
+      columns: [
+        {
+          title: '成员姓名',
+          dataIndex: 'name',
+          key: 'name',
+          width: '20%',
+          scopedSlots: { customRender: 'name' }
+        },
+        {
+          title: '工号',
+          dataIndex: 'workId',
+          key: 'workId',
+          width: '20%',
+          scopedSlots: { customRender: 'workId' }
+        },
+        {
+          title: '所属部门',
+          dataIndex: 'department',
+          key: 'department',
+          width: '40%',
+          scopedSlots: { customRender: 'department' }
+        },
+        {
+          title: '操作',
+          key: 'action',
+          scopedSlots: { customRender: 'operation' }
         }
-      },
-
-      // 最终全页面提交
-      validate () {
-        this.$refs.repository.form.validateFields((err, values) => {
-          if (!err) {
-            this.$notification['error']({
-              message: 'Received values of form:',
-              description: values
-            })
-          }
-        })
-        this.$refs.task.form.validateFields((err, values) => {
-          if (!err) {
-            this.$notification['error']({
-              message: 'Received values of form:',
-              description: values
-            })
-          }
-        })
+      ],
+      data: [
+        {
+          key: '1',
+          name: '小明',
+          workId: '001',
+          editable: false,
+          department: '行政部'
+        },
+        {
+          key: '2',
+          name: '李莉',
+          workId: '002',
+          editable: false,
+          department: 'IT部'
+        },
+        {
+          key: '3',
+          name: '王小帅',
+          workId: '003',
+          editable: false,
+          department: '财务部'
+        }
+      ]
+    }
+  },
+  methods: {
+    handleSubmit (e) {
+      e.preventDefault()
+    },
+    newMember () {
+      this.data.push({
+        key: '-1',
+        name: '',
+        workId: '',
+        department: '',
+        editable: true,
+        isNew: true
+      })
+    },
+    remove (key) {
+      const newData = this.data.filter(item => item.key !== key)
+      this.data = newData
+    },
+    saveRow (key) {
+      const target = this.data.filter(item => item.key === key)[0]
+      target.editable = false
+      target.isNew = false
+    },
+    toggle (key) {
+      const target = this.data.filter(item => item.key === key)[0]
+      target.editable = !target.editable
+    },
+    getRowByKey (key, newData) {
+      const data = this.data
+      return (newData || data).filter(item => item.key === key)[0]
+    },
+    cancel (key) {
+      const target = this.data.filter(item => item.key === key)[0]
+      target.editable = false
+    },
+    handleChange (value, key, column) {
+      const newData = [...this.data]
+      const target = newData.filter(item => key === item.key)[0]
+      if (target) {
+        target[column] = value
+        this.data = newData
       }
+    },
+
+    // 最终全页面提交
+    validate () {
+      this.$refs.repository.form.validateFields((err, values) => {
+        if (!err) {
+          this.$notification['error']({
+            message: 'Received values of form:',
+            description: values
+          })
+        }
+      })
+      this.$refs.task.form.validateFields((err, values) => {
+        if (!err) {
+          this.$notification['error']({
+            message: 'Received values of form:',
+            description: values
+          })
+        }
+      })
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

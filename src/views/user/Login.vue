@@ -125,7 +125,7 @@ export default {
   components: {
     TwoStepCaptcha
   },
-  data() {
+  data () {
     return {
       customActiveKey: 'tab1',
       loginBtn: false,
@@ -143,7 +143,7 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     get2step({ })
       .then(res => {
         this.requiredTwoStepCaptcha = res.result.stepCode
@@ -156,7 +156,7 @@ export default {
   methods: {
     ...mapActions(['Login', 'Logout']),
     // handler
-    handleUsernameOrEmail(rule, value, callback) {
+    handleUsernameOrEmail (rule, value, callback) {
       const { state } = this
       const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
       if (regex.test(value)) {
@@ -166,11 +166,11 @@ export default {
       }
       callback()
     },
-    handleTabClick(key) {
+    handleTabClick (key) {
       this.customActiveKey = key
       // this.form.resetFields()
     },
-    handleSubmit(e) {
+    handleSubmit (e) {
       e.preventDefault()
       const {
         form: { validateFields },
@@ -186,7 +186,7 @@ export default {
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         if (!err) {
           console.log('login form', values)
-          const loginParams = {...values}
+          const loginParams = { ...values }
           delete loginParams.username
           loginParams[!state.loginType ? 'email' : 'username'] = values.username
           loginParams.password = md5(values.password)
@@ -203,7 +203,7 @@ export default {
         }
       })
     },
-    getCaptcha(e) {
+    getCaptcha (e) {
       e.preventDefault()
       const { form: { validateFields }, state } = this
 
@@ -237,16 +237,16 @@ export default {
         }
       })
     },
-    stepCaptchaSuccess() {
+    stepCaptchaSuccess () {
       this.loginSuccess()
     },
-    stepCaptchaCancel() {
+    stepCaptchaCancel () {
       this.Logout().then(() => {
         this.loginBtn = false
         this.stepCaptchaVisible = false
       })
     },
-    loginSuccess(res) {
+    loginSuccess (res) {
       console.log(res)
       this.$router.push({ name: 'dashboard' })
       // 延迟 1 秒显示欢迎信息
@@ -257,7 +257,7 @@ export default {
         })
       }, 1000)
     },
-    requestFailed(err) {
+    requestFailed (err) {
       this.$notification['error']({
         message: '错误',
         description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',

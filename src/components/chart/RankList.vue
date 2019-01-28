@@ -12,20 +12,20 @@
 </template>
 
 <script>
-  export default {
-    name: 'RankList',
-    // ['title', 'list']
-    props: {
-      title: {
-        type: String,
-        default: ''
-      },
-      list: {
-        type: Array,
-        default: null
-      }
+export default {
+  name: 'RankList',
+  // ['title', 'list']
+  props: {
+    title: {
+      type: String,
+      default: ''
+    },
+    list: {
+      type: Array,
+      default: null
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

@@ -133,171 +133,171 @@
 </template>
 
 <script>
-  import { mixinDevice } from '@/utils/mixin.js'
-  import PageLayout from '@/components/page/PageLayout'
-  import DetailList from '@/components/tools/DetailList'
+import { mixinDevice } from '@/utils/mixin.js'
+import PageLayout from '@/components/page/PageLayout'
+import DetailList from '@/components/tools/DetailList'
 
-  const DetailListItem = DetailList.Item
+const DetailListItem = DetailList.Item
 
-  export default {
-    name: 'Advanced',
-    components: {
-      PageLayout,
-      DetailList,
-      DetailListItem
-    },
-    mixins: [mixinDevice],
-    data () {
-      return {
-        tabList: [
-          {
-            key: '1',
-            tab: '操作日志一'
-          },
-          {
-            key: '2',
-            tab: '操作日志二'
-          },
-          {
-            key: '3',
-            tab: '操作日志三'
-          }
-        ],
-        activeTabKey: '1',
-
-        operationColumns: [
-          {
-            title: '操作类型',
-            dataIndex: 'type',
-            key: 'type'
-          },
-          {
-            title: '操作人',
-            dataIndex: 'name',
-            key: 'name'
-          },
-          {
-            title: '执行结果',
-            dataIndex: 'status',
-            key: 'status',
-            scopedSlots: { customRender: 'status' },
-          },
-          {
-            title: '操作时间',
-            dataIndex: 'updatedAt',
-            key: 'updatedAt'
-          },
-          {
-            title: '备注',
-            dataIndex: 'remark',
-            key: 'remark'
-          }
-        ],
-        operation1: [
-          {
-            key: 'op1',
-            type: '订购关系生效',
-            name: '曲丽丽',
-            status: 'agree',
-            updatedAt: '2017-10-03  19:23:12',
-            remark: '-'
-          },
-          {
-            key: 'op2',
-            type: '财务复审',
-            name: '付小小',
-            status: 'reject',
-            updatedAt: '2017-10-03  19:23:12',
-            remark: '不通过原因'
-          },
-          {
-            key: 'op3',
-            type: '部门初审',
-            name: '周毛毛',
-            status: 'agree',
-            updatedAt: '2017-10-03  19:23:12',
-            remark: '-'
-          },
-          {
-            key: 'op4',
-            type: '提交订单',
-            name: '林东东',
-            status: 'agree',
-            updatedAt: '2017-10-03  19:23:12',
-            remark: '很棒'
-          },
-          {
-            key: 'op5',
-            type: '创建订单',
-            name: '汗牙牙',
-            status: 'agree',
-            updatedAt: '2017-10-03  19:23:12',
-            remark: '-'
-          }
-        ],
-        operation2: [
-          {
-            key: 'op2',
-            type: '财务复审',
-            name: '付小小',
-            status: 'reject',
-            updatedAt: '2017-10-03  19:23:12',
-            remark: '不通过原因'
-          },
-          {
-            key: 'op3',
-            type: '部门初审',
-            name: '周毛毛',
-            status: 'agree',
-            updatedAt: '2017-10-03  19:23:12',
-            remark: '-'
-          },
-          {
-            key: 'op4',
-            type: '提交订单',
-            name: '林东东',
-            status: 'agree',
-            updatedAt: '2017-10-03  19:23:12',
-            remark: '很棒'
-          }
-        ],
-        operation3: [
-          {
-            key: 'op2',
-            type: '财务复审',
-            name: '付小小',
-            status: 'reject',
-            updatedAt: '2017-10-03  19:23:12',
-            remark: '不通过原因'
-          },
-          {
-            key: 'op3',
-            type: '部门初审',
-            name: '周毛毛',
-            status: 'agree',
-            updatedAt: '2017-10-03  19:23:12',
-            remark: '-'
-          }
-        ],
-      }
-    },
-    filters: {
-      statusFilter(status) {
-        const statusMap = {
-          'agree': '成功',
-          'reject': '驳回'
+export default {
+  name: 'Advanced',
+  components: {
+    PageLayout,
+    DetailList,
+    DetailListItem
+  },
+  mixins: [mixinDevice],
+  data () {
+    return {
+      tabList: [
+        {
+          key: '1',
+          tab: '操作日志一'
+        },
+        {
+          key: '2',
+          tab: '操作日志二'
+        },
+        {
+          key: '3',
+          tab: '操作日志三'
         }
-        return statusMap[status]
-      },
-      statusTypeFilter(type) {
-        const statusTypeMap = {
-          'agree': 'success',
-          'reject': 'error'
+      ],
+      activeTabKey: '1',
+
+      operationColumns: [
+        {
+          title: '操作类型',
+          dataIndex: 'type',
+          key: 'type'
+        },
+        {
+          title: '操作人',
+          dataIndex: 'name',
+          key: 'name'
+        },
+        {
+          title: '执行结果',
+          dataIndex: 'status',
+          key: 'status',
+          scopedSlots: { customRender: 'status' }
+        },
+        {
+          title: '操作时间',
+          dataIndex: 'updatedAt',
+          key: 'updatedAt'
+        },
+        {
+          title: '备注',
+          dataIndex: 'remark',
+          key: 'remark'
         }
-        return statusTypeMap[type]
+      ],
+      operation1: [
+        {
+          key: 'op1',
+          type: '订购关系生效',
+          name: '曲丽丽',
+          status: 'agree',
+          updatedAt: '2017-10-03  19:23:12',
+          remark: '-'
+        },
+        {
+          key: 'op2',
+          type: '财务复审',
+          name: '付小小',
+          status: 'reject',
+          updatedAt: '2017-10-03  19:23:12',
+          remark: '不通过原因'
+        },
+        {
+          key: 'op3',
+          type: '部门初审',
+          name: '周毛毛',
+          status: 'agree',
+          updatedAt: '2017-10-03  19:23:12',
+          remark: '-'
+        },
+        {
+          key: 'op4',
+          type: '提交订单',
+          name: '林东东',
+          status: 'agree',
+          updatedAt: '2017-10-03  19:23:12',
+          remark: '很棒'
+        },
+        {
+          key: 'op5',
+          type: '创建订单',
+          name: '汗牙牙',
+          status: 'agree',
+          updatedAt: '2017-10-03  19:23:12',
+          remark: '-'
+        }
+      ],
+      operation2: [
+        {
+          key: 'op2',
+          type: '财务复审',
+          name: '付小小',
+          status: 'reject',
+          updatedAt: '2017-10-03  19:23:12',
+          remark: '不通过原因'
+        },
+        {
+          key: 'op3',
+          type: '部门初审',
+          name: '周毛毛',
+          status: 'agree',
+          updatedAt: '2017-10-03  19:23:12',
+          remark: '-'
+        },
+        {
+          key: 'op4',
+          type: '提交订单',
+          name: '林东东',
+          status: 'agree',
+          updatedAt: '2017-10-03  19:23:12',
+          remark: '很棒'
+        }
+      ],
+      operation3: [
+        {
+          key: 'op2',
+          type: '财务复审',
+          name: '付小小',
+          status: 'reject',
+          updatedAt: '2017-10-03  19:23:12',
+          remark: '不通过原因'
+        },
+        {
+          key: 'op3',
+          type: '部门初审',
+          name: '周毛毛',
+          status: 'agree',
+          updatedAt: '2017-10-03  19:23:12',
+          remark: '-'
+        }
+      ]
+    }
+  },
+  filters: {
+    statusFilter (status) {
+      const statusMap = {
+        'agree': '成功',
+        'reject': '驳回'
       }
+      return statusMap[status]
+    },
+    statusTypeFilter (type) {
+      const statusTypeMap = {
+        'agree': 'success',
+        'reject': 'error'
+      }
+      return statusTypeMap[type]
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

@@ -37,51 +37,51 @@
 </template>
 
 <script>
-  import PageHeader from './PageHeader'
+import PageHeader from './PageHeader'
 
-  export default {
-    name: 'LayoutContent',
-    components: {
-      PageHeader
+export default {
+  name: 'LayoutContent',
+  components: {
+    PageHeader
+  },
+  // ['desc', 'logo', 'title', 'avatar', 'linkList', 'extraImage']
+  props: {
+    desc: {
+      type: String,
+      default: null
     },
-    // ['desc', 'logo', 'title', 'avatar', 'linkList', 'extraImage']
-    props: {
-      desc: {
-        type: String,
-        default: null
-      },
-      logo: {
-        type: String,
-        default: null
-      },
-      title: {
-        type: String,
-        default: null
-      },
-      avatar: {
-        type: String,
-        default: null
-      },
-      linkList: {
-        type: Array,
-        default: null
-      },
-      extraImage: {
-        type: String,
-        default: null
-      },
-      search: {
-        type: Boolean,
-        default: false
-      },
-      tabs: {
-        type: Object,
-        default: () => ({})
-      }
+    logo: {
+      type: String,
+      default: null
     },
-    methods: {
+    title: {
+      type: String,
+      default: null
+    },
+    avatar: {
+      type: String,
+      default: null
+    },
+    linkList: {
+      type: Array,
+      default: null
+    },
+    extraImage: {
+      type: String,
+      default: null
+    },
+    search: {
+      type: Boolean,
+      default: false
+    },
+    tabs: {
+      type: Object,
+      default: () => ({})
     }
+  },
+  methods: {
   }
+}
 </script>
 
 <style lang="less" scoped>

@@ -14,27 +14,27 @@
 </template>
 
 <script>
-  import types from './type'
+import types from './type'
 
-  export default {
-    name: 'Exception',
-    props: {
-      type: {
-        type: String,
-        default: '404'
-      }
-    },
-    data() {
-      return {
-        config: types
-      }
-    },
-    methods: {
-      handleToHome () {
-        this.$router.push({ name: 'dashboard' })
-      }
+export default {
+  name: 'Exception',
+  props: {
+    type: {
+      type: String,
+      default: '404'
+    }
+  },
+  data () {
+    return {
+      config: types
+    }
+  },
+  methods: {
+    handleToHome () {
+      this.$router.push({ name: 'dashboard' })
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

@@ -46,7 +46,7 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       stepLoading: false,
 
@@ -54,13 +54,13 @@ export default {
     }
   },
   methods: {
-    handleStepOk() {
+    handleStepOk () {
       const vm = this
       this.stepLoading = true
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log('values', values)
-          setTimeout( () => {
+          setTimeout(() => {
             vm.stepLoading = false
             vm.$emit('success', { values })
           }, 2000)
@@ -74,7 +74,7 @@ export default {
       this.visible = false
       this.$emit('cancel')
     },
-    onForgeStepCode() {
+    onForgeStepCode () {
 
     }
   }

@@ -10,19 +10,19 @@
 </template>
 
 <script>
-  export default {
-    name: 'FooterToolBar',
-    props: {
-      prefixCls: {
-        type: String,
-        default: 'ant-pro-footer-toolbar'
-      },
-      extra: {
-        type: [String, Object],
-        default: ''
-      }
+export default {
+  name: 'FooterToolBar',
+  props: {
+    prefixCls: {
+      type: String,
+      default: 'ant-pro-footer-toolbar'
+    },
+    extra: {
+      type: [String, Object],
+      default: ''
     }
   }
+}
 </script>
 
 <style lang="less" scoped>
