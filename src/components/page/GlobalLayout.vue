@@ -73,78 +73,78 @@
 </template>
 
 <script>
-  import SideMenu from '@/components/menu/SideMenu'
-  import GlobalHeader from '@/components/page/GlobalHeader'
-  import GlobalFooter from '@/components/page/GlobalFooter'
-  import SettingDrawer from '@/components/setting/SettingDrawer'
-  import { triggerWindowResizeEvent } from '@/utils/util'
-  import { mapState, mapActions } from 'vuex'
-  import { mixin, mixinDevice } from '@/utils/mixin.js'
+import SideMenu from '@/components/menu/SideMenu'
+import GlobalHeader from '@/components/page/GlobalHeader'
+import GlobalFooter from '@/components/page/GlobalFooter'
+import SettingDrawer from '@/components/setting/SettingDrawer'
+import { triggerWindowResizeEvent } from '@/utils/util'
+import { mapState, mapActions } from 'vuex'
+import { mixin, mixinDevice } from '@/utils/mixin.js'
 
-  export default {
-    name: 'GlobalLayout',
-    components: {
-      SideMenu,
-      GlobalHeader,
-      GlobalFooter,
-      SettingDrawer
-    },
-    mixins: [mixin, mixinDevice],
-    data () {
-      return {
-        collapsed: false,
-        menus: []
+export default {
+  name: 'GlobalLayout',
+  components: {
+    SideMenu,
+    GlobalHeader,
+    GlobalFooter,
+    SettingDrawer
+  },
+  mixins: [mixin, mixinDevice],
+  data () {
+    return {
+      collapsed: false,
+      menus: []
+    }
+  },
+  computed: {
+    ...mapState({
+      // 主路由
+      mainMenu: state => state.permission.addRouters
+    }),
+    contentPaddingLeft () {
+      if (!this.fixSidebar || this.isMobile()) {
+        return '0'
       }
-    },
-    computed: {
-      ...mapState({
-        // 主路由
-        mainMenu: state => state.permission.addRouters,
-      }),
-      contentPaddingLeft () {
-        if(!this.fixSidebar || this.isMobile()){
-          return '0'
-        }
-        if(this.sidebarOpened){
-          return '256px'
-        }
-        return '80px'
+      if (this.sidebarOpened) {
+        return '256px'
       }
+      return '80px'
+    }
+  },
+  watch: {
+    sidebarOpened (val) {
+      console.log('sidebarOpened', val)
+      this.collapsed = !val
+    }
+  },
+  created () {
+    this.menus = this.mainMenu.find((item) => item.path === '/').children
+    this.collapsed = !this.sidebarOpened
+  },
+  methods: {
+    ...mapActions(['setSidebar']),
+    toggle () {
+      this.collapsed = !this.collapsed
+      this.setSidebar(!this.collapsed)
+      triggerWindowResizeEvent()
     },
-    watch: {
-      sidebarOpened(val) {
-        console.log('sidebarOpened', val)
-        this.collapsed = !val
-      },
-    },
-    created() {
-      this.menus = this.mainMenu.find((item) => item.path === '/').children
-      this.collapsed = !this.sidebarOpened
-    },
-    methods: {
-      ...mapActions(['setSidebar']),
-      toggle() {
-        this.collapsed = !this.collapsed
-        this.setSidebar(!this.collapsed)
-        triggerWindowResizeEvent()
-      },
-      paddingCalc () {
-        let left = ''
-        if (this.sidebarOpened) {
-          left = this.isDesktop() ? '256px' : '80px'
-        } else {
-          left = this.isMobile() && '0' || (this.fixSidebar && '80px' || '0')
-        }
-        console.log('left', left)
-        return left
-      },
-      menuSelect() {
-        if (!this.isDesktop()) {
-          this.collapsed = false
-        }
+    paddingCalc () {
+      let left = ''
+      if (this.sidebarOpened) {
+        left = this.isDesktop() ? '256px' : '80px'
+      } else {
+        left = this.isMobile() && '0' || (this.fixSidebar && '80px' || '0')
       }
+      console.log('left', left)
+      return left
     },
+    menuSelect () {
+      if (!this.isDesktop()) {
+        this.collapsed = false
+      }
+    }
   }
+}
 </script>
 
 <style lang="less">
@@ -267,8 +267,6 @@
       }
     }
 
-
-
     .header {
       height: 64px;
       padding: 0 12px 0 0;
@@ -300,7 +298,6 @@
             background: hsla(0, 0%, 100%, .85);
             vertical-align: middle;
           }
-
 
           .icon {
             font-size: 16px;
@@ -376,7 +373,6 @@
 
     }
 
-
     .top-nav-header-index {
       box-shadow: 0 1px 4px rgba(0,21,41,.08);
       position: relative;
@@ -445,7 +441,6 @@
         }
       }
     }
-
 
     // 内容区
     .layout-content {

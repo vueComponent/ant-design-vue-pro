@@ -15,27 +15,27 @@
 </template>
 
 <script>
-  export default {
-    name: 'Result',
-    props: {
-      isSuccess: {
-        type: Boolean,
-        default: false
-      },
-      title: {
-        type: String,
-        default: ''
-      },
-      description: {
-        type: String,
-        default: ''
-      },
-      content: {
-        type: Boolean,
-        default: true
-      }
+export default {
+  name: 'Result',
+  props: {
+    isSuccess: {
+      type: Boolean,
+      default: false
+    },
+    title: {
+      type: String,
+      default: ''
+    },
+    description: {
+      type: String,
+      default: ''
+    },
+    content: {
+      type: Boolean,
+      default: true
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

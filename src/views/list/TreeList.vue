@@ -2,7 +2,13 @@
   <a-card :bordered="false">
     <a-row :gutter="8">
       <a-col :span="5">
-        <s-tree :dataSource="orgTree" :openKeys.sync="openKeys" :search="true" @click="handleClick" @add="handleAdd" @titleClick="handleTitleClick"></s-tree>
+        <s-tree
+          :dataSource="orgTree"
+          :openKeys.sync="openKeys"
+          :search="true"
+          @click="handleClick"
+          @add="handleAdd"
+          @titleClick="handleTitleClick"></s-tree>
       </a-col>
       <a-col :span="19">
         <s-table
@@ -93,7 +99,7 @@ export default {
           table: '操作',
           dataIndex: 'action',
           width: '150px',
-          scopedSlots: { customRender: 'action' },
+          scopedSlots: { customRender: 'action' }
         }
       ],
       // 加载数据方法 必须为 Promise 对象
@@ -102,7 +108,6 @@ export default {
           .then(res => {
             return res.result
           })
-
       },
       orgTree: [],
       selectedRowKeys: [],
@@ -124,7 +129,7 @@ export default {
     },
     handleAdd (item) {
       console.log('add button, item', item)
-      this.$message.info(`提示：你点了 ${item.key} - ${item.title} ` )
+      this.$message.info(`提示：你点了 ${item.key} - ${item.title} `)
       this.$refs.modal.add(item.key)
     },
     handleTitleClick (item) {
@@ -143,7 +148,7 @@ export default {
     onSelectChange (selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
-    },
+    }
   }
 }
 </script>

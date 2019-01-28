@@ -30,23 +30,23 @@
 </template>
 
 <script>
-  import RouteView from '@/components/layouts/RouteView'
-  import { mixinDevice } from '@/utils/mixin.js'
+import RouteView from '@/components/layouts/RouteView'
+import { mixinDevice } from '@/utils/mixin.js'
 
-  export default {
-    name: 'UserLayout',
-    components: { RouteView },
-    mixins: [mixinDevice],
-    data () {
-      return {}
-    },
-    mounted () {
-      document.body.classList.add('userLayout')
-    },
-    beforeDestroy () {
-      document.body.classList.remove('userLayout')
-    },
+export default {
+  name: 'UserLayout',
+  components: { RouteView },
+  mixins: [mixinDevice],
+  data () {
+    return {}
+  },
+  mounted () {
+    document.body.classList.add('userLayout')
+  },
+  beforeDestroy () {
+    document.body.classList.remove('userLayout')
   }
+}
 </script>
 
 <style lang="less" scoped>

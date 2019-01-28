@@ -87,21 +87,19 @@ const action = Vue.directive('action', {
     const permissionId = vnode.context.$route.meta.permission
     let actions = []
     roles.permissions.forEach(p => {
-      if (p.permissionId != permissionId) {
+      if (p.permissionId !== permissionId) {
         return
       }
       actions = p.actionList
     })
     if (actions.indexOf(actionName) < 0) {
       setTimeout(() => {
-        if(el.parentNode == null){
+        if (el.parentNode == null) {
           el.style.display = 'none'
-        }
-        else{
-            el.parentNode.removeChild(el)
+        } else {
+          el.parentNode.removeChild(el)
         }
       }, 10)
-
     }
   }
 })

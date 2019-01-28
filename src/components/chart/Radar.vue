@@ -11,56 +11,56 @@
 </template>
 
 <script>
-  const axis1Opts = {
-    dataKey: 'item',
-    line: null,
-    tickLine: null,
-    grid: {
-      lineStyle: {
-        lineDash: null
-      },
-      hideFirstLine: false
-    }
-  }
-  const axis2Opts = {
-    dataKey: 'score',
-    line: null,
-    tickLine: null,
-    grid: {
-      type: 'polygon',
-      lineStyle: {
-        lineDash: null
-      }
-    }
-  }
-
-  const scale = [
-    {
-      dataKey: 'score',
-      min: 0,
-      max: 80
-    }, {
-      dataKey: 'user',
-      alias: '类型'
-    }
-  ]
-
-  export default {
-    name: 'Radar',
-    props: {
-      data: {
-        type: Array,
-        default: null,
-      }
+const axis1Opts = {
+  dataKey: 'item',
+  line: null,
+  tickLine: null,
+  grid: {
+    lineStyle: {
+      lineDash: null
     },
-    data () {
-      return {
-        axis1Opts,
-        axis2Opts,
-        scale
-      }
+    hideFirstLine: false
+  }
+}
+const axis2Opts = {
+  dataKey: 'score',
+  line: null,
+  tickLine: null,
+  grid: {
+    type: 'polygon',
+    lineStyle: {
+      lineDash: null
     }
   }
+}
+
+const scale = [
+  {
+    dataKey: 'score',
+    min: 0,
+    max: 80
+  }, {
+    dataKey: 'user',
+    alias: '类型'
+  }
+]
+
+export default {
+  name: 'Radar',
+  props: {
+    data: {
+      type: Array,
+      default: null
+    }
+  },
+  data () {
+    return {
+      axis1Opts,
+      axis2Opts,
+      scale
+    }
+  }
+}
 </script>
 
 <style scoped>

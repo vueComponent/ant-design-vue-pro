@@ -34,59 +34,57 @@
   </a-modal>
 </template>
 <script>
-  import { VueCropper } from 'vue-cropper'
+import { VueCropper } from 'vue-cropper'
 
-  export default {
-    components: {
-      VueCropper
+export default {
+  components: {
+    VueCropper
+  },
+  data () {
+    return {
+      visible: false,
+      id: null,
+      confirmLoading: false,
+
+      options: {
+        img: '/avatar2.jpg',
+        autoCrop: true,
+        autoCropWidth: 200,
+        autoCropHeight: 200,
+        fixedBox: true
+      },
+      previews: {}
+    }
+  },
+  methods: {
+    edit (id) {
+      this.visible = true
+      this.id = id
+      /* 获取原始头像 */
     },
-    data() {
-      return {
-        visible: false,
-        id: null,
-        confirmLoading: false,
-
-        options: {
-          img: '/avatar2.jpg',
-          autoCrop: true,
-          autoCropWidth: 200,
-          autoCropHeight: 200,
-          fixedBox: true
-        },
-        previews: {},
-      }
+    close () {
+      this.id = null
+      this.visible = false
     },
-    methods: {
-      edit(id) {
-        this.visible = true
-        this.id = id
-        /* 获取原始头像 */
+    cancelHandel () {
+      this.close()
+    },
+    okHandel () {
+      const vm = this
 
-      },
-      close() {
-        this.id = null
-        this.visible = false
-      },
-      cancelHandel() {
-        this.close()
-      },
-      okHandel() {
-        const vm = this
+      vm.confirmLoading = true
+      setTimeout(() => {
+        vm.confirmLoading = false
+        vm.close()
+        vm.$message.success('上传头像成功')
+      }, 2000)
+    },
 
-        vm.confirmLoading = true
-        setTimeout(() => {
-          vm.confirmLoading = false
-          vm.close()
-          vm.$message.success('上传头像成功')
-        }, 2000)
-
-      },
-
-      realTime(data) {
-        this.previews = data
-      }
+    realTime (data) {
+      this.previews = data
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

@@ -63,105 +63,104 @@
 </template>
 
 <script>
-  import { getRoleList, getPermissions } from '@/api/manage'
-  import { mixinDevice } from '@/utils/mixin'
-  import { actionToObject } from '@/utils/permissions'
-  import pick from 'lodash.pick'
+import { getRoleList, getPermissions } from '@/api/manage'
+import { mixinDevice } from '@/utils/mixin'
+import { actionToObject } from '@/utils/permissions'
+import pick from 'lodash.pick'
 
-  export default {
-    name: 'RoleList',
-    mixins: [mixinDevice],
-    components: {},
-    data () {
-      return {
-        form: this.$form.createForm(this),
-        mdl: {},
+export default {
+  name: 'RoleList',
+  mixins: [mixinDevice],
+  components: {},
+  data () {
+    return {
+      form: this.$form.createForm(this),
+      mdl: {},
 
-        roles: [],
-        permissions: []
-      }
-    },
-    created () {
-      getRoleList().then((res) => {
-        this.roles = res.result.data
-        this.roles.push({
-          id: '-1',
-          name: '新增角色',
-          describe: '新增一个角色'
-        })
-        console.log('this.roles', this.roles)
+      roles: [],
+      permissions: []
+    }
+  },
+  created () {
+    getRoleList().then((res) => {
+      this.roles = res.result.data
+      this.roles.push({
+        id: '-1',
+        name: '新增角色',
+        describe: '新增一个角色'
       })
-      this.loadPermissions()
+      console.log('this.roles', this.roles)
+    })
+    this.loadPermissions()
+  },
+  methods: {
+    callback (val) {
+      console.log(val)
     },
-    methods: {
-      callback (val) {
-        console.log(val)
-      },
 
-      add () {
-        this.edit({ id: 0 })
-      },
+    add () {
+      this.edit({ id: 0 })
+    },
 
-      edit (record) {
-        this.mdl = Object.assign({}, record)
-        // 有权限表，处理勾选
-        if (this.mdl.permissions && this.permissions) {
-          // 先处理要勾选的权限结构
-          const permissionsAction = {}
-          this.mdl.permissions.forEach(permission => {
-            permissionsAction[permission.permissionId] = permission.actionEntitySet.map(entity => entity.action)
-          })
-
-          console.log('permissionsAction', permissionsAction)
-          // 把权限表遍历一遍，设定要勾选的权限 action
-          this.permissions.forEach(permission => {
-            const selected = permissionsAction[permission.id]
-            permission.selected =  selected || []
-          })
-
-          console.log('this.permissions', this.permissions)
-        }
-
-        this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.mdl, 'id', 'name', 'status', 'describe'))
+    edit (record) {
+      this.mdl = Object.assign({}, record)
+      // 有权限表，处理勾选
+      if (this.mdl.permissions && this.permissions) {
+        // 先处理要勾选的权限结构
+        const permissionsAction = {}
+        this.mdl.permissions.forEach(permission => {
+          permissionsAction[permission.permissionId] = permission.actionEntitySet.map(entity => entity.action)
         })
-        console.log('this.mdl', this.mdl)
-      },
 
-      onChangeCheck (permission) {
-        permission.indeterminate = !!permission.selected.length && (permission.selected.length < permission.actionsOptions.length)
-        permission.checkedAll = permission.selected.length === permission.actionsOptions.length
-      },
-      onChangeCheckAll (e, permission) {
-
-        console.log('permission:', permission)
-
-        Object.assign(permission, {
-          selected: e.target.checked ? permission.actionsOptions.map(obj => obj.value) : [],
-          indeterminate: false,
-          checkedAll: e.target.checked
+        console.log('permissionsAction', permissionsAction)
+        // 把权限表遍历一遍，设定要勾选的权限 action
+        this.permissions.forEach(permission => {
+          const selected = permissionsAction[permission.id]
+          permission.selected = selected || []
         })
-      },
-      loadPermissions () {
-        getPermissions().then(res => {
-          const result = res.result
-          this.permissions = result.map(permission => {
-            const options = actionToObject(permission.actionData)
-            permission.checkedAll = false
-            permission.selected = []
-            permission.indeterminate = false
-            permission.actionsOptions = options.map(option => {
-              return {
-                label: option.describe,
-                value: option.action
-              }
-            })
-            return permission
-          })
-        })
+
+        console.log('this.permissions', this.permissions)
       }
+
+      this.$nextTick(() => {
+        this.form.setFieldsValue(pick(this.mdl, 'id', 'name', 'status', 'describe'))
+      })
+      console.log('this.mdl', this.mdl)
     },
+
+    onChangeCheck (permission) {
+      permission.indeterminate = !!permission.selected.length && (permission.selected.length < permission.actionsOptions.length)
+      permission.checkedAll = permission.selected.length === permission.actionsOptions.length
+    },
+    onChangeCheckAll (e, permission) {
+      console.log('permission:', permission)
+
+      Object.assign(permission, {
+        selected: e.target.checked ? permission.actionsOptions.map(obj => obj.value) : [],
+        indeterminate: false,
+        checkedAll: e.target.checked
+      })
+    },
+    loadPermissions () {
+      getPermissions().then(res => {
+        const result = res.result
+        this.permissions = result.map(permission => {
+          const options = actionToObject(permission.actionData)
+          permission.checkedAll = false
+          permission.selected = []
+          permission.indeterminate = false
+          permission.actionsOptions = options.map(option => {
+            return {
+              label: option.describe,
+              value: option.action
+            }
+          })
+          return permission
+        })
+      })
+    }
   }
+}
 </script>
 
 <style scoped>

@@ -149,105 +149,105 @@
 </template>
 
 <script>
-  import STable from '@/components/table/'
-  import { getRoleList, getServiceList } from '@/api/manage'
+import STable from '@/components/table/'
+import { getRoleList, getServiceList } from '@/api/manage'
 
-  export default {
-    name: 'TableList',
-    components: {
-      STable
-    },
-    data () {
-      return {
-        description: '列表使用场景：后台管理中的权限管理以及角色管理，可用于基于 RBAC 设计的角色权限控制，颗粒度细到每一个操作类型。',
+export default {
+  name: 'TableList',
+  components: {
+    STable
+  },
+  data () {
+    return {
+      description: '列表使用场景：后台管理中的权限管理以及角色管理，可用于基于 RBAC 设计的角色权限控制，颗粒度细到每一个操作类型。',
 
-        visible: false,
-        labelCol: {
-          xs: { span: 24 },
-          sm: { span: 5 },
+      visible: false,
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 5 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 }
+      },
+      form: null,
+      mdl: {},
+
+      // 高级搜索 展开/关闭
+      advanced: false,
+      // 查询参数
+      queryParam: {},
+      // 表头
+      columns: [
+        {
+          title: '唯一识别码',
+          dataIndex: 'id'
         },
-        wrapperCol: {
-          xs: { span: 24 },
-          sm: { span: 16 },
+        {
+          title: '角色名称',
+          dataIndex: 'name'
         },
-        form: null,
-        mdl: {},
-
-        // 高级搜索 展开/关闭
-        advanced: false,
-        // 查询参数
-        queryParam: {},
-        // 表头
-        columns: [
-          {
-            title: '唯一识别码',
-            dataIndex: 'id'
-          },
-          {
-            title: '角色名称',
-            dataIndex: 'name',
-          },
-          {
-            title: '状态',
-            dataIndex: 'status'
-          },
-          {
-            title: '创建时间',
-            dataIndex: 'createTime',
-            sorter: true
-          }, {
-            title: '操作',
-            width: '150px',
-            dataIndex: 'action',
-            scopedSlots: { customRender: 'action' },
-          }
-        ],
-        // 加载数据方法 必须为 Promise 对象
-        loadData: parameter => {
-          return getRoleList(parameter)
-            .then(res => {
-              return res.result
-            })
+        {
+          title: '状态',
+          dataIndex: 'status'
         },
-
-        selectedRowKeys: [],
-        selectedRows: []
-      }
-    },
-    created () {
-      getServiceList().then(res => {
-        console.log('getServiceList.call()', res)
-      })
-
-      getRoleList().then(res => {
-        console.log('getRoleList.call()', res)
-      })
-    },
-    methods: {
-      handleEdit (record) {
-        this.mdl = Object.assign({}, record)
-
-        this.mdl.permissions.forEach(permission => {
-          permission.actionsOptions = permission.actionEntitySet.map(action => {
-            return { label: action.describe, value: action.action, defaultCheck: action.defaultCheck }
+        {
+          title: '创建时间',
+          dataIndex: 'createTime',
+          sorter: true
+        }, {
+          title: '操作',
+          width: '150px',
+          dataIndex: 'action',
+          scopedSlots: { customRender: 'action' }
+        }
+      ],
+      // 加载数据方法 必须为 Promise 对象
+      loadData: parameter => {
+        return getRoleList(parameter)
+          .then(res => {
+            return res.result
           })
+      },
+
+      selectedRowKeys: [],
+      selectedRows: []
+    }
+  },
+  created () {
+    getServiceList().then(res => {
+      console.log('getServiceList.call()', res)
+    })
+
+    getRoleList().then(res => {
+      console.log('getRoleList.call()', res)
+    })
+  },
+  methods: {
+    handleEdit (record) {
+      this.mdl = Object.assign({}, record)
+
+      this.mdl.permissions.forEach(permission => {
+        permission.actionsOptions = permission.actionEntitySet.map(action => {
+          return { label: action.describe, value: action.action, defaultCheck: action.defaultCheck }
         })
+      })
 
-        this.visible = true
-      },
-      handleOk () {
-
-      },
-      onChange (selectedRowKeys, selectedRows) {
-        this.selectedRowKeys = selectedRowKeys
-        this.selectedRows = selectedRows
-      },
-      toggleAdvanced () {
-        this.advanced = !this.advanced
-      },
+      this.visible = true
     },
-    watch: {
-      /*
+    handleOk () {
+
+    },
+    onChange (selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys
+      this.selectedRows = selectedRows
+    },
+    toggleAdvanced () {
+      this.advanced = !this.advanced
+    }
+  },
+  watch: {
+    /*
       'selectedRows': function (selectedRows) {
         this.needTotalList = this.needTotalList.map(item => {
           return {
@@ -259,6 +259,6 @@
         })
       }
       */
-    }
   }
+}
 </script>

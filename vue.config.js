@@ -24,7 +24,7 @@ module.exports = {
   configureWebpack: {
     plugins: [
       // Ignore all locale files of moment.js
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ]
   },
 
@@ -51,7 +51,7 @@ module.exports = {
           'border-radius-base': '4px',
           */
         },
-        javascriptEnabled: true,
+        javascriptEnabled: true
       }
     }
   },

@@ -7,19 +7,19 @@
 </template>
 
 <script>
-  export default {
-    name: 'SettingItem',
-    props: {
-      title: {
-        type: String,
-        default: ''
-      },
-      divider: {
-        type: Boolean,
-        default: false
-      }
+export default {
+  name: 'SettingItem',
+  props: {
+    title: {
+      type: String,
+      default: ''
+    },
+    divider: {
+      type: Boolean,
+      default: false
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

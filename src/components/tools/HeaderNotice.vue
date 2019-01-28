@@ -46,26 +46,26 @@
 </template>
 
 <script>
-  export default {
-    name: 'HeaderNotice',
-    data () {
-      return {
-        loadding: false
+export default {
+  name: 'HeaderNotice',
+  data () {
+    return {
+      loadding: false
+    }
+  },
+  methods: {
+    fetchNotice () {
+      if (this.loadding) {
+        this.loadding = false
+        return
       }
-    },
-    methods: {
-      fetchNotice () {
-        if (this.loadding) {
-          this.loadding = false
-          return
-        }
-        this.loadding = true
-        setTimeout(() => {
-          this.loadding = false
-        }, 2000)
-      }
+      this.loadding = true
+      setTimeout(() => {
+        this.loadding = false
+      }, 2000)
     }
   }
+}
 </script>
 
 <style lang="css">

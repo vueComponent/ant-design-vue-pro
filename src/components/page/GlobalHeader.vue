@@ -39,72 +39,72 @@
 </template>
 
 <script>
-  import UserMenu from '../tools/UserMenu'
-  import SMenu from '../menu/'
-  import Logo from '../tools/Logo'
+import UserMenu from '../tools/UserMenu'
+import SMenu from '../menu/'
+import Logo from '../tools/Logo'
 
-  import { mixin } from '@/utils/mixin.js'
+import { mixin } from '@/utils/mixin.js'
 
-  export default {
-    name: 'GlobalHeader',
-    components: {
-      UserMenu,
-      SMenu,
-      Logo
+export default {
+  name: 'GlobalHeader',
+  components: {
+    UserMenu,
+    SMenu,
+    Logo
+  },
+  mixins: [mixin],
+  props: {
+    mode: {
+      type: String,
+      // sidemenu, topmenu
+      default: 'sidemenu'
     },
-    mixins: [mixin],
-    props: {
-      mode: {
-        type: String,
-        // sidemenu, topmenu
-        default: 'sidemenu'
-      },
-      menus: {
-        type: Array,
-        required: true
-      },
-      theme: {
-        type: String,
-        required: false,
-        default: 'dark'
-      },
-      collapsed: {
-        type: Boolean,
-        required: false,
-        default: false
-      },
-      device: {
-        type: String,
-        required: false,
-        default: 'desktop'
-      }
+    menus: {
+      type: Array,
+      required: true
     },
-    data() {
-      return {
-        headerBarFixed: false,
-      }
+    theme: {
+      type: String,
+      required: false,
+      default: 'dark'
     },
-    mounted () {
-      window.addEventListener('scroll', this.handleScroll)
+    collapsed: {
+      type: Boolean,
+      required: false,
+      default: false
     },
-    methods: {
-      handleScroll () {
-        if (this.autoHideHeader) {
-          const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-          if (scrollTop > 100) {
-            this.headerBarFixed = true
-          } else {
-            this.headerBarFixed = false
-          }
+    device: {
+      type: String,
+      required: false,
+      default: 'desktop'
+    }
+  },
+  data () {
+    return {
+      headerBarFixed: false
+    }
+  },
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    handleScroll () {
+      if (this.autoHideHeader) {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        if (scrollTop > 100) {
+          this.headerBarFixed = true
         } else {
           this.headerBarFixed = false
         }
-      },
-      toggle() {
-        this.$emit('toggle')
+      } else {
+        this.headerBarFixed = false
       }
+    },
+    toggle () {
+      this.$emit('toggle')
     }
   }
+}
 </script>
 
 <style lang="less" scoped>
