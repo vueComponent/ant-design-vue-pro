@@ -62,7 +62,7 @@
     </div>
 
     <div class="table-operator">
-      <a-button type="primary" icon="plus" @click="() => $router.push({name: 'anime-add'})">新建</a-button>
+      <a-button type="primary" icon="plus">新建</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
