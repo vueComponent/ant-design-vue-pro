@@ -249,22 +249,26 @@ export default {
         props[k] = this[localKey]
         return props[k]
       }
-      if (showAlert && k === 'rowSelection') {
-        // 重新绑定 rowSelection 事件
-        props[k] = {
-          selectedRows: this.selectedRows,
-          selectedRowKeys: this.selectedRowKeys,
-          onChange: (selectedRowKeys, selectedRows) => {
-            this.updateSelect(selectedRowKeys, selectedRows)
-            typeof this[k].onChange !== 'undefined' && this[k].onChange(selectedRowKeys, selectedRows)
+      if (k === 'rowSelection') {
+        if (showAlert && this.rowSelection) {
+          // 重新绑定 rowSelection 事件
+          props[k] = {
+            selectedRows: this.selectedRows,
+            selectedRowKeys: this.selectedRowKeys,
+            onChange: (selectedRowKeys, selectedRows) => {
+              this.updateSelect(selectedRowKeys, selectedRows)
+              typeof this[k].onChange !== 'undefined' && this[k].onChange(selectedRowKeys, selectedRows)
+            }
           }
+          return props[k]
         }
+        // 如果没打算开启 rowSelection 则清空默认的选择项
+        props[k] = null
         return props[k]
       }
       props[k] = this[k]
       return props[k]
     })
-
     const table = (
       <a-table {...{ props, scopedSlots: { ...this.$scopedSlots } }} onChange={this.loadData}>
         {this.$slots.default}
