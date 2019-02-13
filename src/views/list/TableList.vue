@@ -75,14 +75,20 @@
       </a-dropdown>
     </div>
 
+    <div>
+      <a-button @click="tableOption(false)" v-if="optionAlertShow">关闭 alert</a-button>
+    </div>
     <s-table
       ref="table"
       size="default"
       :columns="columns"
       :data="loadData"
-      :alert="{ show: true, clear: () => { this.selectedRowKeys = [] } }"
-      :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+      :alert="options.alert"
+      :rowSelection="options.rowSelection"
     >
+      <span slot="serial" slot-scope="text, record, index">
+        {{ index + 1 }}
+      </span>
       <span slot="action" slot-scope="text, record">
         <template v-if="$auth('table.update')">
           <a @click="handleEdit(record)">编辑</a>
@@ -216,6 +222,10 @@ export default {
       // 表头
       columns: [
         {
+          title: '#',
+          scopedSlots: { customRender: 'serial' }
+        },
+        {
           title: '规则编号',
           dataIndex: 'no'
         },
@@ -254,15 +264,44 @@ export default {
             return res.result
           })
       },
-
       selectedRowKeys: [],
-      selectedRows: []
+      selectedRows: [],
+
+      // custom table alert & rowSelection
+      options: {
+        alert: { show: true, clear: () => { this.selectedRowKeys = [] } },
+        rowSelection: {
+          selectedRowKeys: this.selectedRowKeys,
+          onChange: this.onSelectChange
+        }
+      },
+      optionAlertShow: true
     }
   },
   created () {
+    this.tableOption(true)
     getRoleList({ t: new Date() })
   },
   methods: {
+
+    tableOption (bool) {
+      if (bool) {
+        this.options = {
+          alert: { show: true, clear: () => { this.selectedRowKeys = [] } },
+          rowSelection: {
+            selectedRowKeys: this.selectedRowKeys,
+            onChange: this.onSelectChange
+          }
+        }
+      } else {
+        this.options = {
+          alert: false,
+          rowSelection: null
+        }
+        this.optionAlertShow = false
+      }
+    },
+
     handleEdit (record) {
       this.mdl = Object.assign({}, record)
       console.log(this.mdl)
