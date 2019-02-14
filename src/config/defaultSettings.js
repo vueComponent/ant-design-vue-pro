@@ -22,6 +22,7 @@ export default {
   fixSiderbar: false, // sticky siderbar
   autoHideHeader: false, //  auto hide header
   colorWeak: false,
+  multiTab: false,
   // vue-ls options
   storageOptions: {
     namespace: 'pro__', // key prefix

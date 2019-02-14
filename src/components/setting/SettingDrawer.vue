@@ -135,6 +135,12 @@
                   <div slot="title">色弱模式</div>
                 </a-list-item-meta>
               </a-list-item>
+              <a-list-item>
+                <a-switch slot="actions" size="small" :defaultChecked="multiTab" @change="onMultiTab" />
+                <a-list-item-meta>
+                  <div slot="title">多页签模式</div>
+                </a-list-item-meta>
+              </a-list-item>
             </a-list>
           </div>
         </div>
@@ -212,6 +218,10 @@ export default {
       this.$store.dispatch('ToggleWeak', checked)
       updateColorWeak(checked)
     },
+    onMultiTab (checked) {
+      this.baseConfig.multiTab = checked
+      this.$store.dispatch('ToggleMultiTab', checked)
+    },
     handleMenuTheme (theme) {
       this.baseConfig.navTheme = theme
       this.$store.dispatch('ToggleTheme', theme)
@@ -226,6 +236,7 @@ export default {
   fixSiderbar: ${this.baseConfig.fixSiderbar}, // sticky siderbar
   autoHideHeader: ${this.baseConfig.autoHideHeader}, //  auto hide header
   colorWeak: ${this.baseConfig.colorWeak},
+  multiTab: ${this.baseConfig.multiTab},
   // vue-ls options
   storageOptions: {
     namespace: 'pro__',
