@@ -11,29 +11,29 @@
 </template>
 
 <script>
-  export default {
-    name: 'Trend',
-    props: {
-      prefixCls: {
-        type: String,
-        default: 'ant-pro-trend'
-      },
-      /**
+export default {
+  name: 'Trend',
+  props: {
+    prefixCls: {
+      type: String,
+      default: 'ant-pro-trend'
+    },
+    /**
        * 上升下降标识：up|down
        */
-      flag: {
-        type: String,
-        required: true
-      },
-      /**
+    flag: {
+      type: String,
+      required: true
+    },
+    /**
        * 颜色反转
        */
-      reverseColor: {
-        type: Boolean,
-        default: false
-      }
+    reverseColor: {
+      type: Boolean,
+      default: false
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

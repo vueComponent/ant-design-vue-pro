@@ -47,26 +47,26 @@
 </template>
 
 <script>
-  export default {
-    name: 'Step2',
-    data () {
-      return {
-        loading: false
-      }
+export default {
+  name: 'Step2',
+  data () {
+    return {
+      loading: false
+    }
+  },
+  methods: {
+    nextStep () {
+      const that = this
+      that.loading = true
+      setTimeout(function () {
+        that.$emit('nextStep')
+      }, 1500)
     },
-    methods: {
-      nextStep () {
-        const that = this
-        that.loading = true
-        setTimeout(function () {
-          that.$emit('nextStep')
-        }, 1500)
-      },
-      prevStep () {
-        this.$emit('prevStep')
-      }
+    prevStep () {
+      this.$emit('prevStep')
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

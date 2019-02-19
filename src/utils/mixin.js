@@ -17,7 +17,8 @@ const mixin = {
       fixSidebar: state => state.app.fixSiderbar,
       contentWidth: state => state.app.contentWidth,
       autoHideHeader: state => state.app.autoHideHeader,
-      sidebarOpened: state => state.app.sidebar
+      sidebarOpened: state => state.app.sidebar,
+      multiTab: state => state.app.multiTab
     })
   },
   methods: {
@@ -33,7 +34,7 @@ const mixin = {
 const mixinDevice = {
   computed: {
     ...mapState({
-      device: state => state.app.device,
+      device: state => state.app.device
     })
   },
   methods: {

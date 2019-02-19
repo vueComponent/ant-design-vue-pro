@@ -1,5 +1,6 @@
 <template>
   <global-layout>
+    <multi-tab v-if="$store.getters.multiTab"></multi-tab>
     <transition name="page-transition">
       <route-view />
     </transition>
@@ -7,19 +8,21 @@
 </template>
 
 <script>
-  import RouteView from '@/components/layouts/RouteView'
-  import GlobalLayout from '@/components/page/GlobalLayout'
+import RouteView from '@/components/layouts/RouteView'
+import MultiTab from '@/components/MultiTab'
+import GlobalLayout from '@/components/page/GlobalLayout'
 
-  export default {
-    name: 'BasicLayout',
-    components: {
-      RouteView,
-      GlobalLayout
-    },
-    data () {
-      return {}
-    }
+export default {
+  name: 'BasicLayout',
+  components: {
+    RouteView,
+    MultiTab,
+    GlobalLayout
+  },
+  data () {
+    return {}
   }
+}
 </script>
 
 <style lang="less">

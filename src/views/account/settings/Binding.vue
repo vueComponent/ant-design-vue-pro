@@ -8,16 +8,16 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        data: []
-      }
-    },
-    methods: {
-
+export default {
+  data () {
+    return {
+      data: []
     }
+  },
+  methods: {
+
   }
+}
 </script>
 
 <style scoped>

@@ -46,7 +46,7 @@
 
           <div style="height: 20px">
             <a-tooltip class="setting-drawer-theme-color-colorBlock" v-for="(item, index) in colorList" :key="index">
-              <template slot='title'>
+              <template slot="title">
                 {{ item.key }}
               </template>
               <a-tag :color="item.color" @click="changeColor(item.color)">
@@ -90,7 +90,7 @@
             <a-list :split="false">
               <a-list-item>
                 <a-tooltip slot="actions">
-                  <template slot='title'>
+                  <template slot="title">
                     该设定仅 [顶部栏导航] 时有效
                   </template>
                   <a-select size="small" style="width: 80px;" :defaultValue="contentWidth" @change="handleContentWidthChange">
@@ -135,6 +135,12 @@
                   <div slot="title">色弱模式</div>
                 </a-list-item-meta>
               </a-list-item>
+              <a-list-item>
+                <a-switch slot="actions" size="small" :defaultChecked="multiTab" @change="onMultiTab" />
+                <a-list-item-meta>
+                  <div slot="title">多页签模式</div>
+                </a-list-item-meta>
+              </a-list-item>
             </a-list>
           </div>
         </div>
@@ -162,62 +168,66 @@
 </template>
 
 <script>
-  import DetailList from '@/components/tools/DetailList'
-  import SettingItem from '@/components/setting/SettingItem'
-  import config from '@/config/defaultSettings'
-  import { updateTheme, updateColorWeak, colorList } from '@/components/tools/setting'
-  import { mixin, mixinDevice } from '@/utils/mixin'
+import DetailList from '@/components/tools/DetailList'
+import SettingItem from '@/components/setting/SettingItem'
+import config from '@/config/defaultSettings'
+import { updateTheme, updateColorWeak, colorList } from '@/components/tools/setting'
+import { mixin, mixinDevice } from '@/utils/mixin'
 
-  export default {
-    components: {
-      DetailList,
-      SettingItem
-    },
-    mixins: [mixin, mixinDevice],
-    data() {
-      return {
-        visible: true,
-        colorList,
-        baseConfig: Object.assign({}, config)
-      }
-    },
-    watch: {
+export default {
+  components: {
+    DetailList,
+    SettingItem
+  },
+  mixins: [mixin, mixinDevice],
+  data () {
+    return {
+      visible: true,
+      colorList,
+      baseConfig: Object.assign({}, config)
+    }
+  },
+  watch: {
 
+  },
+  mounted () {
+    const vm = this
+    setTimeout(() => {
+      vm.visible = false
+    }, 16)
+    // 当主题色不是默认色时，才进行主题编译
+    if (this.primaryColor !== config.primaryColor) {
+      updateTheme(this.primaryColor)
+    }
+    if (this.colorWeak !== config.colorWeak) {
+      updateColorWeak(this.colorWeak)
+    }
+  },
+  methods: {
+    showDrawer () {
+      this.visible = true
     },
-    mounted () {
-      const vm = this
-      setTimeout(() => {
-        vm.visible = false
-      }, 16)
-      // 当主题色不是默认色时，才进行主题编译
-      if (this.primaryColor !== config.primaryColor) {
-        updateTheme(this.primaryColor)
-      }
-      if (this.colorWeak !== config.colorWeak) {
-        updateColorWeak(this.colorWeak)
-      }
+    onClose () {
+      this.visible = false
     },
-    methods: {
-      showDrawer() {
-        this.visible = true
-      },
-      onClose() {
-        this.visible = false
-      },
-      toggle() {
-        this.visible = !this.visible
-      },
-      onColorWeak (checked) {
-        this.baseConfig.colorWeak = checked
-        this.$store.dispatch('ToggleWeak', checked)
-        updateColorWeak(checked)
-      },
-      handleMenuTheme (theme) {
-        this.baseConfig.navTheme = theme
-        this.$store.dispatch('ToggleTheme', theme)
-      },
-      doCopy () {
-        const text = `export default {
+    toggle () {
+      this.visible = !this.visible
+    },
+    onColorWeak (checked) {
+      this.baseConfig.colorWeak = checked
+      this.$store.dispatch('ToggleWeak', checked)
+      updateColorWeak(checked)
+    },
+    onMultiTab (checked) {
+      this.baseConfig.multiTab = checked
+      this.$store.dispatch('ToggleMultiTab', checked)
+    },
+    handleMenuTheme (theme) {
+      this.baseConfig.navTheme = theme
+      this.$store.dispatch('ToggleTheme', theme)
+    },
+    doCopy () {
+      const text = `export default {
   primaryColor: '${this.baseConfig.primaryColor}', // primary color of ant design
   navTheme: '${this.baseConfig.navTheme}', // theme for nav menu
   layout: '${this.baseConfig.layout}', // nav menu position: sidemenu or topmenu
@@ -226,6 +236,7 @@
   fixSiderbar: ${this.baseConfig.fixSiderbar}, // sticky siderbar
   autoHideHeader: ${this.baseConfig.autoHideHeader}, //  auto hide header
   colorWeak: ${this.baseConfig.colorWeak},
+  multiTab: ${this.baseConfig.multiTab},
   // vue-ls options
   storageOptions: {
     namespace: 'pro__',
@@ -233,51 +244,51 @@
     storage: 'local',
   }
 }`
-        this.$copyText(text).then(message => {
-          console.log('copy', message)
-          this.$message.success('复制完毕')
-        }).catch(err => {
-          console.log('copy.err', err)
-          this.$message.error('复制失败')
-        })
-      },
-      handleLayout (mode) {
-        this.baseConfig.layout = mode
-        this.$store.dispatch('ToggleLayoutMode', mode)
-        // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
-        //
-        this.handleFixSiderbar(false)
-      },
-      handleContentWidthChange (type) {
-        this.baseConfig.contentWidth = type
-        this.$store.dispatch('ToggleContentWidth', type)
-      },
-      changeColor (color) {
-        this.baseConfig.primaryColor = color
-        if (this.primaryColor !== color) {
-          this.$store.dispatch('ToggleColor', color)
-          updateTheme(color)
-        }
-      },
-      handleFixedHeader (fixed) {
-        this.baseConfig.fixedHeader = fixed
-        this.$store.dispatch('ToggleFixedHeader', fixed)
-      },
-      handleFixedHeaderHidden (autoHidden) {
-        this.baseConfig.autoHideHeader = autoHidden
-        this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
-      },
-      handleFixSiderbar (fixed) {
-        if (this.layoutMode === 'topmenu') {
-          this.baseConfig.fixSiderbar = false
-          this.$store.dispatch('ToggleFixSiderbar', false)
-          return
-        }
-        this.baseConfig.fixSiderbar = fixed
-        this.$store.dispatch('ToggleFixSiderbar', fixed)
+      this.$copyText(text).then(message => {
+        console.log('copy', message)
+        this.$message.success('复制完毕')
+      }).catch(err => {
+        console.log('copy.err', err)
+        this.$message.error('复制失败')
+      })
+    },
+    handleLayout (mode) {
+      this.baseConfig.layout = mode
+      this.$store.dispatch('ToggleLayoutMode', mode)
+      // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
+      //
+      this.handleFixSiderbar(false)
+    },
+    handleContentWidthChange (type) {
+      this.baseConfig.contentWidth = type
+      this.$store.dispatch('ToggleContentWidth', type)
+    },
+    changeColor (color) {
+      this.baseConfig.primaryColor = color
+      if (this.primaryColor !== color) {
+        this.$store.dispatch('ToggleColor', color)
+        updateTheme(color)
       }
     },
+    handleFixedHeader (fixed) {
+      this.baseConfig.fixedHeader = fixed
+      this.$store.dispatch('ToggleFixedHeader', fixed)
+    },
+    handleFixedHeaderHidden (autoHidden) {
+      this.baseConfig.autoHideHeader = autoHidden
+      this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
+    },
+    handleFixSiderbar (fixed) {
+      if (this.layoutMode === 'topmenu') {
+        this.baseConfig.fixSiderbar = false
+        this.$store.dispatch('ToggleFixSiderbar', false)
+        return
+      }
+      this.baseConfig.fixSiderbar = fixed
+      this.$store.dispatch('ToggleFixSiderbar', fixed)
+    }
   }
+}
 </script>
 
 <style lang="less" scoped>

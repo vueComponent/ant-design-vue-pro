@@ -49,58 +49,58 @@
 </template>
 
 <script>
-  import PageLayout from '@/components/page/PageLayout'
-  import RouteView from '@/components/layouts/RouteView'
-  import { mixinDevice } from '@/utils/mixin.js'
+import PageLayout from '@/components/page/PageLayout'
+import RouteView from '@/components/layouts/RouteView'
+import { mixinDevice } from '@/utils/mixin.js'
 
-  export default {
-    components: {
-      RouteView,
-      PageLayout
-    },
-    mixins: [mixinDevice],
-    data () {
-      return {
-        // horizontal  inline
-        mode: 'inline',
+export default {
+  components: {
+    RouteView,
+    PageLayout
+  },
+  mixins: [mixinDevice],
+  data () {
+    return {
+      // horizontal  inline
+      mode: 'inline',
 
-        openKeys: [],
-        defaultSelectedKeys: [],
+      openKeys: [],
+      defaultSelectedKeys: [],
 
-        // cropper
-        preview: {},
-        option: {
-          img: '/avatar2.jpg',
-          info: true,
-          size: 1,
-          outputType: 'jpeg',
-          canScale: false,
-          autoCrop: true,
-          // 只有自动截图开启 宽度高度才生效
-          autoCropWidth: 180,
-          autoCropHeight: 180,
-          fixedBox: true,
-          // 开启宽度和高度比例
-          fixed: true,
-          fixedNumber: [1, 1]
-        },
-
-        pageTitle: ''
-      }
-    },
-    created () {
-      this.updateMenu()
-    },
-    methods: {
-      onOpenChange (openKeys) {
-        this.openKeys = openKeys
+      // cropper
+      preview: {},
+      option: {
+        img: '/avatar2.jpg',
+        info: true,
+        size: 1,
+        outputType: 'jpeg',
+        canScale: false,
+        autoCrop: true,
+        // 只有自动截图开启 宽度高度才生效
+        autoCropWidth: 180,
+        autoCropHeight: 180,
+        fixedBox: true,
+        // 开启宽度和高度比例
+        fixed: true,
+        fixedNumber: [1, 1]
       },
-      updateMenu () {
-        const routes = this.$route.matched.concat()
-        this.defaultSelectedKeys = [ routes.pop().path ]
-      }
+
+      pageTitle: ''
+    }
+  },
+  created () {
+    this.updateMenu()
+  },
+  methods: {
+    onOpenChange (openKeys) {
+      this.openKeys = openKeys
     },
+    updateMenu () {
+      const routes = this.$route.matched.concat()
+      this.defaultSelectedKeys = [ routes.pop().path ]
+    }
   }
+}
 </script>
 
 <style lang="less" scoped>

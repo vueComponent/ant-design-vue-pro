@@ -71,7 +71,7 @@ router.afterEach(() => {
  * Action 权限指令
  * 指令用法：
  *  - 在需要控制 action 级别权限的组件上使用 v-action:[method] , 如下：
- *    <a-button v-action:add >添加用户</a-button>
+ *    <i-button v-action:add >添加用户</a-button>
  *    <a-button v-action:delete>删除用户</a-button>
  *    <a v-action:edit @click="edit(record)">修改</a>
  *
@@ -87,21 +87,19 @@ const action = Vue.directive('action', {
     const permissionId = vnode.context.$route.meta.permission
     let actions = []
     roles.permissions.forEach(p => {
-      if (p.permissionId != permissionId) {
+      if (p.permissionId !== permissionId) {
         return
       }
       actions = p.actionList
     })
     if (actions.indexOf(actionName) < 0) {
       setTimeout(() => {
-        if(el.parentNode == null){
+        if (el.parentNode == null) {
           el.style.display = 'none'
-        }
-        else{
-            el.parentNode.removeChild(el)
+        } else {
+          el.parentNode.removeChild(el)
         }
       }, 10)
-
     }
   }
 })

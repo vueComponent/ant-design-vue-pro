@@ -45,14 +45,14 @@
 </template>
 
 <script>
-  export default {
-    name: 'Step1',
-    methods: {
-      nextStep () {
-        this.$emit('nextStep')
-      }
+export default {
+  name: 'Step1',
+  methods: {
+    nextStep () {
+      this.$emit('nextStep')
     }
   }
+}
 </script>
 
 <style scoped>

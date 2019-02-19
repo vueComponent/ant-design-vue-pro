@@ -145,49 +145,49 @@
 </template>
 
 <script>
-  import ChartCard from '@/components/chart/ChartCard'
-  import ACol from 'ant-design-vue/es/grid/Col'
-  import ATooltip from 'ant-design-vue/es/tooltip/Tooltip'
-  import MiniArea from '@/components/chart/MiniArea'
-  import MiniBar from '@/components/chart/MiniBar'
-  import MiniProgress from '@/components/chart/MiniProgress'
-  import RankList from '@/components/chart/RankList'
-  import Bar from '@/components/chart/Bar'
-  import Trend from '@/components/Trend'
+import ChartCard from '@/components/chart/ChartCard'
+import ACol from 'ant-design-vue/es/grid/Col'
+import ATooltip from 'ant-design-vue/es/tooltip/Tooltip'
+import MiniArea from '@/components/chart/MiniArea'
+import MiniBar from '@/components/chart/MiniBar'
+import MiniProgress from '@/components/chart/MiniProgress'
+import RankList from '@/components/chart/RankList'
+import Bar from '@/components/chart/Bar'
+import Trend from '@/components/Trend'
 
-  const rankList = []
-  for (let i = 0; i < 7; i++) {
-    rankList.push({
-      name: '白鹭岛 ' + (i+1) + ' 号店',
-      total: 1234.56 - i * 100
-    })
-  }
+const rankList = []
+for (let i = 0; i < 7; i++) {
+  rankList.push({
+    name: '白鹭岛 ' + (i + 1) + ' 号店',
+    total: 1234.56 - i * 100
+  })
+}
 
-  export default {
-    name: 'Analysis',
-    components: {
-      ATooltip,
-      ACol,
-      ChartCard,
-      MiniArea,
-      MiniBar,
-      MiniProgress,
-      RankList,
-      Bar,
-      Trend
-    },
-    data() {
-      return {
-        loading: true,
-        rankList
-      }
-    },
-    created() {
-      setTimeout(() => {
-        this.loading = !this.loading
-      }, 1000)
+export default {
+  name: 'Analysis',
+  components: {
+    ATooltip,
+    ACol,
+    ChartCard,
+    MiniArea,
+    MiniBar,
+    MiniProgress,
+    RankList,
+    Bar,
+    Trend
+  },
+  data () {
+    return {
+      loading: true,
+      rankList
     }
+  },
+  created () {
+    setTimeout(() => {
+      this.loading = !this.loading
+    }, 1000)
   }
+}
 </script>
 
 <style lang="less" scoped>

@@ -62,8 +62,8 @@
     </div>
 
     <div class="table-operator">
-      <a-button type="primary" icon="plus" v-if="$auth('table.add')">新建</a-button>
-      <a-dropdown v-if="$auth('table.edit') && selectedRowKeys.length > 0">
+      <a-button type="primary" icon="plus" v-action:add>新建</a-button>
+      <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
           <!-- lock | unlock -->
@@ -75,14 +75,20 @@
       </a-dropdown>
     </div>
 
+    <div>
+      <a-button @click="tableOption(false)" v-if="optionAlertShow">关闭 alert</a-button>
+    </div>
     <s-table
       ref="table"
       size="default"
       :columns="columns"
       :data="loadData"
-      :alert="{ show: true, clear: () => { this.selectedRowKeys = [] } }"
-      :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+      :alert="options.alert"
+      :rowSelection="options.rowSelection"
     >
+      <span slot="serial" slot-scope="text, record, index">
+        {{ index + 1 }}
+      </span>
       <span slot="action" slot-scope="text, record">
         <template v-if="$auth('table.update')">
           <a @click="handleEdit(record)">编辑</a>
@@ -118,19 +124,19 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='规则编号'
+          label="规则编号"
           hasFeedback
-          validateStatus='success'
+          validateStatus="success"
         >
-          <a-input placeholder='规则编号' v-model="mdl.no" id='no' />
+          <a-input placeholder="规则编号" v-model="mdl.no" id="no" />
         </a-form-item>
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='服务调用次数'
+          label="服务调用次数"
           hasFeedback
-          validateStatus='success'
+          validateStatus="success"
         >
           <a-input-number :min="1" id="callNo" v-model="mdl.callNo" style="width: 100%" />
         </a-form-item>
@@ -138,33 +144,33 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='状态'
+          label="状态"
           hasFeedback
-          validateStatus='warning'
+          validateStatus="warning"
         >
-          <a-select defaultValue='1' v-model="mdl.status">
-            <a-select-option value='1'>Option 1</a-select-option>
-            <a-select-option value='2'>Option 2</a-select-option>
-            <a-select-option value='3'>Option 3</a-select-option>
+          <a-select defaultValue="1" v-model="mdl.status">
+            <a-select-option value="1">Option 1</a-select-option>
+            <a-select-option value="2">Option 2</a-select-option>
+            <a-select-option value="3">Option 3</a-select-option>
           </a-select>
         </a-form-item>
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='描述'
+          label="描述"
           hasFeedback
-          help='请填写一段描述'
+          help="请填写一段描述"
         >
-          <a-textarea :rows="5" v-model="mdl.description" placeholder="..." id='description'/>
+          <a-textarea :rows="5" v-model="mdl.description" placeholder="..." id="description"/>
         </a-form-item>
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label='更新时间'
+          label="更新时间"
           hasFeedback
-          validateStatus='error'
+          validateStatus="error"
         >
           <a-date-picker
             style="width: 100%"
@@ -181,113 +187,146 @@
 </template>
 
 <script>
-  import STable from '@/components/table/'
-  import ATextarea from 'ant-design-vue/es/input/TextArea'
-  import AInput from 'ant-design-vue/es/input/Input'
-  import moment from 'moment'
+import STable from '@/components/table/'
+import ATextarea from 'ant-design-vue/es/input/TextArea'
+import AInput from 'ant-design-vue/es/input/Input'
+import moment from 'moment'
 
-  import { getRoleList, getServiceList } from '@/api/manage'
+import { getRoleList, getServiceList } from '@/api/manage'
 
-  export default {
-    name: 'TableList',
-    components: {
-      AInput,
-      ATextarea,
-      STable
-    },
-    data () {
-      return {
-        visible: false,
-        labelCol: {
-          xs: { span: 24 },
-          sm: { span: 5 },
+export default {
+  name: 'TableList',
+  components: {
+    AInput,
+    ATextarea,
+    STable
+  },
+  data () {
+    return {
+      visible: false,
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 5 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 12 }
+      },
+      form: null,
+      mdl: {},
+
+      // 高级搜索 展开/关闭
+      advanced: false,
+      // 查询参数
+      queryParam: {},
+      // 表头
+      columns: [
+        {
+          title: '#',
+          scopedSlots: { customRender: 'serial' }
         },
-        wrapperCol: {
-          xs: { span: 24 },
-          sm: { span: 12 },
+        {
+          title: '规则编号',
+          dataIndex: 'no'
         },
-        form: null,
-        mdl: {},
-
-        // 高级搜索 展开/关闭
-        advanced: true,
-        // 查询参数
-        queryParam: {},
-        // 表头
-        columns: [
-          {
-            title: '规则编号',
-            dataIndex: 'no'
-          },
-          {
-            title: '描述',
-            dataIndex: 'description'
-          },
-          {
-            title: '服务调用次数',
-            dataIndex: 'callNo',
-            sorter: true,
-            needTotal: true,
-            customRender: (text) => text + ' 次'
-          },
-          {
-            title: '状态',
-            dataIndex: 'status',
-            needTotal: true
-          },
-          {
-            title: '更新时间',
-            dataIndex: 'updatedAt',
-            sorter: true
-          },
-          {
-            table: '操作',
-            dataIndex: 'action',
-            width: '150px',
-            scopedSlots: { customRender: 'action' },
-          }
-        ],
-        // 加载数据方法 必须为 Promise 对象
-        loadData: parameter => {
-          return getServiceList(Object.assign(parameter, this.queryParam))
-            .then(res => {
-              return res.result
-            })
+        {
+          title: '描述',
+          dataIndex: 'description'
         },
-
-        selectedRowKeys: [],
-        selectedRows: []
-      }
-    },
-    created () {
-      getRoleList({ t: new Date()})
-    },
-    methods: {
-      handleEdit (record) {
-        this.mdl = Object.assign({}, record)
-        console.log(this.mdl)
-        this.visible = true
-      },
-      handleOk () {
-
-      },
-
-      onSelectChange (selectedRowKeys, selectedRows) {
-        this.selectedRowKeys = selectedRowKeys
-        this.selectedRows = selectedRows
-      },
-      toggleAdvanced () {
-        this.advanced = !this.advanced
-      },
-
-      resetSearchForm () {
-        this.queryParam = {
-          date: moment(new Date())
+        {
+          title: '服务调用次数',
+          dataIndex: 'callNo',
+          sorter: true,
+          needTotal: true,
+          customRender: (text) => text + ' 次'
+        },
+        {
+          title: '状态',
+          dataIndex: 'status',
+          needTotal: true
+        },
+        {
+          title: '更新时间',
+          dataIndex: 'updatedAt',
+          sorter: true
+        },
+        {
+          table: '操作',
+          dataIndex: 'action',
+          width: '150px',
+          scopedSlots: { customRender: 'action' }
         }
+      ],
+      // 加载数据方法 必须为 Promise 对象
+      loadData: parameter => {
+        return getServiceList(Object.assign(parameter, this.queryParam))
+          .then(res => {
+            return res.result
+          })
+      },
+      selectedRowKeys: [],
+      selectedRows: [],
+
+      // custom table alert & rowSelection
+      options: {
+        alert: { show: true, clear: () => { this.selectedRowKeys = [] } },
+        rowSelection: {
+          selectedRowKeys: this.selectedRowKeys,
+          onChange: this.onSelectChange
+        }
+      },
+      optionAlertShow: true
+    }
+  },
+  created () {
+    this.tableOption(true)
+    getRoleList({ t: new Date() })
+  },
+  methods: {
+
+    tableOption (bool) {
+      if (bool) {
+        this.options = {
+          alert: { show: true, clear: () => { this.selectedRowKeys = [] } },
+          rowSelection: {
+            selectedRowKeys: this.selectedRowKeys,
+            onChange: this.onSelectChange
+          }
+        }
+      } else {
+        this.options = {
+          alert: false,
+          rowSelection: null
+        }
+        this.optionAlertShow = false
       }
     },
-    watch: {
-      /*
+
+    handleEdit (record) {
+      this.mdl = Object.assign({}, record)
+      console.log(this.mdl)
+      this.visible = true
+    },
+    handleOk () {
+
+    },
+
+    onSelectChange (selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys
+      this.selectedRows = selectedRows
+    },
+    toggleAdvanced () {
+      this.advanced = !this.advanced
+    },
+
+    resetSearchForm () {
+      this.queryParam = {
+        date: moment(new Date())
+      }
+    }
+  },
+  watch: {
+    /*
       'selectedRows': function (selectedRows) {
         this.needTotalList = this.needTotalList.map(item => {
           return {
@@ -299,6 +338,6 @@
         })
       }
       */
-    }
   }
+}
 </script>

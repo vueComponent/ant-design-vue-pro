@@ -33,15 +33,15 @@ export default {
     return {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 5 },
+        sm: { span: 5 }
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 16 },
+        sm: { span: 16 }
       },
       visible: false,
       confirmLoading: false,
-      mdl: {},
+      mdl: {}
     }
   },
   beforeCreate () {
@@ -49,7 +49,7 @@ export default {
     console.log('form::', this.form)
   },
   created () {
-    
+
   },
   methods: {
     add (id) {
@@ -59,7 +59,7 @@ export default {
       this.mdl = Object.assign({}, record)
       this.visible = true
       this.$nextTick(() => {
-        this.form.setFieldsValue( { ...record } )
+        this.form.setFieldsValue({ ...record })
       })
     },
     close () {

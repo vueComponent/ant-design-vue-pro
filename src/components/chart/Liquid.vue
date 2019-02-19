@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-chart 
-      :forceFit="true" 
-      :height="height" 
-      :width="width" 
-      :data="data" 
-      :scale="scale" 
+    <v-chart
+      :forceFit="true"
+      :height="height"
+      :width="width"
+      :data="data"
+      :scale="scale"
       :padding="0">
       <v-tooltip />
       <v-interval
@@ -47,19 +47,19 @@
 </template>
 
 <script>
-  export default {
-    name: 'Liquid',
-    props: {
-      height: {
-        type: Number,
-        default: 0
-      },
-      width: {
-        type: Number,
-        default: 0
-      }
+export default {
+  name: 'Liquid',
+  props: {
+    height: {
+      type: Number,
+      default: 0
+    },
+    width: {
+      type: Number,
+      default: 0
     }
   }
+}
 </script>
 
 <style scoped>

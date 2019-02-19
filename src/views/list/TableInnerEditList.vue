@@ -62,7 +62,7 @@
     </div>
 
     <div class="table-operator">
-      <a-button type="primary" icon="plus" @click="() => $router.push({name: 'anime-add'})">新建</a-button>
+      <a-button type="primary" icon="plus">新建</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
@@ -80,8 +80,7 @@
       size="default"
       :columns="columns"
       :data="loadData"
-      :showAlertInfo="true"
-      @onSelect="onChange"
+      :alert="{ show: true, clear: true }"
     >
       <template v-for="(col, index) in columns" v-if="col.scopedSlots" :slot="col.dataIndex" slot-scope="text, record, index">
         <div :key="index">
@@ -89,17 +88,17 @@
             v-if="record.editable"
             style="margin: -5px 0"
             :value="text"
-            @change="e => handleChange(e.target.value, record.key, col)"
+            @change="e => handleChange(e.target.value, record.key, col, record)"
           />
           <template v-else>{{ text }}</template>
         </div>
       </template>
       <template slot="action" slot-scope="text, record, index">
-        <div class='editable-row-operations'>
+        <div class="editable-row-operations">
           <span v-if="record.editable">
             <a @click="() => save(record)">保存</a>
             <a-divider type="vertical" />
-            <a-popconfirm title='真的放弃编辑吗?' @confirm="() => cancel(record)">
+            <a-popconfirm title="真的放弃编辑吗?" @confirm="() => cancel(record)">
               <a>取消</a>
             </a-popconfirm>
           </span>
@@ -116,123 +115,121 @@
 </template>
 
 <script>
-  import STable from '@/components/table/'
+import STable from '@/components/table/'
 
-  export default {
-    name: 'TableList',
-    components: {
-      STable
-    },
-    data () {
-      return {
-        // 高级搜索 展开/关闭
-        advanced: false,
-        // 查询参数
-        queryParam: {},
-        // 表头
-        columns: [
-          {
-            title: '规则编号',
-            dataIndex: 'no',
-            width: 90
-          },
-          {
-            title: '描述',
-            dataIndex: 'description',
-            scopedSlots: { customRender: 'description' },
-          },
-          {
-            title: '服务调用次数',
-            dataIndex: 'callNo',
-            width: '150px',
-            sorter: true,
-            needTotal: true,
-            scopedSlots: { customRender: 'callNo' },
-            // customRender: (text) => text + ' 次'
-          },
-          {
-            title: '状态',
-            dataIndex: 'status',
-            width: '100px',
-            needTotal: true,
-            scopedSlots: { customRender: 'status' },
-          },
-          {
-            title: '更新时间',
-            dataIndex: 'updatedAt',
-            width: '150px',
-            sorter: true,
-            scopedSlots: { customRender: 'updatedAt' },
-          },
-          {
-            table: '操作',
-            dataIndex: 'action',
-            width: '120px',
-            scopedSlots: { customRender: 'action' },
-          }
-        ],
-        // 加载数据方法 必须为 Promise 对象
-        loadData: parameter => {
-          return this.$http.get('/service', {
-            params: Object.assign(parameter, this.queryParam)
-          }).then(res => {
-            return res.result
-          })
+export default {
+  name: 'TableList',
+  components: {
+    STable
+  },
+  data () {
+    return {
+      // 高级搜索 展开/关闭
+      advanced: false,
+      // 查询参数
+      queryParam: {},
+      // 表头
+      columns: [
+        {
+          title: '规则编号',
+          dataIndex: 'no',
+          width: 90
         },
-
-        selectedRowKeys: [],
-        selectedRows: []
-      }
-    },
-    methods: {
-
-      handleChange (value, key, column) {
-        console.log(value, key, column)
-      },
-      edit (row) {
-        row.editable = true
-        // row = Object.assign({}, row)
-        this.$refs.table.updateEdit()
-      },
-      // eslint-disable-next-line
-      del (row) {
-        this.$confirm({
-          title: '警告',
-          content: '真的要删除吗?',
-          okText: '删除',
-          okType: 'danger',
-          cancelText: '取消',
-          onOk() {
-            console.log('OK')
-            // 在这里调用删除接口
-            return new Promise((resolve, reject) => {
-              setTimeout(Math.random() > 0.5 ? resolve : reject, 1000)
-            }).catch(() => console.log('Oops errors!'))
-          },
-          onCancel() {
-            console.log('Cancel')
-          },
+        {
+          title: '描述',
+          dataIndex: 'description',
+          scopedSlots: { customRender: 'description' }
+        },
+        {
+          title: '服务调用次数',
+          dataIndex: 'callNo',
+          width: '150px',
+          sorter: true,
+          needTotal: true,
+          scopedSlots: { customRender: 'callNo' }
+          // customRender: (text) => text + ' 次'
+        },
+        {
+          title: '状态',
+          dataIndex: 'status',
+          width: '100px',
+          needTotal: true,
+          scopedSlots: { customRender: 'status' }
+        },
+        {
+          title: '更新时间',
+          dataIndex: 'updatedAt',
+          width: '200px',
+          sorter: true,
+          scopedSlots: { customRender: 'updatedAt' }
+        },
+        {
+          table: '操作',
+          dataIndex: 'action',
+          width: '120px',
+          scopedSlots: { customRender: 'action' }
+        }
+      ],
+      // 加载数据方法 必须为 Promise 对象
+      loadData: parameter => {
+        return this.$http.get('/service', {
+          params: Object.assign(parameter, this.queryParam)
+        }).then(res => {
+          return res.result
         })
       },
-      save (row) {
-        delete row.editable
-        this.$refs.table.updateEdit()
-      },
-      cancel (row) {
-        delete row.editable
-        this.$refs.table.updateEdit()
-      },
 
-      onChange (row) {
-        this.selectedRowKeys = row.selectedRowKeys
-        this.selectedRows = row.selectedRows
-      },
-      toggleAdvanced () {
-        this.advanced = !this.advanced
-      },
+      selectedRowKeys: [],
+      selectedRows: []
+    }
+  },
+  methods: {
+
+    handleChange (value, key, column, record) {
+      console.log(value, key, column)
+      record[column.dataIndex] = value
     },
-    watch: {
-      /*
+    edit (row) {
+      row.editable = true
+      // row = Object.assign({}, row)
+    },
+    // eslint-disable-next-line
+      del (row) {
+      this.$confirm({
+        title: '警告',
+        content: `真的要删除 ${row.no} 吗?`,
+        okText: '删除',
+        okType: 'danger',
+        cancelText: '取消',
+        onOk () {
+          console.log('OK')
+          // 在这里调用删除接口
+          return new Promise((resolve, reject) => {
+            setTimeout(Math.random() > 0.5 ? resolve : reject, 1000)
+          }).catch(() => console.log('Oops errors!'))
+        },
+        onCancel () {
+          console.log('Cancel')
+        }
+      })
+    },
+    save (row) {
+      row.editable = false
+    },
+    cancel (row) {
+      row.editable = false
+    },
+
+    onChange (row) {
+      this.selectedRowKeys = row.selectedRowKeys
+      this.selectedRows = row.selectedRows
+    },
+    toggleAdvanced () {
+      this.advanced = !this.advanced
+    }
+  },
+  watch: {
+    /*
       'selectedRows': function (selectedRows) {
         this.needTotalList = this.needTotalList.map(item => {
           return {
@@ -244,8 +241,8 @@
         })
       }
       */
-    }
   }
+}
 </script>
 
 <style lang="less" scoped>
