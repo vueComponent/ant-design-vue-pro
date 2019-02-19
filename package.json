@@ -37,6 +37,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
+    "babel-plugin-import": "^1.11.0",
     "eslint": "^5.8.0",
     "eslint-plugin-html": "^5.0.0",
     "eslint-plugin-vue": "^5.0.0",
