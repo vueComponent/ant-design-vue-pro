@@ -38,7 +38,7 @@ export default {
       }
       this.pages = this.pages.filter(page => page.fullPath !== targetKey)
       this.fullPathList = this.fullPathList.filter(path => path !== targetKey)
-    },
+    }
   },
   watch: {
     '$route': function (newVal) {
