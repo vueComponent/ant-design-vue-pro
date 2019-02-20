@@ -62,7 +62,7 @@ export default {
     },
     renderMenuItem: function (h, menu, pIndex, index) {
       return h(Item, { key: menu.path ? menu.path : 'item_' + pIndex + '_' + index }, [
-        h('router-link', { attrs: { to: { name: menu.name } } }, [
+        h('router-link', { attrs: { to: { path: menu.path } } }, [
           this.renderIcon(h, menu.meta.icon),
           h('span', [menu.meta.title])
         ])
