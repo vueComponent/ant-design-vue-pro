@@ -38,11 +38,11 @@
 
 | 参数     | 说明                                      | 类型    | 默认值 |
 | -------- | ----------------------------------------- | ------- | ------ |
-| hidden   | 控制路由是否显示在 sidebar                | boolean | falase |
+| hidden   | 控制路由是否显示在 sidebar                | boolean | false |
 | redirect | 重定向地址, 访问这个路由时,自定进行重定向 | string  | -      |
-| name     | 路由名称, 建议设置,且不能重名             | string  | -      |
+| name     | 路由名称, 必须设置,且不能重名           | string  | -      |
 | meta     | 路由元信息（路由附带扩展信息）            | object  | {}     |
-
+| alwaysShow | 强制菜单显示为Item而不是SubItem(配合 meta.hidden) | boolean  | -   |
 
 
 `{ Meta }` 路由元信息对象
@@ -52,6 +52,7 @@
 | title               | 路由标题, 用于显示面包屑, 页面标题 *推荐设置                 | string  | -      |
 | icon                | 路由在 menu 上显示的图标                                     | string  | -      |
 | keepAlive           | 缓存该路由                                                   | boolean | false  |
+| hidden              | 配合`alwaysShow`使用，用于隐藏菜单时，提供递归到父菜单显示 选中菜单项_（可参考 个人页 配置方式）_ | boolean | false  |
 | hiddenHeaderContent | *特殊 隐藏 [PageHeader](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/layout/PageHeader.vue#L14) 组件中的页面带的 面包屑和页面标题栏 | boolean | false  |
 | permission          | 与项目提供的权限拦截匹配的权限，如果不匹配，则会被禁止访问该路由页面 | array   | []     |
 
