@@ -78,9 +78,28 @@ export const asyncRouterMap = [
         children: [
           {
             path: '/list/query-list',
-            name: 'QueryList',
+            name: 'QueryListWrapper',
+            alwaysShow: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/list/TableList'),
-            meta: { title: '查询表格', keepAlive: true, permission: [ 'table' ] }
+            meta: { title: '查询表格', keepAlive: true, permission: [ 'table' ] },
+            redirect: {
+              name: 'QueryList',
+              params: { page: 1 }
+            },
+            children: [
+              {
+                path: '/list/query-list/:page([1-9]\\d*)?',
+                name: 'QueryList',
+                component: () => import('@/views/list/table/List'),
+                meta: { title: '查询表格', hidden: true, keepAlive: true, permission: [ 'table' ] }
+              },
+              {
+                path: '/list/query-list/edit/:id([1-9]\\d*)?',
+                name: 'QueryListEdit',
+                component: () => import('@/views/list/table/Edit'),
+                meta: { title: '编辑', hidden: true, keepAlive: true, permission: [ 'table' ] }
+              }
+            ]
           },
           {
             path: '/list/tree-list',
