@@ -1,5 +1,6 @@
 <template>
   <a-popover
+    v-model="visible"
     trigger="click"
     placement="bottomRight"
     :autoAdjustOverflow="true"
@@ -50,19 +51,21 @@ export default {
   name: 'HeaderNotice',
   data () {
     return {
-      loadding: false
+      loadding: false,
+      visible: false
     }
   },
   methods: {
     fetchNotice () {
-      if (this.loadding) {
+      if (!this.visible) {
+        this.loadding = true
+        setTimeout(() => {
+          this.loadding = false
+        }, 2000)
+      } else {
         this.loadding = false
-        return
       }
-      this.loadding = true
-      setTimeout(() => {
-        this.loadding = false
-      }, 2000)
+      this.visible = !this.visible
     }
   }
 }
