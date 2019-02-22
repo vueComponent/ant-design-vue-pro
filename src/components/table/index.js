@@ -130,6 +130,7 @@ export default {
       }
       ))
       // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data
+      // eslint-disable-next-line
       if (result instanceof Promise || '[object Promise]' === result.toString()) {
         result.then(r => {
           this.localPagination = Object.assign({}, this.localPagination, {
