@@ -1,12 +1,10 @@
 <template>
-  <div>
-    Monitor
-  </div>
+  <h1>work</h1>
 </template>
 
 <script>
 export default {
-  name: 'Monitor'
+  name: 'dashboard'
 }
 </script>
 
