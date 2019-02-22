@@ -129,9 +129,8 @@ export default {
         ...filters
       }
       ))
-
       // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data
-      if (result instanceof Promise) {
+      if (result instanceof Promise || '[object Promise]' === result.toString()) {
         result.then(r => {
           this.localPagination = Object.assign({}, this.localPagination, {
             current: r.pageNo, // 返回结果中的当前分页数
