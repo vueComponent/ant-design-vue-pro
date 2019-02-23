@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@antv/data-set": "^0.10.1",
-    "ant-design-vue": "~1.3.2",
+    "ant-design-vue": "~1.3.5",
     "axios": "^0.18.0",
     "enquire.js": "^2.1.6",
     "js-cookie": "^2.2.0",
