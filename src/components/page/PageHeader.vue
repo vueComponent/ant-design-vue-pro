@@ -202,6 +202,7 @@ export default {
         flex: 0 1 25%;
         margin: 0 2% 8px 0;
       }
+
       .content, .headerContent {
         flex: 0 1 70%;
 
@@ -215,22 +216,26 @@ export default {
           }
         }
       }
+
       .extra {
         flex: 1 1 auto;
         margin-left: 0;
         min-width: 0;
         text-align: right;
       }
+
       .action {
         margin-left: unset;
         min-width: 266px;
         flex: 0 1 auto;
         text-align: left;
         margin-bottom: 12px;
+
         &:empty {
           display: none;
         }
       }
     }
   }
+}
 </style>
