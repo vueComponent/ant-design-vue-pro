@@ -93,13 +93,7 @@ const action = Vue.directive('action', {
       actions = p.actionList
     })
     if (actions.indexOf(actionName) < 0) {
-      setTimeout(() => {
-        if (el.parentNode == null) {
-          el.style.display = 'none'
-        } else {
-          el.parentNode.removeChild(el)
-        }
-      }, 10)
+      el.parentNode && el.parentNode.removeChild(el) || (el.style.display = 'none')
     }
   }
 })
