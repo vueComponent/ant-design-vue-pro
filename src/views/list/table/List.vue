@@ -63,7 +63,7 @@
 
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="$router.push({ name: 'QueryListEdit' })">新建</a-button>
-      <a-button type="dashed" @click="tableOption(false)" v-if="optionAlertShow">关闭 alert</a-button>
+      <a-button type="dashed" @click="tableOption">{{ optionAlertShow && '关闭' || '开启' }} alert</a-button>
       <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
@@ -188,16 +188,16 @@ export default {
           onChange: this.onSelectChange
         }
       },
-      optionAlertShow: true
+      optionAlertShow: false
     }
   },
   created () {
-    this.tableOption(true)
+    this.tableOption()
     getRoleList({ t: new Date() })
   },
   methods: {
-    tableOption (bool) {
-      if (bool) {
+    tableOption () {
+      if (!this.optionAlertShow) {
         this.options = {
           alert: { show: true, clear: () => { this.selectedRowKeys = [] } },
           rowSelection: {
@@ -205,6 +205,7 @@ export default {
             onChange: this.onSelectChange
           }
         }
+        this.optionAlertShow = true
       } else {
         this.options = {
           alert: false,

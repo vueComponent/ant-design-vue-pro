@@ -81,6 +81,7 @@
       :columns="columns"
       :data="loadData"
       :alert="{ show: true, clear: true }"
+      :rowSelection="{ selectedRowKeys: this.selectedRowKeys, onChange: this.onSelectChange }"
     >
       <template v-for="(col, index) in columns" v-if="col.scopedSlots" :slot="col.dataIndex" slot-scope="text, record, index">
         <div :key="index">
@@ -194,7 +195,7 @@ export default {
       // row = Object.assign({}, row)
     },
     // eslint-disable-next-line
-      del (row) {
+    del (row) {
       this.$confirm({
         title: '警告',
         content: `真的要删除 ${row.no} 吗?`,
@@ -220,9 +221,9 @@ export default {
       row.editable = false
     },
 
-    onChange (row) {
-      this.selectedRowKeys = row.selectedRowKeys
-      this.selectedRows = row.selectedRows
+    onSelectChange (selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys
+      this.selectedRows = selectedRows
     },
     toggleAdvanced () {
       this.advanced = !this.advanced
