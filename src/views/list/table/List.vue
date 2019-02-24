@@ -63,6 +63,7 @@
 
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="$router.push({ name: 'QueryListEdit' })">新建</a-button>
+      <a-button type="dashed" @click="tableOption(false)" v-if="optionAlertShow">关闭 alert</a-button>
       <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
@@ -75,12 +76,10 @@
       </a-dropdown>
     </div>
 
-    <div>
-      <a-button @click="tableOption(false)" v-if="optionAlertShow">关闭 alert</a-button>
-    </div>
     <s-table
       ref="table"
       size="default"
+      rowKey="key"
       :columns="columns"
       :data="loadData"
       :alert="options.alert"
@@ -172,6 +171,7 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
+        console.log('loadData.parameter', parameter)
         return getServiceList(Object.assign(parameter, this.queryParam))
           .then(res => {
             return res.result

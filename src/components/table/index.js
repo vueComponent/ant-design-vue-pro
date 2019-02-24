@@ -104,7 +104,10 @@ export default {
      * @param Boolean bool
      */
     refresh (bool = false) {
-      this.loadData(bool ? { current: 1 } : {})
+      bool && (this.localPagination = Object.assign({}, {
+        current: 1, pageSize: this.pageSize
+      }))
+      this.loadData()
     },
     /**
      * 加载数据方法
@@ -114,11 +117,11 @@ export default {
      */
     loadData (pagination, filters, sorter) {
       this.localLoading = true
-      var result = this.data(Object.assign({
+      const parameter = Object.assign({
         pageNo: (pagination && pagination.current) ||
-          this.localPagination.current,
+            this.localPagination.current,
         pageSize: (pagination && pagination.pageSize) ||
-          this.localPagination.pageSize
+            this.localPagination.pageSize
       },
       (sorter && sorter.field && {
         sortField: sorter.field
@@ -128,7 +131,8 @@ export default {
       }) || {}, {
         ...filters
       }
-      ))
+      )
+      const result = this.data(parameter)
       // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data
       // eslint-disable-next-line
       if (result instanceof Promise || '[object Promise]' === result.toString()) {
@@ -140,7 +144,6 @@ export default {
             pageSize: (pagination && pagination.pageSize) ||
               this.localPagination.pageSize
           })
-
           // 为防止删除数据后导致页面当前页面数据长度为 0 ,自动翻页到上一页
           if (r.data.length === 0 && this.localPagination.current !== 1) {
             this.localPagination.current--
