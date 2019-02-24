@@ -5,11 +5,11 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 </div>
 
 <div align="center">
-  
+
 [![License](https://img.shields.io/npm/l/package.json.svg?style=flat)](https://github.com/sendya/ant-design-pro-vue/blob/master/LICENSE)
 [![Release](https://img.shields.io/github/release/sendya/ant-design-pro-vue.svg?style=flat)](https://github.com/sendya/ant-design-pro-vue/releases/latest)
 [![Travis branch](https://travis-ci.org/sendya/ant-design-pro-vue.svg?branch=master)](https://travis-ci.org/sendya/ant-design-pro-vue)
-  
+
 </div>
 
 Overview
@@ -18,6 +18,8 @@ Overview
 基于 [Ant Design of Vue](https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/) 实现的 [Ant Design Pro](https://pro.ant.design/)  Vue 版
 
 [预览地址](https://pro.loacg.com/)  **附带一些后台基础用到的列表展示例子**
+
+![工作台-多标签模式](https://static-2.loacg.com/open/static/github/20190224163345.jpg)
 
 ![工作台+设置菜单](https://static-2.loacg.com/open/static/github/20181126112124.png)
 
@@ -50,7 +52,7 @@ Overview
 - yarn
 - webpack
 - eslint
-- @vue/cli 3.2.1
+- @vue/cli ~3
 - [ant-design-vue](https://github.com/vueComponent/ant-design-vue) - Ant Design Of Vue 实现
 - [vue-cropper](https://github.com/xyxiao001/vue-cropper) - 头像裁剪组件
 - [@antv/g2](https://antv.alipay.com/zh-cn/index.html) - Alipay AntV 数据可视化图表
@@ -142,6 +144,7 @@ yarn run lint
   - Ellipsis 文本自动省略号 [Ellipsis.md](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/Ellipsis/index.md)
   - NumberInfo 数据文本 [NumberInfo.md](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/NumberInfo/index.md)
   - FooterToolbar 底部工具栏 [FooterToolbar.md](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/FooterToolbar/index.md)
+  - IconSelector 图标选择组件 [IconSelector.md](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/IconSelector/README.md) 提供: [@AraragiTsukihiz](https://github.com/araragitsukihiz)
 - 其他待补充...
 
 
