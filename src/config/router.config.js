@@ -308,6 +308,23 @@ export const asyncRouterMap = [
             ]
           }
         ]
+      },
+
+      // other
+      {
+        path: '/other',
+        name: 'otherPage',
+        component: PageView,
+        meta: { title: '其他组件', icon: 'slack', permission: [ 'dashboard' ] },
+        redirect: '/other/icon-selector',
+        children: [
+          {
+            path: '/other/icon-selector',
+            name: 'TestIconSelect',
+            component: () => import('@/views/other/IconSelectorView'),
+            meta: { title: 'IconSelector', keepAlive: true, permission: [ 'dashboard' ] }
+          }
+        ]
       }
     ]
   },
