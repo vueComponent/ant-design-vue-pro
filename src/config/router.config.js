@@ -43,7 +43,7 @@ export const asyncRouterMap = [
       // forms
       {
         path: '/form',
-        redirect: '/form/basic-form',
+        redirect: '/form/base-form',
         component: PageView,
         meta: { title: '表单页', icon: 'form', permission: [ 'form' ] },
         children: [
@@ -258,6 +258,7 @@ export const asyncRouterMap = [
       {
         path: '/account',
         component: RouteView,
+        redirect: '/account/center',
         name: 'account',
         meta: { title: '个人页', icon: 'user', keepAlive: true, permission: [ 'user' ] },
         children: [
