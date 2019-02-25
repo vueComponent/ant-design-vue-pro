@@ -216,8 +216,7 @@ export default {
     },
 
     handleEdit (record) {
-      // Object.assign({}, record)
-      this.$router.push({ name: 'QueryListEdit', params: { id: record.key } })
+      this.$emit('onEdit', record)
     },
     handleOk () {
 

@@ -88,6 +88,12 @@
 <script>
 export default {
   name: 'TableEdit',
+  props: {
+    record: {
+      type: [Object, String],
+      default: ''
+    }
+  },
   data () {
     return {
       labelCol: {
@@ -108,14 +114,17 @@ export default {
       id: 0
     }
   },
+  // beforeCreate () {
+  //   this.form = this.$form.createForm(this)
+  // },
   mounted () {
-    this.loadEditInfo()
+    this.$nextTick(() => {
+      this.loadEditInfo(this.record)
+    })
   },
   methods: {
     handleGoBack () {
-      // TODO
-      // 改为动态组件时应该把这个方法派发出去，交由父组件处理
-      this.$router.back()
+      this.$emit('onGoBack')
     },
     handleSubmit () {
       const { form: { validateFields } } = this
@@ -126,6 +135,9 @@ export default {
         }
       })
     },
+    handleGetInfo () {
+
+    },
     loadEditInfo (data) {
       const { form } = this
       // ajax
@@ -133,7 +145,8 @@ export default {
       new Promise((resolve) => {
         setTimeout(resolve, 1500)
       }).then(() => {
-        form.setFieldsValue({ no: '1', callNo: '999' })
+        form.setFieldsValue(data)
+        // form.setFieldsValue({ no: '1', callNo: '999' })
       })
     }
   }
