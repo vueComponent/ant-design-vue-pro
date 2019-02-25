@@ -15,6 +15,7 @@
             'no',
             {rules: [{ required: true, message: '请输入规则编号' }]}
           ]"
+          :disabled="true"
         ></a-input>
       </a-form-item>
 
@@ -35,7 +36,7 @@
         hasFeedback
         validateStatus="warning"
       >
-        <a-select defaultValue="1" v-decorator="['status', {rules: [{ required: true, message: '请选择状态' }]}]">
+        <a-select v-decorator="['status', {rules: [{ required: true, message: '请选择状态' }], initialValue: '1'}]">
           <a-select-option value="1">Option 1</a-select-option>
           <a-select-option value="2">Option 2</a-select-option>
           <a-select-option value="3">Option 3</a-select-option>
@@ -67,6 +68,19 @@
         />
       </a-form-item>
 
+      <a-form-item
+        v-bind="buttonCol"
+      >
+        <a-row>
+          <a-col span="6">
+            <a-button type="primary" html-type="submit">提交</a-button>
+          </a-col>
+          <a-col span="10">
+            <a-button @click="handleGoBack">返回</a-button>
+          </a-col>
+          <a-col span="8"></a-col>
+        </a-row>
+      </a-form-item>
     </a-form>
   </div>
 </template>
@@ -84,19 +98,25 @@ export default {
         xs: { span: 24 },
         sm: { span: 12 }
       },
-      form: null,
+      buttonCol: {
+        wrapperCol: {
+          xs: { span: 24 },
+          sm: { span: 12, offset: 5 }
+        }
+      },
+      form: this.$form.createForm(this),
       id: 0
     }
   },
-  beforeCreate () {
-    this.form = this.$form.createForm(this)
-  },
-  created () {
-    if (this.$route.params.id) {
-      this.id = this.$route.params.id
-    }
+  mounted () {
+    this.loadEditInfo()
   },
   methods: {
+    handleGoBack () {
+      // TODO
+      // 改为动态组件时应该把这个方法派发出去，交由父组件处理
+      this.$router.back()
+    },
     handleSubmit () {
       const { form: { validateFields } } = this
       validateFields((err, values) => {
@@ -106,21 +126,15 @@ export default {
         }
       })
     },
-    loadEditInfo () {
-      const { from } = this
+    loadEditInfo (data) {
+      const { form } = this
       // ajax
       console.log(`将加载 ${this.id} 信息到表单`)
       new Promise((resolve) => {
         setTimeout(resolve, 1500)
       }).then(() => {
-        from.setFieldsValue({ no: '1', callNo: '999' })
+        form.setFieldsValue({ no: '1', callNo: '999' })
       })
-    }
-  },
-  watch: {
-    id (val, oldVal) {
-      console.log('val', val, 'oldVal', oldVal)
-      this.loadEditInfo()
     }
   }
 }
