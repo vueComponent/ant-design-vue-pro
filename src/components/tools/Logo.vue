@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import LogoSvg from '@/assets/logo.svg'
+import LogoSvg from '@/assets/logo.svg?inline'
 
 console.log(LogoSvg)
 
