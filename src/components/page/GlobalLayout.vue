@@ -403,7 +403,7 @@ export default {
             transition: all .3s;
             overflow: hidden;
 
-            img {
+            img, svg {
               display: inline-block;
               vertical-align: middle;
               height: 32px;
