@@ -507,12 +507,12 @@ export default {
       background: #002140;
       overflow: hidden;
 
-      img, h1 {
+      img, svg, h1 {
         display: inline-block;
         vertical-align: middle;
       }
 
-      img {
+      img, svg {
         height: 32px;
       }
 
