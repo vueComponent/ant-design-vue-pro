@@ -37,9 +37,9 @@
         validateStatus="warning"
       >
         <a-select v-decorator="['status', {rules: [{ required: true, message: '请选择状态' }], initialValue: '1'}]">
-          <a-select-option value="1">Option 1</a-select-option>
-          <a-select-option value="2">Option 2</a-select-option>
-          <a-select-option value="3">Option 3</a-select-option>
+          <a-select-option :value="1">Option 1</a-select-option>
+          <a-select-option :value="2">Option 2</a-select-option>
+          <a-select-option :value="3">Option 3</a-select-option>
         </a-select>
       </a-form-item>
 
@@ -65,6 +65,7 @@
           showTime
           format="YYYY-MM-DD HH:mm:ss"
           placeholder="Select Time"
+          v-decorator="['updatedAt']"
         />
       </a-form-item>
 
@@ -86,6 +87,9 @@
 </template>
 
 <script>
+import moment from 'moment'
+import pick from 'lodash.pick'
+
 export default {
   name: 'TableEdit',
   props: {
@@ -145,8 +149,10 @@ export default {
       new Promise((resolve) => {
         setTimeout(resolve, 1500)
       }).then(() => {
-        form.setFieldsValue(data)
-        // form.setFieldsValue({ no: '1', callNo: '999' })
+        const formData = pick(data, ['no', 'callNo', 'status', 'description', 'updatedAt'])
+        formData.updatedAt = moment(data.updatedAt)
+        console.log('formData', formData)
+        form.setFieldsValue(formData)
       })
     }
   }
