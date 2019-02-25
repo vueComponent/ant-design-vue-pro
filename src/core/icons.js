@@ -1,3 +1,3 @@
-import bxAnaalyse from '@/assets/icons/bx-analyse.svg' // path to your '*.svg' file.
+import bxAnaalyse from '@/assets/icons/bx-analyse.svg?inline' // path to your '*.svg?inline' file.
 
 export { bxAnaalyse }
