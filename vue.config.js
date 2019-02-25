@@ -37,6 +37,11 @@ module.exports = {
       .set('@views', resolve('src/views'))
       .set('@layout', resolve('src/layout'))
       .set('@static', resolve('src/static'))
+
+    const svgRule = config.module.rule('svg')
+    svgRule.uses.clear()
+    svgRule.use('vue-svg-loader')
+      .loader('vue-svg-loader')
   },
 
   css: {

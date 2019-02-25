@@ -58,7 +58,12 @@ export default {
   },
   methods: {
     renderIcon: function (h, icon) {
-      return icon === 'none' || icon === undefined ? null : h(Icon, { props: { type: icon !== undefined ? icon : '' } })
+      if (icon === 'none' || icon === undefined) {
+        return null
+      }
+      const props = {}
+      typeof (icon) === 'object' ? props.component = icon : props.type = icon
+      return h(Icon, { props: { ...props } })
     },
     renderMenuItem: function (h, menu, pIndex, index) {
       return h(Item, { key: menu.path ? menu.path : 'item_' + pIndex + '_' + index }, [
