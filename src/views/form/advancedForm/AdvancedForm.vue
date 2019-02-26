@@ -139,8 +139,9 @@ export default {
       e.preventDefault()
     },
     newMember () {
+      const length = this.data.length
       this.data.push({
-        key: '-1',
+        key: (parseInt(this.data[length - 1].key) + 1).toString(),
         name: '',
         workId: '',
         department: '',
