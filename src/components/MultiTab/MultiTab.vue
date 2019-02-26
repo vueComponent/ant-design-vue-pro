@@ -33,11 +33,10 @@ export default {
       this[action](targetKey)
     },
     remove (targetKey) {
-      if (this.pages.length === 1) {
-        return
-      }
       this.pages = this.pages.filter(page => page.fullPath !== targetKey)
       this.fullPathList = this.fullPathList.filter(path => path !== targetKey)
+      // 跳转到最后一个还存在的标签页
+      this.activeKey = this.fullPathList[this.fullPathList.length - 1]
     }
   },
   watch: {
