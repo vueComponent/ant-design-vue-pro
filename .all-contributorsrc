@@ -1,0 +1,23 @@
+{
+  "projectName": "ant-design-pro-vue",
+  "projectOwner": "sendya",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "zkwolf",
+      "name": "zkwolf",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/8555127?v=4",
+      "profile": "http://www.zkwolf.top",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
