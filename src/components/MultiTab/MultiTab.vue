@@ -49,8 +49,10 @@ export default {
     remove (targetKey) {
       this.pages = this.pages.filter(page => page.fullPath !== targetKey)
       this.fullPathList = this.fullPathList.filter(path => path !== targetKey)
-      // 跳转到最后一个还存在的标签页
-      this.selectedLastPath()
+      // 判断当前标签是否关闭，若关闭则跳转到最后一个还存在的标签页
+      if (!this.fullPathList.includes(this.activeKey)) {
+        this.selectedLastPath()
+      }
     },
     selectedLastPath () {
       this.activeKey = this.fullPathList[this.fullPathList.length - 1]
@@ -65,15 +67,29 @@ export default {
       // TODO
       console.log('close left', e)
       const index = this.fullPathList.indexOf(e)
-      if (index > -1) {
-        this.fullPathList.splice(index, -1)
+      if (index > 0) {
+        this.remove(this.fullPathList[index - 1])
+      } else {
+        this.$message.info('左侧没有标签')
       }
     },
     closeRight (e) {
       console.log('close right', e)
+      const index = this.fullPathList.indexOf(e)
+      if (index < (this.fullPathList.length - 1)) {
+        this.remove(this.fullPathList[index + 1])
+      } else {
+        this.$message.info('右侧没有标签')
+      }
     },
     closeAll (e) {
       console.log('close all', e)
+      const currentIndex = this.fullPathList.indexOf(e)
+      this.fullPathList.forEach((item, index) => {
+        if (index !== currentIndex) {
+          this.remove(item)
+        }
+      })
     },
     closeMenuClick ({ key, item, domEvent }) {
       console.log('key', key)
@@ -132,7 +148,13 @@ export default {
   render () {
     const { onEdit, $data: { pages } } = this
     const panes = pages.map(page => {
-      return (<a-tab-pane style={{ height: 0 }} tab={this.renderTabPane(page.meta.title, page.fullPath)} key={page.fullPath} closable={pages.length > 1}></a-tab-pane>)
+      return (
+        <a-tab-pane
+          style={{ height: 0 }}
+          tab={this.renderTabPane(page.meta.title, page.fullPath)}
+          key={page.fullPath} closable={pages.length > 1}
+        >
+        </a-tab-pane>)
     })
 
     return (
