@@ -1,4 +1,5 @@
 <h1 align="center">Ant Design Pro Vue</h1>
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 <div align="center">
 An out-of-box UI solution for enterprise applications as a Vue boilerplate. based on  <a href="https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/" target="_blank">Ant Design of Vue</a>
@@ -108,7 +109,9 @@ yarn run lint
 ```
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-
+<!-- prettier-ignore -->
+| [<img src="https://avatars0.githubusercontent.com/u/5404542?v=4" width="100px;" alt="言肆"/><br /><sub><b>言肆</b></sub>](https://i.loacg.com)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=sendya "Code") [📖](https://github.com/sendya/ant-design-pro-vue/commits?author=sendya "Documentation") |
+| :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 附属文档
@@ -138,3 +141,12 @@ yarn run lint
 ----
 
 > @vue/cli 升级后，eslint 规则更新了。由于影响到全部 .vue 文件，需要逐个验证。既暂时关闭部分原本不验证的规则，后期维护时，在逐步修正这些 rules
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/all-contributors/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
