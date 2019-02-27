@@ -39,6 +39,12 @@ export default {
       this.record = ''
       this.currentComponet = 'List'
     }
+  },
+  watch: {
+    '$route.path' () {
+      this.record = ''
+      this.currentComponet = 'List'
+    }
   }
 }
 </script>
