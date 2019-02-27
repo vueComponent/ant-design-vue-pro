@@ -108,16 +108,6 @@ yarn run lint
   }
 ```
 
-Contributors
-----
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
-| [<img src="https://avatars0.githubusercontent.com/u/5404542?v=4" width="100px;" alt="言肆"/><br /><sub><b>言肆</b></sub>](https://i.loacg.com)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=sendya "Code") [📖](https://github.com/sendya/ant-design-pro-vue/commits?author=sendya "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/25897806?v=4" width="100px;" alt="kokoroli"/><br /><sub><b>kokoroli</b></sub>](https://github.com/kokoroli)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=kokoroli "Code") [📖](https://github.com/sendya/ant-design-pro-vue/commits?author=kokoroli "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/10286849?v=4" width="100px;" alt="musnow"/><br /><sub><b>musnow</b></sub>](https://github.com/musnow)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=musnow"Code") | [<img src="https://avatars0.githubusercontent.com/u/8555127?v=4" width="100px;" alt="zkwolf"/><br /><sub><b>zkwolf</b></sub>](https://github.com/zkwolf)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=zkwolf"Code") | [<img src="https://avatars0.githubusercontent.com/u/19700237?v=4" width="100px;" alt="mcmf"/><br /><sub><b>土拨鼠</b></sub>](https://github.com/mcmf)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=mcmf"Code") | [<img src="https://avatars0.githubusercontent.com/u/28291464?v=4" width="100px;" alt="AClumsy"/><br /><sub><b>阿凌</b></sub>](https://github.com/AClumsy)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=AClumsy"Code") | [<img src="https://avatars0.githubusercontent.com/u/3831242?v=4" width="100px;" alt="mynuolr"/><br /><sub><b>mynuolr</b></sub>](https://github.com/mynuolr)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=mynuolr"Code") |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
- [<img src="https://avatars0.githubusercontent.com/u/1051992?v=4" width="100px;" alt="since2006"/><br /><sub><b>since2006</b></sub>](https://github.com/since2006)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=since2006"Code") | [<img src="https://avatars0.githubusercontent.com/u/26241263?v=4" width="100px;" alt="yihuishou"/><br /><sub><b>挥手的骑士</b></sub>](https://github.com/yihuishou)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=yihuishou"Code") |
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
 附属文档
 ----
 
@@ -141,16 +131,15 @@ Contributors
 - 其他待补充...
 
 
-备注
-----
-
-> @vue/cli 升级后，eslint 规则更新了。由于影响到全部 .vue 文件，需要逐个验证。既暂时关闭部分原本不验证的规则，后期维护时，在逐步修正这些 rules
 ## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://github.com/all-contributors/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
+| [<img src="https://avatars0.githubusercontent.com/u/5404542?v=4" width="100px;" alt="言肆"/><br /><sub><b>言肆</b></sub>](https://i.loacg.com)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=sendya "Code") [📖](https://github.com/sendya/ant-design-pro-vue/commits?author=sendya "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/25897806?v=4" width="100px;" alt="kokoroli"/><br /><sub><b>kokoroli</b></sub>](https://github.com/kokoroli)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=kokoroli "Code") [📖](https://github.com/sendya/ant-design-pro-vue/commits?author=kokoroli "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/10286849?v=4" width="100px;" alt="musnow"/><br /><sub><b>musnow</b></sub>](https://github.com/musnow)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=musnow"Code") | [<img src="https://avatars0.githubusercontent.com/u/8555127?v=4" width="100px;" alt="zkwolf"/><br /><sub><b>zkwolf</b></sub>](https://github.com/zkwolf)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=zkwolf"Code") | [<img src="https://avatars0.githubusercontent.com/u/19700237?v=4" width="100px;" alt="mcmf"/><br /><sub><b>土拨鼠</b></sub>](https://github.com/mcmf)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=mcmf"Code") | [<img src="https://avatars0.githubusercontent.com/u/28291464?v=4" width="100px;" alt="AClumsy"/><br /><sub><b>阿凌</b></sub>](https://github.com/AClumsy)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=AClumsy"Code") | [<img src="https://avatars0.githubusercontent.com/u/3831242?v=4" width="100px;" alt="mynuolr"/><br /><sub><b>mynuolr</b></sub>](https://github.com/mynuolr)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=mynuolr"Code") |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+ [<img src="https://avatars0.githubusercontent.com/u/1051992?v=4" width="100px;" alt="since2006"/><br /><sub><b>since2006</b></sub>](https://github.com/since2006)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=since2006"Code") | [<img src="https://avatars0.githubusercontent.com/u/26241263?v=4" width="100px;" alt="yihuishou"/><br /><sub><b>挥手的骑士</b></sub>](https://github.com/yihuishou)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=yihuishou"Code") |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
