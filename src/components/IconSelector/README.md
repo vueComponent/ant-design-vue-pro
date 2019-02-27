@@ -4,7 +4,7 @@ IconSelector
 > 图标选择组件，常用于为某一个数据设定一个图标时使用
 > eg: 设定菜单列表时，为每个菜单设定一个图标
 
-该组件由 [@AraragiTsukihiz](https://github.com/araragitsukihiz) 封装
+该组件由 [@Saraka](https://github.com/saraka-tsukai) 封装
 
 
 

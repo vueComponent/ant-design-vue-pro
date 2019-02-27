@@ -9,7 +9,7 @@ Table 重封装组件说明
 >
 > 你无需在你是用表格的页面进行分页逻辑处理，仅需向 Table 组件传递绑定 `:data="Promise"` 对象即可
 
-该 `table` 由 [@AraragiTsukihiz](https://github.com/araragitsukihiz) 完成封装
+该 `table` 由 [@Saraka](https://github.com/saraka-tsukai) 完成封装
 
 
 例子1
