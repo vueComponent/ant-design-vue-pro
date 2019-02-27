@@ -407,6 +407,7 @@ export default {
               display: inline-block;
               vertical-align: middle;
               height: 32px;
+              width: 32px;
             }
 
             h1 {
@@ -514,6 +515,7 @@ export default {
 
       img, svg {
         height: 32px;
+        width: 32px;
       }
 
       h1 {

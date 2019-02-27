@@ -25,6 +25,7 @@
     "vue-cropper": "^0.4.4",
     "vue-ls": "^3.2.0",
     "vue-router": "^3.0.1",
+    "vue-svg-component-runtime": "^1.0.1",
     "vuex": "^3.1.0"
   },
   "devDependencies": {
@@ -43,7 +44,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
-    "vue-svg-loader": "^0.12.0",
+    "vue-svg-icon-loader": "^2.1.1",
     "vue-template-compiler": "^2.5.22"
   },
   "eslintConfig": {
