@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     onEdit (targetKey, action) {
-      console.log('onEdit', targetKey, action)
       this[action](targetKey)
     },
     remove (targetKey) {
@@ -60,30 +59,33 @@ export default {
 
     // content menu
     closeThat (e) {
-      console.log('close that', e)
       this.remove(e)
     },
     closeLeft (e) {
-      // TODO
-      console.log('close left', e)
-      const index = this.fullPathList.indexOf(e)
-      if (index > 0) {
-        this.remove(this.fullPathList[index - 1])
+      const currentIndex = this.fullPathList.indexOf(e)
+      if (currentIndex > 0) {
+        this.fullPathList.forEach((item, index) => {
+          if (index < currentIndex) {
+            this.remove(item)
+          }
+        })
       } else {
         this.$message.info('左侧没有标签')
       }
     },
     closeRight (e) {
-      console.log('close right', e)
-      const index = this.fullPathList.indexOf(e)
-      if (index < (this.fullPathList.length - 1)) {
-        this.remove(this.fullPathList[index + 1])
+      const currentIndex = this.fullPathList.indexOf(e)
+      if (currentIndex < (this.fullPathList.length - 1)) {
+        this.fullPathList.forEach((item, index) => {
+          if (index > currentIndex) {
+            this.remove(item)
+          }
+        })
       } else {
         this.$message.info('右侧没有标签')
       }
     },
     closeAll (e) {
-      console.log('close all', e)
       const currentIndex = this.fullPathList.indexOf(e)
       this.fullPathList.forEach((item, index) => {
         if (index !== currentIndex) {
@@ -92,8 +94,6 @@ export default {
       })
     },
     closeMenuClick ({ key, item, domEvent }) {
-      console.log('key', key)
-      console.log('item', item.$attrs['data-vkey'])
       const vkey = domEvent.target.getAttribute('data-vkey')
       switch (key) {
         case 'close-right':
@@ -141,7 +141,6 @@ export default {
       }
     },
     activeKey: function (newPathKey) {
-      console.log('activeKey', newPathKey)
       this.$router.push({ path: newPathKey })
     }
   },
