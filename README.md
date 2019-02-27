@@ -23,26 +23,9 @@ Overview
 
 ![工作台+设置菜单](https://static-2.loacg.com/open/static/github/20181126112124.png)
 
-![工作台](https://static-2.loacg.com/open/static/github/20180916-134306.png)
-
 ![个人设置](https://static-2.loacg.com/open/static/github/20180916-134251.png)
 
-![个人中心](https://static-2.loacg.com/open/static/github/20181020152930.png)
-
-![内联编辑列表](https://static-2.loacg.com/open/static/github/20180916-155011.png)
-
-![角色列表](https://static-2.loacg.com/open/static/github/20180916-154921.png)
-
-![角色编辑](https://static-2.loacg.com/open/static/github/20180916-155317.png)
-
 ![权限列表](https://static-2.loacg.com/open/static/github/20180916-154937.png)
-
-![权限编辑](https://static-2.loacg.com/open/static/github/20180916-154950.png)
-
-权限路由控制流程
-
-![权限结构](https://static-2.loacg.com/open/static/github/permissions.png)
-
 
 
 环境和依赖
@@ -124,6 +107,9 @@ yarn run lint
   }
 ```
 
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 附属文档
 ----
