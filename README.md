@@ -107,6 +107,23 @@ yarn run lint
     }
   }
 ```
+- **使用polyfill兼容至 IE10**
+
+- 移除polyfill。 polyfill用于兼容IE，不需要兼容IE可移除。减少体积
+  > 参考 [Vue CLI Polyfill](https://cli.vuejs.org/zh/guide/browser-compatibility.html#usebuiltins-usage)
+  
+  - 移除入口文件的 `import '@babel/polyfill'`
+    
+  - 删除 `babel.conflg.js` 中的
+    ```ecmascript 6
+    [
+      '@babel/preset-env',
+      {
+        'useBuiltIns': 'entry'
+      }
+    ]
+    ```
+
 
 附属文档
 ----
