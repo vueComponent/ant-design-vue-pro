@@ -121,6 +121,18 @@ export default {
     this.menus = this.mainMenu.find((item) => item.path === '/').children
     this.collapsed = !this.sidebarOpened
   },
+  mounted () {
+    const userAgent = navigator.userAgent
+    if (userAgent.indexOf('Edge') > -1) {
+      this.$nextTick(() => {
+        this.collapsed = !this.collapsed
+        setTimeout(() => {
+          this.collapsed = !this.collapsed
+        }, 16)
+      })
+    }
+
+  },
   methods: {
     ...mapActions(['setSidebar']),
     toggle () {
@@ -158,6 +170,7 @@ export default {
   }
 
   .layout.ant-layout {
+    height: auto;
     overflow-x: hidden;
 
     &.mobile,&.tablet {
@@ -488,6 +501,7 @@ export default {
     box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
     position: relative;
     z-index: 10;
+    height: auto;
 
     .ant-layout-sider-children:hover {
       overflow-y: auto;
