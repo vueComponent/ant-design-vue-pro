@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import Result from './Result'
+import { Result } from '@/components'
 import { mixinDevice } from '@/utils/mixin.js'
 
 const directionType = {

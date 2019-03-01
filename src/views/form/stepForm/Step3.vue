@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Result from '../../result/Result'
+import { Result } from '@/components'
 
 export default {
   name: 'Step3',
