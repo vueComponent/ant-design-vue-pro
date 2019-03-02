@@ -131,7 +131,6 @@ export default {
         }, 16)
       })
     }
-
   },
   methods: {
     ...mapActions(['setSidebar']),

@@ -80,7 +80,7 @@ export const asyncRouterMap = [
           {
             path: '/list/query-list',
             name: 'QueryListWrapper',
-            alwaysShow: true, // 强制显示 MenuItem 而不是 SubMenu
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/list/TableList'),
             meta: { title: '查询表格', keepAlive: true, permission: [ 'table' ] }
           },
@@ -257,7 +257,7 @@ export const asyncRouterMap = [
             component: () => import('@/views/account/settings/Index'),
             meta: { title: '个人设置', hideHeader: true, keepAlive: true, permission: [ 'user' ] },
             redirect: '/account/settings/base',
-            alwaysShow: true,
+            hideChildrenInMenu: true,
             children: [
               {
                 path: '/account/settings/base',

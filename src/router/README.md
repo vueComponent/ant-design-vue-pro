@@ -42,7 +42,7 @@
 | redirect | 重定向地址, 访问这个路由时,自定进行重定向 | string  | -      |
 | name     | 路由名称, 必须设置,且不能重名           | string  | -      |
 | meta     | 路由元信息（路由附带扩展信息）            | object  | {}     |
-| alwaysShow | 强制菜单显示为Item而不是SubItem(配合 meta.hidden) | boolean  | -   |
+| hideChildrenInMenu | 强制菜单显示为Item而不是SubItem(配合 meta.hidden) | boolean  | -   |
 
 
 `{ Meta }` 路由元信息对象
