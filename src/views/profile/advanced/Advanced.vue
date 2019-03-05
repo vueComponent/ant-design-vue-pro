@@ -53,10 +53,10 @@
       <detail-list title="信息组">
         <detail-list-item term="某某数据">725</detail-list-item>
         <detail-list-item term="该数据更新时间">2018-08-08</detail-list-item>
-        <detail-list-item >&nbsp;</detail-list-item>
+        <detail-list-item ></detail-list-item>
         <detail-list-item term="某某数据">725</detail-list-item>
         <detail-list-item term="该数据更新时间">2018-08-08</detail-list-item>
-        <detail-list-item >&nbsp;</detail-list-item>
+        <detail-list-item ></detail-list-item>
       </detail-list>
       <a-card type="inner" title="多层信息组">
         <detail-list title="组名称" size="small">
