@@ -3,7 +3,7 @@
     <a-list
       :grid="{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }"
       :dataSource="dataSource">
-      <a-list-item slot="renderItem" slot-scope="item, index">
+      <a-list-item slot="renderItem" slot-scope="item">
         <a-card :hoverable="true">
           <a-card-meta>
             <div style="margin-bottom: 3px" slot="title">{{ item.title }}</div>

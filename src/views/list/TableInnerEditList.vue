@@ -83,7 +83,7 @@
       :alert="{ show: true, clear: true }"
       :rowSelection="{ selectedRowKeys: this.selectedRowKeys, onChange: this.onSelectChange }"
     >
-      <template v-for="(col, index) in columns" v-if="col.scopedSlots" :slot="col.dataIndex" slot-scope="text, record, index">
+      <template v-for="(col, index) in columns" v-if="col.scopedSlots" :slot="col.dataIndex" slot-scope="text, record">
         <div :key="index">
           <a-input
             v-if="record.editable"
@@ -94,7 +94,7 @@
           <template v-else>{{ text }}</template>
         </div>
       </template>
-      <template slot="action" slot-scope="text, record, index">
+      <template slot="action" slot-scope="text, record">
         <div class="editable-row-operations">
           <span v-if="record.editable">
             <a @click="() => save(record)">保存</a>

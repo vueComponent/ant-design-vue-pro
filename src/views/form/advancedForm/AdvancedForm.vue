@@ -15,7 +15,7 @@
           :dataSource="data"
           :pagination="false"
         >
-          <template v-for="(col, i) in ['name', 'workId', 'department']" :slot="col" slot-scope="text, record, index">
+          <template v-for="(col, i) in ['name', 'workId', 'department']" :slot="col" slot-scope="text, record">
             <a-input
               :key="col"
               v-if="record.editable"
@@ -26,7 +26,7 @@
             />
             <template v-else>{{ text }}</template>
           </template>
-          <template slot="operation" slot-scope="text, record, index">
+          <template slot="operation" slot-scope="text, record">
             <template v-if="record.editable">
               <span v-if="record.isNew">
                 <a @click="saveRow(record.key)">添加</a>
