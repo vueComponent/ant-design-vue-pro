@@ -87,12 +87,19 @@ const action = Vue.directive('action', {
     const permissionId = vnode.context.$route.meta.permission
     let actions = []
     roles.permissions.forEach(p => {
-      if (p.permissionId !== permissionId) {
-        return
+      //$route.meta.permission 是否配置Array类型
+      if (Array.isArray(permissionId)) {
+        if (!permissionId.includes(p.permissionId)) {
+          return
+        }
+      } else {
+        if (p.permissionId !== permissionId) {
+          return
+        }
       }
       actions = p.actionList
     })
-    if (actions.indexOf(actionName) < 0) {
+    if (!actions.includes(actionName)) {
       el.parentNode && el.parentNode.removeChild(el) || (el.style.display = 'none')
     }
   }
