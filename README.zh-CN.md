@@ -16,10 +16,10 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 </div>
 
 - 预览: https://preview.pro.loacg.com
-- 首页 Page: https://pro.loacg.com
+- 首页: https://pro.loacg.com
 - 文档: https://pro.loacg.com/docs/getting-started
-- 更新日志: https://pro.loacg.com/docs/changelog coming soon
-- 常见问题: https://pro.loacg.com/docs/faq coming soon
+- 更新日志: https://pro.loacg.com/docs/changelog
+- 常见问题: https://pro.loacg.com/docs/faq
 
 Overview
 ----

@@ -18,8 +18,8 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 - Preview: https://preview.pro.loacg.com
 - Home Page: https://pro.loacg.com
 - Documentation: https://pro.loacg.com/docs/getting-started
-- ChangeLog: https://pro.loacg.com/docs/changelog coming soon
-- FAQ: https://pro.loacg.com/docs/faq coming soon
+- ChangeLog: https://pro.loacg.com/docs/changelog
+- FAQ: https://pro.loacg.com/docs/faq
 
 Overview
 ----
