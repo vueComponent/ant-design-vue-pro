@@ -1,5 +1,5 @@
 <template>
-  <a-locale-provider :locale="locale">
+  <a-locale-provider :locale="locale" >
     <div id="app">
       <router-view/>
     </div>
@@ -9,7 +9,7 @@
 <script>
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import { deviceEnquire, DEVICE_TYPE } from '@/utils/device'
-
+//test ci error checks
 export default {
   data () {
     return {
