@@ -1,7 +1,9 @@
 <template>
   <div class="user-wrapper">
     <span class="action">
-      <a-icon type="question-circle-o"></a-icon>
+      <a href="https://pro.loacg.com/docs/getting-started" target="_blank" style="color: #001529">
+        <a-icon type="question-circle-o"></a-icon>
+      </a>
     </span>
     <header-notice class="action"/>
     <a-dropdown>
