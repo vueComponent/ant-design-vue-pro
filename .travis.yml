@@ -4,5 +4,4 @@ node_js:
 cache: yarn
 script:
   - yarn
-  - yarn run lint --no-fix
-  - yarn run build
+  - yarn run lint --no-fix && yarn run build
