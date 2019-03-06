@@ -1,3 +1,5 @@
+[English](./README.md) | 简体中文
+
 <h1 align="center">Ant Design Pro Vue</h1>
 
 <div align="center">
@@ -13,12 +15,16 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 
 </div>
 
+- 预览: https://preview.pro.loacg.com
+- 首页 Page: https://pro.loacg.com
+- 文档: https://pro.loacg.com/docs/getting-started
+- 更新日志: https://pro.loacg.com/docs/changelog coming soon
+- 常见问题: https://pro.loacg.com/docs/faq coming soon
+
 Overview
 ----
 
-基于 [Ant Design of Vue](https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/) 实现的 [Ant Design Pro](https://pro.ant.design/)  Vue 版
-
-[预览地址](https://pro.loacg.com/)  **附带一些后台基础用到的列表展示例子**
+基于 [Ant Design of Vue](https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/) 实现的 [Ant Design Pro](https://pro.ant.design/) 
 
 ![工作台-多标签模式](https://static-2.loacg.com/open/static/github/20190224163345.jpg)
 
@@ -158,5 +164,3 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/all-contri
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 [<img src="https://avatars0.githubusercontent.com/u/22741147?v=4" width="100px;" alt="Saraka"/><br /><sub><b>Saraka</b></sub>](https://github.com/saraka-tsukai)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=saraka-tsukai "Code") [🔧](https://github.com/sendya/ant-design-pro-vue) | [<img src="https://avatars0.githubusercontent.com/u/1051992?v=4" width="100px;" alt="since2006"/><br /><sub><b>since2006</b></sub>](https://github.com/since2006)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=since2006 "Code") | [<img src="https://avatars0.githubusercontent.com/u/26241263?v=4" width="100px;" alt="yihuishou"/><br /><sub><b>挥手的骑士</b></sub>](https://github.com/yihuishou)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=yihuishou "Code") |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
