@@ -264,10 +264,10 @@ export default {
             }
           }
           return props[k]
-        }else if(! this.rowSelection){
-	        // 如果没打算开启 rowSelection 则清空默认的选择项
-	        props[k] = null
-	        return props[k]
+        } else if (!this.rowSelection) {
+          // 如果没打算开启 rowSelection 则清空默认的选择项
+          props[k] = null
+          return props[k]
         }
       }
       props[k] = this[k]
