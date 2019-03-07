@@ -51,7 +51,7 @@ export default {
     },
     rowSelection: {
       type: Object,
-      default: () => ({})
+      default: null
     },
     /** @Deprecated */
     showAlertInfo: {
@@ -254,7 +254,7 @@ export default {
       }
       if (k === 'rowSelection') {
         if (showAlert && this.rowSelection) {
-          // 重新绑定 rowSelection 事件
+          // 如果需要使用alert，则重新绑定 rowSelection 事件
           props[k] = {
             selectedRows: this.selectedRows,
             selectedRowKeys: this.selectedRowKeys,
@@ -264,10 +264,11 @@ export default {
             }
           }
           return props[k]
+        } else if (!this.rowSelection) {
+          // 如果没打算开启 rowSelection 则清空默认的选择项
+          props[k] = null
+          return props[k]
         }
-        // 如果没打算开启 rowSelection 则清空默认的选择项
-        props[k] = null
-        return props[k]
       }
       props[k] = this[k]
       return props[k]
