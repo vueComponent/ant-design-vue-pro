@@ -299,6 +299,7 @@ export default {
           display: inline-block;
           transition: all .3s;
           height: 100%;
+          color: rgba(0, 0, 0, 0.65);
 
           &:hover {
             background: rgba(0, 0, 0, 0.025);
@@ -323,6 +324,9 @@ export default {
 
           .action {
             color: rgba(255, 255, 255, 0.85);
+            a {
+              color: rgba(255, 255, 255, 0.85);
+            }
 
             &:hover {
               background: rgba(255, 255, 255, 0.16);
@@ -348,6 +352,9 @@ export default {
               text-align: center;
               width: 56px;
               line-height: 58px;
+              h1 {
+                display: none;
+              }
             }
           }
         }
@@ -380,6 +387,9 @@ export default {
               white-space: nowrap;
             }
           }
+          .ant-menu.ant-menu-horizontal {
+                max-width: 350px;
+          }
         }
       }
 
@@ -401,6 +411,8 @@ export default {
           border: none;
           height: 64px;
           line-height: 64px;
+          width: 100%;
+          max-width: 700px;
         }
 
         .header-index-left {
