@@ -349,8 +349,8 @@ export default {
             }
 
             .logo.top-nav-header {
+              flex: 0 0 56px;
               text-align: center;
-              width: 56px;
               line-height: 58px;
               h1 {
                 display: none;
@@ -388,7 +388,8 @@ export default {
             }
           }
           .ant-menu.ant-menu-horizontal {
-                max-width: 350px;
+            flex: 1 1;
+            white-space: normal;
           }
         }
       }
@@ -411,8 +412,6 @@ export default {
           border: none;
           height: 64px;
           line-height: 64px;
-          width: 100%;
-          max-width: 700px;
         }
 
         .header-index-left {
@@ -446,7 +445,7 @@ export default {
         }
 
         .header-index-right {
-          float: right;
+          flex: 0 0 198px;
           height: 64px;
           overflow: hidden;
         }
