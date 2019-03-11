@@ -59,6 +59,12 @@ export default {
   methods: {
     // select menu item
     onOpenChange (openKeys) {
+      // 在水平模式下时执行，并且不再执行后续
+      if (this.mode === 'horizontal') {
+        this.openKeys = openKeys
+        return
+      }
+      // 非水平模式时
       const latestOpenKey = openKeys.find(key => !this.openKeys.includes(key))
       if (!this.rootSubmenuKeys.includes(latestOpenKey)) {
         this.openKeys = openKeys
