@@ -157,15 +157,17 @@ export default {
     })
 
     return (
-      <div style="margin: -23px -24px 24px -24px">
-        <a-tabs
-          hideAdd
-          type={'editable-card'}
-          v-model={this.activeKey}
-          tabBarStyle={{ background: '#FFF', margin: 0, paddingLeft: '16px', paddingTop: '1px' }}
-          {...{ on: { edit: onEdit } }}>
-          {panes}
-        </a-tabs>
+      <div class="ant-pro-multi-tab">
+        <div class="ant-pro-multi-tab-wrapper">
+          <a-tabs
+            hideAdd
+            type={'editable-card'}
+            v-model={this.activeKey}
+            tabBarStyle={{ background: '#FFF', margin: 0, paddingLeft: '16px', paddingTop: '1px' }}
+            {...{ on: { edit: onEdit } }}>
+            {panes}
+          </a-tabs>
+        </div>
       </div>
     )
   }

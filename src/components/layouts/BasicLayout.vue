@@ -26,6 +26,7 @@ export default {
 </script>
 
 <style lang="less">
+  @import url('../global.less');
 
   /*
  * The following styles are auto-applied to elements with
