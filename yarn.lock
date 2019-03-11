@@ -10300,10 +10300,10 @@ vue-clipboard2@^0.2.1:
   dependencies:
     clipboard "^2.0.0"
 
-vue-cropper@^0.4.4:
-  version "0.4.8"
-  resolved "https://registry.yarnpkg.com/vue-cropper/-/vue-cropper-0.4.8.tgz#9bd26a93335cded988d135d9f25575a61a9fb795"
-  integrity sha512-xS+23lhyZvTSExmsO3x14lXra5xmykEoAy6iyjLiXH+5l+koP3F+aP8EjJmT9hGOvT5b8fVu9nts9pHAeXb78w==
+vue-cropper@0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/vue-cropper/-/vue-cropper-0.4.4.tgz#63c85ba5c7f9d9779370930c8522b61deb177c97"
+  integrity sha512-5xJ3jWyTnsx3JM+lFV5mwdPjKfpYi2rvByEh4H0sFtCMILo3YTmMti2pq9YeoPLybJz04ho+wemYw5TqidYV5g==
   dependencies:
     "@babel/core" "^7.1.2"
     "@babel/plugin-transform-runtime" "^7.1.0"
