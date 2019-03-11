@@ -157,6 +157,9 @@ export default {
           this.localDataSource = r.data // 返回结果中的数组数据
           this.localLoading = false
         })
+      } else {
+        // 在确实不需要请求数据的情况下关闭loading效果
+        this.localLoading = false
       }
     },
     initTotalList (columns) {
