@@ -1,10 +1,10 @@
 <template>
   <div class="user-wrapper">
-    <span class="action">
-      <a href="https://pro.loacg.com/docs/getting-started" target="_blank" style="color: #001529">
+    <a href="https://pro.loacg.com/docs/getting-started" target="_blank">
+      <span class="action">
         <a-icon type="question-circle-o"></a-icon>
-      </a>
-    </span>
+      </span>
+    </a>
     <header-notice class="action"/>
     <a-dropdown>
       <span class="action ant-dropdown-link user-dropdown-menu">
