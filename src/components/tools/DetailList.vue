@@ -25,7 +25,6 @@ const Item = {
     }
   },
   render () {
-    console.log('this.$slots.default', this.$slots.default)
     return (
       <Col {...{ props: responsive[this.col] }}>
         <div class="term">{this.$props.term}</div>

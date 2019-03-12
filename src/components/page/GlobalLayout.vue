@@ -113,7 +113,6 @@ export default {
   },
   watch: {
     sidebarOpened (val) {
-      console.log('sidebarOpened', val)
       this.collapsed = !val
     }
   },
@@ -146,7 +145,6 @@ export default {
       } else {
         left = this.isMobile() && '0' || (this.fixSidebar && '80px' || '0')
       }
-      console.log('left', left)
       return left
     },
     menuSelect () {
