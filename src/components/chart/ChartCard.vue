@@ -2,12 +2,20 @@
   <a-card :loading="loading" :body-style="{ padding: '20px 24px 8px' }" :bordered="false">
     <div class="chart-card-header">
       <div class="meta">
-        <span class="chart-card-title">{{ title }}</span>
+        <span class="chart-card-title">
+          <slot name="title">
+            {{ title }}
+          </slot>
+        </span>
         <span class="chart-card-action">
           <slot name="action"></slot>
         </span>
       </div>
-      <div class="total"><span>{{ total }}</span></div>
+      <div class="total">
+        <slot name="total">
+          <span>{{ typeof total === 'function' && total() || total }}</span>
+        </slot>
+      </div>
     </div>
     <div class="chart-card-content">
       <div class="content-fix">
@@ -31,8 +39,9 @@ export default {
       default: ''
     },
     total: {
-      type: String,
-      default: ''
+      type: [Function, Number, String],
+      required: false,
+      default: null
     },
     loading: {
       type: Boolean,
