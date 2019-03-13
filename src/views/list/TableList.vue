@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     handleEdit (record) {
-      this.record = record
+      this.record = record || ''
       this.currentComponet = 'Edit'
       console.log(record)
     },
