@@ -79,7 +79,7 @@ export default {
           dataIndex: 'description'
         },
         {
-          title: '登陆次数',
+          title: '登录次数',
           dataIndex: 'callNo',
           sorter: true,
           needTotal: true,
