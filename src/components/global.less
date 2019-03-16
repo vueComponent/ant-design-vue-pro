@@ -355,7 +355,10 @@ body {
   height: auto;
 
   .ant-layout-sider-children {
-    overflow-y: auto;
+    overflow-y: hidden;
+    &:hover{
+      overflow-y: auto;
+    }
   }
 
   &.ant-fixed-sidemenu {
