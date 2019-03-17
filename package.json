@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "postinstall": "opencollective-postinstall"
   },
   "dependencies": {
     "@antv/data-set": "^0.10.1",
@@ -19,6 +20,7 @@
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
+    "opencollective-postinstall": "^2.0.2",
     "viser-vue": "^2.3.3",
     "vue": "^2.5.22",
     "vue-clipboard2": "^0.2.1",
@@ -26,7 +28,8 @@
     "vue-ls": "^3.2.0",
     "vue-router": "^3.0.1",
     "vue-svg-component-runtime": "^1.0.1",
-    "vuex": "^3.1.0"
+    "vuex": "^3.1.0",
+    "opencollective": "^1.0.3"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.2.5",
@@ -118,5 +121,9 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 10"
-  ]
+  ],
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/ant-design-pro-vue"
+  }
 }
