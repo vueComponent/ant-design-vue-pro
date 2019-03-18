@@ -354,7 +354,8 @@ body {
   z-index: 10;
   height: auto;
 
-  .ant-layout-sider-children {
+  .ant-layout-sider-children  {
+    padding-top: 64px;
     overflow-y: hidden;
     &:hover{
       overflow-y: auto;
@@ -367,14 +368,18 @@ body {
   }
 
   .logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 64px;
-    position: relative;
     line-height: 64px;
     padding-left: 24px;
     -webkit-transition: all .3s;
     transition: all .3s;
     background: #002140;
     overflow: hidden;
+    z-index: 9;
 
     img, svg, h1 {
       display: inline-block;
