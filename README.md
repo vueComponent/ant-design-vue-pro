@@ -11,7 +11,6 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 [![Backers on Open Collective](https://opencollective.com/ant-design-pro-vue/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/ant-design-pro-vue/sponsors/badge.svg)](#sponsors) [![License](https://img.shields.io/npm/l/package.json.svg?style=flat)](https://github.com/sendya/ant-design-pro-vue/blob/master/LICENSE)
 [![Release](https://img.shields.io/github/release/sendya/ant-design-pro-vue.svg?style=flat)](https://github.com/sendya/ant-design-pro-vue/releases/latest)
 [![Travis branch](https://travis-ci.org/sendya/ant-design-pro-vue.svg?branch=master)](https://travis-ci.org/sendya/ant-design-pro-vue)
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors)
 
 </div>
 
@@ -148,17 +147,6 @@ Docs
 
 ## Contributors
 
-Thanks goes to these wonderful people ([emoji key](https://github.com/all-contributors/all-contributors#emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
-| [<img src="https://avatars0.githubusercontent.com/u/5404542?v=4" width="100px;" alt="言肆"/><br /><sub><b>言肆</b></sub>](https://i.loacg.com)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=sendya "Code") [📖](https://github.com/sendya/ant-design-pro-vue/commits?author=sendya "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/25897806?v=4" width="100px;" alt="晴心"/><br /><sub><b>晴心</b></sub>](https://github.com/kokoroli)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=kokoroli "Code") [📖](https://github.com/sendya/ant-design-pro-vue/commits?author=kokoroli "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/10286849?v=4" width="100px;" alt="musnow"/><br /><sub><b>musnow</b></sub>](https://github.com/musnow)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=musnow "Code") | [<img src="https://avatars0.githubusercontent.com/u/8555127?v=4" width="100px;" alt="zkwolf"/><br /><sub><b>zkwolf</b></sub>](https://github.com/zkwolf)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=zkwolf "Code") | [<img src="https://avatars0.githubusercontent.com/u/19700237?v=4" width="100px;" alt="mcmf"/><br /><sub><b>土拨鼠</b></sub>](https://github.com/mcmf)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=mcmf "Code") | [<img src="https://avatars0.githubusercontent.com/u/28291464?v=4" width="100px;" alt="AClumsy"/><br /><sub><b>阿凌</b></sub>](https://github.com/AClumsy)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=AClumsy "Code") | [<img src="https://avatars0.githubusercontent.com/u/3831242?v=4" width="100px;" alt="mynuolr"/><br /><sub><b>mynuolr</b></sub>](https://github.com/mynuolr)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=mynuolr "Code") |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-[<img src="https://avatars0.githubusercontent.com/u/22741147?v=4" width="100px;" alt="Saraka"/><br /><sub><b>Saraka</b></sub>](https://github.com/saraka-tsukai)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=saraka-tsukai "Code") [🔧](https://github.com/sendya/ant-design-pro-vue) | [<img src="https://avatars0.githubusercontent.com/u/1051992?v=4" width="100px;" alt="since2006"/><br /><sub><b>since2006</b></sub>](https://github.com/since2006)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=since2006 "Code") | [<img src="https://avatars0.githubusercontent.com/u/26241263?v=4" width="100px;" alt="yihuishou"/><br /><sub><b>挥手的骑士</b></sub>](https://github.com/yihuishou)<br />[💻](https://github.com/sendya/ant-design-pro-vue/commits?author=yihuishou "Code") |
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-## Contributors
-
 This project exists thanks to all the people who contribute. 
 <a href="https://github.com/sendya/ant-design-pro-vue/graphs/contributors"><img src="https://opencollective.com/ant-design-pro-vue/contributors.svg?width=890&button=false" /></a>
 
@@ -184,5 +172,4 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/ant-design-pro-vue/sponsor/7/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/7/avatar.svg"></a>
 <a href="https://opencollective.com/ant-design-pro-vue/sponsor/8/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/ant-design-pro-vue/sponsor/9/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/9/avatar.svg"></a>
-
 
