@@ -122,7 +122,7 @@ export default {
         })
         // 把权限表遍历一遍，设定要勾选的权限 action
         this.permissions.forEach(permission => {
-          permission.selected = permissionsAction[permission.id]
+          permission.selected = permissionsAction[permission.id] || []
         })
       }
 
@@ -175,9 +175,10 @@ export default {
       })
     },
     loadPermissions () {
+      const that = this
       getPermissions().then(res => {
         const result = res.result
-        this.permissions = result.map(permission => {
+        that.permissions = result.map(permission => {
           const options = actionToObject(permission.actionData)
           permission.checkedAll = false
           permission.selected = []
