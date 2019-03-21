@@ -8,6 +8,7 @@ import Viser from 'viser-vue'
 
 // ext library
 import VueClipboard from 'vue-clipboard2'
+import 'ant-design-vue/dist/antd.less'
 import PermissionHelper from '@/utils/helper/permission'
 
 VueClipboard.config.autoSetContainer = true
