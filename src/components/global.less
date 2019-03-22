@@ -13,10 +13,9 @@ body {
   height: auto;
   overflow-x: hidden;
 
-  &.mobile,&.tablet {
-
+  &.mobile,
+  &.tablet {
     .ant-layout-content {
-
       .content {
         margin: 24px 0 0;
       }
@@ -47,9 +46,9 @@ body {
   &.mobile {
     .sidemenu {
       .ant-header-fixedHeader {
-
-        &.ant-header-side-opened, &.ant-header-side-closed  {
-          width: 100%
+        &.ant-header-side-opened,
+        &.ant-header-side-closed {
+          width: 100%;
         }
       }
     }
@@ -64,7 +63,7 @@ body {
     line-height: 64px;
     padding: 0 24px;
     cursor: pointer;
-    transition: color .3s;
+    transition: color 0.3s;
     &:hover {
       background: rgba(0, 0, 0, 0.025);
     }
@@ -77,7 +76,7 @@ body {
       right: 0;
       z-index: 9;
       width: 100%;
-      transition: width .2s;
+      transition: width 0.2s;
 
       &.ant-header-side-opened {
         width: 100%;
@@ -98,7 +97,6 @@ body {
         max-width: unset;
       }
     }
-
   }
 
   .sidemenu {
@@ -108,14 +106,14 @@ body {
       right: 0;
       z-index: 9;
       width: 100%;
-      transition: width .2s;
+      transition: width 0.2s;
 
       &.ant-header-side-opened {
-        width: calc(100% - 256px)
+        width: calc(100% - 256px);
       }
 
       &.ant-header-side-closed {
-        width: calc(100% - 80px)
+        width: calc(100% - 80px);
       }
     }
   }
@@ -124,12 +122,12 @@ body {
     height: 64px;
     padding: 0 12px 0 0;
     background: #fff;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
     position: relative;
   }
 
-  .header, .top-nav-header-index {
-
+  .header,
+  .top-nav-header-index {
     .user-wrapper {
       float: right;
       height: 100%;
@@ -138,7 +136,7 @@ body {
         cursor: pointer;
         padding: 0 12px;
         display: inline-block;
-        transition: all .3s;
+        transition: all 0.3s;
         height: 100%;
         color: rgba(0, 0, 0, 0.65);
 
@@ -149,7 +147,7 @@ body {
         .avatar {
           margin: 20px 8px 20px 0;
           color: #1890ff;
-          background: hsla(0, 0%, 100%, .85);
+          background: hsla(0, 0%, 100%, 0.85);
           vertical-align: middle;
         }
 
@@ -162,7 +160,6 @@ body {
 
     &.dark {
       .user-wrapper {
-
         .action {
           color: rgba(255, 255, 255, 0.85);
           a {
@@ -177,13 +174,11 @@ body {
     }
   }
 
-  &.mobile,&.tablet {
+  &.mobile,
+  &.tablet {
     .top-nav-header-index {
-
       .header-index-wide {
-
         .header-index-left {
-
           .trigger {
             color: rgba(255, 255, 255, 0.85);
             padding: 0 12px;
@@ -201,9 +196,7 @@ body {
       }
 
       &.light {
-
         .header-index-wide {
-
           .header-index-left {
             .trigger {
               color: rgba(0, 0, 0, 0.65);
@@ -218,13 +211,11 @@ body {
   &.tablet {
     // overflow: hidden; text-overflow:ellipsis; white-space: nowrap;
     .top-nav-header-index {
-
       .header-index-wide {
-
         .header-index-left {
           .logo > a {
             overflow: hidden;
-            text-overflow:ellipsis;
+            text-overflow: ellipsis;
             white-space: nowrap;
           }
         }
@@ -234,13 +225,12 @@ body {
         }
       }
     }
-
   }
 
   .top-nav-header-index {
-    box-shadow: 0 1px 4px rgba(0,21,41,.08);
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
     position: relative;
-    transition: background .3s,width .2s;
+    transition: background 0.3s, width 0.2s;
 
     .header-index-wide {
       max-width: 1200px;
@@ -267,10 +257,11 @@ body {
           height: 64px;
           position: relative;
           line-height: 64px;
-          transition: all .3s;
+          transition: all 0.3s;
           overflow: hidden;
 
-          img, svg {
+          img,
+          svg {
             display: inline-block;
             vertical-align: middle;
             height: 32px;
@@ -318,6 +309,10 @@ body {
     padding: 0 12px 0 0;
   }
 
+  // footer
+  .ant-layout-footer {
+    padding: 0;
+  }
 }
 
 .topmenu {
@@ -346,21 +341,21 @@ body {
   }
 
   .ant-drawer-body {
-    padding: 0
+    padding: 0;
   }
 }
 
 // 菜单样式
 .sider {
-  box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
+  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
   position: relative;
   z-index: 10;
   height: auto;
 
-  .ant-layout-sider-children  {
+  .ant-layout-sider-children {
     padding-top: 64px;
     overflow-y: hidden;
-    &:hover{
+    &:hover {
       overflow-y: auto;
     }
   }
@@ -378,18 +373,21 @@ body {
     height: 64px;
     line-height: 64px;
     padding-left: 24px;
-    -webkit-transition: all .3s;
-    transition: all .3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
     background: #002140;
     overflow: hidden;
     z-index: 9;
 
-    img, svg, h1 {
+    img,
+    svg,
+    h1 {
       display: inline-block;
       vertical-align: middle;
     }
 
-    img, svg {
+    img,
+    svg {
       height: 32px;
       width: 32px;
     }
@@ -398,7 +396,7 @@ body {
       color: #fff;
       font-size: 20px;
       margin: 0 0 0 12px;
-      font-family: Avenir,Helvetica Neue,Arial,Helvetica,sans-serif;
+      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       font-weight: 600;
       vertical-align: middle;
     }
@@ -421,7 +419,6 @@ body {
       border-right-color: transparent;
     }
   }
-
 }
 
 // 外置的样式控制
@@ -439,12 +436,10 @@ body {
 
   .ant-dropdown-menu-item > .anticon:first-child,
   .ant-dropdown-menu-item > a > .anticon:first-child,
-  .ant-dropdown-menu-submenu-title > .anticon:first-child
-  .ant-dropdown-menu-submenu-title > a > .anticon:first-child {
+  .ant-dropdown-menu-submenu-title > .anticon:first-child .ant-dropdown-menu-submenu-title > a > .anticon:first-child {
     min-width: 12px;
     margin-right: 8px;
   }
-
 }
 
 // 数据列表 样式
@@ -453,9 +448,7 @@ body {
 }
 
 .table-page-search-wrapper {
-
   .ant-form-inline {
-
     .ant-form-item {
       display: flex;
       margin-bottom: 24px;
@@ -467,7 +460,7 @@ body {
         vertical-align: middle;
       }
 
-      >.ant-form-item-label {
+      > .ant-form-item-label {
         line-height: 32px;
         padding-right: 8px;
         width: auto;
@@ -484,11 +477,9 @@ body {
     margin-bottom: 24px;
     white-space: nowrap;
   }
-
 }
 
 .content {
-
   .table-operator {
     margin-bottom: 18px;
 

@@ -18,14 +18,13 @@
 </template>
 
 <script>
-import ALayoutSider from 'ant-design-vue/es/layout/Sider'
-import Logo from '../tools/Logo'
+import Logo from '@/components/tools/Logo'
 import SMenu from './index'
-import { mixin, mixinDevice } from '@/utils/mixin.js'
+import { mixin, mixinDevice } from '@/utils/mixin'
 
 export default {
   name: 'SideMenu',
-  components: { ALayoutSider, Logo, SMenu },
+  components: { Logo, SMenu },
   mixins: [mixin, mixinDevice],
   props: {
     mode: {

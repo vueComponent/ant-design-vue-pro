@@ -1,50 +1,33 @@
 <template>
-  <a-layout class="layout" :class="[device]">
-
-    <template v-if="isSideMenu()">
+  <a-layout :class="['layout', device]">
+    <!-- SideMenu -->
+    <template>
       <a-drawer
         v-if="isMobile()"
-        :wrapClassName="'drawer-sider ' + navTheme"
+        placement="left"
+        :wrapClassName="`drawer-sider ${navTheme}`"
         :closable="false"
         :visible="collapsed"
-        placement="left"
-        @close="() => this.collapsed = false"
+        @close="drawerClose"
       >
         <side-menu
+          mode="inline"
           :menus="menus"
           :theme="navTheme"
           :collapsed="false"
           :collapsible="true"
-          mode="inline"
-          @menuSelect="menuSelect"></side-menu>
+          @menuSelect="menuSelect"
+        ></side-menu>
       </a-drawer>
 
       <side-menu
-        v-else
+        v-else-if="isSideMenu()"
         mode="inline"
         :menus="menus"
         :theme="navTheme"
         :collapsed="collapsed"
-        :collapsible="true"></side-menu>
-    </template>
-    <!-- 下次优化这些代码 -->
-    <template v-else>
-      <a-drawer
-        v-if="isMobile()"
-        :wrapClassName="'drawer-sider ' + navTheme"
-        placement="left"
-        @close="() => this.collapsed = false"
-        :closable="false"
-        :visible="collapsed"
-      >
-        <side-menu
-          :menus="menus"
-          :theme="navTheme"
-          :collapsed="false"
-          :collapsible="true"
-          mode="inline"
-          @menuSelect="menuSelect"></side-menu>
-      </a-drawer>
+        :collapsible="true"
+      ></side-menu>
     </template>
 
     <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: contentPaddingLeft, minHeight: '100vh' }">
@@ -59,46 +42,59 @@
       />
 
       <!-- layout content -->
-      <a-layout-content :style="{ margin: $store.getters.multiTab ? '24px 24px 0' : '24px 24px 0', height: '100%', paddingTop: fixedHeader ? '64px' : '0' }">
-        <slot></slot>
+      <a-layout-content :style="{ height: '100%', margin: multiTab ? '24px 24px 0' : '24px 24px 0', paddingTop: fixedHeader ? '64px' : '0' }">
+        <multi-tab v-if="multiTab"></multi-tab>
+        <transition name="page-transition">
+          <route-view />
+        </transition>
       </a-layout-content>
 
       <!-- layout footer -->
-      <a-layout-footer style="padding: 0">
+      <a-layout-footer>
         <global-footer />
       </a-layout-footer>
-      <setting-drawer></setting-drawer>
+
+      <!-- Setting Drawer (show in development mode) -->
+      <setting-drawer v-if="!production"></setting-drawer>
     </a-layout>
   </a-layout>
+
 </template>
 
 <script>
-import SideMenu from '@/components/menu/SideMenu'
-import GlobalHeader from '@/components/page/GlobalHeader'
-import GlobalFooter from '@/components/page/GlobalFooter'
-import SettingDrawer from '@/components/setting/SettingDrawer'
 import { triggerWindowResizeEvent } from '@/utils/util'
 import { mapState, mapActions } from 'vuex'
-import { mixin, mixinDevice } from '@/utils/mixin.js'
+import { mixin, mixinDevice } from '@/utils/mixin'
+import config from '@/config/defaultSettings'
+
+import RouteView from './RouteView'
+import MultiTab from '@/components/MultiTab'
+import SideMenu from '@/components/Menu/SideMenu'
+import GlobalHeader from '@/components/GlobalHeader'
+import GlobalFooter from '@/components/GlobalFooter'
+import SettingDrawer from '@/components/SettingDrawer'
 
 export default {
-  name: 'GlobalLayout',
+  name: 'BasicLayout',
+  mixins: [mixin, mixinDevice],
   components: {
+    RouteView,
+    MultiTab,
     SideMenu,
     GlobalHeader,
     GlobalFooter,
     SettingDrawer
   },
-  mixins: [mixin, mixinDevice],
   data () {
     return {
+      production: config.production,
       collapsed: false,
       menus: []
     }
   },
   computed: {
     ...mapState({
-      // 主路由
+      // 动态主路由
       mainMenu: state => state.permission.addRouters
     }),
     contentPaddingLeft () {
@@ -117,7 +113,7 @@ export default {
     }
   },
   created () {
-    this.menus = this.mainMenu.find((item) => item.path === '/').children
+    this.menus = this.mainMenu.find(item => item.path === '/').children
     this.collapsed = !this.sidebarOpened
   },
   mounted () {
@@ -143,7 +139,7 @@ export default {
       if (this.sidebarOpened) {
         left = this.isDesktop() ? '256px' : '80px'
       } else {
-        left = this.isMobile() && '0' || (this.fixSidebar && '80px' || '0')
+        left = (this.isMobile() && '0') || ((this.fixSidebar && '80px') || '0')
       }
       return left
     },
@@ -151,7 +147,37 @@ export default {
       if (!this.isDesktop()) {
         this.collapsed = false
       }
+    },
+    drawerClose () {
+      this.collapsed = false
     }
   }
 }
 </script>
+
+<style lang="less">
+@import url('../components/global.less');
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="page-transition" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the page transition by editing
+ * these styles.
+ */
+
+.page-transition-enter {
+  opacity: 0;
+}
+
+.page-transition-leave-active {
+  opacity: 0;
+}
+
+.page-transition-enter .page-transition-container,
+.page-transition-leave-active .page-transition-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+</style>

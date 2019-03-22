@@ -1,16 +1,7 @@
 <template>
   <div class="page-header">
     <div class="page-header-index-wide">
-      <a-breadcrumb class="breadcrumb">
-        <a-breadcrumb-item v-for="(item, index) in breadList" :key="index">
-          <router-link
-            v-if="item.name != name && index != 1"
-            :to="{ path: item.path === '' ? '/' : item.path }"
-          >{{ item.meta.title }}</router-link>
-          <span v-else>{{ item.meta.title }}</span>
-        </a-breadcrumb-item>
-      </a-breadcrumb>
-
+      <s-breadcrumb />
       <div class="detail">
         <div class="main" v-if="!$route.meta.hiddenHeaderContent">
           <div class="row">
@@ -22,7 +13,7 @@
           </div>
           <div class="row">
             <div v-if="avatar" class="avatar">
-              <a-avatar :src="avatar"/>
+              <a-avatar :src="avatar" />
             </div>
             <div v-if="this.$slots.content" class="headerContent">
               <slot name="content"></slot>
@@ -50,13 +41,8 @@ export default {
   },
   props: {
     title: {
-      type: String,
-      default: '',
-      required: false
-    },
-    breadcrumb: {
-      type: Array,
-      default: null,
+      type: [String, Boolean],
+      default: true,
       required: false
     },
     logo: {
@@ -71,36 +57,12 @@ export default {
     }
   },
   data () {
-    return {
-      name: '',
-      breadList: []
-    }
-  },
-  created () {
-    this.getBreadcrumb()
-  },
-  methods: {
-    getBreadcrumb () {
-      this.breadList = []
-      // this.breadList.push({name: 'index', path: '/dashboard/', meta: {title: '首页'}})
-
-      this.name = this.$route.name
-      this.$route.matched.forEach((item) => {
-        // item.name !== 'index' && this.breadList.push(item)
-        this.breadList.push(item)
-      })
-    }
-  },
-  watch: {
-    $route () {
-      this.getBreadcrumb()
-    }
+    return {}
   }
 }
 </script>
 
 <style lang="less" scoped>
-
 .page-header {
   background: #fff;
   padding: 16px 32px 0;
@@ -146,10 +108,9 @@ export default {
         font-size: 20px;
         line-height: 28px;
         font-weight: 500;
-        color: rgba(0,0,0,.85);
+        color: rgba(0, 0, 0, 0.85);
         margin-bottom: 16px;
         flex: auto;
-
       }
       .logo {
         width: 28px;
@@ -157,9 +118,10 @@ export default {
         border-radius: 4px;
         margin-right: 16px;
       }
-      .content, .headerContent {
+      .content,
+      .headerContent {
         flex: auto;
-        color: rgba(0,0,0,.45);
+        color: rgba(0, 0, 0, 0.45);
         line-height: 22px;
 
         .link {
@@ -192,9 +154,7 @@ export default {
 }
 
 .mobile .page-header {
-
   .main {
-
     .row {
       flex-wrap: wrap;
 
@@ -203,7 +163,8 @@ export default {
         margin: 0 2% 8px 0;
       }
 
-      .content, .headerContent {
+      .content,
+      .headerContent {
         flex: 0 1 70%;
 
         .link {
