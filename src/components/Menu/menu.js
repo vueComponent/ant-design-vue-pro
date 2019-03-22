@@ -101,16 +101,15 @@ export default {
     },
     renderMenuItem (menu) {
       const target = menu.meta.target || null
-      const props = {
-        to: { name: menu.name },
-        target: target
-      }
+      const tag = target && 'a' || 'router-link'
+      const props = { to: { name: menu.name } }
+      const attrs = { href: menu.path, target: menu.meta.target }
       return (
         <Item {...{ key: menu.path }}>
-          <router-link {...{ props }}>
+          <tag {...{ props, attrs }}>
             {this.renderIcon(menu.meta.icon)}
             <span>{menu.meta.title}</span>
-          </router-link>
+          </tag>
         </Item>
       )
     },
