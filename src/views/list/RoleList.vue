@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import STable from '@/components/table/'
+import { STable } from '@/components'
 import RoleModal from './modules/RoleModal'
 
 export default {

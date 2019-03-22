@@ -49,14 +49,13 @@
 </template>
 
 <script>
-import PageLayout from '@/components/page/PageLayout'
-import RouteView from '@/components/layouts/RouteView'
+import { PageView, RouteView } from '@/layouts'
 import { mixinDevice } from '@/utils/mixin.js'
 
 export default {
   components: {
     RouteView,
-    PageLayout
+    PageView
   },
   mixins: [mixinDevice],
   data () {

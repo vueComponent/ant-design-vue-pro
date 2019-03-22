@@ -149,7 +149,7 @@
 </template>
 
 <script>
-import STable from '@/components/table/'
+import { STable } from '@/components'
 import { getRoleList, getServiceList } from '@/api/manage'
 
 export default {

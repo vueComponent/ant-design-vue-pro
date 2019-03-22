@@ -145,15 +145,9 @@
 </template>
 
 <script>
-import ChartCard from '@/components/chart/ChartCard'
 import ACol from 'ant-design-vue/es/grid/Col'
 import ATooltip from 'ant-design-vue/es/tooltip/Tooltip'
-import MiniArea from '@/components/chart/MiniArea'
-import MiniBar from '@/components/chart/MiniBar'
-import MiniProgress from '@/components/chart/MiniProgress'
-import RankList from '@/components/chart/RankList'
-import Bar from '@/components/chart/Bar'
-import Trend from '@/components/Trend'
+import { ChartCard, MiniArea, MiniBar, MiniProgress, RankList, Bar, Trend } from '@/components'
 
 const rankList = []
 for (let i = 0; i < 7; i++) {

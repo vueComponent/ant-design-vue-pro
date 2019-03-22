@@ -134,7 +134,7 @@
 </template>
 
 <script>
-import STable from '@/components/table/'
+import { STable } from '@/components'
 
 export default {
   name: 'TableList',

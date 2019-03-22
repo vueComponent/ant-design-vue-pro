@@ -1,5 +1,5 @@
 <template>
-  <page-layout :title="title">
+  <page-view :title="title">
     <a-card :bordered="false">
       <detail-list title="退款申请">
         <detail-list-item term="取货单号">1000000000</detail-list-item>
@@ -39,20 +39,18 @@
 
       </s-table>
     </a-card>
-  </page-layout>
+  </page-view>
 </template>
 
 <script>
-import PageLayout from '@/components/page/PageLayout'
-import STable from '@/components/table/'
+import { PageView } from '@/layouts'
+import { STable } from '@/components'
 import DetailList from '@/components/tools/DetailList'
-import ABadge from 'ant-design-vue/es/badge/Badge'
 const DetailListItem = DetailList.Item
 
 export default {
   components: {
-    PageLayout,
-    ABadge,
+    PageView,
     DetailList,
     DetailListItem,
     STable
