@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { RouteView } from '@/layouts'
+import RouteView from './RouteView'
 import { mixinDevice } from '@/utils/mixin'
 
 export default {
