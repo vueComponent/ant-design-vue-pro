@@ -20,6 +20,7 @@
       <div class="title">退货商品</div>
       <s-table
         style="margin-bottom: 24px"
+        row-key="id"
         :columns="goodsColumns"
         :data="loadGoodsData">
 
@@ -28,6 +29,7 @@
       <div class="title">退货进度</div>
       <s-table
         style="margin-bottom: 24px"
+        row-key="key"
         :columns="scheduleColumns"
         :data="loadScheduleData">
 
