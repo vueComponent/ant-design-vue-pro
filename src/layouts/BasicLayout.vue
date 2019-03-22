@@ -1,34 +1,32 @@
 <template>
   <a-layout :class="['layout', device]">
     <!-- SideMenu -->
-    <template>
-      <a-drawer
-        v-if="isMobile()"
-        placement="left"
-        :wrapClassName="`drawer-sider ${navTheme}`"
-        :closable="false"
-        :visible="collapsed"
-        @close="drawerClose"
-      >
-        <side-menu
-          mode="inline"
-          :menus="menus"
-          :theme="navTheme"
-          :collapsed="false"
-          :collapsible="true"
-          @menuSelect="menuSelect"
-        ></side-menu>
-      </a-drawer>
-
+    <a-drawer
+      v-if="isMobile()"
+      placement="left"
+      :wrapClassName="`drawer-sider ${navTheme}`"
+      :closable="false"
+      :visible="collapsed"
+      @close="drawerClose"
+    >
       <side-menu
-        v-else-if="isSideMenu()"
         mode="inline"
         :menus="menus"
         :theme="navTheme"
-        :collapsed="collapsed"
+        :collapsed="false"
         :collapsible="true"
+        @menuSelect="menuSelect"
       ></side-menu>
-    </template>
+    </a-drawer>
+
+    <side-menu
+      v-else-if="isSideMenu()"
+      mode="inline"
+      :menus="menus"
+      :theme="navTheme"
+      :collapsed="collapsed"
+      :collapsible="true"
+    ></side-menu>
 
     <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: contentPaddingLeft, minHeight: '100vh' }">
       <!-- layout header -->
