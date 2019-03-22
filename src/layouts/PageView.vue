@@ -41,7 +41,7 @@
       <div class="page-header-index-wide">
         <slot>
           <!-- keep-alive  -->
-          <route-view ref="content"></route-view>
+          <router-view ref="content"></router-view>
         </slot>
       </div>
     </div>
@@ -50,12 +50,10 @@
 
 <script>
 import PageHeader from '@/components/PageHeader'
-import RouteView from './RouteView'
 
 export default {
   name: 'PageView',
   components: {
-    RouteView,
     PageHeader
   },
   props: {
@@ -88,21 +86,13 @@ export default {
   updated () {
     this.getPageHeaderInfo()
   },
-  computed: {
-
-    getPageTitle () {
-      return this.$route.meta.title
-    }
-
-  },
   methods: {
     getPageHeaderInfo () {
       // eslint-disable-next-line
       this.pageTitle = (typeof(this.title) === 'string' || !this.title) ? this.title : this.$route.meta.title
 
       // 因为套用了一层 route-view 所以要取 ref 对象下的子节点的第一个对象
-      const content = this.$refs.content && this.$refs.content.$children[0]
-
+      const content = this.$refs.content
       if (content) {
         this.description = content.description
         this.linkList = content.linkList
