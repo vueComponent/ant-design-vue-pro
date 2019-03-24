@@ -2,7 +2,7 @@
   <div class="footer">
     <div class="links">
       <a
-        href="https://pro.ant.design/"
+        href="https://pro.loacg.com/"
         target="_blank"
       >Pro 首页</a>
       <a

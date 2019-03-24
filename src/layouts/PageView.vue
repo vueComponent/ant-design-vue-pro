@@ -81,24 +81,27 @@ export default {
     }
   },
   mounted () {
-    this.getPageHeaderInfo()
+    this.getPageMeta()
   },
   updated () {
-    this.getPageHeaderInfo()
+    this.getPageMeta()
   },
   methods: {
-    getPageHeaderInfo () {
+    getPageMeta () {
       // eslint-disable-next-line
       this.pageTitle = (typeof(this.title) === 'string' || !this.title) ? this.title : this.$route.meta.title
 
-      // 因为套用了一层 route-view 所以要取 ref 对象下的子节点的第一个对象
       const content = this.$refs.content
       if (content) {
-        this.description = content.description
-        this.linkList = content.linkList
-        this.extraImage = content.extraImage
-        this.search = content.search === true
-        this.tabs = content.tabs
+        if (content.pageMeta) {
+          Object.assign(this, content.pageMeta)
+        } else {
+          this.description = content.description
+          this.linkList = content.linkList
+          this.extraImage = content.extraImage
+          this.search = content.search === true
+          this.tabs = content.tabs
+        }
       }
     }
   }
