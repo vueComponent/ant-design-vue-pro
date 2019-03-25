@@ -3,6 +3,7 @@ import Bar from '@/components/Charts/Bar'
 import ChartCard from '@/components/Charts/ChartCard'
 import Liquid from '@/components/Charts/Liquid'
 import MiniArea from '@/components/Charts/MiniArea'
+import MiniSmoothArea from '@/components/Charts/MiniSmoothArea'
 import MiniBar from '@/components/Charts/MiniBar'
 import MiniProgress from '@/components/Charts/MiniProgress'
 import Radar from '@/components/Charts/Radar'
@@ -30,6 +31,7 @@ export {
   ChartCard,
   Liquid,
   MiniArea,
+  MiniSmoothArea,
   MiniBar,
   MiniProgress,
   Radar,
