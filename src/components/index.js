@@ -22,6 +22,7 @@ import STable from '@/components/Table'
 import MultiTab from '@/components/MultiTab'
 import Result from '@/components/Result'
 import IconSelector from '@/components/IconSelector'
+import ExceptionPage from '@/components/Exception'
 
 export {
   AvatarList,
@@ -46,5 +47,6 @@ export {
   STable,
   MultiTab,
   Result,
+  ExceptionPage,
   IconSelector
 }
