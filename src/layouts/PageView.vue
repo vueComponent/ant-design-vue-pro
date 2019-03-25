@@ -41,7 +41,10 @@
       <div class="page-header-index-wide">
         <slot>
           <!-- keep-alive  -->
-          <router-view ref="content"></router-view>
+          <keep-alive v-if="multiTab">
+            <router-view ref="content" />
+          </keep-alive>
+          <router-view v-else ref="content" />
         </slot>
       </div>
     </div>
@@ -49,6 +52,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import PageHeader from '@/components/PageHeader'
 
 export default {
@@ -79,6 +83,11 @@ export default {
       search: false,
       tabs: {}
     }
+  },
+  computed: {
+    ...mapState({
+      multiTab: state => state.app.multiTab
+    })
   },
   mounted () {
     this.getPageMeta()
