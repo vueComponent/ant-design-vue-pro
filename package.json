@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:preview": "vue-cli-service build --mode preview",
     "lint": "vue-cli-service lint",
     "lint:nofix": "vue-cli-service lint --no-fix",
     "test:unit": "vue-cli-service test:unit",
@@ -21,7 +22,6 @@
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
-    "opencollective-postinstall": "^2.0.2",
     "viser-vue": "^2.3.3",
     "vue": "^2.5.22",
     "vue-clipboard2": "^0.2.1",
@@ -29,8 +29,7 @@
     "vue-ls": "^3.2.0",
     "vue-router": "^3.0.1",
     "vue-svg-component-runtime": "^1.0.1",
-    "vuex": "^3.1.0",
-    "opencollective": "^1.0.3"
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.2.5",
@@ -50,7 +49,9 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "vue-svg-icon-loader": "^2.1.1",
-    "vue-template-compiler": "^2.5.22"
+    "vue-template-compiler": "^2.5.22",
+    "opencollective": "^1.0.3",
+    "opencollective-postinstall": "^2.0.2"
   },
   "eslintConfig": {
     "root": true,
