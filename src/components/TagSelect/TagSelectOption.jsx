@@ -8,13 +8,9 @@ export default {
       type: String,
       default: 'ant-pro-tag-select-option'
     },
-    defaultValue: {
-      type: [String, Number, Object],
-      required: true
-    },
     value: {
       type: [String, Number, Object],
-      required: true
+      default: ''
     },
     checked: {
       type: Boolean,
@@ -23,23 +19,20 @@ export default {
   },
   data () {
     return {
-      val: this.value || this.defaultValue || null,
       localChecked: this.checked || false
     }
   },
-  methods () {
-
+  watch: {
+    '$parent.checkAll' (val) {
+      this.localChecked = val
+    }
   },
   render () {
-    const { $slots, $props, val } = this
-    const props = {
-      ...$props
-    }
+    const { $slots, value } = this
     const onChange = (checked) => {
-      this.localChecked = checked
-      this.$emit('change', { val, checked })
+      this.$emit('change', { value, checked })
     }
-    return (<CheckableTag {...{ props }} onChange={onChange}>
+    return (<CheckableTag key={value} vModel={this.localChecked} onChange={onChange}>
       {$slots.default}
     </CheckableTag>)
   }
