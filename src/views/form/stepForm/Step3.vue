@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-form style="margin: 40px auto 0;">
-      <result title="操作成功" :is-success="true" description="预计两小时内到账">
+      <result title="操作成功" :is-success="true" description="预计两小时内到账" style="max-width: 560px;">
         <div class="information">
           <a-row>
             <a-col :sm="8" :xs="24">付款账户：</a-col>
@@ -47,7 +47,7 @@ export default {
       this.$emit('finish')
     },
     toOrderList () {
-      this.$router.push('/list/query-list')
+      this.$router.push('/list/table-list')
     }
   }
 }

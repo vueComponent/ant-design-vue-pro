@@ -41,6 +41,14 @@
         <a-button type="primary" @click="nextStep">下一步</a-button>
       </a-form-item>
     </a-form>
+    <a-divider />
+    <div class="step-form-style-desc">
+      <h3>说明</h3>
+      <h4>转账到支付宝账户</h4>
+      <p>如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。</p>
+      <h4>转账到银行卡</h4>
+      <p>如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。</p>
+    </div>
   </div>
 </template>
 
@@ -55,6 +63,29 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+.step-form-style-desc {
+  padding: 0 56px;
+  color: rgba(0,0,0,.45);
 
+  h3 {
+    margin: 0 0 12px;
+    color: rgba(0,0,0,.45);
+    font-size: 16px;
+    line-height: 32px;
+  }
+
+  h4 {
+    margin: 0 0 4px;
+    color: rgba(0,0,0,.45);
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: 12px;
+    line-height: 22px;
+  }
+}
 </style>
