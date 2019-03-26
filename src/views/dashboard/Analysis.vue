@@ -185,8 +185,8 @@
             <v-chart :force-fit="true" :height="350" :data="pieData" :scale="pieScale">
               <v-tooltip :showTitle="false" dataKey="item*percent" />
               <v-axis />
-              <v-legend dataKey="item" />
-              <v-pie position="percent" color="item" :vStyle="pieStyle" :label="labelConfig" />
+              <v-legend dataKey="item"  position="right" :offsetX="-140"/>
+              <v-pie position="percent" color="item" :vStyle="pieStyle"  />
               <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
             </v-chart>
           </div>
@@ -318,12 +318,7 @@ export default {
       pieStyle: {
         stroke: '#fff',
         lineWidth: 1
-      },
-      labelConfig: ['percent', {
-        formatter: (val, item) => {
-          return item.point.item + ': ' + val
-        }
-      }]
+      }
     }
   },
   created () {
