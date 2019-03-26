@@ -26,7 +26,7 @@
           <a-step >
             <span style="font-size: 14px" slot="title">创建项目</span>
             <template slot="description">
-              <div style="fontSize: 12px; color: rgba(0, 0, 0, 0.45); position: relative; left: 42px;" slot="description" >
+              <div style="fontSize: 12px; color: rgba(0, 0, 0, 0.45); position: relative; left: 42px;text-align: left;" slot="description" >
                 <div style="margin: 8px 0 4px">
                   曲丽丽
                   <a-icon style="margin-left: 8px" type="dingding-o" />
@@ -38,7 +38,7 @@
           <a-step title="部门初审">
             <span style="font-size: 14px" slot="title">部门初审</span>
             <template slot="description">
-              <div style="fontSize: 12px; color: rgba(0, 0, 0, 0.45); position: relative; left: 42px;" slot="description" >
+              <div style="fontSize: 12px; color: rgba(0, 0, 0, 0.45); position: relative; left: 42px;text-align: left;" slot="description" >
                 <div style="margin: 8px 0 4px">
                   周毛毛
                   <a-icon style="margin-left: 8px; color: #00A0E9" type="dingding-o" />
