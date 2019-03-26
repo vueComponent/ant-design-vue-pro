@@ -1,18 +1,21 @@
+// ie polyfill
 import '@babel/polyfill'
+
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/'
-import { VueAxios } from '@/utils/request' // axios 不建议引入到 Vue 原型链上
+import { VueAxios } from './utils/request'
 
-import './core/use'
 import bootstrap from './core/bootstrap'
-import '@/permission' // permission control
-import '@/utils/filter' // global filter
+import './core/use'
+import './permission' // permission control
+import './utils/filter' // global filter
 
 Vue.config.productionTip = false
 
-Vue.use(VueAxios, router)
+// mount axios Vue.$http and this.$http
+Vue.use(VueAxios)
 
 new Vue({
   router,
