@@ -99,106 +99,122 @@
       </div>
     </a-card>
 
-    <a-row :gutter="12">
-      <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-        <a-card :loading="loading" :bordered="false" title="线上热门搜索" :style="{ marginTop: '24px', height: '500px' }">
-          <a-dropdown :trigger="['click']" placement="bottomLeft" slot="extra">
-            <a class="ant-dropdown-link" href="#">
-              <a-icon type="ellipsis" />
-            </a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a href="javascript:;">操作一</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a href="javascript:;">操作二</a>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
-          <a-row :gutter="68">
-            <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
-              <number-info :total="12321" :sub-total="17.1">
-                <span slot="subtitle">
-                  <span>搜索用户数</span>
-                  <a-tooltip title="指标说明" slot="action">
-                    <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }" />
-                  </a-tooltip>
+    <div class="antd-pro-pages-dashboard-analysis-twoColLayout" :class="isDesktop() ? 'desktop' : ''">
+      <a-row :gutter="24">
+        <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+          <a-card :loading="loading" :bordered="false" title="线上热门搜索" :style="{ marginTop: '24px', minHeight: '500px' }">
+            <a-dropdown :trigger="['click']" placement="bottomLeft" slot="extra">
+              <a class="ant-dropdown-link" href="#">
+                <a-icon type="ellipsis" />
+              </a>
+              <a-menu slot="overlay">
+                <a-menu-item>
+                  <a href="javascript:;">操作一</a>
+                </a-menu-item>
+                <a-menu-item>
+                  <a href="javascript:;">操作二</a>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
+            <a-row :gutter="68">
+              <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
+                <number-info :total="12321" :sub-total="17.1">
+                  <span slot="subtitle">
+                    <span>搜索用户数</span>
+                    <a-tooltip title="指标说明" slot="action">
+                      <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }" />
+                    </a-tooltip>
+                  </span>
+                </number-info>
+                <!-- miniChart -->
+                <div>
+                  <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale" />
+                </div>
+              </a-col>
+              <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
+                <number-info :total="2.7" :sub-total="26.2" status="down">
+                  <span slot="subtitle">
+                    <span>人均搜索次数</span>
+                    <a-tooltip title="指标说明" slot="action">
+                      <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }" />
+                    </a-tooltip>
+                  </span>
+                </number-info>
+                <!-- miniChart -->
+                <div>
+                  <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale" />
+                </div>
+              </a-col>
+            </a-row>
+            <div class="ant-table-wrapper">
+              <a-table
+                row-key="index"
+                size="small"
+                :columns="searchTableColumns"
+                :dataSource="searchData"
+                :pagination="{ pageSize: 5 }"
+              >
+                <span slot="range" slot-scope="text, record">
+                  <trend :flag="record.status === 0 ? 'up' : 'down'">
+                    {{ text }}%
+                  </trend>
                 </span>
-              </number-info>
-              <!-- miniChart -->
-              <div>
-                <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale" />
-              </div>
-            </a-col>
-            <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
-              <number-info :total="2.7" :sub-total="26.2" status="down">
-                <span slot="subtitle">
-                  <span>人均搜索次数</span>
-                  <a-tooltip title="指标说明" slot="action">
-                    <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }" />
-                  </a-tooltip>
-                </span>
-              </number-info>
-              <!-- miniChart -->
-              <div>
-                <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale" />
-              </div>
-            </a-col>
-          </a-row>
-          <div class="ant-table-wrapper">
-            <a-table
-              row-key="index"
-              size="small"
-              :columns="searchTableColumns"
-              :dataSource="searchData"
-              :pagination="{ pageSize: 5 }"
-            />
-          </div>
-        </a-card>
-      </a-col>
-      <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-        <a-card :loading="loading" :bordered="false" title="销售额类别占比" :style="{ marginTop: '24px', height: '500px' }">
-          <div slot="extra" style="height: inherit;">
-            <div style="bottom: 12px;display: inline-block;">
-              <a-radio-group defaultValue="a">
-                <a-radio-button value="a">全部渠道</a-radio-button>
-                <a-radio-button value="b">线上</a-radio-button>
-                <a-radio-button value="c">门店</a-radio-button>
-              </a-radio-group>
+              </a-table>
             </div>
-            <span class="dashboard-analysis-iconGroup">
-              <a-dropdown :trigger="['click']" placement="bottomLeft">
-                <a-icon type="ellipsis" class="ant-dropdown-link" />
-                <a-menu slot="overlay">
-                  <a-menu-item>
-                    <a href="javascript:;">操作一</a>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <a href="javascript:;">操作二</a>
-                  </a-menu-item>
-                </a-menu>
-              </a-dropdown>
-            </span>
-          </div>
-          <h4>销售额</h4>
-          <div>
-            <v-chart :force-fit="true" :height="350" :data="pieData" :scale="pieScale">
-              <v-tooltip :showTitle="false" dataKey="item*percent" />
-              <v-axis />
-              <v-legend dataKey="item" position="right" :offsetX="-140"/>
-              <v-pie position="percent" color="item" :vStyle="pieStyle" />
-              <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
-            </v-chart>
-          </div>
-        </a-card>
-      </a-col>
-    </a-row>
+          </a-card>
+        </a-col>
+        <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
+          <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false" title="销售额类别占比" :style="{ marginTop: '24px', minHeight: '500px' }">
+            <div slot="extra" style="height: inherit;">
+              <!-- style="bottom: 12px;display: inline-block;" -->
+              <span class="dashboard-analysis-iconGroup">
+                <a-dropdown :trigger="['click']" placement="bottomLeft">
+                  <a-icon type="ellipsis" class="ant-dropdown-link" />
+                  <a-menu slot="overlay">
+                    <a-menu-item>
+                      <a href="javascript:;">操作一</a>
+                    </a-menu-item>
+                    <a-menu-item>
+                      <a href="javascript:;">操作二</a>
+                    </a-menu-item>
+                  </a-menu>
+                </a-dropdown>
+              </span>
+              <div class="analysis-salesTypeRadio">
+                <a-radio-group defaultValue="a">
+                  <a-radio-button value="a">全部渠道</a-radio-button>
+                  <a-radio-button value="b">线上</a-radio-button>
+                  <a-radio-button value="c">门店</a-radio-button>
+                </a-radio-group>
+              </div>
+
+            </div>
+            <h4>销售额</h4>
+            <div>
+              <!-- style="width: calc(100% - 240px);" -->
+              <div>
+                <v-chart :force-fit="true" :height="405" :data="pieData" :scale="pieScale">
+                  <v-tooltip :showTitle="false" dataKey="item*percent" />
+                  <v-axis />
+                  <!-- position="right" :offsetX="-140" -->
+                  <v-legend dataKey="item"/>
+                  <v-pie position="percent" color="item" :vStyle="pieStyle" />
+                  <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
+                </v-chart>
+              </div>
+
+            </div>
+          </a-card>
+        </a-col>
+      </a-row>
+    </div>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
 import { ChartCard, MiniArea, MiniBar, MiniProgress, RankList, Bar, Trend, NumberInfo, MiniSmoothArea } from '@/components'
+import { mixinDevice } from '@/utils/mixin'
 
 const rankList = []
 for (let i = 0; i < 7; i++) {
@@ -239,15 +255,14 @@ const searchTableColumns = [
   },
   {
     dataIndex: 'count',
-    title: '用户数',
-    width: 164
+    title: '用户数'
   },
   {
     dataIndex: 'range',
     title: '周涨幅',
     align: 'right',
     sorter: (a, b) => a.range - b.range,
-    width: 164
+    scopedSlots: { customRender: 'range' }
   }
 ]
 const searchData = []
@@ -289,6 +304,7 @@ const pieData = dv.rows
 
 export default {
   name: 'Analysis',
+  mixins: [mixinDevice],
   components: {
     ChartCard,
     MiniArea,
@@ -344,6 +360,26 @@ export default {
     }
   }
 
+  .antd-pro-pages-dashboard-analysis-twoColLayout {
+    position: relative;
+    display: flex;
+    display: block;
+    flex-flow: row wrap;
+
+    &.desktop div[class^=ant-col]:last-child {
+      position: absolute;
+      right: 0;
+      height: 100%;
+    }
+  }
+
+  .antd-pro-pages-dashboard-analysis-salesCard {
+    height: calc(100% - 24px);
+    /deep/ .ant-card-head {
+      position: relative;
+    }
+  }
+
   .dashboard-analysis-iconGroup {
     i {
       margin-left: 16px;
@@ -352,5 +388,10 @@ export default {
       transition: color .32s;
       color: black;
     }
+  }
+  .analysis-salesTypeRadio {
+    position: absolute;
+    right: 54px;
+    bottom: 12px;
   }
 </style>
