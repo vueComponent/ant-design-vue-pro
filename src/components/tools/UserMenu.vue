@@ -5,7 +5,7 @@
         <a-icon type="question-circle-o"></a-icon>
       </span>
     </a>
-    <header-notice class="action"/>
+    <notice-icon class="action"/>
     <a-dropdown>
       <span class="action ant-dropdown-link user-dropdown-menu">
         <a-avatar class="avatar" size="small" :src="avatar()"/>
@@ -41,13 +41,13 @@
 </template>
 
 <script>
-import HeaderNotice from './HeaderNotice'
+import NoticeIcon from '@/components/NoticeIcon'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'UserMenu',
   components: {
-    HeaderNotice
+    NoticeIcon
   },
   methods: {
     ...mapActions(['Logout']),

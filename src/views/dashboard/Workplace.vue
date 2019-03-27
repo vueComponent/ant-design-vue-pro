@@ -1,5 +1,6 @@
+
 <template>
-  <page-layout :avatar="avatar">
+  <page-view :avatar="avatar" :title="false">
     <div slot="headerContent">
       <div class="title">{{ timeFix }}，{{ user.name }}<span class="welcome-text">，{{ welcome() }}</span></div>
       <div>前端工程师 | 蚂蚁金服 - 某某某事业群 - VUE平台</div>
@@ -106,16 +107,16 @@
         </a-col>
       </a-row>
     </div>
-  </page-layout>
+  </page-view>
 </template>
 
 <script>
 import { timeFix } from '@/utils/util'
 import { mapGetters } from 'vuex'
 
-import PageLayout from '@/components/page/PageLayout'
+import { PageView } from '@/layouts'
 import HeadInfo from '@/components/tools/HeadInfo'
-import Radar from '@/components/chart/Radar'
+import { Radar } from '@/components'
 
 import { getRoleList, getServiceList } from '@/api/manage'
 
@@ -124,7 +125,7 @@ const DataSet = require('@antv/data-set')
 export default {
   name: 'Workplace',
   components: {
-    PageLayout,
+    PageView,
     HeadInfo,
     Radar
   },

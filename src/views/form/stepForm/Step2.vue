@@ -38,6 +38,15 @@
       >
         ￥ 5,000.00
       </a-form-item>
+      <a-divider />
+      <a-form-item
+        label="支付密码"
+        :labelCol="{span: 5}"
+        :wrapperCol="{span: 19}"
+        class="stepFormText"
+      >
+        <a-input type="password" style="width: 80%;" value="123456" />
+      </a-form-item>
       <a-form-item :wrapperCol="{span: 19, offset: 5}">
         <a-button :loading="loading" type="primary" @click="nextStep">提交</a-button>
         <a-button style="margin-left: 8px" @click="prevStep">上一步</a-button>
