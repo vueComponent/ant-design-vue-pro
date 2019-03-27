@@ -11,7 +11,6 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 [![Backers on Open Collective](https://opencollective.com/ant-design-pro-vue/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/ant-design-pro-vue/sponsors/badge.svg)](#sponsors) [![License](https://img.shields.io/npm/l/package.json.svg?style=flat)](https://github.com/sendya/ant-design-pro-vue/blob/master/LICENSE)
 [![Release](https://img.shields.io/github/release/sendya/ant-design-pro-vue.svg?style=flat)](https://github.com/sendya/ant-design-pro-vue/releases/latest)
 [![Travis branch](https://travis-ci.org/sendya/ant-design-pro-vue.svg?branch=master)](https://travis-ci.org/sendya/ant-design-pro-vue)
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors)
 
 </div>
 
@@ -31,8 +30,6 @@ Overview
 ![工作台+设置菜单](https://static-2.loacg.com/open/static/github/20181126112124.png)
 
 ![个人设置](https://static-2.loacg.com/open/static/github/20180916-134251.png)
-
-![权限列表](https://static-2.loacg.com/open/static/github/20180916-154937.png)
 
 
 环境和依赖
