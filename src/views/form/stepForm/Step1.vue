@@ -3,8 +3,8 @@
     <a-form style="max-width: 500px; margin: 40px auto 0;">
       <a-form-item
         label="付款账户"
-        :labelCol="{span: 5}"
-        :wrapperCol="{span: 19}"
+        :labelCol="labelCol"
+        :wrapperCol="wrapperCol"
       >
         <a-select value="1" placeholder="ant-design@alipay.com">
           <a-select-option value="1">ant-design@alipay.com</a-select-option>
@@ -12,8 +12,8 @@
       </a-form-item>
       <a-form-item
         label="收款账户"
-        :labelCol="{span: 5}"
-        :wrapperCol="{span: 19}"
+        :labelCol="labelCol"
+        :wrapperCol="wrapperCol"
       >
         <a-input-group :compact="true" style="display: inline-block; vertical-align: middle">
           <a-select defaultValue="alipay" style="width: 100px">
@@ -25,15 +25,15 @@
       </a-form-item>
       <a-form-item
         label="收款人姓名"
-        :labelCol="{span: 5}"
-        :wrapperCol="{span: 19}"
+        :labelCol="labelCol"
+        :wrapperCol="wrapperCol"
       >
         <a-input value="Alex" />
       </a-form-item>
       <a-form-item
         label="转账金额"
-        :labelCol="{span: 5}"
-        :wrapperCol="{span: 19}"
+        :labelCol="labelCol"
+        :wrapperCol="wrapperCol"
       >
         <a-input prefix="￥" value="5000" />
       </a-form-item>
@@ -55,6 +55,12 @@
 <script>
 export default {
   name: 'Step1',
+  data () {
+    return {
+      labelCol: { lg: { span: 5 }, sm: { span: 5 } },
+      wrapperCol: { lg: { span: 19 }, sm: { span: 19 } }
+    }
+  },
   methods: {
     nextStep () {
       this.$emit('nextStep')
