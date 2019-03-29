@@ -141,7 +141,7 @@ export default {
     newMember () {
       const length = this.data.length
       this.data.push({
-        key: (parseInt(this.data[length - 1].key) + 1).toString(),
+        key: length === 0 ? '1' : (parseInt(this.data[length - 1].key) + 1).toString(),
         name: '',
         workId: '',
         department: '',
