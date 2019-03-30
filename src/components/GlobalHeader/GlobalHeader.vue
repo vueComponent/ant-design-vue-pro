@@ -1,6 +1,6 @@
 <template>
   <a-layout-header
-    v-if="!headerBarFixed"
+    v-if="visible"
     :class="[fixedHeader && 'ant-header-fixedHeader', sidebarOpened ? 'ant-header-side-opened' : 'ant-header-side-closed', ]"
     :style="{ padding: '0' }"
   >
@@ -26,9 +26,7 @@
 import UserMenu from '../tools/UserMenu'
 import SMenu from '../Menu/'
 import Logo from '../tools/Logo'
-
 import { mixin } from '@/utils/mixin'
-import { handleScrollHeader } from '@/utils/util'
 
 export default {
   name: 'GlobalHeader',
@@ -66,31 +64,41 @@ export default {
   },
   data () {
     return {
-      headerBarFixed: false
+      visible: true,
+      oldScrollTop: 0
     }
   },
   mounted () {
-    const _this = this
-    handleScrollHeader(direction => {
-      _this.handleScroll(direction)
-    })
+    document.body.addEventListener('scroll', this.handleScroll, { passive: true })
   },
   methods: {
-    handleScroll (direction) {
-      if (this.autoHideHeader) {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        if (direction === 'up') {
-          this.headerBarFixed = false
-        } else {
-          scrollTop > 100 && (this.headerBarFixed = true)
-        }
-      } else {
-        this.headerBarFixed = false
+    handleScroll () {
+      if (!this.autoHideHeader) {
+        return
+      }
+
+      const scrollTop = document.body.scrollTop + document.documentElement.scrollTop
+      if (!this.ticking) {
+        this.ticking = true
+        requestAnimationFrame(() => {
+          if (this.oldScrollTop > scrollTop) {
+            this.visible = true
+          } else if (scrollTop > 300 && this.visible) {
+            this.visible = false
+          } else if (scrollTop < 300 && !this.visible) {
+            this.visible = true
+          }
+          this.oldScrollTop = scrollTop
+          this.ticking = false
+        })
       }
     },
     toggle () {
       this.$emit('toggle')
     }
+  },
+  beforeDestroy () {
+    document.body.removeEventListener('scrool', this.handScroll)
   }
 }
 </script>
