@@ -101,7 +101,7 @@ export default {
     }
   },
   beforeDestroy () {
-    document.body.removeEventListener('scrool', this.handScroll)
+    document.body.removeEventListener('scroll', this.handleScroll, true)
   }
 }
 </script>
