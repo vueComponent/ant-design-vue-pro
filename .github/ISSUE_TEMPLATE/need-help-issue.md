@@ -1,6 +1,6 @@
 ---
-name: Help issue template
-about: Describe this issue template's purpose here.
+name: Need help issue
+about: Question for use
 title: ''
 labels: question
 assignees: ''
