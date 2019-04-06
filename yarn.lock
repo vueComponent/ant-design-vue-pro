@@ -1666,10 +1666,10 @@ ant-design-palettes@^1.1.3:
   dependencies:
     tinycolor2 "^1.4.1"
 
-ant-design-vue@~1.3.7:
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.3.7.tgz#5e26c875ac636df1c20f076baa142aca62f97f14"
-  integrity sha512-PAbQrIrpmnonQohismGPxhSvwDmi2HKTfWjBpAItWsTEnXYqFzGHA7aytlutGTBRJjpyhlD6jpoiAnk/ocn4cw==
+ant-design-vue@~1.3.8:
+  version "1.3.8"
+  resolved "http://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.3.8.tgz#b8c9fc30fd658f134c09d7698f2825a342cfef5f"
+  integrity sha1-uMn8MP1ljxNMCddpjyglo0LP718=
   dependencies:
     "@ant-design/icons" "^1.1.15"
     "@ant-design/icons-vue" "^1.0.1"
