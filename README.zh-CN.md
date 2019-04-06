@@ -19,6 +19,13 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 - 文档: https://pro.loacg.com/docs/getting-started
 - 更新日志: https://pro.loacg.com/docs/changelog
 - 常见问题: https://pro.loacg.com/docs/faq
+- 分支: 
+  - demo/router-view-table: 增删改查业务(通过路由导航)
+  - feature/demand_load: 按需加载 Antd 组件
+  - feature/lang: 多语言国际化 (i18n) 例示
+  - feature/dynamic-menu: 动态菜单 (从后端拉取并生成菜单结构)
+  - lite: 无任何业务逻辑的模板 (老旧的)
+
 
 Overview
 ----
@@ -83,11 +90,11 @@ yarn run lint
 其他说明
 ----
 
-- **关于 Issue 反馈 (重要!重要!重要!) 请在开 *Issue* 时，描述清楚您的使用环境，所使用 Pro 版本或分支，出现的情况等...** 另外，若有疑问也可加入 QQ群 （Ant Design Vue 原作者使用讨论群 217490093，**非 Pro 群**），项目的几位维护者也在该群
+- **关于 Issue 反馈 (重要!重要!重要!) 请在开 *Issue* 前，先阅读该内容：[Issue / PR 编写建议](https://github.com/sendya/ant-design-pro-vue/issues/90)** 
 
 - 项目使用的 [vue-cli3](https://cli.vuejs.org/guide/), 请更新您的 cli
 
-- 关闭 Eslint (不推荐) 移除 `package.json` 中 `eslintConfig` 整个节点代码
+- 关闭 Eslint (不推荐) 移除 `package.json` 中 `eslintConfig` 整个节点代码, `vue.config.js` 下的 `lintOnSave` 值改为 `false`
 
 - 项目使用了在线 mock，[easy-mock](https://www.easy-mock.com/)  项目所用的 mock 数据 [点击查看(请勿改动接口返回数据)](https://www.easy-mock.com/project/5b7bce071f130e5b7fe8cd7d)，也可以下载 [ANTD-PRO-Easy-Mock-API.zip](https://github.com/sendya/ant-design-pro-vue/files/2682711/ANTD-PRO-Easy-Mock-API.zip) 然后自行导入到自己的 mock 服务上
 

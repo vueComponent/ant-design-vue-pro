@@ -19,6 +19,13 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 - Documentation: https://pro.loacg.com/docs/getting-started
 - ChangeLog: https://pro.loacg.com/docs/changelog
 - FAQ: https://pro.loacg.com/docs/faq
+- Branches: 
+  - demo/router-view-table: CRUD view in router
+  - feature/demand_load: loaded on demand
+  - feature/lang: i18n support
+  - feature/dynamic-menu: dynamic menu demo
+  - lite: lite template (legacy)
+
 
 Overview
 ----
@@ -78,10 +85,10 @@ yarn run lint
 
 ### Other
 
-- **IMPORTANT : About Issue feedback !! Please describe your environment, the Pro version or branch used, what happened, etc. when opening Issue**
+- **IMPORTANT : About Issue feedback !! when opening Issue read [Issue / PR Contributing](https://github.com/sendya/ant-design-pro-vue/issues/90)**
 
 - [Vue-cli3](https://cli.vuejs.org/guide/) used by the project.
-- Disable Eslint (not recommended): remove `eslintConfig`  field in `package.json` 
+- Disable Eslint (not recommended): remove `eslintConfig`  field in `package.json`  and `vue.config.js` field `lintOnSave: false`
 
 - Easy-Mock used by project，[easy-mock](https://www.easy-mock.com/)  Project API Data [DO NOT CHANGE THE INTERFACE](https://www.easy-mock.com/project/5b7bce071f130e5b7fe8cd7d)，If you want to modify, please fork [ANTD-PRO-Easy-Mock-API.zip](https://github.com/sendya/ant-design-pro-vue/files/2682711/ANTD-PRO-Easy-Mock-API.zip) and running to your server.
 
