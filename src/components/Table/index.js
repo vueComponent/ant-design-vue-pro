@@ -154,7 +154,7 @@ export default {
           // 这里用于判断接口是否有返回 r.totalCount 或 this.showPagination = false
           // 当情况满足时，表示数据不满足分页大小，关闭 table 分页功能
 
-          (!this.showPagination || !r.totalCount && this.showPagination === 'auto') && (this.localPagination = false)
+          (!this.showPagination || !r.totalCount && this.showPagination === 'auto') && (this.localPagination.hideOnSinglePage = true)
           this.localDataSource = r.data // 返回结果中的数组数据
           this.localLoading = false
         })
