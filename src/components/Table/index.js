@@ -11,7 +11,7 @@ export default {
 
       localLoading: false,
       localDataSource: [],
-      localPagination: Object.assign({}, T.props.pagination)
+      localPagination: Object.assign({}, this.pagination)
     }
   },
   props: Object.assign({}, T.props, {
