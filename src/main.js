@@ -14,6 +14,11 @@ import './utils/filter' // global filter
 
 Vue.config.productionTip = false
 
+// mock
+if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'true') {
+  import('./mock')
+}
+
 // mount axios Vue.$http and this.$http
 Vue.use(VueAxios)
 

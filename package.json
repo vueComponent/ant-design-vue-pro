@@ -20,6 +20,7 @@
     "lodash.get": "^4.4.2",
     "lodash.pick": "^4.4.0",
     "md5": "^2.2.1",
+    "mockjs": "^1.0.1-beta3",
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
     "viser-vue": "^2.3.3",
@@ -48,10 +49,10 @@
     "eslint-plugin-vue": "^5.0.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
-    "vue-svg-icon-loader": "^2.1.1",
-    "vue-template-compiler": "^2.5.22",
     "opencollective": "^1.0.3",
-    "opencollective-postinstall": "^2.0.2"
+    "opencollective-postinstall": "^2.0.2",
+    "vue-svg-icon-loader": "^2.1.1",
+    "vue-template-compiler": "^2.5.22"
   },
   "eslintConfig": {
     "root": true,
