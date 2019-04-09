@@ -20,7 +20,7 @@
     "lodash.get": "^4.4.2",
     "lodash.pick": "^4.4.0",
     "md5": "^2.2.1",
-    "mockjs": "^1.0.1-beta3",
+    "mockjs2": "^1.0.2",
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
     "viser-vue": "^2.3.3",
