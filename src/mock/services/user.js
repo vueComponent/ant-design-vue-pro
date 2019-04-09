@@ -1,5 +1,5 @@
-import Mock from 'mockjs'
-import { builder, getBody } from '../util'
+import Mock from 'mockjs2'
+import { builder } from '../util'
 
 const info = (options) => {
   console.log('options', options)
@@ -370,4 +370,4 @@ const info = (options) => {
   return builder(userInfo)
 }
 
-Mock.mock(/\/user\/info/, 'get', info)
+Mock.mock(/\/api\/user\/info/, 'get', info)
