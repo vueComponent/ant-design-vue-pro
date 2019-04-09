@@ -90,8 +90,6 @@ yarn run lint
 - [Vue-cli3](https://cli.vuejs.org/guide/) used by the project.
 - Disable Eslint (not recommended): remove `eslintConfig`  field in `package.json`  and `vue.config.js` field `lintOnSave: false`
 
-- Easy-Mock used by project，[easy-mock](https://www.easy-mock.com/)  Project API Data [DO NOT CHANGE THE INTERFACE](https://www.easy-mock.com/project/5b7bce071f130e5b7fe8cd7d)，If you want to modify, please fork [ANTD-PRO-Easy-Mock-API.zip](https://github.com/sendya/ant-design-pro-vue/files/2682711/ANTD-PRO-Easy-Mock-API.zip) and running to your server.
-
 - Load on Demand: modify `/src/main.js` L7,  append `import './core/lazy_use'` code.
 
 - Customize Theme:  `vue.config.js` 
