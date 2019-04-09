@@ -17,6 +17,7 @@ const serverList = (options) => {
     const tmpKey = key + i
     result.push({
       key: tmpKey,
+      id: tmpKey,
       no: 'No ' + tmpKey,
       description: '这是一段描述',
       callNo: Mock.mock('@integer(1, 999)'),
@@ -33,10 +34,6 @@ const serverList = (options) => {
     totalPage: totalPage,
     data: result
   })
-}
-
-const role = () => {
-  return builder({ message: 'ok' })
 }
 
 const projects = () => {
@@ -249,7 +246,6 @@ const radar = () => {
 }
 
 Mock.mock(/\/service/, 'get', serverList)
-Mock.mock(/\/role/, 'get', role)
 Mock.mock(/\/list\/search\/projects/, 'get', projects)
 Mock.mock(/\/workplace\/activity/, 'get', activity)
 Mock.mock(/\/workplace\/teams/, 'get', teams)
