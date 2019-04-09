@@ -34,9 +34,8 @@ export default {
   data () {
     return {
       expand: false,
-      checkAll: false,
       localCheckAll: false,
-      items: [],
+      items: this.getItemsKey(filterEmpty(this.$slots.default)),
       val: this.value || this.defaultValue || []
     }
   },
@@ -44,22 +43,16 @@ export default {
     onChange (checked) {
       const key = Object.keys(this.items).filter(key => key === checked.value)
       this.items[key] = checked.checked
-      // console.log(this.items)
       const bool = Object.values(this.items).lastIndexOf(false)
-      console.log('bool', bool, 'this.checkAll', this.checkAll)
       if (bool === -1) {
-        !this.checkAll && (this.checkAll = true)
+        this.localCheckAll = true
       } else {
-        this.checkAll && (this.checkAll = false)
         this.localCheckAll = false
       }
     },
     onCheckAll (checked) {
-      this.checkAll = checked.checked
-      // Object.keys(this.items)
-      // this.items[k] = checked.checked
-      Object.values(this.items).forEach(v => {
-        v = checked.checked
+      Object.keys(this.items).forEach(v => {
+        this.items[v] = checked.checked
       })
     },
     getItemsKey (items) {
@@ -99,8 +92,6 @@ export default {
       [`${prefixCls}`]: true
     }
     const tagItems = filterEmpty(this.$slots.default)
-    this.items = this.getItemsKey(tagItems)
-    console.log(this.items)
     return (
       <div class={classString}>
         {this.renderCheckAll()}
