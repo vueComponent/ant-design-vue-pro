@@ -22,12 +22,11 @@ function plugin (Vue) {
         return (permissions) => {
           const [permission, action] = permissions.split('.')
           const permissionList = _this.$store.getters.roles.permissions
-          permissionList.find((val) => {
+          return permissionList.find((val) => {
             return val.permissionId === permission
           }).actionList.findIndex((val) => {
             return val === action
-          })
-          return false
+          }) > -1
         }
       }
     }
