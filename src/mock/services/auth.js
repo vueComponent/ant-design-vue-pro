@@ -8,7 +8,7 @@ const login = (options) => {
   const body = getBody(options)
   console.log('mock: body', body)
   if (!username.includes(body.username) || !password.includes(body.password)) {
-    return builder({}, '账户或密码错误', 401)
+    return builder({ isLogin: true }, '账户或密码错误', 401)
   }
 
   return builder({
