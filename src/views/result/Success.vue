@@ -1,6 +1,6 @@
 <template>
-  <a-card :bordered="false">
-    <result :is-success="true" :description="description" :title="title">
+  <a-card :bordered="false" style="margin: -24px -24px 0px;">
+    <result type="success" :description="description" :title="title">
       <template slot="action">
         <a-button type="primary">返回列表</a-button>
         <a-button style="margin-left: 8px">查看项目</a-button>

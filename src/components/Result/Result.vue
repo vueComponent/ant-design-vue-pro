@@ -1,26 +1,44 @@
 <template>
   <div class="result">
     <div>
-      <a-icon :class="{ 'icon': true, 'success': isSuccess, 'error': !isSuccess }" :type="isSuccess ? 'check-circle' : 'close-circle'"/>
+      <a-icon :class="{ 'icon': true, [`${type}`]: true }" :type="localIsSuccess ? 'check-circle' : 'close-circle'"/>
     </div>
-    <div class="title" v-if="title">{{ title }}</div>
-    <div class="description" v-if="description">{{ description }}</div>
-    <div class="content" v-if="content">
+    <div class="title">
+      <slot name="title">
+        {{ title }}
+      </slot>
+    </div>
+    <div class="description">
+      <slot name="description">
+        {{ description }}
+      </slot>
+    </div>
+    <div class="extra" v-if="$slots.default">
       <slot></slot>
     </div>
-    <div class="action">
+    <div class="action" v-if="$slots.action">
       <slot name="action"></slot>
     </div>
   </div>
 </template>
 
 <script>
+const resultEnum = ['success', 'error']
+
 export default {
   name: 'Result',
   props: {
+    /** @Deprecated */
     isSuccess: {
       type: Boolean,
       default: false
+    },
+    type: {
+      type: String,
+      default: resultEnum[0],
+      validator (val) {
+        return (val) => resultEnum.includes(val)
+      }
     },
     title: {
       type: String,
@@ -29,10 +47,11 @@ export default {
     description: {
       type: String,
       default: ''
-    },
-    content: {
-      type: Boolean,
-      default: true
+    }
+  },
+  computed: {
+    localIsSuccess: function () {
+      return this.type === resultEnum[0]
     }
   }
 }
@@ -69,7 +88,7 @@ export default {
       color: rgba(0, 0, 0, 0.45);
       margin-bottom: 24px;
     }
-    .content {
+    .extra {
       background: #fafafa;
       padding: 24px 40px;
       border-radius: 2px;
