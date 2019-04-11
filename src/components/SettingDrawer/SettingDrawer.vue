@@ -3,8 +3,8 @@
     <a-drawer
       width="300"
       placement="right"
-      :closable="false"
       @close="onClose"
+      :closable="false"
       :visible="visible"
       :getContainer="() => $refs.settingDrawer"
       :style="{}"
@@ -111,7 +111,10 @@
               <a-list-item>
                 <a-switch slot="actions" size="small" :disabled="!fixedHeader" :defaultChecked="autoHideHeader" @change="handleFixedHeaderHidden" />
                 <a-list-item-meta>
-                  <div slot="title" :style="{ textDecoration: !fixedHeader ? 'line-through' : 'unset' }">下滑时隐藏 Header</div>
+                  <a-tooltip slot="title" placement="left">
+                    <template slot="title">固定 Header 时可配置</template>
+                    <div :style="{ opacity: !fixedHeader ? '0.5' : '1' }">下滑时隐藏 Header</div>
+                  </a-tooltip>
                 </a-list-item-meta>
               </a-list-item>
               <a-list-item >
@@ -237,6 +240,7 @@ export default {
   autoHideHeader: ${this.baseConfig.autoHideHeader}, //  auto hide header
   colorWeak: ${this.baseConfig.colorWeak},
   multiTab: ${this.baseConfig.multiTab},
+  production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true',
   // vue-ls options
   storageOptions: {
     namespace: 'pro__',
