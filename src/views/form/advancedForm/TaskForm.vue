@@ -4,13 +4,13 @@
       <a-col :lg="6" :md="12" :sm="24">
         <a-form-item
           label="任务名">
-          <a-input placeholder="请输入任务名称" v-decorator="[ 'task.name', {rules: [{ required: true, message: '请输入任务名称', whitespace: true}]} ]" />
+          <a-input placeholder="请输入任务名称" v-decorator="[ 'name2', {rules: [{ required: true, message: '请输入任务名称', whitespace: true}]} ]" />
         </a-form-item>
       </a-col>
       <a-col :xl="{span: 7, offset: 1}" :lg="{span: 8}" :md="{span: 12}" :sm="24">
         <a-form-item
           label="任务描述">
-          <a-input placeholder="请输入任务描述" v-decorator="[ 'task.description', {rules: [{ required: true, message: '请输入任务描述', whitespace: true}]} ]" />
+          <a-input placeholder="请输入任务描述" v-decorator="[ 'url2', {rules: [{ required: true, message: '请输入任务描述', whitespace: true}]} ]" />
         </a-form-item>
       </a-col>
       <a-col :xl="{span: 9, offset: 1}" :lg="{span: 10}" :md="{span: 24}" :sm="24">
@@ -19,7 +19,7 @@
           <a-select
             placeholder="请选择执行人"
             v-decorator="[
-              'task.executor',
+              'owner2',
               {rules: [{ required: true, message: '请选择执行人'}]}
             ]" >
             <a-select-option value="黄丽丽">黄丽丽</a-select-option>
@@ -35,7 +35,7 @@
           <a-select
             placeholder="请选择责任人"
             v-decorator="[
-              'task.manager',
+              'approver2',
               {rules: [{ required: true, message: '请选择责任人'}]}
             ]" >
             <a-select-option value="王伟">王伟</a-select-option>
@@ -49,7 +49,7 @@
           <a-time-picker
             style="width: 100%"
             v-decorator="[
-              'task.time',
+              'dateRange2',
               {rules: [{ required: true, message: '请选择提醒时间'}]}
             ]" />
         </a-form-item>
@@ -59,7 +59,7 @@
           label="任务类型">
           <a-select
             placeholder="请选择任务类型"
-            v-decorator="[ 'task.type', {rules: [{ required: true, message: '请选择任务类型'}]} ]" >
+            v-decorator="[ 'type2', {rules: [{ required: true, message: '请选择任务类型'}]} ]" >
             <a-select-option value="定时执行">定时执行</a-select-option>
             <a-select-option value="周期执行">周期执行</a-select-option>
           </a-select>

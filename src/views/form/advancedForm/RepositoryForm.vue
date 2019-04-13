@@ -6,7 +6,7 @@
           <a-input
             placeholder="请输入仓库名称"
             v-decorator="[
-              'repository.name',
+              'name',
               {rules: [{ required: true, message: '请输入仓库名称', whitespace: true}]}
             ]" />
         </a-form-item>
@@ -19,7 +19,7 @@
             addonAfter=".com"
             placeholder="请输入"
             v-decorator="[
-              'repository.domain',
+              'url',
               {rules: [{ required: true, message: '请输入仓库域名', whitespace: true}, {validator: validate}]}
             ]" />
         </a-form-item>
@@ -27,7 +27,7 @@
       <a-col :xl="{span: 9, offset: 1}" :lg="{span: 10}" :md="{span: 24}" :sm="24">
         <a-form-item
           label="仓库管理员">
-          <a-select placeholder="请选择管理员" v-decorator="[ 'repository.manager', {rules: [{ required: true, message: '请选择管理员'}]} ]">
+          <a-select placeholder="请选择管理员" v-decorator="[ 'owner', {rules: [{ required: true, message: '请选择管理员'}]} ]">
             <a-select-option value="王同学">王同学</a-select-option>
             <a-select-option value="李同学">李同学</a-select-option>
             <a-select-option value="黄同学">黄同学</a-select-option>
@@ -39,7 +39,7 @@
       <a-col :lg="6" :md="12" :sm="24">
         <a-form-item
           label="审批人">
-          <a-select placeholder="请选择审批员" v-decorator="[ 'repository.auditor', {rules: [{ required: true, message: '请选择审批员'}]} ]">
+          <a-select placeholder="请选择审批员" v-decorator="[ 'approver', {rules: [{ required: true, message: '请选择审批员'}]} ]">
             <a-select-option value="王晓丽">王晓丽</a-select-option>
             <a-select-option value="李军">李军</a-select-option>
           </a-select>
@@ -51,7 +51,7 @@
           <a-range-picker
             style="width: 100%"
             v-decorator="[
-              'repository.effectiveDate',
+              'dateRange',
               {rules: [{ required: true, message: '请选择生效日期'}]}
             ]" />
         </a-form-item>
@@ -62,7 +62,7 @@
           <a-select
             placeholder="请选择仓库类型"
             v-decorator="[
-              'repository.type',
+              'type',
               {rules: [{ required: true, message: '请选择仓库类型'}]}
             ]" >
             <a-select-option value="公开">公开</a-select-option>
