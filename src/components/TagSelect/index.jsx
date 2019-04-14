@@ -54,6 +54,7 @@ export default {
       Object.keys(this.items).forEach(v => {
         this.items[v] = checked.checked
       })
+      this.localCheckAll = checked.checked
     },
     getItemsKey (items) {
       const totalItem = {}
