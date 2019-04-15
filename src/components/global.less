@@ -361,11 +361,11 @@ body {
   box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
   position: relative;
   z-index: 10;
-  height: auto;
+  min-height: 100vh;
 
   .ant-layout-sider-children {
-    padding-top: 64px;
     overflow-y: hidden;
+
     &:hover {
       overflow-y: auto;
     }
@@ -377,18 +377,13 @@ body {
   }
 
   .logo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    position: relative;
     height: 64px;
-    line-height: 64px;
     padding-left: 24px;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-    background: #002140;
     overflow: hidden;
-    z-index: 9;
+    line-height: 64px;
+    background: #002140;
+    transition: all .3s;
 
     img,
     svg,

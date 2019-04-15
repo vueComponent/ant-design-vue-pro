@@ -109,7 +109,7 @@ export default {
 <style lang="less">
 .header-animat{
   position: relative;
-  z-index: 999;
+  z-index: 2;
 }
 .showHeader-enter-active {
   transition: all 0.25s ease;
