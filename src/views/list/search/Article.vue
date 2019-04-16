@@ -63,6 +63,7 @@
       <a-list
         size="large"
         rowKey="id"
+        :loading="loading"
         itemLayout="vertical"
         :dataSource="data"
       >
@@ -131,6 +132,7 @@ export default {
   data () {
     return {
       owners,
+      loading: true,
       loadingMore: false,
       data: [],
       form: this.$form.createForm(this)
@@ -147,6 +149,7 @@ export default {
       this.$http.get('/list/article').then(res => {
         console.log('res', res)
         this.data = res.result
+        this.loading = false
       })
     },
     loadMore () {
