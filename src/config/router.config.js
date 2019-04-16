@@ -111,7 +111,7 @@ export const asyncRouterMap = [
               {
                 path: '/list/search/project',
                 name: 'SearchProjects',
-                component: () => import('../views/list/TableList'),
+                component: () => import('../views/list/search/Projects'),
                 meta: { title: '搜索列表（项目）', permission: [ 'table' ] }
               },
               {
