@@ -9,6 +9,7 @@ import Viser from 'viser-vue'
 // ext library
 import VueClipboard from 'vue-clipboard2'
 import PermissionHelper from '@/utils/helper/permission'
+import './directives/action'
 
 VueClipboard.config.autoSetContainer = true
 

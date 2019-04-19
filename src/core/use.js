@@ -12,6 +12,7 @@ import 'ant-design-vue/dist/antd.less'
 import VueClipboard from 'vue-clipboard2'
 import PermissionHelper from '@/utils/helper/permission'
 // import '@/components/use'
+import './directives/action'
 
 VueClipboard.config.autoSetContainer = true
 
