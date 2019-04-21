@@ -1,6 +1,6 @@
 <template>
   <div :class="[`nav-theme-${navTheme}`, `nav-layout-${navLayout}`]">
-    <a-layout id="components-layout-demo-side" style="min-height: 100vh">
+    <a-layout style="min-height: 100vh">
       <a-layout-sider
         v-if="navLayout === 'left'"
         :theme="navTheme"

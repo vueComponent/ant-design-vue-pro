@@ -17,6 +17,7 @@
         "nprogress": "^0.2.0",
         "resize-detector": "^0.2.0",
         "vue": "^2.6.6",
+        "vue-color": "^2.7.0",
         "vue-router": "^3.0.1",
         "vuex": "^3.0.1"
     },
@@ -29,6 +30,7 @@
         "@vue/cli-service": "^3.5.0",
         "@vue/eslint-config-prettier": "^4.0.1",
         "@vue/test-utils": "1.0.0-beta.29",
+        "antd-theme-webpack-plugin": "^1.2.0",
         "babel-core": "7.0.0-bridge.0",
         "babel-eslint": "^10.0.1",
         "babel-jest": "^23.6.0",
