@@ -17,7 +17,7 @@ export default {
   props: Object.assign({}, T.props, {
     rowKey: {
       type: [String, Function],
-      default: 'id'
+      default: 'key'
     },
     data: {
       type: Function,
@@ -40,7 +40,7 @@ export default {
       default: 'default'
     },
     /**
-     * {
+     * alert: {
      *   show: true,
      *   clear: Function
      * }
@@ -61,11 +61,25 @@ export default {
     showPagination: {
       type: String | Boolean,
       default: 'auto'
+    },
+    /**
+     * enable page URI mode
+     *
+     * e.g:
+     * /users/1
+     * /users/2
+     * /users/3?queryParam=test
+     * ...
+     */
+    pageURI: {
+      type: Boolean,
+      default: false
     }
   }),
   watch: {
     'localPagination.current' (val) {
-      this.$router.push({
+      this.pageURI && this.$router.push({
+        ...this.$route,
         name: this.$route.name,
         params: Object.assign({}, this.$route.params, {
           pageNo: val
@@ -89,8 +103,10 @@ export default {
     }
   },
   created () {
+    const { pageNo } = this.$route.params
+    const localPageNum = this.pageURI && (pageNo && parseInt(pageNo)) || this.pageNum
     this.localPagination = ['auto', true].includes(this.showPagination) && Object.assign({}, this.localPagination, {
-      current: this.pageNum,
+      current: localPageNum,
       pageSize: this.pageSize,
       showSizeChanger: this.showSizeChanger
     })
