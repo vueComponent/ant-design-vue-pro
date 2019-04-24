@@ -40,14 +40,6 @@ export default {
       return keys
     }
   },
-  // created () {
-  //   this.updateMenu()
-  // },
-  /**
-   * updateMenu 在 created 周期中被调用，他先于 render 函数
-   * 因此 renderMenuItem 函数中添加 meta: {hidden: true} 是 updateMenu 执行完成后再改变的
-   * 在添加 meta 后需要重新调用一下 updateMenu 来改变 selectedKeys 的值
-   *  */
   mounted () {
     this.updateMenu()
   },
@@ -81,21 +73,14 @@ export default {
       }
     },
     updateMenu () {
-      console.log('this updateMenu methods')
       const routes = this.$route.matched.concat()
-      console.log('updateMenu: routes -> ', routes)
-      console.log('this.$route', this.$route)
-      console.log('routes.length >= 3', routes.length >= 3, this.$route.meta)
       const { hidden } = this.$route.meta
-      console.log('hidden', hidden)
       if (routes.length >= 3 && hidden) {
         routes.pop()
-        console.log('updateMenu: routes -> ', routes)
         this.selectedKeys = [routes[routes.length - 1].path]
       } else {
         this.selectedKeys = [routes.pop().path]
       }
-      console.log('this.selectedKeys', this.selectedKeys)
       const openKeys = []
       if (this.mode === 'inline') {
         routes.forEach(item => {
