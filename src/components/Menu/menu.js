@@ -74,14 +74,19 @@ export default {
     },
     updateMenu () {
       const routes = this.$route.matched.concat()
-
-      if (routes.length >= 4 && this.$route.meta.hidden) {
+      console.log('updateMenu: routes -> ', routes)
+      console.log('this.$route', this.$route)
+      console.log('routes.length >= 3', routes.length >= 3, this.$route.meta)
+      const { hidden } = this.$route.meta
+      console.log('hidden', hidden)
+      if (routes.length >= 3 && hidden) {
         routes.pop()
-        this.selectedKeys = [routes[2].path]
+        console.log('updateMenu: routes -> ', routes)
+        this.selectedKeys = [routes[routes.length - 1].path]
       } else {
         this.selectedKeys = [routes.pop().path]
       }
-
+      console.log('this.selectedKeys', this.selectedKeys)
       const openKeys = []
       if (this.mode === 'inline') {
         routes.forEach(item => {
@@ -104,6 +109,16 @@ export default {
       const tag = target && 'a' || 'router-link'
       const props = { to: { name: menu.name } }
       const attrs = { href: menu.path, target: menu.meta.target }
+
+      if (menu.children && menu.hideChildrenInMenu) {
+        // 把有子菜单的 并且 父菜单是要隐藏子菜单的
+        // 都给子菜单增加一个 hidden 属性
+        // 用来给刷新页面时， selectedKeys 做控制用
+        menu.children.forEach(item => {
+          item.meta = Object.assign(item.meta, { hidden: true })
+        })
+      }
+
       return (
         <Item {...{ key: menu.path }}>
           <tag {...{ props, attrs }}>
