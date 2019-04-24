@@ -141,7 +141,13 @@
               <a-list-item>
                 <a-switch slot="actions" size="small" :defaultChecked="multiTab" @change="onMultiTab" />
                 <a-list-item-meta>
-                  <div slot="title">多页签模式</div>
+                  <div slot="title">多页标签模式</div>
+                </a-list-item-meta>
+              </a-list-item>
+              <a-list-item>
+                <a-switch slot="actions" size="small" :disabled="!fixedHeader || !multiTab" :defaultChecked="fixedMultiTab" @change="onFixedMultiTab" />
+                <a-list-item-meta>
+                  <div slot="title">固定多页标签</div>
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
@@ -225,6 +231,10 @@ export default {
       this.baseConfig.multiTab = checked
       this.$store.dispatch('ToggleMultiTab', checked)
     },
+    onFixedMultiTab (checked) {
+      this.baseConfig.fixedMultiTab = checked
+      this.$store.dispatch('ToggleFixedMultiTab', checked)
+    },
     handleMenuTheme (theme) {
       this.baseConfig.navTheme = theme
       this.$store.dispatch('ToggleTheme', theme)
@@ -240,12 +250,13 @@ export default {
   autoHideHeader: ${this.baseConfig.autoHideHeader}, //  auto hide header
   colorWeak: ${this.baseConfig.colorWeak},
   multiTab: ${this.baseConfig.multiTab},
+  fixedMultiTab: ${this.baseConfig.fixedMultiTab},
   production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true',
   // vue-ls options
   storageOptions: {
-    namespace: 'pro__',
-    name: 'ls',
-    storage: 'local',
+    namespace: 'pro__', // key prefix
+    name: 'ls', // name variable Vue.[ls] or this.[$ls],
+    storage: 'local' // storage name session, local, memory
   }
 }`
       this.$copyText(text).then(message => {
@@ -277,6 +288,10 @@ export default {
     handleFixedHeader (fixed) {
       this.baseConfig.fixedHeader = fixed
       this.$store.dispatch('ToggleFixedHeader', fixed)
+    },
+    handleFixedMultiTab (fixed) {
+      this.baseConfig.fixedMultiTab = fixed
+      this.$store.dispatch('ToggleFixedMultiTab', fixed)
     },
     handleFixedHeaderHidden (autoHidden) {
       this.baseConfig.autoHideHeader = autoHidden

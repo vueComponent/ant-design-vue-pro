@@ -26,6 +26,7 @@
 -->
 
 <script>
+import { mixin } from '@/utils/mixin'
 export default {
   name: 'MultiTab',
   data () {
@@ -33,7 +34,35 @@ export default {
       fullPathList: [],
       pages: [],
       activeKey: '',
-      newTabIndex: 0
+      newTabIndex: 0,
+      oldScrollTop: 0,
+      visible: true
+    }
+  },
+  mixins: [mixin],
+  computed: {
+    left () {
+      let left = 0
+      if (this.layoutMode === 'sidemenu') {
+        if (this.fixedMultiTab) {
+          if (this.sidebarOpened) {
+            left = 281
+          } else {
+            left = 105
+          }
+        }
+      }
+      return `${left}px`
+    },
+    top () {
+      let top = 0
+      if (this.fixedMultiTab) {
+        top = 80
+        if (this.autoHideHeader && !this.visible) {
+          top = 23
+        }
+      }
+      return `${top}px`
     }
   },
   created () {
@@ -42,6 +71,26 @@ export default {
     this.selectedLastPath()
   },
   methods: {
+    handleScroll () {
+      if (!this.autoHideHeader) {
+        return
+      }
+      const scrollTop = document.body.scrollTop + document.documentElement.scrollTop
+      if (!this.ticking) {
+        this.ticking = true
+        requestAnimationFrame(() => {
+          if (this.oldScrollTop > scrollTop) {
+            this.visible = true
+          } else if (scrollTop > 300 && this.visible) {
+            this.visible = false
+          } else if (scrollTop < 300 && !this.visible) {
+            this.visible = true
+          }
+          this.oldScrollTop = scrollTop
+          this.ticking = false
+        })
+      }
+    },
     onEdit (targetKey, action) {
       this[action](targetKey)
     },
@@ -75,7 +124,7 @@ export default {
     },
     closeRight (e) {
       const currentIndex = this.fullPathList.indexOf(e)
-      if (currentIndex < (this.fullPathList.length - 1)) {
+      if (currentIndex < this.fullPathList.length - 1) {
         this.fullPathList.forEach((item, index) => {
           if (index > currentIndex) {
             this.remove(item)
@@ -114,26 +163,36 @@ export default {
     renderTabPaneMenu (e) {
       return (
         <a-menu {...{ on: { click: this.closeMenuClick } }}>
-          <a-menu-item key="close-that" data-vkey={e}>关闭当前标签</a-menu-item>
-          <a-menu-item key="close-right" data-vkey={e}>关闭右侧</a-menu-item>
-          <a-menu-item key="close-left" data-vkey={e}>关闭左侧</a-menu-item>
-          <a-menu-item key="close-all" data-vkey={e}>关闭全部</a-menu-item>
+          <a-menu-item key="close-that" data-vkey={e}>
+            关闭当前标签
+          </a-menu-item>
+          <a-menu-item key="close-right" data-vkey={e}>
+            关闭右侧
+          </a-menu-item>
+          <a-menu-item key="close-left" data-vkey={e}>
+            关闭左侧
+          </a-menu-item>
+          <a-menu-item key="close-all" data-vkey={e}>
+            关闭全部
+          </a-menu-item>
         </a-menu>
       )
     },
     // render
     renderTabPane (title, keyPath) {
       const menu = this.renderTabPaneMenu(keyPath)
-
       return (
         <a-dropdown overlay={menu} trigger={['contextmenu']}>
-          <span style={{ userSelect: 'none' }}>{ title }</span>
+          <span style={{ userSelect: 'none' }}>{title}</span>
         </a-dropdown>
       )
     }
   },
+  mounted () {
+    document.body.addEventListener('scroll', this.handleScroll, { passive: true })
+  },
   watch: {
-    '$route': function (newVal) {
+    $route: function (newVal) {
       this.activeKey = newVal.fullPath
       if (this.fullPathList.indexOf(newVal.fullPath) < 0) {
         this.fullPathList.push(newVal.fullPath)
@@ -144,27 +203,41 @@ export default {
       this.$router.push({ path: newPathKey })
     }
   },
+  beforeDestroy () {
+    document.body.removeEventListener('scroll', this.handleScroll, true)
+  },
   render () {
-    const { onEdit, $data: { pages } } = this
+    const {
+      onEdit,
+      $data: { pages }
+    } = this
     const panes = pages.map(page => {
       return (
         <a-tab-pane
           style={{ height: 0 }}
           tab={this.renderTabPane(page.meta.title, page.fullPath)}
-          key={page.fullPath} closable={pages.length > 1}
-        >
-        </a-tab-pane>)
+          key={page.fullPath}
+          closable={pages.length > 1}
+        />
+      )
     })
-
     return (
-      <div class="ant-pro-multi-tab">
+      <div
+        style={{
+          top: this.top,
+          left: this.left,
+          width: this.fixedMultiTab ? 'calc(100% - ' + this.left + ' + 24px)' : 'initial'
+        }}
+        class={{ 'ant-pro-multi-tab': true, 'ant-pro-multi-tab-fixed': this.fixedMultiTab }}
+      >
         <div class="ant-pro-multi-tab-wrapper">
           <a-tabs
             hideAdd
             type={'editable-card'}
             v-model={this.activeKey}
             tabBarStyle={{ background: '#FFF', margin: 0, paddingLeft: '16px', paddingTop: '1px' }}
-            {...{ on: { edit: onEdit } }}>
+            {...{ on: { edit: onEdit } }}
+          >
             {panes}
           </a-tabs>
         </div>
@@ -173,3 +246,20 @@ export default {
   }
 }
 </script>
+<style lang="less">
+.ant-pro-multi-tab.ant-pro-multi-tab-fixed {
+  position: fixed;
+  z-index: 3;
+  width: 100%;
+}
+.showHeader-enter-active {
+  transition: all 0.25s ease;
+}
+.showHeader-leave-active {
+  transition: all 0.5s ease;
+}
+.showHeader-enter,
+.showHeader-leave-to {
+  opacity: 0;
+}
+</style>

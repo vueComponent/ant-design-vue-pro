@@ -79,7 +79,6 @@ export default {
       if (!this.autoHideHeader) {
         return
       }
-
       const scrollTop = document.body.scrollTop + document.documentElement.scrollTop
       if (!this.ticking) {
         this.ticking = true

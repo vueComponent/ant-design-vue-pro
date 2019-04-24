@@ -40,7 +40,7 @@
       />
 
       <!-- layout content -->
-      <a-layout-content :style="{ height: '100%', margin: multiTab ? '24px 24px 0' : '24px 24px 0', paddingTop: fixedHeader ? '64px' : '0' }">
+      <a-layout-content :style="{ height: '100%', margin: multiTab ? '24px 24px 0' : '24px 24px 0', paddingTop: paddingTop }">
         <multi-tab v-if="multiTab"></multi-tab>
         <transition name="page-transition">
           <route-view />
@@ -103,6 +103,16 @@ export default {
         return '256px'
       }
       return '80px'
+    },
+    paddingTop () {
+      let top = 0
+      if (this.fixedHeader) {
+        top += 64
+        if (this.fixedMultiTab) {
+          top += 34
+        }
+      }
+      return top + 'px'
     }
   },
   watch: {
