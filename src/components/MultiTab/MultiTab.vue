@@ -26,6 +26,7 @@
 -->
 
 <script>
+import { mixin } from '@/utils/mixin'
 export default {
   name: 'MultiTab',
   data () {
@@ -34,6 +35,22 @@ export default {
       pages: [],
       activeKey: '',
       newTabIndex: 0
+    }
+  },
+  mixins: [mixin],
+  computed: {
+    left () {
+      let left = 0
+      if (this.layoutMode == 'sidemenu') {
+        if (this.fixedMultiTab) {
+          if (this.sidebarOpened) {
+            left = 281
+          } else {
+            left = 105
+          }
+        }
+      }
+      return `${left}px`
     }
   },
   created () {
@@ -155,9 +172,8 @@ export default {
         >
         </a-tab-pane>)
     })
-
     return (
-      <div class="ant-pro-multi-tab">
+      <div style={{"top": this.fixedMultiTab ? "80px" : "0px", "left": this.left, width: this.fixedMultiTab ? 'calc(100% - ' + this.left + ' + 24px)' : 'initial' }} class= {{ "ant-pro-multi-tab": true, "ant-pro-multi-tab-fixed": this.fixedMultiTab }}>
         <div class="ant-pro-multi-tab-wrapper">
           <a-tabs
             hideAdd
@@ -173,3 +189,20 @@ export default {
   }
 }
 </script>
+<style lang="less">
+.ant-pro-multi-tab.ant-pro-multi-tab-fixed{
+    position: fixed;
+    z-index: 3;
+    width: 100%;
+  }
+.showHeader-enter-active {
+  transition: all 0.25s ease;
+}
+.showHeader-leave-active {
+  transition: all 0.5s ease;
+}
+.showHeader-enter, .showHeader-leave-to {
+  opacity: 0;
+}
+</style>
+

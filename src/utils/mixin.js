@@ -18,7 +18,8 @@ const mixin = {
       contentWidth: state => state.app.contentWidth,
       autoHideHeader: state => state.app.autoHideHeader,
       sidebarOpened: state => state.app.sidebar,
-      multiTab: state => state.app.multiTab
+      multiTab: state => state.app.multiTab,
+      fixedMultiTab: state => state.app.fixedMultiTab
     })
   },
   methods: {

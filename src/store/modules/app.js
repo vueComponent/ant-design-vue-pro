@@ -9,7 +9,8 @@ import {
   DEFAULT_FIXED_SIDEMENU,
   DEFAULT_FIXED_HEADER_HIDDEN,
   DEFAULT_CONTENT_WIDTH_TYPE,
-  DEFAULT_MULTI_TAB
+  DEFAULT_MULTI_TAB,
+  DEFAULT_FIXED_MULTI_TAB
 } from '@/store/mutation-types'
 
 const app = {
@@ -24,7 +25,8 @@ const app = {
     autoHideHeader: false,
     color: null,
     weak: false,
-    multiTab: true
+    multiTab: true,
+    fixedMultiTab: false
   },
   mutations: {
     SET_SIDEBAR_TYPE: (state, type) => {
@@ -74,6 +76,10 @@ const app = {
     TOGGLE_MULTI_TAB: (state, bool) => {
       Vue.ls.set(DEFAULT_MULTI_TAB, bool)
       state.multiTab = bool
+    },
+    TOGGLE_FIXED_MULTI_TAB: (state, fixed) => {
+      Vue.ls.set(DEFAULT_FIXED_MULTI_TAB, fixed)
+      state.fixedMultiTab = fixed
     }
   },
   actions: {
@@ -95,6 +101,7 @@ const app = {
     ToggleFixedHeader ({ commit }, fixedHeader) {
       if (!fixedHeader) {
         commit('TOGGLE_FIXED_HEADER_HIDDEN', false)
+        commit('TOGGLE_FIXED_MULTI_TAB', false)
       }
       commit('TOGGLE_FIXED_HEADER', fixedHeader)
     },
@@ -115,6 +122,12 @@ const app = {
     },
     ToggleMultiTab ({ commit }, bool) {
       commit('TOGGLE_MULTI_TAB', bool)
+      if (!bool) {
+        commit('TOGGLE_FIXED_MULTI_TAB', false)
+      }
+    },
+    ToggleFixedMultiTab ({ commit }, bool) {
+      commit('TOGGLE_FIXED_MULTI_TAB', bool)
     }
   }
 }
