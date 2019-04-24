@@ -37,7 +37,7 @@
         :collapsed="collapsed"
         :device="device"
         @toggle="toggle"
-      />      
+      />
       <!-- layout content -->
       <a-layout-content :style="{ height: '100%', margin: multiTab ? '24px 24px 0' : '24px 24px 0', paddingTop: paddingTop }">
         <multi-tab v-if="multiTab"></multi-tab>
