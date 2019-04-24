@@ -37,8 +37,7 @@
         :collapsed="collapsed"
         :device="device"
         @toggle="toggle"
-      />
-      
+      />      
       <!-- layout content -->
       <a-layout-content :style="{ height: '100%', margin: multiTab ? '24px 24px 0' : '24px 24px 0', paddingTop: paddingTop }">
         <multi-tab v-if="multiTab"></multi-tab>
@@ -104,11 +103,11 @@ export default {
       }
       return '80px'
     },
-    paddingTop (){
+    paddingTop () {
       let top = 0
-      if(this.fixedHeader){
+      if (this.fixedHeader) {
         top += 64
-        if(this.fixedMultiTab){
+        if (this.fixedMultiTab) {
           top += 34
         }
       }

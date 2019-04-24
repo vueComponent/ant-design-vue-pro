@@ -41,7 +41,7 @@ export default {
   computed: {
     left () {
       let left = 0
-      if (this.layoutMode == 'sidemenu') {
+      if (this.layoutMode === 'sidemenu') {
         if (this.fixedMultiTab) {
           if (this.sidebarOpened) {
             left = 281
@@ -173,7 +173,7 @@ export default {
         </a-tab-pane>)
     })
     return (
-      <div style={{"top": this.fixedMultiTab ? "80px" : "0px", "left": this.left, width: this.fixedMultiTab ? 'calc(100% - ' + this.left + ' + 24px)' : 'initial' }} class= {{ "ant-pro-multi-tab": true, "ant-pro-multi-tab-fixed": this.fixedMultiTab }}>
+      <div style={{ 'top': this.fixedMultiTab ? '80px' : '0px', 'left': this.left, width: this.fixedMultiTab ? 'calc(100% - ' + this.left + ' + 24px)' : 'initial' }} class= {{ 'ant-pro-multi-tab': true, 'ant-pro-multi-tab-fixed': this.fixedMultiTab }}>
         <div class="ant-pro-multi-tab-wrapper">
           <a-tabs
             hideAdd
@@ -205,4 +205,3 @@ export default {
   opacity: 0;
 }
 </style>
-
