@@ -26,6 +26,9 @@ router.beforeEach((to, from, next) => {
           .dispatch('GetInfo')
           .then(res => {
             const roles = res.result && res.result.role
+            // console.log(roles)
+            // Vue.ls.set(userRoles,roles);
+            // let langs = Vue.ls.get(DEFAULT_Language);
             store.dispatch('GenerateRoutes', { roles }).then(() => {
               // 根据roles权限生成可访问的路由表
               // 动态添加可访问路由表

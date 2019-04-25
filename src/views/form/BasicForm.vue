@@ -2,107 +2,114 @@
   <a-card :body-style="{padding: '24px 32px'}" :bordered="false">
     <a-form @submit="handleSubmit" :form="form">
       <a-form-item
-        label="标题"
+        :label="$t('lang.formtitlelabel')"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
-        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
+      >
         <a-input
           v-decorator="[
             'name',
-            {rules: [{ required: true, message: '请输入标题' }]}
+            {rules: [{ required: true, message: $t('lang.formRequiredTitle') }]}
           ]"
           name="name"
-          placeholder="给目标起个名字" />
+          :placeholder="$t('lang.formtitleplaceholder')"
+        />
       </a-form-item>
       <a-form-item
-        label="起止日期"
+        :label="$t('lang.formdatelabel')"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
-        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
+      >
         <a-range-picker
           name="buildTime"
           style="width: 100%"
           v-decorator="[
             'buildTime',
-            {rules: [{ required: true, message: '请选择起止日期' }]}
-          ]" />
+            {rules: [{ required: true, message: $t('lang.formRequiredSelectDate') }]}
+          ]"
+        />
       </a-form-item>
       <a-form-item
-        label="目标描述"
+        :label="$t('lang.formgoallabel')"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
-        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
+      >
         <a-textarea
           rows="4"
-          placeholder="请输入你阶段性工作目标"
+          :placeholder="$t('lang.formgoalplaceholder')"
           v-decorator="[
             'description',
-            {rules: [{ required: true, message: '请输入目标描述' }]}
-          ]" />
+            {rules: [{ required: true, message: $t('lang.formRequiredGoalDescription') }]}
+          ]"
+        />
       </a-form-item>
       <a-form-item
-        label="衡量标准"
+        :label="$t('lang.formstandardlabel')"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
-        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
+      >
         <a-textarea
           rows="4"
-          placeholder="请输入衡量标准"
+          :placeholder="$t('lang.formstandardplaceholder')"
           v-decorator="[
             'type',
-            {rules: [{ required: true, message: '请输入衡量标准' }]}
-          ]" />
+            {rules: [{ required: true, message: $t('lang.formstandardplaceholder') }]}
+          ]"
+        />
       </a-form-item>
       <a-form-item
-        label="客户"
+        :label="$t('lang.formclientlabel')"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
-        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
+      >
         <a-input
-          placeholder="请描述你服务的客户，内部客户直接 @姓名／工号"
+          :placeholder="$t('lang.formclientplaceholder')"
           v-decorator="[
             'customer',
-            {rules: [{ required: true, message: '请描述你服务的客户' }]}
-          ]" />
+            {rules: [{ required: true, message: $t('lang.formRequiredDescribeCustomers') }]}
+          ]"
+        />
       </a-form-item>
       <a-form-item
-        label="邀评人"
+        :label="$t('lang.forminviteslabel')"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
         :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
         :required="false"
       >
-        <a-input placeholder="请直接 @姓名／工号，最多可邀请 5 人" />
+        <a-input :placeholder="$t('lang.forminvitesplaceholder')"/>
       </a-form-item>
       <a-form-item
-        label="权重"
+        :label="$t('lang.formweightlabel')"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
         :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
         :required="false"
       >
-        <a-input-number :min="0" :max="100" />
-        <span> %</span>
+        <a-input-number :min="0" :max="100"/>
+        <span>%</span>
       </a-form-item>
       <a-form-item
-        label="目标公开"
+        :label="$t('lang.formpubliclabel')"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
         :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
         :required="false"
-        help="客户、邀评人默认被分享"
+        :help="$t('lang.formpubliclabelhelp')"
       >
         <a-radio-group v-model="value">
-          <a-radio :value="1">公开</a-radio>
-          <a-radio :value="2">部分公开</a-radio>
-          <a-radio :value="3">不公开</a-radio>
+          <a-radio :value="1">{{$t('lang.formpublicradiopublic')}}</a-radio>
+          <a-radio :value="2">{{$t('lang.formpublicradiopartiallypublic')}}</a-radio>
+          <a-radio :value="3">{{$t('lang.formpublicradioprivate')}}</a-radio>
         </a-radio-group>
         <a-form-item>
           <a-select mode="multiple" v-if="value === 2">
-            <a-select-option value="4">同事一</a-select-option>
-            <a-select-option value="5">同事二</a-select-option>
-            <a-select-option value="6">同事三</a-select-option>
+            <a-select-option value="4">{{$t('lang.formpublicUsersoptionA')}}</a-select-option>
+            <a-select-option value="5">{{$t('lang.formpublicUsersoptionB')}}</a-select-option>
+            <a-select-option value="6">{{$t('lang.formpublicUsersoptionC')}}</a-select-option>
           </a-select>
         </a-form-item>
       </a-form-item>
-      <a-form-item
-        :wrapperCol="{ span: 24 }"
-        style="text-align: center"
-      >
-        <a-button htmlType="submit" type="primary">提交</a-button>
-        <a-button style="margin-left: 8px">保存</a-button>
+      <a-form-item :wrapperCol="{ span: 24 }" style="text-align: center">
+        <a-button htmlType="submit" type="primary">{{$t('lang.formsubmit')}}</a-button>
+        <a-button style="margin-left: 8px">{{$t('lang.formsave')}}</a-button>
       </a-form-item>
     </a-form>
   </a-card>
@@ -111,20 +118,18 @@
 <script>
 export default {
   name: 'BaseForm',
-  data () {
+  data() {
     return {
       description: '表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。',
       value: 1,
 
       // form
       form: this.$form.createForm(this)
-
     }
   },
   methods: {
-
     // handler
-    handleSubmit (e) {
+    handleSubmit(e) {
       e.preventDefault()
       this.form.validateFields((err, values) => {
         if (!err) {

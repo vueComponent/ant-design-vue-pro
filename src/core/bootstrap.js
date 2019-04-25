@@ -2,6 +2,8 @@ import Vue from 'vue'
 import store from '@/store/'
 import {
   ACCESS_TOKEN,
+  DEFAULT_Language,
+  DEFAULT_Roles,
   DEFAULT_COLOR,
   DEFAULT_THEME,
   DEFAULT_LAYOUT_MODE,
@@ -17,6 +19,8 @@ import config from '@/config/defaultSettings'
 
 export default function Initializer () {
   store.commit('SET_SIDEBAR_TYPE', Vue.ls.get(SIDEBAR_TYPE, true))
+  store.commit('TOGGLE_Language', Vue.ls.get(DEFAULT_Language, config.languages))
+  store.commit('SAVE_Roles', Vue.ls.get(DEFAULT_Roles, config.roles))
   store.commit('TOGGLE_THEME', Vue.ls.get(DEFAULT_THEME, config.navTheme))
   store.commit('TOGGLE_LAYOUT_MODE', Vue.ls.get(DEFAULT_LAYOUT_MODE, config.layout))
   store.commit('TOGGLE_FIXED_HEADER', Vue.ls.get(DEFAULT_FIXED_HEADER, config.fixedHeader))

@@ -29,7 +29,32 @@ const colorList = [
     key: '酱紫', color: '#722ED1'
   }
 ]
-
+const colorListEn = [
+  {
+    key: 'Dust Red', color: '#F5222D'
+  },
+  {
+    key: 'Volcano', color: '#FA541C'
+  },
+  {
+    key: 'Sunset Orange', color: '#FAAD14'
+  },
+  {
+    key: 'Cyan', color: '#13C2C2'
+  },
+  {
+    key: 'Polar Green', color: '#52C41A'
+  },
+  {
+    key: 'Daybreak Blue (default)', color: '#1890FF'
+  },
+  {
+    key: 'Geek Glue', color: '#2F54EB'
+  },
+  {
+    key: 'Golden Purple', color: '#722ED1'
+  }
+]
 const updateTheme = primaryColor => {
   // Don't compile less in production!
   /* if (process.env.NODE_ENV === 'production') {
@@ -40,7 +65,7 @@ const updateTheme = primaryColor => {
     return
   }
   const hideMessage = message.loading('正在编译主题！', 0)
-  function buildIt () {
+  function buildIt() {
     if (!window.less) {
       return
     }
@@ -92,4 +117,4 @@ const updateColorWeak = colorWeak => {
   colorWeak ? document.body.classList.add('colorWeak') : document.body.classList.remove('colorWeak')
 }
 
-export { updateTheme, colorList, updateColorWeak }
+export { updateTheme, colorList, colorListEn, updateColorWeak }

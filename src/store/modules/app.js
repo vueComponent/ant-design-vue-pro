@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import {
   SIDEBAR_TYPE,
+  DEFAULT_Language,
+  DEFAULT_Roles,
   DEFAULT_THEME,
   DEFAULT_LAYOUT_MODE,
   DEFAULT_COLOR,
@@ -15,6 +17,8 @@ import {
 const app = {
   state: {
     sidebar: true,
+    // language:'ch_CN',
+    language: 'zh-CN',
     device: 'desktop',
     theme: '',
     layout: '',
@@ -71,6 +75,15 @@ const app = {
       Vue.ls.set(DEFAULT_COLOR_WEAK, flag)
       state.weak = flag
     },
+    TOGGLE_Language: (state, language) => {
+      Vue.ls.set(DEFAULT_Language, language)
+      state.language = language
+    },
+    SAVE_Roles: (state, roles) => {
+      Vue.ls.set(DEFAULT_Roles, roles)
+      state.roles = roles
+    },
+
     TOGGLE_MULTI_TAB: (state, bool) => {
       Vue.ls.set(DEFAULT_MULTI_TAB, bool)
       state.multiTab = bool
@@ -113,6 +126,17 @@ const app = {
     ToggleWeak ({ commit }, weakFlag) {
       commit('TOGGLE_WEAK', weakFlag)
     },
+    ToggleLanguage ({
+      commit
+    }, language) {
+      commit('TOGGLE_Language', language)
+    },
+    SaveRoles ({
+      commit
+    }, roles) {
+      commit('SAVE_Roles', roles)
+    },
+
     ToggleMultiTab ({ commit }, bool) {
       commit('TOGGLE_MULTI_TAB', bool)
     }

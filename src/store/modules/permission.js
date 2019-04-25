@@ -1,4 +1,5 @@
-import { asyncRouterMap, constantRouterMap } from '@/config/router.config'
+import { asyncRouterMap, asyncRouterMapEn, constantRouterMap } from '@/config/router.config'
+import store from '../index';
 
 /**
  * 过滤账户是否拥有某一个权限，并将菜单从加载列表移除
@@ -7,7 +8,7 @@ import { asyncRouterMap, constantRouterMap } from '@/config/router.config'
  * @param route
  * @returns {boolean}
  */
-function hasPermission (permission, route) {
+function hasPermission(permission, route) {
   if (route.meta && route.meta.permission) {
     let flag = false
     for (let i = 0, len = permission.length; i < len; i++) {
@@ -37,7 +38,7 @@ function hasRole(roles, route) {
   }
 }
 
-function filterAsyncRouter (routerMap, roles) {
+function filterAsyncRouter(routerMap, roles) {
   const accessedRouters = routerMap.filter(route => {
     if (hasPermission(roles.permissionList, route)) {
       if (route.children && route.children.length) {
@@ -62,15 +63,28 @@ const permission = {
     }
   },
   actions: {
-    GenerateRoutes ({ commit }, data) {
+    GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
         const { roles } = data
-        const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+        
+        const langs = store.getters.language;
+        console.log(roles)
+        console.log(langs)
+        commit('SAVE_Roles', roles)//路由权限列表
+        let routeMap;
+        if (langs === "zh-CN") {
+          routeMap = asyncRouterMap
+        } else if (langs === "en-US") {
+          routeMap = asyncRouterMapEn
+        }
+        console.log(routeMap);
+        const accessedRouters = filterAsyncRouter(routeMap, roles)
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })
     }
   }
 }
+
 
 export default permission
