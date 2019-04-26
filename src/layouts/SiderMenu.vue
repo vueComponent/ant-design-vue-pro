@@ -63,7 +63,7 @@ export default {
       const menuData = [];
       for (let item of routes) {
         if (item.meta && item.meta.authority && !check(item.meta.authority)) {
-          break;
+          continue;
         }
         if (item.name && !item.hideInMenu) {
           this.openKeysMap[item.path] = parentKeys;
