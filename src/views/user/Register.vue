@@ -209,7 +209,7 @@ export default {
 
     handleSubmit () {
       const { form: { validateFields }, $router } = this
-      validateFields((err, values) => {
+      validateFields({ force: true }, (err, values) => {
         if (!err) {
           $router.push({ name: 'registerResult', params: { ...values } })
         }
