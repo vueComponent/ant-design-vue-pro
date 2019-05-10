@@ -287,7 +287,7 @@ export default {
           return props[k]
         }
       }
-      props[k] = this[k]
+      this[k] && (props[k] = this[k])
       return props[k]
     })
     const table = (
