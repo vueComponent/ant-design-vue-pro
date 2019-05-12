@@ -18,7 +18,7 @@ const actions = {
       method: "POST",
       data: payload
     });
-    commit("saveStepFormData", payload);
+    commit("saveStepFormData", { payload });
     router.push("/form/step-form/result");
   }
 };
