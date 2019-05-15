@@ -72,6 +72,10 @@ export default {
     logo: {
       type: String,
       default: null
+    },
+    directTabs: {
+      type: Object,
+      default: null
     }
   },
   data () {
@@ -99,7 +103,7 @@ export default {
     getPageMeta () {
       // eslint-disable-next-line
       this.pageTitle = (typeof(this.title) === 'string' || !this.title) ? this.title : this.$route.meta.title
-
+      this.tabs = this.directTabs
       const content = this.$refs.content
       if (content) {
         if (content.pageMeta) {
