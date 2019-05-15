@@ -72,6 +72,10 @@ export default {
     logo: {
       type: String,
       default: null
+    },
+    directTabs: {
+      type: Object,
+      default: null
     }
   },
   data () {
@@ -90,6 +94,7 @@ export default {
     })
   },
   mounted () {
+    this.tabs = this.directTabs
     this.getPageMeta()
   },
   updated () {
