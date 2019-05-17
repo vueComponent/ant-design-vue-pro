@@ -1,5 +1,5 @@
 <template>
-  <a-card :loading="loading" :body-style="{ padding: '20px 24px 8px' }" :bordered="false">
+  <div>
     <div class="chart-card-header">
       <div class="meta">
         <span class="chart-card-title">
@@ -16,17 +16,7 @@
         </slot>
       </div>
     </div>
-    <div class="chart-card-content" v-if="!mini">
-      <div class="content-fix">
-        <slot></slot>
-      </div>
-    </div>
-    <div class="chart-card-footer" v-if="!mini">
-      <div class="field">
-        <slot name="footer"></slot>
-      </div>
-    </div>
-  </a-card>
+  </div>
 </template>
 
 <script>
@@ -42,14 +32,6 @@ export default {
       required: false,
       default: null
     },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    mini: {
-      type: Boolean,
-      default: false
-    },
     titleFontSize: {
       type: Number,
       default: 30
@@ -57,7 +39,7 @@ export default {
     suffix: {
       type: String,
       default: ''
-    },
+    }
   }
 }
 </script>
@@ -83,37 +65,6 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-}
-
-.chart-card-footer {
-  border-top: 1px solid #e8e8e8;
-  padding-top: 9px;
-  margin-top: 8px;
-
-  > * {
-    position: relative;
-  }
-
-  .field {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin: 0;
-  }
-}
-
-.chart-card-content {
-  margin-bottom: 12px;
-  position: relative;
-  height: 46px;
-  width: 100%;
-
-  .content-fix {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-  }
 }
 
 .total {

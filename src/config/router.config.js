@@ -17,7 +17,7 @@ export const asyncRouterMap = [
         name: 'dashboard',
         redirect: '/dashboard/workplace',
         component: RouteView,
-        hideChildrenInMenu: true,
+        // hideChildrenInMenu: true,
         meta: { title: '仪表盘', keepAlive: true, icon: bxAnaalyse, permission: [ 'dashboard' ] },
         children: [
           {
@@ -28,9 +28,10 @@ export const asyncRouterMap = [
           },
           // 外部链接
           {
-            path: 'https://www.baidu.com/',
+            path: '/dashboard/monitor',
             name: 'Monitor',
-            meta: { title: '监控页（外部）', target: '_blank' }
+            component: () => import('@/views/dashboard/Monitor'),
+            meta: { title: '监控页', keepAlive: false, permission: [ 'dashboard' ] }
           },
           {
             path: '/dashboard/workplace',

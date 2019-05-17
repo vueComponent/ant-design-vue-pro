@@ -1,6 +1,7 @@
 // chart
 import Bar from '@/components/Charts/Bar'
 import ChartCard from '@/components/Charts/ChartCard'
+import Pie from '@/components/Charts/Pie'
 import Liquid from '@/components/Charts/Liquid'
 import MiniArea from '@/components/Charts/MiniArea'
 import MiniSmoothArea from '@/components/Charts/MiniSmoothArea'
@@ -10,6 +11,12 @@ import Radar from '@/components/Charts/Radar'
 import RankList from '@/components/Charts/RankList'
 import TransferBar from '@/components/Charts/TransferBar'
 import TagCloud from '@/components/Charts/TagCloud'
+import Cloud from '@/components/Charts/Cloud'
+import WaterWave from '@/components/Charts/WaterWave'
+import Gauge from '@/components/Charts/Gauge'
+import ActiveChart from '@/components/Charts/ActiveChart'
+
+
 
 // pro components
 import AvatarList from '@/components/AvatarList'
@@ -28,6 +35,7 @@ import TagSelect from '@/components/TagSelect'
 import ExceptionPage from '@/components/Exception'
 import StandardFormRow from '@/components/StandardFormRow'
 import ArticleListContent from '@/components/ArticleListContent'
+import miniCard from '@/components/miniCard'
 
 export {
   AvatarList,
@@ -58,5 +66,11 @@ export {
   IconSelector,
   TagSelect,
   StandardFormRow,
-  ArticleListContent
+  ArticleListContent,
+  Pie,
+  Cloud,
+  WaterWave,
+  Gauge,
+  miniCard,
+  ActiveChart
 }
