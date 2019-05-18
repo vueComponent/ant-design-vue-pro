@@ -9,19 +9,18 @@
           <slot name="action"></slot>
         </span>
       </div>
-      <div class="total" :style="{fontSize:titleFontSize+'px'}">
+      <div class="total">
         <slot name="total">
           <span>{{ typeof total === 'function' && total() || total }}</span>
-          <span v-if="suffix" v-text="suffix" class="suffix"></span>
         </slot>
       </div>
     </div>
-    <div class="chart-card-content" v-if="!mini">
+    <div class="chart-card-content">
       <div class="content-fix">
         <slot></slot>
       </div>
     </div>
-    <div class="chart-card-footer" v-if="!mini">
+    <div class="chart-card-footer">
       <div class="field">
         <slot name="footer"></slot>
       </div>
@@ -45,19 +44,7 @@ export default {
     loading: {
       type: Boolean,
       default: false
-    },
-    mini: {
-      type: Boolean,
-      default: false
-    },
-    titleFontSize: {
-      type: Number,
-      default: 30
-    },
-    suffix: {
-      type: String,
-      default: ''
-    },
+    }
   }
 }
 </script>
@@ -127,12 +114,5 @@ export default {
   font-size: 30px;
   line-height: 38px;
   height: 38px;
-}
-
-.suffix {
-  margin-left: 4px;
-  color: rgba(0, 0, 0, 0.65);
-  font-size: 16px;
-  font-style: normal;
 }
 </style>

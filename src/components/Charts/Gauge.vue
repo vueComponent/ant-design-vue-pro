@@ -60,7 +60,7 @@
 import { registerShape } from 'viser-vue'
 
 registerShape('point', 'pointer', {
-  draw(cfg, container) {
+  draw (cfg, container) {
     let point = cfg.points[0] // 获取第一个标记点
     point = this.parsePoint(point)
     const center = this.parsePoint({
@@ -104,15 +104,22 @@ const scale = [
   }
 ]
 
-const data = [{ value: 6 }]
-
 export default {
-  data() {
+  props: {
+    data: {
+      type: Array,
+      default: () => {
+        return [{ value: 8, title: '跳出率' }]
+      }
+    },
+    height: {
+      type: Number,
+      default: 180
+    }
+  },
+  data () {
     return {
-      height: 180,
-      data: data,
       scale: scale,
-
       axisLabel: {
         offset: -12,
         formatter: val => {
@@ -167,7 +174,7 @@ export default {
       },
 
       arcGuide2Start: [0, 0.965],
-      arcGuide2End: [data[0].value, 0.965],
+      arcGuide2End: [this.data[0].value, 0.965],
       arcGuide2Style: {
         stroke: '#1890FF',
         lineWidth: 10
@@ -176,8 +183,8 @@ export default {
       htmlGuidePosition: ['50%', '95%'],
       htmlGuideHtml: `
         <div style="width: 300px;text-align: center;">
-          <p style="font-size: 14px;color: #545454;margin: 0;">跳出率</p>
-          <p style="font-size:24px;color: #545454;margin: 0;">${data[0].value * 10}%</p>
+          <p style="font-size: 14px;color: #0000006e;margin: 0;">${this.data[0].title}</p>
+          <p style="font-size:24px;color: #545454;margin: 0;">${this.data[0].value * 10}%</p>
         </div>
       `
     }

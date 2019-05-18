@@ -16,8 +16,6 @@ import WaterWave from '@/components/Charts/WaterWave'
 import Gauge from '@/components/Charts/Gauge'
 import ActiveChart from '@/components/Charts/ActiveChart'
 
-
-
 // pro components
 import AvatarList from '@/components/AvatarList'
 import CountDown from '@/components/CountDown'
@@ -35,7 +33,7 @@ import TagSelect from '@/components/TagSelect'
 import ExceptionPage from '@/components/Exception'
 import StandardFormRow from '@/components/StandardFormRow'
 import ArticleListContent from '@/components/ArticleListContent'
-import miniCard from '@/components/miniCard'
+import MiniCard from '@/components/MiniCard'
 
 export {
   AvatarList,
@@ -71,6 +69,6 @@ export {
   Cloud,
   WaterWave,
   Gauge,
-  miniCard,
+  MiniCard,
   ActiveChart
 }

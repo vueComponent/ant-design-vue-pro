@@ -28,7 +28,7 @@
             style="margin-bottom: 24px;"
             :bordered="false"
             title="进行中的项目"
-            :body-style="{ padding: 0 }">
+            :body-style="loading?'':{ padding: 0 }">
             <a slot="extra">全部项目</a>
             <div>
               <a-card-grid class="project-card-grid" :key="i" v-for="(item, i) in projects">
@@ -86,7 +86,7 @@
               <a-button size="small" type="primary" ghost icon="plus">添加</a-button>
             </div>
           </a-card>
-          <a-card title="XX 指数" style="margin-bottom: 24px" :loading="radarLoading" :bordered="false" :body-style="{ padding: 0 }">
+          <a-card title="XX 指数" style="margin-bottom: 24px" :loading="radarLoading" :bordered="false" :body-style="loading?'':{ padding: 0 }">
             <div style="min-height: 400px;">
               <!-- :scale="scale" :axis1Opts="axis1Opts" :axis2Opts="axis2Opts"  -->
               <radar :data="radarData" />

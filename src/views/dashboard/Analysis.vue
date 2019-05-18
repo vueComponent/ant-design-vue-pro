@@ -63,7 +63,7 @@
       </a-col>
     </a-row>
 
-    <a-card :loading="loading" :bordered="false" :body-style="{padding: '0'}">
+    <a-card :loading="loading" :bordered="false" :body-style="showPadding? '' : {padding: '0'} ">
       <div class="salesCard">
         <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
           <div class="extra-wrapper" slot="tabBarExtraContent">
@@ -319,6 +319,7 @@ export default {
   data () {
     return {
       loading: true,
+      showPadding: true,
       rankList,
 
       // 搜索用户数
@@ -339,6 +340,8 @@ export default {
   },
   created () {
     setTimeout(() => {
+      // 兼容处理
+      this.showPadding = false
       this.loading = !this.loading
     }, 1000)
   }

@@ -14,16 +14,8 @@
 </template>
 
 <script>
-const data = [
-  {
-    type: '男性',
-    value: 56.4
-  },
-]
-
-const eachView = function(view, facet) {
+const eachView = function (view, facet) {
   var data = facet.data
-  var color  = '#1890ff'
   data.push({
     type: '其他',
     value: 100 - data[0].value
@@ -35,7 +27,7 @@ const eachView = function(view, facet) {
   view
     .intervalStack()
     .position('value')
-    .color('type', [color, '#eceef1'])
+    .color('type', [data[0].color, '#eceef1'])
     .opacity(1)
   view.guide().html({
     position: ['50%', '50%'],
@@ -48,18 +40,18 @@ const eachView = function(view, facet) {
   })
 }
 export default {
-  mounted() {
+  mounted () {
     this.setStyle()
   },
   methods: {
-    setStyle() {
+    setStyle () {
       const id = 'legend-html'
       if (document.getElementById(id)) {
         return
       }
       const styleTxt = `
         .g2-guide-html {
-            width: 50px;
+            width: 60px;
             height: 50px;
             vertical-align: middle;
             text-align: center;
@@ -81,10 +73,21 @@ export default {
       document.getElementsByTagName('head')[0].appendChild(style)
     }
   },
-  data() {
+  data () {
     return {
-      data: data,
       eachView
+    }
+  },
+  props: {
+    data: {
+      type: Array,
+      default: () => {
+        return [{
+          type: '男性',
+          value: 56.4,
+          color: '#1890ff'
+        }]
+      }
     }
   }
 }
