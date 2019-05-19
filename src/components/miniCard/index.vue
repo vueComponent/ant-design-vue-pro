@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: 'ChartCard',
+  name: 'MiniCard',
   props: {
     title: {
       type: String,
