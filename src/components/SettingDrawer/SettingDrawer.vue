@@ -6,8 +6,6 @@
       @close="onClose"
       :closable="false"
       :visible="visible"
-      :getContainer="() => $refs.settingDrawer"
-      :style="{}"
     >
       <div class="setting-drawer-index-content">
 

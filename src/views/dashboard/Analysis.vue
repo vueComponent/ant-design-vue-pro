@@ -78,7 +78,7 @@
           <a-tab-pane loading="true" tab="销售额" key="1">
             <a-row>
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar title="销售额排行" />
+                <bar :data="barData" title="销售额排行" />
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                 <rank-list title="门店销售排行榜" :list="rankList"/>
@@ -88,7 +88,7 @@
           <a-tab-pane tab="访问量" key="2">
             <a-row>
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar title="销售额趋势" />
+                <bar :data="barData2" title="销售额趋势" />
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                 <rank-list title="门店销售排行榜" :list="rankList"/>
@@ -216,6 +216,19 @@ import moment from 'moment'
 import { ChartCard, MiniArea, MiniBar, MiniProgress, RankList, Bar, Trend, NumberInfo, MiniSmoothArea } from '@/components'
 import { mixinDevice } from '@/utils/mixin'
 
+const barData = []
+const barData2 = []
+for (let i = 0; i < 12; i += 1) {
+  barData.push({
+    x: `${i + 1}月`,
+    y: Math.floor(Math.random() * 1000) + 200
+  })
+  barData2.push({
+    x: `${i + 1}月`,
+    y: Math.floor(Math.random() * 1000) + 200
+  })
+}
+
 const rankList = []
 for (let i = 0; i < 7; i++) {
   rankList.push({
@@ -326,6 +339,9 @@ export default {
       searchUserScale,
       searchTableColumns,
       searchData,
+
+      barData,
+      barData2,
 
       //
       pieScale,
