@@ -29,7 +29,7 @@
       </div>
 
       <div class="operate">
-        <a-button type="dashed" style="width: 100%" icon="plus">添加</a-button>
+        <a-button type="dashed" style="width: 100%" icon="plus" @click="$refs.taskForm.add()">添加</a-button>
       </div>
 
       <a-list size="large" :pagination="{showSizeChanger: true, showQuickJumper: true, pageSize: 5, total: 50}">
@@ -66,12 +66,14 @@
         </a-list-item>
       </a-list>
 
+      <task-form ref="taskForm" />
     </a-card>
   </div>
 </template>
 
 <script>
 import HeadInfo from '@/components/tools/HeadInfo'
+import TaskForm from './modules/TaskForm'
 
 const data = []
 data.push({
@@ -129,7 +131,8 @@ data.push({
 export default {
   name: 'StandardList',
   components: {
-    HeadInfo
+    HeadInfo,
+    TaskForm
   },
   data () {
     return {
