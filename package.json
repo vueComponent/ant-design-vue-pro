@@ -29,6 +29,7 @@
     "vue-clipboard2": "^0.2.1",
     "vue-cropper": "0.4.4",
     "vue-ls": "^3.2.0",
+    "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.0.1",
     "vue-svg-component-runtime": "^1.0.1",
     "vuex": "^3.1.0",
