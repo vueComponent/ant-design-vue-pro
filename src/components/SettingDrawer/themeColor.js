@@ -20,7 +20,7 @@ export default {
       oldColors: this.getAntdSerials(lastColor), // current colors array. The same as `matchColors`
       newColors: this.getAntdSerials(newColor) // new colors array, one-to-one corresponde with `oldColors`
     }
-    var promise = client.changer.changeColor(options)
+    var promise = client.changer.changeColor(options, Promise)
     this.lastColor = lastColor
     return promise
   }
