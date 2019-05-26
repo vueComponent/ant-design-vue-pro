@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const ThemeColorReplacer = require('webpack-theme-color-replacer')
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -24,7 +25,12 @@ module.exports = {
   configureWebpack: {
     plugins: [
       // Ignore all locale files of moment.js
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      // 生成仅包含颜色的替换样式（主题色等）
+      new ThemeColorReplacer({
+        fileName: 'css/theme-colors.css',
+        matchColors: getAntdSerials('#1890ff') // 主色系列
+      })
     ]
   },
 
@@ -97,4 +103,15 @@ module.exports = {
   lintOnSave: undefined,
   // babel-loader no-ignore node_modules/*
   transpileDependencies: []
+}
+
+function getAntdSerials (color) {
+  var lightens = new Array(9).fill().map((t, i) => {
+    return ThemeColorReplacer.varyColor.lighten(color, i / 10)
+  })
+  // 此处为了简化，采用了darken。实际按color.less需求可以引入tinycolor, colorPalette变换得到颜色值
+  var darkens = new Array(6).fill().map((t, i) => {
+    return ThemeColorReplacer.varyColor.darken(color, i / 10)
+  })
+  return lightens.concat(darkens)
 }
