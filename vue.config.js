@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const ThemeColorReplacer = require('webpack-theme-color-replacer')
+const generate = require('@ant-design/colors/lib/generate').default
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -29,7 +30,20 @@ module.exports = {
       // 生成仅包含颜色的替换样式（主题色等）
       new ThemeColorReplacer({
         fileName: 'css/theme-colors.css',
-        matchColors: getAntdSerials('#1890ff') // 主色系列
+        matchColors: getAntdSerials('#1890ff'), // 主色系列
+        // 改变样式选择器，解决样式覆盖问题
+        changeSelector (selector) {
+          switch (selector) {
+            case '.ant-calendar-today .ant-calendar-date':
+              return ':not(.ant-calendar-selected-date)' + selector
+            case '.ant-btn:focus,.ant-btn:hover':
+              return '.ant-btn:focus:not(.ant-btn-primary),.ant-btn:hover:not(.ant-btn-primary)'
+            case '.ant-btn.active,.ant-btn:active':
+              return '.ant-btn.active:not(.ant-btn-primary),.ant-btn:active:not(.ant-btn-primary)'
+            default :
+              return selector
+          }
+        }
       })
     ]
   },
@@ -106,12 +120,10 @@ module.exports = {
 }
 
 function getAntdSerials (color) {
-  var lightens = new Array(9).fill().map((t, i) => {
+  // 淡化（即less的tint）
+  const lightens = new Array(9).fill().map((t, i) => {
     return ThemeColorReplacer.varyColor.lighten(color, i / 10)
   })
-  // 此处为了简化，采用了darken。实际按color.less需求可以引入tinycolor, colorPalette变换得到颜色值
-  var darkens = new Array(6).fill().map((t, i) => {
-    return ThemeColorReplacer.varyColor.darken(color, i / 10)
-  })
-  return lightens.concat(darkens)
+  const colorPalettes = generate(color)
+  return lightens.concat(colorPalettes)
 }
