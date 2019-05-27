@@ -11,7 +11,7 @@
         ></a-input>
       </a-form-item>
 
-      <a-popover placement="rightTop" trigger="click" :visible="state.passwordLevelChecked">
+      <a-popover placement="rightTop" trigger="click" :visible="state.passwordLevelChecked" @visibleChange="handlePasswordInputClickChange">
         <template slot="content">
           <div :style="{ width: '240px' }" >
             <div :class="['user-register', passwordLevelClass]">强度：<span>{{ passwordLevelName }}</span></div>
@@ -204,6 +204,10 @@ export default {
         this.state.passwordLevelChecked = true
         return
       }
+      this.state.passwordLevelChecked = false
+    },
+
+    handlePasswordInputClickChange () {
       this.state.passwordLevelChecked = false
     },
 
