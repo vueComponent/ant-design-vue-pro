@@ -1,6 +1,5 @@
 <template>
   <div>
-    <CountDown :target="new Date().getTime() + 3900000" />
     {{ $t("message")["app.dashboard.analysis.timeLabel"] }} :
     <a-date-picker></a-date-picker>
     <Chart :option="chartOption" style="height: 400px" />
@@ -11,7 +10,6 @@
 <script>
 import request from "../../utils/request";
 import Chart from "../../components/Chart";
-import CountDown from "../../components/CountDown";
 import chartCode from "!!raw-loader!../../components/Chart";
 export default {
   data() {
@@ -57,8 +55,7 @@ export default {
     clearInterval(this.interval);
   },
   components: {
-    Chart,
-    CountDown
+    Chart
   }
 };
 </script>
