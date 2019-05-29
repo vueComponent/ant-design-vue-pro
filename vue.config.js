@@ -29,10 +29,11 @@ module.exports = {
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       // 生成仅包含颜色的替换样式（主题色等）
       new ThemeColorReplacer({
-        fileName: 'css/theme-colors.css',
+        fileName: 'css/theme-colors[hash].css',
         matchColors: getAntdSerials('#1890ff'), // 主色系列
         // 改变样式选择器，解决样式覆盖问题
         changeSelector (selector) {
+          console.log(selector)
           switch (selector) {
             case '.ant-calendar-today .ant-calendar-date':
               return ':not(.ant-calendar-selected-date)' + selector
@@ -40,6 +41,7 @@ module.exports = {
               return '.ant-btn:focus:not(.ant-btn-primary),.ant-btn:hover:not(.ant-btn-primary)'
             case '.ant-btn.active,.ant-btn:active':
               return '.ant-btn.active:not(.ant-btn-primary),.ant-btn:active:not(.ant-btn-primary)'
+            case '.ant-menu-horizontal>.ant-menu-item-active,.ant-menu-horizontal>.ant-menu-item-open,.ant-menu-horizontal>.ant-menu-item-selected,.ant-menu-horizontal>.ant-menu-item:hover,.ant-menu-horizontal>.ant-menu-submenu-active,.ant-menu-horizontal>.ant-menu-submenu-open,.ant-menu-horizontal>.ant-menu-submenu-selected,.ant-menu-horizontal>.ant-menu-submenu:hover':
             case '.ant-menu-horizontal > .ant-menu-item-active,.ant-menu-horizontal > .ant-menu-item-open,.ant-menu-horizontal > .ant-menu-item-selected,.ant-menu-horizontal > .ant-menu-item:hover,.ant-menu-horizontal > .ant-menu-submenu-active,.ant-menu-horizontal > .ant-menu-submenu-open,.ant-menu-horizontal > .ant-menu-submenu-selected,.ant-menu-horizontal > .ant-menu-submenu:hover':
               return '.ant-menu-horizontal > .ant-menu-item-active,.ant-menu-horizontal > .ant-menu-item-open,.ant-menu-horizontal > .ant-menu-item-selected,.ant-menu-horizontal > .ant-menu-item:hover,.ant-menu-horizontal > .ant-menu-submenu-active,.ant-menu-horizontal > .ant-menu-submenu-open,.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected,.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover'
             default :
