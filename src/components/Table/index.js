@@ -105,10 +105,11 @@ export default {
   created () {
     const { pageNo } = this.$route.params
     const localPageNum = this.pageURI && (pageNo && parseInt(pageNo)) || this.pageNum
-    this.localPagination = ['auto', true].includes(this.showPagination) && Object.assign({}, this.localPagination, {
+    this.localPagination = Object.assign({}, this.localPagination, {
       current: localPageNum,
       pageSize: this.pageSize,
-      showSizeChanger: this.showSizeChanger
+      showSizeChanger: this.showSizeChanger,
+      showPagination: ['auto', true].includes(this.showPagination)
     })
     this.needTotalList = this.initTotalList(this.columns)
     this.loadData()
