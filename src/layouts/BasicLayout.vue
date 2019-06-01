@@ -22,7 +22,7 @@
           ></a-icon>
           <Header />
         </a-layout-header>
-        <a-layout-content style="margin: 0 16px">
+        <a-layout-content style="margin: 24px 24px 0">
           <router-view></router-view>
         </a-layout-content>
         <a-layout-footer style="text-align: center">

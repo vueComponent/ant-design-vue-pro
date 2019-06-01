@@ -30,7 +30,7 @@ module.exports = {
     plugins: [themePlugin, new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)],
     resolve: {
       alias: {
-        "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/icons.js")
+        // "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/icons.js")
       }
     }
   },
@@ -45,6 +45,7 @@ module.exports = {
     svgRule.use("vue-svg-loader").loader("vue-svg-loader");
   },
   devServer: {
+    open: true,
     proxy: {
       "/api": {
         target: "http://localhost:3000",
