@@ -13,7 +13,7 @@
           <logo></logo>
           <h1>Ant Design Pro</h1>
         </div>
-        <SiderMenu :theme="navTheme" />
+        <SiderMenu :theme="navTheme" :collapsed="collapsed" />
       </a-layout-sider>
       <a-layout>
         <a-layout-header style="background: #fff; padding: 0">
