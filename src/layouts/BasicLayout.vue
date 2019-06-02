@@ -9,7 +9,10 @@
         v-model="collapsed"
         width="256px"
       >
-        <div class="logo">Ant Design Vue Pro</div>
+        <div class="logo">
+          <logo></logo>
+          <h1>Ant Design Pro</h1>
+        </div>
         <SiderMenu :theme="navTheme" />
       </a-layout-sider>
       <a-layout>
@@ -41,6 +44,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import SiderMenu from "./SiderMenu";
 import SettingDrawer from "../components/SettingDrawer";
+import Logo from "@/assets/logo.svg";
+
 export default {
   data() {
     return {
@@ -59,27 +64,53 @@ export default {
     Header,
     Footer,
     SiderMenu,
-    SettingDrawer
+    SettingDrawer,
+    Logo
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .trigger {
   padding: 0 20px;
   line-height: 64px;
   font-size: 20px;
+
+  &:hover {
+    background: #eeeeee;
+  }
 }
-.trigger:hover {
-  background: #eeeeee;
-}
+
 .logo {
+  position: relative;
   height: 64px;
-  line-height: 64px;
-  text-align: center;
+  padding-left: 24px;
   overflow: hidden;
+  line-height: 64px;
+  background: #002140;
+
+  svg {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  h1 {
+    display: inline-block;
+    margin: 0 0 0 12px;
+    font-size: 20px;
+    font-family: Avenir, "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    vertical-align: middle;
+  }
 }
-.nav-theme-dark >>> .logo {
-  color: #ffffff;
+
+.nav-theme-dark {
+  /deep/ .logo {
+    h1 {
+      color: #ffffff;
+    }
+  }
 }
 </style>
