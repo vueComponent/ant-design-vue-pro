@@ -9,27 +9,14 @@ function resolve (dir) {
 
 // vue.config.js
 module.exports = {
-  /*
-    Vue-cli3:
-    Crashed when using Webpack `import()` #2463
-    https://github.com/vuejs/vue-cli/issues/2463
-
-   */
-  /*
-  pages: {
-    index: {
-      entry: 'src/main.js',
-      chunks: ['chunk-vendors', 'chunk-common', 'index']
-    }
-  },
-  */
   configureWebpack: {
     plugins: [
       // Ignore all locale files of moment.js
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       // 生成仅包含颜色的替换样式（主题色等）
+      // TODO 需要增加根据环境不开启主题需求
       new ThemeColorReplacer({
-        fileName: 'css/theme-colors[hash].css',
+        fileName: 'css/theme-colors.css', // TODO 需要处理的暗坑
         matchColors: getAntdSerials('#1890ff'), // 主色系列
         // 改变样式选择器，解决样式覆盖问题
         changeSelector (selector) {
