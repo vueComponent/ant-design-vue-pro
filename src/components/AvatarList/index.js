@@ -5,7 +5,7 @@ const install = function(Vue) {
   Vue.component(AvatarList.name, AvatarList);
   Vue.component(AvatarListItem.name, AvatarListItem);
 };
-const Avatars = { AvatarList, AvatarListItem, install };
+const avatar = { AvatarList, AvatarListItem, install };
 
-export default Avatars;
+export default avatar;
 export { AvatarList, AvatarListItem, install };

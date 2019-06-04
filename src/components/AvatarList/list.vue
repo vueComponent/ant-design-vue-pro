@@ -27,7 +27,7 @@ export default {
     let items;
     if (this.maxLength > 0 && this.maxLength < list.length) {
       items = list.slice(0, this.maxLength);
-      items.push(h("avatar-list-item", "+" + this.maxLength));
+      items.push(h("avatar-list-item", "+" + (list.length - this.maxLength)));
     } else {
       items = list;
     }

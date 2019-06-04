@@ -1,6 +1,6 @@
 <template>
   <a-tooltip :title="tips">
-    <a-avatar :size="itemSize" :src="src" :style="excessItemsStyle">
+    <a-avatar :size="size" :src="src" :style="!src && excessItemsStyle">
       <slot></slot>
     </a-avatar>
   </a-tooltip>
@@ -10,10 +10,6 @@
 export default {
   name: "AvatarListItem",
   props: {
-    size: {
-      type: [String, Number],
-      default: ""
-    },
     tips: {
       type: String,
       default: ""
@@ -25,13 +21,13 @@ export default {
   },
   data() {
     return {
-      itemSize: this.size || this.$parent.size || "default",
-      excessItemsStyle: this.$parent.excessItemsStyle || null
+      size: this.$parent.size,
+      excessItemsStyle: this.$parent.excessItemsStyle
     };
   },
   watch: {
     "$parent.size"(val) {
-      this.itemSize = val;
+      this.size = val;
     },
     "$parent.excessItemsStyle"(val) {
       this.excessItemsStyle = val;

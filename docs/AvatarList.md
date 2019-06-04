@@ -13,7 +13,7 @@ Vue.use(AvatarList);
 
 - 或者局部引用
 
-``` js
+``` vue
 // XXX.vue
 import { AvatarList, AvatarListItem } from "../../components/AvatarList/index";
 
@@ -68,9 +68,9 @@ export default {
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | ---| --- |
-| size | 头像大小 | number 或者 e m (large、small 、mini, default) | default |
+| size | 头像大小 | number 或者 enum (large、small、mini、default) | default |
 | maxLength | 要显示的最大项目 | number | 0 |
-| excessItemsStyle | 多余的项目风格 | Object | null |
+| excessItemsStyle | 多余的项目风格 | Object | - |
 
 ### AvatarListItem
 
