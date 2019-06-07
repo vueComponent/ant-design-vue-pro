@@ -172,7 +172,7 @@ export default {
           // 这里用于判断接口是否有返回 r.totalCount 且 this.showPagination = true 且 pageNo 和 pageSize 存在 且 totalCount 小于等于 pageNo * pageSize 的大小
           // 当情况满足时，表示数据不满足分页大小，关闭 table 分页功能
           try {
-            if ((['auto', true].includes(this.showPagination) && r.totalCount <= (r.pageNo * pagination.pageSize))) {
+            if ((['auto', true].includes(this.showPagination) && r.totalCount <= (r.pageNo * this.localPagination.pageSize))) {
               this.localPagination.hideOnSinglePage = true
             }
           } catch (e) {
