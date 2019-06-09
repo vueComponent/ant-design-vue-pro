@@ -20,7 +20,14 @@ import {
   Select,
   LocaleProvider,
   Dropdown,
-  DatePicker
+  DatePicker,
+  Badge,
+  Tabs,
+  Spin,
+  List,
+  Avatar,
+  Tag,
+  message
 } from "ant-design-vue";
 import Authorized from "./components/Authorized";
 import Auth from "./directives/auth";
@@ -44,6 +51,13 @@ Vue.component("Authorized", Authorized);
 Vue.use(Auth);
 Vue.use(VueI18n);
 Vue.use(VueHighlightJS);
+Vue.use(Badge);
+Vue.use(Tabs);
+Vue.use(Spin);
+Vue.use(List);
+Vue.use(Avatar);
+Vue.use(Tag);
+Vue.prototype.$message = message;
 
 const i18n = new VueI18n({
   locale: queryString.parse(location.search).locale || "zhCN",

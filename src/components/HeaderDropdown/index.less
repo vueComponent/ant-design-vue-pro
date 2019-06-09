@@ -1,0 +1,18 @@
+@import "~ant-design-vue/es/style/themes/default.less";
+.header-dropdown {
+  &__container > * {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: @shadow-1-down;
+  }
+
+  @media screen and (max-width: @screen-xs){
+    &__container {
+      width: 100% !important;
+    }
+
+    &__container > * {
+      border-radius: 0 !important;
+    }
+  }
+}

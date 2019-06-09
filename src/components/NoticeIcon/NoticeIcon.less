@@ -1,0 +1,32 @@
+@import "~ant-design-vue/es/style/themes/default.less";
+
+.notice-icon {
+  &__notice-button {
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  &__popover {
+    position: relative;
+    width: 336px;
+  }
+  &__icon {
+    padding: 4px;
+    vertical-align: middle;
+  }
+
+  &__badge {
+    font-size: 16px;
+  }
+  &__tabs {
+    :global {
+      .ant-tabs-nav-scroll {
+        text-align: center;
+      }
+      .ant-tabs-bar {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
