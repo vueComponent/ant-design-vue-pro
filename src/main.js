@@ -26,6 +26,7 @@ import {
   Spin,
   List,
   Avatar,
+  Tooltip,
   Tag,
   message
 } from "ant-design-vue";
@@ -47,6 +48,8 @@ Vue.use(Select);
 Vue.use(LocaleProvider);
 Vue.use(Dropdown);
 Vue.use(DatePicker);
+Vue.use(Avatar);
+Vue.use(Tooltip);
 Vue.component("Authorized", Authorized);
 Vue.use(Auth);
 Vue.use(VueI18n);
@@ -55,7 +58,6 @@ Vue.use(Badge);
 Vue.use(Tabs);
 Vue.use(Spin);
 Vue.use(List);
-Vue.use(Avatar);
 Vue.use(Tag);
 Vue.prototype.$message = message;
 
