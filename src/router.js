@@ -120,21 +120,21 @@ const router = new Router({
           children: [
             {
               path: "/exception/403",
-              name: "403",
+              name: "exception403",
               component: () =>
                 import(/* webpackChunkName: "exception" */ "@/views/Exception/403"),
               meta: { title: "403" }
             },
             {
               path: "/exception/404",
-              name: "404",
+              name: "exception404",
               component: () =>
                 import(/* webpackChunkName: "exception" */ "@/views/Exception/404"),
               meta: { title: "404" }
             },
             {
               path: "/exception/500",
-              name: "500",
+              name: "exception500",
               component: () =>
                 import(/* webpackChunkName: "exception" */ "@/views/Exception/500"),
               meta: { title: "500" }
@@ -142,6 +142,20 @@ const router = new Router({
           ]
         }
       ]
+    },
+    {
+      path: "/403",
+      name: "403",
+      hideInMenu: true,
+      component: () =>
+        import(/* webpackChunkName: "exception" */ "@/views/Exception/403")
+    },
+    {
+      path: "*",
+      name: "404",
+      hideInMenu: true,
+      component: () =>
+        import(/* webpackChunkName: "exception" */ "@/views/Exception/404")
     }
   ]
 });

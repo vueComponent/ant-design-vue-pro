@@ -33,6 +33,10 @@ export default {
     theme: {
       type: String,
       default: "dark"
+    },
+    collapsed: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -42,6 +46,14 @@ export default {
     "$route.path": function(val) {
       this.selectedKeys = this.selectedKeysMap[val];
       this.openKeys = this.collapsed ? [] : this.openKeysMap[val];
+    },
+    collapsed(val) {
+      if (val) {
+        this.cacheOpenKeys = this.openKeys;
+        this.openKeys = [];
+      } else {
+        this.openKeys = this.cacheOpenKeys;
+      }
     }
   },
   data() {
@@ -49,7 +61,6 @@ export default {
     this.openKeysMap = {};
     const menuData = this.getMenuData(this.$router.options.routes);
     return {
-      collapsed: false,
       menuData,
       selectedKeys: this.selectedKeysMap[this.$route.path],
       openKeys: this.collapsed ? [] : this.openKeysMap[this.$route.path]
