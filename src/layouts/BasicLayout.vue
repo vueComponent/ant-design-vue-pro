@@ -41,7 +41,7 @@
 
 <script>
 import Header from "./Header";
-import Footer from "./Footer";
+import Footer from "../components/GlobalFooter";
 import SiderMenu from "./SiderMenu";
 import SettingDrawer from "../components/SettingDrawer";
 import Logo from "@/assets/logo.svg";
