@@ -109,7 +109,8 @@ export default {
       current: localPageNum,
       pageSize: this.pageSize,
       showSizeChanger: this.showSizeChanger
-    })
+    }) || false
+    console.log('this.localPagination', this.localPagination)
     this.needTotalList = this.initTotalList(this.columns)
     this.loadData()
   },
@@ -135,9 +136,9 @@ export default {
       this.localLoading = true
       const parameter = Object.assign({
         pageNo: (pagination && pagination.current) ||
-            this.localPagination.current || this.pageNum,
+          this.showPagination && this.localPagination.current || this.pageNum,
         pageSize: (pagination && pagination.pageSize) ||
-            this.localPagination.pageSize || this.pageSize
+          this.showPagination && this.localPagination.pageSize || this.pageSize
       },
       (sorter && sorter.field && {
         sortField: sorter.field
@@ -148,29 +149,36 @@ export default {
         ...filters
       }
       )
+      console.log('parameter', parameter)
       const result = this.data(parameter)
       // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data
       // eslint-disable-next-line
       if ((typeof result === 'object' || typeof result === 'function') && typeof result.then === 'function') {
         result.then(r => {
-          this.localPagination = Object.assign({}, this.localPagination, {
+          this.localPagination = this.showPagination && Object.assign({}, this.localPagination, {
             current: r.pageNo, // 返回结果中的当前分页数
             total: r.totalCount, // 返回结果中的总记录数
             showSizeChanger: this.showSizeChanger,
             pageSize: (pagination && pagination.pageSize) ||
               this.localPagination.pageSize
-          })
+          }) || false
           // 为防止删除数据后导致页面当前页面数据长度为 0 ,自动翻页到上一页
-          if (r.data.length === 0 && this.localPagination.current > 1) {
+          if (r.data.length === 0 && this.showPagination && this.localPagination.current > 1) {
             this.localPagination.current--
             this.loadData()
             return
           }
 
-          // 这里用于判断接口是否有返回 r.totalCount 或 this.showPagination = false
+          // 这里用于判断接口是否有返回 r.totalCount 且 this.showPagination = true 且 pageNo 和 pageSize 存在 且 totalCount 小于等于 pageNo * pageSize 的大小
           // 当情况满足时，表示数据不满足分页大小，关闭 table 分页功能
-
-          (!this.showPagination || !r.totalCount && this.showPagination === 'auto') && (this.localPagination.hideOnSinglePage = true)
+          try {
+            if ((['auto', true].includes(this.showPagination) && r.totalCount <= (r.pageNo * this.localPagination.pageSize))) {
+              this.localPagination.hideOnSinglePage = true
+            }
+          } catch (e) {
+            this.localPagination = false
+          }
+          console.log('loadData -> this.localPagination', this.localPagination)
           this.localDataSource = r.data // 返回结果中的数组数据
           this.localLoading = false
         })
@@ -272,7 +280,9 @@ export default {
       if (k === 'rowSelection') {
         if (showAlert && this.rowSelection) {
           // 如果需要使用alert，则重新绑定 rowSelection 事件
+          console.log('this.rowSelection', this.rowSelection)
           props[k] = {
+            ...this.rowSelection,
             selectedRows: this.selectedRows,
             selectedRowKeys: this.selectedRowKeys,
             onChange: (selectedRowKeys, selectedRows) => {

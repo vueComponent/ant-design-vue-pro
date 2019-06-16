@@ -4,6 +4,7 @@
     trigger="click"
     placement="bottomRight"
     overlayClassName="header-notice-wrapper"
+    :getPopupContainer="() => $refs.noticeRef.parentElement"
     :autoAdjustOverflow="true"
     :arrowPointAtCenter="true"
     :overlayStyle="{ width: '300px', top: '50px' }"
@@ -39,7 +40,7 @@
         </a-tabs>
       </a-spin>
     </template>
-    <span @click="fetchNotice" class="header-notice">
+    <span @click="fetchNotice" class="header-notice" ref="noticeRef">
       <a-badge count="12">
         <a-icon style="font-size: 16px; padding: 4px" type="bell" />
       </a-badge>
