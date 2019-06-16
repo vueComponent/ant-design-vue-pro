@@ -57,7 +57,7 @@
     "opencollective-postinstall": "^2.0.2",
     "vue-svg-icon-loader": "^2.1.1",
     "vue-template-compiler": "^2.5.22",
-    "webpack-theme-color-replacer": "^1.2.13"
+    "webpack-theme-color-replacer": "^1.2.15"
   },
   "eslintConfig": {
     "root": true,
