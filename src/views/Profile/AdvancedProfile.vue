@@ -26,15 +26,20 @@
         <Step title="创建项目">
           <div class="text-secondary step-description" slot="description">
             曲丽丽
-            <Icon type="dingding-o" style="margin-left: 8px;" />
+            <Icon type="dingding-o" style="margin-left: 8px;"></Icon>
             <div>2016-12-12 12:32</div>
           </div>
         </Step>
         <Step title="部门初审">
           <div class="step-description" slot="description">
             周毛毛
-            <Icon type="dingding-o" style="color: #00A0E9; margin-left: 8px" />
-            <div><a href>催一下</a></div>
+            <Icon
+              type="dingding-o"
+              style="color: #00A0E9; margin-left: 8px"
+            ></Icon>
+            <div>
+              <a href>催一下</a>
+            </div>
           </div>
         </Step>
         <Step title="财务复核"></Step>
@@ -63,7 +68,7 @@
               <Icon
                 style="color: rgba(0, 0, 0, 0.43); margin-left: 4px;"
                 type="info-circle-o"
-              />
+              ></Icon>
             </Tooltip>
           </span>
           725
@@ -87,7 +92,7 @@
             这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长...
           </Description>
         </DescriptionList>
-        <Divider style="margin: 16px 0" />
+        <Divider style="margin: 16px 0"></Divider>
         <DescriptionList
           size="small"
           style="margin-bottom: 16px;"
@@ -99,7 +104,7 @@
             Nakai一年生蔓生藤本；茎、枝粗壮，具明显的棱。卷须较粗..
           </Description>
         </DescriptionList>
-        <Divider style="margin: 16px 0" />
+        <Divider style="margin: 16px 0"></Divider>
         <DescriptionList size="small" title="组名称">
           <Description term="负责人">付小小</Description>
           <Description term="角色码">1234568</Description>
