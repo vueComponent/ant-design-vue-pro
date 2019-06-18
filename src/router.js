@@ -140,6 +140,30 @@ const router = new Router({
               meta: { title: "500" }
             }
           ]
+        },
+        // Profile
+        {
+          path: "/profile",
+          name: "profile",
+          component: { render: h => h("router-view") },
+          redirect: "/profile/basic",
+          meta: { title: "详情页", icon: "profile", authority: ["admin"] },
+          children: [
+            {
+              path: "/profile/basic",
+              name: "basic",
+              component: () =>
+                import(/* webpackChunkName: "profile" */ "@/views/Profile/BasicProfile"),
+              meta: { title: "基础详情页" }
+            },
+            {
+              path: "/profile/advanced",
+              name: "advanced",
+              component: () =>
+                import(/* webpackChunkName: "profile" */ "@/views/Profile/AdvancedProfile"),
+              meta: { title: "高级详情页" }
+            }
+          ]
         }
       ]
     },
