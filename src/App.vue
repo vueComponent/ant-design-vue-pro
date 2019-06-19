@@ -26,4 +26,5 @@ export default {
   #app {
     height: 100%;
   }
+  html::-webkit-scrollbar {display:none}
 </style>
