@@ -90,7 +90,7 @@ yarn run lint
 - [Vue-cli3](https://cli.vuejs.org/guide/) used by the project.
 - Disable Eslint (not recommended): remove `eslintConfig`  field in `package.json`  and `vue.config.js` field `lintOnSave: false`
 
-- Load on Demand: modify `/src/main.js` L7,  append `import './core/lazy_use'` code.
+- Load on Demand: modify `/src/main.js` L14,  replace to `import './core/lazy_use'` code.
 
 - Customize Theme:  `vue.config.js` 
 eg: 
