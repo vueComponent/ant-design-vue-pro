@@ -1,8 +1,8 @@
-function chart(req) {
+function captcha(req) {
   let res = null;
   switch (req.method) {
     case "GET":
-      res = [100, 40, 78, 10, 30, 48];
+      res = "captcha-xxx";
       break;
     default:
       res = null;
@@ -10,4 +10,4 @@ function chart(req) {
   return res;
 }
 
-module.exports = chart;
+module.exports = captcha;

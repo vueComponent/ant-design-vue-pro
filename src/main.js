@@ -28,6 +28,9 @@ import {
   Avatar,
   Tooltip,
   Tag,
+  Checkbox,
+  Col,
+  Row,
   message
 } from "ant-design-vue";
 import Authorized from "./components/Authorized";
@@ -59,6 +62,9 @@ Vue.use(Tabs);
 Vue.use(Spin);
 Vue.use(List);
 Vue.use(Tag);
+Vue.use(Checkbox);
+Vue.use(Col);
+Vue.use(Row);
 Vue.prototype.$message = message;
 
 const i18n = new VueI18n({

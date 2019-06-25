@@ -104,9 +104,9 @@ const noticeList = [
   }
 ];
 
-function notices(method) {
+function notices(req) {
   let res = null;
-  switch (method) {
+  switch (req.method) {
     case "GET":
       res = noticeList;
       break;

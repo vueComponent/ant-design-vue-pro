@@ -1,8 +1,8 @@
-function form(req) {
+function register(req) {
   let res = null;
   switch (req.method) {
     case "POST":
-      res = { message: "OK" };
+      res = { status: "ok", currentAuthority: "user" };
       break;
     default:
       res = null;
@@ -10,4 +10,4 @@ function form(req) {
   return res;
 }
 
-module.exports = form;
+module.exports = register;
