@@ -9,6 +9,7 @@ const state = {
 
 const actions = {
   async login({ commit }, payload) {
+    console.log(payload);
     const response = (await request({
       url: "/api/login/account",
       method: "POST",
@@ -50,15 +51,26 @@ const actions = {
       });
     }
   },
-  async register({ commit }, { payload }) {
-    const response = await request({
+  async register({ commit }, payload) {
+    console.log(payload);
+    const response = (await request({
       url: "/api/register",
       method: "POST",
       data: payload
-    });
-    commit("changeLoginStatus", response);
+    })).data;
+    console.log(response);
+    if (response.status === "ok") {
+      commit("changeLoginStatus", response);
+      router.push({
+        name: "register.result",
+        params: {
+          account: payload.mail
+        }
+      });
+    }
   },
-  async getSmsCaptcha({ payload }) {
+  // eslint-disable-next-line no-unused-vars
+  async getCaptcha({ commit }, payload) {
     console.log(payload);
     await request({
       url: `/api/captcha?mobile=${payload.mobile}`,

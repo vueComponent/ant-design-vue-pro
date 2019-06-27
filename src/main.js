@@ -31,6 +31,9 @@ import {
   Checkbox,
   Col,
   Row,
+  Popover,
+  Progress,
+  Alert,
   message
 } from "ant-design-vue";
 import Authorized from "./components/Authorized";
@@ -65,6 +68,9 @@ Vue.use(Tag);
 Vue.use(Checkbox);
 Vue.use(Col);
 Vue.use(Row);
+Vue.use(Popover);
+Vue.use(Progress);
+Vue.use(Alert);
 Vue.prototype.$message = message;
 
 const i18n = new VueI18n({

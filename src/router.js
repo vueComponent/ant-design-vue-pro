@@ -33,6 +33,12 @@ const router = new Router({
           name: "register",
           component: () =>
             import(/* webpackChunkName: "user" */ "./views/User/Register")
+        },
+        {
+          path: "/user/register-result",
+          name: "register.result",
+          component: () =>
+            import(/* webpackChunkName: "user" */ "./views/User/RegisterResult")
         }
       ]
     },
