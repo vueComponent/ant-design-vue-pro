@@ -11,7 +11,10 @@
       "
     >
       <Tab key="account" tab="账户密码登录">
-        <VNodes :vnodes="renderMessage('account')" />
+        <VNodes
+          v-if="status === 'error' && type === 'account' && !submitting"
+          :vnodes="renderMessage('account')"
+        />
         <UserName
           name="userName"
           placeholder="用户名：admin or user"
@@ -35,7 +38,10 @@
         />
       </Tab>
       <Tab key="mobile" tab="手机号登录">
-        <VNodes :vnodes="renderMessage('mobile')" />
+        <VNodes
+          v-if="status === 'error' && type === 'mobile' && !submitting"
+          :vnodes="renderMessage('mobile')"
+        />
         <Mobile
           name="mobile"
           placeholder="手机号"
@@ -90,7 +96,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 import { Modal } from "ant-design-vue";
 import Login from "@/components/Login";
 
@@ -133,6 +139,7 @@ export default {
   },
   methods: {
     ...mapActions("login", ["login", "getCaptcha"]),
+    ...mapMutations("login", ["changeLoginStatus"]),
     handleSubmit(err, values) {
       const { type } = this.$data;
       if (!err) {
@@ -147,6 +154,10 @@ export default {
     },
     onTabChange(type) {
       this.type = type;
+      this.changeLoginStatus({
+        status: false,
+        currentAuthority: "guest"
+      });
     },
     changeAutoLogin(e) {
       this.autoLogin = e.target.checked;
@@ -173,22 +184,18 @@ export default {
       });
     },
     renderMessage(type) {
-      if (this.status === "error" && this.type === type && !this.submitting) {
-        return (
-          <a-alert
-            style="margin-bottom: 24px"
-            message={
-              type === "account"
-                ? "账户或密码错误（admin/ant.design）"
-                : "验证码错误"
-            }
-            type="error"
-            showIcon
-          />
-        );
-      } else {
-        return null;
-      }
+      return (
+        <a-alert
+          style="margin-bottom: 24px"
+          message={
+            type === "account"
+              ? "账户或密码错误（admin/ant.design）"
+              : "验证码错误"
+          }
+          type="error"
+          showIcon
+        />
+      );
     }
   }
 };
