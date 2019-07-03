@@ -1,177 +1,130 @@
 <template>
   <div class="main">
-    <div class="login">
-      <a-form :form="form" @submit="handleSubmit">
-        <a-tabs
-          :animated="false"
-          class="tabs"
-          :activeKey="type"
-          @change="onSwitch"
-        >
-          <a-tab-pane key="account" tab="账户密码登录">
-            <VNodes :vnodes="renderMessage('account')" />
-            <a-form-item>
-              <a-input
-                id="userName"
-                type="UserName"
-                size="large"
-                placeholder="用户名：admin or user"
-                v-decorator="[
-                  'userName',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        message: '请输入用户名!'
-                      }
-                    ]
-                  }
-                ]"
-              >
-                <a-icon slot="prefix" type="user" class="prefixIcon" />
-              </a-input>
-            </a-form-item>
-            <a-form-item>
-              <a-input
-                id="password"
-                type="Password"
-                size="large"
-                placeholder="密码：ant.design"
-                v-decorator="[
-                  'password',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        message: '请输入密码！'
-                      }
-                    ]
-                  }
-                ]"
-                :onPressEnter="onPressEnter"
-              >
-                <a-icon slot="prefix" type="lock" class="prefixIcon" />
-              </a-input>
-            </a-form-item>
-          </a-tab-pane>
-          <a-tab-pane key="mobile" tab="手机号登录">
-            <VNodes :vnodes="renderMessage('mobile')" />
-            <a-form-item>
-              <a-input
-                size="large"
-                type="Mobile"
-                placeholder="手机号"
-                v-decorator="[
-                  'mobile',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        message: '请输入手机号！'
-                      },
-                      {
-                        pattern: /^1\d{10}$/,
-                        message: '手机号格式错误！'
-                      }
-                    ]
-                  }
-                ]"
-              >
-                <a-icon slot="prefix" type="mobile" class="prefixIcon" />
-              </a-input>
-            </a-form-item>
-            <a-form-item>
-              <a-row :gutter="8">
-                <a-col :span="16">
-                  <a-input
-                    size="large"
-                    type="Captcha"
-                    placeholder="验证码"
-                    v-decorator="[
-                      'captcha',
-                      {
-                        rules: [
-                          {
-                            required: true,
-                            message: '请输入验证码！'
-                          }
-                        ]
-                      }
-                    ]"
-                  >
-                    <a-icon slot="prefix" type="mail" class="prefixIcon" />
-                  </a-input>
-                </a-col>
-                <a-col :span="8">
-                  <a-button
-                    class="getCaptcha"
-                    size="large"
-                    @click="onGetCaptcha"
-                    :disabled="!!count"
-                    >{{ count ? `${count} 秒` : "获取验证码" }}</a-button
-                  >
-                </a-col>
-              </a-row>
-            </a-form-item>
-          </a-tab-pane>
-        </a-tabs>
-        <div>
-          <a-checkbox :checked="autoLogin" @change="changeAutoLogin">
-            自动登录
-          </a-checkbox>
-          <a style="float: right" href="">
-            忘记密码
-          </a>
-        </div>
-        <a-form-item>
-          <a-button
-            size="large"
-            class="submit"
-            type="primary"
-            htmlType="submit"
-            :loading="submitting"
-            >登录</a-button
-          >
-        </a-form-item>
-        <div class="other">
-          其他登录方式
-          <a-icon type="alipay-circle" class="icon" theme="outlined" />
-          <a-icon type="taobao-circle" class="icon" theme="outlined" />
-          <a-icon type="weibo-circle" class="icon" theme="outlined" />
-          <router-link class="register" to="/user/register">
-            注册账户
-          </router-link>
-        </div>
-      </a-form>
-    </div>
+    <Login
+      :defaultActiveKey="type"
+      :onTabChange="onTabChange"
+      :onSubmit="handleSubmit"
+      v-ant-ref="
+        form => {
+          this.loginForm = form;
+        }
+      "
+    >
+      <Tab key="account" tab="账户密码登录">
+        <VNodes :vnodes="renderMessage('account')" />
+        <UserName
+          name="userName"
+          placeholder="用户名：admin or user"
+          :rules="[
+            {
+              required: true,
+              message: '请输入用户名!'
+            }
+          ]"
+        />
+        <Password
+          name="password"
+          placeholder="密码：ant.design"
+          :rules="[{ required: true, message: '请输入密码！' }]"
+          :onPressEnter="
+            e => {
+              e.preventDefault();
+              this.form.validateFields(this.handleSubmit);
+            }
+          "
+        />
+      </Tab>
+      <Tab key="mobile" tab="手机号登录">
+        <VNodes :vnodes="renderMessage('mobile')" />
+        <Mobile
+          name="mobile"
+          placeholder="手机号"
+          :rules="[
+            {
+              required: true,
+              message: '请输入手机号！'
+            },
+            {
+              pattern: /^1\d{10}$/,
+              message: '手机号格式错误！'
+            }
+          ]"
+        />
+        <Captcha
+          name="captcha"
+          placeholder="验证码"
+          :countDown="120"
+          :onGetCaptcha="onGetCaptcha"
+          getCaptchaButtonText="获取验证码"
+          getCaptchaSecondText="秒"
+          :rules="[
+            {
+              required: true,
+              message: '请输入验证码！'
+            }
+          ]"
+        />
+      </Tab>
+      <div>
+        <a-checkbox :checked="autoLogin" @change="changeAutoLogin">
+          自动登录
+        </a-checkbox>
+        <a style="float: right" href="">
+          忘记密码
+        </a>
+      </div>
+      <Submit :loading="submitting">
+        登录
+      </Submit>
+      <div class="other">
+        其他登录方式
+        <a-icon type="alipay-circle" class="icon" theme="outlined" />
+        <a-icon type="taobao-circle" class="icon" theme="outlined" />
+        <a-icon type="weibo-circle" class="icon" theme="outlined" />
+        <router-link class="register" to="/user/register">
+          注册账户
+        </router-link>
+      </div>
+    </Login>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
 import { Modal } from "ant-design-vue";
+import Login from "@/components/Login";
+
+const {
+  Tab,
+  UserName,
+  Password,
+  Mobile,
+  Captcha,
+  Submit
+} = Login.WrappedComponent;
+
 export default {
   components: {
     VNodes: {
       functional: true,
       render: (h, ctx) => ctx.props.vnodes
-    }
+    },
+    Login,
+    Tab,
+    UserName,
+    Password,
+    Mobile,
+    Captcha,
+    Submit
   },
   data() {
     return {
-      form: this.$form.createForm(this),
       type: "account",
       autoLogin: true,
       submitting: false,
       count: 0,
-      active: {
-        account: ["userName", "password"],
-        mobile: ["mobile", "captcha"]
-      }
+      tabs: []
     };
-  },
-  beforeDestroy() {
-    clearInterval(this.interval);
   },
   computed: {
     ...mapState("login", {
@@ -180,53 +133,44 @@ export default {
   },
   methods: {
     ...mapActions("login", ["login", "getCaptcha"]),
-    handleSubmit(e) {
-      e.preventDefault();
-      const { type, form } = this;
-      const activeFileds = this.active[type];
-      form.validateFields(activeFileds, { force: true }, (err, values) => {
-        if (!err) {
-          this.submitting = true;
-          this.login({
-            ...values,
-            type
-          }).then(() => {
-            this.submitting = false;
-          });
-        }
-      });
+    handleSubmit(err, values) {
+      const { type } = this.$data;
+      if (!err) {
+        this.submitting = true;
+        this.login({
+          ...values,
+          type
+        }).then(() => {
+          this.submitting = false;
+        });
+      }
     },
-    onSwitch(key) {
-      this.type = key;
+    onTabChange(type) {
+      this.type = type;
     },
     changeAutoLogin(e) {
       this.autoLogin = e.target.checked;
     },
-    runGetCaptchaCountDown() {
-      this.count = 59;
-      this.interval = setInterval(() => {
-        this.count -= 1;
-        if (this.count === 0) {
-          clearInterval(this.interval);
-        }
-      }, 1000);
-    },
     onGetCaptcha() {
-      const { form } = this;
-      form.validateFields(["mobile"], { force: true }, (err, values) => {
-        if (!err) {
-          this.getCaptcha({ mobile: values.mobile });
-          this.runGetCaptchaCountDown();
-          Modal.info({
-            title:
-              "此项目为演示项目，并不会真的给您发送验证码。请切换到账户密码登录界面按提示登录。"
-          });
-        }
+      return new Promise((resolve, reject) => {
+        this.loginForm.validateFields(
+          ["mobile"],
+          { force: true },
+          (err, values) => {
+            if (err) {
+              reject(err);
+            } else {
+              this.getCaptcha({ mobile: values.mobile })
+                .then(resolve)
+                .catch(reject);
+              Modal.info({
+                title:
+                  "此项目为演示项目，并不会真的给您发送验证码。请切换到账户密码登录界面按提示登录。"
+              });
+            }
+          }
+        );
       });
-    },
-    onPressEnter(e) {
-      e.preventDefault();
-      this.form.validateFields(this.handleSubmit);
     },
     renderMessage(type) {
       if (this.status === "error" && this.type === type && !this.submitting) {

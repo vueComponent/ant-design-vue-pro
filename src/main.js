@@ -39,6 +39,8 @@ import {
 import Authorized from "./components/Authorized";
 import Auth from "./directives/auth";
 import "highlight.js/styles/github.css";
+import ref from "vue-ref";
+Vue.use(ref, { name: "ant-ref" });
 
 Vue.config.productionTip = false;
 
