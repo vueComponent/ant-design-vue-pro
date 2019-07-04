@@ -1,8 +1,5 @@
 <script>
 import { Form, Tabs } from "ant-design-vue";
-import LoginSubmit from "./LoginSubmit";
-import LoginTab from "./LoginTab";
-import LoginItem from "./LoginItem";
 import LoginContext from "./LoginContext";
 
 const Login = {
@@ -63,8 +60,6 @@ const Login = {
           } else {
             active[type] = [activeItem];
           }
-          // this.active = active
-          console.log(this.active);
         }
       };
     }
@@ -113,12 +108,6 @@ const Login = {
     );
   }
 };
-
-Login.Tab = LoginTab;
-Login.Submit = LoginSubmit;
-Object.keys(LoginItem).forEach(item => {
-  Login[item] = LoginItem[item];
-});
 
 export default Form.create()(Login);
 </script>

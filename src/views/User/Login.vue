@@ -100,14 +100,7 @@ import { mapActions, mapState, mapMutations } from "vuex";
 import { Modal } from "ant-design-vue";
 import Login from "@/components/Login";
 
-const {
-  Tab,
-  UserName,
-  Password,
-  Mobile,
-  Captcha,
-  Submit
-} = Login.WrappedComponent;
+const { Tab, UserName, Password, Mobile, Captcha, Submit } = Login;
 
 export default {
   components: {

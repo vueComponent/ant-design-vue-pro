@@ -22,8 +22,14 @@ const WrapFormItem = {
     name: String,
     placeholder: String,
     type: String,
-    getCaptchaButtonText: String,
-    getCaptchaSecondText: String,
+    getCaptchaButtonText: {
+      type: String,
+      default: "captcha"
+    },
+    getCaptchaSecondText: {
+      type: String,
+      default: "second"
+    },
     onGetCaptcha: Function,
     countDown: Number
   },
