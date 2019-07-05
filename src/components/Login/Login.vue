@@ -66,7 +66,6 @@ const Login = {
   },
   render() {
     const { tabs, type } = this.$data;
-    const { form } = this.$props;
     const children = this.$slots.default;
     const TabChildren = [];
     const otherChildren = [];
@@ -86,7 +85,7 @@ const Login = {
     return (
       <LoginContext.Provider value={this.getContext()}>
         <div class="login">
-          <Form form={form} onSubmit={this.handleSubmit}>
+          <Form onSubmit={this.handleSubmit}>
             {tabs.length > 0 ? (
               <div>
                 <Tabs
