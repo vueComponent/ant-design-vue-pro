@@ -1,7 +1,6 @@
 English | [简体中文](./README.zh-CN.md)
 
 <h1 align="center">Ant Design Pro Vue</h1>
-
 <div align="center">
 An out-of-box UI solution for enterprise applications as a Vue boilerplate. based on  <a href="https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/" target="_blank">Ant Design of Vue</a>
 </div>
@@ -92,39 +91,8 @@ yarn run lint
 
 - Load on Demand: modify `/src/main.js` L14,  replace to `import './core/lazy_use'` code.
 
-- Customize Theme:  `vue.config.js` 
-eg: 
-```ecmascript 6
-  css: {
-    loaderOptions: {
-      less: {
-        modifyVars: {
-          /* Less variables, required modifyVars*/
+- Customize Theme:  [Custom Theme Config](https://github.com/kokoroli/antd-awesome/blob/master/docs/Ant_Design_%E6%A0%B7%E5%BC%8F%E8%A6%86%E7%9B%96.md)
 
-          'primary-color': '#F5222D',
-          'link-color': '#F5222D',
-          'border-radius-base': '4px',
-        },
-        javascriptEnabled: true,
-      }
-    }
-  }
-```
-- **polyfill**
-
-- remove polyfill: 
-  > [Vue CLI Polyfill](https://cli.vuejs.org/zh/guide/browser-compatibility.html#usebuiltins-usage)
-  
-  - remove `import '@babel/polyfill'`  field in  `src/main.js`
-  - `babel.conflg.js` remove
-    ```ecmascript 6
-    [
-      '@babel/preset-env',
-      {
-        'useBuiltIns': 'entry'
-      }
-    ]
-    ```
 
 ## Browsers support
 

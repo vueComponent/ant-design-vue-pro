@@ -16,6 +16,8 @@ import {
 import config from '@/config/defaultSettings'
 
 export default function Initializer () {
+  console.log(`API_URL: ${process.env.VUE_APP_API_BASE_URL}`)
+
   store.commit('SET_SIDEBAR_TYPE', Vue.ls.get(SIDEBAR_TYPE, true))
   store.commit('TOGGLE_THEME', Vue.ls.get(DEFAULT_THEME, config.navTheme))
   store.commit('TOGGLE_LAYOUT_MODE', Vue.ls.get(DEFAULT_LAYOUT_MODE, config.layout))

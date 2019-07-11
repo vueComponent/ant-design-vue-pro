@@ -1,7 +1,6 @@
 [English](./README.md) | 简体中文
 
 <h1 align="center">Ant Design Pro Vue</h1>
-
 <div align="center">
 An out-of-box UI solution for enterprise applications as a Vue boilerplate. based on  <a href="https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/" target="_blank">Ant Design of Vue</a>
 </div>
@@ -92,29 +91,13 @@ yarn run lint
 
 - **关于 Issue 反馈 (重要!重要!重要!) 请在开 *Issue* 前，先阅读该内容：[Issue / PR 编写建议](https://github.com/sendya/ant-design-pro-vue/issues/90)** 
 
-- 项目使用的 [vue-cli3](https://cli.vuejs.org/guide/), 请更新您的 cli
+- 项目使用的 [vue-cli3](https://cli.vuejs.org/guide/), 请确保你所使用的 vue-cli 是新版，并且已经学习 cli 官方文档使用教程
 
 - 关闭 Eslint (不推荐) 移除 `package.json` 中 `eslintConfig` 整个节点代码, `vue.config.js` 下的 `lintOnSave` 值改为 `false`
 
-- 开启组件按需加载 `/src/main.js` L7 修改为 `import './core/lazy_use'`
+- 开启组件按需加载 `/src/main.js` L14 修改为 `import './core/lazy_use'`
 
-- 修改 Ant Design 配色，在文件 `vue.config.js` 中，其他 less 变量覆盖参考 [ant design](https://ant.design/docs/react/customize-theme-cn) 官方说明
-```ecmascript 6
-  css: {
-    loaderOptions: {
-      less: {
-        modifyVars: {
-          /* less 变量覆盖，用于自定义 ant design 主题 */
-
-          'primary-color': '#F5222D',
-          'link-color': '#F5222D',
-          'border-radius-base': '4px',
-        },
-        javascriptEnabled: true,
-      }
-    }
-  }
-```
+- [修改 Ant Design 配色](https://github.com/kokoroli/antd-awesome/blob/master/docs/Ant_Design_%E6%A0%B7%E5%BC%8F%E8%A6%86%E7%9B%96.md)
 - **使用polyfill兼容至 IE10**
 
 ## 浏览器兼容
