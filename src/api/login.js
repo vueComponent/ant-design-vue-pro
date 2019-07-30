@@ -2,6 +2,7 @@ import api from './index'
 import { axios } from '@/utils/request'
 
 /**
+ * 登录函数
  * login func
  * parameter: {
  *     username: '',

@@ -3,6 +3,7 @@ import { builder } from '../util'
 
 const info = (options) => {
   console.log('options', options)
+  // 用户基本信息
   const userInfo = {
     'id': '4291d7da9005377ec9aec4a71ea837f',
     'name': '天野远子',
@@ -20,7 +21,7 @@ const info = (options) => {
     'roleId': 'admin',
     'role': {}
   }
-  // role
+  // 用户角色（role）
   const roleObj = {
     'id': 'admin',
     'name': '管理员',
@@ -332,6 +333,7 @@ const info = (options) => {
     }]
   }
 
+  // 再增加一个超级模块
   roleObj.permissions.push({
     'roleId': 'admin',
     'permissionId': 'support',
