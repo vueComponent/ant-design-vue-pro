@@ -18,7 +18,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: 'Ant Design Pro',
+      default: '自控所伺服系统',
       required: false
     },
     showTitle: {
