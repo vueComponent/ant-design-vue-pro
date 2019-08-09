@@ -84,6 +84,11 @@ yarn run build
 yarn run lint
 ```
 
+- 登录试用, 请使用以下账号和密码登录:
+```
+admin/admin 或 admin/ant.design
+```
+
 
 
 其他说明

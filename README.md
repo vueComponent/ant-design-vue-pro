@@ -81,6 +81,11 @@ yarn run build
 yarn run lint
 ```
 
+- Login and have a try, please login with the following credentials:
+```
+admin/admin OR admin/ant.design
+```
+
 
 ### Other
 
