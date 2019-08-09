@@ -70,7 +70,6 @@ import MultiTab from '@/components/MultiTab'
 import SideMenu from '@/components/Menu/SideMenu'
 import GlobalHeader from '@/components/GlobalHeader'
 import GlobalFooter from '@/components/GlobalFooter'
-import SettingDrawer from '@/components/SettingDrawer'
 
 export default {
   name: 'BasicLayout',
@@ -81,7 +80,7 @@ export default {
     SideMenu,
     GlobalHeader,
     GlobalFooter,
-    SettingDrawer
+    SettingDrawer: () => import(/* webpackChunkName: "SettingDrawer" */ '@/components/SettingDrawer')
   },
   data () {
     return {
