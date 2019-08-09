@@ -1,30 +1,3 @@
-<!--
-<template>
-  <div style="margin: -23px -24px 24px -24px">
-    &lt;!&ndash;<a-dropdown :trigger="['contextmenu']" overlayClassName="multi-tab-menu-wrapper">
-      <a-menu slot="overlay">
-        <a-menu-item key="1">1st menu item</a-menu-item>
-        <a-menu-item key="2">2nd menu item</a-menu-item>
-        <a-menu-item key="3">3rd menu item</a-menu-item>
-      </a-menu>
-    </a-dropdown>&ndash;&gt;
-    <a-tabs
-      hideAdd
-      v-model="activeKey"
-      type="editable-card"
-      :tabBarStyle="{ background: '#FFF', margin: 0, paddingLeft: '16px', paddingTop: '1px' }"
-      @edit="onEdit"
-    >
-      <a-tab-pane v-for="page in pages" :style="{ height: 0 }" :tab="page.meta.title" :key="page.fullPath" :closable="pages.length > 1">
-      </a-tab-pane>
-      <template slot="renderTabBar" slot-scope="props, DefaultTabBar">
-        <component :is="DefaultTabBar" {...props} />
-      </template>
-    </a-tabs>
-  </div>
-</template>
--->
-
 <script>
 export default {
   name: 'MultiTab',
@@ -59,7 +32,12 @@ export default {
 
     // content menu
     closeThat (e) {
-      this.remove(e)
+      // 判断是否为最后一个标签页，如果是最后一个，则无法被关闭
+      if (this.fullPathList.length > 1) {
+        this.remove(e)
+      } else {
+        this.$message.info('这是最后一个标签了, 无法被关闭')
+      }
     },
     closeLeft (e) {
       const currentIndex = this.fullPathList.indexOf(e)
@@ -93,31 +71,16 @@ export default {
         }
       })
     },
-    closeMenuClick ({ key, item, domEvent }) {
-      const vkey = domEvent.target.getAttribute('data-vkey')
-      switch (key) {
-        case 'close-right':
-          this.closeRight(vkey)
-          break
-        case 'close-left':
-          this.closeLeft(vkey)
-          break
-        case 'close-all':
-          this.closeAll(vkey)
-          break
-        default:
-        case 'close-that':
-          this.closeThat(vkey)
-          break
-      }
+    closeMenuClick (key, route) {
+      this[key](route)
     },
     renderTabPaneMenu (e) {
       return (
-        <a-menu {...{ on: { click: this.closeMenuClick } }}>
-          <a-menu-item key="close-that" data-vkey={e}>关闭当前标签</a-menu-item>
-          <a-menu-item key="close-right" data-vkey={e}>关闭右侧</a-menu-item>
-          <a-menu-item key="close-left" data-vkey={e}>关闭左侧</a-menu-item>
-          <a-menu-item key="close-all" data-vkey={e}>关闭全部</a-menu-item>
+        <a-menu {...{ on: { click: ({ key, item, domEvent }) => { this.closeMenuClick(key, e) } } }}>
+          <a-menu-item key="closeThat">关闭当前标签</a-menu-item>
+          <a-menu-item key="closeRight">关闭右侧</a-menu-item>
+          <a-menu-item key="closeLeft">关闭左侧</a-menu-item>
+          <a-menu-item key="closeAll">关闭全部</a-menu-item>
         </a-menu>
       )
     },
