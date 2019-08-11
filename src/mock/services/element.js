@@ -6,120 +6,164 @@ const list = () => {
   return builder({
     'second': [
       {
-      "basisElementId": 1,
-      "hasChild": -1,
-      "isRadio": 0,
-      "isShow": 0,
-      "isWrite": -1,
       "level": 1,
-      "questionName": "留全血",
-      "showType": 0,
-      "simple": 1,
-      "sort": 1,
-      "type": 1
-    },
-    {
-      "basisElementId": 2,
-      "hasChild": -1,
-      "isRadio": 0,
-      "isShow": 0,
-      "isWrite": -1,
-      "level": 1,
-      "questionName": "留血清",
-      "showType": 0,
-      "simple": 1,
-      "sort": 2,
-      "type": 1
-    },
-    {
-      "basisElementId": 3,
-      "hasChild": -1,
-      "isRadio": 0,
-      "isShow": 0,
-      "isWrite": 1,
-      "level": 1,
-      "questionName": "患者支扩确诊时间",
-      "showType": 0,
-      "simple": -1,
-      "sort": 3,
-      "type": 1
-    },
-    {
-      "basisElementId": 4,
-      "childList": [
+      "answers": [
         {
-          "basisElementId": 5,
-          "hasChild": -1,
-          "isRadio": 0,
-          "isShow": 0,
-          "isWrite": -1,
-          "level": 2,
-          "parentId": 4,
-          "questionName": "咳嗽",
-          "showType": 0,
-          "simple": -1,
-          "sort": 1,
-          "type": 2
-        },
-        {
-          "basisElementId": 6,
-          "childEleName": "",
-          "hasChild": -1,
-          "isRadio": 0,
-          "isShow": 0,
-          "isWrite": 1,
-          "level": 2,
-          "parentId": 4,
-          "questionName": "咳痰",
-          "showType": 0,
-          "simple": -1,
-          "sort": 1,
-          "type": 2,
-          "unit": "ml/日"
-        },
-        {
-          "basisElementId": 7,
-          "childEleName": "",
-          "hasChild": -1,
-          "isRadio": 0,
-          "isShow": 0,
-          "isWrite": -1,
-          "level": 2,
-          "parentId": 4,
-          "questionName": "痰血",
-          "showType": 0,
-          "simple": -1,
-          "sort": 1,
-          "type": 2,
-          "unit": ""
-        },
-        {
-          "basisElementId": 8,
-          "childEleName": "",
-          "hasChild": -1,
-          "isRadio": 0,
-          "isShow": 0,
-          "isWrite": 1,
-          "level": 2,
-          "parentId": 4,
-          "questionName": "咯血",
-          "showType": 0,
-          "simple": -1,
-          "sort": 1,
-          "type": 2,
-          "unit": "ml/日"
+          "basisAnswerId": 12,
+          "patientBasisMarkId": 1,
+          "elementNumValue": 1,
+          "basisElementId": 1
         }
       ],
-      "hasChild": 1,
+      "simple": 1,
+      "questionName": "留全血",
+      "sort": 1,
+      "type": 1,
+      "isRadio": 0,
+      "isShow": 0,
+      "basisElementId": 1,
+      "hasChild": -1,
+      "showType": 0,
+      "isWrite": -1
+    },
+    {
+      "level": 1,
+      "answers": [
+        {
+          "basisAnswerId": 13,
+          "patientBasisMarkId": 1,
+          "elementNumValue": -1,
+          "basisElementId": 2
+        }
+      ],
+      "simple": 1,
+      "questionName": "留血清",
+      "sort": 2,
+      "type": 1,
+      "isRadio": 0,
+      "isShow": 0,
+      "basisElementId": 2,
+      "hasChild": -1,
+      "showType": 0,
+      "isWrite": -1
+    },
+    {
+      "level": 1,
+      "answers": [
+        {
+          "basisAnswerId": 14,
+          "elementTextValue": "2019-01-01",
+          "patientBasisMarkId": 1,
+          "basisElementId": 3
+        }
+      ],
+      "simple": -1,
+      "questionName": "患者支扩确诊时间",
+      "sort": 3,
+      "type": 1,
+      "isRadio": 0,
+      "isShow": 0,
+      "basisElementId": 3,
+      "hasChild": -1,
+      "showType": 0,
+      "isWrite": 1
+    },
+    {
+      "level": 1,
+      "answers": [],
+      "childList": [
+        {
+          "level": 2,
+          "answers": [
+            {
+              "basisAnswerId": 15,
+              "patientBasisMarkId": 1,
+              "elementNumValue": 1,
+              "basisElementId": 5
+            }
+          ],
+          "simple": -1,
+          "questionName": "咳嗽",
+          "sort": 1,
+          "type": 2,
+          "isRadio": 0,
+          "parentId": 4,
+          "isShow": 0,
+          "basisElementId": 5,
+          "hasChild": -1,
+          "showType": 0,
+          "isWrite": -1
+        },
+        {
+          "level": 2,
+          "answers": [
+            {
+              "basisAnswerId": 16,
+              "elementTextValue": "100",
+              "patientBasisMarkId": 1,
+              "elementNumValue": 1,
+              "basisElementId": 6
+            }
+          ],
+          "simple": -1,
+          "questionName": "咳痰",
+          "sort": 1,
+          "type": 2,
+          "isRadio": 0,
+          "parentId": 4,
+          "isShow": 0,
+          "childEleName": "",
+          "unit": "ml/日",
+          "basisElementId": 6,
+          "hasChild": -1,
+          "showType": 0,
+          "isWrite": 1
+        },
+        {
+          "level": 2,
+          "answers": [],
+          "simple": -1,
+          "questionName": "痰血",
+          "sort": 1,
+          "type": 2,
+          "isRadio": 0,
+          "parentId": 4,
+          "isShow": 0,
+          "childEleName": "",
+          "unit": "",
+          "basisElementId": 7,
+          "hasChild": -1,
+          "showType": 0,
+          "isWrite": -1
+        },
+        {
+          "level": 2,
+          "answers": [],
+          "simple": -1,
+          "questionName": "咯血",
+          "sort": 1,
+          "type": 2,
+          "isRadio": 0,
+          "parentId": 4,
+          "isShow": 0,
+          "childEleName": "",
+          "unit": "ml/日",
+          "basisElementId": 8,
+          "hasChild": -1,
+          "showType": 0,
+          "isWrite": 1
+        }
+      ],
+      "simple": -1,
+      "questionName": "主要临床症状：有无下列症状：（多选，勾选）",
+      "sort": 4,
+      "type": 1,
       "isRadio": -1,
       "isShow": 0,
-      "isWrite": -1,
-      "level": 1,
-      "questionName": "主要临床症状：有无下列症状：（多选，勾选）",
+      "basisElementId": 4,
+      "hasChild": 1,
       "showType": 1,
-      "simple": -1,
-      "sort": 4,
-      "type": 1
+      "isWrite": -1
     }
     ],
     'seven': [

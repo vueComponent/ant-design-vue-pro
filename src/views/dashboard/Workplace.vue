@@ -1,38 +1,39 @@
 
 <template>
   <div>
+    <button @click="submit">提交</button>
     <div v-for="(qu1, index) in list" :key="index">
       <p class="fl">{{qu1.questionName||''}}</p>
       <div v-if="qu1.simple > 0" class="fl" style="margin-left: 50px;">
-        <label><input type="radio" :name="qu1.basisElementId" :value="[qu1.basisElementId+'_1']">是</label>
-        <label><input type="radio" :name="qu1.basisElementId" :value="[qu1.basisElementId+'_-1']">否</label>
+        <label><input type="radio" :name="qu1.basisElementId" :value="1" :checked="qu1.answers[0].elementNumValue === 1">是</label>
+        <label><input type="radio" :name="qu1.basisElementId" :value="-1" :checked="qu1.answers[0].elementNumValue === -1">否</label>
       </div>
       <div v-if="qu1.simple < 0 && qu1.isWrite > 0">
-        <input type="text" style="margin-left: 50px;" :name="qu1.basisElementId">
+        <input type="text" style="margin-left: 50px;" :name="qu1.basisElementId" :value="qu1.answers[0].elementTextValue">
       </div>
       <div v-if="qu1.hasChild > 0" :class="{clear: qu1.showType === 2}">
         <!-- 单选 -->
         <div class="radio-group" v-if="qu1.isRadio > 0">
           <div :class="{fl: qu1.showType !== 2}" v-for="(op,index) in qu1.childList" :key="index">
-            <label :class="{fl: qu1.showType !== 2}"><input type="radio" :name="op.parentId" :value="[op.parentId + '_' + op.basisElementId]">{{op.questionName||''}}</label>
+            <label :class="{fl: qu1.showType !== 2}"><input type="radio" :name="op.parentId" :value="op.basisElementId">{{op.questionName||''}}</label>
             <p :class="{fl: qu1.showType !== 2}" v-if="op.isWrite > 0"><input type="text" name="">{{op.unit}}</p>
           </div>
         </div>
         <!-- 多选 -->
         <div class="check-group" v-if="qu1.isRadio < 0">
           <div :class="{fl: qu1.showType !== 2}" class="clear" v-for="(op,index) in qu1.childList" :key="index" style="margin-right: 20px;">
-            <label class="fl"><input type="checkbox" :name="op.parentId" :value="[op.parentId + '_' + op.basisElementId]">{{op.questionName||''}}</label>
-            <p style="margin-left: 10px;" class="fl" v-if="op.isWrite > 0"><input type="text" name="">{{op.unit}}</p>
+            <label class="fl"><input type="checkbox" :name="op.parentId" :value="op.basisElementId" :data-nip="op.isWrite" :checked="op.answers.length && op.answers[0].elementNumValue > 0">{{op.questionName||''}}</label>
+            <p style="margin-left: 10px;" class="fl" v-if="op.isWrite > 0"><input type="text" :name="[op.basisElementId+'-text']" :value="op.answers.length && op.answers[0].elementTextValue || ''">{{op.unit}}</p>
             <!-- 子选项 -->
             <div v-if="op.hasChild > 0">
               <div class="radio-group" v-if="op.isRadio > 0">
                 <div v-for="(sub,index) in op.childList">
-                  <label class="fl"><input type="radio" :name="sub.parentId" :value="[sub.parentId + '_' + sub.basisElementId]">{{sub.questionName||''}}</label>
+                  <label class="fl"><input type="radio" :name="sub.parentId" :value="sub.basisElementId">{{sub.questionName||''}}</label>
                 </div>
               </div>
               <div class="check-group" v-if="op.isRadio < 0">
                 <div v-for="(sub,index) in op.childList">
-                  <label class="fl"><input type="radio" :name="sub.parentId" :value="[sub.parentId + '_' + sub.basisElementId]">{{sub.questionName||''}}</label>
+                  <label class="fl"><input type="checkbox" :name="sub.parentId" :value="sub.basisElementId">{{sub.questionName||''}}</label>
                 </div>
               </div>
             </div>
@@ -45,7 +46,7 @@
             <p :class="{fl: sub.showType === 1}" v-if="sub.isWrite > 0"><input type="text" name="">{{sub.unit}}</p>
             <div class="radio-group" v-if="sub.isRadio > 0">
               <div v-for="(subOp,index) in sub.childList" :key="index">
-                <label :class="{fl: sub.showType === 1}"><input type="radio" :name="subOp.parentId" :value="[subOp.parentId + '_' + subOp.basisElementId]">{{subOp.questionName||''}}</label>
+                <label :class="{fl: sub.showType === 1}"><input type="radio" :name="subOp.parentId" :value="subOp.basisElementId">{{subOp.questionName||''}}</label>
               </div>
             </div>
             <div class="check-group" v-if="sub.isRadio < 0"></div>
@@ -58,28 +59,79 @@
 </template>
 
 <script>
+import { getElementsAnswer, submit } from '@/api/basis'
+import _ from 'lodash'
+import $ from 'jquery'
+
 export default {
+
   name: 'Workplace',
   data () {
     return {
       list: []
     }
   },
-  computed: {
-    
-  },
-  created () {
-   
-  },
   mounted () {
-    this.getProjects()
+    var that = this
+    var params = new URLSearchParams();
+    params.append('basisMaskId', 2)
+    params.append('patientBasisId', 1)
+    getElementsAnswer(params)
+    .then(res => {
+      that.list = res.data
+    })
   },
   methods: {
     getProjects () {
       this.$http.get('/element/list')
         .then(res => {
-          this.list = res.result && res.result.seven
+          this.list = res.result && res.result.second
         })
+    },
+    submit(){
+      var result = [];
+      var a = _.each(this.list, function(item){
+        if(item.simple > 0){
+          result.push({
+            basisElementId: item.basisElementId,
+            elementNumValue: $('input[name="' + item.basisElementId + '"]:checked').val()
+          })
+        }else if(item.isWrite > 0){
+          result.push({
+            basisElementId: item.basisElementId,
+            elementTextValue: $('input[name="' + item.basisElementId + '"]').val()
+          }) 
+        }else if(item.hasChild > 0){
+          $('input[name="' + item.basisElementId + '"]:checked').each(function(i,v){
+            if($(v).data('nip') && $(v).data('nip') > 0){
+              result.push({
+                basisElementId: parseInt($(v).val()),
+                elementNumValue: 1,
+                elementTextValue: $('[name="' + $(v).val() +'-text"]').val()
+              })
+            }else{
+              result.push({
+                basisElementId: parseInt($(v).val()),
+                elementNumValue: 1
+              })
+            }
+          })
+        }
+      })
+      console.log(result)
+      var patientBasis = {patientBasisId:1,"patientId":1,"type":1,"executeId":1,"executeStatus":1,"status":0}
+      var patientBasisMark = {patientBasisId:1,"basisMarkId":2,"basisMarkName":"支扩病史资料","level":1,"progress":"10%"}
+      var params = new URLSearchParams();
+      params.append('basisAnswer', JSON.stringify(result))
+      params.append('patientBasis', JSON.stringify(patientBasis))
+      params.append('patientBasisMark', JSON.stringify(patientBasisMark))
+      submit(params)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
 }

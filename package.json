@@ -17,6 +17,7 @@
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "enquire.js": "^2.1.6",
+    "jquery": "^3.4.1",
     "js-cookie": "^2.2.0",
     "lodash.get": "^4.4.2",
     "lodash.pick": "^4.4.0",

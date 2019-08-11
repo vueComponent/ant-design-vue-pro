@@ -7,14 +7,11 @@ import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 // 创建 axios 实例
 const service = axios.create({
-  baseURL: 'http://localhost:9996/zklm-web', // api base_url
-  timeout: 6000, // 请求超时时间
+  baseURL: '/api', // api base_url
+  timeout: 6000 // 请求超时时间
 })
 
-service.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-
 const err = (error) => {
-  debugger
   if (error.response) {
     const data = error.response.data
     const token = Vue.ls.get(ACCESS_TOKEN)
