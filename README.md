@@ -58,7 +58,7 @@ Overview
 - Clone repo
 ```bash
 git clone https://github.com/sendya/ant-design-pro-vue.git
-cd ant-design-pro-vue
+cd ant-design-pro-vue 121213123
 ```
 
 - Install dependencies
