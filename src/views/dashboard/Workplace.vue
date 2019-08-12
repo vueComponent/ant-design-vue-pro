@@ -74,7 +74,7 @@ export default {
   mounted () {
     var that = this
     var params = new URLSearchParams();
-    params.append('basisMaskId', 7)
+    params.append('basisMaskId', 10)
     params.append('patientBasisId', 1)
     getElementsAnswer(params)
     .then(res => {
@@ -114,28 +114,28 @@ export default {
                   elementTextValue: $('input[name="' + sub.basisElementId + '"]').val()
                 })
               }
-              $('input[name="' + sub.basisElementId + '"]:checked').each(function(i,v){
+              $('input[name="' + sub.basisElementId + '"][type!="text"]').each(function(i,v){
                 result.push({
                   basisAnswerId: $(v).data('answerId'),
                   basisElementId: parseInt($(v).val()),
-                  elementNumValue: 1
+                  elementNumValue: $(v).prop('checked') ? 1 : -1
                 })
               })
             })
           }else{
-            $('input[name="' + item.basisElementId + '"]:checked').each(function(i,v){
+            $('input[name="' + item.basisElementId + '"][type!="text"]').each(function(i,v){
               if($(v).data('nip') && $(v).data('nip') > 0){
                 result.push({
                   basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
                   basisElementId: parseInt($(v).val()),
-                  elementNumValue: 1,
+                  elementNumValue: $(v).prop('checked') ? 1 : -1,
                   elementTextValue: $('[name="' + $(v).val() +'-text"]').val()
                 })
               }else{
                 result.push({
                   basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
                   basisElementId: parseInt($(v).val()),
-                  elementNumValue: 1
+                  elementNumValue: $(v).prop('checked') ? 1 : -1
                 })
               }
             })
@@ -144,7 +144,7 @@ export default {
       })
       console.log(result)
       var patientBasis = {patientBasisId:1,"patientId":1,"type":1,"executeId":1,"executeStatus":1,"status":0}
-      var patientBasisMark = {patientBasisId:1,"basisMarkId":7,"basisMarkName":"病因学相关检查","level":2,"progress":"10%"}
+      var patientBasisMark = {patientBasisId:1,"basisMarkId":10,"basisMarkName":"其他实验室检查","level":2,"progress":"10%"}
       var params = new URLSearchParams();
       params.append('basisAnswer', JSON.stringify(result))
       params.append('patientBasis', JSON.stringify(patientBasis))
@@ -152,7 +152,8 @@ export default {
       submit(params)
       .then(res => {
         console.log(res)
-        // location.href = location.href
+        alert('保存成功')
+        location.href = location.href
       })
       .catch(error => {
         console.log(error)
