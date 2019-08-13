@@ -2,119 +2,93 @@
   <a-card :bordered="false">
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
-        <a-row :gutter="48">
-          <a-col :md="8" :sm="24">
-            <a-form-item label="规则编号">
-              <a-input v-model="queryParam.id" placeholder=""/>
-            </a-form-item>
+        <a-row :gutter="16">
+          <a-col :md="6" :sm="24">
+            <a-form-item label="规则编号"><a-input v-model="queryParam.id" placeholder="" /></a-form-item>
           </a-col>
-          <a-col :md="8" :sm="24">
-            <a-form-item label="使用状态">
-              <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
-                <a-select-option value="0">全部</a-select-option>
-                <a-select-option value="1">关闭</a-select-option>
-                <a-select-option value="2">运行中</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <template v-if="advanced">
-            <a-col :md="8" :sm="24">
-              <a-form-item label="调用次数">
-                <a-input-number v-model="queryParam.callNo" style="width: 100%"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="更新日期">
-                <a-date-picker v-model="queryParam.date" style="width: 100%" placeholder="请输入更新日期"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="使用状态">
-                <a-select v-model="queryParam.useStatus" placeholder="请选择" default-value="0">
-                  <a-select-option value="0">全部</a-select-option>
-                  <a-select-option value="1">关闭</a-select-option>
-                  <a-select-option value="2">运行中</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="使用状态">
-                <a-select placeholder="请选择" default-value="0">
-                  <a-select-option value="0">全部</a-select-option>
-                  <a-select-option value="1">关闭</a-select-option>
-                  <a-select-option value="2">运行中</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-          </template>
-          <a-col :md="!advanced && 8 || 24" :sm="24">
-            <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
+          <a-col :md="6" :sm="24">
+            <a-form-item>
               <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
-              <a-button style="margin-left: 8px" @click="() => queryParam = {}">重置</a-button>
               <a @click="toggleAdvanced" style="margin-left: 8px">
                 {{ advanced ? '收起' : '展开' }}
-                <a-icon :type="advanced ? 'up' : 'down'"/>
+                <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
-            </span>
+            </a-form-item>
+          </a-col>
+          <a-col :md="12" style="text-align:right" :sm="24"><a-button type="primary" icon="plus" @click="$refs.createModal.add()">新建</a-button></a-col>
+          <a-col v-if="advanced" class="tableSearch" :md="6">
+              <a-card>
+                <a-form-item label="使用状态">
+                  <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
+                    <a-select-option value="0">全部</a-select-option>
+                    <a-select-option value="1">关闭</a-select-option>
+                    <a-select-option value="2">运行中</a-select-option>
+                  </a-select>
+                </a-form-item>
+                <a-form-item label="调用次数"><a-input-number v-model="queryParam.callNo" style="width: 100%" /></a-form-item>
+                <a-form-item label="更新日期"><a-date-picker v-model="queryParam.date" style="width: 100%" placeholder="请输入更新日期" /></a-form-item>
+                <a-form-item label="使用状态">
+                  <a-select v-model="queryParam.useStatus" placeholder="请选择" default-value="0">
+                    <a-select-option value="0">全部</a-select-option>
+                    <a-select-option value="1">关闭</a-select-option>
+                    <a-select-option value="2">运行中</a-select-option>
+                  </a-select>
+                </a-form-item>
+                <a-form-item label="使用状态">
+                  <a-select placeholder="请选择" default-value="0">
+                    <a-select-option value="0">全部</a-select-option>
+                    <a-select-option value="1">关闭</a-select-option>
+                    <a-select-option value="2">运行中</a-select-option>
+                  </a-select>
+                </a-form-item>
+              </a-card>
           </a-col>
         </a-row>
       </a-form>
     </div>
-
-    <div class="table-operator">
-      <a-button type="primary" icon="plus" @click="$refs.createModal.add()">新建</a-button>
-      <a-button type="dashed" @click="tableOption">{{ optionAlertShow && '关闭' || '开启' }} alert</a-button>
-      <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
-        <a-menu slot="overlay">
-          <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
-          <!-- lock | unlock -->
-          <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
-        </a-menu>
-        <a-button style="margin-left: 8px">
-          批量操作 <a-icon type="down" />
-        </a-button>
-      </a-dropdown>
-    </div>
-
-    <s-table
-      ref="table"
-      size="default"
-      rowKey="key"
-      :columns="columns"
-      :data="loadData"
-      :alert="options.alert"
-      :rowSelection="options.rowSelection"
-      showPagination="auto"
-    >
-      <span slot="serial" slot-scope="text, record, index">
-        {{ index + 1 }}
-      </span>
-      <span slot="status" slot-scope="text">
-        <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
+    <s-table ref="table" size="default" rowKey="key" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+      <span slot="serial" slot-scope="text, record, index">{{ index + 1 }}</span>
+      <span slot="status" slot-scope="text"><a-badge :status="text | statusTypeFilter" :text="text | statusFilter" /></span>
+      <span slot="pros" slot-scope="pros">
+        <div v-for="pro in pros" class="progressTag">
+          <div class="progressTagContent">
+            <p class="progressTagTitle">{{ pro.name }}</p>
+            <a-progress :strokeColor="pro.percent == 100 ? '#4BC5AC' : '#00A0E9'" strokeWidth="10" :showInfo="false" :percent="pro.percent" size="small" />
+          </div>
+          <a-icon v-if="pro.percent == 100" type="check-circle" theme="filled" />
+          <span class="ant-progress-span" v-if="pro.percent < 100 && pro.percent > 0">23%</span>
+          <a-icon style="color:#00A0E9" v-if="pro.percent == 0" type="clock-circle" theme="filled" />
+        </div>
       </span>
       <span slot="description" slot-scope="text">
-        <ellipsis :length="4" tooltip>{{ text }}</ellipsis>
+        <ellipsis :length="8" tooltip>{{ text }}</ellipsis>
       </span>
 
       <span slot="action" slot-scope="text, record">
         <template>
-          <a @click="handleEdit(record)">配置</a>
+          <a @click="handleEdit(record)">
+            <a-icon type="home" />
+            配置
+          </a>
           <a-divider type="vertical" />
-          <a @click="handleSub(record)">订阅报警</a>
+          <a @click="handleSub(record)">
+            <a-icon type="home" />
+            订阅报警
+          </a>
         </template>
       </span>
     </s-table>
     <create-form ref="createModal" @ok="handleOk" />
-    <step-by-step-modal ref="modal" @ok="handleOk"/>
+    <step-by-step-modal ref="modal" @ok="handleOk" />
   </a-card>
 </template>
 
 <script>
-import moment from 'moment'
-import { STable, Ellipsis } from '@/components'
-import StepByStepModal from './modules/StepByStepModal'
-import CreateForm from './modules/CreateForm'
-import { getRoleList, getServiceList } from '@/api/manage'
+import moment from 'moment';
+import { STable, Ellipsis } from '@/components';
+import StepByStepModal from './modules/StepByStepModal';
+import CreateForm from './modules/CreateForm';
+import { getRoleList, getServiceList } from '@/api/manage';
 
 const statusMap = {
   0: {
@@ -133,7 +107,7 @@ const statusMap = {
     status: 'error',
     text: '异常'
   }
-}
+};
 
 export default {
   name: 'TableList',
@@ -143,7 +117,7 @@ export default {
     CreateForm,
     StepByStepModal
   },
-  data () {
+  data() {
     return {
       mdl: {},
       // 高级搜索 展开/关闭
@@ -169,13 +143,19 @@ export default {
           title: '服务调用次数',
           dataIndex: 'callNo',
           sorter: true,
-          needTotal: true,
-          customRender: (text) => text + ' 次'
+          // needTotal: true,
+          customRender: text => text + ' 次'
         },
         {
           title: '状态',
           dataIndex: 'status',
           scopedSlots: { customRender: 'status' }
+        },
+        {
+          title: '进度',
+          dataIndex: 'pros',
+          width: '452px',
+          scopedSlots: { customRender: 'pros' }
         },
         {
           title: '更新时间',
@@ -185,96 +165,106 @@ export default {
         {
           title: '操作',
           dataIndex: 'action',
-          width: '150px',
+          width: '200px',
           scopedSlots: { customRender: 'action' }
         }
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        console.log('loadData.parameter', parameter)
-        return getServiceList(Object.assign(parameter, this.queryParam))
-          .then(res => {
-            return res.result
-          })
+        console.log('loadData.parameter', parameter);
+        return getServiceList(Object.assign(parameter, this.queryParam)).then(res => {
+          return res.result;
+        });
       },
       selectedRowKeys: [],
       selectedRows: [],
 
       // custom table alert & rowSelection
       options: {
-        alert: { show: true, clear: () => { this.selectedRowKeys = [] } },
+        alert: {
+          show: false,
+          clear: () => {
+            this.selectedRowKeys = [];
+          }
+        },
         rowSelection: {
           selectedRowKeys: this.selectedRowKeys,
           onChange: this.onSelectChange
         }
       },
       optionAlertShow: false
-    }
+    };
   },
   filters: {
-    statusFilter (type) {
-      return statusMap[type].text
+    statusFilter(type) {
+      return statusMap[type].text;
     },
-    statusTypeFilter (type) {
-      return statusMap[type].status
+    statusTypeFilter(type) {
+      return statusMap[type].status;
     }
   },
-  created () {
-    this.tableOption()
-    getRoleList({ t: new Date() })
+  created() {
+    getRoleList({ t: new Date() });
   },
   methods: {
-    tableOption () {
-      if (!this.optionAlertShow) {
-        this.options = {
-          alert: { show: true, clear: () => { this.selectedRowKeys = [] } },
-          rowSelection: {
-            selectedRowKeys: this.selectedRowKeys,
-            onChange: this.onSelectChange,
-            getCheckboxProps: record => ({
-              props: {
-                disabled: record.no === 'No 2', // Column configuration not to be checked
-                name: record.no
-              }
-            })
-          }
-        }
-        this.optionAlertShow = true
-      } else {
-        this.options = {
-          alert: false,
-          rowSelection: null
-        }
-        this.optionAlertShow = false
-      }
+    handleEdit(record) {
+      console.log(record);
+      this.$refs.modal.edit(record);
     },
-
-    handleEdit (record) {
-      console.log(record)
-      this.$refs.modal.edit(record)
-    },
-    handleSub (record) {
+    handleSub(record) {
       if (record.status !== 0) {
-        this.$message.info(`${record.no} 订阅成功`)
+        this.$message.info(`${record.no} 订阅成功`);
       } else {
-        this.$message.error(`${record.no} 订阅失败，规则已关闭`)
+        this.$message.error(`${record.no} 订阅失败，规则已关闭`);
       }
     },
-    handleOk () {
-      this.$refs.table.refresh()
+    handleOk() {
+      this.$refs.table.refresh();
     },
-    onSelectChange (selectedRowKeys, selectedRows) {
-      this.selectedRowKeys = selectedRowKeys
-      this.selectedRows = selectedRows
+    onSelectChange(selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys;
+      this.selectedRows = selectedRows;
     },
-    toggleAdvanced () {
-      this.advanced = !this.advanced
+    toggleAdvanced() {
+      this.advanced = !this.advanced;
     },
-    resetSearchForm () {
+    resetSearchForm() {
       this.queryParam = {
         date: moment(new Date())
-      }
+      };
     }
   }
-}
+};
 </script>
+<style>
+.progressTag {
+  display: inline-block;
+  width: 140px;
+}
+.progressTagContent {
+  display: inline-block;
+  width: 100px;
+  margin-right: 5px;
+}
+.progressTagTitle {
+  padding-left: 40px;
+  margin-bottom: 2px;
+}
+.progressTag .anticon {
+  color: #4bc5ac;
+  font-size: 18px;
+  vertical-align: bottom;
+}
+.ant-progress-inner {
+  background-color: #e5f6ff;
+}
+.progressTag .ant-progress-span {
+  color: #e5f6ff;
+}
+.tableSearch {
+  background: #FFFFFF;
+  position: absolute;
+  top: 52px;
+  z-index: 100;
+}
+</style>

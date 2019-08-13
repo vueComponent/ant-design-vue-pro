@@ -252,17 +252,20 @@ export default {
       ) : (this.alert !== null && typeof this.alert.clear === 'function') ? (
         this.renderClear(this.alert.clear)
       ) : null
-
+      
       // 绘制 alert 组件
-      return (
-        <a-alert showIcon={true} style="margin-bottom: 16px">
-          <template slot="message">
-            <span style="margin-right: 12px">已选择: <a style="font-weight: 600">{this.selectedRows.length}</a></span>
-            {needTotalItems}
-            {clearItem}
-          </template>
-        </a-alert>
-      )
+      if(this.alert.show){
+              return (
+          <a-alert showIcon={true} style="margin-bottom: 16px">
+            <template slot="message">
+              <span style="margin-right: 12px">已选择: <a style="font-weight: 600">{this.selectedRows.length}</a></span>
+              {needTotalItems}
+              {clearItem}
+            </template>
+          </a-alert>
+        )
+      }
+
     }
   },
 

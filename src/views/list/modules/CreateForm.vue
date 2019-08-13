@@ -10,11 +10,42 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item
-          label="描述"
+          label="姓名"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
         >
-          <a-input v-decorator="['desc', {rules: [{required: true, min: 5, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['name',{rules: [{required: true}]}]" />
+        </a-form-item>
+        <a-form-item
+          label="身份证号"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+        >
+          <a-input v-decorator="['card', {rules: [{required: true,min:18}]}]" />
+        </a-form-item>
+        <a-form-item
+          label="性别"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+        >
+        <a-radio-group v-decorator="['sex', {initialValue: 1, rules: [{required: true}]}]" style="width: 100%">
+          <a-radio :value="0">男</a-radio>
+          <a-radio :value="1">女</a-radio>
+        </a-radio-group>
+        </a-form-item>
+         </a-form-item>
+        <a-form-item
+          label="身份证号"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+        >
+          <a-date-picker
+          style="width: 100%"
+          showTime
+          format="YYYY-MM-DD"
+          placeholder="请选择"
+          v-decorator="['birthday',{rules: [{required: true}]}]"
+        />
         </a-form-item>
       </a-form>
     </a-spin>
