@@ -22,6 +22,21 @@ const serverList = (options) => {
       description: '这是一段描述',
       callNo: Mock.mock('@integer(1, 999)'),
       status: Mock.mock('@integer(0, 3)'),
+      pros:[
+        {
+          id:1,
+          name:'基线',
+          percent:100,
+        },{
+          id:2,
+          name:"访视",
+          percent:40
+        },{
+          id:3,
+          name:"访视",
+          percent:0
+          }
+      ],
       updatedAt: Mock.mock('@datetime'),
       editable: false
     })

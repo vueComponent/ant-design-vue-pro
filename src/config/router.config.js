@@ -17,7 +17,7 @@ export const asyncRouterMap = [
         name: 'dashboard',
         redirect: '/dashboard/workplace',
         component: RouteView,
-        meta: { title: '仪表盘', keepAlive: true, icon: bxAnaalyse},
+        meta: { title: '首页', keepAlive: true, icon: bxAnaalyse},
         children: [
           {
             path: '/dashboard/analysis',
