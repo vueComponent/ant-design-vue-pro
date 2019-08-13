@@ -19,10 +19,11 @@ export const asyncRouterMap = [
         meta: { title: '首页', keepAlive: true, icon: 'home'}
       },
       {
-        path: '/case/index',
-        name: 'Case',
-        component: () => import('@/views/case/index'),
-        meta: { title: '病例管理', keepAlive: true, icon: 'home'}
+        path: '/list/table-list/:pageNo([1-9]\\d*)?',
+        name: 'TableListWrapper',
+        hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+        component: () => import('@/views/list/TableList'),
+        meta: { title: '病例管理', keepAlive: true, icon: 'table'}
       },
       {
         path: '/task/index',
