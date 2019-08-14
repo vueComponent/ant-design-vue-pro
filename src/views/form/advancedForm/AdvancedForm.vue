@@ -258,24 +258,19 @@ export default {
         const errors = Object.assign({}, repository.form.getFieldsError(), task.form.getFieldsError())
         const tmp = { ...errors }
         this.errorList(tmp)
-        console.log(tmp)
       })
     },
     errorList (errors) {
       if (!errors || errors.length === 0) {
-        return null
+        return
       }
-      this.errors = Object.keys(errors).map(key => {
-        if (!errors[key]) {
-          return null
-        }
-
-        return {
+      this.errors = Object.keys(errors)
+        .filter(key => errors[key])
+        .map(key => ({
           key: key,
           message: errors[key][0],
           fieldLabel: fieldLabels[key]
-        }
-      })
+        }))
     },
     scrollToField (fieldKey) {
       const labelNode = document.querySelector(`label[for="${fieldKey}"]`)
