@@ -16,3 +16,33 @@ export function getElementsAnswer(params) {
     data: params
   })
 }
+//获得省市
+export function getProvinceAndCity() {
+  return axios({
+    url: '/dictionaryAttribute/getProvinceAndCity',
+    method: 'post'
+  })
+}
+//获得民族
+export function getNation() {
+  return axios({
+    url: '/dictionaryAttribute/getNation',
+    method: 'post'
+  })
+}
+//根据字典ID获得内容
+export function getDictionaryAttributeByDictionaryId(params) {
+  return axios({
+    url: '/dictionaryAttribute/getDictionaryAttributeByDictionaryId',
+    method: 'post',
+    data: params
+  })
+}
+//提交患者信息
+export function addOrUpdate(params) {
+  return axios({
+    url: '/patient/addOrUpdate',
+    method: 'post',
+    data: params
+  })
+}
