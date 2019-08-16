@@ -22,9 +22,12 @@
        </a-col>
        <a-col :span="19">
          <div class="baselineForm">
-      <!--        <a-button  size="large">导入</a-button>
-              <a-button  size="large">保存</a-button>
-              <a-button type="primary" size="large">提交</a-button> -->
+              <div class="fr">
+                <a-button class="btn">导入</a-button>
+                <a-button class="btn">保存</a-button>
+                <a-button class="btn" type="primary">提交</a-button>
+              </div>
+              
               <a-form :form="form">
                 <a-form-item
                   label="姓名"
@@ -97,7 +100,7 @@
                   </a-checkbox-group>
                  </a-form-item>
               </a-form>
-               <a-dragger ></a-dragger>
+               <a-dragger :formSubtitle="file.formSubtitle"></a-dragger>
          </div>         
        </a-col>
      </a-row>
@@ -141,6 +144,8 @@ export default {
     getOrgTree().then(res => {
       this.orgTree = res.result;
     });
+    const { id } = this.$route.params
+    console.log(id)
   },
   methods: {
     handleClick(e) {
@@ -191,11 +196,12 @@ export default {
 };
 </script>
 
-<style>
-.ant-card-wider-padding .ant-card-body {
-  padding: 18px 32px;
-}
-.tree-title{
+<style lang="less" scoped>
+.page-header-index-wide{
+  /deep/ .ant-card-wider-padding .ant-card-body {
+    padding: 18px 32px;
+  }
+  /deep/ .tree-title{
     border-right: 1px solid #E8E8E8;
     color: #25AEFE;
     font-size: 22px;
@@ -204,76 +210,87 @@ export default {
     padding-bottom: 10px;
     background-image:url(../../../assets/treeTop.png) ;
     background-repeat: no-repeat;
-}
- .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title,.ant-menu .ant-menu-item{
+  }
+  /deep/ .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title,.ant-menu .ant-menu-item{
     height: 50px;
     line-height: 50px;
-}
-.ant-menu-submenu-title{
+  }
+  /deep/ .ant-menu-submenu-title{
     height: 50px;
     line-height: 50px;
-}
-.ant-menu-item:hover, .ant-menu-item-active, .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active, .ant-menu-submenu-title:hover {
-    background-color: #EAF2FD;
-}
-.ant-menu-item .placeholderI{
+  }
+  /deep/ .ant-menu-item{
+    .ant-menu-item:hover, .ant-menu-item-active, .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active, .ant-menu-submenu-title:hover {
+        background-color: #EAF2FD;
+    }
+    .placeholderI{
       display: inline-block;
-    width: 27px;
-}
-.ant-menu-item .anticon.anticon-check-circle{
+      width: 27px;
+    }
+    .anticon.anticon-check-circle{
         font-size: 18px;
         color: #8AC51B;
-}
-.ant-menu-item  .anticon.anticon-clock-circle{
-    font-size: 18px;
-    color: #06A0E2;
-  }
-.ant-menu-item  .treeSubTitle{
-    font-size: 16px;
-    margin-left: 10px;
-    display: inline-block;
-    width: 150px;
-  }
-.ant-menu-item  .treeSubPercentage{
-     font-size: 16px;
-    margin-left: 10px;
-  }
- li.ant-menu-submenu.ant-menu-submenu-inline .treeSubTitle{
-     font-size: 16px;
-     margin-left: 10px;
-     display: inline-block;
-     width: 150px;
-  }
-  li.ant-menu-submenu.ant-menu-submenu-inline .treeSubPercentage{
-     font-size: 16px;
-    margin-left: 10px;
-  }
-  li.ant-menu-submenu.ant-menu-submenu-inline .anticon.anticon-check-circle{
-          font-size: 18px;
-          color: #8AC51B;
-  }
-  li.ant-menu-submenu.ant-menu-submenu-inline  .anticon.anticon-clock-circle{
+    }
+    .anticon.anticon-clock-circle{
       font-size: 18px;
       color: #06A0E2;
     }
-   li.ant-menu-submenu.ant-menu-submenu-inline .placeholderI{
-          display: inline-block;
+    .treeSubTitle{
+      font-size: 16px;
+      margin-left: 10px;
+      display: inline-block;
+      width: 150px;
+    }
+    .treeSubPercentage{
+      font-size: 16px;
+      margin-left: 10px;
+    }
+  }
+  /deep/ .ant-menu-submenu{
+    &.ant-menu-submenu-inline{
+      .treeSubTitle{
+         font-size: 16px;
+         margin-left: 10px;
+         display: inline-block;
+         width: 150px;
+      }
+      .treeSubPercentage{
+        font-size: 16px;
+        margin-left: 10px;
+      }
+      .action{
+        font-size: 18px;
+        &.anticon-check-circle{
+          color: #8AC51B;
+        }
+        &.anticon-clock-circle{
+          color: #06A0E2;
+        }
+      }
+      .placeholderI{
+        display: inline-block;
         width: 27px;
+      }
     }
-    .baselineForm{
-      padding: 20px;
+  }
+  .baselineForm{
+    .fr{
+      float: right;
     }
-    .baselineForm .ant-row {
+    .btn{
+      margin-right: 10px;
+    }
+    padding: 20px;
+    .ant-row{
       padding-bottom: 10px;
       padding-top: 10px;
       margin-bottom: 0px;
       border-bottom: 1px solid #F3F3F3;
     }
-    
-    .baselineForm .ant-form-item-label{
+    .ant-form-item-label{
       text-align: left;
-    } 
-    .baselineForm .formSubtitle{
+    }
+    .formSubtitle{
         height: 50px;
         line-height: 50px;
         font-weight: bold;
@@ -283,4 +300,6 @@ export default {
         background: #FAFCFD;
         border-bottom: 1px solid #F3F3F3;
     }
+  }
+}
 </style>

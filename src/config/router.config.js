@@ -19,11 +19,27 @@ export const asyncRouterMap = [
         meta: { title: '首页', keepAlive: true, icon: 'home'}
       },
       {
-        path: '/list/table-list/:pageNo([1-9]\\d*)?',
-        name: 'TableListWrapper',
-        hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-        component: () => import('@/views/list/TableList'),
-        meta: { title: '病例管理', keepAlive: true, icon: 'table'}
+        path: '/list/',
+        name: 'list',
+        component: RouteView,
+        redirect: '/list/table-list',
+        meta: { title: '病例管理', icon: 'table'},
+        children: [
+          {
+            path: '/list/table-list/:pageNo([1-9]\\d*)?',
+            name: 'TableListWrapper',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/list/TableList'),
+            meta: { title: '病例管理', keepAlive: true, icon: 'table'}
+          },
+          {
+            path: '/list/basis/:id(\\d*)',
+            name: 'success',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            hidden: true,
+            component: () => import('@/views/account/center/Index')
+          }
+        ]
       },
       {
         path: '/task/index',
