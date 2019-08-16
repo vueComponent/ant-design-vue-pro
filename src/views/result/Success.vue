@@ -1,92 +1,73 @@
 <template>
-  <a-card :bordered="false" style="margin: -24px -24px 0px;">
-    <result type="success" :description="description" :title="title">
-      <template slot="action">
-        <a-button type="primary">返回列表</a-button>
-        <a-button style="margin-left: 8px">查看项目</a-button>
-        <a-button style="margin-left: 8px">打印</a-button>
-      </template>
-      <div>
-        <div style="font-size: 16px; color: rgba(0, 0, 0, 0.85); font-weight: 500; margin-bottom: 20px;">项目名称</div>
-        <a-row style="margin-bottom: 16px">
-          <a-col :xs="24" :sm="12" :md="12" :lg="12" :xl="6">
-            <span style="color: rgba(0, 0, 0, 0.85)">项目 ID：</span>
-            20180724089
-          </a-col>
-          <a-col :xs="24" :sm="12" :md="12" :lg="12" :xl="6">
-            <span style="color: rgba(0, 0, 0, 0.85)">负责人：</span>
-            曲丽丽是谁？
-          </a-col>
-          <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="12">
-            <span style="color: rgba(0, 0, 0, 0.85)">生效时间：</span>
-            2016-12-12 ~ 2017-12-12
-          </a-col>
-        </a-row>
-        <a-steps :current="1" :direction="isMobile() && directionType.vertical || directionType.horizontal" progressDot>
-          <a-step >
-            <span style="font-size: 14px" slot="title">创建项目</span>
-            <template slot="description">
-              <div style="fontSize: 12px; color: rgba(0, 0, 0, 0.45); position: relative; left: 42px;text-align: left;" slot="description" >
-                <div style="margin: 8px 0 4px">
-                  曲丽丽
-                  <a-icon style="margin-left: 8px" type="dingding-o" />
-                </div>
-                <div>2016-12-12 12:32</div>
-              </div>
-            </template>
-          </a-step>
-          <a-step title="部门初审">
-            <span style="font-size: 14px" slot="title">部门初审</span>
-            <template slot="description">
-              <div style="fontSize: 12px; color: rgba(0, 0, 0, 0.45); position: relative; left: 42px;text-align: left;" slot="description" >
-                <div style="margin: 8px 0 4px">
-                  周毛毛
-                  <a-icon style="margin-left: 8px; color: #00A0E9" type="dingding-o" />
-                </div>
-                <div><a href="">催一下</a></div>
-              </div>
-            </template>
-          </a-step>
-          <a-step title="财务复核">
-            <span style="font-size: 14px" slot="title">财务复核</span>
-          </a-step>
-          <a-step title="完成" >
-            <span style="font-size: 14px" slot="title">完成</span>
-          </a-step>
-        </a-steps>
-      </div>
-    </result>
-  </a-card>
+  <div>
+     <a-card :bordered="false" style="margin: -24px -24px 0px;background-color: #0399EC;color:#FFFFFF">
+      <a-row :gutter="30" style="line-height: 34px;">
+        <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:20px" /></a-col>
+        <a-col :md="3" :sm="20" style="fontSize:20px">
+          <a-icon type="credit-card" theme="filled" />
+          受访者:杨溢
+        </a-col>
+        <a-col :md="5" :sm="24" style="fontSize:20px">
+          <a-icon type="credit-card" theme="filled" style="fontSize:20px" />
+          320123199408175777
+        </a-col>
+        <a-col :md="15" :sm="24" style="fontSize:20px;textAlign: right;">创建时间：2018-01-02</a-col>
+      </a-row>
+    </a-card>
+   <a-card :bordered="false" style="margin:24px 24px 0px">
+    <a-row :gutter="8">
+      <a-col :span="5"><s-tree :dataSource="orgTree" :openKeys.sync="openKeys" :search="true" @click="handleClick" @add="handleAdd" @titleClick="handleTitleClick"></s-tree></a-col>
+      <a-col :span="19"><h1>11111111111111</h1></a-col>
+    </a-row>
+    </a-card>
+  </div>
 </template>
 
 <script>
-import { Result } from '@/components'
-import { mixinDevice } from '@/utils/mixin.js'
+import STree from '@/components/Tree/Tree';
+import { getOrgTree, getServiceList } from '@/api/manage';
 
-const directionType = {
-  horizontal: 'horizontal',
-  vertical: 'vertical'
-}
+// import { Result } from '@/components'
+// import { mixinDevice } from '@/utils/mixin.js'
 
 export default {
-  name: 'Success',
+  name: 'success',
   components: {
-    Result
+    STree
   },
-  mixins: [mixinDevice],
-  data () {
+  data() {
     return {
-      title: '提交成功',
-      description: '提交结果页用于反馈一系列操作任务的处理结果，\n' +
-          ' 如果仅是简单操作，使用 Message 全局提示反馈即可。\n' +
-          ' 本文字区域可以展示简单的补充说明，如果有类似展示\n' +
-          ' “单据”的需求，下面这个灰色区域可以呈现比较复杂的内容。',
-      directionType
+      openKeys: ['key-01'],
+      orgTree: []
+    };
+  },
+  created() {
+    getOrgTree().then(res => {
+      this.orgTree = res.result;
+    });
+  },
+  methods: {
+    handleClick(e) {
+      console.log('handleClick', e);
+      this.queryParam = {
+        key: e.key
+      };
+      this.$refs.table.refresh(true);
+    },
+    handleAdd(item) {
+      console.log('add button, item', item);
+      this.$message.info(`提示：你点了 ${item.key} - ${item.title} `);
+      this.$refs.modal.add(item.key);
+    },
+    handleTitleClick(item) {
+      console.log('handleTitleClick', item);
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
+<style>
+.ant-card-wider-padding .ant-card-body {
+  padding: 18px 32px;
+}
 </style>

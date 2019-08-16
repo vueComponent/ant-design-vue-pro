@@ -17,7 +17,7 @@ export default {
     search: {
       type: Boolean,
       default: false
-    }
+    },
   },
   created () {
     this.localOpenKeys = this.openKeys.slice(0)
@@ -46,11 +46,18 @@ export default {
     renderIcon (icon) {
       return icon && (<Icon type={icon} />) || null
     },
+    renderTreeIcon(percentage){
+      if(parseInt(percentage)==0||!percentage||percentage=='') return (<i class="placeholderI"></i>)
+      if(parseInt(percentage)<100) return (<Icon type="clock-circle" theme="filled" />)
+      if(parseInt(percentage)==100) return (<Icon type="check-circle" theme="filled" />)
+    },
     renderMenuItem (item) {
       return (
         <Item key={item.key}>
+          {this.renderTreeIcon(item.percentage)}
           { this.renderIcon(item.icon) }
-          { item.title }
+          <span class="treeSubTitle">{ item.title }</span>
+          <span class="treeSubPercentage">{item.percentage}</span>
           <a class="btn" style="width: 20px;z-index:1300" {...{ on: { click: () => this.handlePlus(item) } }}><a-icon type="plus"/></a>
         </Item>
       )
@@ -87,8 +94,10 @@ export default {
 
       const title = (
         <span slot="title">
+          {this.renderTreeIcon(item.percentage)}
           { this.renderIcon(item.icon) }
-          <span>{ item.title }</span>
+          <span class="treeSubTitle">{ item.title }</span>
+          <span class="treeSubPercentage">{item.percentage}</span>
         </span>
       )
 
@@ -115,7 +124,8 @@ export default {
     return (
       <div class="tree-wrapper">
         { search ? this.renderSearch() : null }
-        <Menu mode="inline" class="custom-tree" {...{ on: { click: item => this.$emit('click', item), 'update:openKeys': val => { this.localOpenKeys = val } } }} openKeys={this.localOpenKeys}>
+        <div class="tree-title">支扩研究基线表</div>
+        <Menu mode="inline" inlineIndent={0} class="custom-tree" {...{ on: { click: item => this.$emit('click', item), 'update:openKeys': val => { this.localOpenKeys = val } } }} openKeys={this.localOpenKeys}>
           { list }
         </Menu>
       </div>

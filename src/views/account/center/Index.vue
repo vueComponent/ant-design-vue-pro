@@ -1,288 +1,286 @@
 <template>
   <div class="page-header-index-wide page-header-wrapper-grid-content-main">
-    <a-row :gutter="24">
-      <a-col :md="24" :lg="7">
-        <a-card :bordered="false">
-          <div class="account-center-avatarHolder">
-            <div class="avatar">
-              <img :src="avatar()">
-            </div>
-            <div class="username">{{ nickname() }}</div>
-            <div class="bio">海纳百川，有容乃大</div>
-          </div>
-          <div class="account-center-detail">
-            <p>
-              <i class="title"></i>交互专家
-            </p>
-            <p>
-              <i class="group"></i>蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED
-            </p>
-            <p>
-              <i class="address"></i>
-              <span>浙江省</span>
-              <span>杭州市</span>
-            </p>
-          </div>
-          <a-divider/>
-
-          <div class="account-center-tags">
-            <div class="tagsTitle">标签</div>
-            <div>
-              <template v-for="(tag, index) in tags">
-                <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
-                  <a-tag
-                    :key="tag"
-                    :closable="index !== 0"
-                    :afterClose="() => handleTagClose(tag)"
-                  >{{ `${tag.slice(0, 20)}...` }}</a-tag>
-                </a-tooltip>
-                <a-tag
-                  v-else
-                  :key="tag"
-                  :closable="index !== 0"
-                  :afterClose="() => handleTagClose(tag)"
-                >{{ tag }}</a-tag>
-              </template>
-              <a-input
-                v-if="tagInputVisible"
-                ref="tagInput"
-                type="text"
-                size="small"
-                :style="{ width: '78px' }"
-                :value="tagInputValue"
-                @change="handleInputChange"
-                @blur="handleTagInputConfirm"
-                @keyup.enter="handleTagInputConfirm"
-              />
-              <a-tag v-else @click="showTagInput" style="background: #fff; borderStyle: dashed;">
-                <a-icon type="plus"/>New Tag
-              </a-tag>
-            </div>
-          </div>
-          <a-divider :dashed="true"/>
-
-          <div class="account-center-team">
-            <div class="teamTitle">团队</div>
-            <a-spin :spinning="teamSpinning">
-              <div class="members">
-                <a-row>
-                  <a-col :span="12" v-for="(item, index) in teams" :key="index">
-                    <a>
-                      <a-avatar size="small" :src="item.avatar"/>
-                      <span class="member">{{ item.name }}</span>
-                    </a>
-                  </a-col>
-                </a-row>
-              </div>
-            </a-spin>
-          </div>
-        </a-card>
-      </a-col>
-      <a-col :md="24" :lg="17">
-        <a-card
-          style="width:100%"
-          :bordered="false"
-          :tabList="tabListNoTitle"
-          :activeTabKey="noTitleKey"
-          @tabChange="key => handleTabChange(key, 'noTitleKey')"
-        >
-          <article-page v-if="noTitleKey === 'article'"></article-page>
-          <app-page v-else-if="noTitleKey === 'app'"></app-page>
-          <project-page v-else-if="noTitleKey === 'project'"></project-page>
-        </a-card>
-      </a-col>
-    </a-row>
+     <a-card :bordered="false" style="background-color: #0399EC;color:#FFFFFF">
+       <a-row :gutter="30" style="line-height: 34px;">
+         <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:20px" /></a-col>
+         <a-col :md="3" :sm="20" style="fontSize:20px">
+           <a-icon type="credit-card" theme="filled" />
+           受访者:杨溢
+         </a-col>
+         <a-col :md="5" :sm="24" style="fontSize:20px">
+           <a-icon type="credit-card" theme="filled" style="fontSize:20px" />
+           320123199408175777
+         </a-col>
+         <a-col :md="15" :sm="24" style="fontSize:20px;textAlign: right;">创建时间：2018-01-02</a-col>
+       </a-row>
+    </a-card>
+    <a-card :bordered="false" style="margin-top: 20px;">
+     <a-row :gutter="8">
+       <a-col :span="5">
+         <s-tree :dataSource="orgTree" :openKeys.sync="openKeys" :search="false"  @click="handleClick" @add="handleAdd" @titleClick="handleTitleClick">
+        </s-tree>
+       </a-col>
+       <a-col :span="19">
+         <div class="baselineForm">
+      <!--        <a-button  size="large">导入</a-button>
+              <a-button  size="large">保存</a-button>
+              <a-button type="primary" size="large">提交</a-button> -->
+              <a-form :form="form">
+                <a-form-item
+                  label="姓名"
+                  :labelCol="labelCol"
+                  :wrapperCol="wrapperCol"
+                >
+                  <a-input v-decorator="['name',{rules: [{required: true,message:"该选项为必填"}]}]" />
+                </a-form-item>
+                <a-form-item
+                  label="身份证号"
+                  :labelCol="labelCol"
+                  :wrapperCol="wrapperCol"
+                >
+                  <a-input v-decorator="['card', {rules: [{required: true,min:18}]}]" />
+                </a-form-item>
+                <a-form-item
+                  label="性别"
+                  :labelCol="labelCol"
+                  :wrapperCol="wrapperCol"
+                >
+                <a-radio-group v-decorator="['sex', {initialValue: 1, rules: [{required: true}]}]" style="width: 100%">
+                  <a-radio :value="0">男</a-radio>
+                  <a-radio :value="1">女</a-radio>
+                </a-radio-group>
+                </a-form-item>
+                 </a-form-item>
+                 <a-form-item
+                   label="患者支扩病程"
+                   :labelCol=" { span: 4 }"
+                   :wrapperCol="{ span: 20 }"
+                 >
+                 <a-radio-group v-decorator="['sex', {initialValue: 1, rules: [{required: true}]}]" style="width: 100%">
+                   <a-radio :value="0">不知道</a-radio>
+                   <a-radio :value="1"> &lt;5年</a-radio>
+                   <a-radio :value="2"> 5-9年</a-radio>
+                   <a-radio :value="3"> 10-14年</a-radio>
+                   <a-radio :value="4"> 15-20年</a-radio>
+                   <a-radio :value="5"> &lg;29年</a-radio>
+                   <a-radio :value="6"> 20-29年</a-radio>
+                 </a-radio-group>
+                 </a-form-item>
+                 </a-form-item>
+                <a-form-item
+                  label="身份证号"
+                  :labelCol="labelCol"
+                  :wrapperCol="wrapperCol"
+                >
+                  <a-date-picker
+                  style="width: 100%"
+                  showTime
+                  format="YYYY-MM-DD"
+                  placeholder="请选择"
+                  v-decorator="['birthday',{rules: [{required: true}]}]"
+                />
+                </a-form-item>
+                 <p class="formSubtitle">相关治疗</p>
+                 <a-form-item
+                   label="手术部位"
+                   :labelCol=" { span: 4 }"
+                  :wrapperCol="{ span: 20 }"
+                 >
+                 <a-checkbox-group v-decorator="['shoushu']">
+                    <a-checkbox :value="0">部位</a-checkbox>
+                    <a-checkbox :value="1">右肺上叶</a-checkbox>
+                    <a-checkbox :value="2">右肺中</a-checkbox>
+                    <a-checkbox :value="3">右肺下叶</a-checkbox>
+                    <a-checkbox :value="4">左肺上叶固有</a-checkbox>
+                    <a-checkbox :value="5">左肺上叶舌段</a-checkbox>
+                    <a-checkbox :value="6">左肺下叶</a-checkbox>
+                  </a-checkbox-group>
+                 </a-form-item>
+              </a-form>
+               <a-dragger ></a-dragger>
+         </div>         
+       </a-col>
+     </a-row>
+     </a-card>
   </div>
 </template>
 
 <script>
-import { PageView, RouteView } from '@/layouts'
-import { AppPage, ArticlePage, ProjectPage } from './page'
-
-import { mapGetters } from 'vuex'
-
+import STree from '@/components/Tree/Tree';
+import { getOrgTree, getServiceList } from '@/api/manage';
+import ADragger from './page/dragger';
 export default {
+  name: 'success',
   components: {
-    RouteView,
-    PageView,
-    AppPage,
-    ArticlePage,
-    ProjectPage
+    STree,
+    ADragger
   },
-  data () {
+  data() {
     return {
-      tags: ['很有想法的', '专注设计', '辣~', '大长腿', '川妹子', '海纳百川'],
-
-      tagInputVisible: false,
-      tagInputValue: '',
-
-      teams: [],
-      teamSpinning: true,
-
-      tabListNoTitle: [
-        {
-          key: 'article',
-          tab: '文章(8)'
-        },
-        {
-          key: 'app',
-          tab: '应用(8)'
-        },
-        {
-          key: 'project',
-          tab: '项目(8)'
-        }
-      ],
-      noTitleKey: 'app'
+      openKeys: ['key-01'],
+      orgTree: [],
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 4 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 6 }
+      },
+      visible: false,
+      confirmLoading: false,
+      form: this.$form.createForm(this),
+     
+      file:{
+         formSubtitle:"草草1草1草"
+      }
+      
     }
   },
-  mounted () {
-    this.getTeams()
+  created() {
+    getOrgTree().then(res => {
+      this.orgTree = res.result;
+    });
   },
   methods: {
-    ...mapGetters(['nickname', 'avatar']),
-
-    getTeams () {
-      this.$http.get('/workplace/teams').then(res => {
-        this.teams = res.result
-        this.teamSpinning = false
+    handleClick(e) {
+      // console.log('handleClick', e);
+      // this.queryParam = {
+      //   key: e.key
+      // };
+    },
+    handleAdd(item) {
+      console.log('add button, item', item);
+      this.$message.info(`提示：你点了 ${item.key} - ${item.title} `);
+      this.$refs.modal.add(item.key);
+    },
+    handleTitleClick(item) {
+      console.log('handleTitleClick', item);
+    },   
+     handleSubmit () {
+      const { form: { validateFields } } = this
+      this.confirmLoading = true
+      validateFields((errors, values) => {
+        if (!errors) {
+          console.log('values', values)
+          setTimeout(() => {
+            this.visible = false
+            this.confirmLoading = false
+            this.$emit('ok', values)
+          }, 1500)
+        } else {
+          this.confirmLoading = false
+        }
       })
     },
-
-    handleTabChange (key, type) {
-      this[type] = key
+       handleCancel () {
+      this.visible = false
     },
-
-    handleTagClose (removeTag) {
-      const tags = this.tags.filter(tag => tag !== removeTag)
-      this.tags = tags
-    },
-
-    showTagInput () {
-      this.tagInputVisible = true
-      this.$nextTick(() => {
-        this.$refs.tagInput.focus()
-      })
-    },
-
-    handleInputChange (e) {
-      this.tagInputValue = e.target.value
-    },
-
-    handleTagInputConfirm () {
-      const inputValue = this.tagInputValue
-      let tags = this.tags
-      if (inputValue && !tags.includes(inputValue)) {
-        tags = [...tags, inputValue]
+     onChange(info) {
+      const { status } = info.file;
+      if (status !== 'uploading') {
+        console.log(info.file, info.fileList);
       }
-
-      Object.assign(this, {
-        tags,
-        tagInputVisible: false,
-        tagInputValue: ''
-      })
+      if (status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
     }
   }
-}
+};
 </script>
 
-<style lang="less" scoped>
-.page-header-wrapper-grid-content-main {
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-  transition: 0.3s;
-
-  .account-center-avatarHolder {
-    text-align: center;
-    margin-bottom: 24px;
-
-    & > .avatar {
-      margin: 0 auto;
-      width: 104px;
-      height: 104px;
-      margin-bottom: 20px;
-      border-radius: 50%;
-      overflow: hidden;
-      img {
-        height: 100%;
-        width: 100%;
-      }
-    }
-
-    .username {
-      color: rgba(0, 0, 0, 0.85);
-      font-size: 20px;
-      line-height: 28px;
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-  }
-
-  .account-center-detail {
-    p {
-      margin-bottom: 8px;
-      padding-left: 26px;
-      position: relative;
-    }
-
-    i {
-      position: absolute;
-      height: 14px;
-      width: 14px;
-      left: 0;
-      top: 4px;
-      background: url(https://gw.alipayobjects.com/zos/rmsportal/pBjWzVAHnOOtAUvZmZfy.svg);
-    }
-
-    .title {
-      background-position: 0 0;
-    }
-    .group {
-      background-position: 0 -22px;
-    }
-    .address {
-      background-position: 0 -44px;
-    }
-  }
-
-  .account-center-tags {
-    .ant-tag {
-      margin-bottom: 8px;
-    }
-  }
-
-  .account-center-team {
-    .members {
-      a {
-        display: block;
-        margin: 12px 0;
-        line-height: 24px;
-        height: 24px;
-        .member {
-          font-size: 14px;
-          color: rgba(0, 0, 0, 0.65);
-          line-height: 24px;
-          max-width: 100px;
-          vertical-align: top;
-          margin-left: 12px;
-          transition: all 0.3s;
-          display: inline-block;
-        }
-        &:hover {
-          span {
-            color: #1890ff;
-          }
-        }
-      }
-    }
-  }
-
-  .tagsTitle,
-  .teamTitle {
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.85);
-    margin-bottom: 12px;
-  }
+<style>
+.ant-card-wider-padding .ant-card-body {
+  padding: 18px 32px;
 }
+.tree-title{
+    border-right: 1px solid #E8E8E8;
+    color: #25AEFE;
+    font-size: 22px;
+    padding-left: 55px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    background-image:url(../../../assets/treeTop.png) ;
+    background-repeat: no-repeat;
+}
+ .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title,.ant-menu .ant-menu-item{
+    height: 50px;
+    line-height: 50px;
+}
+.ant-menu-submenu-title{
+    height: 50px;
+    line-height: 50px;
+}
+.ant-menu-item:hover, .ant-menu-item-active, .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active, .ant-menu-submenu-title:hover {
+    background-color: #EAF2FD;
+}
+.ant-menu-item .placeholderI{
+      display: inline-block;
+    width: 27px;
+}
+.ant-menu-item .anticon.anticon-check-circle{
+        font-size: 18px;
+        color: #8AC51B;
+}
+.ant-menu-item  .anticon.anticon-clock-circle{
+    font-size: 18px;
+    color: #06A0E2;
+  }
+.ant-menu-item  .treeSubTitle{
+    font-size: 16px;
+    margin-left: 10px;
+    display: inline-block;
+    width: 150px;
+  }
+.ant-menu-item  .treeSubPercentage{
+     font-size: 16px;
+    margin-left: 10px;
+  }
+ li.ant-menu-submenu.ant-menu-submenu-inline .treeSubTitle{
+     font-size: 16px;
+     margin-left: 10px;
+     display: inline-block;
+     width: 150px;
+  }
+  li.ant-menu-submenu.ant-menu-submenu-inline .treeSubPercentage{
+     font-size: 16px;
+    margin-left: 10px;
+  }
+  li.ant-menu-submenu.ant-menu-submenu-inline .anticon.anticon-check-circle{
+          font-size: 18px;
+          color: #8AC51B;
+  }
+  li.ant-menu-submenu.ant-menu-submenu-inline  .anticon.anticon-clock-circle{
+      font-size: 18px;
+      color: #06A0E2;
+    }
+   li.ant-menu-submenu.ant-menu-submenu-inline .placeholderI{
+          display: inline-block;
+        width: 27px;
+    }
+    .baselineForm{
+      padding: 20px;
+    }
+    .baselineForm .ant-row {
+      padding-bottom: 10px;
+      padding-top: 10px;
+      margin-bottom: 0px;
+      border-bottom: 1px solid #F3F3F3;
+    }
+    
+    .baselineForm .ant-form-item-label{
+      text-align: left;
+    } 
+    .baselineForm .formSubtitle{
+        height: 50px;
+        line-height: 50px;
+        font-weight: bold;
+        font-size: 16px;
+        padding-left: 10px;
+        margin-bottom: 0px;
+        background: #FAFCFD;
+        border-bottom: 1px solid #F3F3F3;
+    }
 </style>
