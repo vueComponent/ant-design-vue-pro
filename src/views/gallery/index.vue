@@ -15,8 +15,7 @@
               </a>
             </a-form-item>
           </a-col>
-          <a-col :md="12" style="text-align:right" :sm="24"><a-button type="primary" icon="plus" @click="$refs.createModal.add()">新建</a-button></a-col>
-          <a-col :md="12" style="text-align:right" :sm="24"><a-button type="primary" icon="plus" @click="$refs.createModal.add()">导出</a-button></a-col>
+          <a-col :md="12" style="text-align:right" :sm="24"><a-button type="primary" icon="plus" @click="$refs.registerModal.add()">新建</a-button><a-button type="primary" icon="plus" >导出</a-button></a-col>
           <a-col v-if="advanced" class="tableSearch" :md="6">
               <a-card>
                 <a-form-item label="使用状态">
@@ -58,6 +57,7 @@
         </template>
       </span>
     </s-table>
+    <Register-form ref="registerModal"  @ok="handleOk" />
   </a-card>
 </template>
 
@@ -65,6 +65,7 @@
 import moment from 'moment';
 import { STable, Ellipsis } from '@/components';
 import { getReportList } from '@/api/report';
+import RegisterForm from './modules/RegisterForm';
 
 const statusMap = {
   0: {
@@ -85,7 +86,8 @@ export default {
   name: 'TableList',
   components: {
     STable,
-    Ellipsis
+    Ellipsis,
+    RegisterForm,
   },
   data() {
     return {
@@ -169,7 +171,10 @@ export default {
   methods: {
     toggleAdvanced() {
       this.advanced = !this.advanced;
-    }
+    },
+    handleOk() {
+      this.$refs.table.refresh();
+    },
   }
 };
 </script>

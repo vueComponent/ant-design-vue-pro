@@ -1,5 +1,5 @@
 <template>
-  <a-modal title="新建病例" :width="800" :bodyStyle="bodyStyle" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
+  <a-modal title="新建病例" :width="800" :bodyStyle="bodyStyle" :destroyOnClose="destroyOnClose" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="病例识别号（身份证号)" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -81,6 +81,7 @@ export default {
       visible: false,
       confirmLoading: false,
       centered:true,
+      destroyOnClose:true,
       bodyStyle:{
         height:"600px",
         overflow:"auto"
