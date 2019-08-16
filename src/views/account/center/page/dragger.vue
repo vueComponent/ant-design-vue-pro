@@ -17,7 +17,10 @@
 export default {
   name:"dagger",
   props:{
-    
+    formSubtitle: {
+      type: String,
+      default: ''
+    }
   },
   data () {
     return {
