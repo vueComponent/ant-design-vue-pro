@@ -46,18 +46,18 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="default" rowKey="key" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="default" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="serial" slot-scope="text, record, index">{{ index + 1 }}</span>
-      <span slot="status" slot-scope="text"><a-badge :status="text | statusTypeFilter" :text="text | statusFilter" /></span>
-      <span slot="pros" slot-scope="pros">
-        <div v-for="pro in pros" class="progressTag">
+      <span slot="visit" slot-scope="text"><a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
+      <span slot="basisList" slot-scope="basisList">
+        <div v-for="pro in basisList" class="progressTag">
           <div class="progressTagContent">
             <p class="progressTagTitle">{{ pro.name }}</p>
-            <a-progress :strokeColor="pro.percent == 100 ? '#4BC5AC' : '#00A0E9'" strokeWidth="10" :showInfo="false" :percent="pro.percent" size="small" />
+            <a-progress :strokeColor="pro.progress == 100 ? '#4BC5AC' : '#00A0E9'" :strokeWidth="10" :showInfo="false" :percent="parseInt(pro.progress)" size="small" />
           </div>
-          <a-icon v-if="pro.percent == 100" type="check-circle" theme="filled" />
-          <span class="ant-progress-span" v-if="pro.percent < 100 && pro.percent > 0">23%</span>
-          <a-icon style="color:#00A0E9" v-if="pro.percent == 0" type="clock-circle" theme="filled" />
+          <a-icon v-if="pro.progress == 100" type="check-circle" theme="filled" />
+          <span class="ant-progress-span" v-if="pro.progress < 100 && pro.progress > 0">23%</span>
+          <a-icon style="color:#00A0E9" v-if="pro.progress == 0" type="clock-circle" theme="filled" />
         </div>
       </span>
       <span slot="description" slot-scope="text">
@@ -88,24 +88,24 @@ import moment from 'moment';
 import { STable, Ellipsis } from '@/components';
 import StepByStepModal from './modules/StepByStepModal';
 import CreateForm from './modules/CreateForm';
-import { getRoleList, getServiceList } from '@/api/manage';
+import { getPatientList } from '@/api/patient';
 
-const statusMap = {
+const visitMap = {
   0: {
     status: 'default',
-    text: '关闭'
+    text: '忽略'
   },
   1: {
     status: 'processing',
-    text: '运行中'
+    text: '未执行'
   },
   2: {
     status: 'success',
-    text: '已上线'
+    text: '执行中'
   },
   3: {
     status: 'error',
-    text: '异常'
+    text: '已完成'
   }
 };
 
@@ -127,40 +127,31 @@ export default {
       // 表头
       columns: [
         {
-          title: '#',
-          scopedSlots: { customRender: 'serial' }
+          title: '档案号',
+          dataIndex: 'code'
         },
         {
-          title: '规则编号',
-          dataIndex: 'no'
+          title: '患者姓名',
+          dataIndex: 'name'
         },
         {
-          title: '描述',
-          dataIndex: 'description',
-          scopedSlots: { customRender: 'description' }
+          title: '身份证号',
+          dataIndex: 'card'
         },
         {
-          title: '服务调用次数',
-          dataIndex: 'callNo',
-          sorter: true,
-          // needTotal: true,
-          customRender: text => text + ' 次'
+          title: '创建日期',
+          dataIndex: 'createDate',
+          customRender: createDate => moment(createDate).format('YYYY-MM-DD HH:mm:ss')
         },
         {
-          title: '状态',
-          dataIndex: 'status',
-          scopedSlots: { customRender: 'status' }
+          title: '访视状态',
+          dataIndex: 'visit',
+          scopedSlots: { customRender: 'visit' }
         },
         {
-          title: '进度',
-          dataIndex: 'pros',
-          width: '452px',
-          scopedSlots: { customRender: 'pros' }
-        },
-        {
-          title: '更新时间',
-          dataIndex: 'updatedAt',
-          sorter: true
+          title: '访视进度',
+          dataIndex: 'basisList',
+          scopedSlots: { customRender: 'basisList' }
         },
         {
           title: '操作',
@@ -172,8 +163,8 @@ export default {
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
         console.log('loadData.parameter', parameter);
-        return getServiceList(Object.assign(parameter, this.queryParam)).then(res => {
-          return res.result;
+        return getPatientList(Object.assign(parameter, this.queryParam)).then(res => {
+          return res;
         });
       },
       selectedRowKeys: [],
@@ -201,10 +192,16 @@ export default {
     },
     statusTypeFilter(type) {
       return statusMap[type].status;
+    },
+    visitFilter(type) {
+      return visitMap[type].text;
+    },
+    visitTypeFilter(type) {
+      return visitMap[type].status;
     }
   },
   created() {
-    getRoleList({ t: new Date() });
+
   },
   methods: {
     handleEdit(record) {
@@ -236,31 +233,33 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="less" scoped>
 .progressTag {
   display: inline-block;
   width: 140px;
+
+  /deep/ .progressTagContent {
+    display: inline-block;
+    width: 100px;
+    margin-right: 5px;
+  }
+  /deep/ .progressTagTitle {
+    padding-left: 40px;
+    margin-bottom: 2px;
+  }
+  /deep/ .progressTag .anticon {
+    color: #4bc5ac;
+    font-size: 18px;
+    vertical-align: bottom;
+  }
+  /deep/ .ant-progress-inner {
+    background-color: #e5f6ff;
+  }
+  /deep/ .progressTag .ant-progress-span {
+    color: rgb(0, 160, 233);
+  }
 }
-.progressTagContent {
-  display: inline-block;
-  width: 100px;
-  margin-right: 5px;
-}
-.progressTagTitle {
-  padding-left: 40px;
-  margin-bottom: 2px;
-}
-.progressTag .anticon {
-  color: #4bc5ac;
-  font-size: 18px;
-  vertical-align: bottom;
-}
-.ant-progress-inner {
-  background-color: #e5f6ff;
-}
-.progressTag .ant-progress-span {
-  color: #e5f6ff;
-}
+
 .tableSearch {
   background: #FFFFFF;
   position: absolute;
