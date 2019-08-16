@@ -233,31 +233,33 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="less" scoped>
 .progressTag {
   display: inline-block;
   width: 140px;
+
+  /deep/ .progressTagContent {
+    display: inline-block;
+    width: 100px;
+    margin-right: 5px;
+  }
+  /deep/ .progressTagTitle {
+    padding-left: 40px;
+    margin-bottom: 2px;
+  }
+  /deep/ .progressTag .anticon {
+    color: #4bc5ac;
+    font-size: 18px;
+    vertical-align: bottom;
+  }
+  /deep/ .ant-progress-inner {
+    background-color: #e5f6ff;
+  }
+  /deep/ .progressTag .ant-progress-span {
+    color: rgb(0, 160, 233);
+  }
 }
-.progressTagContent {
-  display: inline-block;
-  width: 100px;
-  margin-right: 5px;
-}
-.progressTagTitle {
-  padding-left: 40px;
-  margin-bottom: 2px;
-}
-.progressTag .anticon {
-  color: #4bc5ac;
-  font-size: 18px;
-  vertical-align: bottom;
-}
-.ant-progress-inner {
-  background-color: #e5f6ff;
-}
-.progressTag .ant-progress-span {
-  color: rgb(0, 160, 233);
-}
+
 .tableSearch {
   background: #FFFFFF;
   position: absolute;

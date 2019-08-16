@@ -1,5 +1,5 @@
 <template>
-  <a-modal title="新建病例" :width="800" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
+  <a-modal centered title="新建病例" :width="800" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="病例识别号（身份证号)" :labelCol="labelCol" :wrapperCol="wrapperCol">
