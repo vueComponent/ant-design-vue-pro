@@ -51,7 +51,7 @@
        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="医疗费用支付情况">
          <a-radio-group :options="payTypeList" v-decorator="['payType',requiredRule]" />
        </a-form-item>
-       <a-form-item label="联系电话1" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone1']"/></a-form-item>
+       <a-form-item label="联系电话1" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone1',requiredRule]"/></a-form-item>
        <a-form-item label="联系电话2" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone2']"/></a-form-item>
        <a-form-item label="联系电话3" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone3']"/></a-form-item>
       </a-form>

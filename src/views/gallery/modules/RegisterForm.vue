@@ -14,14 +14,20 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <div v-if="userData == ''">
-          <a-form-item><a-input-search placeholder="input search text" @search="onSearch" v-decorator="['card', { rules: [{ required: true }] }]" enterButton /></a-form-item>
+          <a-form-item><a-input-search placeholder="搜索患者姓名,身份证号" @search="onSearch" v-decorator="['card', { rules: [{ required: true }] }]" enterButton /></a-form-item>
         </div>
-        <div v-else>
-          <h1>{{ userData }}</h1>
-        </div>
+        <div v-else><user-detail :option="userData"></user-detail></div>
         <a-tabs defaultActiveKey="1">
           <a-tab-pane tab="采集报告" key="1">
-            <a-form-item><a-checkbox-group :options="registerList" v-decorator="['register', { rules: [{ required: true }] }]" /></a-form-item>
+            <a-form-item>
+              <a-checkbox-group v-decorator="['register', { rules: [{ required: true }] }]" style="width:100%">
+                <a-row>
+                  <a-col :span="8" style="margin-top: 20px;" v-for="item in registerList">
+                    <a-checkbox :value="item.value">{{ item.label }}</a-checkbox>
+                  </a-col>
+                </a-row>
+              </a-checkbox-group>
+            </a-form-item>
           </a-tab-pane>
         </a-tabs>
       </a-form>
@@ -33,10 +39,12 @@
 <script>
 import { getDictionaryAttributeByDictionaryId, addOrUpdate } from '@/api/basis';
 import UserList from './UserList';
+import UserDetail from './UserDetail';
 import _ from 'lodash';
 export default {
   components: {
-    UserList
+    UserList,
+    UserDetail
   },
   data() {
     return {
@@ -44,19 +52,19 @@ export default {
       registerList: [],
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 7 }
+        sm: { span: 8 }
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 14 }
+        sm: { span: 8 }
       },
       visible: false,
       confirmLoading: false,
       centered: true,
       maskClosable: false,
-      destroyOnClose:true,
+      destroyOnClose: true,
       bodyStyle: {
-        height: '600px',
+        height: '500px',
         overflow: 'auto'
       },
       form: this.$form.createForm(this),
@@ -79,12 +87,9 @@ export default {
       });
     });
   },
-  mounted() {
-    console.log(12368788)
-  },
   methods: {
     add() {
-      this.userData='';
+      this.userData = '';
       this.visible = true;
     },
     handleSubmit() {
@@ -113,9 +118,9 @@ export default {
     handleCancel() {
       this.visible = false;
     },
-    callback(key) {
-      console.log(key);
-    },
+    // callback(key) {
+    //   console.log(key);
+    // },
     onSearch(value) {
       this.$refs.userListModule.add(value);
     },

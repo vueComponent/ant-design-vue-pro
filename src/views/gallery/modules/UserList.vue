@@ -1,5 +1,6 @@
 <template>
   <a-modal title="选择患者" :width="800" :destroyOnClose="destroyOnClose" :bodyStyle="bodyStyle" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="checkuUser" @cancel="handleCancel">
+         <a-spin :spinning="confirmLoading">
       <a-table :columns="columns"
       :rowSelection="rowSelection"
       :dataSource="data"
@@ -11,21 +12,30 @@
         {{name.first}} {{name.last}}
       </template>
     </a-table>
+    </a-spin>
   </a-modal>
 </template>
 
 <script>
 import {getPatientList} from '@/api/patient';
+import moment from 'moment';
 import _ from 'lodash';
 const columns = [{
-  title: 'Name',
+  title: '档案号',
+  dataIndex: 'code',
+},{
+  title: '患者姓名',
   dataIndex: 'name',
 }, {
-  title: 'telephone1',
+  title: '身份证号',
+  dataIndex: 'card',
+},{
+  title: '联系方式',
   dataIndex: 'telephone1',
-}, {
-  title: 'Address',
-  dataIndex: 'address',
+},{
+  title: '创建日期',
+  dataIndex: 'createDate',
+  customRender: createDate => moment(createDate).format('YYYY-MM-DD')
 }];
 export default { 
   data() {
@@ -34,7 +44,10 @@ export default {
       userData:{},
       data:[],
       pagination: {
-        pageSize:5
+        defaultPageSize:5,
+        pageSize:5,
+        hideOnSinglePage:true,
+        total:0
       },
       loading: false,
       columns,
@@ -43,23 +56,23 @@ export default {
       destroyOnClose:true,
       centered:true,
       bodyStyle:{
-        height:"400px",
+        height:"500px",
         overflow:"auto"
       }
     };
   },
   mounted() {
     this.userData={};
-    this.getPatientList(1,this.pagination.pageSize,1)
+    // this.getPatientList(1,this.pagination.pageSize,1)
   },
   methods: {
     add(value) {
-      this.userId=value;
       this.visible = true;
+      this.confirmLoading=true;
+      this.getPatientList(1,this.pagination.pageSize,1,value)
     },
     checkuUser() {
       this. $emit('listen',this.userData)
-      console.log(this.userData);
       this.visible = false;
     },
     handleCancel() {
@@ -68,17 +81,17 @@ export default {
     handleTableChange (pagination, filters, sorter) {
       this.getPatientList(pagination.current,pagination.pageSize,1)
     },
-    getPatientList(pageNumber,pageSize,params,name){
-      const that=this;
-      const Name=name?name:'';
+    getPatientList(pageNumber,pageSize,params,keyword){
+      const keyWord=keyword?keyword:'';
       const Params = new URLSearchParams();
       Params.append('pageNumber',pageNumber);
       Params.append('pageSize',pageSize);
       Params.append('params',params);
-      Params.append('name',Name);
+      Params.append('keyword',keyWord);
       getPatientList(Params).then(res => {
-          that.data=res.data
-          that.pagination.total=res.total
+          this.data=res.data
+          this.pagination.total=res.total
+           this.confirmLoading=false;
       });
     }
   },
