@@ -39,7 +39,7 @@
 <script>
 import { getDictionaryAttributeByDictionaryId, addOrUpdate } from '@/api/basis';
 import UserList from './UserList';
-import UserDetail from './UserDetail';
+import UserDetail from '../../list/modules/UserDetailTop.vue';
 import _ from 'lodash';
 export default {
   components: {

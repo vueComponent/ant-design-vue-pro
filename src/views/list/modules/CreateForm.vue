@@ -1,5 +1,15 @@
 <template>
-  <a-modal title="新建病例" :width="800" :bodyStyle="bodyStyle" :destroyOnClose="destroyOnClose" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
+  <a-modal
+    :title="options.title"
+    :width="800"
+    :bodyStyle="bodyStyle"
+    :destroyOnClose="destroyOnClose"
+    :centered="centered"
+    :visible="visible"
+    :confirmLoading="confirmLoading"
+    @ok="handleSubmit"
+    @cancel="handleCancel"
+  >
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="病例识别号（身份证号)" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -7,7 +17,7 @@
         </a-form-item>
         <!-- <a-form-item label="病例档案号" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['card', { rules: [{ required: true }] }]" /></a-form-item> -->
         <a-form-item label="患者同意注册日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker style="width: 100%" showTime format="YYYY-MM-DD"  v-decorator="['registerDate', requiredRule]" />
+          <a-date-picker style="width: 100%" showTime format="YYYY-MM-DD" v-decorator="['registerDate', requiredRule]" />
         </a-form-item>
         <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['name', requiredRule]" /></a-form-item>
         <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -17,59 +27,49 @@
           </a-radio-group>
         </a-form-item>
         <a-form-item label="出生日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker style="width: 100%" showTime format="YYYY-MM-DD"  v-decorator="['birthDate', requiredRule]" />
+          <a-date-picker style="width: 100%" showTime format="YYYY-MM-DD" v-decorator="['birthDate', requiredRule]" />
         </a-form-item>
         <a-form-item label="常居住地" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-row :gutter="8">
             <a-col :span="12">
               <a-cascader
-                v-decorator="[
-                  'residence',
-                  requiredRule
-                ]"
+                v-decorator="['residence', requiredRule]"
                 :options="residences"
                 :fieldNames="{ label: 'city', value: 'cityId', children: 'children' }"
                 placeholder="选择省/市"
               />
             </a-col>
-            <a-col :span="12"><a-input placeholder="请输入详细地址" v-decorator="['address',requiredRule]" /></a-col>
+            <a-col :span="12"><a-input placeholder="请输入详细地址" v-decorator="['address', requiredRule]" /></a-col>
           </a-row>
         </a-form-item>
-        <a-form-item label="民族" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select
-            v-decorator="['nation',requiredRule ]"
-            :options="nationList"
-          ></a-select>
+        <a-form-item label="民族" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-select v-decorator="['nation', requiredRule]" :options="nationList"></a-select></a-form-item>
+        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="职业"><a-radio-group :options="professionList" v-decorator="['work', requiredRule]" /></a-form-item>
+        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="文化程度"><a-radio-group :options="censusList" v-decorator="['census', requiredRule]" /></a-form-item>
+        <a-form-item label="家庭年收入" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['income', requiredRule]" addonAfter="万元" /></a-form-item>
+        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="医疗费用支付情况">
+          <a-radio-group :options="payTypeList" v-decorator="['payType', requiredRule]" />
         </a-form-item>
-        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="职业">
-          <a-radio-group :options="professionList" v-decorator="['work',requiredRule]" />
-        </a-form-item>
-        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="文化程度">
-          <a-radio-group :options="censusList" v-decorator="['census',requiredRule]" />
-        </a-form-item>
-       <a-form-item label="家庭年收入" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['income', requiredRule]" addonAfter="万元" /></a-form-item>
-       <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="医疗费用支付情况">
-         <a-radio-group :options="payTypeList" v-decorator="['payType',requiredRule]" />
-       </a-form-item>
-       <a-form-item label="联系电话1" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone1',requiredRule]"/></a-form-item>
-       <a-form-item label="联系电话2" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone2']"/></a-form-item>
-       <a-form-item label="联系电话3" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone3']"/></a-form-item>
+        <a-form-item label="联系电话1" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone1', requiredRule]" /></a-form-item>
+        <a-form-item label="联系电话2" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone2']" /></a-form-item>
+        <a-form-item label="联系电话3" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone3']" /></a-form-item>
       </a-form>
     </a-spin>
   </a-modal>
 </template>
 
 <script>
-import { getProvinceAndCity, getNation, getDictionaryAttributeByDictionaryId,addOrUpdate } from '@/api/basis';
+import { getProvinceAndCity, getNation, getDictionaryAttributeByDictionaryId, addOrUpdate } from '@/api/basis';
+import moment from 'moment';
 import _ from 'lodash';
 export default {
   data() {
     return {
+      options: {},
       residences: [],
       nationList: [],
       professionList: [],
       censusList: [],
-      payTypeList:[],
+      payTypeList: [],
       labelCol: {
         xs: { span: 24 },
         sm: { span: 7 }
@@ -80,11 +80,11 @@ export default {
       },
       visible: false,
       confirmLoading: false,
-      centered:true,
-      destroyOnClose:true,
-      bodyStyle:{
-        height:"600px",
-        overflow:"auto"
+      centered: true,
+      destroyOnClose: true,
+      bodyStyle: {
+        height: '600px',
+        overflow: 'auto'
       },
       form: this.$form.createForm(this),
       requiredRule: { rules: [{ required: true, message: '该选项必填' }] }
@@ -138,7 +138,7 @@ export default {
         }, {});
       });
     });
-    
+
     const dictionary3 = new URLSearchParams();
     dictionary3.append('dictionaryId', 3);
     dictionary3.append('status', 1);
@@ -155,6 +155,24 @@ export default {
   },
   methods: {
     add() {
+      this.options.title = '新建患者';
+      this.visible = true;
+    },
+    edit(value) {
+      console.log('value', value);
+      this.options.title = '编辑患者';
+      // this.$nextTick(() => {
+      //   this.form.setFieldsValue({
+      //     "name":'123'
+      //   });
+      // });
+      value.birthDate = moment(value.birthDate, 'x');
+      value.registerDate = moment(value.registerDate, 'x');
+      value.residence = [value.addressP, value.addressC];
+      // value.birthDate=moment(value.birthDate, 'YYYY-MM-DD');
+      setTimeout(() => {
+        this.form.setFieldsValue(value);
+      }, 0);
       this.visible = true;
     },
     handleSubmit() {
@@ -163,7 +181,7 @@ export default {
       } = this;
       this.confirmLoading = false;
       validateFields((errors, fieldsValue) => {
-        const that=this;
+        const that = this;
         if (errors) {
           this.confirmLoading = false;
           return;
@@ -174,19 +192,19 @@ export default {
         const values = {
           ...fieldsValue,
           birthDate: fieldsValue['birthDate'].format('YYYY-MM-DD'),
-          registerDate:fieldsValue['registerDate'].format('YYYY-MM-DD'),
-          addressP:residence[0],
-          addressC:residence[1]
+          registerDate: fieldsValue['registerDate'].format('YYYY-MM-DD'),
+          addressP: residence[0],
+          addressC: residence[1]
         };
         const params = new URLSearchParams();
-        params.append('patientStr', JSON.stringify(values))
-        params.append('changeCenter', '')
-        params.append('centerId','')
+        params.append('patientStr', JSON.stringify(values));
+        params.append('changeCenter', '');
+        params.append('centerId', '');
         addOrUpdate(params).then(res => {
-              console.log(res);
-             that.visible = false;
-             that.confirmLoading = false;
-              that.$emit('ok', values);
+          console.log(res);
+          that.visible = false;
+          that.confirmLoading = false;
+          that.$emit('ok', values);
         });
       });
     },
