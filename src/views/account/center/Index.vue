@@ -5,19 +5,19 @@
          <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:20px" /></a-col>
          <a-col :md="3" :sm="20" style="fontSize:20px">
            <a-icon type="credit-card" theme="filled" />
-           受访者:杨溢
+           受访者:{{patient.name}}
          </a-col>
          <a-col :md="5" :sm="24" style="fontSize:20px">
            <a-icon type="credit-card" theme="filled" style="fontSize:20px" />
-           320123199408175777
+           {{patient.card}}
          </a-col>
-         <a-col :md="15" :sm="24" style="fontSize:20px;textAlign: right;">创建时间：2018-01-02</a-col>
+         <a-col :md="15" :sm="24" style="fontSize:20px;textAlign: right;">创建时间：{{patientBasis.createDate | moment}}</a-col>
        </a-row>
     </a-card>
     <a-card :bordered="false" style="margin-top: 20px;">
      <a-row :gutter="8">
        <a-col :span="5">
-         <s-tree :dataSource="orgTree" :openKeys.sync="openKeys" :search="false"  @click="handleClick" @add="handleAdd" @titleClick="handleTitleClick">
+         <s-tree :treeTitle="title" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false"  @click="handleClick">
         </s-tree>
        </a-col>
        <a-col :span="19">
@@ -27,80 +27,67 @@
                 <a-button class="btn">保存</a-button>
                 <a-button class="btn" type="primary">提交</a-button>
               </div>
-              
               <a-form :form="form">
-                <a-form-item
-                  label="姓名"
-                  :labelCol="labelCol"
-                  :wrapperCol="wrapperCol"
-                >
-                  <a-input v-decorator="['name',{rules: [{required: true,message:"该选项为必填"}]}]" />
+                <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="labelCol"
+                  :wrapperCol="wrapperCol">
+                    <a-radio-group v-if="qu1.simple === 1">
+                      <a-radio :value="1">是</a-radio>
+                      <a-radio :value="-1">否</a-radio>
+                    </a-radio-group>
+                    <a-radio-group v-if="qu1.simple === 2">
+                      <a-radio :value="1">有</a-radio>
+                      <a-radio :value="-1">无</a-radio>
+                    </a-radio-group>
+                    <a-input :name="qu1.basisElementId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" />
+                    <a-date-picker v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate'" />
+                    <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0">
+                      <a-checkbox v-for="(op,index) in qu1.childList" :key="index" :name="op.parentId+''">{{op.questionName}}</a-checkbox>
+                    </a-checkbox-group>
+                    <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
+                      <a-row v-for="(sub, index) in qu1.childList" :key="index" class="no-border">
+                        <a-col :span="7">({{sub.sort}}) {{sub.questionName}}</a-col>
+                        
+                        <a-col :span="sub.isWrite > 0 ? 4 : 17">
+                          <a-input v-if="sub.isWrite > 0" :name="sub.basisElementId+''" />
+                          <a-radio-group v-if="sub.simple === 1">
+                            <a-radio :value="1">是</a-radio>
+                            <a-radio :value="-1">否</a-radio>
+                          </a-radio-group>
+                          <a-radio-group v-if="sub.simple === 2">
+                            <a-radio :value="1">有</a-radio>
+                            <a-radio :value="-1">无</a-radio>
+                          </a-radio-group>
+                          <div class="clear" v-if="sub.simple > 0"></div>
+                          <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0">
+                            <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId">{{subOp.questionName}}</a-checkbox>
+                          </a-checkbox-group>
+                          <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0">
+                            <a-radio v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId">{{subOp.questionName}}</a-radio>
+                          </a-radio-group>
+                          <div v-if="sub.hasChild && sub.isRadio === 0" v-for="(subOp,index) in sub.childList">
+                            <a-row>
+                              <a-col :span="6">{{subOp.questionName}}</a-col>
+                              <a-radio-group v-if="subOp.simple === 1">
+                                <a-radio :value="1">是</a-radio>
+                                <a-radio :value="-1">否</a-radio>
+                              </a-radio-group>
+                              <a-radio-group v-if="subOp.simple === 2">
+                                <a-radio :value="1">有</a-radio>
+                                <a-radio :value="-1">无</a-radio>
+                              </a-radio-group>
+                              <a-col :span="6" v-if="subOp.isWrite > 0"><a-input :name="subOp.basisElementId+''" /></a-col>
+                              <a-col :span="18" v-if="subOp.hasChild > 0 && subOp.isRadio < 0">
+                                <a-checkbox-group>
+                                  <a-checkbox v-for="(secondSub,index) in subOp.childList" :key="index" :name="secondSub.parentId+''" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-checkbox>
+                                </a-checkbox-group>
+                              </a-col>
+                            </a-row>
+                          </div>
+                        </a-col>
+                      </a-row>
+                    </div>
                 </a-form-item>
-                <a-form-item
-                  label="身份证号"
-                  :labelCol="labelCol"
-                  :wrapperCol="wrapperCol"
-                >
-                  <a-input v-decorator="['card', {rules: [{required: true,min:18}]}]" />
-                </a-form-item>
-                <a-form-item
-                  label="性别"
-                  :labelCol="labelCol"
-                  :wrapperCol="wrapperCol"
-                >
-                <a-radio-group v-decorator="['sex', {initialValue: 1, rules: [{required: true}]}]" style="width: 100%">
-                  <a-radio :value="0">男</a-radio>
-                  <a-radio :value="1">女</a-radio>
-                </a-radio-group>
-                </a-form-item>
-                 </a-form-item>
-                 <a-form-item
-                   label="患者支扩病程"
-                   :labelCol=" { span: 4 }"
-                   :wrapperCol="{ span: 20 }"
-                 >
-                 <a-radio-group v-decorator="['sex', {initialValue: 1, rules: [{required: true}]}]" style="width: 100%">
-                   <a-radio :value="0">不知道</a-radio>
-                   <a-radio :value="1"> &lt;5年</a-radio>
-                   <a-radio :value="2"> 5-9年</a-radio>
-                   <a-radio :value="3"> 10-14年</a-radio>
-                   <a-radio :value="4"> 15-20年</a-radio>
-                   <a-radio :value="5"> &lg;29年</a-radio>
-                   <a-radio :value="6"> 20-29年</a-radio>
-                 </a-radio-group>
-                 </a-form-item>
-                 </a-form-item>
-                <a-form-item
-                  label="身份证号"
-                  :labelCol="labelCol"
-                  :wrapperCol="wrapperCol"
-                >
-                  <a-date-picker
-                  style="width: 100%"
-                  showTime
-                  format="YYYY-MM-DD"
-                  placeholder="请选择"
-                  v-decorator="['birthday',{rules: [{required: true}]}]"
-                />
-                </a-form-item>
-                 <p class="formSubtitle">相关治疗</p>
-                 <a-form-item
-                   label="手术部位"
-                   :labelCol=" { span: 4 }"
-                  :wrapperCol="{ span: 20 }"
-                 >
-                 <a-checkbox-group v-decorator="['shoushu']">
-                    <a-checkbox :value="0">部位</a-checkbox>
-                    <a-checkbox :value="1">右肺上叶</a-checkbox>
-                    <a-checkbox :value="2">右肺中</a-checkbox>
-                    <a-checkbox :value="3">右肺下叶</a-checkbox>
-                    <a-checkbox :value="4">左肺上叶固有</a-checkbox>
-                    <a-checkbox :value="5">左肺上叶舌段</a-checkbox>
-                    <a-checkbox :value="6">左肺下叶</a-checkbox>
-                  </a-checkbox-group>
-                 </a-form-item>
               </a-form>
-               <a-dragger :formSubtitle="file.formSubtitle"></a-dragger>
          </div>         
        </a-col>
      </a-row>
@@ -109,60 +96,69 @@
 </template>
 
 <script>
-import STree from '@/components/Tree/Tree';
-import { getOrgTree, getServiceList } from '@/api/manage';
-import ADragger from './page/dragger';
+import STree from '@/components/Tree/Tree'
+import { mapActions } from 'vuex'
+import { getPatientBasis, getElementsAnswer } from '@/api/basis'
+
 export default {
   name: 'success',
   components: {
-    STree,
-    ADragger
+    STree
   },
   data() {
     return {
+      title: '支扩研究基线表',
       openKeys: ['key-01'],
       orgTree: [],
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 4 }
+        sm: { span: 4 },
+        md: { span: 4}
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 6 }
+        sm: { span: 20 },
+        md: { span: 20 }
       },
       visible: false,
       confirmLoading: false,
       form: this.$form.createForm(this),
-     
-      file:{
-         formSubtitle:"草草1草1草"
-      }
-      
+      patient: {},
+      patientBasis: {},
+      list: []
     }
   },
   created() {
-    getOrgTree().then(res => {
-      this.orgTree = res.result;
-    });
+    var that = this
+    this.CloseSidebar()
+
     const { id } = this.$route.params
-    console.log(id)
+    var params = new URLSearchParams()
+    params.append('patientBasisId', id)
+    getPatientBasis(params)
+    .then(res => {
+      that.patient = res.data.patient
+      that.patientBasis = res.data.patientBasis
+      that.orgTree = res.data.list
+    })
+    params = new URLSearchParams();
+    params.append('basisMaskId', 1)
+    params.append('patientBasisId', 1)
+    getElementsAnswer(params)
+    .then(res => {
+      that.list = res.data
+    })
   },
   methods: {
+    ...mapActions(['CloseSidebar']),
     handleClick(e) {
       // console.log('handleClick', e);
       // this.queryParam = {
       //   key: e.key
       // };
-    },
-    handleAdd(item) {
-      console.log('add button, item', item);
-      this.$message.info(`提示：你点了 ${item.key} - ${item.title} `);
-      this.$refs.modal.add(item.key);
-    },
-    handleTitleClick(item) {
-      console.log('handleTitleClick', item);
-    },   
-     handleSubmit () {
+      console.log('你点了节点')
+    },  
+    handleSubmit () {
       const { form: { validateFields } } = this
       this.confirmLoading = true
       validateFields((errors, values) => {
@@ -178,10 +174,10 @@ export default {
         }
       })
     },
-       handleCancel () {
+    handleCancel () {
       this.visible = false
     },
-     onChange(info) {
+    onChange(info) {
       const { status } = info.file;
       if (status !== 'uploading') {
         console.log(info.file, info.fileList);
@@ -197,6 +193,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.clear{
+  clear: both;
+}
 .page-header-index-wide{
   /deep/ .ant-card-wider-padding .ant-card-body {
     padding: 18px 32px;
@@ -286,9 +285,17 @@ export default {
       padding-top: 10px;
       margin-bottom: 0px;
       border-bottom: 1px solid #F3F3F3;
+      &.no-border{
+        border-bottom: none;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
     }
-    .ant-form-item-label{
+    /deep/ .ant-form-item-label{
       text-align: left;
+      label:after{
+        content: ''
+      }
     }
     .formSubtitle{
         height: 50px;

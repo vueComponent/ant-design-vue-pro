@@ -57,15 +57,15 @@
         </template>
       </span>
     </s-table>
-    <Register-form ref="registerModal"  @ok="handleOk" />
+    <Register-form ref="registerModal" @ok="handleOk" />
   </a-card>
 </template>
 
 <script>
-import moment from 'moment';
-import { STable, Ellipsis } from '@/components';
-import { getReportList } from '@/api/report';
-import RegisterForm from './modules/RegisterForm';
+import moment from 'moment'
+import { STable, Ellipsis } from '@/components'
+import { getReportList } from '@/api/report'
+import RegisterForm from './modules/RegisterForm'
 
 const statusMap = {
   0: {
@@ -80,16 +80,16 @@ const statusMap = {
     status: 'success',
     text: '已完成'
   }
-};
+}
 
 export default {
   name: 'TableList',
   components: {
     STable,
     Ellipsis,
-    RegisterForm,
+    RegisterForm
   },
-  data() {
+  data () {
     return {
       mdl: {},
       // 高级搜索 展开/关闭
@@ -133,10 +133,10 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        console.log('loadData.parameter', parameter);
+        console.log('loadData.parameter', parameter)
         return getReportList(Object.assign(parameter, this.queryParam)).then(res => {
-          return res;
-        });
+          return res
+        })
       },
       selectedRowKeys: [],
       selectedRows: [],
@@ -146,7 +146,7 @@ export default {
         alert: {
           show: false,
           clear: () => {
-            this.selectedRowKeys = [];
+            this.selectedRowKeys = []
           }
         },
         rowSelection: {
@@ -155,28 +155,28 @@ export default {
         }
       },
       optionAlertShow: false
-    };
-  },
-  filters: {
-    statusFilter(type) {
-      return statusMap[type].text;
-    },
-    statusTypeFilter(type) {
-      return statusMap[type].status;
     }
   },
-  created() {
-
+  filters: {
+    statusFilter (type) {
+      return statusMap[type].text
+    },
+    statusTypeFilter (type) {
+      return statusMap[type].status
+    }
+  },
+  created () {
+    
   },
   methods: {
-    toggleAdvanced() {
-      this.advanced = !this.advanced;
+    toggleAdvanced () {
+      this.advanced = !this.advanced
     },
-    handleOk() {
-      this.$refs.table.refresh();
-    },
+    handleOk () {
+      this.$refs.table.refresh()
+    }
   }
-};
+}
 </script>
 <style lang="less" scoped>
 

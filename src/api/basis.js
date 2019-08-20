@@ -46,3 +46,11 @@ export function addOrUpdate(params) {
     data: params
   })
 }
+
+export function getPatientBasis(params) {
+  return axios({
+    url: '/basis/getPatientBasis',
+    method: 'post',
+    data: params
+  })
+}

@@ -18,6 +18,10 @@ export default {
       type: Boolean,
       default: false
     },
+    treeTitle: {
+      type: String,
+      default: ''
+    }
   },
   created () {
     this.localOpenKeys = this.openKeys.slice(0)
@@ -53,27 +57,27 @@ export default {
     },
     renderMenuItem (item) {
       return (
-        <Item key={item.key}>
+        <Item key={item.basisMarkId}>
           {this.renderTreeIcon(item.percentage)}
           { this.renderIcon(item.icon) }
-          <span class="treeSubTitle">{ item.title }</span>
+          <span class="treeSubTitle">{ item.basisMarkName }</span>
           <span class="treeSubPercentage">{item.percentage}</span>
           <a class="btn" style="width: 20px;z-index:1300" {...{ on: { click: () => this.handlePlus(item) } }}><a-icon type="plus"/></a>
         </Item>
       )
     },
     renderItem (item) {
-      return item.children ? this.renderSubItem(item, item.key) : this.renderMenuItem(item, item.key)
+      return item.childList ? this.renderSubItem(item, item.key) : this.renderMenuItem(item, item.key)
     },
     renderItemGroup (item) {
-      const childrenItems = item.children.map(o => {
-        return this.renderItem(o, o.key)
+      const childrenItems = item.childList.map(o => {
+        return this.renderItem(o, o.basisMarkId)
       })
 
       return (
-        <ItemGroup key={item.key}>
+        <ItemGroup key={item.basisMarkId}>
           <template slot="title">
-            <span>{ item.title }</span>
+            <span>{ item.basisMarkName }</span>
             <a-dropdown>
               <a class="btn"><a-icon type="ellipsis" /></a>
               <a-menu slot="overlay">
@@ -88,15 +92,15 @@ export default {
       )
     },
     renderSubItem (item, key) {
-      const childrenItems = item.children && item.children.map(o => {
-        return this.renderItem(o, o.key)
+      const childrenItems = item.childList && item.childList.map(o => {
+        return this.renderItem(o, o.basisMarkId)
       })
 
       const title = (
         <span slot="title">
           {this.renderTreeIcon(item.percentage)}
           { this.renderIcon(item.icon) }
-          <span class="treeSubTitle">{ item.title }</span>
+          <span class="treeSubTitle">{ item.basisMarkName }</span>
           <span class="treeSubPercentage">{item.percentage}</span>
         </span>
       )
@@ -114,7 +118,7 @@ export default {
     }
   },
   render () {
-    const { dataSource, search } = this.$props
+    const { dataSource, search, treeTitle } = this.$props
 
     // this.localOpenKeys = openKeys.slice(0)
     const list = dataSource.map(item => {
@@ -124,7 +128,7 @@ export default {
     return (
       <div class="tree-wrapper">
         { search ? this.renderSearch() : null }
-        <div class="tree-title">支扩研究基线表</div>
+        <div class="tree-title">{ treeTitle }</div>
         <Menu mode="inline" inlineIndent={0} class="custom-tree" {...{ on: { click: item => this.$emit('click', item), 'update:openKeys': val => { this.localOpenKeys = val } } }} openKeys={this.localOpenKeys}>
           { list }
         </Menu>
