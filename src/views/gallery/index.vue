@@ -15,7 +15,7 @@
               </a>
             </a-form-item>
           </a-col>
-          <a-col :md="12" style="text-align:right" :sm="24"><a-button type="primary" icon="plus" @click="$refs.registerModal.add()">新建</a-button><a-button type="primary" icon="plus" >导出</a-button></a-col>
+          <a-col :md="12" style="text-align:right" :sm="24"><a-button type="primary"  @click="$refs.registerModal.add()">添加采集</a-button><a-button type="primary"  style="margin-left: 20px;">导出</a-button></a-col>
           <a-col v-if="advanced" class="tableSearch" :md="6">
               <a-card>
                 <a-form-item label="使用状态">
