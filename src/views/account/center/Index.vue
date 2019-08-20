@@ -17,15 +17,15 @@
     <a-card :bordered="false" style="margin-top: 20px;">
      <a-row :gutter="8">
        <a-col :span="5">
-         <s-tree :treeTitle="title" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false"  @click="handleClick">
+        <s-tree :treeTitle="title" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
         </s-tree>
        </a-col>
        <a-col :span="19">
          <div class="baselineForm">
-              <div class="fr">
-                <a-button class="btn">导入</a-button>
-                <a-button class="btn">保存</a-button>
-                <a-button class="btn" type="primary">提交</a-button>
+              <div style="overflow: hidden;">
+                <a-button class="btn fr">导入</a-button>
+                <a-button class="btn fr">保存</a-button>
+                <a-button class="btn fr" type="primary">提交</a-button>
               </div>
               <a-form :form="form">
                 <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="labelCol"
@@ -45,14 +45,17 @@
                     </a-checkbox-group>
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
                       <a-row v-for="(sub, index) in qu1.childList" :key="index" class="no-border">
+                        <br v-if="sub.showType === 2" />
                         <a-col :span="7">({{sub.sort}}) {{sub.questionName}}</a-col>
                         
                         <a-col :span="sub.isWrite > 0 ? 4 : 17">
+
                           <a-input v-if="sub.isWrite > 0" :name="sub.basisElementId+''" />
                           <a-radio-group v-if="sub.simple === 1" v-model="sub.basisElementId">
                             <a-radio :value="1">是</a-radio>
                             <a-radio :value="-1">否</a-radio>
                           </a-radio-group>
+
                           <a-radio-group v-if="sub.simple === 2" v-model="sub.basisElementId">
                             <a-radio :value="1">有</a-radio>
                             <a-radio :value="-1">无</a-radio>
@@ -86,6 +89,11 @@
                                 <a-checkbox-group>
                                   <a-checkbox v-for="(secondSub,index) in subOp.childList" :key="index" :name="secondSub.parentId+''" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-checkbox>
                                 </a-checkbox-group>
+                              </a-col>
+                              <a-col :span="17" v-if="subOp.hasChild > 0 && subOp.isRadio > 0">
+                                <a-radio-group>
+                                  <a-radio v-for="(secondSub,index) in subOp.childList" :key="index" :name="secondSub.parentId+''" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-radio>
+                                </a-radio-group>
                               </a-col>
                               <a-col v-if="subOp.hasChild > 0 && subOp.isRadio === 0  && (!subOp.logicValue || subOp.basisElementId === 1)" v-for="(thirdSub, index) in subOp.childList" :key="index" :span="17" :offset="1">
                                 <a-col :span="12">{{thirdSub.questionName}}</a-col>
@@ -141,39 +149,28 @@ export default {
       form: this.$form.createForm(this),
       patient: {},
       patientBasis: {},
-      list: []
+      list: [],
+      patientBasisId: this.$route.params.id,
+      basisMaskId: undefined
     }
   },
   created() {
     var that = this
     this.CloseSidebar()
-
-    const { id } = this.$route.params
     var params = new URLSearchParams()
-    params.append('patientBasisId', id)
+    params.append('patientBasisId', this.patientBasisId)
     getPatientBasis(params)
     .then(res => {
       that.patient = res.data.patient
       that.patientBasis = res.data.patientBasis
       that.orgTree = res.data.list
     })
-    params = new URLSearchParams();
-    params.append('basisMaskId', 1)
-    params.append('patientBasisId', 1)
-    getElementsAnswer(params)
-    .then(res => {
-      that.list = res.data
-      // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
-    })
   },
   methods: {
     ...mapActions(['CloseSidebar']),
     handleClick(e) {
-      // console.log('handleClick', e);
-      // this.queryParam = {
-      //   key: e.key
-      // };
-      console.log('你点了节点')
+      this.basisMaskId = e.key
+      this.getElementsAnswer()
     },  
     handleSubmit () {
       const { form: { validateFields } } = this
@@ -204,6 +201,17 @@ export default {
       } else if (status === 'error') {
         message.error(`${info.file.name} file upload failed.`);
       }
+    },
+    getElementsAnswer (){
+      var that = this
+      var params = new URLSearchParams()
+      params.append('basisMaskId', this.basisMaskId)
+      params.append('patientBasisId', this.patientBasisId)
+      getElementsAnswer(params)
+      .then(res => {
+        that.list = res.data
+        // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
+      })
     }
   }
 };

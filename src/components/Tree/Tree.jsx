@@ -67,7 +67,7 @@ export default {
       )
     },
     renderItem (item) {
-      return item.childList ? this.renderSubItem(item, item.key) : this.renderMenuItem(item, item.key)
+      return item.childList ? this.renderSubItem(item, item.basisMarkId) : this.renderMenuItem(item, item.basisMarkId)
     },
     renderItemGroup (item) {
       const childrenItems = item.childList.map(o => {
