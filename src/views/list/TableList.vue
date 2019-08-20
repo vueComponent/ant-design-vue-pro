@@ -47,6 +47,9 @@
       </a-form>
     </div>
     <s-table ref="table" size="default" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+      <span slot="name"  slot-scope="text,record" @click="showUser(record)">
+        <p class="userName">{{text}}</p>
+      </span>
       <span slot="serial" slot-scope="text, record, index">{{ index + 1 }}</span>
       <span slot="visit" slot-scope="text"><a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <span slot="basisList" slot-scope="basisList">
@@ -67,19 +70,17 @@
       <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">
-            <a-icon type="home" />
-            配置
+            编辑
           </a>
           <a-divider type="vertical" />
           <a @click="handleSub(record)">
-            <a-icon type="home" />
             订阅报警
           </a>
         </template>
       </span>
     </s-table>
     <create-form ref="createModal" @ok="handleOk" />
-    <step-by-step-modal ref="modal" @ok="handleOk" />
+    <user-detail ref="detailModal"/>
   </a-card>
 </template>
 
@@ -89,6 +90,7 @@ import { STable, Ellipsis } from '@/components';
 import StepByStepModal from './modules/StepByStepModal';
 import CreateForm from './modules/CreateForm';
 import { getPatientList } from '@/api/patient';
+import UserDetail from './modules/UserDetail'
 
 const visitMap = {
   0: {
@@ -115,7 +117,8 @@ export default {
     STable,
     Ellipsis,
     CreateForm,
-    StepByStepModal
+    StepByStepModal,
+    UserDetail
   },
   data() {
     return {
@@ -132,7 +135,8 @@ export default {
         },
         {
           title: '患者姓名',
-          dataIndex: 'name'
+          dataIndex: 'name',
+          scopedSlots: { customRender: 'name' }
         },
         {
           title: '身份证号',
@@ -204,9 +208,11 @@ export default {
 
   },
   methods: {
+    showUser(record){
+      this.$refs.detailModal.show(record);
+    },
     handleEdit(record) {
-      console.log(record);
-      this.$refs.modal.edit(record);
+      this.$refs.createModal.edit(record);
     },
     handleSub(record) {
       if (record.status !== 0) {
@@ -265,5 +271,15 @@ export default {
   position: absolute;
   top: 52px;
   z-index: 100;
+}
+.userName{
+  color: #1FB2FA;
+  margin: 0;
+}
+.userName:active,.userName:hover{
+    text-decoration: underline;
+    text-underline-position: under;
+    text-decoration-color: #1FB2FA;
+    cursor: pointer;
 }
 </style>

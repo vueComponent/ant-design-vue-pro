@@ -19,3 +19,13 @@ export function getPatientList (parameter) {
     params: parameter
   })
 }
+
+
+export function getPatientDetail (parameter) {
+  return axios({
+    url: '/patient/detail',
+    method: 'post',
+    params: parameter
+  })
+}
+
