@@ -41,8 +41,11 @@
                     <a-input :name="qu1.basisElementId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" />
                     <a-date-picker v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate'" />
                     <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0">
-                      <a-checkbox v-for="(op,index) in qu1.childList" :key="index" :name="op.parentId+''">{{op.questionName}}</a-checkbox>
+                      <a-checkbox v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementId">{{op.questionName}}</a-checkbox>
                     </a-checkbox-group>
+                    <a-radio-group v-if="qu1.hasChild > 0 && qu1.isRadio > 0">
+                      <a-radio v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementId">{{op.questionName}}</a-radio>
+                    </a-radio-group>
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
                       <a-row v-for="(sub, index) in qu1.childList" :key="index" class="no-border">
                         <br v-if="sub.showType === 2" />
