@@ -49,40 +49,55 @@
                         
                         <a-col :span="sub.isWrite > 0 ? 4 : 17">
                           <a-input v-if="sub.isWrite > 0" :name="sub.basisElementId+''" />
-                          <a-radio-group v-if="sub.simple === 1">
+                          <a-radio-group v-if="sub.simple === 1" v-model="sub.basisElementId">
                             <a-radio :value="1">是</a-radio>
                             <a-radio :value="-1">否</a-radio>
                           </a-radio-group>
-                          <a-radio-group v-if="sub.simple === 2">
+                          <a-radio-group v-if="sub.simple === 2" v-model="sub.basisElementId">
                             <a-radio :value="1">有</a-radio>
                             <a-radio :value="-1">无</a-radio>
                           </a-radio-group>
                           <div class="clear" v-if="sub.simple > 0"></div>
                           <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0">
-                            <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId">{{subOp.questionName}}</a-checkbox>
+                            <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId" v-if="sub.basisElementId === 1">{{subOp.questionName}}</a-checkbox>
                           </a-checkbox-group>
-                          <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0">
+                          <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0" v-model="sub.basisElementId">
                             <a-radio v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId">{{subOp.questionName}}</a-radio>
                           </a-radio-group>
-                          <div v-if="sub.hasChild && sub.isRadio === 0" v-for="(subOp,index) in sub.childList">
-                            <a-row>
-                              <a-col :span="6">{{subOp.questionName}}</a-col>
-                              <a-radio-group v-if="subOp.simple === 1">
+                          <a-col :offset="1" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].isWrite > 0">
+                            <a-col :span="6">{{sub.childList[0].questionName}}</a-col>
+                            <a-col :span="8"><a-input /></a-col>
+                          </a-col>
+                          <a-row class="no-border" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue > 0 && secondSub.hasChild > 0" v-for="(secondSub, index) in sub.childList" :key="index">
+                            <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" /></a-col>
+                          </a-row>
+                          <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (!sub.logicValue || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList">
+                              <a-col :span="7">{{subOp.questionName}}</a-col>
+                              <a-radio-group v-if="subOp.simple === 1" v-model="subOp.basisElementId">
                                 <a-radio :value="1">是</a-radio>
                                 <a-radio :value="-1">否</a-radio>
                               </a-radio-group>
-                              <a-radio-group v-if="subOp.simple === 2">
+                              <a-radio-group v-if="subOp.simple === 2" v-model="subOp.basisElementId">
                                 <a-radio :value="1">有</a-radio>
                                 <a-radio :value="-1">无</a-radio>
                               </a-radio-group>
                               <a-col :span="6" v-if="subOp.isWrite > 0"><a-input :name="subOp.basisElementId+''" /></a-col>
-                              <a-col :span="18" v-if="subOp.hasChild > 0 && subOp.isRadio < 0">
+                              <a-col :span="17" v-if="subOp.hasChild > 0 && subOp.isRadio < 0">
                                 <a-checkbox-group>
                                   <a-checkbox v-for="(secondSub,index) in subOp.childList" :key="index" :name="secondSub.parentId+''" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-checkbox>
                                 </a-checkbox-group>
                               </a-col>
-                            </a-row>
-                          </div>
+                              <a-col v-if="subOp.hasChild > 0 && subOp.isRadio === 0  && (!subOp.logicValue || subOp.basisElementId === 1)" v-for="(thirdSub, index) in subOp.childList" :key="index" :span="17" :offset="1">
+                                <a-col :span="12">{{thirdSub.questionName}}</a-col>
+                                <a-col :span="12">
+                                  <a-radio-group v-if="thirdSub.simple === 1">
+                                    <a-radio :value="1">是</a-radio>
+                                    <a-radio :value="-1">否</a-radio>
+                                  </a-radio-group>
+                                  <a-input v-if="thirdSub.isWrite > 0" :name="thirdSub.basisElementId + ''" />
+                                </a-col>
+                              </a-col>
+                          </a-row>
                         </a-col>
                       </a-row>
                     </div>
@@ -99,6 +114,7 @@
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
 import { getPatientBasis, getElementsAnswer } from '@/api/basis'
+import _ from 'lodash'
 
 export default {
   name: 'success',
@@ -147,6 +163,7 @@ export default {
     getElementsAnswer(params)
     .then(res => {
       that.list = res.data
+      // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
     })
   },
   methods: {
