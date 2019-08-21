@@ -24,8 +24,8 @@
          <div class="baselineForm">
               <div style="overflow: hidden;">
                 <a-button class="btn fr">导入</a-button>
-                <a-button class="btn fr">保存</a-button>
-                <a-button class="btn fr" type="primary">提交</a-button>
+                <a-button class="btn fr" @click="save">保存</a-button>
+                <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
               </div>
               <a-form :form="form">
                 <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="labelCol"
@@ -53,28 +53,34 @@
                         
                         <a-col :span="sub.isWrite > 0 ? 4 : 17">
 
-                          <a-input v-if="sub.isWrite > 0" :name="sub.basisElementId+''" />
+                          <a-input v-if="sub.isWrite > 0 && !sub.event" :name="sub.basisElementId+''" />
+                          <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate'" />
                           <a-radio-group v-if="sub.simple === 1" v-model="sub.basisElementId">
                             <a-radio :value="1">是</a-radio>
                             <a-radio :value="-1">否</a-radio>
                           </a-radio-group>
-
                           <a-radio-group v-if="sub.simple === 2" v-model="sub.basisElementId">
                             <a-radio :value="1">有</a-radio>
                             <a-radio :value="-1">无</a-radio>
                           </a-radio-group>
                           <div class="clear" v-if="sub.simple > 0"></div>
+                          <a-col :span="4" v-if="sub.logicValue === 0 || sub.basisElementId === 1">{{sub.childEleName}}</a-col>
                           <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0">
-                            <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId" v-if="sub.basisElementId === 1">{{subOp.questionName}}</a-checkbox>
+                            <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId" v-if="sub.logicValue === 0 || sub.basisElementId === 1">{{subOp.questionName}}</a-checkbox>
                           </a-checkbox-group>
                           <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0" v-model="sub.basisElementId">
                             <a-radio v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId">{{subOp.questionName}}</a-radio>
                           </a-radio-group>
+                          <a-row v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue === 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementId === sub.basisElementId"" v-for="(thirdSub, index) in sub.childList">
+                            <a-col :span="6">{{thirdSub.childList[0].questionName}}</a-col>
+                            <a-col :span="8"><a-input /></a-col>
+                          </a-row>
                           <a-col :offset="1" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].isWrite > 0">
                             <a-col :span="6">{{sub.childList[0].questionName}}</a-col>
                             <a-col :span="8"><a-input /></a-col>
                           </a-col>
                           <a-row class="no-border" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue > 0 && secondSub.hasChild > 0" v-for="(secondSub, index) in sub.childList" :key="index">
+                            <a-col :span="3" v-if="sub.basisElementId === secondSub.basisElementId">{{secondSub.childList[0].questionName}}</a-col>
                             <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" /></a-col>
                           </a-row>
                           <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (!sub.logicValue || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList">
@@ -215,6 +221,65 @@ export default {
         that.list = res.data
         // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
       })
+    },
+    save (){
+      var result = []
+      var a = _.each(this.list, function(item){
+        if(item.simple > 0){
+          result.push({
+            basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
+            basisElementId: item.basisElementId,
+            elementNumValue: $('input[name="' + item.basisElementId + '"]:checked').val()
+          })
+        }else if(item.isWrite > 0){
+          result.push({
+            basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
+            basisElementId: item.basisElementId,
+            elementTextValue: $('input[name="' + item.basisElementId + '"]').val()
+          }) 
+        }
+        if(item.hasChild > 0){
+          if(item.childList[0].type === 1){
+            _.each(item.childList, function(sub){
+              if(sub.isWrite > 0){
+                result.push({
+                  basisAnswerId: (sub.answers && sub.answers.length) ? sub.answers[0].basisAnswerId : '',
+                  basisElementId: sub.basisElementId,
+                  elementTextValue: $('input[name="' + sub.basisElementId + '"]').val()
+                })
+              }
+              $('input[name="' + sub.basisElementId + '"][type!="text"]').each(function(i,v){
+                result.push({
+                  basisAnswerId: $(v).data('answerId'),
+                  basisElementId: parseInt($(v).val()),
+                  elementNumValue: $(v).prop('checked') ? 1 : -1
+                })
+              })
+            })
+          }else{
+            $('input[name="' + item.basisElementId + '"][type!="text"]').each(function(i,v){
+              if($(v).data('nip') && $(v).data('nip') > 0){
+                result.push({
+                  basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
+                  basisElementId: parseInt($(v).val()),
+                  elementNumValue: $(v).prop('checked') ? 1 : -1,
+                  elementTextValue: $('[name="' + $(v).val() +'-text"]').val()
+                })
+              }else{
+                result.push({
+                  basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
+                  basisElementId: parseInt($(v).val()),
+                  elementNumValue: $(v).prop('checked') ? 1 : -1
+                })
+              }
+            })
+          }
+        }
+      })
+      console.log(result)
+    },
+    submit (){
+
     }
   }
 };
@@ -223,6 +288,9 @@ export default {
 <style lang="less" scoped>
 .clear{
   clear: both;
+}
+.ant-col-4 .ant-calendar-picker{
+  width: 100%;
 }
 .page-header-index-wide{
   /deep/ .ant-card-wider-padding .ant-card-body {
