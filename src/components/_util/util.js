@@ -2,6 +2,13 @@
  * components util
  */
 
+import { Icon } from 'ant-design-vue';
+
+export const MyIcon = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_1349368_awj4ykfv47d.js',
+})
+
+
 /**
  * 清理空值，对象
  * @param children

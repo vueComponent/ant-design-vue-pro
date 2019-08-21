@@ -120,9 +120,9 @@ export default {
      * 如果参数为 true, 则强制刷新到第一页
      * @param Boolean bool
      */
-    refresh (bool = false) {
+    refresh (bool = false,keyword) {
       bool && (this.localPagination = Object.assign({}, {
-        current: 1, pageSize: this.pageSize
+        current: 1, pageSize: this.pageSize,keyWord:keyword
       }))
       this.loadData()
     },
@@ -134,11 +134,13 @@ export default {
      */
     loadData (pagination, filters, sorter) {
       this.localLoading = true
+      console.log("pagination",pagination)
       const parameter = Object.assign({
         pageNumber: (pagination && pagination.current) ||
           this.showPagination && this.localPagination.current || this.pageNum,
         pageSize: (pagination && pagination.pageSize) ||
-          this.showPagination && this.localPagination.pageSize || this.pageSize
+          this.showPagination && this.localPagination.pageSize || this.pageSize,
+         keyWord:this.localPagination.keyWord||''
       },
       (sorter && sorter.field && {
         sortField: sorter.field
