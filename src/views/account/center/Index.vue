@@ -30,20 +30,20 @@
               <a-form :form="form">
                 <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="labelCol"
                   :wrapperCol="wrapperCol">
-                    <a-radio-group v-if="qu1.simple === 1">
+                    <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementId+''">
                       <a-radio :value="1">是</a-radio>
                       <a-radio :value="-1">否</a-radio>
                     </a-radio-group>
-                    <a-radio-group v-if="qu1.simple === 2">
+                    <a-radio-group v-if="qu1.simple === 2" :name="qu1.basisElementId+''">
                       <a-radio :value="1">有</a-radio>
                       <a-radio :value="-1">无</a-radio>
                     </a-radio-group>
                     <a-input :name="qu1.basisElementId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" />
-                    <a-date-picker v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate'" />
+                    <a-date-picker :name="qu1.basisElementId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate'" />
                     <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0">
-                      <a-checkbox v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementId">{{op.questionName}}</a-checkbox>
+                      <a-checkbox v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementId" :name="qu1.basisElementId+''">{{op.questionName}}</a-checkbox>
                     </a-checkbox-group>
-                    <a-radio-group v-if="qu1.hasChild > 0 && qu1.isRadio > 0">
+                    <a-radio-group v-if="qu1.hasChild > 0 && qu1.isRadio > 0" :name="qu1.basisElementId">
                       <a-radio v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementId">{{op.questionName}}</a-radio>
                     </a-radio-group>
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
@@ -54,26 +54,29 @@
                         <a-col :span="sub.isWrite > 0 ? 4 : 17">
 
                           <a-input v-if="sub.isWrite > 0 && !sub.event" :name="sub.basisElementId+''" />
-                          <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate'" />
-                          <a-radio-group v-if="sub.simple === 1" v-model="sub.basisElementId">
+                          <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate'" :name="sub.basisElementId+''" />
+                          <a-radio-group v-if="sub.simple === 1" v-model="sub.basisElementId" :name="sub.basisElementId+''">
                             <a-radio :value="1">是</a-radio>
                             <a-radio :value="-1">否</a-radio>
                           </a-radio-group>
-                          <a-radio-group v-if="sub.simple === 2" v-model="sub.basisElementId">
-                            <a-radio :value="1">有</a-radio>
-                            <a-radio :value="-1">无</a-radio>
+                          <a-radio-group v-if="sub.simple === 2" v-model="sub.basisElementId" :name.once="sub.basisElementId+''">
+                            <a-radio :value="1">有fdf</a-radio>
+                            <a-radio :value="-1">无fdf</a-radio>
                           </a-radio-group>
                           <div class="clear" v-if="sub.simple > 0"></div>
                           <a-col :span="4" v-if="sub.logicValue === 0 || sub.basisElementId === 1">{{sub.childEleName}}</a-col>
                           <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0">
                             <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId" v-if="sub.logicValue === 0 || sub.basisElementId === 1">{{subOp.questionName}}</a-checkbox>
                           </a-checkbox-group>
-                          <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0" v-model="sub.basisElementId">
-                            <a-radio v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId">{{subOp.questionName}}</a-radio>
+                          <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0" v-model="sub.basisElementId" :name="sub.basisElementId+''">
+                            <a-radio v-for="(subOp,index) in sub.childList" :key="index" :value="subOp.basisElementId">{{subOp.questionName}}</a-radio>
                           </a-radio-group>
                           <a-row v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue === 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementId === sub.basisElementId"" v-for="(thirdSub, index) in sub.childList">
                             <a-col :span="6">{{thirdSub.childList[0].questionName}}</a-col>
-                            <a-col :span="8"><a-input /></a-col>
+                            <a-col :span="8">
+                              <a-date-picker v-if="thirdSub.childList[0].event === 'showDate'" :name="thirdSub.childList[0].basisElementId" />
+                              <a-input v-else />
+                            </a-col>
                           </a-row>
                           <a-col :offset="1" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].isWrite > 0">
                             <a-col :span="6">{{sub.childList[0].questionName}}</a-col>
@@ -132,6 +135,7 @@ import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
 import { getPatientBasis, getElementsAnswer } from '@/api/basis'
 import _ from 'lodash'
+import $ from 'jquery'
 
 export default {
   name: 'success',
@@ -232,20 +236,22 @@ export default {
             elementNumValue: $('input[name="' + item.basisElementId + '"]:checked').val()
           })
         }else if(item.isWrite > 0){
+          var text = $('[name="' + item.basisElementId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + item.basisElementId + '"] input').val() : $('[name="' + item.basisElementId + '"]').val()
           result.push({
             basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
             basisElementId: item.basisElementId,
-            elementTextValue: $('input[name="' + item.basisElementId + '"]').val()
+            elementTextValue: text
           }) 
         }
         if(item.hasChild > 0){
           if(item.childList[0].type === 1){
             _.each(item.childList, function(sub){
               if(sub.isWrite > 0){
+                var text = $('[name="' + sub.basisElementId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + sub.basisElementId + '"] input').val() : $('[name="' + sub.basisElementId + '"]').val()
                 result.push({
                   basisAnswerId: (sub.answers && sub.answers.length) ? sub.answers[0].basisAnswerId : '',
                   basisElementId: sub.basisElementId,
-                  elementTextValue: $('input[name="' + sub.basisElementId + '"]').val()
+                  elementTextValue: text
                 })
               }
               $('input[name="' + sub.basisElementId + '"][type!="text"]').each(function(i,v){
@@ -255,8 +261,21 @@ export default {
                   elementNumValue: $(v).prop('checked') ? 1 : -1
                 })
               })
+              if(sub.hasChild > 0){
+                _.each(sub.childList, function(third){
+                  if(third.hasChild > 0 && third.childList[0] && third.childList[0].isWrite > 0){
+                    var text = $('[name="' + third.childList[0].basisElementId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + third.childList[0].basisElementId + '"] input').val() : $('[name="' + third.childList[0].basisElementId + '"]').val()
+                    result.push({
+                      basisAnswerId: (third.childList[0].answers && third.childList[0].answers.length) ? third.childList[0].answers[0].basisAnswerId : '',
+                      basisElementId: third.childList[0].basisElementId,
+                      elementTextValue: text || ''
+                    })
+                  }
+                })
+              }
             })
           }else{
+            // 是选项，单选或多选
             $('input[name="' + item.basisElementId + '"][type!="text"]').each(function(i,v){
               if($(v).data('nip') && $(v).data('nip') > 0){
                 result.push({
