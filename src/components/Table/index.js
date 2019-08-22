@@ -288,7 +288,10 @@ export default {
             onChange: (selectedRowKeys, selectedRows) => {
               this.updateSelect(selectedRowKeys, selectedRows)
               typeof this[k].onChange !== 'undefined' && this[k].onChange(selectedRowKeys, selectedRows)
-            }
+            },
+            getCheckboxProps: record => (
+              typeof this[k].getCheckboxProps !== 'undefined' && this[k].getCheckboxProps(record)
+            )
           }
           return props[k]
         } else if (!this.rowSelection) {
