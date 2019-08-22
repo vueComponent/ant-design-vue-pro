@@ -4,7 +4,7 @@
       <a-form layout="inline">
         <a-row :gutter="16">
           <a-col :md="4" :sm="24">
-            <a-form-item ><a-input v-model="keyword" placeholder="" /></a-form-item>
+            <a-form-item ><a-input v-model="keyword" placeholder="搜索患者姓名、身份证号" /></a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
             <a-form-item>
