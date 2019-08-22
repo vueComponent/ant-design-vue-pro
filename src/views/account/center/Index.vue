@@ -30,7 +30,7 @@
               <a-form :form="form">
                 <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="labelCol"
                   :wrapperCol="wrapperCol">
-                    <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementId+''">
+                    <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementId+''" :value="qu1.answers && qu1.answers.length && qu1.answers[0].elementNumValue">
                       <a-radio :value="1">是</a-radio>
                       <a-radio :value="-1">否</a-radio>
                     </a-radio-group>
@@ -38,12 +38,12 @@
                       <a-radio :value="1">有</a-radio>
                       <a-radio :value="-1">无</a-radio>
                     </a-radio-group>
-                    <a-input :name="qu1.basisElementId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" />
-                    <a-date-picker :name="qu1.basisElementId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate'" />
+                    <a-input :name="qu1.basisElementId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" :value="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" />
+                    <a-date-picker :name="qu1.basisElementId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate'" :value="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" />
                     <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0">
                       <a-checkbox v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementId" :name="qu1.basisElementId+''">{{op.questionName}}</a-checkbox>
                     </a-checkbox-group>
-                    <a-radio-group v-if="qu1.hasChild > 0 && qu1.isRadio > 0" :name="qu1.basisElementId">
+                    <a-radio-group v-if="qu1.hasChild > 0 && qu1.isRadio > 0" :name="qu1.basisElementId+''">
                       <a-radio v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementId">{{op.questionName}}</a-radio>
                     </a-radio-group>
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
@@ -53,28 +53,28 @@
                         
                         <a-col :span="sub.isWrite > 0 ? 4 : 17">
 
-                          <a-input v-if="sub.isWrite > 0 && !sub.event" :name="sub.basisElementId+''" />
-                          <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate'" :name="sub.basisElementId+''" />
-                          <a-radio-group v-if="sub.simple === 1" v-model="sub.basisElementId" :name="sub.basisElementId+''">
+                          <a-input v-if="sub.isWrite > 0 && !sub.event" :name="sub.basisElementCopyId+''" />
+                          <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate'" :name="sub.basisElementCopyId+''" />
+                          <a-radio-group v-if="sub.simple === 1" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
                             <a-radio :value="1">是</a-radio>
                             <a-radio :value="-1">否</a-radio>
                           </a-radio-group>
-                          <a-radio-group v-if="sub.simple === 2" v-model="sub.basisElementId" :name.once="sub.basisElementId+''">
-                            <a-radio :value="1">有fdf</a-radio>
-                            <a-radio :value="-1">无fdf</a-radio>
+                          <a-radio-group v-if="sub.simple === 2" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
+                            <a-radio :value="1">有</a-radio>
+                            <a-radio :value="-1">无</a-radio>
                           </a-radio-group>
                           <div class="clear" v-if="sub.simple > 0"></div>
                           <a-col :span="4" v-if="sub.logicValue === 0 || sub.basisElementId === 1">{{sub.childEleName}}</a-col>
                           <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0">
                             <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId" v-if="sub.logicValue === 0 || sub.basisElementId === 1">{{subOp.questionName}}</a-checkbox>
                           </a-checkbox-group>
-                          <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0" v-model="sub.basisElementId" :name="sub.basisElementId+''">
+                          <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
                             <a-radio v-for="(subOp,index) in sub.childList" :key="index" :value="subOp.basisElementId">{{subOp.questionName}}</a-radio>
                           </a-radio-group>
                           <a-row v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue === 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementId === sub.basisElementId"" v-for="(thirdSub, index) in sub.childList">
                             <a-col :span="6">{{thirdSub.childList[0].questionName}}</a-col>
                             <a-col :span="8">
-                              <a-date-picker v-if="thirdSub.childList[0].event === 'showDate'" :name="thirdSub.childList[0].basisElementId" />
+                              <a-date-picker v-if="thirdSub.childList[0].event === 'showDate'" :name="thirdSub.childList[0].basisElementCopyId+''" />
                               <a-input v-else />
                             </a-col>
                           </a-row>
@@ -88,15 +88,18 @@
                           </a-row>
                           <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (!sub.logicValue || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList">
                               <a-col :span="7">{{subOp.questionName}}</a-col>
-                              <a-radio-group v-if="subOp.simple === 1" v-model="subOp.basisElementId">
+                              <a-radio-group v-if="subOp.simple === 1" v-model="subOp.basisElementId" :name="subOp.basisElementCopyId+''">
                                 <a-radio :value="1">是</a-radio>
                                 <a-radio :value="-1">否</a-radio>
                               </a-radio-group>
-                              <a-radio-group v-if="subOp.simple === 2" v-model="subOp.basisElementId">
+                              <a-radio-group v-if="subOp.simple === 2" v-model="subOp.basisElementId" :name="subOp.basisElementCopyId+''">
                                 <a-radio :value="1">有</a-radio>
                                 <a-radio :value="-1">无</a-radio>
                               </a-radio-group>
-                              <a-col :span="6" v-if="subOp.isWrite > 0"><a-input :name="subOp.basisElementId+''" /></a-col>
+                              <a-col :span="6" v-if="subOp.isWrite > 0">
+                                <a-date-picker v-if="subOp.event === 'showDate'" :name="subOp.basisElementCopyId+''" />
+                                <a-input :name="subOp.basisElementCopyId+''" v-else />
+                              </a-col>
                               <a-col :span="17" v-if="subOp.hasChild > 0 && subOp.isRadio < 0">
                                 <a-checkbox-group>
                                   <a-checkbox v-for="(secondSub,index) in subOp.childList" :key="index" :name="secondSub.parentId+''" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-checkbox>
@@ -110,11 +113,11 @@
                               <a-col v-if="subOp.hasChild > 0 && subOp.isRadio === 0  && (!subOp.logicValue || subOp.basisElementId === 1)" v-for="(thirdSub, index) in subOp.childList" :key="index" :span="17" :offset="1">
                                 <a-col :span="12">{{thirdSub.questionName}}</a-col>
                                 <a-col :span="12">
-                                  <a-radio-group v-if="thirdSub.simple === 1">
+                                  <a-radio-group v-if="thirdSub.simple === 1" :name="thirdSub.basisElementCopyId+''">
                                     <a-radio :value="1">是</a-radio>
                                     <a-radio :value="-1">否</a-radio>
                                   </a-radio-group>
-                                  <a-input v-if="thirdSub.isWrite > 0" :name="thirdSub.basisElementId + ''" />
+                                  <a-input v-if="thirdSub.isWrite > 0" :name="thirdSub.basisElementCopyId + ''" />
                                 </a-col>
                               </a-col>
                           </a-row>
@@ -133,7 +136,7 @@
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-import { getPatientBasis, getElementsAnswer } from '@/api/basis'
+import { getPatientBasis, getElementsAnswer, submit } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 
@@ -232,14 +235,14 @@ export default {
         if(item.simple > 0){
           result.push({
             basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
-            basisElementId: item.basisElementId,
-            elementNumValue: $('input[name="' + item.basisElementId + '"]:checked').val()
+            basisElementId: item.basisElementCopyId,
+            elementNumValue: $('input[name="' + item.basisElementCopyId + '"]:checked').val()
           })
         }else if(item.isWrite > 0){
-          var text = $('[name="' + item.basisElementId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + item.basisElementId + '"] input').val() : $('[name="' + item.basisElementId + '"]').val()
+          var text = $('[name="' + item.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + item.basisElementCopyId + '"] input').val() : $('[name="' + item.basisElementCopyId + '"]').val()
           result.push({
             basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
-            basisElementId: item.basisElementId,
+            basisElementId: item.basisElementCopyId,
             elementTextValue: text
           }) 
         }
@@ -247,29 +250,77 @@ export default {
           if(item.childList[0].type === 1){
             _.each(item.childList, function(sub){
               if(sub.isWrite > 0){
-                var text = $('[name="' + sub.basisElementId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + sub.basisElementId + '"] input').val() : $('[name="' + sub.basisElementId + '"]').val()
+                var text = $('[name="' + sub.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + sub.basisElementCopyId + '"] input').val() : $('[name="' + sub.basisElementCopyId + '"]').val()
                 result.push({
                   basisAnswerId: (sub.answers && sub.answers.length) ? sub.answers[0].basisAnswerId : '',
-                  basisElementId: sub.basisElementId,
+                  basisElementId: sub.basisElementCopyId,
                   elementTextValue: text
                 })
               }
-              $('input[name="' + sub.basisElementId + '"][type!="text"]').each(function(i,v){
+              if(sub.simple > 0){
                 result.push({
-                  basisAnswerId: $(v).data('answerId'),
-                  basisElementId: parseInt($(v).val()),
-                  elementNumValue: $(v).prop('checked') ? 1 : -1
+                  basisAnswerId: (sub.answers && sub.answers.length) ? sub.answers[0].basisAnswerId : '',
+                  basisElementId: sub.basisElementCopyId,
+                  elementNumValue: $('input[name="' + sub.basisElementCopyId + '"]:checked').val()
                 })
+              }
+              $('input[name="' + sub.basisElementCopyId + '"][type!="text"]').each(function(i,v){
+                if(parseInt($(v).val()) !== 1 && parseInt($(v).val()) !== -1){
+                  result.push({
+                    basisAnswerId: $(v).data('answerId'),
+                    basisElementId: parseInt($(v).val()),
+                    elementNumValue: $(v).prop('checked') ? 1 : -1
+                  })
+                }
               })
+              
               if(sub.hasChild > 0){
                 _.each(sub.childList, function(third){
-                  if(third.hasChild > 0 && third.childList[0] && third.childList[0].isWrite > 0){
-                    var text = $('[name="' + third.childList[0].basisElementId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + third.childList[0].basisElementId + '"] input').val() : $('[name="' + third.childList[0].basisElementId + '"]').val()
+                  if(third.simple > 0){
                     result.push({
-                      basisAnswerId: (third.childList[0].answers && third.childList[0].answers.length) ? third.childList[0].answers[0].basisAnswerId : '',
-                      basisElementId: third.childList[0].basisElementId,
+                      basisAnswerId: (third.answers && third.answers.length) ? third.answers[0].basisAnswerId : '',
+                      basisElementId: third.basisElementCopyId,
+                      elementNumValue: $('input[name="' + third.basisElementCopyId + '"]:checked').val()
+                    })
+                  }
+                  if(third.isWrite > 0){
+                    var text = $('[name="' + third.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + third.basisElementCopyId + '"] input').val() : $('[name="' + third.basisElementCopyId + '"]').val()
+                    result.push({
+                      basisAnswerId: (third.answers && third.answers.length) ? third.answers[0].basisAnswerId : '',
+                      basisElementId: third.basisElementCopyId,
                       elementTextValue: text || ''
                     })
+                  }
+                  if(third.hasChild > 0){
+                    if(third.isRadio !== 0){
+                      $('input[name="' + third.basisElementCopyId + '"][type!="text"]').each(function(i,v){
+                        if(parseInt($(v).val()) !== 1 && parseInt($(v).val()) !== -1){
+                          result.push({
+                            basisAnswerId: $(v).data('answerId'),
+                            basisElementId: parseInt($(v).val()),
+                            elementNumValue: $(v).prop('checked') ? 1 : -1
+                          })
+                        }
+                      })
+                    }else{
+                      _.each(third.childList,function(fourth){
+                        if(fourth.simple > 0){
+                          result.push({
+                            basisAnswerId: (fourth.answers && fourth.answers.length) ? fourth.answers[0].basisAnswerId : '',
+                            basisElementId: fourth.basisElementCopyId,
+                            elementNumValue: $('input[name="' + fourth.basisElementCopyId + '"]:checked').val()
+                          })
+                        }
+                        if(fourth.isWrite > 0){
+                          var text = $('[name="' + fourth.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + fourth.basisElementCopyId + '"] input').val() : $('[name="' + fourth.basisElementCopyId + '"]').val()
+                          result.push({
+                            basisAnswerId: (fourth.answers && fourth.answers.length) ? fourth.answers[0].basisAnswerId : '',
+                            basisElementId: fourth.basisElementCopyId,
+                            elementTextValue: text || ''
+                          })
+                        }
+                      })
+                    }
                   }
                 })
               }
@@ -296,6 +347,19 @@ export default {
         }
       })
       console.log(result)
+      var params = new URLSearchParams();
+      params.append('basisAnswer', JSON.stringify(result))
+      params.append('patientBasis', JSON.stringify(this.patientBasis))
+      params.append('basisMarkId', this.basisMaskId)
+      submit(params)
+      .then(res => {
+        console.log(res)
+        alert('保存成功')
+        location.href = location.href
+      })
+      .catch(error => {
+        console.log(error)
+      })
     },
     submit (){
 
@@ -308,7 +372,8 @@ export default {
 .clear{
   clear: both;
 }
-.ant-col-4 .ant-calendar-picker{
+.ant-col-4 .ant-calendar-picker,
+.ant-col-6 .ant-calendar-picker{
   width: 100%;
 }
 .page-header-index-wide{
