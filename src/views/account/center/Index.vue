@@ -30,21 +30,21 @@
               <a-form :form="form">
                 <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="labelCol"
                   :wrapperCol="wrapperCol">
-                    <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementId+''" :value="qu1.answers && qu1.answers.length && qu1.answers[0].elementNumValue">
+                    <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" :value="qu1.answers && qu1.answers.length && qu1.answers[0].elementNumValue">
                       <a-radio :value="1">是</a-radio>
                       <a-radio :value="-1">否</a-radio>
                     </a-radio-group>
-                    <a-radio-group v-if="qu1.simple === 2" :name="qu1.basisElementId+''">
+                    <a-radio-group v-if="qu1.simple === 2" :name="qu1.basisElementCopyId+''">
                       <a-radio :value="1">有</a-radio>
                       <a-radio :value="-1">无</a-radio>
                     </a-radio-group>
-                    <a-input :name="qu1.basisElementId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" :value="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" />
-                    <a-date-picker :name="qu1.basisElementId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate'" :value="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" />
+                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" :value="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" />
+                    <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate'" :value="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue && moment(qu1.answers[0].elementTextValue)" />
                     <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0">
-                      <a-checkbox v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementId" :name="qu1.basisElementId+''">{{op.questionName}}</a-checkbox>
+                      <a-checkbox v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId" :name="qu1.basisElementCopyId+''" :checked="op.basisElementCopyId > 0">{{op.questionName}}</a-checkbox>
                     </a-checkbox-group>
-                    <a-radio-group v-if="qu1.hasChild > 0 && qu1.isRadio > 0" :name="qu1.basisElementId+''">
-                      <a-radio v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementId">{{op.questionName}}</a-radio>
+                    <a-radio-group v-if="qu1.hasChild > 0 && qu1.isRadio > 0" :name="qu1.basisElementCopyId+''">
+                      <a-radio v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId">{{op.questionName}}</a-radio>
                     </a-radio-group>
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
                       <a-row v-for="(sub, index) in qu1.childList" :key="index" class="no-border">
@@ -53,7 +53,7 @@
                         
                         <a-col :span="sub.isWrite > 0 ? 4 : 17">
 
-                          <a-input v-if="sub.isWrite > 0 && !sub.event" :name="sub.basisElementCopyId+''" />
+                          <a-input v-if="sub.isWrite > 0 && (!sub.event || sub.event === 'compute')" :name="sub.basisElementCopyId+''" />
                           <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate'" :name="sub.basisElementCopyId+''" />
                           <a-radio-group v-if="sub.simple === 1" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
                             <a-radio :value="1">是</a-radio>
@@ -64,7 +64,7 @@
                             <a-radio :value="-1">无</a-radio>
                           </a-radio-group>
                           <div class="clear" v-if="sub.simple > 0"></div>
-                          <a-col :span="4" v-if="sub.logicValue === 0 || sub.basisElementId === 1">{{sub.childEleName}}</a-col>
+                          <a-col :span="4" v-if="(sub.logicValue === 0 || sub.basisElementId === 1) && sub.childEleName">{{sub.childEleName}}</a-col>
                           <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0">
                             <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId" v-if="sub.logicValue === 0 || sub.basisElementId === 1">{{subOp.questionName}}</a-checkbox>
                           </a-checkbox-group>
@@ -80,7 +80,7 @@
                           </a-row>
                           <a-col :offset="1" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].isWrite > 0">
                             <a-col :span="6">{{sub.childList[0].questionName}}</a-col>
-                            <a-col :span="8"><a-input /></a-col>
+                            <a-col :span="8"><a-input :name="sub.childList[0].basisElementCopyId+''" /></a-col>
                           </a-col>
                           <a-row class="no-border" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue > 0 && secondSub.hasChild > 0" v-for="(secondSub, index) in sub.childList" :key="index">
                             <a-col :span="3" v-if="sub.basisElementId === secondSub.basisElementId">{{secondSub.childList[0].questionName}}</a-col>
@@ -139,6 +139,7 @@ import { mapActions } from 'vuex'
 import { getPatientBasis, getElementsAnswer, submit } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
+import moment from 'moment'
 
 export default {
   name: 'success',
@@ -162,13 +163,15 @@ export default {
       },
       visible: false,
       confirmLoading: false,
-      form: this.$form.createForm(this),
       patient: {},
       patientBasis: {},
       list: [],
       patientBasisId: this.$route.params.id,
       basisMaskId: undefined
     }
+  },
+  beforeCreate (){
+    this.form = this.$form.createForm(this, {onFieldsChange: this.onFieldsChange, onValuesChange: this.onValuesChange})
   },
   created() {
     var that = this
@@ -184,6 +187,7 @@ export default {
   },
   methods: {
     ...mapActions(['CloseSidebar']),
+    moment,
     handleClick(e) {
       this.basisMaskId = e.key
       this.getElementsAnswer()
@@ -363,6 +367,12 @@ export default {
     },
     submit (){
 
+    },
+    onFieldsChange (props, fields){
+      console.log('fields changed')
+    },
+    onValuesChange (props, values){
+      console.log('values changed')
     }
   }
 };
