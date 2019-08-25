@@ -86,7 +86,7 @@
                           </a-col>
                           <a-row class="no-border" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue > 0 && secondSub.hasChild > 0" v-for="(secondSub, index) in sub.childList" :key="index">
                             <a-col :span="3" v-if="sub.basisElementId === secondSub.basisElementId">{{secondSub.childList[0].questionName}}</a-col>
-                            <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" /></a-col>
+                            <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.answers && secondSub.answers.length && secondSub.answers[0].elementTextValue" /></a-col>
                           </a-row>
                           <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (!sub.logicValue || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList">
                               <a-col :span="7">{{subOp.questionName}}</a-col>
@@ -119,7 +119,7 @@
                                     <a-radio :value="1">是</a-radio>
                                     <a-radio :value="-1">否</a-radio>
                                   </a-radio-group>
-                                  <a-input v-if="thirdSub.isWrite > 0" :name="thirdSub.basisElementCopyId + ''" />
+                                  <a-input v-if="thirdSub.isWrite > 0" :name="thirdSub.basisElementCopyId + ''" :defaultValue="thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" />
                                 </a-col>
                               </a-col>
                           </a-row>
