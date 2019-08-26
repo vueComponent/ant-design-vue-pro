@@ -28,8 +28,7 @@
                 <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
               </div>
               <a-form :form="form">
-                <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="labelCol"
-                  :wrapperCol="wrapperCol">
+                <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
                     <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementNumValue || ''">
                       <a-radio :value="1">是</a-radio>
                       <a-radio :value="-1">否</a-radio>
@@ -48,7 +47,7 @@
                       <a-radio v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId">{{op.questionName}}</a-radio>
                     </a-radio-group>
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
-                      <a-row v-for="(sub, index) in qu1.childList" :key="index" class="no-border">
+                      <a-row v-for="(sub, index) in qu1.childList" :key="index">
                         <br v-if="sub.showType === 2" />
                         <a-col :span="7">({{sub.sort}}) {{sub.questionName}}</a-col>
                         
@@ -80,7 +79,7 @@
                               <a-input v-if="!thirdSub.childList[0].event" />
                             </a-col>
                           </a-row>
-                          <a-col :offset="1" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].isWrite > 0">
+                          <a-col v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].isWrite > 0">
                             <a-col :span="6">{{sub.childList[0].questionName}}</a-col>
                             <a-col :span="8"><a-input :name="sub.childList[0].basisElementCopyId+''" /></a-col>
                           </a-col>
@@ -113,16 +112,16 @@
                                   <a-radio v-for="(secondSub,index) in subOp.childList" :key="index" :name="secondSub.parentId+''" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-radio>
                                 </a-radio-group>
                               </a-col>
-                              <a-col v-if="subOp.hasChild > 0 && subOp.isRadio === 0  && (!subOp.logicValue || subOp.basisElementId === 1)" v-for="(thirdSub, index) in subOp.childList" :key="index" :span="17" :offset="1">
-                                <a-col :span="12">{{thirdSub.questionName}}</a-col>
-                                <a-col :span="12">
+                              <div v-if="subOp.hasChild > 0 && subOp.isRadio === 0  && (!subOp.logicValue || subOp.basisElementId === 1)" v-for="(thirdSub, index) in subOp.childList" :key="index">
+                                <a-col :span="7">{{thirdSub.questionName}}</a-col>
+                                <a-col :span="17">
                                   <a-radio-group v-if="thirdSub.simple === 1" :name="thirdSub.basisElementCopyId+''" v-model="thirdSub.basisElementId">
                                     <a-radio :value="1">是</a-radio>
                                     <a-radio :value="-1">否</a-radio>
                                   </a-radio-group>
                                   <a-input v-if="thirdSub.isWrite > 0" :name="thirdSub.basisElementCopyId + ''" :defaultValue="thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" />
                                 </a-col>
-                              </a-col>
+                              </div>
                           </a-row>
                         </a-col>
                       </a-row>
@@ -154,15 +153,25 @@ export default {
       title: '支扩研究基线表',
       openKeys: ['key-01'],
       orgTree: [],
-      labelCol: {
+      labelColHor: {
         xs: { span: 24 },
         sm: { span: 4 },
         md: { span: 4}
       },
-      wrapperCol: {
+      labelColVer: {
+        xs: { span: 24 },
+        sm: { span: 24 },
+        md: { span: 24}
+      },
+      wrapperHor: {
         xs: { span: 24 },
         sm: { span: 20 },
         md: { span: 20 }
+      },
+      wrapperVer: {
+        xs: { span: 24 },
+        sm: { span: 24 },
+        md: { span: 24 }
       },
       visible: false,
       confirmLoading: false,
@@ -550,6 +559,13 @@ export default {
       text-align: left;
       label:after{
         content: ''
+      }
+      &.ant-col-md-24 label{
+        display: block;
+        background-color: #F7F8F8;
+        font-weight: bold;
+        font-size: 16px;
+        color: #231815;
       }
     }
     .formSubtitle{
