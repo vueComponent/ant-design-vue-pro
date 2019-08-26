@@ -38,6 +38,7 @@
           </a-menu-item>
         </a-menu>
       </a-dropdown>
+      <lang-select />
     </div>
   </div>
 </template>
@@ -45,10 +46,12 @@
 <script>
 import NoticeIcon from '@/components/NoticeIcon'
 import { mapActions, mapGetters } from 'vuex'
+import LangSelect from '@/components/tools/LangSelect'
 
 export default {
   name: 'UserMenu',
   components: {
+    LangSelect,
     NoticeIcon
   },
   computed: {
