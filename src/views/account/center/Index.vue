@@ -86,7 +86,7 @@
                           </a-col>
                           <a-row class="no-border" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue > 0 && secondSub.hasChild > 0" v-for="(secondSub, index) in sub.childList" :key="index">
                             <a-col :span="3" v-if="sub.basisElementId === secondSub.basisElementId">{{secondSub.childList[0].questionName}}</a-col>
-                            <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.answers && secondSub.answers.length && secondSub.answers[0].elementTextValue" /></a-col>
+                            <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].answers && secondSub.childList[0].answers.length && secondSub.childList[0].answers[0].elementTextValue" :name="secondSub.childList[0].basisElementCopyId+''" /></a-col>
                           </a-row>
                           <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (!sub.logicValue || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList">
                               <a-col :span="7">{{subOp.questionName}}</a-col>
@@ -99,8 +99,9 @@
                                 <a-radio :value="-1">无</a-radio>
                               </a-radio-group>
                               <a-col :span="6" v-if="subOp.isWrite > 0">
-                                <a-date-picker v-if="subOp.event === 'showDate'" :name="subOp.basisElementCopyId+''" />
-                                <a-input :name="subOp.basisElementCopyId+''" v-else :defaultValue="subOp.answers && subOp.answers.length && subOp.answers[0].elementTextValue" />
+                                <a-date-picker v-if="subOp.event === 'showDate' && subOp.answers && subOp.answers.length && subOp.answers[0].elementTextValue" :name="subOp.basisElementCopyId+''" :defaultValue="moment(subOp.answers[0].elementTextValue)" />
+                                <a-date-picker v-if="subOp.event === 'showDate' && (!subOp.answers || !subOp.answers.length || !subOp.answers[0].elementTextValue)" :name="subOp.basisElementCopyId+''" />
+                                <a-input :name="subOp.basisElementCopyId+''" v-if="!subOp.event || subOp.event !== 'showDate'" :defaultValue="subOp.answers && subOp.answers.length && subOp.answers[0].elementTextValue" />
                               </a-col>
                               <a-col :span="17" v-if="subOp.hasChild > 0 && subOp.isRadio < 0">
                                 <a-checkbox-group :defaultValue="selectedCheckbox(subOp.childList)">
@@ -297,17 +298,17 @@ export default {
                   elementNumValue: $('input[name="' + sub.basisElementCopyId + '"]:checked').val()
                 })
               }
-              $('input[name="' + sub.basisElementCopyId + '"][type!="text"]').each(function(i,v){
-                if(parseInt($(v).val()) !== 1 && parseInt($(v).val()) !== -1){
-                  result.push({
-                    basisAnswerId: $(v).data('answerId'),
-                    basisElementId: parseInt($(v).val()),
-                    elementNumValue: $(v).prop('checked') ? 1 : -1
-                  })
-                }
-              })
               
               if(sub.hasChild > 0){
+                if(sub.isRadio !== 0){
+                  _.each(sub.childList, function(third){
+                    result.push({
+                      basisAnswerId: third.answers && third.answers.length ? third.answers[0].basisAnswerId : '',
+                      basisElementId: third.basisElementCopyId,
+                      elementNumValue: $('[value="' + third.basisElementCopyId + '"][name="' + third.parentId + '"]').prop('checked') ? 1 : -1
+                    })
+                  })
+                }
                 _.each(sub.childList, function(third){
                   if(third.simple > 0){
                     result.push({
@@ -325,74 +326,79 @@ export default {
                     })
                   }
                   if(third.hasChild > 0){
-                    if(third.isRadio !== 0){
-                      $('input[name="' + third.basisElementCopyId + '"][type!="text"]').each(function(i,v){
-                        if(parseInt($(v).val()) !== 1 && parseInt($(v).val()) !== -1){
-                          result.push({
-                            basisAnswerId: $(v).data('answerId'),
-                            basisElementId: parseInt($(v).val()),
-                            elementNumValue: $(v).prop('checked') ? 1 : -1
-                          })
-                        }
-                      })
-                    }else{
-                      _.each(third.childList,function(fourth){
-                        if(fourth.simple > 0){
-                          result.push({
-                            basisAnswerId: (fourth.answers && fourth.answers.length) ? fourth.answers[0].basisAnswerId : '',
-                            basisElementId: fourth.basisElementCopyId,
-                            elementNumValue: $('input[name="' + fourth.basisElementCopyId + '"]:checked').val()
-                          })
-                        }
-                        if(fourth.isWrite > 0){
-                          var text = $('[name="' + fourth.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + fourth.basisElementCopyId + '"] input').val() : $('[name="' + fourth.basisElementCopyId + '"]').val()
-                          result.push({
-                            basisAnswerId: (fourth.answers && fourth.answers.length) ? fourth.answers[0].basisAnswerId : '',
-                            basisElementId: fourth.basisElementCopyId,
-                            elementTextValue: text || ''
-                          })
-                        }
-                      })
-                    }
+                    
+                    _.each(third.childList,function(fourth){
+                      if(third.isRadio !== 0){
+                        result.push({
+                          basisAnswerId: fourth.answers && fourth.answers.length ? fourth.answers[0].basisAnswerId : '',
+                          basisElementId: fourth.basisElementCopyId,
+                          elementNumValue: $('[value="' + fourth.basisElementCopyId + '"][name="' + fourth.parentId + '"]').prop('checked') ? 1 : -1
+                        })
+                      }
+                      if(fourth.simple > 0){
+                        result.push({
+                          basisAnswerId: (fourth.answers && fourth.answers.length) ? fourth.answers[0].basisAnswerId : '',
+                          basisElementId: fourth.basisElementCopyId,
+                          elementNumValue: $('input[name="' + fourth.basisElementCopyId + '"]:checked').val()
+                        })
+                      }
+                      if(fourth.isWrite > 0){
+                        var text = $('[name="' + fourth.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + fourth.basisElementCopyId + '"] input').val() : $('[name="' + fourth.basisElementCopyId + '"]').val()
+                        result.push({
+                          basisAnswerId: (fourth.answers && fourth.answers.length) ? fourth.answers[0].basisAnswerId : '',
+                          basisElementId: fourth.basisElementCopyId,
+                          elementTextValue: text || ''
+                        })
+                      }
+                    })
                   }
                 })
               }
             })
           }else{
             // 是选项，单选或多选
-            $('input[name="' + item.basisElementId + '"][type!="text"]').each(function(i,v){
-              if($(v).data('nip') && $(v).data('nip') > 0){
+            if(item.isRadio !== 0){
+              _.each(item.childList, function(sub){
                 result.push({
-                  basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
-                  basisElementId: parseInt($(v).val()),
-                  elementNumValue: $(v).prop('checked') ? 1 : -1,
-                  elementTextValue: $('[name="' + $(v).val() +'-text"]').val()
+                  basisAnswerId: sub.answers && sub.answers.length ? sub.answers[0].basisAnswerId : '',
+                  basisElementId: sub.basisElementCopyId,
+                  elementNumValue: $('[value="' + sub.basisElementCopyId + '"][name="' + sub.parentId + '"]').prop('checked') ? 1 : -1
                 })
-              }else{
-                result.push({
-                  basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
-                  basisElementId: parseInt($(v).val()),
-                  elementNumValue: $(v).prop('checked') ? 1 : -1
-                })
-              }
-            })
+              })
+            }
+            // $('input[name="' + item.basisElementCopyId + '"][type!="text"]').each(function(i,v){
+            //   if($(v).data('nip') && $(v).data('nip') > 0){
+            //     result.push({
+            //       basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
+            //       basisElementId: parseInt($(v).val()),
+            //       elementNumValue: $(v).prop('checked') ? 1 : -1,
+            //       elementTextValue: $('[name="' + $(v).val() +'-text"]').val()
+            //     })
+            //   }else{
+            //     result.push({
+            //       basisAnswerId: $(v).,
+            //       basisElementId: parseInt($(v).val()),
+            //       elementNumValue: $(v).prop('checked') ? 1 : -1
+            //     })
+            //   }
+            // })
           }
         }
       })
       console.log(result)
-      var params = new URLSearchParams();
-      params.append('basisAnswer', JSON.stringify(result))
-      params.append('patientBasis', JSON.stringify(this.patientBasis))
-      params.append('basisMarkId', this.basisMaskId)
-      submit(params)
-      .then(res => {
-        console.log(res)
-        alert('保存成功')
-        location.href = location.href
-      })
-      .catch(error => {
-        console.log(error)
-      })
+      // var params = new URLSearchParams();
+      // params.append('basisAnswer', JSON.stringify(result))
+      // params.append('patientBasis', JSON.stringify(this.patientBasis))
+      // params.append('basisMarkId', this.basisMaskId)
+      // submit(params)
+      // .then(res => {
+      //   console.log(res)
+      //   alert('保存成功')
+      //   location.href = location.href
+      // })
+      // .catch(error => {
+      //   console.log(error)
+      // })
     },
     submit (){
 
