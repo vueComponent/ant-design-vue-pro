@@ -40,18 +40,24 @@
                     <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (!qu1.answers || qu1.answers.length === 0 || qu1.answers[0].elementTextValue === '')" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue)" :defaultValue="moment(qu1.answers[0].elementTextValue)" />
-                    <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0" :defaultValue="selectedCheckbox(qu1.childList)">
+                    <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0" v-model="qu1.elementId">
                       <a-checkbox v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId" :name="qu1.basisElementCopyId+''">{{op.questionName}}</a-checkbox>
                     </a-checkbox-group>
                     <a-radio-group v-if="qu1.hasChild > 0 && qu1.isRadio > 0" :name="qu1.basisElementCopyId+''">
                       <a-radio v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId">{{op.questionName}}</a-radio>
                     </a-radio-group>
+                    <!-- 一级联动 -->
+                    <a-row v-for="(sub, index) in qu1.childList" :key="index" v-if="qu1.isRadio < 0 && sub.logicValue > 0 && qu1.elementId.indexOf(sub.basisElementCopyId) > -1">
+                      <a-col :span="4">{{sub.childList[0].questionName}}</a-col>
+                      <a-col :span="4"><a-input :name="sub.childList[0].basisElementCopyId+''" :addonAfter="sub.childList[0].unit" :defaultValue="sub.childList[0].answers && sub.childList[0].answers.length && sub.childList[0].answers[0].elementTextValue" /></a-col>
+                    </a-row>
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
-                      <a-row v-for="(sub, index) in qu1.childList" :key="index">
-                        <br v-if="sub.showType === 2" />
+                      <a-row v-for="(sub, index) in qu1.childList" :key="index" :class="{'no-border': index === qu1.childList.length - 1}">
+                        <!-- <br v-if="sub.showType === 2" /> -->
                         <a-col :span="7">({{sub.sort}}) {{sub.questionName}}</a-col>
                         
                         <a-col :span="sub.isWrite > 0 ? 4 : 17">
+                          <!-- 是否，有无以及填写值 -->
                           <a-input v-if="sub.isWrite > 0 && (!sub.event || sub.event === 'compute')" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" />
                           <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && (!sub.answers || sub.answers.length === 0 || sub.answers[0].elementTextValue === '')" :name="sub.basisElementCopyId+''" />
                           <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :name="sub.basisElementCopyId+''" :defaultValue="moment(sub.answers[0].elementTextValue)" />
@@ -65,11 +71,26 @@
                           </a-radio-group>
                           <div class="clear" v-if="sub.simple > 0"></div>
                           <a-col :span="4" v-if="(sub.logicValue === 0 || sub.basisElementId === 1) && sub.childEleName">{{sub.childEleName}}</a-col>
-                          <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0" :defaultValue="selectedCheckbox(sub.childList)">
-                            <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementId" v-if="sub.logicValue === 0 || sub.basisElementId === 1">{{subOp.questionName}}</a-checkbox>
+                          <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0" v-model="sub.elementId">
+                            <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementCopyId" v-if="sub.logicValue === 0 || sub.basisElementId === 1">{{subOp.questionName}}</a-checkbox>
                           </a-checkbox-group>
+                          <!-- 二级联动 -->
+                          <a-row v-for="(third, index) in sub.childList" :key="index" v-if="sub.hasChild > 0 && sub.isRadio < 0 && third.hasChild > 0 && third.logicValue > 0 && sub.elementId.indexOf(third.basisElementCopyId) > -1">
+                            <a-col :span="4" v-if="third.childList[0].isWrite > 0">{{third.childList[0].questionName}}</a-col>
+                            <a-col :span="4" v-if="third.childList[0].isWrite > 0">
+                              <a-date-picker v-if="third.childList[0].event === 'showDate' && third.childList[0].answers && third.childList[0].answers.length && third.childList[0].answers[0].elementTextValue" :defaultValue="moment(third.childList[0].answers[0].elementTextValue)" :name="third.childList[0].basisElementCopyId+''" />
+                              <a-date-picker v-if="third.childList[0].event === 'showDate' && (!third.childList[0].answers || !third.childList[0].answers.length || !third.childList[0].answers[0].elementTextValue)" :name="third.childList[0].basisElementCopyId+''" />
+                              <a-input v-if="!third.childList[0].event" :addonAfter="third.childList[0].unit" :name="third.childList[0].basisElementCopyId+''" :defaultValue="third.childList[0].answers && third.childList[0].answers.length && third.childList[0].answers[0].elementTextValue" />
+                            </a-col>
+                            <a-col :span="4" v-if="third.isRadio > 0 && third.hasChild > 0">{{third.questionName}}</a-col>
+                            <a-col :span="16" v-if="third.isRadio > 0 && third.hasChild > 0">
+                              <a-radio-group :name="third.basisElementCopyId+''" v-model="third.basisElementId">
+                                <a-radio v-for="(fourth, index) in third.childList" :key="index" :value="fourth.basisElementCopyId">{{fourth.questionName}}</a-radio>
+                              </a-radio-group>
+                            </a-col>
+                          </a-row>
                           <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
-                            <a-radio v-for="(subOp,index) in sub.childList" :key="index" :value="subOp.basisElementId">{{subOp.questionName}}</a-radio>
+                            <a-radio v-for="(subOp,index) in sub.childList" :key="index" :value="subOp.basisElementCopyId">{{subOp.questionName}}</a-radio>
                           </a-radio-group>
                           <a-row v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue === 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementId === sub.basisElementId" v-for="(thirdSub, index) in sub.childList">
                             <a-col :span="6">{{thirdSub.childList[0].questionName}}</a-col>
@@ -103,7 +124,7 @@
                                 <a-input :name="subOp.basisElementCopyId+''" v-if="!subOp.event || subOp.event !== 'showDate'" :defaultValue="subOp.answers && subOp.answers.length && subOp.answers[0].elementTextValue" />
                               </a-col>
                               <a-col :span="17" v-if="subOp.hasChild > 0 && subOp.isRadio < 0">
-                                <a-checkbox-group :defaultValue="selectedCheckbox(subOp.childList)">
+                                <a-checkbox-group v-model="subOp.elementId">
                                   <a-checkbox v-for="(secondSub,index) in subOp.childList" :key="index" :name="secondSub.parentId+''" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-checkbox>
                                 </a-checkbox-group>
                               </a-col>
@@ -114,7 +135,7 @@
                               </a-col>
                               <div v-if="subOp.hasChild > 0 && subOp.isRadio === 0  && (!subOp.logicValue || subOp.basisElementId === 1)" v-for="(thirdSub, index) in subOp.childList" :key="index">
                                 <a-col :span="7">{{thirdSub.questionName}}</a-col>
-                                <a-col :span="17">
+                                <a-col :span="6">
                                   <a-radio-group v-if="thirdSub.simple === 1" :name="thirdSub.basisElementCopyId+''" v-model="thirdSub.basisElementId">
                                     <a-radio :value="1">是</a-radio>
                                     <a-radio :value="-1">否</a-radio>
@@ -221,6 +242,12 @@ export default {
           }
         }
         return ''
+      }
+    },
+    checkControlShow (){
+      return function(node){
+        console.log($('[value="' + node.parentId + '"]').prop('checked'))
+        return $('[value="' + node.parentId + '"]').prop('checked')
       }
     }
   },
@@ -373,6 +400,14 @@ export default {
                   basisElementId: sub.basisElementCopyId,
                   elementNumValue: $('[value="' + sub.basisElementCopyId + '"][name="' + sub.parentId + '"]').prop('checked') ? 1 : -1
                 })
+                // TODO:此处后面需看还有没有更多情况
+                if(sub.hasChild > 0 && sub.isWrite > 0){
+                  result.push({
+                    basisAnswer: sub.childList[0].answers && sub.childList[0].answers.length ? sub.childList[0].answers[0].basisAnswerId : '',
+                    basisElementId: sub.childList[0].basisElementCopyId,
+                    elementTextValue: $('[name="' + sub.childList[0].basisElementCopyId + '"]').val()
+                  })
+                }
               })
             }
             // $('input[name="' + item.basisElementCopyId + '"][type!="text"]').each(function(i,v){
@@ -395,19 +430,19 @@ export default {
         }
       })
       console.log(result)
-      // var params = new URLSearchParams();
-      // params.append('basisAnswer', JSON.stringify(result))
-      // params.append('patientBasis', JSON.stringify(this.patientBasis))
-      // params.append('basisMarkId', this.basisMaskId)
-      // submit(params)
-      // .then(res => {
-      //   console.log(res)
-      //   alert('保存成功')
-      //   location.href = location.href
-      // })
-      // .catch(error => {
-      //   console.log(error)
-      // })
+      var params = new URLSearchParams();
+      params.append('basisAnswer', JSON.stringify(result))
+      params.append('patientBasis', JSON.stringify(this.patientBasis))
+      params.append('basisMarkId', this.basisMaskId)
+      submit(params)
+      .then(res => {
+        console.log(res)
+        alert('保存成功')
+        location.href = location.href
+      })
+      .catch(error => {
+        console.log(error)
+      })
     },
     submit (){
 
@@ -425,10 +460,20 @@ export default {
             if(b.simple > 0 && b.answers && b.answers.length){
               b.basisElementId = b.answers[0].elementNumValue
             }
+            //单选
             if(b.hasChild > 0 && b.isRadio > 0){
               var re = _.filter(b.childList, function(v){return v.answers && v.answers.length && v.answers[0].elementNumValue > 0})
               if(re.length) b.basisElementId = re[0].basisElementId
             }
+            //多选
+            if(b.hasChild > 0 && b.isRadio < 0){
+              if(b.childList[0].answers && b.childList[0].answers.length){
+                b.elementId = _.map(_.filter(_.flatten(_.map(b.childList,function(v){return v.answers})),function(v){return v.elementNumValue > 0}),function(v){return v.basisElementId})
+              }else{
+                b.elementId = []
+              }
+            }
+            //子选项,第三层
             if(b.hasChild > 0 && b.isRadio === 0){
               _.each(b.childList, function(c){
                 if(c.simple > 0 && c.answers && c.answers.length){
@@ -441,9 +486,22 @@ export default {
                     }
                   })
                 }
+                if(c.hasChild > 0 && c.isRadio < 0){
+                  if(c.childList[0].answers && c.childList[0].answers.length){
+                    c.elementId = _.map(_.filter(_.flatten(_.map(c.childList,function(v){return v.answers})),function(v){return v.elementNumValue > 0}),function(v){return v.basisElementId})
+                  }else{
+                    c.elementId = []
+                  }
+                }
               })
             }
           })
+        }else if(a.hasChild > 0 && a.isRadio < 0){
+          if(a.childList[0].answers && a.childList[0].answers.length){
+            a.elementId = _.map(_.filter(_.flatten(_.map(a.childList,function(v){return v.answers})),function(v){return v.elementNumValue > 0}),function(v){return v.basisElementId})
+          }else{
+            a.elementId = []
+          }
         }
       })
       return list
@@ -459,6 +517,14 @@ export default {
 .ant-col-4 .ant-calendar-picker,
 .ant-col-6 .ant-calendar-picker{
   width: 100%;
+}
+.ant-checkbox-wrapper + .ant-checkbox-wrapper{
+  margin-left: 0;
+}
+.ant-form label,
+.ant-col-7,
+.ant-col-4{
+  font-size: 16px;
 }
 .page-header-index-wide{
   /deep/ .ant-card-wider-padding .ant-card-body {
