@@ -29,7 +29,7 @@
               </div>
               <a-form :form="form">
                 <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
-                    <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementNumValue || ''">
+                    <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
                       <a-radio :value="1">是</a-radio>
                       <a-radio :value="-1">否</a-radio>
                     </a-radio-group>
@@ -37,10 +37,11 @@
                       <a-radio :value="1">有</a-radio>
                       <a-radio :value="-1">无</a-radio>
                     </a-radio-group>
+                    <br v-if="qu1.simple > 0">
                     <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (!qu1.answers || qu1.answers.length === 0 || qu1.answers[0].elementTextValue === '')" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue)" :defaultValue="moment(qu1.answers[0].elementTextValue)" />
-                    <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0" v-model="qu1.elementId">
+                    <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0 && (qu1.logicValue === 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1))" v-model="qu1.elementId">
                       <a-checkbox v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId" :name="qu1.basisElementCopyId+''">{{op.questionName}}</a-checkbox>
                     </a-checkbox-group>
                     <a-radio-group v-if="qu1.hasChild > 0 && qu1.isRadio > 0" :name="qu1.basisElementCopyId+''">
