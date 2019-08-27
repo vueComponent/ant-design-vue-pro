@@ -66,7 +66,7 @@
                             <a-radio :value="-1">否</a-radio>
                           </a-radio-group>
                           <a-radio-group v-if="sub.simple === 2" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
-                            <a-radio :value="1">有</a-radio>
+                            <a-radio :value="1">有fd</a-radio>
                             <a-radio :value="-1">无</a-radio>
                           </a-radio-group>
                           <div class="clear" v-if="sub.simple > 0"></div>
@@ -129,8 +129,8 @@
                                 </a-checkbox-group>
                               </a-col>
                               <a-col :span="17" v-if="subOp.hasChild > 0 && subOp.isRadio > 0">
-                                <a-radio-group>
-                                  <a-radio v-for="(secondSub,index) in subOp.childList" :key="index" :name="secondSub.parentId+''" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-radio>
+                                <a-radio-group :name="subOp.basisElementCopyId+''" v-model="subOp.basisElementId">
+                                  <a-radio v-for="(secondSub,index) in subOp.childList" :key="index" :value="secondSub.basisElementId">{{secondSub.questionName}}aaa</a-radio>
                                 </a-radio-group>
                               </a-col>
                               <div v-if="subOp.hasChild > 0 && subOp.isRadio === 0  && (!subOp.logicValue || subOp.basisElementId === 1)" v-for="(thirdSub, index) in subOp.childList" :key="index">
@@ -217,39 +217,6 @@ export default {
       that.patientBasis = res.data.patientBasis
       that.orgTree = res.data.list
     })
-  },
-  computed: {
-    selectedCheckbox (){
-      return function(list){
-        var a = _.map(list, function(v){return v.answers})
-        var b = _.flatten(a)
-        var c = _.filter(b, function(v){return v && v.elementNumValue > 0})
-        var d = _.map(c, function(v){return v.basisElementId})
-        // return _.map(_.filter(_.flatten(_.map(list, function(a){return a.answers})),function(b){return b && b.elementNumValue > 0}),function(c){return c.basisElementId})
-        return d
-      }
-    },
-    selectedRadio (){ //动态改变basisElementId的值
-      return function(sub){
-        if(sub.simple > 0){
-          if(sub.answers && sub.answers.length){
-            sub.basisElementId = sub.answers[0].elementNumValue
-          }
-        }else{
-          var re = _.filter(_.flatten(_.map(sub.childList, function(v){return v.answers})),function(v){return v && v.elementNumValue > 0});
-          if(re && re.length) {
-            sub.basisElementId = re[0].basisElementId
-          }
-        }
-        return ''
-      }
-    },
-    checkControlShow (){
-      return function(node){
-        console.log($('[value="' + node.parentId + '"]').prop('checked'))
-        return $('[value="' + node.parentId + '"]').prop('checked')
-      }
-    }
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -410,26 +377,10 @@ export default {
                 }
               })
             }
-            // $('input[name="' + item.basisElementCopyId + '"][type!="text"]').each(function(i,v){
-            //   if($(v).data('nip') && $(v).data('nip') > 0){
-            //     result.push({
-            //       basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
-            //       basisElementId: parseInt($(v).val()),
-            //       elementNumValue: $(v).prop('checked') ? 1 : -1,
-            //       elementTextValue: $('[name="' + $(v).val() +'-text"]').val()
-            //     })
-            //   }else{
-            //     result.push({
-            //       basisAnswerId: $(v).,
-            //       basisElementId: parseInt($(v).val()),
-            //       elementNumValue: $(v).prop('checked') ? 1 : -1
-            //     })
-            //   }
-            // })
           }
         }
       })
-      console.log(result)
+      console.log(JSON.stringify(result))
       var params = new URLSearchParams();
       params.append('basisAnswer', JSON.stringify(result))
       params.append('patientBasis', JSON.stringify(this.patientBasis))
@@ -472,6 +423,15 @@ export default {
               }else{
                 b.elementId = []
               }
+              //多选框控制子选项
+              _.each(b.childList,function(c){
+                if(c.logicValue > 0 && c.answers && c.answers.length && c.answers[0].elementNumValue > 0){
+                  var selected = _.filter(_.flatten(_.map(c.childList,function(v){return v.answers})),function(v){return v.elementNumValue > 0})
+                  if(selected.length){
+                    c.basisElementId = _.map(selected,function(v){return v.basisElementId})[0]
+                  }
+                }
+              })
             }
             //子选项,第三层
             if(b.hasChild > 0 && b.isRadio === 0){
@@ -491,6 +451,14 @@ export default {
                     c.elementId = _.map(_.filter(_.flatten(_.map(c.childList,function(v){return v.answers})),function(v){return v.elementNumValue > 0}),function(v){return v.basisElementId})
                   }else{
                     c.elementId = []
+                  }
+                }
+                if(c.hasChild > 0 && c.isRadio > 0){
+                  if(c.childList[0].answers && c.childList[0].answers.length){
+                    var selected = _.filter(_.flatten(_.map(c.childList,function(v){return v.answers})),function(v){return v.elementNumValue > 0})
+                    if(selected.length){
+                      c.basisElementId = _.map(selected,function(v){return v.basisElementId})[0]
+                    }
                   }
                 }
               })
