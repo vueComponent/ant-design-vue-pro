@@ -79,7 +79,7 @@ export default {
     add(value) {
       this.visible = true;
       this.confirmLoading = true;
-      this.getPatientList(1, this.pagination.pageSize, 1, value);
+      this.getPatientList(1, this.pagination.pageSize, value);
     },
     checkuUser() {
       this.$emit('listen', this.userData);
@@ -89,14 +89,13 @@ export default {
       this.visible = false;
     },
     handleTableChange(pagination, filters, sorter) {
-      this.getPatientList(pagination.current, pagination.pageSize, 1);
+      this.getPatientList(pagination.current, pagination.pageSize);
     },
-    getPatientList(pageNumber, pageSize, params, keyword) {
+    getPatientList(pageNumber, pageSize, keyword) {
       const keyWord = keyword ? keyword : '';
       const Params = new URLSearchParams();
       Params.append('pageNumber', pageNumber);
       Params.append('pageSize', pageSize);
-      Params.append('params', params);
       Params.append('keyword', keyWord);
       getPatientList(Params).then(res => {
         this.data = res.data;

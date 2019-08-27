@@ -41,10 +41,11 @@
           <a-tooltip title="指标说明" slot="action"><a-icon type="info-circle-o" /></a-tooltip>
           <div><mini-progress color="rgb(24,144,255)" :target="indexData.completionRate" :percentage="indexData.completionRate" height="8px" /></div>
           <template slot="footer">
-            <trend style="margin-right: 16px;">
-              <span slot="term">计划数</span>
+            <p style="margin-right: 16px;display: inline-block;margin-bottom: 0;">
+               <span slot="term" >计划数</span>
               {{ indexData.planNum }}
-            </trend>
+            </p>
+             
             <trend flag="up" style="float: right;">
               <span slot="term">完成率</span>
               {{ indexData.completionRate }}%

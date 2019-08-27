@@ -3,13 +3,45 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="16">
-          <a-col :md="4" :sm="24">
-            <a-form-item ><a-input v-model="keyword" placeholder="搜索患者姓名、身份证号" /></a-form-item>
+          <a-col :md="5" :sm="24">
+            <a-form-item ><a-input v-model="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" /></a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
             <a-form-item>
-              <a-button type="primary" @click="$refs.table.refresh(true,keyword)">查询</a-button>
+              <a-button type="primary" @click="$refs.table.refresh()">查询</a-button>
+                <a @click="toggleAdvanced" style="margin-left: 8px">
+                  更多筛选
+                <a-icon :type="advanced ? 'up' : 'down'" />
+              </a>
             </a-form-item>
+          </a-col>
+          <a-col v-if="advanced" class="tableSearch" :md="8">
+              <div>
+                <a-tabs defaultActiveKey="1">
+                  <a-tab-pane tab="常用检索" key="1">
+                    <div class="commonRetrieval">                      
+                      <p @click="$refs.table.search({ type: 0})">忽略任务</p>
+                      <p @click="$refs.table.search({ type: 1 })">未执行任务</p>
+                      <p @click="$refs.table.search({ type: 2 })">执行中任务</p>
+                      <p @click="$refs.table.search({ type: 3 })">已完成任务</p>
+                    </div>
+                  </a-tab-pane>
+                  <a-tab-pane tab="自定义检索 2" key="2" forceRender>
+                    <a-card>
+                      <a-form>
+                        <a-form-item  label="档案号"><a-input v-model="queryParam.code" style="width: 100%" /></a-form-item>
+                        <a-form-item  label="姓名"><a-input v-model="queryParam.name" style="width: 100%" /></a-form-item>
+                        <a-form-item  label="身份证号"><a-input v-model="queryParam.card" style="width: 100%" /></a-form-item>
+                      <a-form-item label="创建日期" style="margin-bottom:0;">
+                        <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%"  @change="changeTime1"  /></a-form-item>
+                        <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-</span>
+                        <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime2" /></a-form-item>
+                      </a-form-item>
+                      </a-form>
+                    </a-card>
+                  </a-tab-pane>
+                </a-tabs>
+              </div>
           </a-col>
         </a-row>
       </a-form>
@@ -81,7 +113,9 @@ export default {
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
-      queryParam: {},
+      queryParam: {
+        params:1
+      },
       keyword:'',
       // 表头
       columns: [
@@ -127,17 +161,24 @@ export default {
         }
       ],
       // 加载数据方法 必须为 Promise 对象
-      loadData: parameter => {
-        console.log('loadData.parameter', parameter);
-        const Params = new URLSearchParams();
-        Params.append('pageNumber', parameter.pageNumber);
-        Params.append('pageSize', parameter.pageSize);
-        Params.append('params', 1);
-         Params.append('keyWord', parameter.keyWord);
-        return getVisitTask(Params).then(res => {
+      loadData:parameter => {
+        return getVisitTask(Object.assign(parameter, this.queryParam)).then(res => {
           return res;
         });
       },
+      // parameter => {
+      //   console.log('loadData.parameter', parameter);
+      //   const Params = new URLSearchParams();
+      //   Params.append('pageNumber', parameter.pageNumber);
+      //   Params.append('pageSize', parameter.pageSize);
+      //   Params.append('params', 1);
+      //    Params.append('keyWord', parameter.keyWord);
+      //   return getVisitTask(Params).then(res => {
+      //     return res;
+      //   });
+      // },
+
+      
       selectedRowKeys: [],
       selectedRows: [],
 
@@ -201,6 +242,14 @@ export default {
     },
     toggleAdvanced() {
       this.advanced = !this.advanced;
+    },
+    changeTime1(time) {
+      console.log(time);
+      this.queryParam.createDateStart = moment(time).format('YYYY-MM-DD');
+    },
+    changeTime2(time) {
+      console.log(time);
+      this.queryParam.createDateEnd = moment(time).format('YYYY-MM-DD');
     }
   }
 };
@@ -245,19 +294,31 @@ export default {
 }
 
 .tableSearch {
-  background: #FFFFFF;
+  background: #ffffff;
   position: absolute;
   top: 52px;
   z-index: 100;
+  /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
+    width: 70px !important;
+  }
+  .commonRetrieval {
+    p {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
 }
-.userName{
-  color: #1FB2FA;
+.userName {
+  color: #1fb2fa;
   margin: 0;
-}
-.userName:active,.userName:hover{
+  &:active,
+  &:hover {
     text-decoration: underline;
     text-underline-position: under;
-    text-decoration-color: #1FB2FA;
+    text-decoration-color: #1fb2fa;
     cursor: pointer;
+  }
 }
 </style>

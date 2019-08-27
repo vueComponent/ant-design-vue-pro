@@ -1,0 +1,337 @@
+<template>
+  <a-card :bordered="false">
+    <div class="table-page-search-wrapper">
+      <a-form layout="inline">
+        <a-row :gutter="16">
+          <a-col :md="5" :sm="24">
+             <a-form-item ><a-input v-model="queryParam.keyword"  placeholder="搜索患者姓名、身份证号" /></a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="24">
+            <a-form-item>
+              <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
+              <a @click="toggleAdvanced" style="margin-left: 8px">
+                {{ advanced ? '收起' : '展开' }}
+                <a-icon :type="advanced ? 'up' : 'down'" />
+              </a>
+            </a-form-item>
+          </a-col>
+          <a-col :md="12" style="text-align:right" :sm="24">
+            <a-button type="primary" icon="plus" @click="checkProject()" style="margin-right: 20px;">选择项目</a-button>
+            <a-button type="primary" icon="plus" @click="addCaces()">添加病例</a-button></a-col>
+          <a-col v-if="advanced" class="tableSearch" :md="8">
+              <div>
+                <a-tabs defaultActiveKey="1">
+                  <a-tab-pane tab="常用检索" key="1">
+                    <div class="commonRetrieval">
+                      <p @click="$refs.table.search({ type: 1 })">本月新增病例</p>
+                      <p @click="$refs.table.search({ type: 2 })">本年新增病例</p>
+                      <p @click="$refs.table.search({ type: 3 })">全部病例</p>
+                    </div>
+                  </a-tab-pane>
+                  <a-tab-pane tab="自定义检索" key="2" forceRender>
+                    <a-card>
+                      <a-form>
+                        <a-form-item  label="档案号"><a-input v-model="queryParam.code" style="width: 100%" /></a-form-item>
+                        <a-form-item  label="姓名"><a-input v-model="queryParam.name" style="width: 100%" /></a-form-item>
+                        <a-form-item  label="身份证号"><a-input v-model="queryParam.card" style="width: 100%" /></a-form-item>
+                        <a-form-item label="创建日期" style="margin-bottom:0;">
+                          <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%"  @change="changeTime1"/></a-form-item>
+                          <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-</span>
+                          <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime2" /></a-form-item>
+                        </a-form-item>
+                      </a-form>
+                    </a-card>
+                  </a-tab-pane>
+                </a-tabs>
+              </div>
+          </a-col>
+        </a-row>
+      </a-form>
+    </div>
+    <s-table ref="table" size="default" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+      <span slot="name"  slot-scope="text,record" @click="showUser(record)">
+        <p class="userName">{{text}}</p>
+      </span>
+      <span slot="serial" slot-scope="text, record, index">{{ index + 1 }}</span>
+      <span slot="visit" slot-scope="text"><a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
+      <span slot="basisList" slot-scope="basisList">
+        <div v-for="pro in basisList" class="progressTag">
+          <div class="progressTagContent">
+            <p class="progressTagTitle">{{ pro.name }}</p>
+            <a-progress :strokeColor="pro.progress == 100 ? '#4BC5AC' : '#00A0E9'" :strokeWidth="10" :showInfo="false" :percent="parseInt(pro.progress)" size="small" />
+          </div>
+          <a-icon v-if="pro.progress == 100" type="check-circle" theme="filled" />
+          <span class="ant-progress-span" v-if="pro.progress < 100 && pro.progress > 0">23%</span>
+          <a-icon style="color:#00A0E9" v-if="pro.progress == 0" type="clock-circle" theme="filled" />
+        </div>
+      </span>
+      <span slot="description" slot-scope="text">
+        <ellipsis :length="8" tooltip>{{ text }}</ellipsis>
+      </span>
+
+      <span slot="action" slot-scope="text, record">
+        <template>
+          <a @click="handleEdit(record)">
+            编辑
+          </a>
+          <a-divider type="vertical" />
+          <a @click="handleSub(record)">
+            订阅报警
+          </a>
+        </template>
+      </span>
+    </s-table>
+    <user-detail ref="detailModal"/>
+    <drawer ref="drawerModal" @checkedP="checkedP"></drawer>
+  </a-card>
+</template>
+
+<script>
+import moment from 'moment';
+import { STable, Ellipsis } from '@/components';
+import { getDatalList,getPatientList,joinProject } from '@/api/group';
+import UserDetail from '../list/modules/UserDetail'
+import Drawer from './modules/Drawer'
+
+const visitMap = {
+  0: {
+    status: 'default',
+    text: '忽略'
+  },
+  1: {
+    status: 'processing',
+    text: '未执行'
+  },
+  2: {
+    status: 'success',
+    text: '执行中'
+  },
+  3: {
+    status: 'error',
+    text: '已完成'
+  }
+};
+
+export default {
+  name: 'TableList',
+  components: {
+    STable,
+    Ellipsis,
+    UserDetail,
+    Drawer
+  },
+  data() {
+    return {
+      mdl: {},
+      // 高级搜索 展开/关闭
+      advanced: false,
+      // 查询参数
+      queryParam: {
+      },
+      // 表头
+      columns: [
+        {
+          title: '档案号',
+          dataIndex: 'code'
+        },
+        {
+          title: '患者姓名',
+          dataIndex: 'name',
+          scopedSlots: { customRender: 'name' }
+        },
+        {
+          title: '身份证号',
+          dataIndex: 'card'
+        },
+        {
+          title: '入组日期',
+          dataIndex: 'createDate',
+          customRender: createDate => moment(jionDate).format('YYYY-MM-DD HH:mm:ss')
+        },
+        {
+          title: '访视状态',
+          dataIndex: 'visit',
+          scopedSlots: { customRender: 'visit' }
+        },
+        {
+          title: '访视进度',
+          dataIndex: 'basisList',
+          scopedSlots: { customRender: 'basisList' }
+        },
+        {
+          title: '操作',
+          dataIndex: 'action',
+          width: '200px',
+          scopedSlots: { customRender: 'action' }
+        }
+      ],
+      // 加载数据方法 必须为 Promise 对象
+      loadData: parameter => {
+        this.queryParam.projectId=this.project.projectId;
+        return getPatientList(Object.assign(parameter, this.queryParam)).then(res => {
+          return res;
+        });
+      },
+      selectedRowKeys: [],
+      selectedRows: [],
+
+      // custom table alert & rowSelection
+      options: {
+        alert: {
+          show: false,
+          clear: () => {
+            this.selectedRowKeys = [];
+          }
+        },
+        rowSelection: {
+          selectedRowKeys: this.selectedRowKeys,
+          onChange: this.onSelectChange
+        }
+      },
+      optionAlertShow: false
+    };
+  },
+  filters: {
+    statusFilter(type) {
+      return statusMap[type].text;
+    },
+    statusTypeFilter(type) {
+      return statusMap[type].status;
+    },
+    visitFilter(type) {
+      return visitMap[type].text;
+    },
+    visitTypeFilter(type) {
+      return visitMap[type].status;
+    }
+  },
+   beforeRouteEnter(to, from, next){
+     if(from.name=='addProject'){
+          to.meta.isBack=true;
+          //判断是从哪个路由过来的，
+          //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+      }
+     next()
+   },
+  mounted() {
+    console.log(this.$route.meta.isBack)
+    if(!this.$route.meta.isBack){
+       this.$refs.drawerModal.showDrawer();
+    }
+    this.$route.meta.isBack=false;
+  },
+  methods: {
+    showUser(record){
+      this.$refs.detailModal.show(record);
+    },
+    handleEdit(record) {
+      this.$refs.createModal.edit(record);
+    },
+    handleSub(record) {
+      if (record.status !== 0) {
+        this.$message.info(`${record.no} 订阅成功`);
+      } else {
+        this.$message.error(`${record.no} 订阅失败，规则已关闭`);
+      }
+    },
+    handleOk() {
+      this.$refs.table.refresh();
+    },
+    onSelectChange(selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys;
+      this.selectedRows = selectedRows;
+    },
+    toggleAdvanced() {
+      this.advanced = !this.advanced;
+    },
+    resetSearchForm() {
+      this.queryParam = {
+        date: moment(new Date())
+      };
+    },
+    addCaces(){
+        this.$router.push({path:'/group/addProject'})
+    },
+    checkProject(){
+        this.$refs.drawerModal.showDrawer();
+    },
+    checkedP(data){
+      this.project.projectId=data.projectId;
+      console.log("this.project.projectId",this.project.projectId)
+        const key={
+          projectId:data.projectId
+        };
+        this.$refs.table.search(key)
+    },
+    changeTime1(time) {
+      console.log(time);
+      this.queryParam.date1 = moment(time).format('YYYY-MM-DD');
+    },
+    changeTime2(time) {
+      console.log(time);
+      this.queryParam.date2 = moment(time).format('YYYY-MM-DD');
+    }
+  }
+};
+</script>
+<style lang="less" scoped>
+  .tableSearch {
+    background: #ffffff;
+    position: absolute;
+    top: 52px;
+    z-index: 100;
+    /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
+      width: 70px !important;
+    }
+    .commonRetrieval {
+      p {
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+.progressTag {
+  display: inline-block;
+  width: 140px;
+
+  /deep/ .progressTagContent {
+    display: inline-block;
+    width: 100px;
+    margin-right: 5px;
+  }
+  /deep/ .progressTagTitle {
+    padding-left: 40px;
+    margin-bottom: 2px;
+  }
+  /deep/ .progressTag .anticon {
+    color: #4bc5ac;
+    font-size: 18px;
+    vertical-align: bottom;
+  }
+  /deep/ .ant-progress-inner {
+    background-color: #e5f6ff;
+  }
+  /deep/ .progressTag .ant-progress-span {
+    color: rgb(0, 160, 233);
+  }
+}
+
+.tableSearch {
+  background: #FFFFFF;
+  position: absolute;
+  top: 52px;
+  z-index: 100;
+}
+.userName{
+  color: #1FB2FA;
+  margin: 0;
+}
+.userName:active,.userName:hover{
+    text-decoration: underline;
+    text-underline-position: under;
+    text-decoration-color: #1FB2FA;
+    cursor: pointer;
+}
+</style>

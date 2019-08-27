@@ -1,17 +1,17 @@
 import api from './index'
 import { axios } from '@/utils/request'
 
-export function getVisitTask(params) {
+export function getVisitTask(parameter) {
   return axios({
     url: '/visitTask/getDataList',
     method: 'post',
-    data: params
+    params: parameter
   })
  }
- export function ignoreTask(params) {
+ export function ignoreTask(parameter) {
    return axios({
      url: '/visitTask/ignoreTask',
      method: 'post',
-     data: params
+     params: parameter
    })
   }

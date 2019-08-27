@@ -51,13 +51,20 @@ export const asyncRouterMap = [
         path: '/gallery/index',
         name: 'Gallery',
         component: () => import('@/views/gallery/index'),
-        meta: { title: '报告采集', keepAlive: true, icon: 'home'}
+        meta: { title: '报告采集', keepAlive: true, icon: 'home',isBack:false}
       },
       {
         path: '/group/index',
         name: 'Group',
         component: () => import('@/views/group/index'),
-        meta: { title: '入组管理', keepAlive: true, icon: 'home'}
+        meta: { title: '入组管理', keepAlive: true, icon: 'home',isBack:false}
+      },
+      {
+        path: '/group/addProject',
+        name: 'addProject',
+        hidden:true,
+        component: () => import('@/views/group/addProject'),
+        meta: { hiddenHeaderContent:true, hidden: true }
       },
       {
         path: '/account/index',
@@ -67,6 +74,7 @@ export const asyncRouterMap = [
       }
     ]
   },
+ 
   {
     path: '*', redirect: '/404', hidden: true
   }

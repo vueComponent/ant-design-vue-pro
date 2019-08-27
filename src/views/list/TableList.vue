@@ -3,52 +3,52 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="16">
-          <a-col :md="6" :sm="24">
-            <a-form-item label="规则编号"><a-input v-model="queryParam.id" placeholder="" /></a-form-item>
+          <a-col :md="5" :sm="24">
+            <a-form-item><a-input v-model="queryParam.keyword" placeholder="搜索患者姓名、身份证号" /></a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
             <a-form-item>
-              <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
+              <a-button type="primary" @click="$refs.table.refresh()">查询</a-button>
               <a @click="toggleAdvanced" style="margin-left: 8px">
-                {{ advanced ? '收起' : '展开' }}
+                {{ advanced ? '更多筛选' : '更多筛选' }}
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
             </a-form-item>
           </a-col>
           <a-col :md="12" style="text-align:right" :sm="24"><a-button type="primary" icon="plus" @click="$refs.createModal.add()">新建</a-button></a-col>
-          <a-col v-if="advanced" class="tableSearch" :md="6">
-              <a-card>
-                <a-form-item label="使用状态">
-                  <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
-                    <a-select-option value="0">全部</a-select-option>
-                    <a-select-option value="1">关闭</a-select-option>
-                    <a-select-option value="2">运行中</a-select-option>
-                  </a-select>
-                </a-form-item>
-                <a-form-item label="调用次数"><a-input-number v-model="queryParam.callNo" style="width: 100%" /></a-form-item>
-                <a-form-item label="更新日期"><a-date-picker v-model="queryParam.date" style="width: 100%" placeholder="请输入更新日期" /></a-form-item>
-                <a-form-item label="使用状态">
-                  <a-select v-model="queryParam.useStatus" placeholder="请选择" default-value="0">
-                    <a-select-option value="0">全部</a-select-option>
-                    <a-select-option value="1">关闭</a-select-option>
-                    <a-select-option value="2">运行中</a-select-option>
-                  </a-select>
-                </a-form-item>
-                <a-form-item label="使用状态">
-                  <a-select placeholder="请选择" default-value="0">
-                    <a-select-option value="0">全部</a-select-option>
-                    <a-select-option value="1">关闭</a-select-option>
-                    <a-select-option value="2">运行中</a-select-option>
-                  </a-select>
-                </a-form-item>
-              </a-card>
+          <a-col v-if="advanced" class="tableSearch" :md="8">
+            <div>
+              <a-tabs defaultActiveKey="1">
+                <a-tab-pane tab="常用检索" key="1">
+                  <div class="commonRetrieval">
+                    <p @click="$refs.table.search({ type: 1 })">本月新增病例</p>
+                    <p @click="$refs.table.search({ type: 2 })">本年新增病例</p>
+                    <p @click="$refs.table.search({ type: 3 })">全部病例</p>
+                  </div>
+                </a-tab-pane>
+                <a-tab-pane tab="自定义检索 2" key="2" forceRender>
+                  <a-card>
+                    <a-form>
+                      <a-form-item label="档案号"><a-input v-model="queryParam.code" style="width: 100%" /></a-form-item>
+                      <a-form-item label="姓名"><a-input v-model="queryParam.name" style="width: 100%" /></a-form-item>
+                      <a-form-item label="身份证号"><a-input v-model="queryParam.card" style="width: 100%" /></a-form-item>
+                      <a-form-item label="创建日期" style="margin-bottom:0;">
+                        <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime1" /></a-form-item>
+                        <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-</span>
+                        <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime2" /></a-form-item>
+                      </a-form-item>
+                    </a-form>
+                  </a-card>
+                </a-tab-pane>
+              </a-tabs>
+            </div>
           </a-col>
         </a-row>
       </a-form>
     </div>
     <s-table ref="table" size="default" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-      <span slot="name"  slot-scope="text,record" @click="showUser(record)">
-        <p class="userName">{{text}}</p>
+      <span slot="name" slot-scope="text, record" @click="showUser(record)">
+        <p class="userName">{{ text }}</p>
       </span>
       <span slot="serial" slot-scope="text, record, index">{{ index + 1 }}</span>
       <span slot="visit" slot-scope="text"><a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
@@ -69,18 +69,14 @@
 
       <span slot="action" slot-scope="text, record">
         <template>
-          <a @click="handleEdit(record)">
-            编辑
-          </a>
+          <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
-          <a @click="handleSub(record)">
-            订阅报警
-          </a>
+          <a @click="handleSub(record)">订阅报警</a>
         </template>
       </span>
     </s-table>
     <create-form ref="createModal" @ok="handleOk" />
-    <user-detail ref="detailModal"/>
+    <user-detail ref="detailModal" />
   </a-card>
 </template>
 
@@ -90,7 +86,7 @@ import { STable, Ellipsis } from '@/components';
 import StepByStepModal from './modules/StepByStepModal';
 import CreateForm from './modules/CreateForm';
 import { getPatientList } from '@/api/patient';
-import UserDetail from './modules/UserDetail'
+import UserDetail from './modules/UserDetail';
 
 const visitMap = {
   0: {
@@ -166,7 +162,6 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        console.log('loadData.parameter', parameter);
         return getPatientList(Object.assign(parameter, this.queryParam)).then(res => {
           return res;
         });
@@ -204,11 +199,9 @@ export default {
       return visitMap[type].status;
     }
   },
-  created() {
-
-  },
+  created() {},
   methods: {
-    showUser(record){
+    showUser(record) {
       this.$refs.detailModal.show(record);
     },
     handleEdit(record) {
@@ -235,6 +228,14 @@ export default {
       this.queryParam = {
         date: moment(new Date())
       };
+    },
+    changeTime1(time) {
+      console.log(time);
+      this.queryParam.date1 = moment(time).format('YYYY-MM-DD');
+    },
+    changeTime2(time) {
+      console.log(time);
+      this.queryParam.date2 = moment(time).format('YYYY-MM-DD');
     }
   }
 };
@@ -267,19 +268,31 @@ export default {
 }
 
 .tableSearch {
-  background: #FFFFFF;
+  background: #ffffff;
   position: absolute;
   top: 52px;
   z-index: 100;
+  /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
+    width: 70px !important;
+  }
+  .commonRetrieval {
+    p {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
 }
-.userName{
-  color: #1FB2FA;
+.userName {
+  color: #1fb2fa;
   margin: 0;
-}
-.userName:active,.userName:hover{
+  &:active,
+  &:hover {
     text-decoration: underline;
     text-underline-position: under;
-    text-decoration-color: #1FB2FA;
+    text-decoration-color: #1fb2fa;
     cursor: pointer;
+  }
 }
 </style>

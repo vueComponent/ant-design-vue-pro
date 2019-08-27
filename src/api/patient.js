@@ -28,4 +28,3 @@ export function getPatientDetail (parameter) {
     params: parameter
   })
 }
-

@@ -14,13 +14,13 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <div v-if="userData == ''">
-          <a-form-item><a-input-search placeholder="搜索患者姓名,身份证号" @search="onSearch" v-decorator="['card', { rules: [{ required: true }] }]" enterButton /></a-form-item>
+          <a-form-item><a-input-search placeholder="搜索患者姓名,身份证号" @search="onSearch" v-decorator="['card', { rules: [{ required: true , message: '该选项必填'}] }]" enterButton /></a-form-item>
         </div>
         <div v-else><user-detail :option="userData"></user-detail></div>
         <a-tabs defaultActiveKey="1">
           <a-tab-pane tab="采集报告" key="1">
             <a-form-item>
-              <a-checkbox-group v-decorator="['register', { rules: [{ required: true }] }]" style="width:100%">
+              <a-checkbox-group  v-decorator="['basisElementId', { rules: [{ required: true , message: '该选项必填'}] }]" style="width:100%">
                 <a-row>
                   <a-col :span="8" style="margin-top: 20px;" v-for="item in registerList">
                     <a-checkbox :value="item.value">{{ item.label }}</a-checkbox>
@@ -38,6 +38,7 @@
 
 <script>
 import { getDictionaryAttributeByDictionaryId, addOrUpdate } from '@/api/basis';
+import { getReportCollect ,addReportCollect,getChooseReportCollect} from '@/api/report';
 import UserList from './UserList';
 import UserDetail from '../../list/modules/UserDetailTop.vue';
 import _ from 'lodash';
@@ -73,12 +74,10 @@ export default {
   },
   created() {
     const that = this;
-    const dictionary1 = new URLSearchParams();
-    dictionary1.append('dictionaryId', 5);
-    dictionary1.append('status', 1);
-    getDictionaryAttributeByDictionaryId(dictionary1).then(res => {
-      const keyMap = { name: 'label', dictionaryAttributeId: 'value' };
-      _.each(res.data, function(item, index) {
+
+    getReportCollect().then(res => {
+      const keyMap = { questionName: 'label', basisElementId: 'value' };
+      _.each(res.data.reportCollect, function(item, index) {
         that.registerList[index] = Object.keys(item).reduce((newData, key) => {
           let newKey = keyMap[key] || key;
           newData[newKey] = item[key];
@@ -103,11 +102,16 @@ export default {
           this.confirmLoading = false;
           return;
         }
+        const values = {
+          ...fieldsValue,
+          patientId: this.userData.patientId,
+          basisElementId:fieldsValue.basisElementId.join(',')
+        };
         const params = new URLSearchParams();
-        params.append('patientStr', JSON.stringify(values));
-        params.append('changeCenter', '');
-        params.append('centerId', '');
-        addOrUpdate(params).then(res => {
+
+        params.append('info', JSON.stringify(values));
+        console.log(values)
+        addReportCollect(params).then(res => {
           console.log(res);
           that.visible = false;
           that.confirmLoading = false;
@@ -125,7 +129,21 @@ export default {
       this.$refs.userListModule.add(value);
     },
     checkuUser(data) {
+      const that=this;
       this.userData = data[0];
+      const params = new URLSearchParams();
+      params.append('patientId',this.userData.patientId);
+      getChooseReportCollect(params).then(res => {
+        const reportCheckedList=[];
+        _.forEach(res.data.reportCollect,function(value){
+           reportCheckedList.push(value.basisElementId)
+        })
+        that.form.setFieldsValue({
+         basisElementId:reportCheckedList
+        });
+      });
+      
+      
     }
   }
 };

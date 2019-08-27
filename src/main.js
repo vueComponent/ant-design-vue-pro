@@ -16,7 +16,10 @@ import './core/use'
 import './utils/filter' // global filter
 
 Vue.config.productionTip = false
-
+const project={
+  projectId:''
+}
+Vue.prototype.project = project
 // mount axios Vue.$http and this.$http
 Vue.use(VueAxios)
 

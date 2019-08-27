@@ -3,45 +3,45 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="16">
-          <a-col :md="6" :sm="24">
-            <a-form-item label="规则编号"><a-input v-model="queryParam.id" placeholder="" /></a-form-item>
+          <a-col :md="5" :sm="24">
+            <a-form-item ><a-input v-model="queryParam.keyword"  placeholder="搜索患者姓名、身份证号" /></a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
               <a @click="toggleAdvanced" style="margin-left: 8px">
-                {{ advanced ? '收起' : '展开' }}
+               更多筛选
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
             </a-form-item>
           </a-col>
           <a-col :md="12" style="text-align:right" :sm="24"><a-button type="primary"  @click="$refs.registerModal.add()">添加采集</a-button><a-button type="primary"  style="margin-left: 20px;">导出</a-button></a-col>
-          <a-col v-if="advanced" class="tableSearch" :md="6">
-              <a-card>
-                <a-form-item label="使用状态">
-                  <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
-                    <a-select-option value="0">全部</a-select-option>
-                    <a-select-option value="1">关闭</a-select-option>
-                    <a-select-option value="2">运行中</a-select-option>
-                  </a-select>
-                </a-form-item>
-                <a-form-item label="调用次数"><a-input-number v-model="queryParam.callNo" style="width: 100%" /></a-form-item>
-                <a-form-item label="更新日期"><a-date-picker v-model="queryParam.date" style="width: 100%" placeholder="请输入更新日期" /></a-form-item>
-                <a-form-item label="使用状态">
-                  <a-select v-model="queryParam.useStatus" placeholder="请选择" default-value="0">
-                    <a-select-option value="0">全部</a-select-option>
-                    <a-select-option value="1">关闭</a-select-option>
-                    <a-select-option value="2">运行中</a-select-option>
-                  </a-select>
-                </a-form-item>
-                <a-form-item label="使用状态">
-                  <a-select placeholder="请选择" default-value="0">
-                    <a-select-option value="0">全部</a-select-option>
-                    <a-select-option value="1">关闭</a-select-option>
-                    <a-select-option value="2">运行中</a-select-option>
-                  </a-select>
-                </a-form-item>
-              </a-card>
+          <a-col v-if="advanced" class="tableSearch" :md="8">
+             <div>
+              <a-tabs defaultActiveKey="1">
+                <a-tab-pane tab="常用检索" key="1">
+                  <div class="commonRetrieval">
+                    <p @click="$refs.table.search({ type: 1 })">本月新增报告</p>
+                    <p @click="$refs.table.search({ type: 2 })">本年新增报告</p>
+                    <p @click="$refs.table.search({ type: 3 })">全部报告</p>
+                  </div>
+                </a-tab-pane>
+                <a-tab-pane tab="自定义检索" key="2" forceRender>
+                  <a-card>
+                    <a-form>
+                      <a-form-item  label="档案号"><a-input v-model="queryParam.reportCode" style="width: 100%" /></a-form-item>
+                      <a-form-item  label="姓名"><a-input v-model="queryParam.patientName" style="width: 100%" /></a-form-item>
+                      <a-form-item  label="身份证号"><a-input v-model="queryParam.card" style="width: 100%" /></a-form-item>
+                    <a-form-item label="创建日期" style="margin-bottom:0;">
+                      <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%"  @change="changeTime1"  /></a-form-item>
+                      <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-</span>
+                      <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime2" /></a-form-item>
+                    </a-form-item>
+                    </a-form>
+                  </a-card>
+                </a-tab-pane>
+              </a-tabs>
+            </div>
           </a-col>
         </a-row>
       </a-form>
@@ -174,10 +174,45 @@ export default {
     },
     handleOk () {
       this.$refs.table.refresh()
+    },
+    changeTime1(time) {
+      console.log(time);
+      this.queryParam.date1 = moment(time).format('YYYY-MM-DD');
+    },
+    changeTime2(time) {
+      console.log(time);
+      this.queryParam.date2 = moment(time).format('YYYY-MM-DD');
     }
   }
 }
 </script>
 <style lang="less" scoped>
-
+.tableSearch {
+  background: #ffffff;
+  position: absolute;
+  top: 52px;
+  z-index: 100;
+  /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
+    width: 70px !important;
+  }
+  .commonRetrieval {
+    p {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+.userName {
+  color: #1fb2fa;
+  margin: 0;
+  &:active,
+  &:hover {
+    text-decoration: underline;
+    text-underline-position: under;
+    text-decoration-color: #1fb2fa;
+    cursor: pointer;
+  }
+}
 </style>
