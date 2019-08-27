@@ -38,7 +38,7 @@
                       <a-radio :value="-1">无</a-radio>
                     </a-radio-group>
                     <br v-if="qu1.simple > 0">
-                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" />
+                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" :addonAfter="qu1.unit" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (!qu1.answers || qu1.answers.length === 0 || qu1.answers[0].elementTextValue === '')" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue)" :defaultValue="moment(qu1.answers[0].elementTextValue)" />
                     <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0 && (qu1.logicValue === 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1))" v-model="qu1.elementId">
@@ -53,21 +53,24 @@
                       <a-col :span="4"><a-input :name="sub.childList[0].basisElementCopyId+''" :addonAfter="sub.childList[0].unit" :defaultValue="sub.childList[0].answers && sub.childList[0].answers.length && sub.childList[0].answers[0].elementTextValue" /></a-col>
                     </a-row>
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
-                      <a-row v-for="(sub, index) in qu1.childList" :key="index" :class="{'no-border': index === qu1.childList.length - 1}">
+                      <a-row v-for="(sub, index) in qu1.childList" :key="index" :class="{'no-border': index === qu1.childList.length - 1}" v-if="qu1.logicValue === 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1)">
                         <!-- <br v-if="sub.showType === 2" /> -->
                         <a-col :span="7">({{sub.sort}}) {{sub.questionName}}</a-col>
                         
-                        <a-col :span="sub.isWrite > 0 ? 4 : 17">
+                        <a-col :span="17">
                           <!-- 是否，有无以及填写值 -->
-                          <a-input v-if="sub.isWrite > 0 && (!sub.event || sub.event === 'compute')" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" />
-                          <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && (!sub.answers || sub.answers.length === 0 || sub.answers[0].elementTextValue === '')" :name="sub.basisElementCopyId+''" />
-                          <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :name="sub.basisElementCopyId+''" :defaultValue="moment(sub.answers[0].elementTextValue)" />
+                          <a-col :span="6" v-if="sub.isWrite > 0">
+                            <a-input v-if="sub.isWrite > 0 && (!sub.event || sub.event === 'compute')" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" />
+                            <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && (!sub.answers || sub.answers.length === 0 || sub.answers[0].elementTextValue === '')" :name="sub.basisElementCopyId+''" />
+                            <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :name="sub.basisElementCopyId+''" :defaultValue="moment(sub.answers[0].elementTextValue)" />
+                          </a-col>
+                          <br v-if="sub.isWrite > 0">
                           <a-radio-group v-if="sub.simple === 1" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
                             <a-radio :value="1">是</a-radio>
                             <a-radio :value="-1">否</a-radio>
                           </a-radio-group>
                           <a-radio-group v-if="sub.simple === 2" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
-                            <a-radio :value="1">有fd</a-radio>
+                            <a-radio :value="1">有</a-radio>
                             <a-radio :value="-1">无</a-radio>
                           </a-radio-group>
                           <div class="clear" v-if="sub.simple > 0"></div>
@@ -177,8 +180,8 @@ export default {
       orgTree: [],
       labelColHor: {
         xs: { span: 24 },
-        sm: { span: 4 },
-        md: { span: 4}
+        sm: { span: 6 },
+        md: { span: 6}
       },
       labelColVer: {
         xs: { span: 24 },
@@ -187,8 +190,8 @@ export default {
       },
       wrapperHor: {
         xs: { span: 24 },
-        sm: { span: 20 },
-        md: { span: 20 }
+        sm: { span: 18 },
+        md: { span: 18 }
       },
       wrapperVer: {
         xs: { span: 24 },
@@ -274,14 +277,16 @@ export default {
           result.push({
             basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
             basisElementId: item.basisElementCopyId,
-            elementNumValue: $('input[name="' + item.basisElementCopyId + '"]:checked').val()
+            elementNumValue: $('input[name="' + item.basisElementCopyId + '"]:checked').val(),
+            elementTextValue: ''
           })
         }else if(item.isWrite > 0){
           var text = $('[name="' + item.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + item.basisElementCopyId + '"] input').val() : $('[name="' + item.basisElementCopyId + '"]').val()
           result.push({
             basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
             basisElementId: item.basisElementCopyId,
-            elementTextValue: text
+            elementTextValue: text,
+            elementNumValue: ''
           }) 
         }
         if(item.hasChild > 0){
@@ -292,14 +297,16 @@ export default {
                 result.push({
                   basisAnswerId: (sub.answers && sub.answers.length) ? sub.answers[0].basisAnswerId : '',
                   basisElementId: sub.basisElementCopyId,
-                  elementTextValue: text
+                  elementTextValue: text,
+                  elementNumValue: ''
                 })
               }
               if(sub.simple > 0){
                 result.push({
                   basisAnswerId: (sub.answers && sub.answers.length) ? sub.answers[0].basisAnswerId : '',
                   basisElementId: sub.basisElementCopyId,
-                  elementNumValue: $('input[name="' + sub.basisElementCopyId + '"]:checked').val()
+                  elementNumValue: typeof $('input[name="' + sub.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + sub.basisElementCopyId + '"]:checked').val() : '',
+                  elementTextValue: ''
                 })
               }
               
@@ -309,7 +316,8 @@ export default {
                     result.push({
                       basisAnswerId: third.answers && third.answers.length ? third.answers[0].basisAnswerId : '',
                       basisElementId: third.basisElementCopyId,
-                      elementNumValue: $('[value="' + third.basisElementCopyId + '"][name="' + third.parentId + '"]').prop('checked') ? 1 : -1
+                      elementNumValue: $('[value="' + third.basisElementCopyId + '"][name="' + third.parentId + '"]').prop('checked') ? 1 : -1,
+                      elementTextValue: ''
                     })
                   })
                 }
@@ -318,7 +326,8 @@ export default {
                     result.push({
                       basisAnswerId: (third.answers && third.answers.length) ? third.answers[0].basisAnswerId : '',
                       basisElementId: third.basisElementCopyId,
-                      elementNumValue: $('input[name="' + third.basisElementCopyId + '"]:checked').val()
+                      elementNumValue: typeof $('input[name="' + third.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + third.basisElementCopyId + '"]:checked').val() : '',
+                      elementTextValue: ''
                     })
                   }
                   if(third.isWrite > 0){
@@ -326,7 +335,8 @@ export default {
                     result.push({
                       basisAnswerId: (third.answers && third.answers.length) ? third.answers[0].basisAnswerId : '',
                       basisElementId: third.basisElementCopyId,
-                      elementTextValue: text || ''
+                      elementTextValue: text || '',
+                      elementNumValue: ''
                     })
                   }
                   if(third.hasChild > 0){
@@ -336,14 +346,16 @@ export default {
                         result.push({
                           basisAnswerId: fourth.answers && fourth.answers.length ? fourth.answers[0].basisAnswerId : '',
                           basisElementId: fourth.basisElementCopyId,
-                          elementNumValue: $('[value="' + fourth.basisElementCopyId + '"][name="' + fourth.parentId + '"]').prop('checked') ? 1 : -1
+                          elementNumValue: $('[value="' + fourth.basisElementCopyId + '"][name="' + fourth.parentId + '"]').prop('checked') ? 1 : -1,
+                          elementTextValue: ''
                         })
                       }
                       if(fourth.simple > 0){
                         result.push({
                           basisAnswerId: (fourth.answers && fourth.answers.length) ? fourth.answers[0].basisAnswerId : '',
                           basisElementId: fourth.basisElementCopyId,
-                          elementNumValue: $('input[name="' + fourth.basisElementCopyId + '"]:checked').val()
+                          elementNumValue: typeof $('input[name="' + fourth.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + fourth.basisElementCopyId + '"]:checked').val() : '',
+                          elementTextValue: ''
                         })
                       }
                       if(fourth.isWrite > 0){
@@ -351,7 +363,8 @@ export default {
                         result.push({
                           basisAnswerId: (fourth.answers && fourth.answers.length) ? fourth.answers[0].basisAnswerId : '',
                           basisElementId: fourth.basisElementCopyId,
-                          elementTextValue: text || ''
+                          elementTextValue: text || '',
+                          elementNumValue: ''
                         })
                       }
                     })
@@ -366,14 +379,16 @@ export default {
                 result.push({
                   basisAnswerId: sub.answers && sub.answers.length ? sub.answers[0].basisAnswerId : '',
                   basisElementId: sub.basisElementCopyId,
-                  elementNumValue: $('[value="' + sub.basisElementCopyId + '"][name="' + sub.parentId + '"]').prop('checked') ? 1 : -1
+                  elementNumValue: $('[value="' + sub.basisElementCopyId + '"][name="' + sub.parentId + '"]').prop('checked') ? 1 : -1,
+                  elementTextValue: ''
                 })
                 // TODO:此处后面需看还有没有更多情况
                 if(sub.hasChild > 0 && sub.isWrite > 0){
                   result.push({
                     basisAnswer: sub.childList[0].answers && sub.childList[0].answers.length ? sub.childList[0].answers[0].basisAnswerId : '',
                     basisElementId: sub.childList[0].basisElementCopyId,
-                    elementTextValue: $('[name="' + sub.childList[0].basisElementCopyId + '"]').val()
+                    elementTextValue: $('[name="' + sub.childList[0].basisElementCopyId + '"]').val(),
+                    elementNumValue: ''
                   })
                 }
               })
