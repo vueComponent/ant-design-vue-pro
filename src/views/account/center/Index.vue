@@ -407,6 +407,9 @@ export default {
     },
     initList (list){
       _.each(list, function(a){
+        if(a.simple > 0 && a.answers && a.answers.length){
+          a.basisElementId = a.answers[0].elementNumValue
+        }
         if(a.hasChild > 0 && a.isRadio === 0){
           _.each(a.childList,function(b){
             if(b.simple > 0 && b.answers && b.answers.length){
