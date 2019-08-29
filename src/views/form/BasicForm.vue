@@ -1,6 +1,16 @@
 <template>
   <a-card :body-style="{padding: '24px 32px'}" :bordered="false">
     <a-form @submit="handleSubmit" :form="form">
+      <a-form-item v-for="(item, index) in list" 
+      :key="index" :label="item.sort + '.' + item.questionName" 
+      :labelCol="{lg: {span: 7}, sm: {span: 7}}"
+      :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
+        <a-radio-group v-decorator="[item.basisElementCopyId+'', {rules: [{required: item.required > 0, message: '请选择一个'}]}]" v-model="item.basisElementId" :name="item.basisElementCopyId+''">
+          <a-radio :value="1">公开</a-radio>
+          <a-radio :value="2">部分公开</a-radio>
+          <a-radio :value="3">不公开</a-radio>
+        </a-radio-group>
+      </a-form-item>
       <a-form-item
         label="标题"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
@@ -8,7 +18,7 @@
         <a-input
           v-decorator="[
             'name',
-            {rules: [{ required: true, message: '请输入标题' }]}
+            {rules: [{ required: checkRe, message: '请输入标题' }]}
           ]"
           name="name"
           placeholder="给目标起个名字" />
@@ -64,7 +74,6 @@
         label="邀评人"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
         :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
-        :required="false"
       >
         <a-input placeholder="请直接 @姓名／工号，最多可邀请 5 人" />
       </a-form-item>
@@ -72,30 +81,9 @@
         label="权重"
         :labelCol="{lg: {span: 7}, sm: {span: 7}}"
         :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
-        :required="false"
       >
         <a-input-number :min="0" :max="100" />
         <span> %</span>
-      </a-form-item>
-      <a-form-item
-        label="目标公开"
-        :labelCol="{lg: {span: 7}, sm: {span: 7}}"
-        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
-        :required="false"
-        help="客户、邀评人默认被分享"
-      >
-        <a-radio-group v-model="value">
-          <a-radio :value="1">公开</a-radio>
-          <a-radio :value="2">部分公开</a-radio>
-          <a-radio :value="3">不公开</a-radio>
-        </a-radio-group>
-        <a-form-item>
-          <a-select mode="multiple" v-if="value === 2">
-            <a-select-option value="4">同事一</a-select-option>
-            <a-select-option value="5">同事二</a-select-option>
-            <a-select-option value="6">同事三</a-select-option>
-          </a-select>
-        </a-form-item>
       </a-form-item>
       <a-form-item
         :wrapperCol="{ span: 24 }"
@@ -114,11 +102,19 @@ export default {
   data () {
     return {
       description: '表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。',
-      value: 1,
+      value: undefined,
 
       // form
-      form: this.$form.createForm(this)
-
+      form: this.$form.createForm(this),
+      list: [{"isReport":0,"answers":[{"basisAnswerId":56,"elementTextValue":"","elementNumValue":-1,"basisElementId":1001}],"simple":1,"type":1,"required":1,"childEleName":"","showType":0,"event":"","elementId":1001,"level":1,"questionName":"留全血:","sort":1,"isRadio":0,"isShow":0,"unit":"","basisElementCopyId":1001,"basisElementId":-1,"hasChild":-1,"isProgress":1,"logicValue":0,"isWrite":-1}]
+    }
+  },
+  computed: {
+    checkRe() {
+      return function(e){
+        console.log(e)
+        return false
+      }
     }
   },
   methods: {

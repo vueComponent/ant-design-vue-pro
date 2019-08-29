@@ -160,7 +160,7 @@
                             <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].answers && secondSub.childList[0].answers.length && secondSub.childList[0].answers[0].elementTextValue" :name="secondSub.childList[0].basisElementCopyId+''" /></a-col>
                           </a-row>
                           <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (!sub.logicValue || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList">
-                              <a-col :span="6">{{subOp.questionName}}</a-col>
+                              <a-col :span="8">{{subOp.questionName}}</a-col>
                               <a-radio-group v-if="subOp.simple === 1" v-model="subOp.basisElementId" :name="subOp.basisElementCopyId+''">
                                 <a-radio :value="1">是</a-radio>
                                 <a-radio :value="-1">否</a-radio>
@@ -184,8 +184,8 @@
                                   <a-radio v-for="(secondSub,index) in subOp.childList" :key="index" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-radio>
                                 </a-radio-group>
                               </a-col>
-                              <div v-if="subOp.hasChild > 0 && subOp.isRadio === 0  && (!subOp.logicValue || subOp.basisElementId === 1)" v-for="(thirdSub, index) in subOp.childList" :key="index">
-                                <a-col :span="7">{{thirdSub.questionName}}</a-col>
+                              <a-row v-if="subOp.hasChild > 0 && subOp.isRadio === 0  && (!subOp.logicValue || subOp.basisElementId === 1)" v-for="(thirdSub, index) in subOp.childList" :key="index">
+                                <a-col :span="8">{{thirdSub.questionName}}</a-col>
                                 <a-col :span="6">
                                   <a-radio-group v-if="thirdSub.simple === 1" :name="thirdSub.basisElementCopyId+''" v-model="thirdSub.basisElementId">
                                     <a-radio :value="1">是</a-radio>
@@ -193,7 +193,7 @@
                                   </a-radio-group>
                                   <a-input v-if="thirdSub.isWrite > 0" :name="thirdSub.basisElementCopyId + ''" :defaultValue="thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" />
                                 </a-col>
-                              </div>
+                              </a-row>
                           </a-row>
                         </a-col>
                       </a-row>
@@ -251,7 +251,8 @@ export default {
       patientBasis: {},
       list: [],
       patientBasisId: this.$route.params.id,
-      basisMaskId: undefined
+      basisMaskId: undefined,
+      validateFlag: false
     }
   },
   beforeCreate (){
@@ -269,13 +270,22 @@ export default {
       that.orgTree = res.data.list
     })
   },
+  computed: {
+    validate() {
+      return function(index){
+        if(!this.validateFlag) return ''
+        var first = this.list[index]
+        if(first.required > 0) return 'error'
+      }
+    }
+  },
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
     handleClick(e) {
       this.basisMaskId = e.key
       this.getElementsAnswer()
-    },  
+    },
     handleSubmit () {
       const { form: { validateFields } } = this
       this.confirmLoading = true
@@ -459,7 +469,13 @@ export default {
       })
     },
     submit (){
-
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          // eslint-disable-next-line no-console
+          console.log('Received values of form: ', values)
+        }
+      })
+      return false
     },
     onFieldsChange (props, fields){
       console.log('fields changed')
@@ -555,8 +571,10 @@ export default {
 .ant-checkbox-wrapper + .ant-checkbox-wrapper{
   margin-left: 0;
 }
-.ant-form label,
+/deep/ .ant-form label,
 .ant-col-7,
+.ant-col-8,
+.ant-col-6,
 .ant-col-4{
   font-size: 16px;
 }
