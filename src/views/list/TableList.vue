@@ -54,6 +54,7 @@
       <span slot="visit" slot-scope="text"><a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <span slot="basisList" slot-scope="basisList">
         <div v-for="pro in basisList" class="progressTag">
+           <router-link :to="{path:'/list/basis/1'}"> 
           <div class="progressTagContent">
             <p class="progressTagTitle">{{ pro.name }}</p>
             <a-progress :strokeColor="pro.progress == 100 ? '#4BC5AC' : '#00A0E9'" :strokeWidth="10" :showInfo="false" :percent="parseInt(pro.progress)" size="small" />
@@ -61,6 +62,7 @@
           <a-icon v-if="pro.progress == 100" type="check-circle" theme="filled" />
           <span class="ant-progress-span" v-if="pro.progress < 100 && pro.progress > 0">23%</span>
           <a-icon style="color:#00A0E9" v-if="pro.progress == 0" type="clock-circle" theme="filled" />
+           </router-link>
         </div>
       </span>
       <span slot="description" slot-scope="text">
