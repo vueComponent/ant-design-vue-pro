@@ -5,7 +5,7 @@
       :key="index" :label="item.sort + '.' + item.questionName" 
       :labelCol="{lg: {span: 7}, sm: {span: 7}}"
       :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
-        <a-radio-group v-decorator="[item.basisElementCopyId+'', {rules: [{required: item.required > 0, message: '请选择一个'}]}]" v-model="item.basisElementId" :name="item.basisElementCopyId+''">
+        <a-radio-group v-decorator="[item.basisElementCopyId+'', {rules: [{required: item.required > 0, message: '请选择一个'}], initialValue: 2}]" v-model="item.basisElementId" :name="item.basisElementCopyId+''">
           <a-radio :value="1">公开</a-radio>
           <a-radio :value="2">部分公开</a-radio>
           <a-radio :value="3">不公开</a-radio>
@@ -18,7 +18,7 @@
         <a-input
           v-decorator="[
             'name',
-            {rules: [{ required: checkRe, message: '请输入标题' }]}
+            {rules: [{ required: checkRe, message: '请输入标题' }], initialValue: '风动旛动'}
           ]"
           name="name"
           placeholder="给目标起个名字" />
@@ -32,7 +32,7 @@
           style="width: 100%"
           v-decorator="[
             'buildTime',
-            {rules: [{ required: true, message: '请选择起止日期' }]}
+            {rules: [{ required: true, message: '请选择起止日期' }], initialValue: [moment('2019-10-01'), moment('2019-10-02')]}
           ]" />
       </a-form-item>
       <a-form-item
@@ -46,6 +46,17 @@
             'description',
             {rules: [{ required: true, message: '请输入目标描述' }]}
           ]" />
+      </a-form-item>
+      <a-form-item
+        label="多选框"
+        :labelCol="{lg: {span: 7}, sm: {span: 7}}"
+        :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
+        required="true">
+        <a-checkbox-group v-decorator="['checkbox', {rules: [{required: true, message: '请选择'}], initialValue: [1,2]}]">
+          <a-checkbox :value="1">风动旛动</a-checkbox>
+          <a-checkbox :value="2">辅导辅导费</a-checkbox>
+          <a-checkbox :value="3">法典菲尔</a-checkbox>
+        </a-checkbox-group>
       </a-form-item>
       <a-form-item
         label="衡量标准"
@@ -97,6 +108,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'BaseForm',
   data () {
@@ -106,7 +118,7 @@ export default {
 
       // form
       form: this.$form.createForm(this),
-      list: [{"isReport":0,"answers":[{"basisAnswerId":56,"elementTextValue":"","elementNumValue":-1,"basisElementId":1001}],"simple":1,"type":1,"required":1,"childEleName":"","showType":0,"event":"","elementId":1001,"level":1,"questionName":"留全血:","sort":1,"isRadio":0,"isShow":0,"unit":"","basisElementCopyId":1001,"basisElementId":-1,"hasChild":-1,"isProgress":1,"logicValue":0,"isWrite":-1}]
+      list: [{"isReport":0,"answers":[{"basisAnswerId":56,"elementTextValue":"","elementNumValue":-1,"basisElementId":1001}],"simple":1,"type":1,"required":1,"childEleName":"","showType":0,"event":"","elementId":1001,"level":1,"questionName":"留全血:","sort":1,"isRadio":0,"isShow":0,"unit":"","basisElementCopyId":1001,"basisElementId":1,"hasChild":-1,"isProgress":1,"logicValue":0,"isWrite":-1}]
     }
   },
   computed: {
@@ -117,8 +129,10 @@ export default {
       }
     }
   },
+  created() {
+  },
   methods: {
-
+    moment,
     // handler
     handleSubmit (e) {
       e.preventDefault()
