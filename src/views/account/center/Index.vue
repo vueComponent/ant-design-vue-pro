@@ -108,7 +108,8 @@
                         <a-col :span="16">
                           <!-- 是否，有无以及填写值 -->
                           <a-col :span="6" v-if="sub.isWrite > 0">
-                            <a-input v-if="sub.isWrite > 0 && (!sub.event || sub.event === 'compute')" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" />
+                            <a-input v-if="sub.isWrite > 0 && !sub.event" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" :readOnly="sub.computeElement === 0" v-model="computeMap[sub.basisElementCopyId]" />
+                            <a-input v-if="sub.isWrite > 0 && sub.event === 'compute'" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" @change="compute(sub.computeElement)" />
                             <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && (!sub.answers || sub.answers.length === 0 || sub.answers[0].elementTextValue === '')" :name="sub.basisElementCopyId+''" />
                             <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :name="sub.basisElementCopyId+''" :defaultValue="moment(sub.answers[0].elementTextValue)" />
                           </a-col>
@@ -141,8 +142,11 @@
                               </a-radio-group>
                             </a-col>
                           </a-row>
-                          <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
-                            <a-radio v-for="(subOp,index) in sub.childList" :key="index" :value="subOp.basisElementCopyId">{{subOp.questionName}}</a-radio>
+                          <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].event === 'compute'" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''" @change="compute(sub.childList[0].computeElement)">
+                            <a-radio v-for="(subOp,index) in sub.childList" :value="subOp.basisElementCopyId" :key="index">{{subOp.questionName}}</a-radio>
+                          </a-radio-group>
+                          <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0 && (!sub.childList[0].event || sub.childList[0].event !== 'compute')" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
+                            <a-radio v-for="(subOp,index) in sub.childList" :value="subOp.basisElementCopyId" :key="index">{{subOp.questionName}}</a-radio>
                           </a-radio-group>
                           <a-row v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue === 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementId === sub.basisElementId" v-for="(thirdSub, index) in sub.childList">
                             <a-col :span="6">{{thirdSub.childList[0].questionName}}</a-col>
@@ -266,7 +270,12 @@ export default {
       list: [],
       patientBasisId: this.$route.params.id,
       basisMaskId: undefined,
-      validateFlag: false
+      validateFlag: false,
+      computeMap: {
+        1208: '',
+        2727: '', 
+        1160: '' 
+      }
     }
   },
   beforeCreate (){
@@ -577,6 +586,7 @@ export default {
     },
     compute (id){
       console.log(id)
+      var that = this
       var result = this.generateAnswers()
       var params = new URLSearchParams();
       params.append('basisElementId', id)
@@ -586,7 +596,7 @@ export default {
         console.log(res)
         console.log('计算成功,结果为:' + res.data[id])
         if(typeof res.data[id] !== undefined){
-          $('input[name="' + id + '"]').val(res.data[id])
+          that.computeMap[id] = res.data[id]
         }
       })
       .catch(error => {
