@@ -38,6 +38,7 @@
                       <a-radio :value="-1">无</a-radio>
                     </a-radio-group>
                     <br v-if="qu1.simple > 0">
+                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'compute'" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" :addonAfter="qu1.unit" @change="compute(qu1.computeElement)" />
                     <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" :addonAfter="qu1.unit" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (!qu1.answers || qu1.answers.length === 0 || qu1.answers[0].elementTextValue === '')" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue)" :defaultValue="moment(qu1.answers[0].elementTextValue)" />
@@ -223,7 +224,7 @@
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-import { getPatientBasis, getElementsAnswer, submit } from '@/api/basis'
+import { getPatientBasis, getElementsAnswer, submit, computeScore } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
@@ -274,6 +275,7 @@ export default {
   created() {
     var that = this
     this.CloseSidebar()
+    this.compute = _.debounce(this.compute, 300) //节流阀
     var params = new URLSearchParams()
     params.append('patientBasisId', this.patientBasisId)
     getPatientBasis(params)
@@ -340,9 +342,9 @@ export default {
         // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
       })
     },
-    save (){
+    generateAnswers (){
       var result = []
-      var a = _.each(this.list, function(item){
+      _.each(this.list, function(item){
         if(item.simple > 0){
           result.push({
             basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
@@ -466,6 +468,10 @@ export default {
           }
         }
       })
+      return result
+    },
+    save (){
+      var result = this.generateAnswers()
       console.log(JSON.stringify(result))
       var params = new URLSearchParams();
       params.append('basisAnswer', JSON.stringify(result))
@@ -568,6 +574,22 @@ export default {
         }
       })
       return list
+    },
+    compute (id){
+      console.log(id)
+      debugger
+      var result = this.generateAnswers()
+      var params = new URLSearchParams();
+      params.append('basisElementId', id)
+      params.append('basisAnswer', JSON.stringify(result))
+      computeScore(params)
+      .then(res => {
+        console.log(res)
+        alert('计算成功,结果为:' + res.data[id])
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
 };

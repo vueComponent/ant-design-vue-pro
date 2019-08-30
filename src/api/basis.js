@@ -54,3 +54,11 @@ export function getPatientBasis(params) {
     data: params
   })
 }
+
+export function computeScore(params) {
+  return axios({
+    url: '/basis/computeScore',
+    method: 'post',
+    data: params
+  })
+}
