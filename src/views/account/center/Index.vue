@@ -38,7 +38,7 @@
                       <a-radio :value="-1">无</a-radio>
                     </a-radio-group>
                     <br v-if="qu1.simple > 0">
-                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'compute'" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" :addonAfter="qu1.unit" @change="compute(qu1.computeElement)" />
+                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'compute'" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" :addonAfter="qu1.unit" @blur="compute(qu1.computeElement)" />
                     <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" :addonAfter="qu1.unit" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (!qu1.answers || qu1.answers.length === 0 || qu1.answers[0].elementTextValue === '')" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue)" :defaultValue="moment(qu1.answers[0].elementTextValue)" />
@@ -275,7 +275,7 @@ export default {
   created() {
     var that = this
     this.CloseSidebar()
-    this.compute = _.debounce(this.compute, 300) //节流阀
+    // this.compute = _.debounce(this.compute, 300) //节流阀
     var params = new URLSearchParams()
     params.append('patientBasisId', this.patientBasisId)
     getPatientBasis(params)
@@ -577,7 +577,6 @@ export default {
     },
     compute (id){
       console.log(id)
-      debugger
       var result = this.generateAnswers()
       var params = new URLSearchParams();
       params.append('basisElementId', id)
@@ -585,7 +584,10 @@ export default {
       computeScore(params)
       .then(res => {
         console.log(res)
-        alert('计算成功,结果为:' + res.data[id])
+        console.log('计算成功,结果为:' + res.data[id])
+        if(typeof res.data[id] !== undefined){
+          $('input[name="' + id + '"]').val(res.data[id])
+        }
       })
       .catch(error => {
         console.log(error)
