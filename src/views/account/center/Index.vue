@@ -148,7 +148,7 @@
                             <a-col :span="8">
                               <a-date-picker v-if="thirdSub.childList[0].event === 'showDate' && thirdSub.childList[0].answers && thirdSub.childList[0].answers.length && thirdSub.childList[0].answers[0].elementTextValue" :defaultValue="moment(thirdSub.childList[0].answers[0].elementTextValue)" :name="thirdSub.childList[0].basisElementCopyId+''" />
                               <a-date-picker v-if="thirdSub.childList[0].event === 'showDate' && (!thirdSub.childList[0].answers || !thirdSub.childList[0].answers.length || !thirdSub.childList[0].answers[0].elementTextValue)" :name="thirdSub.childList[0].basisElementCopyId+''" />
-                              <a-input v-if="!thirdSub.childList[0].event" :addonAfter="thirdSub.childList[0].unit" />
+                              <a-input v-if="!thirdSub.childList[0].event" :addonAfter="thirdSub.childList[0].unit" :defaultValue="thirdSub.childList[0].answers && thirdSub.childList[0].answers.length && thirdSub.childList[0].answers[0].elementTextValue" />
                             </a-col>
                           </a-row>
                           <a-col v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].isWrite > 0">
@@ -194,12 +194,17 @@
                               </div>
                               <a-row v-if="subOp.hasChild > 0 && subOp.isRadio === 0  && (!subOp.logicValue || subOp.basisElementId === 1)" v-for="(thirdSub, index) in subOp.childList" :key="index">
                                 <a-col :span="8">{{thirdSub.questionName}}</a-col>
-                                <a-col :span="6">
+                                <a-col :span="16">
                                   <a-radio-group v-if="thirdSub.simple === 1" :name="thirdSub.basisElementCopyId+''" v-model="thirdSub.basisElementId">
                                     <a-radio :value="1">是</a-radio>
                                     <a-radio :value="-1">否</a-radio>
                                   </a-radio-group>
-                                  <a-input v-if="thirdSub.isWrite > 0" :name="thirdSub.basisElementCopyId + ''" :defaultValue="thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" />
+                                  <a-date-picker v-if="thirdSub.event === 'showDate' && thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" :defaultValue="moment(thirdSub.answers[0].elementTextValue)" :name="thirdSub.basisElementCopyId+''" />
+                                  <a-date-picker v-if="thirdSub.event === 'showDate' && (!thirdSub.answers || !thirdSub.answers.length || !thirdSub.answers[0].elementTextValue)" :name="thirdSub.basisElementCopyId+''" />
+                                  <a-input v-if="thirdSub.isWrite > 0 && !thirdSub.event" :name="thirdSub.basisElementCopyId + ''" :defaultValue="thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" />
+                                  <a-radio-group v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0" :name="thirdSub.basisElementCopyId+''">
+                                    <a-radio v-for="(fourth, index) in thirdSub.childList" :key="index" :value="fourth.basisElementId">{{fourth.questionName}}</a-radio>
+                                  </a-radio-group>
                                 </a-col>
                               </a-row>
                           </a-row>
