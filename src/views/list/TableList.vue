@@ -73,7 +73,7 @@
         <template>
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
-          <a @click="handleSub(record)">订阅报警</a>
+          <a @click="handleSub(record)">添加访视表</a>
         </template>
       </span>
     </s-table>
