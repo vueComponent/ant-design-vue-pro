@@ -1,7 +1,6 @@
 // eslint-disable-next-line
 import { UserLayout, BasicLayout, RouteView, BlankLayout, PageView } from '@/layouts'
-import { bxAnaalyse } from '@/core/icons'
-
+import { bxAnaalyse,baogao,bingli,fangshi,ruzhu,wenjuan,zhanghao,home } from '@/core/icons'
 export const asyncRouterMap = [
 
   {
@@ -16,7 +15,7 @@ export const asyncRouterMap = [
         path: '/dashboard/analysis',
         name: 'Analysis',
         component: () => import('@/views/dashboard/Analysis'),
-        meta: { title: '首页', keepAlive: true, icon: 'home'}
+        meta: { title: '首页', keepAlive: true, icon: home}
       },
       // {
       //   path: '/list/',
@@ -45,7 +44,7 @@ export const asyncRouterMap = [
         path: '/list/index',
         name: 'list',
         component: () => import('@/views/list/TableList'),
-        meta: { title: '病例管理', keepAlive: true, icon: 'table'}
+        meta: { title: '病例管理', keepAlive: true, icon: bingli}
       },
       {
         path: '/list/basis/:id(\\d*)',
@@ -84,19 +83,19 @@ export const asyncRouterMap = [
         path: '/task/index',
         name: 'Task',
         component: () => import('@/views/task/index'),
-        meta: { title: '随访任务', keepAlive: true, icon: 'home'}
+        meta: { title: '随访任务', keepAlive: true, icon: fangshi}
       },
       {
         path: '/gallery/index',
         name: 'Gallery',
         component: () => import('@/views/gallery/index'),
-        meta: { title: '报告采集', keepAlive: true, icon: 'home',isBack:false}
+        meta: { title: '报告采集', keepAlive: true, icon: baogao,isBack:false}
       },
       {
         path: '/group/index',
         name: 'Group',
         component: () => import('@/views/group/index'),
-        meta: { title: '入组管理', keepAlive: true, icon: 'home',isBack:false}
+        meta: { title: '入组管理', keepAlive: true, icon: ruzhu,isBack:false}
       },
       {
         path: '/group/addProject',
@@ -109,7 +108,7 @@ export const asyncRouterMap = [
         path: '/account/index',
         name: 'Account',
         component: () => import('@/views/account/index'),
-        meta: { title: '账号管理', keepAlive: true, icon: 'home'}
+        meta: { title: '账号管理', keepAlive: true, icon: zhanghao}
       }
     ]
   },

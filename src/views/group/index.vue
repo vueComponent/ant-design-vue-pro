@@ -145,8 +145,8 @@ export default {
         },
         {
           title: '入组日期',
-          dataIndex: 'createDate',
-          customRender: createDate => moment(jionDate).format('YYYY-MM-DD HH:mm:ss')
+          dataIndex: 'joinDate',
+          customRender: joinDate => moment(joinDate).format('YYYY-MM-DD HH:mm:ss')
         },
         {
           title: '访视状态',
