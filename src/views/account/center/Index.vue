@@ -23,7 +23,7 @@
        <a-col :span="19">
          <div class="baselineForm">
               <div style="overflow: hidden;">
-                <a-button class="btn fr">导入</a-button>
+                <a-button class="btn fr" @click="showlog">导入</a-button>
                 <a-button class="btn fr" @click="save">保存</a-button>
                 <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
               </div>
@@ -43,7 +43,17 @@
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (!qu1.answers || qu1.answers.length === 0 || qu1.answers[0].elementTextValue === '')" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue)" :defaultValue="moment(qu1.answers[0].elementTextValue)" />
                     <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0 && (qu1.logicValue === 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1))" v-model="qu1.elementId">
-                      <a-checkbox v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId" :name="qu1.basisElementCopyId+''">{{op.questionName}}</a-checkbox>
+                      <a-checkbox  v-if="op.event!=='showList'" v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId" :name="qu1.basisElementCopyId+''">{{op.questionName}}</a-checkbox>
+                    </a-checkbox-group>
+                    <a-checkbox-group  v-if="qu1.hasChild > 0 && qu1.isRadio < 0&& (qu1.logicValue === 0 || qu1.basisElementId === 1)" v-model="qu1.elementId" style="width: 80%;">
+                      <span v-for="(op, index) in qu1.childList">
+                        <a-checkbox v-if="op.event=='showList'" :name="qu1.basisElementCopyId+''"  @change="showList($event, op.event,op.questionName)" :key="index" :value="op.basisElementCopyId">{{op.questionName}}</a-checkbox>
+                         <div  v-if="op.event=='showList' && qu1.elementId.indexOf(op.basisElementCopyId) > -1&&op.questionName=='其他' "  style="display: inline-block;width: 300px;">
+                            <a-input :name="op.childList[0].basisElementCopyId+''" v-model="op.childList[0].childEleName" @blur="blurInput($event,op.childList[0])"  :addonAfter="op.childList[0].unit" :defaultValue="op.childList[0].answers && op.childList[0].answers.length && op.childList[0].answers[0].elementTextValue" />
+                         </div>
+                         <add-table v-if="op.event=='showList' && qu1.elementId.indexOf(op.basisElementCopyId) > -1&&op.questionName!=='其他'"  v-model="optionDataSource[op.basisElementCopyId]" :dataSource="op.medicineAllergyList?op.medicineAllergyList:optionDataSource[op.basisElementCopyId]"></add-table>
+                         <add-table v-if="op.event=='showList' &&op.questionName=='其他'&&op.childList&&op.childList[0].childEleName!=''&& qu1.elementId.indexOf(op.basisElementCopyId) > -1"  v-model="optionDataSource[op.childList[0].parentId]" :dataSource="op.medicineAllergyList?op.medicineAllergyList:optionDataSource[op.childList[0].parentId]"></add-table>   
+                       </span>
                     </a-checkbox-group>
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio > 0">
                       <a-radio-group :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
@@ -125,7 +135,17 @@
                           <div class="clear" v-if="sub.simple > 0"></div>
                           <a-col :span="4" v-if="(sub.logicValue === 0 || sub.basisElementId === 1) && sub.childEleName">{{sub.childEleName}}</a-col>
                           <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0" v-model="sub.elementId">
-                            <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementCopyId" v-if="sub.logicValue === 0 || sub.basisElementId === 1">{{subOp.questionName}}</a-checkbox>
+                            <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementCopyId" v-if="subOp.event!=='showList'&&(sub.logicValue === 0 || sub.basisElementId === 1)">{{subOp.questionName}}</a-checkbox>
+                          </a-checkbox-group>
+                          <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0" v-model="sub.elementId" style="width: 80%;">
+                                 <span v-for="(subOp, index) in sub.childList">
+                                   <a-checkbox v-if="subOp.event=='showList'" :name="subOp.parentId+''"    @change="showList($event,subOp.event,subOp.questionName)" :key="index" :value="subOp.basisElementCopyId">{{subOp.questionName}}</a-checkbox>
+                                   <div  v-if="subOp.event=='showList' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1&&subOp.questionName=='其他' "  style="display: inline-block;width: 300px;">
+                                      <a-input :name="subOp.childList[0].basisElementCopyId+''" v-model="subOp.childList[0].answers && subOp.childList[0].answers.length&&subOp.childList[0].answers[0].elementTextValue" @blur="blurInput($event,subOp.childList[0])"  :addonAfter="subOp.childList[0].unit"  />
+                                   </div>
+                                   <add-table v-if="subOp.event=='showList' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1&&subOp.questionName!=='其他'"  v-model="optionDataSource[subOp.basisElementCopyId]" :dataSource=" subOp.medicineAllergyList?subOp.medicineAllergyList:optionDataSource[subOp.basisElementCopyId]"></add-table>
+                                   <add-table v-if="subOp.event=='showList' &&subOp.questionName=='其他'&&subOp.childList&&subOp.childList[0].answers!=''&& sub.elementId.indexOf(subOp.basisElementCopyId) > -1"  v-model="optionDataSource[subOp.childList[0].parentId]" :dataSource="subOp.medicineAllergyList?subOp.medicineAllergyList:optionDataSource[subOp.childList[0].parentId]"></add-table>
+                                 </span>
                           </a-checkbox-group>
                           <!-- 二级联动 -->
                           <a-row v-for="(third, index) in sub.childList" :key="index" v-if="sub.hasChild > 0 && sub.isRadio < 0 && third.hasChild > 0 && third.logicValue > 0 && sub.elementId.indexOf(third.basisElementCopyId) > -1">
@@ -133,7 +153,7 @@
                             <a-col :span="4" v-if="third.childList[0].isWrite > 0">
                               <a-date-picker v-if="third.childList[0].event === 'showDate' && third.childList[0].answers && third.childList[0].answers.length && third.childList[0].answers[0].elementTextValue" :defaultValue="moment(third.childList[0].answers[0].elementTextValue)" :name="third.childList[0].basisElementCopyId+''" />
                               <a-date-picker v-if="third.childList[0].event === 'showDate' && (!third.childList[0].answers || !third.childList[0].answers.length || !third.childList[0].answers[0].elementTextValue)" :name="third.childList[0].basisElementCopyId+''" />
-                              <a-input v-if="!third.childList[0].event" :addonAfter="third.childList[0].unit" :name="third.childList[0].basisElementCopyId+''" :defaultValue="third.childList[0].answers && third.childList[0].answers.length && third.childList[0].answers[0].elementTextValue" />
+                              <a-input v-if="!third.childList[0].event&&third.event!=='showList'" :addonAfter="third.childList[0].unit" :name="third.childList[0].basisElementCopyId+''" :defaultValue="third.childList[0].answers && third.childList[0].answers.length && third.childList[0].answers[0].elementTextValue" />
                             </a-col>
                             <a-col :span="4" v-if="third.isRadio > 0 && third.hasChild > 0">{{third.questionName}}</a-col>
                             <a-col :span="16" v-if="third.isRadio > 0 && third.hasChild > 0">
@@ -181,8 +201,19 @@
                               </a-col>
                               <a-col :span="24" v-if="subOp.hasChild > 0 && subOp.isRadio < 0 && (subOp.logicValue === 0 || subOp.basisElementId === 1)">
                                 <a-checkbox-group v-model="subOp.elementId">
-                                  <a-checkbox v-for="(secondSub,index) in subOp.childList" :key="index" :name="secondSub.parentId+''" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-checkbox>
+                                  <a-checkbox v-if="secondSub.event!='showList'" v-for="(secondSub,index) in subOp.childList" :key="index" :name="secondSub.parentId+''" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-checkbox>
                                 </a-checkbox-group>
+                                <a-checkbox-group v-if="subOp.hasChild > 0 && subOp.isRadio < 0&& (subOp.logicValue === 0 || subOp.basisElementId === 1)" v-model="subOp.elementId" style="width: 100%;">
+                                        <span v-for="(secondSub, index) in subOp.childList" >
+                                          <a-checkbox v-if="secondSub.event=='showList'"  :name="secondSub.parentId+''" @change="showList($event,secondSub.event,secondSub.questionName)" :key="index" :value="secondSub.basisElementCopyId">{{secondSub.questionName}}</a-checkbox>
+                                          <div  v-if="secondSub.event=='showList' && subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1&&secondSub.questionName=='其他' "  style="display: inline-block;width: 300px;">
+                                             <a-input :name="secondSub.childList[0].basisElementCopyId+''"  @blur="blurInput($event,secondSub.childList[0])"  :addonAfter="secondSub.childList[0].unit" v-model="secondSub.childList[0].answers && secondSub.childList[0].answers.length && secondSub.childList[0].answers[0].elementTextValue" />
+                                          </div>
+                                          <add-table v-if="secondSub.event=='showList' && subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1&&secondSub.questionName!=='其他'"  v-model="optionDataSource[secondSub.basisElementCopyId]" :dataSource="secondSub.medicineAllergyList?secondSub.medicineAllergyList:optionDataSource[secondSub.basisElementCopyId]"></add-table>
+                                          <add-table v-if="secondSub.event=='showList' &&secondSub.questionName=='其他'&& subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1"  v-model="optionDataSource[secondSub.childList[0].parentId]" :dataSource="secondSub.medicineAllergyList?secondSub.medicineAllergyList:optionDataSource[secondSub.childList[0].parentId]"></add-table>
+                                        </span>
+                                 </a-checkbox-group>   
+                                
                               </a-col>
                               <a-col :span="16" v-if="subOp.hasChild > 0 && subOp.isRadio > 0">
                                 <a-radio-group :name="subOp.basisElementCopyId+''" v-model="subOp.basisElementId">
@@ -228,18 +259,25 @@
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
+<<<<<<< HEAD
+import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList } from '@/api/basis'
+=======
 import { getPatientBasis, getElementsAnswer, submit, computeScore } from '@/api/basis'
+>>>>>>> b836a69bcd4af578d9116aa09b9c3e0024fafe7e
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
-
+import AddTable from "./model/table"
 export default {
   name: 'success',
   components: {
-    STree
+    STree,
+    AddTable
   },
   data() {
     return {
+      optionDataSource:[],
+      checkedList:[],
       title: '支扩研究基线表',
       openKeys: ['key-01'],
       orgTree: [],
@@ -306,6 +344,53 @@ export default {
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
+    showList(e,type,name){
+      if(type !== 'showList') return;
+      if(e.target.checked){
+        if(name=="其他") return;
+        this.getMedicineAllergyList(name,e.target.value)
+      }else{
+         this.$set(this.optionDataSource,e.target.value,[])
+      }
+       
+    },
+    showlog(){
+      console.log(this.optionDataSource);
+        const allergy=[]
+       for(var key in this.optionDataSource){
+          _.each(this.optionDataSource[key], function(item){
+            allergy.push({
+              basisElementId:key,
+              microbeName:item.microbeName,
+              antibiotic:item.antibiotic,
+              antibioticResult:item.antibioticResult,
+              allergyValue:item.allergyValue
+            })
+          })
+      }
+      console.log(allergy);
+    },
+    getMedicineAllergyList(value,index){
+       const that = this
+       const params = new URLSearchParams()
+       params.append('microbeName', value)
+       getMedicineAllergyList(params).then(res => {
+        const  optionDataSource = _.map(res.data, function(v) {
+          return {
+            keyW: v.keyW,
+            microbeName: v.microbeName,
+            antibiotic: v.antibiotic,
+            antibioticResult: v.antibioticResult,
+            allergyValue: v.allergyValue
+          };
+       })   
+        that.$set(that.optionDataSource,index, optionDataSource)
+      }) 
+    },
+    blurInput(e,item){
+      console.log("e.target.value",e.target.name)
+       this.getMedicineAllergyList(e.target.value,item.parentId)
+    },
     handleClick(e) {
       this.basisMaskId = e.key
       this.getElementsAnswer()
@@ -477,15 +562,31 @@ export default {
           }
         }
       })
+<<<<<<< HEAD
+      const allergy=[]
+       for(var key in this.optionDataSource){
+          _.each(this.optionDataSource[key], function(item){
+            allergy.push({
+              basisElementId:key,
+              microbeName:item.microbeName,
+              antibiotic:item.antibiotic,
+              antibioticResult:item.antibioticResult,
+              allergyValue:item.allergyValue
+            })
+          })
+      }
+=======
       return result
     },
     save (){
       var result = this.generateAnswers()
       console.log(JSON.stringify(result))
+>>>>>>> b836a69bcd4af578d9116aa09b9c3e0024fafe7e
       var params = new URLSearchParams();
       params.append('basisAnswer', JSON.stringify(result))
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.basisMaskId)
+      params.append('allergy', JSON.stringify(allergy))
       submit(params)
       .then(res => {
         console.log(res)
