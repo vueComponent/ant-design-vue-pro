@@ -4,13 +4,25 @@
          <a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button>
     </p>
   <a-table rowKey="keyW" size="middle"  :pagination="pagination" :columns="columns" :dataSource="data" >
-    <template v-for="col in ['microbeName', 'antibiotic', 'antibioticResult','allergyValue']" :slot="col" slot-scope="text, record, index">
+    <template v-for="col in ['microbeName', 'antibiotic', 'allergyValue']" :slot="col" slot-scope="text, record, index">
       <div :key="col">
         <a-input v-if="record.editable" style="margin: -5px 0" :value="text" @change="e => handleChange(e.target.value, record.keyW, col)" />
         <template v-else>
           {{ text }}
         </template>
       </div>
+    </template>
+    <template slot="antibioticResult"  slot-scope="text, record, index" >
+      <div>
+       <a-select defaultValue="耐药"    v-if="record.editable" style="margin: -5px 0" :value="text" @change="value => handleSelectChange(value, record.keyW)">
+          <a-select-option value="耐药">耐药</a-select-option>
+          <a-select-option value="敏感">敏感</a-select-option>
+          <a-select-option value="未做" >未做</a-select-option>
+        </a-select>
+       <template v-else>
+         {{ text }}
+       </template>
+     </div>
     </template>
     <template slot="operation" slot-scope="text, record, index">
       <div class="editable-row-operations">
@@ -86,13 +98,22 @@ export default {
   },
   methods: {
     handleChange(value, key, column) {
+      console.log(column)
       const newData = [...this.data];
       const target = newData.filter(item => key === item.keyW)[0];
       if (target) {
         target[column] = value;
         this.data = newData;
       }
-    },    
+    }, 
+    handleSelectChange(value,key,column){
+     const newData = [...this.data];
+      const target = newData.filter(item => key === item.keyW)[0];
+      if (target) {
+        target['antibioticResult'] = value;
+        this.data = newData;
+      }
+    },   
     edit(key) {
       console.log("key",key)
       const newData = [...this.data];
@@ -114,6 +135,7 @@ export default {
       this.$emit('mySign', this.data);
     },
     cancel(key) {
+      console.log(key)
       const newData = [...this.data];
       const target = newData.filter(item => key === item.keyW)[0];
       if (target) {
