@@ -62,3 +62,11 @@ export function computeScore(params) {
     data: params
   })
 }
+
+export function getMedicineAllergyList(params) {
+  return axios({
+    url: '/basis/getMedicineAllergyList',
+    method: 'post',
+    data: params
+  })
+}
