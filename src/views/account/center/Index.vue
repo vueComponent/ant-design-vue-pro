@@ -259,11 +259,7 @@
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-<<<<<<< HEAD
-import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList } from '@/api/basis'
-=======
-import { getPatientBasis, getElementsAnswer, submit, computeScore } from '@/api/basis'
->>>>>>> b836a69bcd4af578d9116aa09b9c3e0024fafe7e
+import { getPatientBasis, getElementsAnswer, submit, getMedicineAllergyList, computeScore } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
@@ -562,8 +558,13 @@ export default {
           }
         }
       })
-<<<<<<< HEAD
-      const allergy=[]
+      return result
+    },
+    save (){
+      var result = this.generateAnswers()
+      console.log(JSON.stringify(result))
+      var params = new URLSearchParams()
+      const allergy = []
        for(var key in this.optionDataSource){
           _.each(this.optionDataSource[key], function(item){
             allergy.push({
@@ -575,14 +576,6 @@ export default {
             })
           })
       }
-=======
-      return result
-    },
-    save (){
-      var result = this.generateAnswers()
-      console.log(JSON.stringify(result))
->>>>>>> b836a69bcd4af578d9116aa09b9c3e0024fafe7e
-      var params = new URLSearchParams();
       params.append('basisAnswer', JSON.stringify(result))
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.basisMaskId)
@@ -605,12 +598,6 @@ export default {
         }
       })
       return false
-    },
-    onFieldsChange (props, fields){
-      console.log('fields changed')
-    },
-    onValuesChange (props, values){
-      console.log('values changed')
     },
     initList (list){
       _.each(list, function(a){
