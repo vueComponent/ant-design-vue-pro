@@ -54,9 +54,9 @@
       <span slot="visit" slot-scope="text"><a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <span slot="basisList" slot-scope="basisList">
         <div v-for="pro in basisList" class="progressTag">
-           <router-link :to="{path:'/list/basis/1'}"> 
+           <router-link :to="{path:'/list/basis/' + pro.patientBasisId}"> 
           <div class="progressTagContent">
-            <p class="progressTagTitle">{{ pro.name }}</p>
+            <p class="progressTagTitle">{{ pro.typeName }}</p>
             <a-progress :strokeColor="pro.progress == 100 ? '#4BC5AC' : '#00A0E9'" :strokeWidth="10" :showInfo="false" :percent="parseInt(pro.progress)" size="small" />
           </div>
           <a-icon v-if="pro.progress == 100" type="check-circle" theme="filled" />
@@ -253,8 +253,9 @@ export default {
     margin-right: 5px;
   }
   /deep/ .progressTagTitle {
-    padding-left: 40px;
-    margin-bottom: 2px;
+    text-align: center;
+    color: #000;
+    margin-bottom: 0;
   }
   /deep/ .progressTag .anticon {
     color: #4bc5ac;
