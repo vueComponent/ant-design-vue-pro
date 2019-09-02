@@ -2,7 +2,7 @@
   <div class="page-header-index-wide page-header-wrapper-grid-content-main">
      <a-card :bordered="false" style="background-color: #0399EC;color:#FFFFFF">
        <a-row :gutter="30" style="line-height: 34px;">
-         <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:20px" /></a-col>
+         <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:20px;cursor: pointer;" @click="$router.back(-1)" /></a-col>
          <a-col :md="3" :sm="20" style="fontSize:20px">
            <a-icon type="credit-card" theme="filled" />
            受访者:{{patient.name}}
@@ -340,6 +340,9 @@ export default {
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
+    back: function() {
+
+    },
     showList(e,type,name){
       if(type !== 'showList') return;
       if(e.target.checked){

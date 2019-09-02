@@ -1,4 +1,4 @@
-sp<template>
+<template>
   <a-modal
     :title="options.title"
     :width="800"
