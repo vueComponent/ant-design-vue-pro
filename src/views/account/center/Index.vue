@@ -2,7 +2,7 @@
   <div class="page-header-index-wide page-header-wrapper-grid-content-main">
      <a-card :bordered="false" style="background-color: #0399EC;color:#FFFFFF">
        <a-row :gutter="30" style="line-height: 34px;">
-         <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:20px" /></a-col>
+         <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:20px;cursor: pointer;" @click="$router.back(-1)" /></a-col>
          <a-col :md="3" :sm="20" style="fontSize:20px">
            <a-icon type="credit-card" theme="filled" />
            受访者:{{patient.name}}
@@ -39,13 +39,14 @@
                     </a-radio-group>
                     <br v-if="qu1.simple > 0">
                     <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'compute'" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" :addonAfter="qu1.unit" @blur="compute(qu1.computeElement)" />
-                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" :addonAfter="qu1.unit" />
+                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event && typeof qu1.computeElement !== 'undefined' && qu1.computeElement === 0" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" :addonAfter="qu1.unit"  v-model="computeMap[qu1.basisElementCopyId]" />
+                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event && typeof qu1.computeElement === 'undefined'" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 200px" :addonAfter="qu1.unit" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (!qu1.answers || qu1.answers.length === 0 || qu1.answers[0].elementTextValue === '')" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue)" :defaultValue="moment(qu1.answers[0].elementTextValue)" />
                     <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0 && (qu1.logicValue === 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1))" v-model="qu1.elementId">
                       <a-checkbox  v-if="op.event!=='showList'" v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId" :name="qu1.basisElementCopyId+''">{{op.questionName}}</a-checkbox>
                     </a-checkbox-group>
-                    <a-checkbox-group  v-if="qu1.hasChild > 0 && qu1.isRadio < 0&& (qu1.logicValue === 0 || qu1.basisElementId === 1)" v-model="qu1.elementId" style="width: 80%;">
+                    <a-checkbox-group  v-if="qu1.hasChild > 0 && qu1.isRadio < 0 && (qu1.logicValue === 0 || qu1.basisElementId === 1)" v-model="qu1.elementId" style="width: 80%;">
                       <span v-for="(op, index) in qu1.childList">
                         <a-checkbox v-if="op.event=='showList'" :name="qu1.basisElementCopyId+''"  @change="showList($event, op.event,op.questionName)" :key="index" :value="op.basisElementCopyId">{{op.questionName}}</a-checkbox>
                          <div  v-if="op.event=='showList' && qu1.elementId.indexOf(op.basisElementCopyId) > -1&&op.questionName=='其他' "  style="display: inline-block;width: 300px;">
@@ -118,8 +119,9 @@
                         <a-col :span="16">
                           <!-- 是否，有无以及填写值 -->
                           <a-col :span="6" v-if="sub.isWrite > 0">
-                            <a-input v-if="sub.isWrite > 0 && !sub.event" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" :readOnly="sub.computeElement === 0" v-model="computeMap[sub.basisElementCopyId]" />
-                            <a-input v-if="sub.isWrite > 0 && sub.event === 'compute'" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" @change="compute(sub.computeElement)" />
+                            <a-input v-if="sub.isWrite > 0 && !sub.event && typeof sub.computeElement !== 'undefined' && sub.computeElement === 0" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" :readOnly="sub.computeElement === 0" v-model="computeMap[sub.basisElementCopyId]" />
+                            <a-input v-if="sub.isWrite > 0 && !sub.event && typeof sub.computeElement === 'undefined'" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" />
+                            <a-input v-if="sub.isWrite > 0 && sub.event === 'compute'" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" @blur="compute(sub.computeElement)" />
                             <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && (!sub.answers || sub.answers.length === 0 || sub.answers[0].elementTextValue === '')" :name="sub.basisElementCopyId+''" />
                             <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :name="sub.basisElementCopyId+''" :defaultValue="moment(sub.answers[0].elementTextValue)" />
                           </a-col>
@@ -274,7 +276,7 @@ export default {
     return {
       optionDataSource:[],
       checkedList:[],
-      title: '支扩研究基线表',
+      title: '',
       openKeys: ['key-01'],
       orgTree: [],
       labelColHor: {
@@ -326,6 +328,13 @@ export default {
       that.patient = res.data.patient
       that.patientBasis = res.data.patientBasis
       that.orgTree = res.data.list
+      if(that.patientBasis.type === 1){
+        that.title = '支扩研究基线表'
+      }else if(that.patientBasis.type === 2){
+        that.title = '支扩研究随访表'
+      }else if(that.patientBasis.type === 3){
+        that.title = '支扩研究访视表'
+      }
     })
   },
   computed: {
@@ -598,19 +607,20 @@ export default {
       })
       return false
     },
-    onFieldsChange (props, fields){
-      console.log('fields changed')
-    },
-    onValuesChange (props, values){
-      console.log('values changed')
-    },
     initList (list){
+      var that = this
       _.each(list, function(a){
         if(a.simple > 0 && a.answers && a.answers.length){
           a.basisElementId = a.answers[0].elementNumValue
         }
+        if(typeof a.computeElement !== 'undefined' && a.computeElement === 0 && a.answers && a.answers.length) {
+          that.computeMap[a.basisElementCopyId] = a.answers[0].elementTextValue
+        }
         if(a.hasChild > 0 && a.isRadio === 0){
           _.each(a.childList,function(b){
+            if(typeof b.computeElement !== 'undefined' && b.computeElement === 0 && b.answers && b.answers.length) {
+              that.computeMap[b.basisElementCopyId] = b.answers[0].elementTextValue
+            }
             if(b.simple > 0 && b.answers && b.answers.length){
               b.basisElementId = b.answers[0].elementNumValue
             }
@@ -673,6 +683,9 @@ export default {
           }else{
             a.elementId = []
           }
+        }else if(a.hasChild > 0 && a.isRadio > 0){
+          var re = _.filter(a.childList, function(v){return v.answers && v.answers.length && v.answers[0].elementNumValue > 0})
+          if(re.length) a.basisElementId = re[0].basisElementId
         }
       })
       return list
