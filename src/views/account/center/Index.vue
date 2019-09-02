@@ -46,7 +46,7 @@
                     <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0 && (qu1.logicValue === 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1))" v-model="qu1.elementId">
                       <a-checkbox  v-if="op.event!=='showList'" v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId" :name="qu1.basisElementCopyId+''">{{op.questionName}}</a-checkbox>
                     </a-checkbox-group>
-                    <a-checkbox-group  v-if="qu1.hasChild > 0 && qu1.isRadio < 0&& (qu1.logicValue === 0 || qu1.basisElementId === 1)" v-model="qu1.elementId" style="width: 80%;">
+                    <a-checkbox-group  v-if="qu1.hasChild > 0 && qu1.isRadio < 0 && (qu1.logicValue === 0 || qu1.basisElementId === 1)" v-model="qu1.elementId" style="width: 80%;">
                       <span v-for="(op, index) in qu1.childList">
                         <a-checkbox v-if="op.event=='showList'" :name="qu1.basisElementCopyId+''"  @change="showList($event, op.event,op.questionName)" :key="index" :value="op.basisElementCopyId">{{op.questionName}}</a-checkbox>
                          <div  v-if="op.event=='showList' && qu1.elementId.indexOf(op.basisElementCopyId) > -1&&op.questionName=='其他' "  style="display: inline-block;width: 300px;">
@@ -119,7 +119,8 @@
                         <a-col :span="16">
                           <!-- 是否，有无以及填写值 -->
                           <a-col :span="6" v-if="sub.isWrite > 0">
-                            <a-input v-if="sub.isWrite > 0 && !sub.event" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" :readOnly="sub.computeElement === 0" v-model="computeMap[sub.basisElementCopyId]" />
+                            <a-input v-if="sub.isWrite > 0 && !sub.event && sub.computeElement === 0" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" :readOnly="sub.computeElement === 0" v-model="computeMap[sub.basisElementCopyId]" />
+                            <a-input v-if="sub.isWrite > 0 && !sub.event && typeof computeElement === 'undefined'" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" />
                             <a-input v-if="sub.isWrite > 0 && sub.event === 'compute'" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" @blur="compute(sub.computeElement)" />
                             <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && (!sub.answers || sub.answers.length === 0 || sub.answers[0].elementTextValue === '')" :name="sub.basisElementCopyId+''" />
                             <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :name="sub.basisElementCopyId+''" :defaultValue="moment(sub.answers[0].elementTextValue)" />
