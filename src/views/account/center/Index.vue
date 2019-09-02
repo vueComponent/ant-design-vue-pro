@@ -69,8 +69,8 @@
                                   <a-radio :value="-1">无</a-radio>
                                 </a-radio-group>
                             </a-col>
-                            <a-col :span="8" v-if="third.simple > 0 && third.logicValue > 0 && third.hasChild > 0 && third.childList[0].isWrite > 0 && third.basisElementId === 1">
-                              <a-input :name="third.childList[0].basisElementCopyId+''" :addonAfter="third.childList[0].unit"></a-input>
+                            <a-col :span="12" v-if="third.simple > 0 && third.logicValue > 0 && third.hasChild > 0 && third.childList[0].isWrite > 0 && third.basisElementId === 1">
+                              <a-col :span="6">{{third.childList[0].questionName}}</a-col><a-col :span="12"><a-input :name="third.childList[0].basisElementCopyId+''" :addonAfter="third.childList[0].unit"></a-input></a-col>
                             </a-col>
                             <a-row v-for="(fourth, index) in third.childList" v-if="third.hasChild > 0 && third.isRadio === 0">
                               <a-col :span="6">{{fourth.questionName}}</a-col>
