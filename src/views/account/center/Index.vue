@@ -276,7 +276,7 @@ export default {
     return {
       optionDataSource:[],
       checkedList:[],
-      title: '支扩研究基线表',
+      title: '',
       openKeys: ['key-01'],
       orgTree: [],
       labelColHor: {
@@ -328,6 +328,13 @@ export default {
       that.patient = res.data.patient
       that.patientBasis = res.data.patientBasis
       that.orgTree = res.data.list
+      if(that.patientBasis.type === 1){
+        that.title = '支扩研究基线表'
+      }else if(that.patientBasis.type === 2){
+        that.title = '支扩研究随访表'
+      }else if(that.patientBasis.type === 3){
+        that.title = '支扩研究访视表'
+      }
     })
   },
   computed: {
