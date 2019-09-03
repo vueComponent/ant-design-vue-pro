@@ -26,7 +26,7 @@
                     <p @click="$refs.table.search({ type: 3 })">全部病例</p>
                   </div>
                 </a-tab-pane>
-                <a-tab-pane tab="自定义检索" key="2" forceRender>
+                <a-tab-pane tab="自定义检索111" key="2" forceRender>
                   <a-card>
                     <a-form>
                       <a-form-item label="档案号"><a-input v-model="queryParam.code" style="width: 100%" /></a-form-item>
