@@ -26,7 +26,7 @@
                     <p @click="$refs.table.search({ type: 3 })">全部病例</p>
                   </div>
                 </a-tab-pane>
-                <a-tab-pane tab="自定义检索 2" key="2" forceRender>
+                <a-tab-pane tab="自定义检索" key="2" forceRender>
                   <a-card>
                     <a-form>
                       <a-form-item label="档案号"><a-input v-model="queryParam.code" style="width: 100%" /></a-form-item>
@@ -274,6 +274,7 @@ export default {
   background: #ffffff;
   position: absolute;
   top: 52px;
+  box-shadow: 4px 4px 10px #ddd;
   z-index: 100;
   /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
     width: 70px !important;

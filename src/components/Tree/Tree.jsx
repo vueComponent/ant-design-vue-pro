@@ -61,7 +61,7 @@ export default {
           {this.renderTreeIcon(item.progress)}
           { this.renderIcon(item.icon) }
           <span class="treeSubTitle">{ item.basisMarkName }</span>
-          <span class="treeSubPercentage">{item.progress}</span>
+          <span class="treeSubPercentage">{item.progress>0?item.progress+"%":item.progress}</span>
           <a class="btn" style="width: 20px;z-index:1300" {...{ on: { click: () => this.handlePlus(item) } }}><a-icon type="plus"/></a>
         </Item>
       )
