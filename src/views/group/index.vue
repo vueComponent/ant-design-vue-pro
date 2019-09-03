@@ -10,12 +10,12 @@
             <a-form-item>
               <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
               <a @click="toggleAdvanced" style="margin-left: 8px">
-                {{ advanced ? '收起' : '展开' }}
+                更多筛选
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
             </a-form-item>
           </a-col>
-          <a-col :md="12" style="text-align:right" :sm="24">
+          <a-col :md="13" style="text-align:right" :sm="24">
             <a-button type="primary" icon="plus" @click="checkProject()" style="margin-right: 20px;">选择项目</a-button>
             <a-button type="primary" icon="plus" @click="addCaces()">添加病例</a-button></a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
@@ -29,7 +29,7 @@
                     </div>
                   </a-tab-pane>
                   <a-tab-pane tab="自定义检索" key="2" forceRender>
-                    <a-card>
+                    <a-card :bordered="false">
                       <a-form>
                         <a-form-item  label="档案号"><a-input v-model="queryParam.code" style="width: 100%" /></a-form-item>
                         <a-form-item  label="姓名"><a-input v-model="queryParam.name" style="width: 100%" /></a-form-item>
@@ -39,6 +39,11 @@
                           <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-</span>
                           <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime2" /></a-form-item>
                         </a-form-item>
+                         <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
+                            <a-button type="primary"  @click="clearForm()">清空</a-button>
+                           <a-button type="primary" style="margin-left: 10px;" @click="$refs.table.refresh()">查询</a-button>
+                        </a-form-item>
+                        
                       </a-form>
                     </a-card>
                   </a-tab-pane>
@@ -221,6 +226,9 @@ export default {
     this.$route.meta.isBack=false;
   },
   methods: {
+     clearForm(){
+      this.queryParam={}
+    },
     showUser(record){
       this.$refs.detailModal.show(record);
     },
@@ -279,11 +287,13 @@ export default {
     background: #ffffff;
     position: absolute;
     top: 52px;
+    top: 52px;box-shadow: 4px 4px 10px #ddd;
     z-index: 100;
     /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
       width: 70px !important;
     }
     .commonRetrieval {
+      padding: 10px;
       p {
         &:hover {
           cursor: pointer;

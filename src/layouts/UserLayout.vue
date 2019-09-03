@@ -4,25 +4,25 @@
       <div class="top">
         <div class="header">
           <a href="/">
-            <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">Ant Design</span>
+            <img src="~@/assets/logo.png" class="logo" alt="logo">
+            <span class="title">支气管扩张症临床诊治与研究联盟</span>
           </a>
-        </div>
-        <div class="desc">
-          Ant Design 是西湖区最具影响力的 Web 设计规范
         </div>
       </div>
 
       <route-view></route-view>
 
       <div class="footer">
-        <div class="links">
-          <a href="_self">帮助</a>
-          <a href="_self">隐私</a>
-          <a href="_self">条款</a>
-        </div>
         <div class="copyright">
-          Copyright &copy; 2018 白鹭学园技术组出品
+          <span>
+            &copy;支气管扩张症临床诊治与研究联盟
+          </span>
+          <span>
+            当前版本：1.0.0
+          </span>
+          <span>
+             技术支持：南京德益康信息科技有限公司
+          </span>
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@ export default {
       min-height: 100%;
       background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
       background-size: 100%;
-      padding: 110px 0 144px;
+      padding: 210px 0 144px;
       position: relative;
 
       a {
@@ -80,7 +80,8 @@ export default {
         .header {
           height: 44px;
           line-height: 44px;
-
+          margin-bottom: 50px;
+          color:#8A8A8A;
           .badge {
             position: absolute;
             display: inline-block;

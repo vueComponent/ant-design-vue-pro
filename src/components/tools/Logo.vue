@@ -1,7 +1,8 @@
 <template>
   <div class="logo">
     <router-link :to="{name:'dashboard'}">
-      <LogoSvg alt="logo" />
+<!--      <LogoSvg alt="logo" /> -->
+        <img src="~@/assets/logo.png" class="logoImg" alt="logoImg">
       <h1 v-if="showTitle">{{ title }}</h1>
     </router-link>
   </div>
@@ -29,3 +30,10 @@ export default {
   }
 }
 </script>
+<style>
+ .logo   .router-link-active .logoImg{
+        height: 40px;
+    width: 46px;
+    padding-left: 0px;
+  }
+</style>

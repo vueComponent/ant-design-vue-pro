@@ -1,7 +1,7 @@
 <template>
   <a-card :bordered="false">
     <div class="table-page-search-wrapper">
-      <a-form layout="inline">
+      <a-form :form="form" layout="inline">
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item><a-input v-model="queryParam.keyword" placeholder="搜索患者姓名、身份证号" /></a-form-item>
@@ -15,7 +15,7 @@
               </a>
             </a-form-item>
           </a-col>
-          <a-col :md="12" style="text-align:right" :sm="24"><a-button type="primary" icon="plus" @click="$refs.createModal.add()">新建</a-button></a-col>
+          <a-col :md="13" style="text-align:right" :sm="24"><a-button type="primary" icon="plus" @click="$refs.createModal.add()">新建</a-button></a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
             <div>
               <a-tabs defaultActiveKey="1">
@@ -27,7 +27,7 @@
                   </div>
                 </a-tab-pane>
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
-                  <a-card>
+                  <a-card  :bordered="false">
                     <a-form>
                       <a-form-item label="档案号"><a-input v-model="queryParam.code" style="width: 100%" /></a-form-item>
                       <a-form-item label="姓名"><a-input v-model="queryParam.name" style="width: 100%" /></a-form-item>
@@ -36,6 +36,10 @@
                         <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime1" /></a-form-item>
                         <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-</span>
                         <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime2" /></a-form-item>
+                      </a-form-item>
+                       <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
+                          <a-button type="primary"  @click="clearForm()">清空</a-button>
+                         <a-button type="primary" style="margin-left: 10px;" @click="$refs.table.refresh()">查询</a-button>
                       </a-form-item>
                     </a-form>
                   </a-card>
@@ -184,7 +188,8 @@ export default {
           onChange: this.onSelectChange
         }
       },
-      optionAlertShow: false
+      optionAlertShow: false,
+      form: this.$form.createForm(this),
     };
   },
   filters: {
@@ -203,6 +208,9 @@ export default {
   },
   created() {},
   methods: {
+    clearForm(){
+      this.queryParam={}
+    },
     showUser(record) {
       this.$refs.detailModal.show(record);
     },
@@ -280,6 +288,7 @@ export default {
     width: 70px !important;
   }
   .commonRetrieval {
+    padding: 10px;
     p {
       &:hover {
         cursor: pointer;
