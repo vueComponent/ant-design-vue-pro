@@ -7330,9 +7330,9 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.1:
   dependencies:
     minimist "0.0.8"
 
-mockjs2@^1.0.5:
+mockjs2@1.0.5:
   version "1.0.5"
-  resolved "https://registry.npmjs.org/mockjs2/-/mockjs2-1.0.5.tgz#be80f670e0468092b15454169591e936c3bd29f9"
+  resolved "https://registry.yarnpkg.com/mockjs2/-/mockjs2-1.0.5.tgz#be80f670e0468092b15454169591e936c3bd29f9"
   integrity sha512-2RPYSxVuIsmV0S8FwUh2srTm+K1EWr57GyUgjA5+6H49ZwqtFUlRfZAVJNYwKtswxehP4FDTsfuCRMd290bFTA==
   dependencies:
     commander "*"
