@@ -220,7 +220,7 @@
                           <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (sub.logicValue === 0 || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList" :class="{'ant-col-pull-8': subOp.level > 3 || subOp.display > 0, 'no-border': index === sub.childList.length - 1}">
                             <!-- <br> -->
                               <!-- 调脂那一层,如果是紧跟后面的单选框或者输入框就占8格；否则就是子问题，占12格 -->
-                              <a-col :span="subOp.simple > 0 || subOp.isWrite > 0 ? 6 : 12">{{subOp.questionName}}</a-col>
+                              <a-col :span="subOp.simple > 0 || subOp.isRadio > 0 || (subOp.questionName.length <= 16 && subOp.isWrite > 0) ? 6 : 24">{{subOp.questionName}}</a-col>
                               <a-radio-group v-if="subOp.simple === 1" v-model="subOp.basisElementId" :name="subOp.basisElementCopyId+''">
                                 <a-radio :value="1">是</a-radio>
                                 <a-radio :value="-1">否</a-radio>
@@ -272,7 +272,7 @@
                               <!-- <a-col :span="6" v-if="secondSub.hasChild > 0 && (secondSub.logicValue === 0 || subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1) && secondSub.isWrite > 0" v-for="(secondSub,index) in subOp.childList">
                                 <a-input style="width:240px;" :name="secondSub.basisElementCopyId+''" :defaultValue="secondSub.answers && secondSub.answers.length && secondSub.answers[0].elementTextValue"></a-input>
                               </a-col> -->
-                              <a-col :span="24" v-if="subOp.hasChild > 0 && subOp.isRadio > 0">
+                              <a-col :span="18" v-if="subOp.hasChild > 0 && subOp.isRadio > 0">
                                 <a-radio-group :name="subOp.basisElementCopyId+''" v-model="subOp.basisElementId">
                                   <a-radio v-for="(secondSub,index) in subOp.childList" :key="index" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-radio>
                                 </a-radio-group>
