@@ -111,6 +111,7 @@
                       <a-col :span="4">{{sub.childList[0].questionName}}</a-col>
                       <a-col :span="4"><a-input :name="sub.childList[0].basisElementCopyId+''" :addonAfter="sub.childList[0].unit" :defaultValue="sub.childList[0].answers && sub.childList[0].answers.length && sub.childList[0].answers[0].elementTextValue" style="width:240px" /></a-col>
                     </a-row>
+                    <!-- 有第二层 -->
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
                       <a-row v-for="(sub, index) in qu1.childList" :key="index" :class="{'no-border': index === qu1.childList.length - 1}" v-if="qu1.logicValue === 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1)">
                         <!-- 第二层开始 -->
@@ -189,6 +190,7 @@
                                   <a-radio :value="1">有</a-radio>
                                   <a-radio :value="-1">无</a-radio>
                                 </a-radio-group>
+                                <a-input v-if="fourth.isWrite > 0" :addonAfter="fourth.unit" :name="fourth.basisElementCopyId+''" :defaultValue="fourth.answers && fourth.answers.length && fourth.answers[0].elementTextValue" style="width: 240px"></a-input>
                                 <div v-if="fourth.hasChild > 0 && fourth.isRadio === 0">
                                   <a-row class="no-border" v-for="fifth in fourth.childList" v-if="fourth.logicValue === 0 || fourth.basisElementId === 1">
                                     <a-col :span="6">{{fifth.questionName}}</a-col>
@@ -306,7 +308,7 @@
                                     <!-- 注掉br是因为啰音类型会掉下去，别处需要换行再调整 -->
                                   <!-- <br v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && thirdSub.simple > 0"> -->
                                   <a-radio-group v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && (thirdSub.logicValue === 0 || thirdSub.basisElementId === 1)" :name="thirdSub.basisElementCopyId+''" v-model="thirdSub.basisElementId">
-                                    <a-radio v-for="(fourth, index) in thirdSub.childList" :key="index" :value="fourth.basisElementCopyId">{{fourth.questionName}}df</a-radio>
+                                    <a-radio v-for="(fourth, index) in thirdSub.childList" :key="index" :value="fourth.basisElementCopyId">{{fourth.questionName}}</a-radio>
                                   </a-radio-group>
                                   <div v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && (thirdSub.logicValue === 0 || thirdSub.basisElementId === 1)">
                                     <div v-for="(fourth, index) in thirdSub.childList" :key="index" v-if="fourth.hasChild > 0 && fourth.isRadio === 0 && (fourth.logicValue === 0 || thirdSub.basisElementId === fourth.basisElementCopyId)">
@@ -960,7 +962,7 @@ export default {
       padding-bottom: 10px;
       padding-top: 10px;
       margin-bottom: 0px;
-      border-bottom: 1px solid #F3F3F3;
+      border-bottom: 1px solid #eee;
       &.no-border{
         border-bottom: none;
         padding-top: 0;
