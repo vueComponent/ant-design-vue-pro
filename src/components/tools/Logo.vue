@@ -31,6 +31,9 @@ export default {
 }
 </script>
 <style>
+	.logo{
+		padding-left: 18px!important;
+	}
  .logo   .router-link-active .logoImg{
         height: 40px;
     width: 46px;
