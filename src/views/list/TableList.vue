@@ -50,7 +50,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="default" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="default"  rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="name" slot-scope="text, record" @click="showUser(record)">
         <p class="userName">{{ text }}</p>
       </span>
@@ -251,6 +251,8 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.ant-table td { white-space: nowrap; }
+  
 .progressTag {
   display: inline-block;
   width: 140px;

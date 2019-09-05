@@ -39,10 +39,6 @@ export default {
       type: String,
       default: 'default'
     },
-    scroll: {
-      type: Object,
-      default: null
-    },
     /**
      * alert: {
      *   show: true,
@@ -65,6 +61,10 @@ export default {
     showPagination: {
       type: String | Boolean,
       default: 'auto'
+    },
+    scroll: {
+      type:Object,
+      default:null
     },
     /**
      * enable page URI mode
@@ -354,20 +354,9 @@ export default {
         this[k] && (props[k] = this[k])
         return props[k]
       })
-      const table = ( <
-          a-table { ...{
-              props,
-              scopedSlots: { ...this.$scopedSlots
-              }
-            }
-          }
-          onChange = {
-            this.loadData
-          } > {
-            Object.keys(this.$slots).map(name => ( < template slot = {
-                  name
-                } > {
-                  this.$slots[name]
+      console.log("props",props)
+      const table = ( <a-table { ...{ props,scopedSlots: { ...this.$scopedSlots} } }  onChange = { this.loadData } > {
+            Object.keys(this.$slots).map(name => ( < template slot = {name } > {this.$slots[name]
                 } < /template>)) } <
                 /a-table>
               )
