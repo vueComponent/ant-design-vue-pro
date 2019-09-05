@@ -17,9 +17,10 @@ router.beforeEach((to, from, next) => {
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
   if (Vue.ls.get(ACCESS_TOKEN)) {
     /* has token */
-    if (to.path === '/user/login') {
+    if (to.path === '/user/login') 
+    {
       next({ path: '/dashboard/workplace' })
-      NProgress.done()
+      user
     } else {
       if (store.getters.roles.length === 0) {
         store

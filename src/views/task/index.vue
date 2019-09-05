@@ -50,7 +50,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="default" rowKey="visitTaskId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="default" rowKey="visitTaskId" :scroll="scroll" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
        <span slot="warnStatus" slot-scope="text">
         <my-icon type="iconyujing_huaban" :class="text|warnStatusType"></my-icon>
       </span>
@@ -126,41 +126,50 @@ export default {
          {
           title: '预警',
           dataIndex: 'warnStatus',
-          scopedSlots: { customRender: 'warnStatus' }
+          scopedSlots: { customRender: 'warnStatus' },
+          width:"200px"
         },
         {
           title: '任务编号',
-          dataIndex: 'fileCode'
+          dataIndex: 'fileCode',
+            width:"200px"
         },
         {
           title: '患者姓名',
           dataIndex: 'patientName',
-          scopedSlots: { customRender: 'name' }
+          scopedSlots: { customRender: 'name' },
+             width: '400px',
         },
         {
           title: '身份证号',
-          dataIndex: 'card'
+          dataIndex: 'card',
+               width: '400px',
         },{
           title: '联系电话',
-          dataIndex: 'telephone'
+          dataIndex: 'telephone',
+               width: '400px',
         },
         {
           title: '创建日期',
           dataIndex: 'createDate',
+              width: '400px',
         },
          {
           title: '到期时间',
           dataIndex: 'planDate',
+                width: '400px',
         },
         {
           title: '任务状态',
           dataIndex: 'executeStatus',
-          scopedSlots: { customRender: 'executeStatus' }
+          scopedSlots: { customRender: 'executeStatus' },
+              width: '400px',
         },
         {
           title: '操作',
           dataIndex: 'action',
-          width: '200px',
+          width: '140px',
+           fixed: 'right',
           scopedSlots: { customRender: 'action' }
         }
       ],
@@ -185,7 +194,7 @@ export default {
       
       selectedRowKeys: [],
       selectedRows: [],
-
+      scroll:{x:"110%",y:0},
       // custom table alert & rowSelection
       options: {
         alert: {
@@ -262,6 +271,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+  /deep/.ant-table td { white-space: nowrap; }
   .warningColor{
     font-size:20px; 
     color: #EB352D;
