@@ -282,7 +282,7 @@
                               <!-- <a-col :span="6" v-if="secondSub.hasChild > 0 && (secondSub.logicValue === 0 || subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1) && secondSub.isWrite > 0" v-for="(secondSub,index) in subOp.childList">
                                 <a-input style="width:240px;" :name="secondSub.basisElementCopyId+''" :defaultValue="secondSub.answers && secondSub.answers.length && secondSub.answers[0].elementTextValue"></a-input>
                               </a-col> -->
-                              <a-col :span="16" v-if="subOp.hasChild > 0 && subOp.isRadio > 0">
+                              <a-col :span="24" v-if="subOp.hasChild > 0 && subOp.isRadio > 0">
                                 <a-radio-group :name="subOp.basisElementCopyId+''" v-model="subOp.basisElementId">
                                   <a-radio v-for="(secondSub,index) in subOp.childList" :key="index" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-radio>
                                 </a-radio-group>
