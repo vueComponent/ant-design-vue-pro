@@ -15,7 +15,8 @@ const constantRouterComponents = {
   '500': () => import(/* webpackChunkName: "error" */ '@/views/exception/500'),
 
   // 你需要动态引入的页面组件
-  'Analysis': () => import('@/views/dashboard/Analysis')
+  'Analysis': () => import('@/views/dashboard/Analysis'),
+  'Workplace': () => import('@/views/dashboard/Workplace')
 }
 
 // 前端未找到页面路由（固定不用改）
@@ -25,6 +26,7 @@ const notFoundRouter = {
 
 // 根级菜单
 const rootRouter = {
+  key: '',
   name: 'index',
   path: '',
   component: 'BasicLayout',
@@ -43,12 +45,18 @@ const rootRouter = {
 export const generatorDynamicRouter = (token) => {
   return new Promise((resolve, reject) => {
     loginService.getCurrentUserNav(token).then(res => {
+      console.log('res', res)
+      const { result } = res
+      const menuNav = []
       const childrenNav = []
       //      后端数据, 根级树数组,  根级 PID
-      listToTree(res, childrenNav, 0)
+      listToTree(result, childrenNav, -1)
       rootRouter.children = childrenNav
-      const routers = generator(rootRouter)
+      menuNav.push(rootRouter)
+      console.log('menuNav', menuNav)
+      const routers = generator(menuNav)
       routers.push(notFoundRouter)
+      console.log('routers', routers)
       resolve(routers)
     }).catch(err => {
       reject(err)
@@ -112,7 +120,7 @@ const listToTree = (list, tree, parentId) => {
     if (item.parentId === parentId) {
       const child = {
         ...item,
-        key: item.key | item.name,
+        key: item.key || item.name,
         children: []
       }
       // 迭代 list， 找到当前菜单相符合的所有子菜单

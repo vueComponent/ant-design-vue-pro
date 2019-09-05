@@ -370,4 +370,124 @@ const info = (options) => {
   return builder(userInfo)
 }
 
+const userNav = (options) => {
+  const nav = [
+    {
+      'name': 'dashboard',
+      'parentId': -1,
+      'id': 1,
+      'meta': {
+        'icon': 'dashboard',
+        'title': '仪表盘',
+        'show': true
+      },
+      'component': 'RouteView'
+    },
+    {
+      'name': 'analysis',
+      'parentId': 1,
+      'id': 2,
+      'meta': {
+        'title': '分析页',
+        'show': true
+      },
+      'component': 'Analysis'
+    },
+    {
+      'name': 'monitor',
+      'parentId': 1,
+      'id': 3,
+      'meta': {
+        'title': '监控页',
+        'show': true
+      },
+      'component': 'Monitor'
+    },
+    {
+      'name': 'workplace',
+      'parentId': 1,
+      'id': 7,
+      'meta': {
+        'title': '工作台',
+        'show': true
+      },
+      'component': 'Workplace'
+    },
+    {
+      'name': 'permission',
+      'parentId': 10,
+      'id': 4,
+      'meta': {
+        'title': '权限管理',
+        'show': true
+      },
+      'component': 'PermissionList'
+    },
+    {
+      'name': 'role',
+      'parentId': 10,
+      'id': 5,
+      'meta': {
+        'title': '角色管理',
+        'show': true
+      },
+      'component': 'RoleList'
+    },
+    {
+      'name': 'user',
+      'parentId': 10,
+      'id': 6,
+      'meta': {
+        'title': '用户管理',
+        'show': true
+      },
+      'component': 'UserList'
+    },
+    {
+      'name': 'system',
+      'parentId': -1,
+      'id': 10,
+      'meta': {
+        'icon': 'setting',
+        'title': '系统管理',
+        'show': true
+      },
+      'component': 'PageView'
+    },
+    {
+      'name': 'features',
+      'parentId': -1,
+      'id': 11,
+      'meta': {
+        'icon': 'ordered-list',
+        'title': '功能管理',
+        'show': true
+      },
+      'component': 'PageView'
+    },
+    {
+      'name': 'task',
+      'parentId': 11,
+      'id': 12,
+      'meta': {
+        'title': '任务列表',
+        'show': true
+      },
+      'component': 'TaskList'
+    },
+    {
+      'name': 'tag',
+      'parentId': 11,
+      'id': 13,
+      'meta': {
+        'title': '标签列表',
+        'show': true
+      },
+      'component': 'TagList'
+    }
+  ]
+  return builder(nav)
+}
+
 Mock.mock(/\/api\/user\/info/, 'get', info)
+Mock.mock(/\/api\/user\/nav/, 'get', userNav)
