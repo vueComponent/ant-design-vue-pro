@@ -1,20 +1,20 @@
 <template>
   <div class="page-header-index-wide page-header-wrapper-grid-content-main">
      <a-card :bordered="false" style="background-color: #0399EC;color:#FFFFFF">
-       <a-row :gutter="30" style="line-height: 34px;">
-         <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:20px;cursor: pointer;" @click="$router.back(-1)" /></a-col>
-         <a-col :md="4" :sm="20" style="fontSize:20px">
-           <a-icon type="credit-card" theme="filled" />
-           受访者:{{patient.name}}
-         </a-col>
-         <a-col :md="6" :sm="24" style="fontSize:20px">
-           <a-icon type="credit-card" theme="filled" style="fontSize:20px" />
-           {{patient.card}}
-         </a-col>
-         <a-col :md="13" :sm="24" style="fontSize:20px;textAlign: right;">创建时间：{{patientBasis.createDate | moment}}</a-col>
-       </a-row>
+           <a-row :gutter="30" style="line-height: 34px;">
+       <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:20px;cursor: pointer;" @click="$router.back(-1)" /></a-col>
+       <a-col :md="4" :sm="20" class="UserNameCard">
+         <my-icon type="iconshoufangzhe_huaban" />
+         受访者:{{ patient.name }}
+       </a-col>
+       <a-col :md="6" :sm="24" class="UserNameCard">   
+       <my-icon type="iconshenfenzheng_huaban" />
+         {{ patient.card }}
+       </a-col>
+       <a-col :md="13" :sm="24" style="fontSize:20px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
+     </a-row>
     </a-card>
-    <a-card :bordered="false" style="margin-top: 20px;">
+    <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 20px;padding-left: 0">
      <a-row :gutter="8">
        <a-col :span="5">
         <s-tree :treeTitle="title" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
@@ -23,7 +23,7 @@
        <a-col :span="19">
          <div class="baselineForm">
               <div style="overflow: hidden;">
-                <a-button class="btn fr" @click="showlog">导入</a-button>
+                <a-button class="btn fr" @click="">导入</a-button>
                 <a-button class="btn fr" @click="save">保存</a-button>
                 <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
               </div>
@@ -45,16 +45,6 @@
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue)" :defaultValue="moment(qu1.answers[0].elementTextValue)" />
                     <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0 && (qu1.logicValue === 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1))" v-model="qu1.elementId">
                       <a-checkbox  v-if="op.event!=='showList'" v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId" :name="qu1.basisElementCopyId+''">{{op.questionName}}</a-checkbox>
-                    </a-checkbox-group>
-                    <a-checkbox-group  v-if="qu1.hasChild > 0 && qu1.isRadio < 0 && (qu1.logicValue === 0 || qu1.basisElementId === 1) && qu1.childList[0].event === 'showList'" v-model="qu1.elementId" style="width: 80%;">
-                      <span v-for="(op, index) in qu1.childList">
-                        <a-checkbox v-if="op.event=='showList'" :name="qu1.basisElementCopyId+''"  @change="showList($event, op.event,op.questionName)" :key="index" :value="op.basisElementCopyId">{{op.questionName}}</a-checkbox>
-                         <div  v-if="op.event=='showList' && qu1.elementId.indexOf(op.basisElementCopyId) > -1&&op.questionName=='其他' "  style="display: inline-block;width: 300px;">
-                            <a-input :name="op.childList[0].basisElementCopyId+''" v-model="op.childList[0].childEleName" @blur="blurInput($event,op.childList[0])"  :addonAfter="op.childList[0].unit" :defaultValue="op.childList[0].answers && op.childList[0].answers.length && op.childList[0].answers[0].elementTextValue" style="width:240px" />
-                         </div>
-                         <add-table v-if="op.event=='showList' && qu1.elementId.indexOf(op.basisElementCopyId) > -1&&op.questionName!=='其他'"  v-model="optionDataSource[op.basisElementCopyId]" :dataSource="op.medicineAllergyList?op.medicineAllergyList:optionDataSource[op.basisElementCopyId]"></add-table>
-                         <add-table v-if="op.event=='showList' &&op.questionName=='其他'&&op.childList&&op.childList[0].childEleName!=''&& qu1.elementId.indexOf(op.basisElementCopyId) > -1"  v-model="optionDataSource[op.childList[0].parentId]" :dataSource="op.medicineAllergyList?op.medicineAllergyList:optionDataSource[op.childList[0].parentId]"></add-table>   
-                       </span>
                     </a-checkbox-group>
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio > 0">
                       <a-radio-group :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
@@ -113,7 +103,7 @@
                     </a-row>
                     <!-- 有第二层 -->
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
-                      <a-row v-for="(sub, index) in qu1.childList" :key="index" :class="{'no-border': index === qu1.childList.length - 1}" v-if="qu1.logicValue === 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1)">
+                      <a-row class="itemRow" v-for="(sub, index) in qu1.childList" :key="index" :class="{'no-border': index === qu1.childList.length - 1}" v-if="qu1.logicValue === 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1)">
                         <!-- 第二层开始 -->
                         <a-col :span="sub.questionName.length > 16 ? 24 : 6">({{sub.sort}}) {{sub.questionName}}</a-col>
                         <!-- 为了体格检查中的啰音的排版 -->
@@ -143,14 +133,14 @@
                           <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0 &&(sub.logicValue === 0 || sub.basisElementId === 1) && sub.childList[0].event !== 'showList'" v-model="sub.elementId">
                             <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementCopyId">{{subOp.questionName}}</a-checkbox>
                           </a-checkbox-group>
-                          <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0 && sub.childList[0].event === 'showList'" v-model="sub.elementId" style="width: 80%;">
+                          <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0 && (sub.logicValue === 0 || sub.basisElementId === 1) && sub.childList[0].event === 'showList'" v-model="sub.elementId" style="width: 80%;">
                            <span v-for="(subOp, index) in sub.childList">
                              <a-checkbox v-if="subOp.event=='showList'" :name="subOp.parentId+''"    @change="showList($event,subOp.event,subOp.questionName)" :key="index" :value="subOp.basisElementCopyId">{{subOp.questionName}}</a-checkbox>
-                             <div  v-if="subOp.event=='showList' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1&&subOp.questionName=='其他' "  style="display: inline-block;width: 300px;">
-                                <a-input :name="subOp.childList[0].basisElementCopyId+''" v-model="subOp.childList[0].answers && subOp.childList[0].answers.length&&subOp.childList[0].answers[0].elementTextValue" @blur="blurInput($event,subOp.childList[0])"  :addonAfter="subOp.childList[0].unit"  />
+                             <div  v-if="subOp.event=='showList' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1&&subOp.questionName=='其他' "  style="display: inline-block;width: 300px;argin-right: 10px;">
+                                <a-input :name="subOp.childList[0].basisElementCopyId+''" :defaultValue="subOp.childList[0].answers && subOp.childList[0].answers.length&&subOp.childList[0].answers[0].elementTextValue" @blur="blurInput($event,subOp.childList[0])"  :addonAfter="subOp.childList[0].unit"  />
                              </div>
                              <add-table v-if="subOp.event=='showList' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1&&subOp.questionName!=='其他'"  v-model="optionDataSource[subOp.basisElementCopyId]" :dataSource=" subOp.medicineAllergyList?subOp.medicineAllergyList:optionDataSource[subOp.basisElementCopyId]"></add-table>
-                             <add-table v-if="subOp.event=='showList' &&subOp.questionName=='其他'&&subOp.childList&&subOp.childList[0].answers!=''&& sub.elementId.indexOf(subOp.basisElementCopyId) > -1"  v-model="optionDataSource[subOp.childList[0].parentId]" :dataSource="subOp.medicineAllergyList?subOp.medicineAllergyList:optionDataSource[subOp.childList[0].parentId]"></add-table>
+                             <add-table  v-if="subOp.event == 'showList' && subOp.questionName == '其他' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1"  v-model="optionDataSource[subOp.childList[0].parentId]" :dataSource="subOp.medicineAllergyList?subOp.medicineAllergyList:optionDataSource[subOp.childList[0].parentId]"></add-table>
                            </span>
                           </a-checkbox-group>
                           <!-- 二级联动 -->
@@ -251,8 +241,8 @@
                                 <a-checkbox-group v-if="subOp.hasChild > 0 && subOp.isRadio < 0&& (subOp.logicValue === 0 || subOp.basisElementId === 1) && subOp.childList[0].event === 'showList'" v-model="subOp.elementId" style="width: 100%;">
                                   <span v-for="(secondSub, index) in subOp.childList" >
                                     <a-checkbox v-if="secondSub.event=='showList'"  :name="secondSub.parentId+''" @change="showList($event,secondSub.event,secondSub.questionName)" :key="index" :value="secondSub.basisElementCopyId">{{secondSub.questionName}}</a-checkbox>
-                                    <div  v-if="secondSub.event=='showList' && subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1&&secondSub.questionName=='其他' "  style="display: inline-block;width: 300px;">
-                                       <a-input :name="secondSub.childList[0].basisElementCopyId+''"  @blur="blurInput($event,secondSub.childList[0])"  :addonAfter="secondSub.childList[0].unit" v-model="secondSub.childList[0].answers && secondSub.childList[0].answers.length && secondSub.childList[0].answers[0].elementTextValue" />
+                                    <div  v-if="secondSub.event=='showList' && subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1&&secondSub.questionName=='其他' "  style="display: inline-block;width: 300px;margin-right: 10px;">
+                                       <a-input :name="secondSub.childList[0].basisElementCopyId+''"  @blur="blurInput($event,secondSub.childList[0])"  :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].answers && secondSub.childList[0].answers.length && secondSub.childList[0].answers[0].elementTextValue" />
                                     </div>
                                     <add-table v-if="secondSub.event=='showList' && subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1&&secondSub.questionName!=='其他'"  v-model="optionDataSource[secondSub.basisElementCopyId]" :dataSource="secondSub.medicineAllergyList?secondSub.medicineAllergyList:optionDataSource[secondSub.basisElementCopyId]"></add-table>
                                     <add-table v-if="secondSub.event=='showList' &&secondSub.questionName=='其他'&& subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1"  v-model="optionDataSource[secondSub.childList[0].parentId]" :dataSource="secondSub.medicineAllergyList?secondSub.medicineAllergyList:optionDataSource[secondSub.childList[0].parentId]"></add-table>
@@ -264,7 +254,7 @@
                                   <a-row v-for="(thirdSub, index) in secondSub.childList" class="no-border">
                                     <a-col :span="6" v-if="thirdSub.questionName">{{thirdSub.questionName}}</a-col>
                                     <a-col :span="8" v-if="thirdSub.isWrite > 0">
-                                      <a-input style="width: 240px;" :name="thirdSub.basisElementCopyId+''" :defaultValue="thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" v-if="!thirdSub.event" :addonAfter="thirdSub.unit"></a-input>
+                                      <a-input style="width: 240px;" :name="thirdSub.basisElementCopyId+''" :defaultValue="thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" v-if="!thirdSub.event && thirdSub.event == 'showList'" :addonAfter="thirdSub.unit"></a-input>
                                       <a-date-picker v-if="thirdSub.event === 'showDate' && thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" :name="thirdSub.basisElementCopyId+''" :defaultValue="moment(thirdSub.answers[0].elementTextValue)" style="width:240px" />
                                       <a-date-picker v-if="thirdSub.event === 'showDate' && (!thirdSub.answers || !thirdSub.answers.length || !thirdSub.answers[0].elementTextValue)" :name="thirdSub.basisElementCopyId+''" style="width:240px" />
                                     </a-col>
@@ -357,11 +347,13 @@ import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
 import AddTable from "./model/table"
+import { MyIcon } from '@/components/_util/util';
 export default {
   name: 'success',
   components: {
     STree,
-    AddTable
+    AddTable,
+    MyIcon
   },
   data() {
     return {
@@ -403,6 +395,9 @@ export default {
         2727: '', 
         1160: '' ,
         4207: ''
+      },
+      bodyStyle: {
+        'padding-left': '0px'
       }
     }
   },
@@ -451,22 +446,6 @@ export default {
       }
        
     },
-    showlog(){
-      console.log(this.optionDataSource);
-        const allergy=[]
-       for(var key in this.optionDataSource){
-          _.each(this.optionDataSource[key], function(item){
-            allergy.push({
-              basisElementId:key,
-              microbeName:item.microbeName,
-              antibiotic:item.antibiotic,
-              antibioticResult:item.antibioticResult,
-              allergyValue:item.allergyValue
-            })
-          })
-      }
-      console.log(allergy);
-    },
     getMedicineAllergyList(value,index){
        const that = this
        const params = new URLSearchParams()
@@ -485,7 +464,6 @@ export default {
       }) 
     },
     blurInput(e,item){
-      console.log("e.target.value",e.target.name)
        this.getMedicineAllergyList(e.target.value,item.parentId)
     },
     handleClick(e) {
@@ -853,112 +831,157 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.clear{
+ .UserNameCard{
+   font-size: 20px;
+   .anticon{
+         font-size: 26px;
+    vertical-align: text-bottom;
+        position: relative;
+    left: -5px;
+   }
+ }
+.clear {
   clear: both;
 }
 .ant-col-4 .ant-calendar-picker,
-.ant-col-6 .ant-calendar-picker{
+.ant-col-6 .ant-calendar-picker {
   width: 100%;
 }
-.ant-checkbox-wrapper + .ant-checkbox-wrapper{
+.ant-checkbox-wrapper + .ant-checkbox-wrapper {
   margin-left: 0;
 }
-// /deep/ .ant-form label,
-// .ant-col-7,
-// .ant-col-8,
-// .ant-col-6,
-// .ant-col-5,
-// .ant-col-4{
-//   font-size: 16px;
-// }
-/deep/ .ant-row{
+
+/deep/.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #CFF4FF;
+}
+
+
+/deep/.ant-menu-vertical .ant-menu-item:after, .ant-menu-vertical-left .ant-menu-item:after, .ant-menu-vertical-right .ant-menu-item:after, .ant-menu-inline .ant-menu-item:after{
+      border-right: 6px solid #1890ff;
+}
+/deep/ .ant-row {
   clear: both;
 }
-.page-header-index-wide{
+.page-header-index-wide {
   /deep/ .ant-card-wider-padding .ant-card-body {
     padding: 18px 32px;
   }
-  /deep/ .tree-title{
-    border-right: 1px solid #E8E8E8;
-    color: #25AEFE;
+  /deep/ .tree-title {
+    border-right: 1px solid #e8e8e8;
+    color: #25aefe;
     font-size: 22px;
-    padding-left: 55px;
+    padding-left: 70px;
     padding-top: 5px;
     padding-bottom: 10px;
-    background-image:url(../../../assets/treeTop.png) ;
+    background-image: url(../../../assets/treeTop.png);
     background-repeat: no-repeat;
+    border-bottom: 1px solid #eee;
+    padding-left: 20p;
+    background-position-x: 15px;
+    padding-bottom: 26px;
   }
-  /deep/ .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title,.ant-menu .ant-menu-item{
+  /deep/ .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title,
+  .ant-menu .ant-menu-item {
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #eeeeee;
+    margin: 0;
+  }
+  /deep/ .ant-menu-submenu-title {
     height: 50px;
     line-height: 50px;
   }
-  /deep/ .ant-menu-submenu-title{
-    height: 50px;
-    line-height: 50px;
-  }
-  /deep/ .ant-menu-item{
-    .ant-menu-item:hover, .ant-menu-item-active, .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active, .ant-menu-submenu-title:hover {
-        background-color: #EAF2FD;
+  /deep/ li.ant-menu-submenu.ant-menu-submenu-inline.ant-menu-submenu-open {
+    background-color: rgba(245,251,255);
+    .ant-menu.ant-menu-inline.ant-menu-sub {
+      background-color: rgba(245,251,255);
+      li {
+        border-bottom: none;
+            height: 40px;
+        line-height: 40px;
+      }
     }
-    .placeholderI{
+  }
+    /deep/ li.ant-menu-submenu.ant-menu-submenu-inline {
+    .ant-menu.ant-menu-inline.ant-menu-sub {
+      li {
+        border-bottom: none;
+        height: 40px;
+        line-height: 40px;
+      }
+    }
+  }
+  /deep/ .ant-menu-item {
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #eeeeee;
+    margin: 0;
+    .ant-menu-item:hover,
+    .ant-menu-item-active,
+    .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+    .ant-menu-submenu-active,
+    .ant-menu-submenu-title:hover {
+      background-color: #eaf2fd;
+    }
+    .placeholderI {
       display: inline-block;
       width: 27px;
     }
-    .anticon.anticon-check-circle{
-        font-size: 18px;
-        color: #8AC51B;
-    }
-    .anticon.anticon-clock-circle{
+    .anticon.anticon-check-circle {
       font-size: 18px;
-      color: #06A0E2;
+      color: #8ac51b;
     }
-    .treeSubTitle{
+    .anticon.anticon-clock-circle {
+      font-size: 18px;
+      color: #06a0e2;
+    }
+    .treeSubTitle {
       font-size: 16px;
       margin-left: 10px;
       display: inline-block;
       width: 140px;
     }
-    .treeSubPercentage{
+    .treeSubPercentage {
       font-size: 16px;
       margin-left: 10px;
     }
   }
-  /deep/ .ant-menu-submenu{
-    &.ant-menu-submenu-inline{
-      .treeSubTitle{
-         font-size: 16px;
-         margin-left: 10px;
-         display: inline-block;
-         width: 140px;
+  /deep/ .ant-menu-submenu {
+    &.ant-menu-submenu-inline {
+      .treeSubTitle {
+        font-size: 16px;
+        margin-left: 10px;
+        display: inline-block;
+        width: 140px;
       }
-      .treeSubPercentage{
+      .treeSubPercentage {
         font-size: 16px;
         margin-left: 10px;
       }
-      .action{
+      .action {
         font-size: 18px;
-        &.anticon-check-circle{
-          color: #8AC51B;
+        &.anticon-check-circle {
+          color: #8ac51b;
         }
-        &.anticon-clock-circle{
-          color: #06A0E2;
+        &.anticon-clock-circle {
+          color: #06a0e2;
         }
       }
-      .placeholderI{
+      .placeholderI {
         display: inline-block;
         width: 27px;
       }
     }
   }
-  .baselineForm{
-    .fr{
+  .baselineForm {
+    .fr {
       float: right;
     }
-    .btn{
+    .btn {
       margin-right: 10px;
     }
     padding: 20px;
-    .ant-row{
+    .ant-row {
       padding-bottom: 10px;
       padding-top: 10px;
       margin-bottom: 0px;
@@ -968,30 +991,36 @@ export default {
         padding-top: 0;
         padding-bottom: 0;
       }
-    }
-    /deep/ .ant-form-item-label{
-      text-align: left;
-      label:after{
-        content: ''
+      &:hover {
       }
-      &.ant-col-md-24 label{
+    }
+    /deep/ .ant-form-item-label {
+      text-align: left;
+      label:after {
+        content: '';
+      }
+      &.ant-col-md-24 label {
         display: block;
-        background-color: #F7F8F8;
+        background-color: #f7f8f8;
         font-weight: bold;
         font-size: 16px;
         color: #231815;
       }
     }
-    .formSubtitle{
-        height: 50px;
-        line-height: 50px;
-        font-weight: bold;
-        font-size: 16px;
-        padding-left: 10px;
-        margin-bottom: 0px;
-        background: #FAFCFD;
-        border-bottom: 1px solid #F3F3F3;
+    .formSubtitle {
+      height: 50px;
+      line-height: 50px;
+      font-weight: bold;
+      font-size: 16px;
+      padding-left: 10px;
+      margin-bottom: 0px;
+      background: #fafcfd;
+      border-bottom: 1px solid #f3f3f3;
+    }
+    .itemRow:hover {
+      background-color: #e6f7ff;
     }
   }
 }
 </style>
+

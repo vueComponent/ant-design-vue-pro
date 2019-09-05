@@ -1,44 +1,44 @@
 <template>
-  <div style="margin-bottom:20px">
-    <p style="margin-top: 30px;">
-         <a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button>
-    </p>
-  <a-table rowKey="keyW" size="middle"  :pagination="pagination" :columns="columns" :dataSource="data" >
-    <template v-for="col in ['microbeName', 'antibiotic', 'allergyValue']" :slot="col" slot-scope="text, record, index">
-      <div :key="col">
-        <a-input v-if="record.editable" style="margin: -5px 0" :value="text" @change="e => handleChange(e.target.value, record.keyW, col)" />
-        <template v-else>
-          {{ text }}
+  <span>
+    <a-icon type="edit" @click="showMicroorganism" class="mcroorganism"/>
+    <a-modal title="药敏检查" width="800px" :visible="visible" :footer="null"  @cancel="handleCancel" :bodyStyle="bodyStyle">
+      <p ><a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button></p>
+      <a-table rowKey="keyW" size="middle" :pagination="pagination" :columns="columns" :dataSource="data">
+        <template v-for="col in ['microbeName', 'antibiotic', 'allergyValue']" :slot="col" slot-scope="text, record, index">
+          <div :key="col" 
+            <a-input v-if="record.editable" style="margin: -5px 0;" :value="text" @change="e => handleChange(e.target.value, record.keyW, col)" />
+            <template v-else>
+              {{ text }}
+            </template>
+          </div>
         </template>
-      </div>
-    </template>
-    <template slot="antibioticResult"  slot-scope="text, record, index" >
-      <div>
-       <a-select defaultValue="耐药"    v-if="record.editable" style="margin: -5px 0" :value="text" @change="value => handleSelectChange(value, record.keyW)">
-          <a-select-option value="耐药">耐药</a-select-option>
-          <a-select-option value="敏感">敏感</a-select-option>
-          <a-select-option value="未做" >未做</a-select-option>
-        </a-select>
-       <template v-else>
-         {{ text }}
-       </template>
-     </div>
-    </template>
-    <template slot="operation" slot-scope="text, record, index">
-      <div class="editable-row-operations">
-        <span v-if="record.editable">
-          <a @click="() => save(record.keyW)">保存</a>
-          <a-popconfirm title="确定取消?" @confirm="() => cancel(record.keyW)"><a>取消</a></a-popconfirm>
-        </span>
-        <span v-else>
-          <a @click="() => edit(record.keyW)">编辑</a>
-          <a-popconfirm v-if="data.length" title="确定删除?" @confirm="() => onDelete(record.keyW)"><a href="javascript:;">删除</a></a-popconfirm>
-        </span>
-      </div>
-    </template>
-  </a-table>
-  </div>
-
+        <template slot="antibioticResult" slot-scope="text, record, index">
+          <div>
+            <a-select defaultValue="耐药" v-if="record.editable" style="margin: -5px 0;width: 100%" :value="text" @change="value => handleSelectChange(value, record.keyW)">
+              <a-select-option value="耐药">耐药</a-select-option>
+              <a-select-option value="敏感">敏感</a-select-option>
+              <a-select-option value="未做">未做</a-select-option>
+            </a-select>
+            <template v-else>
+              {{ text }}
+            </template>
+          </div>
+        </template>
+        <template slot="operation" slot-scope="text, record, index">
+          <div class="editable-row-operations">
+            <span v-if="record.editable">
+              <a @click="() => save(record.keyW)">保存</a>
+              <a-popconfirm title="确定取消?" @confirm="() => cancel(record.keyW)"><a>取消</a></a-popconfirm>
+            </span>
+            <span v-else>
+              <a @click="() => edit(record.keyW)">编辑</a>
+              <a-popconfirm v-if="data.length" title="确定删除?" @confirm="() => onDelete(record.keyW)"><a href="javascript:;">删除</a></a-popconfirm>
+            </span>
+          </div>
+        </template>
+      </a-table>
+    </a-modal>
+  </span>
 </template>
 <script>
 const columns = [
@@ -59,7 +59,8 @@ const columns = [
     dataIndex: 'antibioticResult',
     width: '20%',
     scopedSlots: { customRender: 'antibioticResult' }
-  },{
+  },
+  {
     title: '药敏结果',
     dataIndex: 'allergyValue',
     width: '20%',
@@ -73,49 +74,58 @@ const columns = [
   }
 ];
 export default {
-   model: {
-      prop: 'transfer', //v-model绑定的数据，相当于别名，可以和父组件中的变量名称不一样。
-      event: 'mySign' // 自定义组件发送的信号名称。
-   },
-  props:{
-     transfer:'',
-     dataSource:{
+  model: {
+    prop: 'transfer', //v-model绑定的数据，相当于别名，可以和父组件中的变量名称不一样。
+    event: 'mySign' // 自定义组件发送的信号名称。
+  },
+  props: {
+    transfer: '',
+    dataSource: {
       type: Array,
       default: () => {
-        return []
+        return [];
       }
-    },
+    }
   },
   data() {
     this.cacheData = this.dataSource.map(item => ({ ...item }));
     return {
-      pagination:false,
-      data:this.dataSource,
+      pagination: false,
+      data: this.dataSource,
       columns,
-      count: this.dataSource.length+1,
-      vitamin:"",
+      count: this.dataSource.length + 1,
+      vitamin: '',
+      visible:false,
+        bodyStyle: {
+      height: '600px',
+      overflow: 'auto'
+    },
     };
   },
   methods: {
+    showMicroorganism(){
+       this.visible = true
+    },
+    handleCancel(){
+      this.visible=false
+    },
     handleChange(value, key, column) {
-      console.log(column)
       const newData = [...this.data];
       const target = newData.filter(item => key === item.keyW)[0];
       if (target) {
         target[column] = value;
         this.data = newData;
       }
-    }, 
-    handleSelectChange(value,key,column){
-     const newData = [...this.data];
+    },
+    handleSelectChange(value, key, column) {
+      const newData = [...this.data];
       const target = newData.filter(item => key === item.keyW)[0];
       if (target) {
         target['antibioticResult'] = value;
         this.data = newData;
       }
-    },   
+    },
     edit(key) {
-      console.log("key",key)
       const newData = [...this.data];
       const target = newData.filter(item => key === item.keyW)[0];
       if (target) {
@@ -131,11 +141,10 @@ export default {
         this.data = newData;
         this.cacheData = newData.map(item => ({ ...item }));
       }
-      
+
       this.$emit('mySign', this.data);
     },
     cancel(key) {
-      console.log(key)
       const newData = [...this.data];
       const target = newData.filter(item => key === item.keyW)[0];
       if (target) {
@@ -144,45 +153,55 @@ export default {
         this.data = newData;
       }
     },
-    onDelete (key) {
-      console.log(key)
-      const newData = [...this.data]
-      this.data = newData.filter(item => item.key !== key)
-      
+    onDelete(key) {
+      console.log("key",key)
+      const newData = [...this.data];
+      this.data = newData.filter(item => item.keyW !== key);
+      console.log("this.data",this.data)
+      console.log("newData",newData)
+
       this.$emit('mySign', this.data);
-    },   
-    handleAdd () {
-      const { count, data } = this
+    },
+    handleAdd() {
+      const { count, data } = this;
       const newData = {
-         keyW:count+1,
-        "antibiotic": "",
-        "microbeName": this.vitamin,
-        "antibioticResult":'',
-        "allergyValue":''
-      }
-      this.data = [...data, newData]
-      this.count = count + 1
-      
+        keyW: count + 1,
+        antibiotic: '',
+        microbeName: this.vitamin,
+        antibioticResult: '',
+        allergyValue: ''
+      };
+      this.data = [...data, newData];
+      this.count = count + 1;
+
       this.$emit('mySign', this.data);
     }
   },
-   watch:{
-     dataSource:{
-       immediate:true,
-       handler(val){
-          this.data=val
-          console.log("val",val)
-          this.vitamin=val[0]?val[0].microbeName:'';
-          this.count=val.length>0?val[val.length-1].keyW:0;
-          this.$emit('mySign', this.data);
-          console.log("this.count",this.count)
-       }
-     }
-   }
+  watch: {
+    dataSource: {
+      immediate: true,
+      handler(val) {
+        this.data = val;
+        console.log('val', val);
+        this.vitamin = val[0] ? val[0].microbeName : '';
+        this.count = val.length > 0 ? val[val.length - 1].keyW : 0;
+        this.$emit('mySign', this.data);
+        console.log('this.count', this.count);
+      }
+    }
+  }
 };
 </script>
-<style scoped>
+<style lang="less" scoped>
 .editable-row-operations a {
   margin-right: 8px;
+}
+.mcroorganism{
+  font-size: 18px;
+  margin-right: 20px;
+  &:hover{
+    cursor: pointer;
+    color: #0399EC;
+  }  
 }
 </style>
