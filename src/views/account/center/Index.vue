@@ -28,7 +28,22 @@
                 <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
               </div>
               <a-form :form="form">
-                <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
+                <a-form-item>
+                  <div v-if="question.name" class="question-title" >{{question.name}}</div>
+                  <div v-if="question.remark" class="question-des">{{question.remark}}</div>
+                </a-form-item>
+                <div v-for="item in listArr">
+                  <div class="question-t">{{item.name}}</div><br />
+                  <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
+                    <p v-if="qu1.type == 5">{{qu1.name}}</p>
+                    <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" />
+                    <a-radio-group v-if="qu1.type === 1">
+                      <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.sort">{{item.name}}</a-radio>
+                    </a-radio-group>
+                  </a-form-item>
+                </div>
+                
+                <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + (qu1.questionName || qu1.name)]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
                     <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
                       <a-radio :value="1">是</a-radio>
                       <a-radio :value="-1">否</a-radio>
@@ -250,6 +265,8 @@
                         </a-col>
                       </a-row>
                     </div>
+                    <!-- 问卷调查 -->
+                   
                 </a-form-item>
               </a-form>
          </div>         
@@ -262,7 +279,7 @@
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore } from '@/api/basis'
+import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
@@ -305,6 +322,9 @@ export default {
       patient: {},
       patientBasis: {},
       list: [],
+      listArr: [],
+      list1: [],
+      question:{},
       patientBasisId: this.$route.params.id,
       basisMaskId: undefined,
       validateFlag: false,
@@ -312,7 +332,10 @@ export default {
         1208: '',
         2727: '', 
         1160: '' 
-      }
+      },
+      disBlock :{
+        display: 'block',
+      },
     }
   },
   beforeCreate (){
@@ -432,15 +455,32 @@ export default {
       }
     },
     getElementsAnswer (){
-      var that = this
-      var params = new URLSearchParams()
-      params.append('basisMaskId', this.basisMaskId)
-      params.append('patientBasisId', this.patientBasisId)
-      getElementsAnswer(params)
-      .then(res => {
-        that.list = that.initList(res.data)
-        // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
-      })
+      var that = this;
+      var params = new URLSearchParams();
+      if (this.basisMaskId > 30) {
+        that.list = [];
+        params.append('questionId', this.basisMaskId)
+        getAllQuestionList(params)
+        .then(res => {
+          res.data.topTitles.forEach((item,index,arr)=> {
+            that.listArr = arr;
+         })
+         that.question = that.initList(res.data.question);
+          // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
+        })
+        
+      }else{
+        that.question = {};
+        that.listArr = [];
+        params.append('basisMaskId', this.basisMaskId)
+        params.append('patientBasisId', this.patientBasisId)
+        getElementsAnswer(params)
+        .then(res => {
+          that.list = that.initList(res.data)
+          // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
+        })
+      }
+     
     },
     generateAnswers (){
       var result = []
@@ -851,5 +891,22 @@ export default {
         border-bottom: 1px solid #F3F3F3;
     }
   }
+}
+.question-title{
+  text-align: center;
+  font-size: 22px;
+  color: #3398DC;
+}
+.question-des{
+  font-size: 16px;
+  // border: 1px solid #91D5FF ;
+  // border-radius: 3px;
+  // background: lightblue;
+  padding:0 10px ;
+}
+.question-t{
+  font-size: 18px;
+  line-height: 40px;
+  font-weight: 700;
 }
 </style>
