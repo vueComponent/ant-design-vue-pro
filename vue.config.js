@@ -6,13 +6,32 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
+const assetsCDN = {
+  css: [],
+  // https://unpkg.com/browse/vue@2.6.10/
+  js: [
+    '//unpkg.com/vue@2.6.10/dist/vue.min.js',
+    '//unpkg.com/vue-router@3.0.6/dist/vue-router.min.js',
+    '//unpkg.com/vuex@3.1.1/dist/vuex.min.js',
+    '//unpkg.com/axios@0.19.0/dist/axios.min.js'
+  ]
+}
+
 // vue.config.js
 const vueConfig = {
   configureWebpack: {
+    // webpack plugins
     plugins: [
       // Ignore all locale files of moment.js
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-    ]
+    ],
+    // webpack build externals
+    externals: {
+      vue: 'Vue',
+      'vue-router': 'VueRouter',
+      vuex: 'Vuex',
+      axios: 'axios'
+    }
   },
 
   chainWebpack: (config) => {
@@ -34,6 +53,12 @@ const vueConfig = {
       .options({
         name: 'assets/[name].[hash:8].[ext]'
       })
+
+    // assets require on cdn
+    config.plugin('html').tap(args => {
+      args[0].cdn = assetsCDN
+      return args
+    })
   },
 
   css: {
