@@ -6,8 +6,11 @@ import { VueAxios } from './axios'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 // 创建 axios 实例
+console.log(process.env.NODE_ENV)
+console.log(process.env.NODE_ENV === 'production')
+console.log(process.env.NODE_ENV === 'production' ? '' : '/api')
 const service = axios.create({
-  baseURL: '/api', // api base_url
+  baseURL: process.env.NODE_ENV === 'production' ? 'http://172.16.1.11:9997/zklm-web/' : '/api', // api base_url
   timeout: 6000 // 请求超时时间
 })
 

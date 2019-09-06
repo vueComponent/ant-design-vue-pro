@@ -7,17 +7,13 @@
           <span>上海肺科医院</span>
         </span>
         <a-menu slot="overlay" class="user-dropdown-menu-wrapper">
-          <a-menu-item key="0">
-            <router-link :to="{ name: 'center' }">
+          <a-menu-item key="0" @click="$refs.userCenterModal.showModal()">
               <a-icon type="user"/>
               <span>个人中心</span>
-            </router-link>
           </a-menu-item>
-          <a-menu-item key="1">
-            <router-link :to="{ name: 'settings' }">
+          <a-menu-item key="1"  @click="$refs.changePassword.showModal()">
               <a-icon type="setting"/>
-              <span>账户设置</span>
-            </router-link>
+              <span>修改密码</span>
           </a-menu-item>
           <a-menu-divider/>
           <a-menu-item key="2">
@@ -29,17 +25,22 @@
         </a-menu>
       </a-dropdown>
     </div>
+    <user-center ref="userCenterModal"></user-center>
+    <change-password ref="changePassword"></change-password>
   </div>
 </template>
 
 <script>
 import NoticeIcon from '@/components/NoticeIcon'
 import { mapActions, mapGetters } from 'vuex'
-
+import userCenter from './userCenter'
+import changePassword from './userCenter'
 export default {
   name: 'UserMenu',
   components: {
-    NoticeIcon
+    NoticeIcon,
+    userCenter,
+    changePassword
   },
   methods: {
     ...mapActions(['Logout']),
@@ -63,6 +64,9 @@ export default {
         onCancel () {
         }
       })
+    },
+    userCenter(){
+      // thi.userCenterModal
     }
   }
 }

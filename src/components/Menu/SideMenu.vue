@@ -1,7 +1,7 @@
 <template>
   <a-layout-sider
     :class="['sider', isDesktop() ? null : 'shadow', theme, fixSiderbar ? 'ant-fixed-sidemenu' : null ]"
-    width="256px"
+    width="220px"
     :collapsible="collapsible"
     v-model="collapsed"
     :trigger="null">
