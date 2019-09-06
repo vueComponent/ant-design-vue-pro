@@ -1,5 +1,5 @@
 import { Menu, Icon, Input } from 'ant-design-vue'
-
+import _ from 'lodash'
 const { Item, ItemGroup, SubMenu } = Menu
 const { Search } = Input
 
@@ -38,7 +38,20 @@ export default {
     handleTitleClick (...args) {
       this.$emit('titleClick', { args })
     },
-
+    onOpenChange (openKeys) {
+      const latestOpenKey = openKeys.find(key => this.localOpenKeys.indexOf(key) === -1)
+      const dataSource=[];
+        _.each(this.dataSource,function(item) {
+          if(item.childList){
+            dataSource.push(item.basisMarkId)
+          }
+       }) 
+      if (dataSource.indexOf(latestOpenKey) === -1) {
+        this.localOpenKeys = openKeys
+      } else {
+        this.localOpenKeys = latestOpenKey ? [latestOpenKey] :[]
+      }
+    },
     renderSearch () {
       return (
         <Search
@@ -121,7 +134,8 @@ export default {
   render () {
     const { dataSource, search, treeTitle } = this.$props
 
-    // this.localOpenKeys = openKeys.slice(0)
+   //  // this.localOpenKeys =this.openKeys.slice(0)
+   console.log("确定",this.localOpenKeys)
     const list = dataSource.map(item => {
       return this.renderItem(item)
     })
@@ -130,7 +144,7 @@ export default {
       <div class="tree-wrapper">
         { search ? this.renderSearch() : null }
         <div class="tree-title">{ treeTitle }</div>
-        <Menu mode="inline" inlineIndent={0} class="custom-tree" {...{ on: { click: item => this.$emit('click', item), 'update:openKeys': val => { this.localOpenKeys = val } } }} openKeys={this.localOpenKeys}>
+        <Menu mode="inline" inlineIndent={0} class="custom-tree"  {...{ on: { click: item => this.$emit('click', item),openChange:this.onOpenChange } }} openKeys={this.localOpenKeys}>
           { list }
         </Menu>
       </div>

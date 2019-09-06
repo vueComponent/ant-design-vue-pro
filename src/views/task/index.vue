@@ -127,48 +127,51 @@ export default {
           title: '预警',
           dataIndex: 'warnStatus',
           scopedSlots: { customRender: 'warnStatus' },
-          width:"200px"
+          fixed:"left",
+          width:"50px"
         },
         {
           title: '任务编号',
           dataIndex: 'fileCode',
-            width:"200px"
+           fixed:"left",
+            width:"120px"
         },
         {
           title: '患者姓名',
           dataIndex: 'patientName',
           scopedSlots: { customRender: 'name' },
-             width: '400px',
+           fixed:"left",
+             width: '100px',
         },
         {
           title: '身份证号',
           dataIndex: 'card',
-               width: '400px',
+               width: '200px',
         },{
           title: '联系电话',
           dataIndex: 'telephone',
-               width: '400px',
+               width: '150px',
         },
         {
           title: '创建日期',
           dataIndex: 'createDate',
-              width: '400px',
+              width: '100px',
         },
          {
           title: '到期时间',
           dataIndex: 'planDate',
-                width: '400px',
+                width: '100px',
         },
         {
           title: '任务状态',
           dataIndex: 'executeStatus',
           scopedSlots: { customRender: 'executeStatus' },
-              width: '400px',
+              width: '80px',
         },
         {
           title: '操作',
           dataIndex: 'action',
-          width: '140px',
+          width: '150px',
            fixed: 'right',
           scopedSlots: { customRender: 'action' }
         }
@@ -194,7 +197,10 @@ export default {
       
       selectedRowKeys: [],
       selectedRows: [],
-      scroll:{x:"110%",y:0},
+      scroll:{
+     x:"120%",
+     y:'350px'
+   },
       // custom table alert & rowSelection
       options: {
         alert: {

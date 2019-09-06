@@ -16,17 +16,17 @@
     </a-card>
     <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 20px;padding-left: 0">
      <a-row :gutter="8">
-       <a-col :span="5">
+       <a-col :span="5" style="overflow: auto;height: 350px;">
         <s-tree :treeTitle="title" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
         </s-tree>
        </a-col>
        <a-col :span="19">
+         <div style="overflow: hidden;">
+           <a-button class="btn fr" @click="">导入</a-button>
+           <a-button class="btn fr" @click="save">保存</a-button>
+           <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
+         </div>
          <div class="baselineForm">
-              <div style="overflow: hidden;">
-                <a-button class="btn fr" @click="">导入</a-button>
-                <a-button class="btn fr" @click="save">保存</a-button>
-                <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
-              </div>
               <a-form :form="form">
                 <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
                     <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
@@ -360,7 +360,7 @@ export default {
       optionDataSource:[],
       checkedList:[],
       title: '',
-      openKeys: ['key-01'],
+      openKeys: [3],
       orgTree: [],
       labelColHor: {
         xs: { span: 24 },
@@ -973,13 +973,16 @@ export default {
       }
     }
   }
+  .fr {
+    float: right;
+  }
+  .btn {
+    margin-right: 10px;
+  }
   .baselineForm {
-    .fr {
-      float: right;
-    }
-    .btn {
-      margin-right: 10px;
-    }
+    height: 350px;
+    overflow: auto;
+
     padding: 20px;
     .ant-row {
       padding-bottom: 10px;

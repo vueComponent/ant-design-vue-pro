@@ -83,7 +83,7 @@ export default {
       centered: true,
       destroyOnClose: true,
       bodyStyle: {
-        height: '600px',
+        height: '500px',
         overflow: 'auto'
       },
       form: this.$form.createForm(this),

@@ -59,3 +59,12 @@ export function get2step (parameter) {
     data: parameter
   })
 }
+
+export function getDetailById (parameter) {
+  return axios({
+    url: '/login/getDetailById',
+    method: 'post',
+    params: parameter
+  })
+}
+

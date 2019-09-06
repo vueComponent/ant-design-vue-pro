@@ -121,7 +121,7 @@ export default {
       containerTplTooltip: `<div class="g2-tooltip"><ul class="g2-tooltip-list"></ul></div>`,
       itemTplTooltip: '<li data-index={index}><span style="color:{color}">{name}:</span>{value}</li>',
       containerTplLegend: `<div class="g2-legend"> <table class="g2-legend-list"></table> </div>`,
-      color: ['provinceName', ['#67b7dc', '#84b761', '#fdd400', '#cc4748', '#cd82ad', '#2f4074', '#448e4d', '#b7b83f', '#b9783f']],
+      color: ['provinceName', ['#9760E3', '#3CA0FE', '#38CBCB', '#4FCB74', '#F9D339', '#F1647C']],
     };
   },
   created(){

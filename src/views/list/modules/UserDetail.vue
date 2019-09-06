@@ -154,7 +154,7 @@ export default {
       maskClosable: false,
       destroyOnClose: true,
       bodyStyle: {
-        height: '600px',
+        height: '500px',
         overflow: 'auto'
       }
     };

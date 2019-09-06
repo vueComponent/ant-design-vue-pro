@@ -50,7 +50,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="default"  rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="default" :scroll="scroll"  rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="name" slot-scope="text, record" @click="showUser(record)">
         <p class="userName">{{ text }}</p>
       </span>
@@ -133,25 +133,33 @@ export default {
       columns: [
         {
           title: '档案号',
-          dataIndex: 'code'
+            width:"150px",
+            fixed: 'left',
+          dataIndex: 'fileCode'
+          
         },
         {
           title: '患者姓名',
           dataIndex: 'name',
+           width:"150px",
+           fixed: 'left',
           scopedSlots: { customRender: 'name' }
         },
         {
           title: '身份证号',
+          width:"180px",
           dataIndex: 'card'
         },
         {
           title: '创建日期',
           dataIndex: 'createDate',
+             width:"180px",
           customRender: createDate => moment(createDate).format('YYYY-MM-DD HH:mm:ss')
         },
         {
           title: '访视状态',
           dataIndex: 'visit',
+           width:"100px",
           scopedSlots: { customRender: 'visit' }
         },
         {
@@ -162,7 +170,8 @@ export default {
         {
           title: '操作',
           dataIndex: 'action',
-          width: '200px',
+          width: '150px',
+         fixed: 'right',
           scopedSlots: { customRender: 'action' }
         }
       ],
@@ -187,6 +196,10 @@ export default {
           selectedRowKeys: this.selectedRowKeys,
           onChange: this.onSelectChange
         }
+      },
+      scroll:{
+        x:"150%",
+        y:'350px'
       },
       optionAlertShow: false,
       form: this.$form.createForm(this),

@@ -101,15 +101,8 @@
         </a-card>
       </a-col>
       <a-col :sm="48" :md="24" :xl="12" :style="{ marginBottom: '24px' }">
-        <a-card :loading="loading" title="我的工作1">
+        <a-card :loading="loading" title="病例省份占比">
           <div>
-            <!--            <v-chart :force-fit="true" :height="262" :data="pieData" :scale="pieScale">
-                <v-tooltip :showTitle="true" dataKey="item*percent" />
-                <v-axis />
-                <v-legend dataKey="item"/>
-                <v-pie position="percent" color="item" :vStyle="pieStyle" />
-                <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
-              </v-chart> -->
             <pie></pie>
           </div>
         </a-card>

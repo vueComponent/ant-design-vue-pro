@@ -34,7 +34,7 @@
 import NoticeIcon from '@/components/NoticeIcon'
 import { mapActions, mapGetters } from 'vuex'
 import userCenter from './userCenter'
-import changePassword from './userCenter'
+import changePassword from './changePassword'
 export default {
   name: 'UserMenu',
   components: {
