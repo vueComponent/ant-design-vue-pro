@@ -28,7 +28,7 @@
          </div>
          <div class="baselineForm">
               <a-form :form="form">
-                <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
+                <a-form-item v-if="patientBasis.type === 1 || patientBasis.type === 3" v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
                     <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
                       <a-radio :value="1">是</a-radio>
                       <a-radio :value="-1">否</a-radio>
@@ -117,7 +117,7 @@
                             <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && (!sub.answers || sub.answers.length === 0 || sub.answers[0].elementTextValue === '')" :name="sub.basisElementCopyId+''" style="width:240px" />
                             <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :name="sub.basisElementCopyId+''" :defaultValue="moment(sub.answers[0].elementTextValue)" style="width:240px" />
                           </a-col>
-                          <!-- <br v-if="sub.isWrite > 0"> -->
+                          <br v-if="sub.isWrite > 0">
                           <a-radio-group v-if="sub.simple === 1" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
                             <a-radio :value="1">是</a-radio>
                             <a-radio :value="-1">否</a-radio>
@@ -217,10 +217,10 @@
                             <a-col :span="3" v-if="sub.basisElementId === secondSub.basisElementId">{{secondSub.childList[0].questionName}}</a-col>
                             <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].answers && secondSub.childList[0].answers.length && secondSub.childList[0].answers[0].elementTextValue" :name="secondSub.childList[0].basisElementCopyId+''" style="width:240px" /></a-col>
                           </a-row>
-                          <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (sub.logicValue === 0 || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList" :class="{'ant-col-pull-8': subOp.level > 3 || subOp.display > 0, 'no-border': index === sub.childList.length - 1}">
+                          <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (sub.logicValue === 0 || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList" :class="{'ant-col-pull-6': subOp.level > 3 || subOp.display > 0, 'no-border': index === sub.childList.length - 1}">
                             <!-- <br> -->
                               <!-- 调脂那一层,如果是紧跟后面的单选框或者输入框就占8格；否则就是子问题，占12格 -->
-                              <a-col :span="subOp.simple > 0 || subOp.isWrite > 0 ? 6 : 12">{{subOp.questionName}}</a-col>
+                              <a-col :span="subOp.simple > 0 || subOp.isRadio > 0 || (subOp.questionName.length <= 16 && subOp.isWrite > 0) ? 6 : 24">{{subOp.questionName}}</a-col>
                               <a-radio-group v-if="subOp.simple === 1" v-model="subOp.basisElementId" :name="subOp.basisElementCopyId+''">
                                 <a-radio :value="1">是</a-radio>
                                 <a-radio :value="-1">否</a-radio>
@@ -272,7 +272,7 @@
                               <!-- <a-col :span="6" v-if="secondSub.hasChild > 0 && (secondSub.logicValue === 0 || subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1) && secondSub.isWrite > 0" v-for="(secondSub,index) in subOp.childList">
                                 <a-input style="width:240px;" :name="secondSub.basisElementCopyId+''" :defaultValue="secondSub.answers && secondSub.answers.length && secondSub.answers[0].elementTextValue"></a-input>
                               </a-col> -->
-                              <a-col :span="24" v-if="subOp.hasChild > 0 && subOp.isRadio > 0">
+                              <a-col :span="18" v-if="subOp.hasChild > 0 && subOp.isRadio > 0">
                                 <a-radio-group :name="subOp.basisElementCopyId+''" v-model="subOp.basisElementId">
                                   <a-radio v-for="(secondSub,index) in subOp.childList" :key="index" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-radio>
                                 </a-radio-group>
@@ -297,7 +297,7 @@
                                   <a-input v-if="thirdSub.isWrite > 0 && !thirdSub.event" :name="thirdSub.basisElementCopyId + ''" :defaultValue="thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" style="width:240px" :addonAfter="thirdSub.unit" />
                                     <!-- 注掉br是因为啰音类型会掉下去，别处需要换行再调整 -->
                                   <!-- <br v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && thirdSub.simple > 0"> -->
-                                  <a-radio-group v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && (thirdSub.logicValue === 0 || thirdSub.basisElementId === 1)" :name="thirdSub.basisElementCopyId+''" v-model="thirdSub.basisElementId">
+                                  <a-radio-group v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && (thirdSub.logicValue === 0 || thirdSub.basisElementId === 1)" :name="thirdSub.basisElementCopyId+''" v-model="thirdSub.basisElementId" style="width: 100%">
                                     <a-radio v-for="(fourth, index) in thirdSub.childList" :key="index" :value="fourth.basisElementCopyId">{{fourth.questionName}}</a-radio>
                                   </a-radio-group>
                                   <div v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && (thirdSub.logicValue === 0 || thirdSub.basisElementId === 1)">
@@ -330,9 +330,93 @@
                         </a-col>
                       </a-row>
                     </div>
+                    <!-- 问卷调查 -->
+                   
+                </a-form-item>
+                <!-- 半年随访模板 -->
+                <a-form-item v-if="patientBasis.type === 2" v-for="(first, index) in list" :key="index" :label="[first.sort + '.' + first.questionName]" :labelCol="first.type === 0 ? labelColVer : labelColHor" :wrapperCol="first.type === 0 ? wrapperVer : wrapperHor" :class="{'no-border': index === list.length - 1}">
+                  <div v-if="first.hasChild > 0">
+                    <a-row v-for="(second, index) in first.childList" :key="index" :class="{'no-border': index === first.childList.length - 1}" class="itemRow">
+                      <a-col :span="6">({{second.sort}}) {{second.questionName}}</a-col>
+                      <a-col :span="18">
+                        <a-radio-group v-if="second.simple === 1" :name="second.basisElementCopyId+''" v-model="second.basisElementId">
+                          <a-radio :value="1">是</a-radio>
+                          <a-radio :value="-1">否</a-radio>
+                        </a-radio-group>
+                        <a-radio-group v-if="second.simple === 2" :name="second.basisElementCopyId+''" v-model="second.basisElementId">
+                          <a-radio :value="1">有</a-radio>
+                          <a-radio :value="-1">无</a-radio>
+                        </a-radio-group>
+                        <a-row v-for="(third, index) in second.childList" :class="{'no-border': index === second.childList.length - 1}" v-if="second.basisElementId === 1">
+                          <a-col :span="third.questionName.length > 16 ? 24 : 6">{{third.questionName}}</a-col>
+                          <div v-if="third.isRadio < 0">
+                            <a-col :span="24">
+                              <a-checkbox-group v-if="third.hasChild > 0 && third.isRadio < 0" v-model="third.elementId">
+                                <a-checkbox v-for="(fourth,index) in third.childList" :key="index" :name="fourth.parentId+''" :value="fourth.basisElementCopyId">{{fourth.questionName}}</a-checkbox>
+                              </a-checkbox-group>
+                              <div v-for="(fourth, index) in third.childList" v-if="fourth.hasChild > 0 && fourth.logicValue > 0 && third.elementId.indexOf(fourth.basisElementCopyId) > -1">
+                                <a-row class="no-border" v-if="fourth.childList[0].isWrite > 0">
+                                  <a-col :span="6">{{fourth.childList[0].questionName}}</a-col>
+                                  <a-col :span="18">
+                                    <a-input :name="fourth.childList[0].basisElementCopyId+''" :defaultValue="fourth.childList[0].answers && fourth.childList[0].answers.length && fourth.childList[0].answers[0].elementTextValue" style="width: 240px;" :addonAfter="fourth.childList[0].unit"></a-input>
+                                  </a-col>
+                                </a-row>
+                              </div>
+                            </a-col>
+                          </div>
+                          <div v-if="third.isRadio === 0">
+                            <a-row v-for="(fourth, index) in third.childList">
+                              <a-col :span="7">{{fourth.questionName}}</a-col>
+                              <a-col :span="17">
+                                <a-radio-group v-if="fourth.simple === 1" :name="fourth.basisElementCopyId+''" v-model="fourth.basisElementId">
+                                  <a-radio :value="1">是</a-radio>
+                                  <a-radio :value="-1">否</a-radio>
+                                </a-radio-group>
+                              </a-col>
+                              <div v-if="fourth.hasChild > 0 && fourth.isRadio === 0 && fourth.basisElementId === 1">
+                                <a-row class="no-border" v-for="(fifth, index) in fourth.childList">
+                                  <a-col :span="7">{{fifth.questionName}}</a-col>
+                                  <a-col :span="17">
+                                    <a-checkbox-group v-if="fifth.isRadio < 0" v-model="fifth.elementId">
+                                      <a-checkbox v-for="(sixth,index) in fifth.childList" :key="index" :name="sixth.parentId+''" :value="sixth.basisElementCopyId">{{sixth.questionName}}</a-checkbox>
+                                    </a-checkbox-group>
+                                    <a-radio-group v-if="fifth.isRadio > 0" :name="fifth.basisElementCopyId+''" v-model="fifth.basisElementId">
+                                      <a-radio v-for="(sixth, index) in fifth.childList" :value="sixth.basisElementCopyId">{{sixth.questionName}}</a-radio>
+                                    </a-radio-group>
+                                    <div v-if="fifth.isRadio > 0" v-for="(sixth, index) in fifth.childList">
+                                      <div v-if="sixth.hasChild > 0 && sixth.logicValue > 0 && fifth.basisElementId === sixth.basisElementCopyId">
+                                        <a-col :span="7" v-if="sixth.childList[0].isWrite > 0">
+                                          <a-input style="width: 240px" :addonAfter="sixth.childList[0].unit" :name="sixth.childList[0].basisElementCopyId+''"></a-input>
+                                        </a-col>
+                                      </div>
+                                    </div>
+                                    <a-input v-if="fifth.isWrite > 0" style="width: 240px;" :addonAfter="fifth.unit" :name="fifth.basisElementCopyId+''" :defaultValue="fifth.answers && fifth.answers.length && fifth.answers[0].elementTextValue"></a-input>
+                                    <a-radio-group v-if="fifth.simple === 1" :name="fifth.basisElementCopyId+''" v-model="fifth.basisElementId">
+                                      <a-radio :value="1">是</a-radio>
+                                      <a-radio :value="-1">否</a-radio>
+                                    </a-radio-group>
+                                    <div v-if="fifth.hasChild > 0 && fifth.isRadio === 0 && fifth.logicValue === 1 && fifth.basisElementId === 1">
+                                      <a-row class="no-border ant-col-pull-10" v-for="(sixth, index) in fifth.childList">
+                                        <a-col :span="10">{{sixth.questionName}}</a-col>
+                                        <a-col :span="14">
+                                          <a-radio-group v-if="sixth.isRadio > 0" :name="sixth.basisElementCopyId+''" v-model="sixth.basisElementId">
+                                            <a-radio v-for="(seven, index) in sixth.childList" :value="seven.basisElementCopyId">{{seven.questionName}}fd</a-radio>
+                                          </a-radio-group>
+                                        </a-col>
+                                      </a-row>
+                                    </div>
+                                  </a-col>
+                                </a-row>
+                              </div>
+                            </a-row>
+                          </div>
+                        </a-row>
+                      </a-col>
+                    </a-row>
+                  </div>
                 </a-form-item>
               </a-form>
-         </div>         
+         </div>
        </a-col>
      </a-row>
      </a-card>
@@ -342,7 +426,7 @@
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore } from '@/api/basis'
+import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
@@ -387,14 +471,20 @@ export default {
       patient: {},
       patientBasis: {},
       list: [],
+      listArr: [],
+      list1: [],
+      question:{},
       patientBasisId: this.$route.params.id,
       basisMaskId: undefined,
       validateFlag: false,
       computeMap: {
         1208: '',
         2727: '', 
-        1160: '' ,
+        1160: '',
         4207: ''
+      },
+      disBlock :{
+        display: 'block',
       },
       bodyStyle: {
         'padding-left': '0px'
@@ -501,15 +591,32 @@ export default {
       }
     },
     getElementsAnswer (){
-      var that = this
-      var params = new URLSearchParams()
-      params.append('basisMaskId', this.basisMaskId)
-      params.append('patientBasisId', this.patientBasisId)
-      getElementsAnswer(params)
-      .then(res => {
-        that.list = that.initList(res.data)
-        // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
-      })
+      var that = this;
+      var params = new URLSearchParams();
+      if (this.basisMaskId > 30) {
+        that.list = [];
+        params.append('questionId', this.basisMaskId)
+        getAllQuestionList(params)
+        .then(res => {
+          res.data.topTitles.forEach((item,index,arr)=> {
+            that.listArr = arr;
+         })
+         that.question = that.initList(res.data.question);
+          // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
+        })
+        
+      }else{
+        that.question = {};
+        that.listArr = [];
+        params.append('basisMaskId', this.basisMaskId)
+        params.append('patientBasisId', this.patientBasisId)
+        getElementsAnswer(params)
+        .then(res => {
+          that.list = that.initList(res.data)
+          // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
+        })
+      }
+     
     },
     generateAnswers (){
       var result = []
@@ -831,6 +938,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .ml-10{
+    margin-left: 10px; 
+  }
  .UserNameCard{
    font-size: 20px;
    .anticon{
@@ -985,8 +1095,8 @@ export default {
 
     padding: 20px;
     .ant-row {
-      padding-bottom: 10px;
-      padding-top: 10px;
+      // padding-bottom: 10px;
+      // padding-top: 10px;
       margin-bottom: 0px;
       border-bottom: 1px solid #eee;
       &.no-border{
@@ -1024,6 +1134,23 @@ export default {
       background-color: #e6f7ff;
     }
   }
+}
+.question-title{
+  text-align: center;
+  font-size: 22px;
+  color: #3398DC;
+}
+.question-des{
+  font-size: 16px;
+  // border: 1px solid #91D5FF ;
+  // border-radius: 3px;
+  // background: lightblue;
+  padding:0 10px ;
+}
+.question-t{
+  font-size: 18px;
+  line-height: 40px;
+  font-weight: 700;
 }
 </style>
 

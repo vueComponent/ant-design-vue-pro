@@ -1,7 +1,7 @@
 <template>
   <span>
     <a-icon type="edit" @click="showMicroorganism" class="mcroorganism"/>
-    <a-modal title="药敏检查" width="800px" :visible="visible" :footer="null"  @cancel="handleCancel" :bodyStyle="bodyStyle">
+    <a-modal title="药敏检查" width="800px" :visible="visible" :footer="null" :centered="centered"  @cancel="handleCancel" :bodyStyle="bodyStyle">
       <p ><a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button></p>
       <a-table rowKey="keyW" size="middle" :pagination="pagination" :columns="columns" :dataSource="data">
         <template v-for="col in ['microbeName', 'antibiotic', 'allergyValue']" :slot="col" slot-scope="text, record, index">
@@ -95,11 +95,12 @@ export default {
       columns,
       count: this.dataSource.length + 1,
       vitamin: '',
-      visible:false,
-        bodyStyle: {
-      height: '600px',
-      overflow: 'auto'
-    },
+      visible: false,
+      bodyStyle: {
+        height: '500px',
+        overflow: 'auto'
+      },
+      centered: true
     };
   },
   methods: {
