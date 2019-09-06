@@ -70,3 +70,11 @@ export function getMedicineAllergyList(params) {
     data: params
   })
 }
+
+export function getAllQuestionList(params) {
+  return axios({
+    url: '/question/detail',
+    method: 'post',
+    data: params
+  })
+}

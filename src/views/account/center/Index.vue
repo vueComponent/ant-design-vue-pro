@@ -330,6 +330,8 @@
                         </a-col>
                       </a-row>
                     </div>
+                    <!-- 问卷调查 -->
+                   
                 </a-form-item>
                 <!-- 半年随访模板 -->
                 <a-form-item v-if="patientBasis.type === 2" v-for="(first, index) in list" :key="index" :label="[first.sort + '.' + first.questionName]" :labelCol="first.type === 0 ? labelColVer : labelColHor" :wrapperCol="first.type === 0 ? wrapperVer : wrapperHor" :class="{'no-border': index === list.length - 1}">
@@ -424,7 +426,7 @@
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore } from '@/api/basis'
+import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
@@ -469,14 +471,20 @@ export default {
       patient: {},
       patientBasis: {},
       list: [],
+      listArr: [],
+      list1: [],
+      question:{},
       patientBasisId: this.$route.params.id,
       basisMaskId: undefined,
       validateFlag: false,
       computeMap: {
         1208: '',
         2727: '', 
-        1160: '' ,
+        1160: '',
         4207: ''
+      },
+      disBlock :{
+        display: 'block',
       },
       bodyStyle: {
         'padding-left': '0px'
@@ -583,15 +591,32 @@ export default {
       }
     },
     getElementsAnswer (){
-      var that = this
-      var params = new URLSearchParams()
-      params.append('basisMaskId', this.basisMaskId)
-      params.append('patientBasisId', this.patientBasisId)
-      getElementsAnswer(params)
-      .then(res => {
-        that.list = that.initList(res.data)
-        // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
-      })
+      var that = this;
+      var params = new URLSearchParams();
+      if (this.basisMaskId > 30) {
+        that.list = [];
+        params.append('questionId', this.basisMaskId)
+        getAllQuestionList(params)
+        .then(res => {
+          res.data.topTitles.forEach((item,index,arr)=> {
+            that.listArr = arr;
+         })
+         that.question = that.initList(res.data.question);
+          // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
+        })
+        
+      }else{
+        that.question = {};
+        that.listArr = [];
+        params.append('basisMaskId', this.basisMaskId)
+        params.append('patientBasisId', this.patientBasisId)
+        getElementsAnswer(params)
+        .then(res => {
+          that.list = that.initList(res.data)
+          // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
+        })
+      }
+     
     },
     generateAnswers (){
       var result = []
@@ -1106,6 +1131,23 @@ export default {
       background-color: #e6f7ff;
     }
   }
+}
+.question-title{
+  text-align: center;
+  font-size: 22px;
+  color: #3398DC;
+}
+.question-des{
+  font-size: 16px;
+  // border: 1px solid #91D5FF ;
+  // border-radius: 3px;
+  // background: lightblue;
+  padding:0 10px ;
+}
+.question-t{
+  font-size: 18px;
+  line-height: 40px;
+  font-weight: 700;
 }
 </style>
 
