@@ -8,6 +8,11 @@
       <a-button @click="handleOpenTab">打开 任务列表</a-button>
     </div>
     <a-divider />
+    <div class="page-loading-test">
+      <h4>全局遮罩测试</h4>
+      <a-button @click="handleOpenLoading" style="margin-right: 16px;">打开遮罩(5s 自动关闭)</a-button>
+      <a-button @click="handleOpenLoadingCustomTip">打开遮罩(自定义提示语)</a-button>
+    </div>
   </div>
 </template>
 
@@ -20,6 +25,19 @@ export default {
     },
     handleOpenTab () {
       this.$multiTab.open('/features/task')
+    },
+
+    handleOpenLoading () {
+      this.$loading.show()
+      setTimeout(() => {
+        this.$loading.hide()
+      }, 5000)
+    },
+    handleOpenLoadingCustomTip () {
+      this.$loading.show({ tip: '自定义提示语' })
+      setTimeout(() => {
+        this.$loading.hide()
+      }, 5000)
     }
   }
 }
