@@ -16,7 +16,8 @@ const constantRouterComponents = {
 
   // 你需要动态引入的页面组件
   'Analysis': () => import('@/views/dashboard/Analysis'),
-  'Workplace': () => import('@/views/dashboard/Workplace')
+  'Workplace': () => import('@/views/dashboard/Workplace'),
+  'TestWork': () => import('@/views/dashboard/TestWork')
 }
 
 // 前端未找到页面路由（固定不用改）

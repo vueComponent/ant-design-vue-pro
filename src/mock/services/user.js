@@ -381,7 +381,8 @@ const userNav = (options) => {
         'title': '仪表盘',
         'show': true
       },
-      'component': 'RouteView'
+      'component': 'RouteView',
+      'redirect': '/dashboard/workplace'
     },
     {
       'name': 'analysis',
@@ -412,6 +413,16 @@ const userNav = (options) => {
         'show': true
       },
       'component': 'Workplace'
+    },
+    {
+      'name': 'tests',
+      'parentId': 1,
+      'id': 8,
+      'meta': {
+        'title': '测试功能',
+        'show': true
+      },
+      'component': 'TestWork'
     },
     {
       'name': 'permission',

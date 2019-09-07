@@ -20,10 +20,10 @@ export default {
       this.activeKey = val
     }).$on('close', val => {
       if (!val) {
-        this.remove(this.activeKey)
+        this.closeThat(this.activeKey)
         return
       }
-      this.remove(val)
+      this.closeThat(val)
     })
 
     this.pages.push(this.$route)
