@@ -1,4 +1,6 @@
 <script>
+import events from './events'
+
 export default {
   name: 'MultiTab',
   data () {
@@ -10,6 +12,20 @@ export default {
     }
   },
   created () {
+    // bind event
+    events.$on('open', val => {
+      if (!val) {
+        throw new Error(`multi-tab: open tab ${val} err`)
+      }
+      this.activeKey = val
+    }).$on('close', val => {
+      if (!val) {
+        this.remove(this.activeKey)
+        return
+      }
+      this.remove(val)
+    })
+
     this.pages.push(this.$route)
     this.fullPathList.push(this.$route.fullPath)
     this.selectedLastPath()
