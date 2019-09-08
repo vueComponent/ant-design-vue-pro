@@ -21,7 +21,7 @@ export default {
   name: 'TestWork',
   methods: {
     handleCloseCurrentTab () {
-      this.$multiTab.close()
+      this.$multiTab.closeCurrentPage() // or this.$multiTab.close()
     },
     handleOpenTab () {
       this.$multiTab.open('/features/task')

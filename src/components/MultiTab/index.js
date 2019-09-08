@@ -11,6 +11,12 @@ const api = {
     events.$emit('open', config)
   },
   /**
+   * close current page
+   */
+  closeCurrentPage: function () {
+    this.close()
+  },
+  /**
    * close route fullPath tab
    * @param config
    */
