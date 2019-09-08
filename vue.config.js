@@ -6,6 +6,14 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
+/**
+ * check production or preview(pro.loacg.com only)
+ * @returns {boolean}
+ */
+function isProd () {
+  return process.env.NODE_ENV === 'production' || process.env.VUE_APP_PREVIEW === 'true'
+}
+
 const assetsCDN = {
   css: [],
   // https://unpkg.com/browse/vue@2.6.10/
@@ -17,6 +25,14 @@ const assetsCDN = {
   ]
 }
 
+// webpack build externals
+const prodExternals = {
+  vue: 'Vue',
+  'vue-router': 'VueRouter',
+  vuex: 'Vuex',
+  axios: 'axios'
+}
+
 // vue.config.js
 const vueConfig = {
   configureWebpack: {
@@ -25,13 +41,8 @@ const vueConfig = {
       // Ignore all locale files of moment.js
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ],
-    // webpack build externals
-    externals: {
-      vue: 'Vue',
-      'vue-router': 'VueRouter',
-      vuex: 'Vuex',
-      axios: 'axios'
-    }
+    // if prod is on, add externals
+    externals: isProd() ? prodExternals : {}
   },
 
   chainWebpack: (config) => {
@@ -54,11 +65,14 @@ const vueConfig = {
         name: 'assets/[name].[hash:8].[ext]'
       })
 
+    // if prod is on
     // assets require on cdn
-    config.plugin('html').tap(args => {
-      args[0].cdn = assetsCDN
-      return args
-    })
+    if (isProd()) {
+      config.plugin('html').tap(args => {
+        args[0].cdn = assetsCDN
+        return args
+      })
+    }
   },
 
   css: {
@@ -97,7 +111,7 @@ const vueConfig = {
 }
 
 // preview.pro.loacg.com only do not use in your production;
-if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'true') {
+if (isProd()) {
   // add `ThemeColorReplacer` plugin to webpack plugins
   vueConfig.configureWebpack.plugins.push(createThemeColorReplacerPlugin())
 }
