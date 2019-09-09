@@ -134,15 +134,13 @@ export default {
         {
           title: '档案号',
             width:"150px",
-            fixed: 'left',
           dataIndex: 'fileCode'
           
         },
         {
           title: '患者姓名',
           dataIndex: 'name',
-           width:"150px",
-           fixed: 'left',
+           width:"100px",
           scopedSlots: { customRender: 'name' }
         },
         {
@@ -198,7 +196,7 @@ export default {
         }
       },
       scroll:{
-        x:"150%",
+        x:"130%",
         y:'350px'
       },
       optionAlertShow: false,

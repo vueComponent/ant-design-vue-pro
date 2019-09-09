@@ -17,7 +17,7 @@
     <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 20px;padding-left: 0">
      <a-row :gutter="8">
        <a-col :span="5" style="overflow: auto;height: 350px;">
-        <s-tree :treeTitle="title" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
+        <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
         </s-tree>
        </a-col>
        <a-col :span="19">
@@ -1173,6 +1173,9 @@ export default {
   font-size: 18px;
   line-height: 40px;
   font-weight: 700;
+}
+/deep/.page-header-index-wide[data-v-30448598] .ant-menu-submenu.ant-menu-submenu-inline .treeSubTitle{
+  width: 120px;
 }
 </style>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-drawer width="600" placement="right" :closable="false" @close="onClose" :visible="visible" :maskClosable="maskClosable">
+    <a-drawer width="350" placement="right" :closable="false" @close="onClose" :visible="visible" :maskClosable="maskClosable">
       <div class="porjectInfo">
         <h4 class="proJectInfoTitle">
           <img src="../../../assets/proTitle.png" alt="" />

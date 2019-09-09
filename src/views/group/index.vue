@@ -53,7 +53,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="default" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="default" :scroll="scroll" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="name"  slot-scope="text,record" @click="showUser(record)">
         <p class="userName">{{text}}</p>
       </span>
@@ -137,21 +137,25 @@ export default {
       columns: [
         {
           title: '档案号',
-          dataIndex: 'code'
+          dataIndex: 'fileCode',
+          width: '150px',
         },
         {
           title: '患者姓名',
           dataIndex: 'name',
-          scopedSlots: { customRender: 'name' }
+          scopedSlots: { customRender: 'name' },
+          width:"100px"
         },
         {
           title: '身份证号',
-          dataIndex: 'card'
+          dataIndex: 'card',
+          width:"180px"
         },
         {
           title: '入组日期',
           dataIndex: 'joinDate',
-          customRender: joinDate => moment(joinDate).format('YYYY-MM-DD HH:mm:ss')
+          customRender: joinDate => moment(joinDate).format('YYYY-MM-DD HH:mm:ss'),
+          width:"180px"
         },
         {
           title: '访视状态',
@@ -159,14 +163,10 @@ export default {
           scopedSlots: { customRender: 'visit' }
         },
         {
-          title: '访视进度',
-          dataIndex: 'basisList',
-          scopedSlots: { customRender: 'basisList' }
-        },
-        {
           title: '操作',
           dataIndex: 'action',
-          width: '200px',
+          width: '160px',
+          fixed:"right",
           scopedSlots: { customRender: 'action' }
         }
       ],
@@ -192,6 +192,9 @@ export default {
           selectedRowKeys: this.selectedRowKeys,
           onChange: this.onSelectChange
         }
+      },
+      scroll:{
+        y:"350"
       },
       optionAlertShow: false
     };
