@@ -1,5 +1,6 @@
 // eslint-disable-next-line
 import * as loginService from '@/api/login'
+import * as helper from '@/utils/util'
 // eslint-disable-next-line
 import { BasicLayout, RouteView, BlankLayout, PageView } from '@/layouts'
 
@@ -98,9 +99,9 @@ export const generator = (routerMap, parent) => {
     }
     // 为了防止出现后端返回结果不规范，处理有可能出现拼接出两个 反斜杠
     currentRouter.path = currentRouter.path.replace('//', '/')
-    
+    const finalPath = helper.dealPath(currentRouter.path)
     // 动态匹配  方案1 & 方案2
-    currentRouter.component = constantRouterComponents.hasOwnProperty(item.component || item.key) ? constantRouterComponents[item.component || item.key] : () => import('@/views' + currentRouter.path)
+    currentRouter.component = constantRouterComponents.hasOwnProperty(item.component || item.key) ? constantRouterComponents[item.component || item.key] : () => import('@/views' + finalPath)
     
     // 重定向
     item.redirect && (currentRouter.redirect = item.redirect)
