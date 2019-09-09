@@ -61,12 +61,6 @@ export const asyncRouterMap = [
         hidden:true,
         component: () => import('@/views/group/addProject'),
         meta: { hiddenHeaderContent:true, hidden: true }
-      },
-      {
-        path: '/account/index',
-        name: 'Account',
-        component: () => import('@/views/account/index'),
-        meta: { title: '账号管理', keepAlive: true, icon: zhanghao}
       }
     ]
   },
