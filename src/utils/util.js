@@ -61,6 +61,7 @@ export function removeLoadingAnimate (id = '', timeout = 1500) {
 
 /**
  * 处理路由大小写逻辑，约定vue文件首字母大写。数据库存储小写
+ * name 可以是小写，匹配路劲转换为大写，例如 name:user 转换完成后 views/system/User.vue
  * @param path
  * @returns {string}
  */
