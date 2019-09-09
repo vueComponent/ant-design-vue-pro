@@ -98,6 +98,10 @@ export const generator = (routerMap, parent) => {
     }
     // 为了防止出现后端返回结果不规范，处理有可能出现拼接出两个 反斜杠
     currentRouter.path = currentRouter.path.replace('//', '/')
+    
+    // 动态匹配  方案1 & 方案2
+    currentRouter.component = constantRouterComponents.hasOwnProperty(item.component || item.key) ? constantRouterComponents[item.component || item.key] : () => import('@/views' + currentRouter.path)
+    
     // 重定向
     item.redirect && (currentRouter.redirect = item.redirect)
     // 是否有子菜单，并递归处理
