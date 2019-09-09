@@ -43,7 +43,7 @@
                     <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event && typeof qu1.computeElement === 'undefined'" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 240px" :addonAfter="qu1.unit" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (!qu1.answers || qu1.answers.length === 0 || qu1.answers[0].elementTextValue === '')" />
                     <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue)" :defaultValue="moment(qu1.answers[0].elementTextValue)" />
-                    <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0 && (qu1.logicValue === 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1))" v-model="qu1.elementId">
+                    <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0 && (qu1.logicValue <= 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1))" v-model="qu1.elementId">
                       <a-checkbox  v-if="op.event!=='showList'" v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId" :name="qu1.basisElementCopyId+''">{{op.questionName}}</a-checkbox>
                     </a-checkbox-group>
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio > 0">
@@ -56,7 +56,7 @@
                             <a-radio v-for="(third,index) in sub.childList" :key="index" :value="third.basisElementCopyId">{{third.questionName}}</a-radio>
                           </a-radio-group>
                         </a-row>
-                        <a-row v-for="(third, index) in sub.childList" v-if="sub.isRadio === 0 && (sub.logicValue === 0 || (sub.logicValue > 0 && qu1.basisElementId === sub.basisElementCopyId))">
+                        <a-row v-for="(third, index) in sub.childList" v-if="sub.isRadio === 0 && (sub.logicValue <= 0 || (sub.logicValue > 0 && qu1.basisElementId === sub.basisElementCopyId))">
                           <a-col :span="6">({{third.sort}}) {{third.questionName}}</a-col>
                           <!-- <br> -->
                           <a-col :span="18">
@@ -85,7 +85,7 @@
                                   <a-radio :value="-1">无</a-radio>
                                 </a-radio-group>
                               </a-col>
-                              <a-col :span="12" v-if="fourth.logicValue === 0 || (fourth.logicValue > 0 && fourth.basisElementId === 1) && fourth.hasChild > 0 && fourth.childList[0].isWrite > 0">
+                              <a-col :span="12" v-if="fourth.logicValue <= 0 || (fourth.logicValue > 0 && fourth.basisElementId === 1) && fourth.hasChild > 0 && fourth.childList[0].isWrite > 0">
                                 <a-col :span="6">{{fourth.childList[0].questionName}}</a-col>
                                 <a-col :span="12">
                                   <a-input :addonAfter="fourth.childList[0].unit" :name="fourth.childList[0].basisElementCopyId+''" style="width:240px"></a-input>
@@ -103,7 +103,7 @@
                     </a-row>
                     <!-- 有第二层 -->
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
-                      <a-row class="itemRow" v-for="(sub, index) in qu1.childList" :key="index" :class="{'no-border': index === qu1.childList.length - 1}" v-if="qu1.logicValue === 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1)">
+                      <a-row class="itemRow" v-for="(sub, index) in qu1.childList" :key="index" :class="{'no-border': index === qu1.childList.length - 1}" v-if="qu1.logicValue <= 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1)">
                         <!-- 第二层开始 -->
                         <a-col :span="sub.questionName.length > 16 ? 24 : 6">({{sub.sort}}) {{sub.questionName}}</a-col>
                         <!-- 为了体格检查中的啰音的排版 -->
@@ -129,11 +129,11 @@
                           <!--   -->
                           <!-- <br v-if="sub.showType === 2" /> -->
                           <div class="clear" v-if="sub.simple > 0"></div>
-                          <a-col :span="6" v-if="(sub.logicValue === 0 || sub.basisElementId === 1) && sub.childEleName">{{sub.childEleName}}</a-col>
-                          <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0 &&(sub.logicValue === 0 || sub.basisElementId === 1) && sub.childList[0].event !== 'showList'" v-model="sub.elementId">
+                          <a-col :span="6" v-if="(sub.logicValue <= 0 || sub.basisElementId === 1) && sub.childEleName">{{sub.childEleName}}</a-col>
+                          <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0 &&(sub.logicValue <= 0 || sub.basisElementId === 1) && sub.childList[0].event !== 'showList'" v-model="sub.elementId">
                             <a-checkbox v-for="(subOp,index) in sub.childList" :key="index" :name="subOp.parentId+''" :value="subOp.basisElementCopyId">{{subOp.questionName}}</a-checkbox>
                           </a-checkbox-group>
-                          <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0 && (sub.logicValue === 0 || sub.basisElementId === 1) && sub.childList[0].event === 'showList'" v-model="sub.elementId" style="width: 80%;">
+                          <a-checkbox-group v-if="sub.hasChild > 0 && sub.isRadio < 0 && (sub.logicValue <= 0 || sub.basisElementId === 1) && sub.childList[0].event === 'showList'" v-model="sub.elementId" style="width: 80%;">
                            <span v-for="(subOp, index) in sub.childList">
                              <a-checkbox v-if="subOp.event=='showList'" :name="subOp.parentId+''"    @change="showList($event,subOp.event,subOp.questionName)" :key="index" :value="subOp.basisElementCopyId">{{subOp.questionName}}</a-checkbox>
                              <div  v-if="subOp.event=='showList' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1&&subOp.questionName=='其他' "  style="display: inline-block;width: 300px;argin-right: 10px;">
@@ -172,7 +172,7 @@
                               <a-input v-if="!thirdSub.childList[0].event" :addonAfter="thirdSub.childList[0].unit" :defaultValue="thirdSub.childList[0].answers && thirdSub.childList[0].answers.length && thirdSub.childList[0].answers[0].elementTextValue" style="width:240px" />
                             </a-col>
                           </a-row> -->
-                          <div v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue === 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementCopyId === sub.basisElementId" v-for="(thirdSub, index) in sub.childList">
+                          <div v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue <= 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementCopyId === sub.basisElementId" v-for="(thirdSub, index) in sub.childList">
                             <div v-if="thirdSub.isRadio === 0">
                               <a-row v-for="(fourth, index) in thirdSub.childList" :class="{'no-border': index === thirdSub.childList.length - 1}">
                                 <a-col :span="6">{{fourth.questionName}}</a-col>
@@ -182,7 +182,7 @@
                                 </a-radio-group>
                                 <a-input v-if="fourth.isWrite > 0" :addonAfter="fourth.unit" :name="fourth.basisElementCopyId+''" :defaultValue="fourth.answers && fourth.answers.length && fourth.answers[0].elementTextValue" style="width: 240px"></a-input>
                                 <div v-if="fourth.hasChild > 0 && fourth.isRadio === 0">
-                                  <a-row class="no-border" v-for="fifth in fourth.childList" v-if="fourth.logicValue === 0 || fourth.basisElementId === 1">
+                                  <a-row class="no-border" v-for="fifth in fourth.childList" v-if="fourth.logicValue <= 0 || fourth.basisElementId === 1">
                                     <a-col :span="6">{{fifth.questionName}}</a-col>
                                     <a-col :span="4" v-if="fifth.simple === 2">
                                       <a-radio-group v-model="fifth.basisElementId" :name="fifth.basisElementCopyId+''">
@@ -190,7 +190,7 @@
                                         <a-radio :value="-1">无</a-radio>
                                       </a-radio-group>
                                     </a-col>
-                                    <div v-if="fifth.hasChild > 0 && (fifth.logicValue === 0 || fifth.basisElementId === 1) && fifth.isRadio === 0">
+                                    <div v-if="fifth.hasChild > 0 && (fifth.logicValue <= 0 || fifth.basisElementId === 1) && fifth.isRadio === 0">
                                       <a-col :span="4">{{fifth.childList[0].questionName}}</a-col>
                                       <a-input v-if="fifth.childList[0].isWrite > 0" :span="8" style="width: 240px" :name="fifth.childList[0].basisElementCopyId+''" :defaultValue="fifth.childList[0].answers && fifth.childList[0].answers.length && fifth.childList[0].answers[0].elementTextValue" :addonAfter="fifth.childList[0].unit"></a-input>
                                     </div>
@@ -217,7 +217,7 @@
                             <a-col :span="3" v-if="sub.basisElementId === secondSub.basisElementId">{{secondSub.childList[0].questionName}}</a-col>
                             <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].answers && secondSub.childList[0].answers.length && secondSub.childList[0].answers[0].elementTextValue" :name="secondSub.childList[0].basisElementCopyId+''" style="width:240px" /></a-col>
                           </a-row>
-                          <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (sub.logicValue === 0 || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList" :class="{'ant-col-pull-6': subOp.level > 3 || subOp.display > 0, 'no-border': index === sub.childList.length - 1}">
+                          <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (sub.logicValue <= 0 || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList" :class="{'ant-col-pull-6': subOp.level > 3 || subOp.display > 0, 'no-border': index === sub.childList.length - 1}">
                             <!-- <br> -->
                               <!-- 调脂那一层,如果是紧跟后面的单选框或者输入框就占8格；否则就是子问题，占12格 -->
                               <a-col :span="subOp.simple > 0 || subOp.isRadio > 0 || (subOp.questionName.length <= 16 && subOp.isWrite > 0) ? 6 : 24">{{subOp.questionName}}</a-col>
@@ -234,11 +234,11 @@
                                 <a-date-picker v-if="subOp.event === 'showDate' && (!subOp.answers || !subOp.answers.length || !subOp.answers[0].elementTextValue)" :name="subOp.basisElementCopyId+''" style="width:240px" />
                                 <a-input :name="subOp.basisElementCopyId+''" v-if="!subOp.event || subOp.event !== 'showDate'" :defaultValue="subOp.answers && subOp.answers.length && subOp.answers[0].elementTextValue" :addonAfter="subOp.unit" style="width:240px" />
                               </a-col>
-                              <a-col :span="24" v-if="subOp.hasChild > 0 && subOp.isRadio < 0 && (subOp.logicValue === 0 || subOp.basisElementId === 1)">
+                              <a-col :span="24" v-if="subOp.hasChild > 0 && subOp.isRadio < 0 && (subOp.logicValue <= 0 || subOp.basisElementId === 1)">
                                 <a-checkbox-group v-model="subOp.elementId" v-if="subOp.childList[0].event !== 'showList'">
                                   <a-checkbox v-for="(secondSub,index) in subOp.childList" :key="index" :name="secondSub.parentId+''" :value="secondSub.basisElementCopyId">{{secondSub.questionName}}</a-checkbox>
                                 </a-checkbox-group>
-                                <a-checkbox-group v-if="subOp.hasChild > 0 && subOp.isRadio < 0&& (subOp.logicValue === 0 || subOp.basisElementId === 1) && subOp.childList[0].event === 'showList'" v-model="subOp.elementId" style="width: 100%;">
+                                <a-checkbox-group v-if="subOp.hasChild > 0 && subOp.isRadio < 0&& (subOp.logicValue <= 0 || subOp.basisElementId === 1) && subOp.childList[0].event === 'showList'" v-model="subOp.elementId" style="width: 100%;">
                                   <span v-for="(secondSub, index) in subOp.childList" >
                                     <a-checkbox v-if="secondSub.event=='showList'"  :name="secondSub.parentId+''" @change="showList($event,secondSub.event,secondSub.questionName)" :key="index" :value="secondSub.basisElementCopyId">{{secondSub.questionName}}</a-checkbox>
                                     <div  v-if="secondSub.event=='showList' && subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1&&secondSub.questionName=='其他' "  style="display: inline-block;width: 300px;margin-right: 10px;">
@@ -249,7 +249,7 @@
                                   </span>
                                  </a-checkbox-group>
                               </a-col>
-                              <div v-if="subOp.hasChild > 0 && subOp.isRadio < 0 && (subOp.logicValue === 0 || subOp.basisElementId === 1) && subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1" v-for="(secondSub, index) in subOp.childList" :key="index">
+                              <div v-if="subOp.hasChild > 0 && subOp.isRadio < 0 && (subOp.logicValue <= 0 || subOp.basisElementId === 1) && subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1" v-for="(secondSub, index) in subOp.childList" :key="index">
                                 <div v-if="secondSub.hasChild > 0 && secondSub.isRadio === 0">
                                   <a-row v-for="(thirdSub, index) in secondSub.childList" class="no-border">
                                     <a-col :span="6" v-if="thirdSub.questionName">{{thirdSub.questionName}}</a-col>
@@ -277,7 +277,7 @@
                                   <a-radio v-for="(secondSub,index) in subOp.childList" :key="index" :value="secondSub.basisElementId">{{secondSub.questionName}}</a-radio>
                                 </a-radio-group>
                               </a-col>
-                              <div v-for="(secondSub, index) in subOp.childList" v-if="subOp.hasChild > 0 && subOp.isRadio > 0 && secondSub.hasChild > 0 && secondSub.isRadio === 0 && (secondSub.logicValue === 0 || subOp.basisElementId === secondSub.basisElementCopyId)">
+                              <div v-for="(secondSub, index) in subOp.childList" v-if="subOp.hasChild > 0 && subOp.isRadio > 0 && secondSub.hasChild > 0 && secondSub.isRadio === 0 && (secondSub.logicValue <= 0 || subOp.basisElementId === secondSub.basisElementCopyId)">
                                 <a-col v-for="(thirdSub,index) in secondSub.childList">
                                   <a-col :span="6">{{thirdSub.questionName}}</a-col>
                                   <a-col :span="6" v-if="thirdSub.isWrite > 0">
@@ -286,6 +286,7 @@
                                 </a-col>
                               </div>
                               <a-row v-if="subOp.hasChild > 0 && subOp.isRadio === 0  && (!subOp.logicValue || subOp.basisElementId === 1)" v-for="(thirdSub, index) in subOp.childList" :key="index" class="no-border">
+                                <!-- 雾化治疗 -->
                                 <a-col :span="6">{{thirdSub.questionName}}</a-col>
                                 <a-col :span="16">
                                   <a-radio-group v-if="thirdSub.simple === 1" :name="thirdSub.basisElementCopyId+''" v-model="thirdSub.basisElementId">
@@ -297,11 +298,11 @@
                                   <a-input v-if="thirdSub.isWrite > 0 && !thirdSub.event" :name="thirdSub.basisElementCopyId + ''" :defaultValue="thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" style="width:240px" :addonAfter="thirdSub.unit" />
                                     <!-- 注掉br是因为啰音类型会掉下去，别处需要换行再调整 -->
                                   <!-- <br v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && thirdSub.simple > 0"> -->
-                                  <a-radio-group v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && (thirdSub.logicValue === 0 || thirdSub.basisElementId === 1)" :name="thirdSub.basisElementCopyId+''" v-model="thirdSub.basisElementId" style="width: 100%">
+                                  <a-radio-group v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && (thirdSub.logicValue <= 0 || thirdSub.basisElementId === 1)" :name="thirdSub.basisElementCopyId+''" v-model="thirdSub.basisElementId" style="width: 100%">
                                     <a-radio v-for="(fourth, index) in thirdSub.childList" :key="index" :value="fourth.basisElementCopyId">{{fourth.questionName}}</a-radio>
                                   </a-radio-group>
-                                  <div v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && (thirdSub.logicValue === 0 || thirdSub.basisElementId === 1)">
-                                    <div v-for="(fourth, index) in thirdSub.childList" :key="index" v-if="fourth.hasChild > 0 && fourth.isRadio === 0 && (fourth.logicValue === 0 || thirdSub.basisElementId === fourth.basisElementCopyId)">
+                                  <div v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && (thirdSub.logicValue <= 0 || thirdSub.basisElementId === 1)">
+                                    <div v-for="(fourth, index) in thirdSub.childList" :key="index" v-if="fourth.hasChild > 0 && fourth.isRadio === 0 && (fourth.logicValue <= 0 || thirdSub.basisElementId === fourth.basisElementCopyId)">
                                       <a-row class="no-border">
                                         <a-col :span="6">{{fourth.childList[0].questionName}}</a-col>
                                         <a-col :span="16" v-if="fourth.childList[0].isWrite > 0">
@@ -313,7 +314,7 @@
                                   <a-checkbox-group v-if="thirdSub.isRadio < 0 && thirdSub.hasChild > 0" v-model="thirdSub.elementId">
                                     <a-checkbox v-for="(fourth,index) in thirdSub.childList" :key="index" :name="fourth.parentId+''" :value="fourth.basisElementCopyId">{{fourth.questionName}}</a-checkbox>
                                   </a-checkbox-group>
-                                  <div v-if="thirdSub.hasChild > 0 && thirdSub.isRadio === 0 && (thirdSub.logicValue === 0 || thirdSub.basisElementId === 1)">
+                                  <div v-if="thirdSub.hasChild > 0 && thirdSub.isRadio === 0 && (thirdSub.logicValue <= 0 || thirdSub.basisElementId === 1)">
                                     <a-row v-for="(fourth, index) in thirdSub.childList" :key="index" class="ant-col-pull-12 no-border">
                                       <a-col :span="12">{{fourth.questionName}}</a-col>
                                       <a-col :span="12">
