@@ -2,8 +2,10 @@
   <div class="logo">
     <router-link :to="{name:'dashboard'}">
 <!--      <LogoSvg alt="logo" /> -->
-        <img src="~@/assets/logo.png" class="logoImg" alt="logoImg">
-      <h1 v-if="showTitle">{{ title }}</h1>
+     <img src="~@/assets/logo.png" class="logoImg" alt="logoImg">
+      <h1 v-if="showTitle">
+		  <img src="~@/assets/logowords.png"  class="logowords" alt="">
+	  </h1>
     </router-link>
   </div>
 </template>
@@ -33,6 +35,14 @@ export default {
 <style>
 	.logo{
 		padding-left: 18px!important;
+		
+	}
+	.logo h1{
+		margin-left: 0.1875rem!important;
+	}
+	.logo h1 .logowords{
+		width: 100px!important;
+		height: 40px!important;
 	}
  .logo   .router-link-active .logoImg{
         height: 40px;

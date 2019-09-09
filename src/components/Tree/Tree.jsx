@@ -39,6 +39,10 @@ export default {
     handlePlus (item) {
       this.$emit('add', item)
     },
+    clickItem(item){
+      this.selectedKeys=[item.key]
+      this.$emit('click', item)
+    },
     handleTitleClick (...args) {
       this.$emit('titleClick', { args })
     },
@@ -178,7 +182,7 @@ export default {
       <div class="tree-wrapper">
         { search ? this.renderSearch() : null }
         <div class="tree-title">{ treeTitle }</div>
-        <Menu mode="inline" inlineIndent={0} class="custom-tree"  {...{ on: { click: item => this.$emit('click', item),openChange:this.onOpenChange } }} selectedKeys={this.selectedKeys} openKeys={this.localOpenKeys}>
+        <Menu mode="inline" inlineIndent={0} class="custom-tree"  {...{ on: { click: this.clickItem,openChange:this.onOpenChange } }} selectedKeys={this.selectedKeys} openKeys={this.localOpenKeys}>
           { list }
         </Menu>
       </div>
