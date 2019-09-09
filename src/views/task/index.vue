@@ -127,7 +127,7 @@ export default {
           title: '预警',
           dataIndex: 'warnStatus',
           scopedSlots: { customRender: 'warnStatus' },
-          width:"50px"
+          width:"70px"
         },
         {
           title: '任务编号',
@@ -138,12 +138,12 @@ export default {
           title: '患者姓名',
           dataIndex: 'patientName',
           scopedSlots: { customRender: 'name' },
-             width: '100px',
+             width: '120px',
         },
         {
           title: '身份证号',
           dataIndex: 'card',
-               width: '200px',
+               width: '180px',
         },{
           title: '联系电话',
           dataIndex: 'telephone',

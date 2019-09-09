@@ -61,7 +61,7 @@
            <router-link :to="{path:'/list/basis/' + pro.patientBasisId}"> 
           <div class="progressTagContent">
             <p class="progressTagTitle">{{ pro.typeName }}</p>
-            <a-progress :strokeColor="pro.progress == 100 ? '#4BC5AC' : '#00A0E9'" :strokeWidth="10" :showInfo="false" :percent="parseInt(pro.progress)" size="small" />
+            <a-progress class="progressline" :strokeColor="pro.progress == 100 ? '#4BC5AC' : '#00A0E9'"  :strokeWidth="10" :showInfo="false" :percent="parseInt(pro.progress)" size="small" />
           </div>
           <a-icon v-if="pro.progress == 100" type="check-circle" theme="filled" />
           <span class="ant-progress-span" v-if="pro.progress < 100 && pro.progress > 0">23%</span>
@@ -263,7 +263,10 @@ export default {
 </script>
 <style lang="less" scoped>
 .ant-table td { white-space: nowrap; }
-  
+ 
+/deep/.ant-table-row-hover .progressTag .ant-progress-inner{
+       background-color:#ffffff!important;
+  } 
 .progressTag {
   display: inline-block;
   width: 140px;

@@ -93,7 +93,10 @@
             </div>
           </div>
           <div v-else class="userCard">
-            <p>暂无数据</p>
+               <div style="text-align: center;">
+                   <img src="@/assets/noData.png" alt="">
+                   <p>暂无数据</p>
+            </div>
           </div>
         </a-tab-pane>
         <a-tab-pane tab="访视情况" key="3">
@@ -124,7 +127,10 @@
             </a-timeline>
           </div>
           <div v-else class="userCard">
-            <p>暂无数据</p>
+            <div style="text-align: center;">
+                   <img src="@/assets/noData.png" alt="">
+                   <p>暂无数据</p>
+            </div>
           </div>
         </a-tab-pane>
       </a-tabs>
@@ -155,7 +161,8 @@ export default {
       destroyOnClose: true,
       bodyStyle: {
         height: '500px',
-        overflow: 'auto'
+        overflow: 'auto',
+        background:"#F8FBFC"
       }
     };
   },

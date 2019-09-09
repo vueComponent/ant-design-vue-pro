@@ -93,6 +93,7 @@ export default {
   border: 1px solid #f8f8f8;
   border-top: 4px solid #168ffd;
   padding: 15px 25px;
+  background-color: #ffffff;
   .userDetailTop {
     img {
       display: inline-block;
