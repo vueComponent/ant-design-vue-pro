@@ -64,7 +64,7 @@
       </span>
     </s-table>
         <user-detail ref="detailModal"/>
-    <Register-form ref="registerModal" @ok="handleOk" />
+    <register-form ref="registerModal" @ok="handleOk"></register-form>
   </a-card>
 </template>
 

@@ -1,29 +1,53 @@
 <template>
-  <div class="page-header-index-wide page-header-wrapper-grid-content-main">
-     <a-card :bordered="false" style="background-color: #0399EC;color:#FFFFFF">
-       <a-row :gutter="30" style="line-height: 34px;">
-         <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:20px;cursor: pointer;" @click="$router.back(-1)" /></a-col>
-         <a-col :md="4" :sm="20" class="UserNameCard">
-           <my-icon type="iconshoufangzhe_huaban" />
-           受访者:{{ patient.name }}
-         </a-col>
-         <a-col :md="6" :sm="24" class="UserNameCard">   
-         <my-icon type="iconshenfenzheng_huaban" />
-           {{ patient.card }}
-         </a-col>
-         <a-col :md="13" :sm="24" style="fontSize:20px;textAlign: right;">创建时间：{{ visitTask.createDate | moment }}</a-col>
-       </a-row>
-      </a-card>
-      <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 10px;padding-left: 0">
-        <a-row>
-          <a-col :span="24">
-            <div style="overflow: hidden;">
-              <a-button class="btn fr" @click="">导入</a-button>
-              <a-button class="btn fr" @click="save">保存</a-button>
-              <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
-            </div>
-            <div class="baselineForm">
+  <div id="baselineInfo" class="page-header-index-wide page-header-wrapper-grid-content-main">
+     <a-card :bordered="false" id="baselineHeader" style="background-color: #0399EC;color:#FFFFFF;">
+           <a-row :gutter="30" style="line-height: 34px;">
+       <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" /></a-col>
+       <a-col :md="4" :sm="20" class="UserNameCard">
+         <my-icon type="iconshoufangzhe_huaban" />
+         受访者:{{ patient.name }}
+       </a-col>
+       <a-col :md="6" :sm="24" class="UserNameCard">   
+       <my-icon type="iconshenfenzheng_huaban" />
+         {{ patient.card }}
+       </a-col>
+       <a-col :md="13" :sm="24" style="fontSize: 18px;textAlign: right;">创建时间：{{ visitTask.createDate | moment }}</a-col>
+     </a-row>
+    </a-card>
+    <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 10px;padding-left: 0">
+     <a-row :gutter="8">
+       <a-col :span="5" style="overflow: auto;height: 350px;">
+        <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
+        </s-tree>
+       </a-col>
+       <a-col :span="19">
+         <div style="overflow: hidden;">
+           <a-button class="btn fr" @click="">导入</a-button>
+           <a-button class="btn fr" @click="save">保存</a-button>
+           <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
+         </div>
+         <div class="baselineForm">
               <a-form :form="form">
+
+                <a-form-item>
+                  <div v-if="question.name" class="question-title" >{{question.name}}</div>
+                  <div v-if="question.remark" class="question-des">{{question.remark}}</div>
+                </a-form-item>
+                <div v-for="item in listArr">
+                  <div class="question-t">{{item.name}}</div><br />
+                  <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
+                    <p v-if="qu1.type == 5">{{qu1.name}}</p>
+                    <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" />
+                    <a-radio-group v-if="qu1.type === 1">
+                      <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.sort">{{item.name}}</a-radio>
+                    </a-radio-group>
+                    <a-radio-group v-if="qu1.type === 2">
+                      <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.sort">{{item.name}}</a-checkbox>
+                    </a-radio-group>
+                     <a-date-picker v-if="qu1.type === 6" />
+                  </a-form-item>
+                </div>
+
                 <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
                     <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
                       <a-radio :value="1">是</a-radio>
@@ -329,25 +353,26 @@
                     </div>
                 </a-form-item>
               </a-form>
-            </div>
-          </a-col>
-        </a-row>
-      </a-card>
-    </div>
+         </div>
+       </a-col>
+     </a-row>
+     </a-card>
+  </div>
 </template>
 
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-import { getPatientBasis, getElementsAnswer, submit, getMedicineAllergyList, computeScore, getTaskDetail } from '@/api/basis'
+import { getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList, getTaskDetail } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
 import AddTable from "./model/table"
 import { MyIcon } from '@/components/_util/util';
 export default {
-  name: 'taskDetail',
+  name: 'success',
   components: {
+    STree,
     AddTable,
     MyIcon
   },
@@ -355,12 +380,15 @@ export default {
     return {
       optionDataSource:[],
       checkedList:[],
+      title: '支扩研究访视表',
+      openKeys: [],
+      defaultSelectedKeys: [],
+      orgTree: [],
       labelColHor: {
         xs: { span: 24 },
         sm: { span: 6 },
         md: { span: 6}
       },
-      patient: {},
       labelColVer: {
         xs: { span: 24 },
         sm: { span: 24 },
@@ -378,7 +406,13 @@ export default {
       },
       visible: false,
       confirmLoading: false,
+      patient: {},
       list: [],
+      listArr: [],
+      list1: [],
+      question:{},
+      basisMaskId: undefined,
+      validateFlag: false,
       visitTaskId: this.$route.params.id,
       computeMap: {
         1208: '',
@@ -392,7 +426,6 @@ export default {
       bodyStyle: {
         'padding-left': '0px'
       },
-      basisMaskId: undefined,
       visitTask: {}
     }
   },
@@ -402,14 +435,15 @@ export default {
   created() {
     var that = this
     this.CloseSidebar()
+    // this.compute = _.debounce(this.compute, 300) //节流阀
     var params = new URLSearchParams()
     params.append('visitTaskId', this.visitTaskId)
     getTaskDetail(params)
     .then(res => {
-      that.basisMaskId = res.data.visitTask.basisMarkId
-      that.visitTask = res.data.visitTask
       that.patient = res.data.patient
+      that.visitTask = res.data.visitTask
       that.list = that.initList(res.data.basisElementList)
+      that.orgTree = res.data.bmList
     })
   },
   computed: {
@@ -836,6 +870,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+ /deep/ #baselineHeader{
+    .ant-card-body{
+      padding: 10px
+    }
+  }
+  
   .ml-10{
     margin-left: 10px; 
   }
@@ -1052,6 +1092,9 @@ export default {
 }
 /deep/.page-header-index-wide[data-v-30448598] .ant-menu-submenu.ant-menu-submenu-inline .treeSubTitle{
   width: 120px;
+}
+/deep/.ant-menu-inline .ant-menu-submenu-title {
+     padding-right: 0px;
 }
 </style>
 
