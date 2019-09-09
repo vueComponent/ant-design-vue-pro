@@ -1,10 +1,12 @@
 <template>
-  <span>
-    <a-icon type="edit" @click="showMicroorganism" class="mcroorganism"/>
+  <span class="editMcroorganism">
+    <p  @click="showMicroorganism" >
+      <a-icon type="edit"class="mcroorganism"/><span>编辑</span>
+    </p>
     <a-modal title="药敏检查" width="800px" :visible="visible" :footer="null" :centered="centered"  @cancel="handleCancel" :bodyStyle="bodyStyle">
       <p ><a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button></p>
       <a-table rowKey="keyW" size="middle" :pagination="pagination" :columns="columns" :dataSource="data">
-        <template v-for="col in ['microbeName', 'antibiotic', 'allergyValue']" :slot="col" slot-scope="text, record, index">
+        <template v-for="col in [ 'antibiotic', 'allergyValue']" :slot="col" slot-scope="text, record, index">
           <div :key="col" 
             <a-input v-if="record.editable" style="margin: -5px 0;" :value="text" @change="e => handleChange(e.target.value, record.keyW, col)" />
             <template v-else>
@@ -172,7 +174,7 @@ export default {
         antibioticResult: '',
         allergyValue: ''
       };
-      this.data = [...data, newData];
+      this.data = [newData,...data];
       this.count = count + 1;
 
       this.$emit('mySign', this.data);
@@ -187,7 +189,6 @@ export default {
         this.vitamin = val[0] ? val[0].microbeName : '';
         this.count = val.length > 0 ? val[val.length - 1].keyW : 0;
         this.$emit('mySign', this.data);
-        console.log('this.count', this.count);
       }
     }
   }
@@ -197,12 +198,24 @@ export default {
 .editable-row-operations a {
   margin-right: 8px;
 }
-.mcroorganism{
-  font-size: 18px;
+.editMcroorganism{
+  display: inline-block;
+  margin:0;
   margin-right: 20px;
-  &:hover{
-    cursor: pointer;
+  .mcroorganism{
+    font-size: 14px;
     color: #0399EC;
+  }
+  span{
+    color: #0399EC;
+    
+  }
+   &:hover{
+    cursor: pointer;
+    span{
+      text-decoration: underline;
+    }
   }  
 }
+
 </style>

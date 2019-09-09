@@ -58,7 +58,6 @@
       <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">
-            <a-icon type="edit" />
             编辑
           </a>
         </template>
