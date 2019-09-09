@@ -385,6 +385,7 @@ export default {
     &.desktop div[class^=ant-col]:last-child {
       position: absolute;
       right: 0;
+      top: 0;
       height: 100%;
     }
   }
