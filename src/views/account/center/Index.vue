@@ -466,7 +466,7 @@ export default {
       checkedList:[],
       title: '',
       openKeys: [],
-      defaultSelectedKeys: [5],
+      defaultSelectedKeys: [],
       orgTree: [],
       labelColHor: {
         xs: { span: 24 },
@@ -534,7 +534,17 @@ export default {
       }else if(that.patientBasis.type === 3){
         that.title = '支扩研究访视表'
       }
+      if(typeof this.$route.query.markId === 'undefined'){
+        this.basisMaskId = this.orgTree[0].basisMarkId
+        this.getElementsAnswer()
+        this.defaultSelectedKeys = [this.basisMaskId]
+      }
     })
+    if(this.$route.query.markId){
+      this.basisMaskId = parseInt(this.$route.query.markId)
+      this.getElementsAnswer()
+      this.defaultSelectedKeys = [this.basisMaskId]
+    }    
   },
   computed: {
     validate() {

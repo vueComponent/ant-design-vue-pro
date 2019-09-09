@@ -31,6 +31,13 @@ export const asyncRouterMap = [
         component: () => import('@/views/account/center/Index'),
       },
       {
+        path: '/list/task/:id(\\d*)',
+        name: 'taskDetail',
+        hidden: true,
+        hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+        component: () => import('@/views/account/center/task'),
+      },
+      {
         path: '/task/index',
         name: 'Task',
         component: () => import('@/views/task/index'),
