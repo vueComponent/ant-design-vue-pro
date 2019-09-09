@@ -58,3 +58,13 @@ export function removeLoadingAnimate (id = '', timeout = 1500) {
     document.body.removeChild(document.getElementById(id))
   }, timeout)
 }
+
+/**
+ * 处理路由大小写逻辑，约定vue文件首字母大写。数据库存储小写
+ * @param path
+ * @returns {string}
+ */
+export function dealPath (path) {
+  const RealPath = path.split('/')
+  return truncate(RealPath).join('/') + '/' + toUpperCase(RealPath[RealPath.length - 1])
+}
