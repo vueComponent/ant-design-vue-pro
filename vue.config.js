@@ -111,7 +111,7 @@ const vueConfig = {
 }
 
 // preview.pro.loacg.com only do not use in your production;
-if (isProd()) {
+if (!isProd()) {
   // add `ThemeColorReplacer` plugin to webpack plugins
   vueConfig.configureWebpack.plugins.push(createThemeColorReplacerPlugin())
 }
