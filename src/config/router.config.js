@@ -34,7 +34,7 @@ export const asyncRouterMap = [
         path: '/task/index',
         name: 'Task',
         component: () => import('@/views/task/index'),
-        meta: { title: '随访任务', keepAlive: true, icon: fangshi}
+        meta: { title: '访视任务', keepAlive: true, icon: fangshi}
       },
       {
         path: '/gallery/index',
