@@ -5,7 +5,7 @@
     :maskClosable="false"
     :confirmLoading="confirmLoading"
     :width="800"
-    @cancel="cancelHandel">
+    @cancel="cancelHandle">
     <a-row>
       <a-col :xs="24" :md="12" :style="{height: '350px'}">
         <vue-cropper
@@ -28,8 +28,8 @@
     </a-row>
 
     <template slot="footer">
-      <a-button key="back" @click="cancelHandel">取消</a-button>
-      <a-button key="submit" type="primary" :loading="confirmLoading" @click="okHandel">保存</a-button>
+      <a-button key="back" @click="cancelHandle">取消</a-button>
+      <a-button key="submit" type="primary" :loading="confirmLoading" @click="okHandle">保存</a-button>
     </template>
   </a-modal>
 </template>
@@ -68,10 +68,10 @@ export default {
       this.id = null
       this.visible = false
     },
-    cancelHandel () {
+    cancelHandle () {
       this.close()
     },
-    okHandel () {
+    okHandle () {
       const vm = this
 
       vm.confirmLoading = true
