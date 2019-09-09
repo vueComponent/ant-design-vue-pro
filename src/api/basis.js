@@ -78,3 +78,11 @@ export function getAllQuestionList(params) {
     data: params
   })
 }
+
+export function getTaskDetail(params) {
+  return axios({
+    url: '/visitTask/getVisitTaskDetail',
+    method: 'post',
+    data: params
+  })
+}
