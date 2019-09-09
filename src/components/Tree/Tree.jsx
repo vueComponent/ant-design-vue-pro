@@ -2,7 +2,6 @@ import { Menu, Icon, Input } from 'ant-design-vue'
 import _ from 'lodash'
 const { Item, ItemGroup, SubMenu } = Menu
 const { Search } = Input
-
 export default {
   name: 'Tree',
   props: {
@@ -21,14 +20,19 @@ export default {
     treeTitle: {
       type: String,
       default: ''
-    }
+    },
+    defaultSelectedKeys:{
+      type: Array,
+      default: () => []
+    },
   },
   created () {
-    this.localOpenKeys = this.openKeys.slice(0)
+    
   },
   data () {
     return {
-      localOpenKeys: []
+      localOpenKeys: [],
+      selectedKeys:[]
     }
   },
   methods: {
@@ -131,6 +135,36 @@ export default {
       )
     }
   },
+  watch:{
+    dataSource(newValue,old){
+       const  newData=[];
+       const that=this;
+       if(this.defaultSelectedKeys.length==0){
+         this.selectedKeys=[newValue[0].basisMarkId]
+         return  false
+       }
+       _.each(newValue,function(item){
+          newData.push(item.basisMarkId)
+       })
+      if(newData.indexOf(this.defaultSelectedKeys[0])>-1){
+          this.selectedKeys=this.defaultSelectedKeys;
+      }else{
+         _.each(newValue,function(item){
+           if(item.childList){
+             const childList=[]
+             _.each(item.childList,function(v){
+               childList.push(v.basisMarkId)
+             })
+             if(childList.indexOf(that.defaultSelectedKeys[0])>-1){
+                that.selectedKeys=that.defaultSelectedKeys;
+                that.localOpenKeys=[item.basisMarkId];
+                return false
+             }
+           }
+        })
+      }
+    }
+  },
   render () {
     const { dataSource, search, treeTitle } = this.$props
 
@@ -144,7 +178,7 @@ export default {
       <div class="tree-wrapper">
         { search ? this.renderSearch() : null }
         <div class="tree-title">{ treeTitle }</div>
-        <Menu mode="inline" inlineIndent={0} class="custom-tree"  {...{ on: { click: item => this.$emit('click', item),openChange:this.onOpenChange } }} openKeys={this.localOpenKeys}>
+        <Menu mode="inline" inlineIndent={0} class="custom-tree"  {...{ on: { click: item => this.$emit('click', item),openChange:this.onOpenChange } }} selectedKeys={this.selectedKeys} openKeys={this.localOpenKeys}>
           { list }
         </Menu>
       </div>

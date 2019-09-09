@@ -50,8 +50,11 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="default" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="default" :scroll="scroll" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="collectStatus" slot-scope="text"><a-badge :status="text | statusTypeFilter" :text="text | statusFilter" /></span>
+           <span slot="name"  slot-scope="text,record" @click="showUser(record)">
+       <p class="userName">{{text}}</p>
+     </span>
       <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">
@@ -61,6 +64,7 @@
         </template>
       </span>
     </s-table>
+        <user-detail ref="detailModal"/>
     <Register-form ref="registerModal" @ok="handleOk" />
   </a-card>
 </template>
@@ -70,7 +74,7 @@ import moment from 'moment'
 import { STable, Ellipsis } from '@/components'
 import { getReportList } from '@/api/report'
 import RegisterForm from './modules/RegisterForm'
-
+import UserDetail from '../list/modules/UserDetail'
 const statusMap = {
   0: {
     status: 'default',
@@ -91,7 +95,8 @@ export default {
   components: {
     STable,
     Ellipsis,
-    RegisterForm
+    RegisterForm,
+    UserDetail
   },
   data () {
     return {
@@ -104,34 +109,42 @@ export default {
       columns: [
         {
           title: '报告编号',
-          dataIndex: 'reportCode'
+          dataIndex: 'reportCode',
+          width: '80px',
         },
         {
           title: '档案号',
-          dataIndex: 'fileCode'
+          dataIndex: 'fileCode',
+          width: '150px',
         },
         {
           title: '患者姓名',
-          dataIndex: 'patientName'
+          dataIndex: 'patientName',
+           scopedSlots: { customRender: 'name' },
+           width: '100px',
         },
         {
           title: '身份证号',
-          dataIndex: 'patientCard'
+          dataIndex: 'patientCard',
+          width: '180px',
         },
         {
           title: '创建时间',
           dataIndex: 'collectDate',
-          customRender: collectDate => moment(collectDate).format('YYYY-MM-DD HH:mm:ss')
+          customRender: collectDate => moment(collectDate).format('YYYY-MM-DD HH:mm:ss'),
+           width: '180px',
         },
         {
           title: '采集状态',
           dataIndex: 'collectStatus',
-          scopedSlots: { customRender: 'collectStatus' }
+          scopedSlots: { customRender: 'collectStatus' },
+           width: '80px',
         },
         {
           title: '操作',
           dataIndex: 'action',
-          width: '200px',
+          width: '80px',
+              fixed:"right",
           scopedSlots: { customRender: 'action' }
         }
       ],
@@ -158,6 +171,9 @@ export default {
           onChange: this.onSelectChange
         }
       },
+        scroll:{
+        y:'350px'
+      },
       optionAlertShow: false
     }
   },
@@ -175,6 +191,9 @@ export default {
   methods: {
     clearForm(){
       this.queryParam={}
+    },
+    showUser(record){
+      this.$refs.detailModal.show(record);
     },
     toggleAdvanced () {
       this.advanced = !this.advanced
