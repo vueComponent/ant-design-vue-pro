@@ -94,7 +94,8 @@ export default {
   .avatar-upload-preview {
     position: absolute;
     top: 50%;
-    transform: translate(50%, -50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 180px;
     height: 180px;
     border-radius: 50%;
