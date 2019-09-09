@@ -110,7 +110,7 @@ export default {
         {
           title: '报告编号',
           dataIndex: 'reportCode',
-          width: '80px',
+          width: '120px',
         },
         {
           title: '档案号',
@@ -121,29 +121,28 @@ export default {
           title: '患者姓名',
           dataIndex: 'patientName',
            scopedSlots: { customRender: 'name' },
-           width: '100px',
+           width: '120px',
         },
         {
           title: '身份证号',
           dataIndex: 'patientCard',
-          width: '180px',
+          width: '220px',
         },
         {
           title: '创建时间',
           dataIndex: 'collectDate',
           customRender: collectDate => moment(collectDate).format('YYYY-MM-DD HH:mm:ss'),
-           width: '180px',
+           width: '220px',
         },
         {
           title: '采集状态',
           dataIndex: 'collectStatus',
           scopedSlots: { customRender: 'collectStatus' },
-           width: '80px',
         },
         {
           title: '操作',
           dataIndex: 'action',
-          width: '80px',
+          width: '100px',
               fixed:"right",
           scopedSlots: { customRender: 'action' }
         }

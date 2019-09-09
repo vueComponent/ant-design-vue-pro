@@ -1,8 +1,8 @@
 <template>
-  <div class="page-header-index-wide page-header-wrapper-grid-content-main">
-     <a-card :bordered="false" style="background-color: #0399EC;color:#FFFFFF">
+  <div id="baselineInfo" class="page-header-index-wide page-header-wrapper-grid-content-main">
+     <a-card :bordered="false" id="baselineHeader" style="background-color: #0399EC;color:#FFFFFF;">
            <a-row :gutter="30" style="line-height: 34px;">
-       <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:20px;cursor: pointer;" @click="$router.back(-1)" /></a-col>
+       <a-col :md="1" :sm="4"><a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" /></a-col>
        <a-col :md="4" :sm="20" class="UserNameCard">
          <my-icon type="iconshoufangzhe_huaban" />
          受访者:{{ patient.name }}
@@ -11,10 +11,10 @@
        <my-icon type="iconshenfenzheng_huaban" />
          {{ patient.card }}
        </a-col>
-       <a-col :md="13" :sm="24" style="fontSize:20px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
+       <a-col :md="13" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
      </a-row>
     </a-card>
-    <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 20px;padding-left: 0">
+    <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 10px;padding-left: 0">
      <a-row :gutter="8">
        <a-col :span="5" style="overflow: auto;height: 350px;">
         <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
@@ -970,6 +970,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+ /deep/ #baselineHeader{
+    .ant-card-body{
+      padding: 10px
+    }
+  }
+  
   .ml-10{
     margin-left: 10px; 
   }
@@ -1186,6 +1192,9 @@ export default {
 }
 /deep/.page-header-index-wide[data-v-30448598] .ant-menu-submenu.ant-menu-submenu-inline .treeSubTitle{
   width: 120px;
+}
+/deep/.ant-menu-inline .ant-menu-submenu-title {
+     padding-right: 0px;
 }
 </style>
 
