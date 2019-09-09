@@ -28,6 +28,26 @@
          </div>
          <div class="baselineForm">
               <a-form :form="form">
+
+                <a-form-item>
+                  <div v-if="question.name" class="question-title" >{{question.name}}</div>
+                  <div v-if="question.remark" class="question-des">{{question.remark}}</div>
+                </a-form-item>
+                <div v-for="item in listArr">
+                  <div class="question-t">{{item.name}}</div><br />
+                  <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
+                    <p v-if="qu1.type == 5">{{qu1.name}}</p>
+                    <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" />
+                    <a-radio-group v-if="qu1.type === 1">
+                      <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.sort">{{item.name}}</a-radio>
+                    </a-radio-group>
+                    <a-radio-group v-if="qu1.type === 2">
+                      <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.sort">{{item.name}}</a-checkbox>
+                    </a-radio-group>
+                     <a-date-picker v-if="qu1.type === 6" />
+                  </a-form-item>
+                </div>
+
                 <a-form-item v-if="patientBasis.type === 1 || patientBasis.type === 3" v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
                     <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
                       <a-radio :value="1">是</a-radio>
@@ -401,7 +421,7 @@
                                         <a-col :span="10">{{sixth.questionName}}</a-col>
                                         <a-col :span="14">
                                           <a-radio-group v-if="sixth.isRadio > 0" :name="sixth.basisElementCopyId+''" v-model="sixth.basisElementId">
-                                            <a-radio v-for="(seven, index) in sixth.childList" :value="seven.basisElementCopyId">{{seven.questionName}}fd</a-radio>
+                                            <a-radio v-for="(seven, index) in sixth.childList" :value="seven.basisElementCopyId">{{seven.questionName}}</a-radio>
                                           </a-radio-group>
                                         </a-col>
                                       </a-row>
@@ -446,9 +466,8 @@ export default {
       checkedList:[],
       title: '',
       openKeys: [],
-      defaultSelectedKeys:[],
-      orgTree: [1
-      ],
+      defaultSelectedKeys: [5],
+      orgTree: [],
       labelColHor: {
         xs: { span: 24 },
         sm: { span: 6 },
