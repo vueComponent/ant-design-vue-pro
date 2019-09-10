@@ -18,12 +18,6 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 - 文档: https://pro.loacg.com/docs/getting-started
 - 更新日志: https://pro.loacg.com/docs/changelog
 - 常见问题: https://pro.loacg.com/docs/faq
-- 分支: 
-  - demo/router-view-table: 增删改查业务(通过路由导航)
-  - feature/demand_load: 按需加载 Antd 组件
-  - feature/lang: 多语言国际化 (i18n) 例示
-  - feature/dynamic-menu: 动态菜单 (从后端拉取并生成菜单结构)
-  - lite: 无任何业务逻辑的模板 (老旧的)
 
 
 Overview
@@ -97,8 +91,13 @@ yarn run lint
 
 - 开启组件按需加载 `/src/main.js` L14 修改为 `import './core/lazy_use'`
 
-- [修改 Ant Design 配色](https://github.com/kokoroli/antd-awesome/blob/master/docs/Ant_Design_%E6%A0%B7%E5%BC%8F%E8%A6%86%E7%9B%96.md)
-- **使用polyfill兼容至 IE10**
+- [修改 Ant Design 配色 (@kokoroli)](https://github.com/kokoroli/antd-awesome/blob/master/docs/Ant_Design_%E6%A0%B7%E5%BC%8F%E8%A6%86%E7%9B%96.md)
+
+- I18n: [多语言支持 (@musnow)](./src/locales/index.js)
+
+- 生成环境默认不加载 `mock`，更多详情请看 `src/mock/index.js`
+
+- **用于生产环境，请使用 `release` 版本代码，使用 master 代码出现的任何问题需要你自行解决**
 
 ## 浏览器兼容
 
