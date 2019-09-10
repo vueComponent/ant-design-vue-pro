@@ -1,8 +1,9 @@
 <template>
   <a-modal
     :title="options.title"
-    :width="800"
+    :width=" 600"
     :bodyStyle="bodyStyle"
+      :maskClosable="maskClosable"
     :destroyOnClose="destroyOnClose"
     :centered="centered"
     :visible="visible"
@@ -17,7 +18,7 @@
         </a-form-item>
         <!-- <a-form-item label="病例档案号" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['card', { rules: [{ required: true }] }]" /></a-form-item> -->
         <a-form-item label="患者同意注册日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker style="width: 100%" showTime format="YYYY-MM-DD" v-decorator="['registerDate', requiredRule]" />
+          <a-date-picker style="width: 100%"  format="YYYY-MM-DD" v-decorator="['registerDate', requiredRule]" />
         </a-form-item>
         <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['name', requiredRule]" /></a-form-item>
         <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -27,7 +28,7 @@
           </a-radio-group>
         </a-form-item>
         <a-form-item label="出生日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker style="width: 100%" showTime format="YYYY-MM-DD" v-decorator="['birthDate', requiredRule]" />
+          <a-date-picker style="width: 100%"  format="YYYY-MM-DD" v-decorator="['birthDate', requiredRule]" />
         </a-form-item>
         <a-form-item label="常居住地" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-row :gutter="8">
@@ -69,6 +70,7 @@ export default {
       nationList: [],
       professionList: [],
       censusList: [],
+      maskClosable:false,
       payTypeList: [],
       labelCol: {
         xs: { span: 24 },

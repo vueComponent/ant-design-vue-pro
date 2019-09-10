@@ -8,14 +8,14 @@
           </a-col>
           <a-col :md="6" :sm="24">
             <a-form-item>
-              <a-button type="primary" @click="$refs.table.refresh()">查询</a-button>
+              <a-button type="primary" @click="refreshTable">查询</a-button>
               <a @click="toggleAdvanced" style="margin-left: 8px">
                 {{ advanced ? '更多筛选' : '更多筛选' }}
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
             </a-form-item>
           </a-col>
-          <a-col :md="13" style="text-align:right" :sm="24"><a-button type="primary" icon="plus" @click="$refs.createModal.add()">新建</a-button></a-col>
+          <a-col :md="13" style="text-align:right" :sm="24"><a-button type="primary"  @click="$refs.createModal.add()">新建</a-button></a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
             <div>
               <a-tabs defaultActiveKey="1">
@@ -33,13 +33,11 @@
                       <a-form-item label="姓名"><a-input v-model="queryParam.name" style="width: 100%" /></a-form-item>
                       <a-form-item label="身份证号"><a-input v-model="queryParam.card" style="width: 100%" /></a-form-item>
                       <a-form-item label="创建日期" style="margin-bottom:0;">
-                        <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime1" /></a-form-item>
-                        <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-</span>
-                        <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime2" /></a-form-item>
-                      </a-form-item>
+                      <a-range-picker @change="changeTime" :value="dateArr"/>
+                     </a-form-item>
                        <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
                           <a-button type="primary"  @click="clearForm()">清空</a-button>
-                         <a-button type="primary" style="margin-left: 10px;" @click="$refs.table.refresh()">查询</a-button>
+                         <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
                       </a-form-item>
                     </a-form>
                   </a-card>
@@ -124,6 +122,7 @@ export default {
   },
   data() {
     return {
+      dateArr:[],
       mdl: {},
       bodyStyle:{
         padding:"10px"
@@ -136,31 +135,31 @@ export default {
       columns: [
         {
           title: '档案号',
-            width:"150px",
+            width:"110px",
           dataIndex: 'fileCode'
           
         },
         {
           title: '患者姓名',
           dataIndex: 'name',
-           width:"100px",
+           width:"80px",
           scopedSlots: { customRender: 'name' }
         },
         {
           title: '身份证号',
-          width:"180px",
+          width:"160px",
           dataIndex: 'card'
         },
         {
           title: '创建日期',
           dataIndex: 'createDate',
-             width:"100px",
+             width:"90px",
           customRender: createDate => moment(createDate).format('YYYY-MM-DD')
         },
         {
           title: '访视状态',
           dataIndex: 'visit',
-           width:"100px",
+         width:"80px",
           scopedSlots: { customRender: 'visit' }
         },
         {
@@ -171,7 +170,7 @@ export default {
         {
           title: '操作',
           dataIndex: 'action',
-          width: '150px',
+          width: '140px',
          fixed: 'right',
           scopedSlots: { customRender: 'action' }
         }
@@ -198,16 +197,14 @@ export default {
           onChange: this.onSelectChange
         }
       },
-      scroll:{
-        x:"130%",
-        y:'350px'
-      },
+      height:window.screen.height,
+      scroll:false,
       optionAlertShow: false,
       form: this.$form.createForm(this),
     };
   },
   created(){
-  this.height=window.screen.height
+    console.log("height",this.height)
   },
   filters: {
     statusFilter(type) {
@@ -225,7 +222,13 @@ export default {
   },
   methods: {
     clearForm(){
+      console.log(this.dateArr)
       this.queryParam={}
+      this.dateArr=[]
+    },
+    refreshTable(){
+        this.advanced=false;
+        this.$refs.table.refresh();
     },
     showUser(record) {
       this.$refs.detailModal.show(record);
@@ -234,11 +237,7 @@ export default {
       this.$refs.createModal.edit(record);
     },
     handleSub(record) {
-      if (record.status !== 0) {
-        this.$message.info(`${record.no} 订阅成功`);
-      } else {
-        this.$message.error(`${record.no} 订阅失败，规则已关闭`);
-      }
+      
     },
     handleOk() {
       this.$refs.table.refresh();
@@ -250,19 +249,11 @@ export default {
     toggleAdvanced() {
       this.advanced = !this.advanced;
     },
-    resetSearchForm() {
-      this.queryParam = {
-        date: moment(new Date())
-      };
+    changeTime(time) {
+      this.dateArr=time;
+       this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD');
+       this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
     },
-    changeTime1(time) {
-      console.log(time);
-      this.queryParam.date1 = moment(time).format('YYYY-MM-DD');
-    },
-    changeTime2(time) {
-      console.log(time);
-      this.queryParam.date2 = moment(time).format('YYYY-MM-DD');
-    }
   }
 };
 </script>
@@ -280,7 +271,7 @@ export default {
 
   /deep/ .progressTagContent {
     display: inline-block;
-    width: 100px;
+    width: 80px;
     margin-right: 5px;
   }
   /deep/ .progressTagTitle {
