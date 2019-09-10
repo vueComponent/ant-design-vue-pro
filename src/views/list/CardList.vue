@@ -14,7 +14,7 @@
         <template v-else>
           <a-card :hoverable="true">
             <a-card-meta>
-              <div style="margin-bottom: 3px" slot="title">{{ item.title }}</div>
+              <a slot="title">{{ item.title }}</a>
               <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large"/>
               <div class="meta-content" slot="description">{{ item.content }}</div>
             </a-card-meta>
@@ -59,6 +59,38 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  @import "~@/components/index.less";
+
+  .card-list {
+    /deep/ .ant-card-body:hover {
+      .ant-card-meta-title>a {
+        color: @primary-color;
+      }
+    }
+
+    /deep/ .ant-card-meta-title {
+      margin-bottom: 12px;
+
+      &>a {
+        display: inline-block;
+        max-width: 100%;
+        color: rgba(0,0,0,.85);
+      }
+    }
+
+    /deep/ .meta-content {
+      position: relative;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      height: 64px;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+
+      margin-bottom: 1em;
+    }
+  }
+
   .card-avatar {
     width: 48px;
     height: 48px;
@@ -67,6 +99,7 @@ export default {
 
   .ant-card-actions {
     background: #f7f9fa;
+
     li {
       float: left;
       text-align: center;
@@ -84,7 +117,7 @@ export default {
         display: inline-block;
         width: 100%;
         &:hover {
-          color: #1890ff;
+          color: @primary-color;
         }
       }
     }
@@ -97,13 +130,4 @@ export default {
     height: 188px;
   }
 
-  .meta-content {
-    position: relative;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    height: 64px;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-  }
 </style>
