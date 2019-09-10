@@ -664,6 +664,99 @@ const userNav = (options) => {
         'show': true
       },
       'component': 'Exception500'
+    },
+
+    // account
+    {
+      'name': 'account',
+      'parentId': -1,
+      'id': 10028,
+      'meta': {
+        'title': '个人页',
+        'icon': 'user',
+        'show': true
+      },
+      'redirect': '/account/center',
+      'component': 'RouteView'
+    },
+    {
+      'name': 'center',
+      'parentId': 10028,
+      'id': 10029,
+      'meta': {
+        'title': '个人中心',
+        'show': true
+      },
+      'component': 'AccountCenter'
+    },
+    // 特殊三级菜单
+    {
+      'name': 'settings',
+      'parentId': 10028,
+      'id': 10030,
+      'meta': {
+        'title': '个人设置',
+        'hideHeader': true,
+        'hideChildren': true,
+        'show': true
+      },
+      'redirect': '/account/settings/base',
+      'component': 'AccountSettings'
+    },
+    {
+      'name': 'BaseSettings',
+      'path': '/account/settings/base',
+      'parentId': 10030,
+      'id': 10031,
+      'meta': {
+        'title': '基本设置',
+        'show': false
+      },
+      'component': 'BaseSettings'
+    },
+    {
+      'name': 'SecuritySettings',
+      'path': '/account/settings/security',
+      'parentId': 10030,
+      'id': 10032,
+      'meta': {
+        'title': '安全设置',
+        'show': false
+      },
+      'component': 'SecuritySettings'
+    },
+    {
+      'name': 'CustomSettings',
+      'path': '/account/settings/custom',
+      'parentId': 10030,
+      'id': 10033,
+      'meta': {
+        'title': '个性化设置',
+        'show': false
+      },
+      'component': 'CustomSettings'
+    },
+    {
+      'name': 'BindingSettings',
+      'path': '/account/settings/binding',
+      'parentId': 10030,
+      'id': 10034,
+      'meta': {
+        'title': '账户绑定',
+        'show': false
+      },
+      'component': 'BindingSettings'
+    },
+    {
+      'name': 'NotificationSettings',
+      'path': '/account/settings/notification',
+      'parentId': 10030,
+      'id': 10034,
+      'meta': {
+        'title': '新消息通知',
+        'show': false
+      },
+      'component': 'NotificationSettings'
     }
   ]
   return builder(nav)
