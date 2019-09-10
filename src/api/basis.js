@@ -86,3 +86,11 @@ export function getTaskDetail(params) {
     data: params
   })
 }
+
+export function saveQuestion(params) {
+  return axios({
+    url: '/question/save',
+    method: 'post',
+    data: params
+  })
+}

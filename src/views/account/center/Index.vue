@@ -22,13 +22,13 @@
        </a-col>
        <a-col :span="19">
          <div style="overflow: hidden;">
-           <a-button class="btn fr" @click="">导入</a-button>
+           <!-- <a-button class="btn fr" @click="">导入</a-button> -->
            <a-button class="btn fr" @click="save">保存</a-button>
-           <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
+           <!-- <a-button class="btn fr" type="primary" @click="submit">提交</a-button> -->
          </div>
          <div class="baselineForm" :style="baselineFormStyle">
               <a-form :form="form">
-
+                <!-- 调查问卷 -->
                 <a-form-item>
                   <div v-if="question.name" class="question-title" >{{question.name}}</div>
                   <div v-if="question.remark" class="question-des">{{question.remark}}</div>
@@ -37,17 +37,17 @@
                   <div class="question-t">{{item.name}}</div><br />
                   <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
                     <p v-if="qu1.type == 5">{{qu1.name}}</p>
-                    <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" />
-                    <a-radio-group v-if="qu1.type === 1">
-                      <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.sort">{{item.name}}</a-radio>
+                    <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue" />
+                    <a-radio-group v-if="qu1.type === 1" :name="qu1.questionTitleId+''" v-model="qu1.inputType">
+                      <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
                     </a-radio-group>
-                    <a-radio-group v-if="qu1.type === 2">
-                      <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.sort">{{item.name}}</a-checkbox>
-                    </a-radio-group>
-                     <a-date-picker v-if="qu1.type === 6" />
+                    <a-checkbox-group v-if="qu1.type === 2" :name="qu1.questionTitleId+''">
+                      <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-checkbox>
+                    </a-checkbox-group>
+                    <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" />
                   </a-form-item>
                 </div>
-
+                <!-- 调查问卷结束 -->
                 <a-form-item v-if="patientBasis.type === 1 || patientBasis.type === 3" v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
                     <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
                       <a-radio :value="1">是</a-radio>
@@ -445,7 +445,7 @@
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList } from '@/api/basis'
+import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList, saveQuestion } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
@@ -518,7 +518,8 @@ export default {
       bodyStyle: {
         'padding-left': '0px',
         'padding-bottom':'0px'
-      }
+      },
+      answersList: []
     }
   },
   beforeCreate (){
@@ -540,7 +541,7 @@ export default {
       }else if(that.patientBasis.type === 2){
         that.title = '支扩研究随访表'
       }else if(that.patientBasis.type === 3){
-        that.title = '支扩研究访视表'
+        that.title = '访视任务'
       }
       if(typeof this.$route.query.markId === 'undefined'){
         that.basisMaskId = that.orgTree[0].basisMarkId
@@ -636,13 +637,11 @@ export default {
       if (this.basisMaskId > 30) {
         that.list = [];
         params.append('questionId', this.basisMaskId)
+        params.append('patientBasisId', this.patientBasisId)
         getAllQuestionList(params)
         .then(res => {
-          res.data.topTitles.forEach((item,index,arr)=> {
-            that.listArr = arr;
-         })
-         that.question = that.initList(res.data.question);
-          // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
+          that.listArr = that.initQuestionAnswers(res.data.topTitles)
+          that.question = res.data.question
         })
         
       }else{
@@ -808,36 +807,103 @@ export default {
       })
       return result
     },
+    generateQuestionAnswers (){
+      var result = []
+      var titleObject = {}
+      var childrenObject = []
+      var subOp = {}
+      _.each(this.listArr, function(title){
+        titleObject = {
+          options: []
+        }
+        titleObject.titleId = title.questionTitleId
+        childrenObject = []
+        if(title.childrens && title.childrens.length){
+          _.each(title.childrens, function(sub){
+            if(sub.type === 3){
+              childrenObject.push({
+                titleId: sub.questionTitleId,
+                value: $('input[name="' + sub.questionTitleId + '"]').val()
+              })
+            }
+            if(sub.type === 6){
+              childrenObject.push({
+                titleId: sub.questionTitleId,
+                value: $('[name="' + sub.questionTitleId + '"] input').val()
+              })
+            }
+            if(sub.type === 1 && sub.options && sub.options.length){
+              subOp = {
+                titleId: sub.questionTitleId,
+                options: []
+              }
+              $('input[name="' + sub.questionTitleId + '"]:checked').each(function(){
+                subOp.options.push({
+                  questionTitleId: sub.questionTitleId,
+                  questionOptionId: $(this).val()
+                })
+              })
+              childrenObject.push(subOp)
+            }
+          })
+        }
+        titleObject.childrens = childrenObject
+        result.push(titleObject)
+      })
+      return result
+    },
     save (){
-      var result = this.generateAnswers()
-      console.log(result)
-      var params = new URLSearchParams();
-      const allergy=[]
-       for(var key in this.optionDataSource){
-          _.each(this.optionDataSource[key], function(item){
-            allergy.push({
-              basisElementId:key,
-              microbeName:item.microbeName,
-              antibiotic:item.antibiotic,
-              antibioticResult:item.antibioticResult,
-              allergyValue:item.allergyValue
-            })
+      // 问卷调查
+      const that=this;
+      if(!_.isEmpty(this.question)){
+        var result = this.generateQuestionAnswers()
+        console.log(result)
+        var params = new URLSearchParams()
+        params.append('answers', JSON.stringify(result))
+        params.append('patientBasisId', this.patientBasisId)
+        params.append('questionId', this.question.questionId)
+        saveQuestion(params)
+          .then(res => {
+            console.log(res)
+            that.$message.success(res.msg)
+            // location.href = location.href
+          })
+          .catch(error => {
+            console.log(error)
           })
       }
-      this.patientBasis.status = 1
-      params.append('basisAnswer', JSON.stringify(result))
-      params.append('patientBasis', JSON.stringify(this.patientBasis))
-      params.append('basisMarkId', this.basisMaskId)
-      params.append('allergy', JSON.stringify(allergy))
-      submit(params)
-      .then(res => {
-        console.log(res)
-        alert('保存成功')
-        // location.href = location.href
-      })
-      .catch(error => {
-        console.log(error)
-      })
+      // 基线、访视、随访
+      else{
+        var result = this.generateAnswers()
+        console.log(result)
+        var params = new URLSearchParams()
+        const allergy=[]
+         for(var key in this.optionDataSource){
+            _.each(this.optionDataSource[key], function(item){
+              allergy.push({
+                basisElementId:key,
+                microbeName:item.microbeName,
+                antibiotic:item.antibiotic,
+                antibioticResult:item.antibioticResult,
+                allergyValue:item.allergyValue
+              })
+            })
+        }
+        this.patientBasis.status = 1
+        params.append('basisAnswer', JSON.stringify(result))
+        params.append('patientBasis', JSON.stringify(this.patientBasis))
+        params.append('basisMarkId', this.basisMaskId)
+        params.append('allergy', JSON.stringify(allergy))
+        submit(params)
+        .then(res => {
+          console.log(res)
+          that.$message.success(res.msg)
+          // location.href = location.href
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
     },
     submit (){
       this.form.validateFields((err, values) => {
@@ -951,6 +1017,18 @@ export default {
         }else if(a.hasChild > 0 && a.isRadio > 0){
           var re = _.filter(a.childList, function(v){return v.answers && v.answers.length && v.answers[0].elementNumValue > 0})
           if(re.length) a.basisElementId = re[0].basisElementId
+        }
+      })
+      return list
+    },
+    initQuestionAnswers (list){
+      _.each(list, function(a){
+        if(a.childrens && a.childrens.length){
+          _.each(a.childrens, function(b){
+            if(b.type === 1 && b.answers && b.answers.length){
+              b.inputType = b.answers[0].questionOptionId
+            }
+          })
         }
       })
       return list
