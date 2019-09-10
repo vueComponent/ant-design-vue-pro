@@ -65,6 +65,10 @@ export default {
     showDrawer() {
       this.visible = true
     },
+    onClose() {
+      this.$emit('checkedP', this.dataList[this.n])
+      this.visible = false
+    },
     checkedPro(value,i){
       this.n = i
       this.$emit('checkedP', this.dataList[this.n])

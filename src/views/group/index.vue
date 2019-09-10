@@ -213,24 +213,6 @@ export default {
       return visitMap[type].status;
     }
   },
-   beforeRouteEnter(to, from, next){
-     if(from.name=='addProject'){
-          to.meta.isBack=true;
-          //判断是从哪个路由过来的，
-          //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
-      }
-     next()
-   },
-  mounted() {
-    console.log(this.$route.meta.isBack)
-    if(!this.$route.meta.isBack){
-       this.$refs.drawerModal.showDrawer()
-    }
-    this.$route.meta.isBack = false
-  },
-  activated() {
-    this.$route.meta.isBack = true
-  },
   methods: {
      clearForm(){
       this.queryParam={}
