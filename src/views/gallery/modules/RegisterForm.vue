@@ -116,6 +116,9 @@ export default {
           that.visible = false;
           that.confirmLoading = false;
           that.$emit('ok', values);
+          that.$router.push({
+            path: '/gallery/detail/' + res.data.reportCollectBaseId
+          })
         });
       });
     },

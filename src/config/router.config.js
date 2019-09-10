@@ -50,6 +50,13 @@ export const asyncRouterMap = [
         meta: { title: '报告采集', keepAlive: true, icon: baogao,isBack:false}
       },
       {
+        path: '/gallery/detail/:id(\\d*)',
+        name: 'collectDetail',
+        hidden: true,
+        hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+        component: () => import('@/views/account/center/collect'),
+      },
+      {
         path: '/group/index',
         name: 'Group',
         component: () => import('@/views/group/index'),

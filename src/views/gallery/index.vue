@@ -56,7 +56,7 @@
       <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">
-            编辑
+            执行
           </a>
         </template>
       </span>
@@ -212,7 +212,10 @@ export default {
       this.advanced = !this.advanced
     },
     handleOk () {
-      this.$refs.table.refresh()
+      // this.$refs.table.refresh()
+    },
+    handleEdit (record) {
+      this.$router.push('/gallery/detail/' + record.reportCollectBaseId)
     },
     changeTime(time) {
       this.dateArr=time;
