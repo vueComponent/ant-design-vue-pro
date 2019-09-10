@@ -296,7 +296,7 @@ export default {
  /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item{
    margin-bottom: 10px
  }
-/deep/.ant-table-row-hover .progressTag .ant-progress-inner{
+/deep/.ant-table-row:hover .progressTag .ant-progress-inner{
        background-color:#ffffff!important;
   } 
 .progressTag {

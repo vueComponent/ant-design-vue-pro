@@ -163,9 +163,6 @@ export default {
       '<td style="text-align: right">' +
       percent +
       '</td>' +
-      '<td style="text-align: right;color: #666;width:80px">' +
-      obj.numPatient +
-      '</td>' +
       '</tr>'
     );
   }

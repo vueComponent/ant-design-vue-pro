@@ -27,7 +27,7 @@ export default {
     };
   },
   created(){
-     this.getUDetailById(this.project.doctorId);
+     this.getUDetailById(window.localStorage.getItem("doctorId"));
   },
   // mounted: {
   //   this.getUDetailById(1);

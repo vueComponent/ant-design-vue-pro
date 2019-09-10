@@ -95,7 +95,7 @@ export default {
             .then(function(res){
               console.log(res);
                 if(res.code==0){
-                  that.project.doctorId=res.data.doctorId;
+					window.localStorage.setItem("doctorId",res.data.doctorId);
                    that.loginSuccess(res)
                 }else{
                   that.$notification['error']({
