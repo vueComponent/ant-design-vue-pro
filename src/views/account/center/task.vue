@@ -544,7 +544,7 @@ export default {
 }
 .page-header-index-wide {
   /deep/ .ant-card-wider-padding .ant-card-body {
-    padding: 18px 32px;
+    padding: 10px 15px;
   }
   /deep/ .tree-title {
     border-right: 1px solid #e8e8e8;

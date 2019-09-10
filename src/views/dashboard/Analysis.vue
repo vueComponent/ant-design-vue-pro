@@ -1,7 +1,7 @@
 <template>
   <div class="page-header-index-wide">
-    <a-row :gutter="24">
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
+    <a-row :gutter="10">
+      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
         <chart-card :loading="loading" title="本月患者数" :total="indexData.currMonthPatients">
           <a-tooltip title="指标说明" slot="action"><a-icon type="info-circle-o" /></a-tooltip>
           <div>
@@ -16,7 +16,7 @@
           </template>
         </chart-card>
       </a-col>
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
+      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
         <chart-card :loading="loading" title="本月访视数" :total="indexData.currMonthBasis">
           <a-tooltip title="指标说明" slot="action"><a-icon type="info-circle-o" /></a-tooltip>
           <div><mini-area /></div>
@@ -26,7 +26,7 @@
           </template>
         </chart-card>
       </a-col>
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
+      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
         <chart-card :loading="loading" title="本年患者数" :total="indexData.currYearPatients">
           <a-tooltip title="指标说明" slot="action"><a-icon type="info-circle-o" /></a-tooltip>
           <div><mini-bar /></div>
@@ -36,7 +36,7 @@
           </template>
         </chart-card>
       </a-col>
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
+      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
         <chart-card :loading="loading" title="患者总数" :total="indexData.realNum">
           <a-tooltip title="指标说明" slot="action"><a-icon type="info-circle-o" /></a-tooltip>
           <div><mini-progress color="rgb(24,144,255)" :target="indexData.completionRate" :percentage="indexData.completionRate" height="8px" /></div>
@@ -54,10 +54,10 @@
         </chart-card>
       </a-col>
     </a-row>
-    <a-row :gutter="24">
-      <a-col :sm="48" :md="24" :xl="12" :style="{ marginBottom: '24px' }">
+    <a-row :gutter="10">
+      <a-col :sm="48" :md="24" :xl="12" :style="{ marginBottom: '10px' }">
         <a-card :loading="loading" title="我的工作" total="￥126,560">
-          <a-row :gutter="24">
+          <a-row :gutter="10">
             <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px' }">
               <div class="card-wait-data">
                 <span class="myIcon"><my-icon type="iconziyuan1" /></span>
@@ -100,7 +100,7 @@
           </a-row>
         </a-card>
       </a-col>
-      <a-col :sm="48" :md="24" :xl="12" :style="{ marginBottom: '24px' }">
+      <a-col :sm="48" :md="24" :xl="12" :style="{ marginBottom: '10px' }">
         <a-card :loading="loading" title="病例省份占比">
           <div>
             <pie></pie>
@@ -108,11 +108,11 @@
         </a-card>
       </a-col>
     </a-row>
-    <a-row :gutter="24">
-      <a-col :sm="48" :md="24" :lg="14" :style="{ marginBottom: '24px' }">
+    <a-row :gutter="10">
+      <a-col :sm="48" :md="24" :lg="14" :style="{ marginBottom: '10px' }">
         <a-card :loading="loading" :bordered="false" :body-style="{ padding: '0' }">
           <div class="salesCard">
-            <a-tabs default-active-key="1" size="large" :tab-bar-style="{ marginBottom: '24px', paddingLeft: '16px' }">
+            <a-tabs default-active-key="1" size="large" :tab-bar-style="{ marginBottom: '10px', paddingLeft: '16px' }">
               <a-tab-pane loading="true" tab="新增病例数" key="1">
                 <a-row>
                   <a-col :push="1" :xl="22" :lg="22" :md="22" :sm="24" :xs="24"><bar :data="eachMonthPatients" title="新增病例数" /></a-col>
@@ -127,7 +127,7 @@
           </div>
         </a-card>
       </a-col>
-      <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '24px' }">
+      <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '10px' }">
         <a-card :loading="loading" title="操作培训" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '411px' }">
           <div class="salesCard"><rank-list :list="rankList" /></div>
         </a-card>

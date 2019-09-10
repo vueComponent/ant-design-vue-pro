@@ -1,5 +1,5 @@
 <template>
-  <a-card :bordered="false">
+  <a-card :bordered="false" :bodyStyle="bodyStyle">
     <div class="table-page-search-wrapper">
       <a-form :form="form" layout="inline">
         <a-row :gutter="16">
@@ -50,7 +50,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="default" :scroll="scroll"  rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="small" :scroll="scroll"  rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="name" slot-scope="text, record" @click="showUser(record)">
         <p class="userName">{{ text }}</p>
       </span>
@@ -125,6 +125,9 @@ export default {
   data() {
     return {
       mdl: {},
+      bodyStyle:{
+        padding:"10px"
+      },
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
@@ -151,8 +154,8 @@ export default {
         {
           title: '创建日期',
           dataIndex: 'createDate',
-             width:"180px",
-          customRender: createDate => moment(createDate).format('YYYY-MM-DD HH:mm:ss')
+             width:"100px",
+          customRender: createDate => moment(createDate).format('YYYY-MM-DD')
         },
         {
           title: '访视状态',
@@ -203,6 +206,9 @@ export default {
       form: this.$form.createForm(this),
     };
   },
+  created(){
+  this.height=window.screen.height
+  },
   filters: {
     statusFilter(type) {
       return statusMap[type].text;
@@ -217,7 +223,6 @@ export default {
       return visitMap[type].status;
     }
   },
-  created() {},
   methods: {
     clearForm(){
       this.queryParam={}
@@ -262,14 +267,16 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.ant-table td { white-space: nowrap; }
- 
+.ant-table td { white-space: nowrap;}
+ /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item{
+   margin-bottom: 10px
+ }
 /deep/.ant-table-row-hover .progressTag .ant-progress-inner{
        background-color:#ffffff!important;
   } 
 .progressTag {
   display: inline-block;
-  width: 140px;
+  width: 120px;
 
   /deep/ .progressTagContent {
     display: inline-block;

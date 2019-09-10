@@ -1,5 +1,5 @@
 <template>
-  <a-card :bordered="false">
+  <a-card :bordered="false" >
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="16">
@@ -125,18 +125,19 @@ export default {
         {
           title: '身份证号',
           dataIndex: 'patientCard',
-          width: '220px',
+          width: '180px',
         },
         {
           title: '创建时间',
           dataIndex: 'collectDate',
           customRender: collectDate => moment(collectDate).format('YYYY-MM-DD HH:mm:ss'),
-           width: '220px',
+           width: '180px',
         },
         {
           title: '采集状态',
           dataIndex: 'collectStatus',
           scopedSlots: { customRender: 'collectStatus' },
+          width:"100px"
         },
         {
           title: '操作',
