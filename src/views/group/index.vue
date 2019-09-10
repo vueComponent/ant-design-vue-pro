@@ -16,8 +16,8 @@
             </a-form-item>
           </a-col>
           <a-col :md="13" style="text-align:right" :sm="24">
-            <a-button type="primary" icon="plus" @click="checkProject()" style="margin-right: 20px;">选择项目</a-button>
-            <a-button type="primary" icon="plus" @click="addCaces()">添加病例</a-button></a-col>
+            <a-button type="primary" @click="checkProject()" style="margin-right: 20px;">选择项目</a-button>
+            <a-button type="primary" @click="addCaces()">添加病例</a-button></a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
               <div>
                 <a-tabs defaultActiveKey="1">
@@ -224,9 +224,12 @@ export default {
   mounted() {
     console.log(this.$route.meta.isBack)
     if(!this.$route.meta.isBack){
-       this.$refs.drawerModal.showDrawer();
+       this.$refs.drawerModal.showDrawer()
     }
-    this.$route.meta.isBack=false;
+    this.$route.meta.isBack = false
+  },
+  activated() {
+    this.$route.meta.isBack = true
   },
   methods: {
      clearForm(){
