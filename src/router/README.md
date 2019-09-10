@@ -2,30 +2,18 @@
 ====
 
 
-
-配置文件路径
-----
-
-`@/config/router.config.js`
-
-
-
 格式和说明
 ----
 
-```javascript
-/**
- * 路由配置说明：
- * 建议：sider menu 请不要超过三级菜单，若超过三级菜单，则应该设计为顶部主菜单 配合左侧次级菜单
- *
- **/
- {
+```ecmascript 6
+const routerObject = {
   redirect: noredirect,
   name: 'router-name',
   hidden: true,
   meta: {
     title: 'title',
     icon: 'a-icon',
+    target: '_blank|_self|_top|_parent',
     keepAlive: true,
     hiddenHeaderContent: true,
   }
@@ -52,11 +40,14 @@
 | title               | 路由标题, 用于显示面包屑, 页面标题 *推荐设置                 | string  | -      |
 | icon                | 路由在 menu 上显示的图标                                     | [string,svg]  | -      |
 | keepAlive           | 缓存该路由                                                   | boolean | false  |
+| target              | 菜单链接跳转目标（参考 html a 标记）                          | string | -  |
 | hidden              | 配合`hideChildrenInMenu`使用，用于隐藏菜单时，提供递归到父菜单显示 选中菜单项_（可参考 个人页 配置方式）_ | boolean | false  |
-| hiddenHeaderContent | *特殊 隐藏 [PageHeader](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/layout/PageHeader.vue#L14) 组件中的页面带的 面包屑和页面标题栏 | boolean | false  |
+| hiddenHeaderContent | *特殊 隐藏 [PageHeader](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/PageHeader/PageHeader.vue#L6) 组件中的页面带的 面包屑和页面标题栏 | boolean | false  |
 | permission          | 与项目提供的权限拦截匹配的权限，如果不匹配，则会被禁止访问该路由页面 | array   | []     |
 
 > 路由自定义 `Icon` 请引入自定义 `svg` Icon 文件，然后传递给路由的 `meta.icon` 参数即可
+
+路由构建例子方案1
 
 路由例子
 ----
@@ -135,11 +126,9 @@ const asyncRouterMap = [
 > 4. `permission` 可以进行自定义修改，只需要对这个模块进行自定义修改即可 [src/store/modules/permission.js#L10](https://github.com/sendya/ant-design-pro-vue/blob/master/src/store/modules/permission.js#L10)
 
 
-
 附权限路由结构：
 
 ![权限结构](https://static-2.loacg.com/open/static/github/permissions.png)
-
 
 
 第二种前端路由由后端动态生成的设计，可以前往官网文档 https://pro.loacg.com/docs/authority-management 参考

@@ -402,6 +402,7 @@ const userNav = (options) => {
       'id': 3,
       'meta': {
         'title': '监控页（外部）',
+        'target': '_blank',
         'show': true
       }
     },

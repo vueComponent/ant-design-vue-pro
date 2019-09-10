@@ -109,9 +109,9 @@ export const generatorDynamicRouter = (token) => {
  */
 export const generator = (routerMap, parent) => {
   return routerMap.map(item => {
-    const { title, show, hideChildren, hiddenHeaderContent, icon } = item.meta || {}
+    const { title, show, hideChildren, hiddenHeaderContent, target, icon } = item.meta || {}
     const currentRouter = {
-      // 路由地址 动态拼接生成如 /dashboard/workplace
+      // 如果路由设置了 path，则作为默认 path，否则 路由地址 动态拼接生成如 /dashboard/workplace
       path: item.path || `${parent && parent.path || ''}/${item.key}`,
       // 路由名称，建议唯一
       name: item.name || item.key || '',
@@ -121,7 +121,7 @@ export const generator = (routerMap, parent) => {
       // component: () => import(`@/views/${item.component}`),
 
       // meta: 页面标题, 菜单图标, 页面权限(供指令权限用，可去掉)
-      meta: { title: title, icon: icon || undefined, hiddenHeaderContent: hiddenHeaderContent, permission: item.name }
+      meta: { title: title, icon: icon || undefined, hiddenHeaderContent: hiddenHeaderContent, target: target, permission: item.name }
     }
     // 是否设置了隐藏菜单
     if (show === false) {
