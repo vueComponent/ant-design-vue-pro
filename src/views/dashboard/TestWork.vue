@@ -6,6 +6,7 @@
       <h4>多标签组件测试功能</h4>
       <a-button @click="handleCloseCurrentTab" style="margin-right: 16px;">关闭当前页</a-button>
       <a-button @click="handleOpenTab">打开 任务列表</a-button>
+      <a-input ref="tInput" />
     </div>
     <a-divider />
     <div class="page-loading-test">
@@ -28,6 +29,10 @@ export default {
     },
 
     handleOpenLoading () {
+      this.$nextTick(function () {
+        console.log('this', this)
+        console.log('this.$refs.tInput', this.$refs.tInput)
+      })
       this.$loading.show()
       setTimeout(() => {
         this.$loading.hide()

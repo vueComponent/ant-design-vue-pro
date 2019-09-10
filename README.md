@@ -18,13 +18,6 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 - Documentation: https://pro.loacg.com/docs/getting-started
 - ChangeLog: https://pro.loacg.com/docs/changelog
 - FAQ: https://pro.loacg.com/docs/faq
-- Branches: 
-  - demo/router-view-table: CRUD view in router
-  - feature/demand_load: loaded on demand
-  - feature/lang: i18n support
-  - feature/dynamic-menu: dynamic menu demo
-  - lite: lite template (legacy)
-
 
 Overview
 ----

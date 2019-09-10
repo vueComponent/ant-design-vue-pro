@@ -15,9 +15,32 @@ const constantRouterComponents = {
   '500': () => import(/* webpackChunkName: "error" */ '@/views/exception/500'),
 
   // 你需要动态引入的页面组件
-  'Analysis': () => import('@/views/dashboard/Analysis'),
   'Workplace': () => import('@/views/dashboard/Workplace'),
-  'TestWork': () => import('@/views/dashboard/TestWork')
+  'Analysis': () => import('@/views/dashboard/Analysis'),
+
+  // form
+  'BasicForm': () => import('@/views/form/BasicForm'),
+  'StepForm': () => import('@/views/form/stepForm/StepForm'),
+  'AdvanceForm': () => import('@/views/form/advancedForm/AdvancedForm'),
+
+  // list
+  'TableList': () => import('@/views/list/TableList'),
+  'BasicList': () => import('@/views/list/StandardList'),
+  'CardList': () => import('@/views/list/CardList'),
+  'SearchLayout': () => import('@/views/list/search/SearchLayout'),
+  'SearchArticles': () => import('@/views/list/search/Article'),
+  'SearchProjects': () => import('@/views/list/search/Projects'),
+  'SearchApplications': () => import('@/views/list/search/Applications'),
+  'ProfileBasic': () => import('@/views/profile/basic/Index'),
+  'ProfileAdvanced': () => import('@/views/profile/advanced/Advanced'),
+  'ResultSuccess': () => import(/* webpackChunkName: "result" */ '@/views/result/Success'),
+  'ResultFail': () => import(/* webpackChunkName: "result" */ '@/views/result/Error'),
+
+  'Exception403': () => import(/* webpackChunkName: "fail" */ '@/views/exception/403'),
+  'Exception404': () => import(/* webpackChunkName: "fail" */ '@/views/exception/404'),
+  'Exception500': () => import(/* webpackChunkName: "fail" */ '@/views/exception/500'),
+
+  'TestWork': () => import(/* webpackChunkName: "TestWork" */ '@/views/dashboard/TestWork')
 }
 
 // 前端未找到页面路由（固定不用改）
@@ -74,10 +97,10 @@ export const generatorDynamicRouter = (token) => {
  */
 export const generator = (routerMap, parent) => {
   return routerMap.map(item => {
-    const { title, show, hideChildren, icon } = item.meta || {}
+    const { title, show, hideChildren, hiddenHeaderContent, icon } = item.meta || {}
     const currentRouter = {
       // 路由地址 动态拼接生成如 /dashboard/workplace
-      path: `${parent && parent.path || ''}/${item.key}`,
+      path: item.path || `${parent && parent.path || ''}/${item.key}`,
       // 路由名称，建议唯一
       name: item.name || item.key || '',
       // 该路由对应页面的 组件 :方案1
@@ -86,7 +109,7 @@ export const generator = (routerMap, parent) => {
       // component: () => import(`@/views/${item.component}`),
 
       // meta: 页面标题, 菜单图标, 页面权限(供指令权限用，可去掉)
-      meta: { title: title, icon: icon || undefined, permission: item.name }
+      meta: { title: title, icon: icon || undefined, hiddenHeaderContent: hiddenHeaderContent, permission: item.name }
     }
     // 是否设置了隐藏菜单
     if (show === false) {
@@ -97,7 +120,9 @@ export const generator = (routerMap, parent) => {
       currentRouter.hideChildrenInMenu = true
     }
     // 为了防止出现后端返回结果不规范，处理有可能出现拼接出两个 反斜杠
-    currentRouter.path = currentRouter.path.replace('//', '/')
+    if (!currentRouter.path.startsWith('http')) {
+      currentRouter.path = currentRouter.path.replace('//', '/')
+    }
     // 重定向
     item.redirect && (currentRouter.redirect = item.redirect)
     // 是否有子菜单，并递归处理
