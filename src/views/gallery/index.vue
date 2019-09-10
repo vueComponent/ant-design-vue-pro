@@ -215,9 +215,9 @@ export default {
       this.$refs.table.refresh()
     },
     changeTime(time) {
-         this.dateArr=time;
-    this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD');
-    this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
+      this.dateArr=time;
+      this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD');
+      this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
     },
   }
 }
