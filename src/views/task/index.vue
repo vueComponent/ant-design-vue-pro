@@ -236,7 +236,8 @@ export default {
       this.$refs.detailModal.show(record);
     },
     implement(record) {
-      //执行      
+      //执行
+      this.$router.push('/list/task/' + record.visitTaskId)     
     },
     ignore(record) {
       //忽略

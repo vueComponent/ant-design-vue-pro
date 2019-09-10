@@ -351,8 +351,6 @@
                         </a-col>
                       </a-row>
                     </div>
-                    <!-- 问卷调查 -->
-                   
                 </a-form-item>
                 <!-- 半年随访模板 -->
                 <a-form-item v-if="patientBasis.type === 2" v-for="(first, index) in list" :key="index" :label="[first.sort + '.' + first.questionName]" :labelCol="first.type === 0 ? labelColVer : labelColHor" :wrapperCol="first.type === 0 ? wrapperVer : wrapperHor" :class="{'no-border': index === list.length - 1}">
@@ -535,16 +533,16 @@ export default {
         that.title = '支扩研究访视表'
       }
       if(typeof this.$route.query.markId === 'undefined'){
-        this.basisMaskId = this.orgTree[0].basisMarkId
-        this.getElementsAnswer()
-        this.defaultSelectedKeys = [this.basisMaskId]
+        that.basisMaskId = that.orgTree[0].basisMarkId
+        that.getElementsAnswer()
+        that.defaultSelectedKeys = [that.basisMaskId]
       }
     })
     if(this.$route.query.markId){
       this.basisMaskId = parseInt(this.$route.query.markId)
       this.getElementsAnswer()
       this.defaultSelectedKeys = [this.basisMaskId]
-    }    
+    }
   },
   computed: {
     validate() {
