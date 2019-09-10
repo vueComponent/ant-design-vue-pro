@@ -23,14 +23,13 @@
           textAlign: 'right'
         }"
       >
-        <a-button @click="onClose" type="primary">确定</a-button>
       </div>
     </a-drawer>
   </div>
 </template>
 <script>
-import { MyIcon } from '@/components/_util/util';
-import { getDatalList,getPatientList,joinProject } from '@/api/group';
+import { MyIcon } from '@/components/_util/util'
+import { getDatalList,getPatientList,joinProject } from '@/api/group'
 export default {
   data() {
     return {
@@ -52,26 +51,28 @@ export default {
     };
   },
   created(){
-    const parems = new URLSearchParams();
-    parems.append('pageNumber', 1);
-    parems.append('pageSize', 10);
+    const parems = new URLSearchParams()
+    parems.append('pageNumber', 1)
+    parems.append('pageSize', 10)
     getDatalList(parems).then(res => {
-      this.dataList=res.data;
-    });
+      this.dataList=res.data
+    })
   },
   components: {
     MyIcon
   },
   methods: {
     showDrawer() {
-      this.visible = true;
+      this.visible = true
     },
     onClose() {
-      this.$emit('checkedP', this.dataList[this.n]);
-      this.visible = false;
+      this.$emit('checkedP', this.dataList[this.n])
+      this.visible = false
     },
     checkedPro(value,i){
-      this.n=i;
+      this.n = i
+      this.$emit('checkedP', this.dataList[this.n])
+      this.visible = false
     }
   }
 };

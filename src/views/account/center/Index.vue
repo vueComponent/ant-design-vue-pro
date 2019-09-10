@@ -814,6 +814,7 @@ export default {
             })
           })
       }
+      this.patientBasis.status = 1
       params.append('basisAnswer', JSON.stringify(result))
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.basisMaskId)
