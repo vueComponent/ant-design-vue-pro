@@ -1,17 +1,10 @@
 const path = require('path')
 const webpack = require('webpack')
 const createThemeColorReplacerPlugin = require('./config/plugin.config')
+const envUtil = require('./src/utils/envUtil')
 
 function resolve (dir) {
   return path.join(__dirname, dir)
-}
-
-/**
- * check production or preview(pro.loacg.com only)
- * @returns {boolean}
- */
-function isProd () {
-  return process.env.NODE_ENV === 'production' || process.env.VUE_APP_PREVIEW === 'true'
 }
 
 const assetsCDN = {
@@ -42,7 +35,7 @@ const vueConfig = {
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ],
     // if prod is on, add externals
-    externals: isProd() ? prodExternals : {}
+    externals: envUtil.isProd() ? prodExternals : {}
   },
 
   chainWebpack: (config) => {
@@ -67,7 +60,7 @@ const vueConfig = {
 
     // if prod is on
     // assets require on cdn
-    if (isProd()) {
+    if (envUtil.isProd()) {
       config.plugin('html').tap(args => {
         args[0].cdn = assetsCDN
         return args
@@ -111,7 +104,7 @@ const vueConfig = {
 }
 
 // preview.pro.loacg.com only do not use in your production;
-if (!isProd()) {
+if (envUtil.isDevOrPreview()) {
   // add `ThemeColorReplacer` plugin to webpack plugins
   vueConfig.configureWebpack.plugins.push(createThemeColorReplacerPlugin())
 }

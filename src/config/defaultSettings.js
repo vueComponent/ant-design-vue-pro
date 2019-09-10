@@ -1,3 +1,4 @@
+import envUtil from '@/utils/envUtil'
 /**
  * 项目默认配置项
  * primaryColor - 默认主题色, 如果修改颜色不生效，请清理 localStorage
@@ -12,7 +13,6 @@
  * storageOptions: {} - Vue-ls 插件配置项 (localStorage/sessionStorage)
  *
  */
-
 export default {
   primaryColor: '#52C41A', // primary color of ant design
   navTheme: 'dark', // theme for nav menu
@@ -23,7 +23,7 @@ export default {
   autoHideHeader: false, //  auto hide header
   colorWeak: false,
   multiTab: false,
-  production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true',
+  production: !envUtil.isProd(),
   // vue-ls options
   storageOptions: {
     namespace: 'pro__', // key prefix
