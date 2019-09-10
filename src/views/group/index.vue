@@ -1,5 +1,5 @@
 <template>
-  <a-card :bordered="false">
+  <a-card :bordered="false" :bodyStyle="bodyStyle">
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="16">
@@ -8,7 +8,7 @@
           </a-col>
           <a-col :md="6" :sm="24">
             <a-form-item>
-              <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
+              <a-button type="primary" @click="refreshTable">查询</a-button>
               <a @click="toggleAdvanced" style="margin-left: 8px">
                 更多筛选
                 <a-icon :type="advanced ? 'up' : 'down'" />
@@ -16,16 +16,17 @@
             </a-form-item>
           </a-col>
           <a-col :md="13" style="text-align:right" :sm="24">
-            <a-button type="primary" @click="checkProject()" style="margin-right: 20px;">选择项目</a-button>
-            <a-button type="primary" @click="addCaces()">添加病例</a-button></a-col>
+            <a-button type="primary" @click="checkProject()" style="margin-right: 10px;">选择项目</a-button>
+            <a-button type="primary" @click="addCaces()">添加病例</a-button>
+            <a-button type="primary" style="margin-left: 10px;">导出</a-button></a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
               <div>
                 <a-tabs defaultActiveKey="1">
                   <a-tab-pane tab="常用检索" key="1">
                     <div class="commonRetrieval">
-                      <p @click="$refs.table.search({ type: 1 })">本月新增病例</p>
-                      <p @click="$refs.table.search({ type: 2 })">本年新增病例</p>
-                      <p @click="$refs.table.search({ type: 3 })">全部病例</p>
+                      <p @click="tableSearch(1)">本月新增病例</p>
+                      <p @click="tableSearch(2)">本年新增病例</p>
+                      <p @click="tableSearch(3)">全部病例</p>
                     </div>
                   </a-tab-pane>
                   <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -35,13 +36,11 @@
                         <a-form-item  label="姓名"><a-input v-model="queryParam.name" style="width: 100%" /></a-form-item>
                         <a-form-item  label="身份证号"><a-input v-model="queryParam.card" style="width: 100%" /></a-form-item>
                         <a-form-item label="创建日期" style="margin-bottom:0;">
-                          <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%"  @change="changeTime1"/></a-form-item>
-                          <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-</span>
-                          <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime2" /></a-form-item>
+                             <a-range-picker @change="changeTime" style="width: 100%"  :value="dateArr"/>
                         </a-form-item>
                          <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
                             <a-button type="primary"  @click="clearForm()">清空</a-button>
-                           <a-button type="primary" style="margin-left: 10px;" @click="$refs.table.refresh()">查询</a-button>
+                           <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
                         </a-form-item>
                         
                       </a-form>
@@ -53,7 +52,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="default" :scroll="scroll" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="small" :scroll="scroll" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="name"  slot-scope="text,record" @click="showUser(record)">
         <p class="userName">{{text}}</p>
       </span>
@@ -77,11 +76,7 @@
       <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">
-            编辑
-          </a>
-          <a-divider type="vertical" />
-          <a @click="handleSub(record)">
-            订阅报警
+            出组
           </a>
         </template>
       </span>
@@ -94,7 +89,7 @@
 <script>
 import moment from 'moment';
 import { STable, Ellipsis } from '@/components';
-import { getDatalList,getPatientList,joinProject } from '@/api/group';
+import { getDatalList,getPatientList,deleteCase } from '@/api/group';
 import UserDetail from '../list/modules/UserDetail'
 import Drawer from './modules/Drawer'
 
@@ -127,7 +122,12 @@ export default {
   },
   data() {
     return {
+      dateArr:[],
       mdl: {},
+      bodyStyle:{
+                     padding:"10px",
+        paddingBottom:"0px"
+      },
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
@@ -138,35 +138,35 @@ export default {
         {
           title: '档案号',
           dataIndex: 'fileCode',
-          width: '150px',
+          width: '200px',
         },
         {
           title: '患者姓名',
           dataIndex: 'name',
           scopedSlots: { customRender: 'name' },
-          width:"100px"
+          width:"200px"
         },
         {
           title: '身份证号',
           dataIndex: 'card',
-          width:"180px"
+          width:"250px"
         },
         {
           title: '入组日期',
           dataIndex: 'joinDate',
-          customRender: joinDate => moment(joinDate).format('YYYY-MM-DD HH:mm:ss'),
-          width:"180px"
+          customRender: joinDate => moment(joinDate).format('YYYY-MM-DD'),
+          width:"200px"
         },
         {
           title: '访视状态',
           dataIndex: 'visit',
-          scopedSlots: { customRender: 'visit' }
+          scopedSlots: { customRender: 'visit' },
+          width:"200px"
         },
         {
           title: '操作',
           dataIndex: 'action',
-          width: '160px',
-          fixed:"right",
+          width: '80px',
           scopedSlots: { customRender: 'action' }
         }
       ],
@@ -193,9 +193,7 @@ export default {
           onChange: this.onSelectChange
         }
       },
-      scroll:{
-        y:"350"
-      },
+      scroll:false,
       optionAlertShow: false
     };
   },
@@ -213,15 +211,49 @@ export default {
       return visitMap[type].status;
     }
   },
+  created() {
+    this.scroll={
+      y: (window.screen.height-368)+"px"
+    }
+  },
   methods: {
      clearForm(){
       this.queryParam={}
     },
+       tableSearch(type){
+       const keyWord={
+         "type":type
+       }
+        this.$refs.table.search(keyWord);
+        this.advanced=false;
+     },
+     refreshTable(){
+         this.advanced=false;
+         this.$refs.table.refresh();
+     },
     showUser(record){
       this.$refs.detailModal.show(record);
     },
     handleEdit(record) {
-      this.$refs.createModal.edit(record);
+           var that = this;
+      this.$confirm({
+        title: '提示',
+        content: '确认将该患者移除项目?',
+        onOk() {
+          const params = new URLSearchParams();
+          params.append('patientId', record.patientId);
+          params.append('projectId', that.project.projectId);
+          that.confirmLoading = true;
+          deleteCase(params).then(res => {
+            if(res.code==0){
+              that.$message.success(res.msg);
+              that.$refs.table.refresh();
+            }
+            that.confirmLoading = false;
+          });
+        },
+        onCancel() {}
+      });
     },
     handleSub(record) {
       if (record.status !== 0) {
@@ -259,18 +291,18 @@ export default {
         };
         this.$refs.table.search(key)
     },
-    changeTime1(time) {
-      console.log(time);
-      this.queryParam.date1 = moment(time).format('YYYY-MM-DD');
-    },
-    changeTime2(time) {
-      console.log(time);
-      this.queryParam.date2 = moment(time).format('YYYY-MM-DD');
+    changeTime(time) {
+          this.dateArr=time;
+     this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD');
+     this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
     }
   }
 };
 </script>
 <style lang="less" scoped>
+   /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item{
+    margin-bottom: 10px
+  }
   .tableSearch {
     background: #ffffff;
     position: absolute;

@@ -56,9 +56,9 @@
     </a-row>
     <a-row :gutter="10">
       <a-col :sm="48" :md="24" :xl="12" :style="{ marginBottom: '10px' }">
-        <a-card :loading="loading" title="我的工作" total="￥126,560">
+        <a-card :loading="loading" :bodyStyle="bodyStyle" title="我的工作" total="￥126,560">
           <a-row :gutter="10">
-            <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px' }">
+            <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 12px' }">
               <div class="card-wait-data">
                 <span class="myIcon"><my-icon type="iconziyuan1" /></span>
                 <div>
@@ -67,7 +67,7 @@
                 </div>
               </div>
             </a-col>
-            <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px' }">
+            <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 12px' }">
               <div class="card-wait-data">
                 <span class="myIcon"><my-icon type="iconziyuan1" /></span>
                 <div>
@@ -77,7 +77,7 @@
 
               </div>
             </a-col>
-            <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px' }">
+            <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 12px' }">
               <div class="card-wait-data">
                 <span class="myIcon"><my-icon type="iconziyuan" /></span>
                 <div>
@@ -87,7 +87,7 @@
 
               </div>
             </a-col>
-            <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px' }">
+            <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 12px' }">
               <div class="card-wait-data">
                 <span class="myIcon"><my-icon type="iconziyuan" /></span>
                 <div>
@@ -128,7 +128,7 @@
         </a-card>
       </a-col>
       <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '10px' }">
-        <a-card :loading="loading" title="操作培训" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '411px' }">
+        <a-card :loading="loading" title="操作培训" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '360px' }">
           <div class="salesCard"><rank-list :list="rankList" /></div>
         </a-card>
       </a-col>
@@ -171,6 +171,9 @@ export default {
   },
   data() {
     return {
+      bodyStyle:{
+        padding:'12px 20px',
+      },
       indexData: {},
       myWork: {},
       loading: true,
@@ -223,6 +226,13 @@ export default {
 /deep/.ant-pro-trend .up {
   color: #1aa355;
 }
+/deep/.ant-tabs .ant-tabs-large-bar .ant-tabs-tab {
+    padding: 12px 16px;
+}
+/deep/.ant-card-head-title{
+  padding: 10px 0px;
+}
+
 .extra-wrapper {
   line-height: 55px;
   padding-right: 24px;
@@ -275,7 +285,7 @@ export default {
   box-sizing: border-box;
   padding: 20px;
   background-color: #f7f8f8;
-  height: 110px;
+  height: 90px;
   background-image: url('');
   span.myIcon {
     display: inline-block;

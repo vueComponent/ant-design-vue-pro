@@ -1,7 +1,7 @@
 <template>
-  <v-chart :forceFit="true" :height="262" :padding="padding" :data="pieData" :scale="scale">
+  <v-chart :forceFit="true" :height="175" :padding="padding" :data="pieData" :scale="scale">
     <v-coord type="theta" :innerRadius="0.8" :radius="0.95"></v-coord>
-    <v-axis :show="false" />
+    <v-axis :show="true" />
     <v-tooltip :showTitle="showTitle"></v-tooltip>
     <v-legend :useHtml="true" position="right" :reactive="true"  :containerTpl="containerTplLegend" :itemTpl="itemTpl" :offset="offset"></v-legend>
     <v-pie position="percent" color="item" :vStyle="pieStyle" />
@@ -60,7 +60,7 @@ const setStyle = () => {
         .g2-legend-list-item{
             cursor:pointer;
             font-size:14px;
-            margin-top:15px;
+            margin-top:5px;
         }
     `;
   const style = document.createElement('style');

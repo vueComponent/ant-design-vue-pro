@@ -209,7 +209,7 @@ export default {
     });
   },
   mounted() {
-    console.log('this.project.projectId', this.project.projectId);
+    
   },
   methods: {
     onChange(checkedValues) {

@@ -1,5 +1,5 @@
 <template>
-  <a-card :bordered="false" >
+  <a-card :bordered="false"  :bodyStyle="bodyStyle">
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="16">
@@ -8,22 +8,22 @@
           </a-col>
           <a-col :md="6" :sm="24">
             <a-form-item>
-              <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
+              <a-button type="primary" @click="refreshTable">查询</a-button>
               <a @click="toggleAdvanced" style="margin-left: 8px">
                更多筛选
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
             </a-form-item>
           </a-col>
-          <a-col :md="13" style="text-align:right" :sm="24"><a-button type="primary"  @click="$refs.registerModal.add()">添加采集</a-button><a-button type="primary"  style="margin-left: 20px;">导出</a-button></a-col>
+          <a-col :md="13" style="text-align:right" :sm="24"><a-button type="primary"  @click="$refs.registerModal.add()">添加采集</a-button><a-button type="primary"  style="margin-left: 10px;">导出</a-button></a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
              <div>
               <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
-                    <p @click="$refs.table.search({ type: 1 })">本月新增报告</p>
-                    <p @click="$refs.table.search({ type: 2 })">本年新增报告</p>
-                    <p @click="$refs.table.search({ type: 3 })">全部报告</p>
+                    <p @click="tableSearch(1)">本月新增报告</p>
+                    <p @click="tableSearch(2)">本年新增报告</p>
+                    <p @click="tableSearch(3)">全部报告</p>
                   </div>
                 </a-tab-pane>
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -33,13 +33,11 @@
                       <a-form-item  label="姓名"><a-input v-model="queryParam.patientName" style="width: 100%" /></a-form-item>
                       <a-form-item  label="身份证号"><a-input v-model="queryParam.card" style="width: 100%" /></a-form-item>
                     <a-form-item label="创建日期" style="margin-bottom:0;">
-                      <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%"  @change="changeTime1"  /></a-form-item>
-                      <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-</span>
-                      <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime2" /></a-form-item>
-                    </a-form-item>
+                      <a-range-picker @change="changeTime" style="width: 100%"  :value="dateArr"/>
+                     </a-form-item>
                     、<a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
                         <a-button type="primary"  @click="clearForm()">清空</a-button>
-                       <a-button type="primary" style="margin-left: 10px;" @click="$refs.table.refresh()">查询</a-button>
+                       <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
                     </a-form-item>
                     </a-form>
                   </a-card>
@@ -50,7 +48,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="default" :scroll="scroll" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" :scroll="scroll" size="small"  rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="collectStatus" slot-scope="text"><a-badge :status="text | statusTypeFilter" :text="text | statusFilter" /></span>
            <span slot="name"  slot-scope="text,record" @click="showUser(record)">
        <p class="userName">{{text}}</p>
@@ -99,6 +97,11 @@ export default {
   },
   data () {
     return {
+       dateArr:[],
+          bodyStyle:{
+                      padding:"10px",
+         paddingBottom:"0px"
+       },
       mdl: {},
       // 高级搜索 展开/关闭
       advanced: false,
@@ -109,12 +112,12 @@ export default {
         {
           title: '报告编号',
           dataIndex: 'reportCode',
-          width: '120px',
+          width: '150px',
         },
         {
           title: '档案号',
           dataIndex: 'fileCode',
-          width: '150px',
+          width: '180px',
         },
         {
           title: '患者姓名',
@@ -125,25 +128,25 @@ export default {
         {
           title: '身份证号',
           dataIndex: 'patientCard',
-          width: '180px',
+          width: '200px',
         },
         {
           title: '创建时间',
           dataIndex: 'collectDate',
-          customRender: collectDate => moment(collectDate).format('YYYY-MM-DD HH:mm:ss'),
+          customRender: collectDate => moment(collectDate).format('YYYY-MM-DD'),
            width: '180px',
         },
         {
           title: '采集状态',
           dataIndex: 'collectStatus',
           scopedSlots: { customRender: 'collectStatus' },
-          width:"100px"
+		     width: '180px',
         },
         {
           title: '操作',
           dataIndex: 'action',
           width: '100px',
-              fixed:"right",
+           className: 'operation',
           scopedSlots: { customRender: 'action' }
         }
       ],
@@ -156,7 +159,7 @@ export default {
       },
       selectedRowKeys: [],
       selectedRows: [],
-
+       scroll:false,
       // custom table alert & rowSelection
       options: {
         alert: {
@@ -170,9 +173,6 @@ export default {
           onChange: this.onSelectChange
         }
       },
-        scroll:{
-        y:'350px'
-      },
       optionAlertShow: false
     }
   },
@@ -185,12 +185,26 @@ export default {
     }
   },
   created () {
-    
+       this.scroll={
+      y: (window.screen.height-368)+"px"
+    }
   },
   methods: {
     clearForm(){
       this.queryParam={}
+        this.dateArr=[]
     },
+      tableSearch(type){
+       const keyWord={
+         "type":type
+       }
+        this.$refs.table.search(keyWord);
+        this.advanced=false;
+     },
+     refreshTable(){
+         this.advanced=false;
+         this.$refs.table.refresh();
+     },
     showUser(record){
       this.$refs.detailModal.show(record);
     },
@@ -200,18 +214,21 @@ export default {
     handleOk () {
       this.$refs.table.refresh()
     },
-    changeTime1(time) {
-      console.log(time);
-      this.queryParam.date1 = moment(time).format('YYYY-MM-DD');
+    changeTime(time) {
+         this.dateArr=time;
+    this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD');
+    this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
     },
-    changeTime2(time) {
-      console.log(time);
-      this.queryParam.date2 = moment(time).format('YYYY-MM-DD');
-    }
   }
 }
 </script>
 <style lang="less" scoped>
+  td.operation {
+  text-align: center !important;
+}
+   /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item{
+    margin-bottom: 10px
+  }
 .tableSearch {
   background: #ffffff;
   position: absolute;

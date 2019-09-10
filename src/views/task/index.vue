@@ -1,5 +1,5 @@
 <template>
-  <a-card :bordered="false">
+  <a-card :bordered="false" :bodyStyle="bodyStyle">
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="16">
@@ -8,22 +8,25 @@
           </a-col>
           <a-col :md="6" :sm="24">
             <a-form-item>
-              <a-button type="primary" @click="$refs.table.refresh()">查询</a-button>
+              <a-button type="primary" @click="refreshTable">查询</a-button>
                 <a @click="toggleAdvanced" style="margin-left: 8px">
                   更多筛选
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
             </a-form-item>
           </a-col>
+          <a-col :md="13" style="text-align:right" :sm="24">
+            <a-button type="primary"  style="margin-left: 10px;">导出</a-button>
+          </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
               <div>
                 <a-tabs defaultActiveKey="1">
                   <a-tab-pane tab="常用检索" key="1">
                     <div class="commonRetrieval">                      
-                      <p @click="$refs.table.search({ type: 0})">忽略任务</p>
-                      <p @click="$refs.table.search({ type: 1 })">未执行任务</p>
-                      <p @click="$refs.table.search({ type: 2 })">执行中任务</p>
-                      <p @click="$refs.table.search({ type: 3 })">已完成任务</p>
+                      <p @click="tableSearch(0)">忽略任务</p>
+                      <p @click="tableSearch(1)">未执行任务</p>
+                      <p @click="tableSearch(2)">执行中任务</p>
+                      <p @click="tableSearch(3)">已完成任务</p>
                     </div>
                   </a-tab-pane>
                   <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -33,13 +36,11 @@
                         <a-form-item  label="姓名"><a-input v-model="queryParam.name" style="width: 100%" /></a-form-item>
                         <a-form-item  label="身份证号"><a-input v-model="queryParam.card" style="width: 100%" /></a-form-item>
                       <a-form-item label="创建日期" style="margin-bottom:0;">
-                        <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%"  @change="changeTime1"  /></a-form-item>
-                        <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-</span>
-                        <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"><a-date-picker style="width: 100%" @change="changeTime2" /></a-form-item>
-                      </a-form-item>
+                              <a-range-picker @change="changeTime" style="width: 100%"  :value="dateArr"/>
+                       </a-form-item>
                       <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
                           <a-button type="primary"  @click="clearForm()">清空</a-button>
-                         <a-button type="primary" style="margin-left: 10px;" @click="$refs.table.refresh()">查询</a-button>
+                         <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
                       </a-form-item>
                       </a-form>
                     </a-card>
@@ -50,7 +51,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="default" rowKey="visitTaskId" :scroll="scroll" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" :scroll="scroll" size="small" rowKey="visitTaskId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
        <span slot="warnStatus" slot-scope="text">
         <my-icon type="iconyujing_huaban" :class="text|warnStatusType"></my-icon>
       </span>
@@ -113,6 +114,10 @@ export default {
   },
   data() {
     return {
+       bodyStyle:{
+                padding:"10px",
+        paddingBottom:"0px"
+      },
       mdl: {},
       // 高级搜索 展开/关闭
       advanced: false,
@@ -163,13 +168,13 @@ export default {
           title: '任务状态',
           dataIndex: 'executeStatus',
           scopedSlots: { customRender: 'executeStatus' },
-            width: '110px',
+          width: '110px',
         },
         {
           title: '操作',
           dataIndex: 'action',
           width: '120px',
-           fixed: 'right',
+          className: 'operation',
           scopedSlots: { customRender: 'action' }
         }
       ],
@@ -194,9 +199,8 @@ export default {
       
       selectedRowKeys: [],
       selectedRows: [],
-      scroll:{
-     y:'350px'
-   },
+      scroll:false,
+      dateArr:[],
       // custom table alert & rowSelection
       options: {
         alert: {
@@ -226,11 +230,25 @@ export default {
     }
   },
   created() {
-
+   this.scroll={
+        y: (window.screen.height-368)+"px"
+      }
   },
   methods: {
     clearForm(){
       this.queryParam={}
+      this.dateArr=[]
+    },
+    refreshTable(){
+        this.advanced=false;
+        this.$refs.table.refresh();
+    },
+    tableSearch(type){
+      const keyWord={
+        "type":type
+      }
+       this.$refs.table.search(keyWord);
+       this.advanced=false;
     },
     showUser(record){
       this.$refs.detailModal.show(record);
@@ -263,18 +281,24 @@ export default {
       this.advanced = !this.advanced;
     },
     changeTime1(time) {
-      console.log(time);
-      this.queryParam.createDateStart = moment(time).format('YYYY-MM-DD');
-    },
-    changeTime2(time) {
-      console.log(time);
-      this.queryParam.createDateEnd = moment(time).format('YYYY-MM-DD');
+            this.dateArr=time;
+       this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD');
+       this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD');
     }
   }
 };
 </script>
 <style lang="less" scoped>
+   /deep/th.operation {
+    text-align: center !important;
+  }
+   /deep/.ant-table-tbody > tr > td.operation {
+    text-align: center !important;
+  }
   /deep/.ant-table td { white-space: nowrap; }
+   /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item{
+    margin-bottom: 10px
+  }
   .warningColor{
     font-size:20px; 
     color: #EB352D;

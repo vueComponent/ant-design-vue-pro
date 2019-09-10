@@ -40,7 +40,7 @@
       />
 
       <!-- layout content -->
-      <a-layout-content :style="{ height: '100%', margin: '10px 10px 0', paddingTop: fixedHeader ? '64px' : '0' }">
+      <a-layout-content :style="{ height: height,overflowY:'auto', margin: '10px 10px 0', paddingTop: fixedHeader ? '64px' : '0' }">
         <multi-tab v-if="multiTab"></multi-tab>
         <transition name="page-transition">
           <route-view />
@@ -88,7 +88,8 @@ export default {
     return {
       production: config.production,
       collapsed: false,
-      menus: []
+      menus: [],
+      height:(window.screen.height-368)+"px"
     }
   },
   computed: {

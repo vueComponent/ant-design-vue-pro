@@ -32,6 +32,13 @@ export function joinProject(parameter) {
     params: parameter
   })
 }
+export function deleteCase(parameter) {
+  return axios({
+    url: '/project/deleteCase',
+    method: 'post',
+    params: parameter
+  })
+}
 
 // export function getPatientList (parameter) {
 //   return axios({

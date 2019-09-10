@@ -16,7 +16,7 @@
     </a-card>
     <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 10px;padding-left: 0">
      <a-row :gutter="8">
-       <a-col :span="5" style="overflow: auto;height: 350px;">
+       <a-col :span="5" :style="baselineInfoStyle">
         <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
         </s-tree>
        </a-col>
@@ -26,7 +26,7 @@
            <a-button class="btn fr" @click="save">保存</a-button>
            <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
          </div>
-         <div class="baselineForm">
+         <div class="baselineForm" :style="baselineFormStyle">
               <a-form :form="form">
 
                 <a-form-item>
@@ -460,6 +460,15 @@ export default {
   },
   data() {
     return {
+        baselineInfoStyle:{
+          overflow:"auto",
+          height:(window.screen.height-330)+'px',
+          "padding-right":"0px",
+          "border-right":"1px solid #ddd"
+        },
+       baselineFormStyle:{
+         height:(window.screen.height-350)+'px',
+       },  
       optionDataSource:[],
       checkedList:[],
       title: '',
@@ -507,7 +516,8 @@ export default {
         display: 'block',
       },
       bodyStyle: {
-        'padding-left': '0px'
+        'padding-left': '0px',
+        'padding-bottom':'0px'
       }
     }
   },
@@ -1127,7 +1137,7 @@ export default {
     margin-right: 10px;
   }
   .baselineForm {
-    height: 350px;
+
     overflow: auto;
 
     padding: 20px;

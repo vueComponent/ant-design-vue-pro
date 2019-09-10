@@ -15,15 +15,18 @@
               </a>
             </a-form-item>
           </a-col>
-          <a-col :md="13" style="text-align:right" :sm="24"><a-button type="primary"  @click="$refs.createModal.add()">新建</a-button></a-col>
+          <a-col :md="13" style="text-align:right" :sm="24">
+            <a-button type="primary"  @click="$refs.createModal.add()">新建</a-button>
+            <a-button type="primary"  style="margin-left: 10px;">导出</a-button>
+          </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
             <div>
               <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
-                    <p @click="$refs.table.search({ type: 1 })">本月新增病例</p>
-                    <p @click="$refs.table.search({ type: 2 })">本年新增病例</p>
-                    <p @click="$refs.table.search({ type: 3 })">全部病例</p>
+                    <p @click="tableSearch(1)">本月新增病例</p>
+                    <p @click="tableSearch(2)">本年新增病例</p>
+                    <p @click="tableSearch(3)">全部病例</p>
                   </div>
                 </a-tab-pane>
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -33,7 +36,7 @@
                       <a-form-item label="姓名"><a-input v-model="queryParam.name" style="width: 100%" /></a-form-item>
                       <a-form-item label="身份证号"><a-input v-model="queryParam.card" style="width: 100%" /></a-form-item>
                       <a-form-item label="创建日期" style="margin-bottom:0;">
-                      <a-range-picker @change="changeTime" :value="dateArr"/>
+                      <a-range-picker @change="changeTime" style="width: 100%"  :value="dateArr"/>
                      </a-form-item>
                        <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
                           <a-button type="primary"  @click="clearForm()">清空</a-button>
@@ -48,7 +51,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="small" :scroll="scroll"  rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="small" :scroll="scroll"  rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection"  showPagination="auto">
       <span slot="name" slot-scope="text, record" @click="showUser(record)">
         <p class="userName">{{ text }}</p>
       </span>
@@ -71,11 +74,11 @@
         <ellipsis :length="8" tooltip>{{ text }}</ellipsis>
       </span>
 
-      <span slot="action" slot-scope="text, record">
+      <span slot="action" slot-scope="text, record" style="text-align: center;">
         <template>
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
-          <a @click="handleSub(record)">添加访视表</a>
+          <a @click="handleSub(record)">添加访视</a>
         </template>
       </span>
     </s-table>
@@ -125,7 +128,8 @@ export default {
       dateArr:[],
       mdl: {},
       bodyStyle:{
-        padding:"10px"
+        padding:"10px",
+        paddingBottom:"0px"
       },
       // 高级搜索 展开/关闭
       advanced: false,
@@ -165,13 +169,14 @@ export default {
         {
           title: '访视进度',
           dataIndex: 'basisList',
+            width:"406px",
           scopedSlots: { customRender: 'basisList' }
         },
         {
           title: '操作',
           dataIndex: 'action',
-          width: '140px',
-         fixed: 'right',
+          width: '120px',
+          className: 'operation',
           scopedSlots: { customRender: 'action' }
         }
       ],
@@ -197,14 +202,15 @@ export default {
           onChange: this.onSelectChange
         }
       },
-      height:window.screen.height,
       scroll:false,
       optionAlertShow: false,
       form: this.$form.createForm(this),
     };
   },
   created(){
-    console.log("height",this.height)
+      this.scroll={
+        y: (window.screen.height-368)+"px"
+      }
   },
   filters: {
     statusFilter(type) {
@@ -225,6 +231,13 @@ export default {
       console.log(this.dateArr)
       this.queryParam={}
       this.dateArr=[]
+    },
+   tableSearch(type){
+      const keyWord={
+        "type":type
+      }
+       this.$refs.table.search(keyWord);
+       this.advanced=false;
     },
     refreshTable(){
         this.advanced=false;
@@ -259,6 +272,12 @@ export default {
 </script>
 <style lang="less" scoped>
 .ant-table td { white-space: nowrap;}
+ /deep/th.operation{
+  text-align: center !important;
+}
+ /deep/.ant-table-tbody > tr > td.operation {
+  text-align: center !important;
+}
  /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item{
    margin-bottom: 10px
  }
@@ -275,6 +294,7 @@ export default {
     margin-right: 5px;
   }
   /deep/ .progressTagTitle {
+    font-size: 12px;
     text-align: center;
     color: #000;
     margin-bottom: 0;

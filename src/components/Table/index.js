@@ -29,7 +29,7 @@ export default {
     },
     pageSize: {
       type: Number,
-      default: 10
+      default: 20
     },
     showSizeChanger: {
       type: Boolean,

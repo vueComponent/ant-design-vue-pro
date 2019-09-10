@@ -13,8 +13,8 @@
   >
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item label="病例识别号（身份证号)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['card', { rules: [{ required: true, validator: isIdCardNo }] }]" />
+        <a-form-item label="病例识别号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input placeholder="请输入身份证号" v-decorator="['card', { rules: [{ required: true, validator: isIdCardNo }] }]" />
         </a-form-item>
         <!-- <a-form-item label="病例档案号" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['card', { rules: [{ required: true }] }]" /></a-form-item> -->
         <a-form-item label="患者同意注册日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -331,3 +331,13 @@ export default {
   }
 };
 </script>
+<style lang="less" scoped>
+/deep/ .ant-modal-header {
+    padding: 12px 24px!important;
+}
+  /deep/.ant-modal-close-x {
+    width: 50px!important;
+    height: 50px!important;
+    line-height: 50px!important;
+}
+</style>
