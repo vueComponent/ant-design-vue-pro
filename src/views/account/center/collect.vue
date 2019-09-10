@@ -11,45 +11,22 @@
        <my-icon type="iconshenfenzheng_huaban" />
          {{ patient.card }}
        </a-col>
-       <a-col :md="13" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
+       <a-col :md="13" :sm="24" style="fontSize: 18px;textAlign: right;">创建时间：{{ patient.createDate | moment }}</a-col>
      </a-row>
     </a-card>
     <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 10px;padding-left: 0">
      <a-row :gutter="8">
-       <a-col :span="5" :style="baselineInfoStyle">
+       <a-col :span="5" style="overflow: auto;height: 350px;">
         <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
         </s-tree>
        </a-col>
        <a-col :span="19">
          <div style="overflow: hidden;">
-           <!-- <a-button class="btn fr" @click="">导入</a-button> -->
-           <a-button class="btn fr" @click="save" v-if="!questionFinished">保存</a-button>
-           <!-- <a-button class="btn fr" type="primary" @click="submit">提交</a-button> -->
+           <a-button class="btn fr" @click="save">保存</a-button>
          </div>
-         <div class="baselineForm" :style="baselineFormStyle">
+         <div class="baselineForm">
               <a-form :form="form">
-                <!-- 调查问卷 -->
-                <a-form-item>
-                  <div v-if="question.name" class="question-title" >{{question.name}}</div>
-                  <div v-if="question.remark" class="question-des">{{question.remark}}</div>
-                </a-form-item>
-                <div v-for="item in listArr">
-                  <div class="question-t">{{item.name}}</div><br />
-                  <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
-                    <p v-if="qu1.type == 5">{{qu1.name}}</p>
-                    <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue" />
-                    <a-radio-group v-if="qu1.type === 1" :name="qu1.questionTitleId+''" v-model="qu1.inputType">
-                      <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
-                    </a-radio-group>
-                    <a-checkbox-group v-if="qu1.type === 2" :name="qu1.questionTitleId+''">
-                      <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-checkbox>
-                    </a-checkbox-group>
-                    <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" />
-                  </a-form-item>
-                </div>
-                <!-- 调查问卷结束 -->
-                <!-- 基线或访视 -->
-                <a-form-item v-if="patientBasis.type === 1 || patientBasis.type === 3" v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
+                <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
                     <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
                       <a-radio :value="1">是</a-radio>
                       <a-radio :value="-1">否</a-radio>
@@ -353,88 +330,6 @@
                       </a-row>
                     </div>
                 </a-form-item>
-                <!-- 半年随访模板 -->
-                <a-form-item v-if="patientBasis.type === 2" v-for="(first, index) in list" :key="index" :label="[first.sort + '.' + first.questionName]" :labelCol="first.type === 0 ? labelColVer : labelColHor" :wrapperCol="first.type === 0 ? wrapperVer : wrapperHor" :class="{'no-border': index === list.length - 1}">
-                  <div v-if="first.hasChild > 0">
-                    <a-row v-for="(second, index) in first.childList" :key="index" :class="{'no-border': index === first.childList.length - 1}" class="itemRow">
-                      <a-col :span="6">({{second.sort}}) {{second.questionName}}</a-col>
-                      <a-col :span="18">
-                        <a-radio-group v-if="second.simple === 1" :name="second.basisElementCopyId+''" v-model="second.basisElementId">
-                          <a-radio :value="1">是</a-radio>
-                          <a-radio :value="-1">否</a-radio>
-                        </a-radio-group>
-                        <a-radio-group v-if="second.simple === 2" :name="second.basisElementCopyId+''" v-model="second.basisElementId">
-                          <a-radio :value="1">有</a-radio>
-                          <a-radio :value="-1">无</a-radio>
-                        </a-radio-group>
-                        <a-row v-for="(third, index) in second.childList" :class="{'no-border': index === second.childList.length - 1}" v-if="second.basisElementId === 1">
-                          <a-col :span="third.questionName.length > 16 ? 24 : 6">{{third.questionName}}</a-col>
-                          <div v-if="third.isRadio < 0">
-                            <a-col :span="24">
-                              <a-checkbox-group v-if="third.hasChild > 0 && third.isRadio < 0" v-model="third.elementId">
-                                <a-checkbox v-for="(fourth,index) in third.childList" :key="index" :name="fourth.parentId+''" :value="fourth.basisElementCopyId">{{fourth.questionName}}</a-checkbox>
-                              </a-checkbox-group>
-                              <div v-for="(fourth, index) in third.childList" v-if="fourth.hasChild > 0 && fourth.logicValue > 0 && third.elementId.indexOf(fourth.basisElementCopyId) > -1">
-                                <a-row class="no-border" v-if="fourth.childList[0].isWrite > 0">
-                                  <a-col :span="6">{{fourth.childList[0].questionName}}</a-col>
-                                  <a-col :span="18">
-                                    <a-input :name="fourth.childList[0].basisElementCopyId+''" :defaultValue="fourth.childList[0].answers && fourth.childList[0].answers.length && fourth.childList[0].answers[0].elementTextValue" style="width: 240px;" :addonAfter="fourth.childList[0].unit"></a-input>
-                                  </a-col>
-                                </a-row>
-                              </div>
-                            </a-col>
-                          </div>
-                          <div v-if="third.isRadio === 0">
-                            <a-row v-for="(fourth, index) in third.childList">
-                              <a-col :span="7">{{fourth.questionName}}</a-col>
-                              <a-col :span="17">
-                                <a-radio-group v-if="fourth.simple === 1" :name="fourth.basisElementCopyId+''" v-model="fourth.basisElementId">
-                                  <a-radio :value="1">是</a-radio>
-                                  <a-radio :value="-1">否</a-radio>
-                                </a-radio-group>
-                              </a-col>
-                              <div v-if="fourth.hasChild > 0 && fourth.isRadio === 0 && fourth.basisElementId === 1">
-                                <a-row class="no-border" v-for="(fifth, index) in fourth.childList">
-                                  <a-col :span="7">{{fifth.questionName}}</a-col>
-                                  <a-col :span="17">
-                                    <a-checkbox-group v-if="fifth.isRadio < 0" v-model="fifth.elementId">
-                                      <a-checkbox v-for="(sixth,index) in fifth.childList" :key="index" :name="sixth.parentId+''" :value="sixth.basisElementCopyId">{{sixth.questionName}}</a-checkbox>
-                                    </a-checkbox-group>
-                                    <a-radio-group v-if="fifth.isRadio > 0" :name="fifth.basisElementCopyId+''" v-model="fifth.basisElementId">
-                                      <a-radio v-for="(sixth, index) in fifth.childList" :value="sixth.basisElementCopyId">{{sixth.questionName}}</a-radio>
-                                    </a-radio-group>
-                                    <div v-if="fifth.isRadio > 0" v-for="(sixth, index) in fifth.childList">
-                                      <div v-if="sixth.hasChild > 0 && sixth.logicValue > 0 && fifth.basisElementId === sixth.basisElementCopyId">
-                                        <a-col :span="7" v-if="sixth.childList[0].isWrite > 0">
-                                          <a-input style="width: 240px" :addonAfter="sixth.childList[0].unit" :name="sixth.childList[0].basisElementCopyId+''"></a-input>
-                                        </a-col>
-                                      </div>
-                                    </div>
-                                    <a-input v-if="fifth.isWrite > 0" style="width: 240px;" :addonAfter="fifth.unit" :name="fifth.basisElementCopyId+''" :defaultValue="fifth.answers && fifth.answers.length && fifth.answers[0].elementTextValue"></a-input>
-                                    <a-radio-group v-if="fifth.simple === 1" :name="fifth.basisElementCopyId+''" v-model="fifth.basisElementId">
-                                      <a-radio :value="1">是</a-radio>
-                                      <a-radio :value="-1">否</a-radio>
-                                    </a-radio-group>
-                                    <div v-if="fifth.hasChild > 0 && fifth.isRadio === 0 && fifth.logicValue === 1 && fifth.basisElementId === 1">
-                                      <a-row class="no-border ant-col-pull-10" v-for="(sixth, index) in fifth.childList">
-                                        <a-col :span="10">{{sixth.questionName}}</a-col>
-                                        <a-col :span="14">
-                                          <a-radio-group v-if="sixth.isRadio > 0" :name="sixth.basisElementCopyId+''" v-model="sixth.basisElementId">
-                                            <a-radio v-for="(seven, index) in sixth.childList" :value="seven.basisElementCopyId">{{seven.questionName}}</a-radio>
-                                          </a-radio-group>
-                                        </a-col>
-                                      </a-row>
-                                    </div>
-                                  </a-col>
-                                </a-row>
-                              </div>
-                            </a-row>
-                          </div>
-                        </a-row>
-                      </a-col>
-                    </a-row>
-                  </div>
-                </a-form-item>
               </a-form>
          </div>
        </a-col>
@@ -446,7 +341,7 @@
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList, saveQuestion } from '@/api/basis'
+import { submit,getMedicineAllergyList,computeScore, getCollectDetail, getCollectElements, saveReport } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
@@ -461,18 +356,9 @@ export default {
   },
   data() {
     return {
-        baselineInfoStyle:{
-          overflow:"auto",
-          height:(window.screen.height-330)+'px',
-          "padding-right":"0px",
-          "border-right":"1px solid #ddd"
-        },
-       baselineFormStyle:{
-         height:(window.screen.height-350)+'px',
-       },  
       optionDataSource:[],
       checkedList:[],
-      title: '',
+      title: '报告采集',
       openKeys: [],
       defaultSelectedKeys: [],
       orgTree: [],
@@ -499,14 +385,13 @@ export default {
       visible: false,
       confirmLoading: false,
       patient: {},
-      patientBasis: {},
       list: [],
       listArr: [],
       list1: [],
       question:{},
-      patientBasisId: this.$route.params.id,
       basisMaskId: undefined,
       validateFlag: false,
+      reportCollectBaseId: this.$route.params.id,
       computeMap: {
         1208: '',
         2727: '', 
@@ -517,11 +402,8 @@ export default {
         display: 'block',
       },
       bodyStyle: {
-        'padding-left': '0px',
-        'padding-bottom':'0px'
-      },
-      answersList: [],
-      questionFinished: false
+        'padding-left': '0px'
+      }
     }
   },
   beforeCreate (){
@@ -532,19 +414,11 @@ export default {
     this.CloseSidebar()
     // this.compute = _.debounce(this.compute, 300) //节流阀
     var params = new URLSearchParams()
-    params.append('patientBasisId', this.patientBasisId)
-    getPatientBasis(params)
+    params.append('reportCollectBaseId', this.reportCollectBaseId)
+    getCollectDetail(params)
     .then(res => {
       that.patient = res.data.patient
-      that.patientBasis = res.data.patientBasis
-      that.orgTree = res.data.list
-      if(that.patientBasis.type === 1){
-        that.title = '支扩研究基线表'
-      }else if(that.patientBasis.type === 2){
-        that.title = '支扩研究随访表'
-      }else if(that.patientBasis.type === 3){
-        that.title = '访视任务'
-      }
+      that.orgTree = res.data.bmList
       if(typeof this.$route.query.markId === 'undefined'){
         that.basisMaskId = that.orgTree[0].basisMarkId
         that.getElementsAnswer()
@@ -636,34 +510,12 @@ export default {
     getElementsAnswer (){
       var that = this;
       var params = new URLSearchParams();
-      if (this.basisMaskId > 30) {
-        that.list = [];
-        params.append('questionId', this.basisMaskId)
-        params.append('patientBasisId', this.patientBasisId)
-        getAllQuestionList(params)
-        .then(res => {
-          that.listArr = that.initQuestionAnswers(res.data.topTitles)
-          that.question = res.data.question
-          if(res.data.isFinish === '0'){
-            that.questionFinished = false
-          }else{
-            that.questionFinished = true
-          }
-        })
-        
-      }else{
-        that.question = {}
-        that.listArr = []
-        that.questionFinished = false
-        params.append('basisMaskId', this.basisMaskId)
-        params.append('patientBasisId', this.patientBasisId)
-        getElementsAnswer(params)
-        .then(res => {
-          that.list = that.initList(res.data)
-          // that.logicList = _.filter(_.flatten(_.map(res.data, function(v){return _.flatMap(v)})),function(v){return v.logicValue > 0})
-        })
-      }
-     
+      params.append('basisMarkId', this.basisMaskId)
+      params.append('reportCollectBaseId', this.reportCollectBaseId)
+      getCollectElements(params)
+      .then(res => {
+        that.list = that.initList(res.basisElementList)
+      })
     },
     generateAnswers (){
       var result = []
@@ -815,105 +667,24 @@ export default {
       })
       return result
     },
-    generateQuestionAnswers (){
-      var result = []
-      var titleObject = {}
-      var childrenObject = []
-      var subOp = {}
-      _.each(this.listArr, function(title){
-        titleObject = {
-          options: []
-        }
-        titleObject.titleId = title.questionTitleId
-        childrenObject = []
-        if(title.childrens && title.childrens.length){
-          _.each(title.childrens, function(sub){
-            if(sub.type === 3){
-              childrenObject.push({
-                titleId: sub.questionTitleId,
-                value: $('input[name="' + sub.questionTitleId + '"]').val()
-              })
-            }
-            if(sub.type === 6){
-              childrenObject.push({
-                titleId: sub.questionTitleId,
-                value: $('[name="' + sub.questionTitleId + '"] input').val()
-              })
-            }
-            if(sub.type === 1 && sub.options && sub.options.length){
-              subOp = {
-                titleId: sub.questionTitleId,
-                options: []
-              }
-              $('input[name="' + sub.questionTitleId + '"]:checked').each(function(){
-                subOp.options.push({
-                  questionTitleId: sub.questionTitleId,
-                  questionOptionId: $(this).val()
-                })
-              })
-              childrenObject.push(subOp)
-            }
-          })
-        }
-        titleObject.childrens = childrenObject
-        result.push(titleObject)
-      })
-      return result
-    },
     save (){
-      // 问卷调查
-      const that=this;
-      if(!_.isEmpty(this.question)){
-        var result = this.generateQuestionAnswers()
-        console.log(result)
-        var params = new URLSearchParams()
-        params.append('answers', JSON.stringify(result))
-        params.append('patientBasisId', this.patientBasisId)
-        params.append('questionId', this.question.questionId)
-        saveQuestion(params)
-          .then(res => {
-            console.log(res)
-            that.$message.success(res.msg)
-            var href = location.href.replace(/\?markId=[\d]+/,'')
-            location.href = href + '?markId=' + this.basisMaskId
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      }
-      // 基线、访视、随访
-      else{
-        var result = this.generateAnswers()
-        console.log(result)
-        var params = new URLSearchParams()
-        const allergy=[]
-         for(var key in this.optionDataSource){
-            _.each(this.optionDataSource[key], function(item){
-              allergy.push({
-                basisElementId:key,
-                microbeName:item.microbeName,
-                antibiotic:item.antibiotic,
-                antibioticResult:item.antibioticResult,
-                allergyValue:item.allergyValue
-              })
-            })
-        }
-        this.patientBasis.status = 1
-        params.append('basisAnswer', JSON.stringify(result))
-        params.append('patientBasis', JSON.stringify(this.patientBasis))
-        params.append('basisMarkId', this.basisMaskId)
-        params.append('allergy', JSON.stringify(allergy))
-        submit(params)
-        .then(res => {
-          console.log(res)
-          that.$message.success(res.msg)
-          var href = location.href.replace(/\?markId=[\d]+/,'')
-          location.href = href + '?markId=' + that.basisMaskId
-        })
-        .catch(error => {
-          console.log(error)
-        })
-      }
+      var that = this
+      var result = this.generateAnswers()
+      console.log(result)
+      var params = new URLSearchParams();
+      params.append('reportResult', JSON.stringify(result))
+      params.append('reportCollectBaseId', this.reportCollectBaseId)
+      params.append('basisMarkId', this.basisMaskId)
+      saveReport(params)
+      .then(res => {
+        console.log(res)
+        that.$message.success(res.msg)
+        var href = location.href.replace(/\?markId=[\d]+/,'')
+        location.href = href + '?markId=' + that.basisMaskId
+      })
+      .catch(error => {
+        console.log(error)
+      })
     },
     submit (){
       this.form.validateFields((err, values) => {
@@ -1031,18 +802,6 @@ export default {
       })
       return list
     },
-    initQuestionAnswers (list){
-      _.each(list, function(a){
-        if(a.childrens && a.childrens.length){
-          _.each(a.childrens, function(b){
-            if(b.type === 1 && b.answers && b.answers.length){
-              b.inputType = b.answers[0].questionOptionId
-            }
-          })
-        }
-      })
-      return list
-    },
     compute (id){
       console.log(id)
       var that = this
@@ -1109,7 +868,7 @@ export default {
 }
 .page-header-index-wide {
   /deep/ .ant-card-wider-padding .ant-card-body {
-    padding: 18px 32px;
+    padding: 10px 15px;
   }
   /deep/ .tree-title {
     border-right: 1px solid #e8e8e8;
@@ -1225,7 +984,7 @@ export default {
     margin-right: 10px;
   }
   .baselineForm {
-
+    height: 350px;
     overflow: auto;
 
     padding: 20px;
@@ -1294,4 +1053,3 @@ export default {
      padding-right: 0px;
 }
 </style>
-

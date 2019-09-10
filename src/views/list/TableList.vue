@@ -94,6 +94,7 @@ import StepByStepModal from './modules/StepByStepModal';
 import CreateForm from './modules/CreateForm';
 import { getPatientList } from '@/api/patient';
 import UserDetail from './modules/UserDetail';
+import { addVasit } from '@/api/basis'
 
 const visitMap = {
   0: {
@@ -250,7 +251,21 @@ export default {
       this.$refs.createModal.edit(record);
     },
     handleSub(record) {
-      
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientId', record.patientId)
+      addVasit(params)
+        .then(res => {
+          if(res.code === 0){
+            that.$message.success('添加成功')
+            location.href = location.href
+          }else{
+            that.$message.error(res.msg)
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     handleOk() {
       this.$refs.table.refresh();

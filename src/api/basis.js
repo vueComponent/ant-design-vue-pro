@@ -94,3 +94,35 @@ export function saveQuestion(params) {
     data: params
   })
 }
+
+export function getCollectDetail(params) {
+  return axios({
+    url: '/reportCollectBase/getByBasisElementId',
+    method: 'post',
+    data: params
+  })
+}
+
+export function addVasit(params) {
+  return axios({
+    url: '/visitTask/addVasit',
+    method: 'post',
+    data: params
+  })
+}
+
+export function getCollectElements(params) {
+  return axios({
+    url: '/reportCollectBase/getBasisElementById',
+    method: 'post',
+    data: params
+  })
+}
+
+export function saveReport(params) {
+  return axios({
+    url: '/reportCollectBase/addOrEditReportResult',
+    method: 'post',
+    data: params
+  })
+}
