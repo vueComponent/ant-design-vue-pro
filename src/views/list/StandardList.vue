@@ -20,10 +20,10 @@
       title="标准列表">
 
       <div slot="extra">
-        <a-radio-group>
-          <a-radio-button>全部</a-radio-button>
-          <a-radio-button>进行中</a-radio-button>
-          <a-radio-button>等待中</a-radio-button>
+        <a-radio-group v-model="status">
+          <a-radio-button value="all">全部</a-radio-button>
+          <a-radio-button value="processing">进行中</a-radio-button>
+          <a-radio-button value="waiting">等待中</a-radio-button>
         </a-radio-group>
         <a-input-search style="margin-left: 16px; width: 272px;" />
       </div>
@@ -136,7 +136,8 @@ export default {
   },
   data () {
     return {
-      data
+      data,
+      status: 'all'
     }
   }
 }
