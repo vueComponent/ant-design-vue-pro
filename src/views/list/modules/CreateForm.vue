@@ -3,7 +3,7 @@
     :title="options.title"
     :width=" 600"
     :bodyStyle="bodyStyle"
-      :maskClosable="maskClosable"
+    :maskClosable="maskClosable"
     :destroyOnClose="destroyOnClose"
     :centered="centered"
     :visible="visible"
@@ -331,11 +331,11 @@ export default {
   }
 };
 </script>
-<style lang="less" scoped>
-/deep/ .ant-modal-header {
+<style>
+ .ant-modal-header {
     padding: 12px 24px!important;
 }
-  /deep/.ant-modal-close-x {
+  .ant-modal-close-x {
     width: 50px!important;
     height: 50px!important;
     line-height: 50px!important;

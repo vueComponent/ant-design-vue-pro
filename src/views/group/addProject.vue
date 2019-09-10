@@ -1,14 +1,13 @@
 <template>
-  <a-row :gutter="24">
+  <a-row :gutter="24" >
     <a-col :sm="6">
       <a-card :bordered="false">
         <a-spin :spinning="confirmLoading">
-          <div class="filterCondition">
+          <div class="filterCondition" :style="{height:height}">
             <h4>
               <img src="../../assets/proTitle.png" alt="" />
               入组条件
             </h4>
-
             <a-checkbox-group @change="onChange" :value="filterCondition">
               <a-row>
                 <a-col :span="24" v-for="(item, i) in filterConditionList">
@@ -25,9 +24,9 @@
     </a-col>
     <a-col :sm="18">
       <a-card :bordered="false">
-        <div>
-          <a-row style="margin-bottom: 10px;">
-            <a-col :sm="6"><p class="queryResults">查询结果</p></a-col>
+        <div :style="{height:height}">
+          <a-row style="margin-bottom: 5px;">
+            <a-col :sm="6"><p style="margin-bottom: 0px;" class="queryResults">查询结果</p></a-col>
             <a-col :sm="18" style="text-align:right">
               <a-button type="primary" style="margin-right: 24px;" @click="selectAll">全选</a-button>
               <a-button type="primary" @click="clearSelected">重置</a-button>
@@ -35,7 +34,7 @@
           </a-row>
           <s-table
             ref="table"
-            size="default"
+            size="small"
             rowKey="patientId"
             :columns="columns"
             :data="loadData"
@@ -164,13 +163,12 @@ export default {
           onChange: this.onSelectChange
         },
         showPagination: false,
-        scroll: {
-          y: 600
-        }
+        scroll: false
       },
       optionAlertShow: false,
       filterConditionList: [],
-      filterCondition: []
+      filterCondition: [],
+      height:(window.screen.height-270)+"px"
     };
   },
   filters: {
@@ -188,6 +186,9 @@ export default {
     }
   },
   created() {
+    this.options.scroll={
+     y:(window.screen.height-400)+"px"
+    }
     var that = this;
     const dictionary1 = new URLSearchParams();
     dictionary1.append('dictionaryId', 6);
@@ -264,7 +265,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .filterCondition {
-  height: 600px;
   h4 {
     border-bottom: 1px solid #dddddd;
     img {

@@ -35,6 +35,7 @@ import NoticeIcon from '@/components/NoticeIcon'
 import { mapActions, mapGetters } from 'vuex'
 import userCenter from './userCenter'
 import changePassword from './changePassword'
+import { loginOut } from '@/api/login';
 export default {
   name: 'UserMenu',
   components: {
@@ -52,13 +53,11 @@ export default {
         title: '提示',
         content: '真的要注销登录吗 ?',
         onOk () {
-          return that.Logout({}).then(() => {
-            window.location.reload()
-          }).catch(err => {
-            that.$message.error({
-              title: '错误',
-              description: err.message
-            })
+          loginOut().then(res => {
+            if(res.code==0){
+              that.$message.success(res.msg);
+              that.$router.push({ name: 'login' });
+            }
           })
         },
         onCancel () {

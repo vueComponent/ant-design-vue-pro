@@ -5,8 +5,8 @@
         <a-input
           size="large"
           type="text"
-          placeholder="账户: admin"
-          v-decorator="['username', { rules: [{ required: true, message: '请输入账号' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change' }]"
+          placeholder="账号"
+          v-decorator="['account', { rules: [{ required: true, message: '请输入账号' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change' }]"
         >
           <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }" />
         </a-input>
@@ -16,7 +16,7 @@
           size="large"
           type="password"
           autocomplete="false"
-          placeholder="密码: admin or ant.design"
+          placeholder="密码"
           v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur' }]"
         >
           <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
@@ -34,6 +34,7 @@
 import md5 from 'md5';
 import { mapActions } from 'vuex';
 import { timeFix } from '@/utils/util';
+import { loginCheck } from '@/api/login';
 
 export default {
   components: {},
@@ -72,6 +73,7 @@ export default {
       callback();
     },
     handleSubmit(e) {
+      const that=this;
       e.preventDefault();
       const {
         form: { validateFields },
@@ -82,19 +84,27 @@ export default {
 
       state.loginBtn = true;
 
-      const validateFieldsKey = customActiveKey === 'tab1' ? ['username', 'password'] : ['mobile', 'captcha'];
+      const validateFieldsKey = customActiveKey === 'tab1' ? ['account', 'password'] : ['mobile', 'captcha'];
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         if (!err) {
           console.log('login form', values);
           const loginParams = { ...values };
-          delete loginParams.username;
-          loginParams[!state.loginType ? 'email' : 'username'] = values.username;
-          loginParams.password = md5(values.password);
           console.log("loginParams",loginParams)
-          Login(loginParams)
-            .then(res => this.loginSuccess(res))
-            .catch(err => this.requestFailed(err))
+          loginCheck(loginParams)
+            .then(function(res){
+              console.log(res);
+                if(res.code==0){
+                  that.project.doctorId=res.data.doctorId;
+                   that.loginSuccess(res)
+                }else{
+                  that.$notification['error']({
+                    message: '错误',
+                    description: res.msg,
+                    duration: 4
+                  });
+                }
+            })
             .finally(() => {
               state.loginBtn = false;
             });
@@ -107,7 +117,7 @@ export default {
     },
     loginSuccess(res) {
       console.log(res);
-      this.$router.push({ name: 'dashboard' });
+      this.$router.push({ name: 'Analysis' });
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         this.$notification.success({
@@ -119,7 +129,7 @@ export default {
     requestFailed(err) {
       this.$notification['error']({
         message: '错误',
-        description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
+        description: ((err.response || {}).data || {}).m || '请求出现错误，请稍后再试',
         duration: 4
       });
     }

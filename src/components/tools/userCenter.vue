@@ -27,7 +27,7 @@ export default {
     };
   },
   created(){
-     this.getUDetailById(1);
+     this.getUDetailById(this.project.doctorId);
   },
   // mounted: {
   //   this.getUDetailById(1);

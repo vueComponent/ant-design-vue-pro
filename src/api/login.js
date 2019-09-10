@@ -68,3 +68,18 @@ export function getDetailById (parameter) {
   })
 }
 
+
+export function loginCheck(parameter) {
+  return axios({
+    url: '/login/loginCheck',
+    method: 'post',
+    params: parameter
+  })
+}
+export function loginOut(parameter) {
+  return axios({
+    url: '/login/loginOut',
+    method: 'post',
+    params: parameter
+  })
+}

@@ -17,7 +17,8 @@ import './utils/filter' // global filter
 
 Vue.config.productionTip = false
 const project={
-  projectId:''
+  projectId:'',
+  doctorId:''
 }
 Vue.prototype.project = project
 // mount axios Vue.$http and this.$http
