@@ -111,8 +111,8 @@
                           <!-- 是否，有无以及填写值 -->
                           <a-col :span="6" v-if="sub.isWrite > 0">
                             <a-input v-if="sub.isWrite > 0 && !sub.event && typeof sub.computeElement !== 'undefined' && sub.computeElement === 0" :name="sub.basisElementCopyId+''" :defaultValue="sub.reportResultList && sub.reportResultList.length && sub.reportResultList[0].elementTextValue" :addonAfter="sub.unit" :readOnly="sub.computeElement === 0" v-model="computeMap[sub.basisElementCopyId]" style="width:240px" />
-                            <a-input v-if="sub.isWrite > 0 && !sub.event && typeof sub.computeElement === 'undefined'" :name="sub.basisElementCopyId+''" :defaultValue="sub.reportResultList && sub.reportResultList.length && sub.reportResultList[0].elementTextValue" :addonAfter="sub.unit" style="width:240px" />
-                            <a-input v-if="sub.isWrite > 0 && sub.event === 'compute'" :name="sub.basisElementCopyId+''" :defaultValue="sub.reportResultList && sub.reportResultList.length && sub.reportResultList[0].elementTextValue" :addonAfter="sub.unit" @blur="compute(sub.computeElement)" style="width:240px" />
+                            <a-input v-if="sub.isWrite > 0 && !sub.event && typeof sub.computeElement === 'undefined'" :name="sub.basisElementCopyId+''" :defaultValue="sub.reportResultList && sub.reportResultList.length && sub.reportResultList[0].elementTextValue || ''" :addonAfter="sub.unit" style="width:240px" />
+                            <a-input v-if="sub.isWrite > 0 && sub.event === 'compute'" :name="sub.basisElementCopyId+''" :defaultValue="sub.reportResultList && sub.reportResultList.length && sub.reportResultList[0].elementTextValue || ''" :addonAfter="sub.unit" @blur="compute(sub.computeElement)" style="width:240px" />
                             <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && (!sub.reportResultList || sub.reportResultList.length === 0 || sub.reportResultList[0].elementTextValue === '')" :name="sub.basisElementCopyId+''" style="width:240px" />
                             <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && sub.reportResultList && sub.reportResultList.length && sub.reportResultList[0].elementTextValue" :name="sub.basisElementCopyId+''" :defaultValue="moment(sub.reportResultList[0].elementTextValue)" style="width:240px" />
                           </a-col>
@@ -136,7 +136,7 @@
                            <span v-for="(subOp, index) in sub.childList">
                              <a-checkbox v-if="subOp.event=='showList'" :name="subOp.parentId+''"    @change="showList($event,subOp.event,subOp.questionName)" :key="index" :value="subOp.basisElementCopyId">{{subOp.questionName}}</a-checkbox>
                              <div  v-if="subOp.event=='showList' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1&&subOp.questionName=='其他' "  style="display: inline-block;width: 300px;argin-right: 10px;">
-                                <a-input :name="subOp.childList[0].basisElementCopyId+''" :defaultValue="subOp.childList[0].reportResultList && subOp.childList[0].reportResultList.length&&subOp.childList[0].reportResultList[0].elementTextValue" @blur="blurInput($event,subOp.childList[0])"  :addonAfter="subOp.childList[0].unit"  />
+                                <a-input :name="subOp.childList[0].basisElementCopyId+''" :defaultValue="subOp.childList[0].reportResultList && subOp.childList[0].reportResultList.length&&subOp.childList[0].reportResultList[0].elementTextValue || ''" @blur="blurInput($event,subOp.childList[0])"  :addonAfter="subOp.childList[0].unit"  />
                              </div>
                              <add-table v-if="subOp.event=='showList' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1&&subOp.questionName!=='其他'"  v-model="optionDataSource[subOp.basisElementCopyId]" :dataSource=" subOp.medicineAllergyList?subOp.medicineAllergyList:optionDataSource[subOp.basisElementCopyId]"></add-table>
                              <add-table  v-if="subOp.event == 'showList' && subOp.questionName == '其他' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1"  v-model="optionDataSource[subOp.childList[0].parentId]" :dataSource="subOp.medicineAllergyList?subOp.medicineAllergyList:optionDataSource[subOp.childList[0].parentId]"></add-table>
@@ -148,7 +148,7 @@
                             <a-col :span="8" v-if="third.childList[0].isWrite > 0">
                               <a-date-picker v-if="third.childList[0].event === 'showDate' && third.childList[0].reportResultList && third.childList[0].reportResultList.length && third.childList[0].reportResultList[0].elementTextValue" :defaultValue="moment(third.childList[0].reportResultList[0].elementTextValue)" :name="third.childList[0].basisElementCopyId+''" style="width:240px" />
                               <a-date-picker v-if="third.childList[0].event === 'showDate' && (!third.childList[0].reportResultList || !third.childList[0].reportResultList.length || !third.childList[0].reportResultList[0].elementTextValue)" :name="third.childList[0].basisElementCopyId+''" style="width:240px" />
-                              <a-input v-if="!third.childList[0].event&&third.event!=='showList'" :addonAfter="third.childList[0].unit" :name="third.childList[0].basisElementCopyId+''" :defaultValue="third.childList[0].reportResultList && third.childList[0].reportResultList.length && third.childList[0].reportResultList[0].elementTextValue" style="width:240px" />
+                              <a-input v-if="!third.childList[0].event&&third.event!=='showList'" :addonAfter="third.childList[0].unit" :name="third.childList[0].basisElementCopyId+''" :defaultValue="third.childList[0].reportResultList && third.childList[0].reportResultList.length && third.childList[0].reportResultList[0].elementTextValue || ''" style="width:240px" />
                             </a-col>
                             <a-col :span="6" v-if="third.isRadio > 0 && third.hasChild > 0">{{third.questionName}}</a-col>
                             <a-col :span="16" v-if="third.isRadio > 0 && third.hasChild > 0">
@@ -172,7 +172,7 @@
                                   <a-radio :value="1">有</a-radio>
                                   <a-radio :value="-1">无</a-radio>
                                 </a-radio-group>
-                                <a-input v-if="fourth.isWrite > 0" :addonAfter="fourth.unit" :name="fourth.basisElementCopyId+''" :defaultValue="fourth.reportResultList && fourth.reportResultList.length && fourth.reportResultList[0].elementTextValue" style="width: 240px"></a-input>
+                                <a-input v-if="fourth.isWrite > 0" :addonAfter="fourth.unit" :name="fourth.basisElementCopyId+''" :defaultValue="fourth.reportResultList && fourth.reportResultList.length && fourth.reportResultList[0].elementTextValue || ''" style="width: 240px"></a-input>
                                 <div v-if="fourth.hasChild > 0 && fourth.isRadio === 0">
                                   <a-row class="no-border" v-for="fifth in fourth.childList" v-if="fourth.logicValue <= 0 || fourth.basisElementId === 1">
                                     <a-col :span="6">{{fifth.questionName}}</a-col>
@@ -184,10 +184,10 @@
                                     </a-col>
                                     <div v-if="fifth.hasChild > 0 && (fifth.logicValue <= 0 || fifth.basisElementId === 1) && fifth.isRadio === 0">
                                       <a-col :span="4">{{fifth.childList[0].questionName}}</a-col>
-                                      <a-input v-if="fifth.childList[0].isWrite > 0" :span="8" style="width: 240px" :name="fifth.childList[0].basisElementCopyId+''" :defaultValue="fifth.childList[0].reportResultList && fifth.childList[0].reportResultList.length && fifth.childList[0].reportResultList[0].elementTextValue" :addonAfter="fifth.childList[0].unit"></a-input>
+                                      <a-input v-if="fifth.childList[0].isWrite > 0" :span="8" style="width: 240px" :name="fifth.childList[0].basisElementCopyId+''" :defaultValue="fifth.childList[0].reportResultList && fifth.childList[0].reportResultList.length && fifth.childList[0].reportResultList[0].elementTextValue || ''" :addonAfter="fifth.childList[0].unit"></a-input>
                                     </div>
                                     <a-col :span="4" v-if="fifth.isWrite > 0">
-                                      <a-input :name="fifth.basisElementCopyId+''" :addonAfter="fifth.unit" :defaultValue="fifth.reportResultList && fifth.reportResultList.length && fifth.reportResultList[0].elementTextValue" style="width:240px"></a-input>
+                                      <a-input :name="fifth.basisElementCopyId+''" :addonAfter="fifth.unit" :defaultValue="fifth.reportResultList && fifth.reportResultList.length && fifth.reportResultList[0].elementTextValue || ''" style="width:240px"></a-input>
                                     </a-col>
                                   </a-row>
                                 </div>
@@ -203,11 +203,11 @@
                           </div>
                           <a-col v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].isWrite > 0">
                             <a-col :span="6">{{sub.childList[0].questionName}}</a-col>
-                            <a-col :span="8"><a-input :name="sub.childList[0].basisElementCopyId+''" style="width:240px" :defaultValue="sub.childList[0].reportResultList && sub.childList[0].reportResultList.length && sub.childList[0].reportResultList[0].elementTextValue" /></a-col>
+                            <a-col :span="8"><a-input :name="sub.childList[0].basisElementCopyId+''" style="width:240px" :defaultValue="sub.childList[0].reportResultList && sub.childList[0].reportResultList.length && sub.childList[0].reportResultList[0].elementTextValue || ''" /></a-col>
                           </a-col>
                           <a-row class="no-border" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue > 0 && secondSub.hasChild > 0" v-for="(secondSub, index) in sub.childList" :key="index">
                             <a-col :span="3" v-if="sub.basisElementId === secondSub.basisElementId">{{secondSub.childList[0].questionName}}</a-col>
-                            <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].reportResultList && secondSub.childList[0].reportResultList.length && secondSub.childList[0].reportResultList[0].elementTextValue" :name="secondSub.childList[0].basisElementCopyId+''" style="width:240px" /></a-col>
+                            <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].reportResultList && secondSub.childList[0].reportResultList.length && secondSub.childList[0].reportResultList[0].elementTextValue || ''" :name="secondSub.childList[0].basisElementCopyId+''" style="width:240px" /></a-col>
                           </a-row>
                           <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (sub.logicValue <= 0 || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList" :class="{'ant-col-pull-6': subOp.level > 3 || subOp.display > 0, 'no-border': index === sub.childList.length - 1}">
                             <!-- <br> -->
@@ -224,7 +224,7 @@
                               <a-col :span="6" v-if="subOp.isWrite > 0">
                                 <a-date-picker v-if="subOp.event === 'showDate' && subOp.reportResultList && subOp.reportResultList.length && subOp.reportResultList[0].elementTextValue" :name="subOp.basisElementCopyId+''" :defaultValue="moment(subOp.reportResultList[0].elementTextValue)" style="width:240px" />
                                 <a-date-picker v-if="subOp.event === 'showDate' && (!subOp.reportResultList || !subOp.reportResultList.length || !subOp.reportResultList[0].elementTextValue)" :name="subOp.basisElementCopyId+''" style="width:240px" />
-                                <a-input :name="subOp.basisElementCopyId+''" v-if="!subOp.event || subOp.event !== 'showDate'" :defaultValue="subOp.reportResultList && subOp.reportResultList.length && subOp.reportResultList[0].elementTextValue" :addonAfter="subOp.unit" style="width:240px" />
+                                <a-input :name="subOp.basisElementCopyId+''" v-if="!subOp.event || subOp.event !== 'showDate'" :defaultValue="subOp.reportResultList && subOp.reportResultList.length && subOp.reportResultList[0].elementTextValue || ''" :addonAfter="subOp.unit" style="width:240px" />
                               </a-col>
                               <a-col :span="24" v-if="subOp.hasChild > 0 && subOp.isRadio < 0 && (subOp.logicValue <= 0 || subOp.basisElementId === 1)">
                                 <a-checkbox-group v-model="subOp.elementId" v-if="subOp.childList[0].event !== 'showList'">
@@ -234,7 +234,7 @@
                                   <span v-for="(secondSub, index) in subOp.childList" >
                                     <a-checkbox v-if="secondSub.event=='showList'"  :name="secondSub.parentId+''" @change="showList($event,secondSub.event,secondSub.questionName)" :key="index" :value="secondSub.basisElementCopyId">{{secondSub.questionName}}</a-checkbox>
                                     <div  v-if="secondSub.event=='showList' && subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1&&secondSub.questionName=='其他' "  style="display: inline-block;width: 300px;margin-right: 10px;">
-                                       <a-input :name="secondSub.childList[0].basisElementCopyId+''"  @blur="blurInput($event,secondSub.childList[0])"  :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].reportResultList && secondSub.childList[0].reportResultList.length && secondSub.childList[0].reportResultList[0].elementTextValue" />
+                                       <a-input :name="secondSub.childList[0].basisElementCopyId+''"  @blur="blurInput($event,secondSub.childList[0])"  :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].reportResultList && secondSub.childList[0].reportResultList.length && secondSub.childList[0].reportResultList[0].elementTextValue || ''" />
                                     </div>
                                     <add-table v-if="secondSub.event=='showList' && subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1&&secondSub.questionName!=='其他'"  v-model="optionDataSource[secondSub.basisElementCopyId]" :dataSource="secondSub.medicineAllergyList?secondSub.medicineAllergyList:optionDataSource[secondSub.basisElementCopyId]"></add-table>
                                     <add-table v-if="secondSub.event=='showList' &&secondSub.questionName=='其他'&& subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1"  v-model="optionDataSource[secondSub.childList[0].parentId]" :dataSource="secondSub.medicineAllergyList?secondSub.medicineAllergyList:optionDataSource[secondSub.childList[0].parentId]"></add-table>
@@ -246,7 +246,7 @@
                                   <a-row v-for="(thirdSub, index) in secondSub.childList" class="no-border">
                                     <a-col :span="6" v-if="thirdSub.questionName">{{thirdSub.questionName}}</a-col>
                                     <a-col :span="8" v-if="thirdSub.isWrite > 0">
-                                      <a-input style="width: 240px;" :name="thirdSub.basisElementCopyId+''" :defaultValue="thirdSub.reportResultList && thirdSub.reportResultList.length && thirdSub.reportResultList[0].elementTextValue" v-if="!thirdSub.event && thirdSub.event == 'showList'" :addonAfter="thirdSub.unit"></a-input>
+                                      <a-input style="width: 240px;" :name="thirdSub.basisElementCopyId+''" :defaultValue="thirdSub.reportResultList && thirdSub.reportResultList.length && thirdSub.reportResultList[0].elementTextValue || ''" v-if="!thirdSub.event && thirdSub.event == 'showList'" :addonAfter="thirdSub.unit"></a-input>
                                       <a-date-picker v-if="thirdSub.event === 'showDate' && thirdSub.reportResultList && thirdSub.reportResultList.length && thirdSub.reportResultList[0].elementTextValue" :name="thirdSub.basisElementCopyId+''" :defaultValue="moment(thirdSub.reportResultList[0].elementTextValue)" style="width:240px" />
                                       <a-date-picker v-if="thirdSub.event === 'showDate' && (!thirdSub.reportResultList || !thirdSub.reportResultList.length || !thirdSub.reportResultList[0].elementTextValue)" :name="thirdSub.basisElementCopyId+''" style="width:240px" />
                                     </a-col>
@@ -273,7 +273,7 @@
                                 <a-col v-for="(thirdSub,index) in secondSub.childList">
                                   <a-col :span="6">{{thirdSub.questionName}}</a-col>
                                   <a-col :span="6" v-if="thirdSub.isWrite > 0">
-                                    <a-input :name="thirdSub.basisElementCopyId+''" :defaultValue="thirdSub.reportResultList && thirdSub.reportResultList.length && thirdSub.reportResultList[0].elementTextValue" style="width:240px" :addonAfter="thirdSub.unit"></a-input>
+                                    <a-input :name="thirdSub.basisElementCopyId+''" :defaultValue="thirdSub.reportResultList && thirdSub.reportResultList.length && thirdSub.reportResultList[0].elementTextValue || ''" style="width:240px" :addonAfter="thirdSub.unit"></a-input>
                                   </a-col>
                                 </a-col>
                               </div>
@@ -287,7 +287,7 @@
                                   </a-radio-group>
                                   <a-date-picker v-if="thirdSub.event === 'showDate' && thirdSub.reportResultList && thirdSub.reportResultList.length && thirdSub.reportResultList[0].elementTextValue" :defaultValue="moment(thirdSub.reportResultList[0].elementTextValue)" :name="thirdSub.basisElementCopyId+''" style="width:240px" />
                                   <a-date-picker v-if="thirdSub.event === 'showDate' && (!thirdSub.reportResultList || !thirdSub.reportResultList.length || !thirdSub.reportResultList[0].elementTextValue)" :name="thirdSub.basisElementCopyId+''" style="width:240px" />
-                                  <a-input v-if="thirdSub.isWrite > 0 && !thirdSub.event" :name="thirdSub.basisElementCopyId + ''" :defaultValue="thirdSub.reportResultList && thirdSub.reportResultList.length && thirdSub.reportResultList[0].elementTextValue" style="width:240px" :addonAfter="thirdSub.unit" />
+                                  <a-input v-if="thirdSub.isWrite > 0 && !thirdSub.event" :name="thirdSub.basisElementCopyId + ''" :defaultValue="thirdSub.reportResultList && thirdSub.reportResultList.length && thirdSub.reportResultList[0].elementTextValue || ''" style="width:240px" :addonAfter="thirdSub.unit" />
                                     <!-- 注掉br是因为啰音类型会掉下去，别处需要换行再调整 -->
                                   <!-- <br v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && thirdSub.simple > 0"> -->
                                   <a-radio-group v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && (thirdSub.logicValue <= 0 || thirdSub.basisElementId === 1)" :name="thirdSub.basisElementCopyId+''" v-model="thirdSub.basisElementId" style="width: 100%">
@@ -298,7 +298,7 @@
                                       <a-row class="no-border">
                                         <a-col :span="6">{{fourth.childList[0].questionName}}</a-col>
                                         <a-col :span="16" v-if="fourth.childList[0].isWrite > 0">
-                                          <a-input :name="fourth.childList[0].basisElementCopyId+''" style="width: 240px;" :defaultValue="fourth.childList[0].reportResultList && fourth.childList[0].reportResultList.length && fourth.childList[0].reportResultList[0].elementTextValue" :addonAfter="fourth.childList[0].unit"></a-input>
+                                          <a-input :name="fourth.childList[0].basisElementCopyId+''" style="width: 240px;" :defaultValue="fourth.childList[0].reportResultList && fourth.childList[0].reportResultList.length && fourth.childList[0].reportResultList[0].elementTextValue || ''" :addonAfter="fourth.childList[0].unit"></a-input>
                                         </a-col>
                                       </a-row>
                                     </div>
@@ -525,7 +525,7 @@ export default {
       _.each(this.list, function(item){
         if(item.simple > 0){
           result.push({
-            basisAnswerId: (item.reportResultList && item.reportResultList.length) ? item.reportResultList[0].basisAnswerId : '',
+            reportResultId: (item.reportResultList && item.reportResultList.length) ? item.reportResultList[0].reportResultId : '',
             basisElementId: item.basisElementCopyId,
             elementNumValue: typeof $('input[name="' + item.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + item.basisElementCopyId + '"]:checked').val() : '',
             elementTextValue: ''
@@ -533,7 +533,7 @@ export default {
         }else if(item.isWrite > 0){
           var text = $('[name="' + item.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + item.basisElementCopyId + '"] input').val() : $('[name="' + item.basisElementCopyId + '"]').val()
           result.push({
-            basisAnswerId: (item.reportResultList && item.reportResultList.length) ? item.reportResultList[0].basisAnswerId : '',
+            reportResultId: (item.reportResultList && item.reportResultList.length) ? item.reportResultList[0].reportResultId : '',
             basisElementId: item.basisElementCopyId,
             elementTextValue: text,
             elementNumValue: ''
@@ -545,7 +545,7 @@ export default {
               if(sub.isWrite > 0){
                 var text = $('[name="' + sub.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + sub.basisElementCopyId + '"] input').val() : $('[name="' + sub.basisElementCopyId + '"]').val()
                 result.push({
-                  basisAnswerId: (sub.reportResultList && sub.reportResultList.length) ? sub.reportResultList[0].basisAnswerId : '',
+                  reportResultId: (sub.reportResultList && sub.reportResultList.length) ? sub.reportResultList[0].reportResultId : '',
                   basisElementId: sub.basisElementCopyId,
                   elementTextValue: text,
                   elementNumValue: ''
@@ -553,7 +553,7 @@ export default {
               }
               if(sub.simple > 0){
                 result.push({
-                  basisAnswerId: (sub.reportResultList && sub.reportResultList.length) ? sub.reportResultList[0].basisAnswerId : '',
+                  reportResultId: (sub.reportResultList && sub.reportResultList.length) ? sub.reportResultList[0].reportResultId : '',
                   basisElementId: sub.basisElementCopyId,
                   elementNumValue: typeof $('input[name="' + sub.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + sub.basisElementCopyId + '"]:checked').val() : '',
                   elementTextValue: ''
@@ -564,7 +564,7 @@ export default {
                 if(sub.isRadio !== 0){
                   _.each(sub.childList, function(third){
                     result.push({
-                      basisAnswerId: third.reportResultList && third.reportResultList.length ? third.reportResultList[0].basisAnswerId : '',
+                      reportResultId: third.reportResultList && third.reportResultList.length ? third.reportResultList[0].reportResultId : '',
                       basisElementId: third.basisElementCopyId,
                       elementNumValue: $('[value="' + third.basisElementCopyId + '"][name="' + third.parentId + '"]').prop('checked') ? 1 : -1,
                       elementTextValue: ''
@@ -574,7 +574,7 @@ export default {
                 _.each(sub.childList, function(third){
                   if(third.simple > 0){
                     result.push({
-                      basisAnswerId: (third.reportResultList && third.reportResultList.length) ? third.reportResultList[0].basisAnswerId : '',
+                      reportResultId: (third.reportResultList && third.reportResultList.length) ? third.reportResultList[0].reportResultId : '',
                       basisElementId: third.basisElementCopyId,
                       elementNumValue: typeof $('input[name="' + third.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + third.basisElementCopyId + '"]:checked').val() : '',
                       elementTextValue: ''
@@ -583,7 +583,7 @@ export default {
                   if(third.isWrite > 0){
                     var text = $('[name="' + third.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + third.basisElementCopyId + '"] input').val() : $('[name="' + third.basisElementCopyId + '"]').val()
                     result.push({
-                      basisAnswerId: (third.reportResultList && third.reportResultList.length) ? third.reportResultList[0].basisAnswerId : '',
+                      reportResultId: (third.reportResultList && third.reportResultList.length) ? third.reportResultList[0].reportResultId : '',
                       basisElementId: third.basisElementCopyId,
                       elementTextValue: text || '',
                       elementNumValue: ''
@@ -594,7 +594,7 @@ export default {
                     _.each(third.childList,function(fourth){
                       if(third.isRadio !== 0){
                         result.push({
-                          basisAnswerId: fourth.reportResultList && fourth.reportResultList.length ? fourth.reportResultList[0].basisAnswerId : '',
+                          reportResultId: fourth.reportResultList && fourth.reportResultList.length ? fourth.reportResultList[0].reportResultId : '',
                           basisElementId: fourth.basisElementCopyId,
                           elementNumValue: $('[value="' + fourth.basisElementCopyId + '"][name="' + fourth.parentId + '"]').prop('checked') ? 1 : -1,
                           elementTextValue: ''
@@ -602,7 +602,7 @@ export default {
                       }
                       if(fourth.simple > 0){
                         result.push({
-                          basisAnswerId: (fourth.reportResultList && fourth.reportResultList.length) ? fourth.reportResultList[0].basisAnswerId : '',
+                          reportResultId: (fourth.reportResultList && fourth.reportResultList.length) ? fourth.reportResultList[0].reportResultId : '',
                           basisElementId: fourth.basisElementCopyId,
                           elementNumValue: typeof $('input[name="' + fourth.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + fourth.basisElementCopyId + '"]:checked').val() : '',
                           elementTextValue: ''
@@ -611,7 +611,7 @@ export default {
                       if(fourth.isWrite > 0){
                         var text = $('[name="' + fourth.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + fourth.basisElementCopyId + '"] input').val() : $('[name="' + fourth.basisElementCopyId + '"]').val()
                         result.push({
-                          basisAnswerId: (fourth.reportResultList && fourth.reportResultList.length) ? fourth.reportResultList[0].basisAnswerId : '',
+                          reportResultId: (fourth.reportResultList && fourth.reportResultList.length) ? fourth.reportResultList[0].reportResultId : '',
                           basisElementId: fourth.basisElementCopyId,
                           elementTextValue: text || '',
                           elementNumValue: ''
@@ -622,7 +622,7 @@ export default {
                           if(fifth.isWrite > 0){
                             var text = $('[name="' + fifth.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + fifth.basisElementCopyId + '"] input').val() : $('[name="' + fifth.basisElementCopyId + '"]').val()
                             result.push({
-                              basisAnswerId: (fifth.reportResultList && fifth.reportResultList.length) ? fifth.reportResultList[0].basisAnswerId : '',
+                              reportResultId: (fifth.reportResultList && fifth.reportResultList.length) ? fifth.reportResultList[0].reportResultId : '',
                               basisElementId: fifth.basisElementCopyId,
                               elementTextValue: text || '',
                               elementNumValue: ''
@@ -630,7 +630,7 @@ export default {
                           }
                           if(fifth.simple > 0){
                             result.push({
-                              basisAnswerId: (fifth.reportResultList && fifth.reportResultList.length) ? fifth.reportResultList[0].basisAnswerId : '',
+                              reportResultId: (fifth.reportResultList && fifth.reportResultList.length) ? fifth.reportResultList[0].reportResultId : '',
                               basisElementId: fifth.basisElementCopyId,
                               elementNumValue: typeof $('input[name="' + fifth.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + fifth.basisElementCopyId + '"]:checked').val() : '',
                               elementTextValue: ''
@@ -641,7 +641,7 @@ export default {
                               if(sixth.isWrite > 0){
                                 var text = $('[name="' + sixth.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + sixth.basisElementCopyId + '"] input').val() : $('[name="' + sixth.basisElementCopyId + '"]').val()
                                 result.push({
-                                  basisAnswerId: (sixth.reportResultList && sixth.reportResultList.length) ? sixth.reportResultList[0].basisAnswerId : '',
+                                  reportResultId: (sixth.reportResultList && sixth.reportResultList.length) ? sixth.reportResultList[0].reportResultId : '',
                                   basisElementId: sixth.basisElementCopyId,
                                   elementTextValue: text || '',
                                   elementNumValue: ''
@@ -653,7 +653,7 @@ export default {
                       }else if(fourth.hasChild > 0 && fourth.isRadio !== 0){
                         _.each(fourth.childList, function(fifth){
                           result.push({
-                            basisAnswerId: fifth.reportResultList && fifth.reportResultList.length ? fifth.reportResultList[0].basisAnswerId : '',
+                            reportResultId: fifth.reportResultList && fifth.reportResultList.length ? fifth.reportResultList[0].reportResultId : '',
                             basisElementId: fifth.basisElementCopyId,
                             elementNumValue: $('[value="' + fifth.basisElementCopyId + '"][name="' + fifth.parentId + '"]').prop('checked') ? 1 : -1,
                             elementTextValue: ''
@@ -670,7 +670,7 @@ export default {
             if(item.isRadio !== 0){
               _.each(item.childList, function(sub){
                 result.push({
-                  basisAnswerId: sub.reportResultList && sub.reportResultList.length ? sub.reportResultList[0].basisAnswerId : '',
+                  reportResultId: sub.reportResultList && sub.reportResultList.length ? sub.reportResultList[0].reportResultId : '',
                   basisElementId: sub.basisElementCopyId,
                   elementNumValue: $('[value="' + sub.basisElementCopyId + '"][name="' + sub.parentId + '"]').prop('checked') ? 1 : -1,
                   elementTextValue: ''
@@ -678,7 +678,7 @@ export default {
                 // TODO:此处后面需看还有没有更多情况
                 if(sub.hasChild > 0 && sub.isWrite > 0){
                   result.push({
-                    basisAnswer: sub.childList[0].reportResultList && sub.childList[0].reportResultList.length ? sub.childList[0].reportResultList[0].basisAnswerId : '',
+                    basisAnswer: sub.childList[0].reportResultList && sub.childList[0].reportResultList.length ? sub.childList[0].reportResultList[0].reportResultId : '',
                     basisElementId: sub.childList[0].basisElementCopyId,
                     elementTextValue: $('[name="' + sub.childList[0].basisElementCopyId + '"]').val(),
                     elementNumValue: ''

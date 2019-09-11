@@ -1203,6 +1203,7 @@ export default {
       importVtData(params)
         .then(res => {
           if(res.code === 0){
+            that.visible = false
             that.$message.success('导入成功', function(){
               var href = location.href.replace(/\?markId=[\d]+/,'')
               location.href = href + '?markId=' + that.basisMaskId
