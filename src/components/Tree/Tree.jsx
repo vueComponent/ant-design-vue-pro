@@ -123,7 +123,7 @@ export default {
           {this.renderTreeIcon(item.percentage)}
           { this.renderIcon(item.icon) }
           <span class="treeSubTitle">{ item.basisMarkName }</span>
-          <span class="treeSubPercentage">{item.percentage}</span>
+          <span class="treeSubPercentage">{parseInt(item.percentage)==0?'':item.percentage}</span>
         </span>
       )
 

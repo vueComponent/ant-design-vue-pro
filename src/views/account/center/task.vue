@@ -22,28 +22,47 @@
        </a-col>
        <a-col :span="19">
          <div style="overflow: hidden;">
-           <!-- <a-button class="btn fr" @click="">导入</a-button> -->
+           <a-button class="btn fr" @click="">导入</a-button>
            <a-button class="btn fr" @click="save">保存</a-button>
-           <!-- <a-button class="btn fr" type="primary" @click="submit">提交</a-button> -->
+           <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
          </div>
          <div class="baselineForm" :style="baselineFormStyle">
               <a-form :form="form">
-                <!-- 基线或访视 -->
+
+                <a-form-item>
+                  <div v-if="question.name" class="question-title" >{{question.name}}</div>
+                  <div v-if="question.remark" class="question-des">{{question.remark}}</div>
+                </a-form-item>
+                <div v-for="item in listArr">
+                  <div class="question-t">{{item.name}}</div><br />
+                  <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
+                    <p v-if="qu1.type == 5">{{qu1.name}}</p>
+                    <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" />
+                    <a-radio-group v-if="qu1.type === 1">
+                      <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.sort">{{item.name}}</a-radio>
+                    </a-radio-group>
+                    <a-radio-group v-if="qu1.type === 2">
+                      <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.sort">{{item.name}}</a-checkbox>
+                    </a-radio-group>
+                     <a-date-picker v-if="qu1.type === 6" />
+                  </a-form-item>
+                </div>
+
                 <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
                     <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
                       <a-radio :value="1">是</a-radio>
                       <a-radio :value="-1">否</a-radio>
                     </a-radio-group>
-                    <a-radio-group v-if="qu1.simple === 2" :name="qu1.basisElementCopyId+''" :defaultValue="qu1.taskExecuteRecord && qu1.taskExecuteRecord.length && qu1.taskExecuteRecord[0].elementNumValue">
+                    <a-radio-group v-if="qu1.simple === 2" :name="qu1.basisElementCopyId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementNumValue">
                       <a-radio :value="1">有</a-radio>
                       <a-radio :value="-1">无</a-radio>
                     </a-radio-group>
                     <!-- <br v-if="qu1.simple > 0"> -->
-                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'compute'" :defaultValue="qu1.taskExecuteRecord && qu1.taskExecuteRecord.length && qu1.taskExecuteRecord[0].elementTextValue" style="width: 240px" :addonAfter="qu1.unit" @blur="compute(qu1.computeElement)" />
-                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event && typeof qu1.computeElement !== 'undefined' && qu1.computeElement === 0" :defaultValue="qu1.taskExecuteRecord && qu1.taskExecuteRecord.length && qu1.taskExecuteRecord[0].elementTextValue" style="width: 240px" :addonAfter="qu1.unit"  v-model="computeMap[qu1.basisElementCopyId]" />
-                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event && typeof qu1.computeElement === 'undefined'" :defaultValue="qu1.taskExecuteRecord && qu1.taskExecuteRecord.length && qu1.taskExecuteRecord[0].elementTextValue" style="width: 240px" :addonAfter="qu1.unit" />
-                    <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (!qu1.taskExecuteRecord || qu1.taskExecuteRecord.length === 0 || qu1.taskExecuteRecord[0].elementTextValue === '')" />
-                    <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (qu1.taskExecuteRecord && qu1.taskExecuteRecord.length && qu1.taskExecuteRecord[0].elementTextValue)" :defaultValue="moment(qu1.taskExecuteRecord[0].elementTextValue)" />
+                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'compute'" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 240px" :addonAfter="qu1.unit" @blur="compute(qu1.computeElement)" />
+                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event && typeof qu1.computeElement !== 'undefined' && qu1.computeElement === 0" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 240px" :addonAfter="qu1.unit"  v-model="computeMap[qu1.basisElementCopyId]" />
+                    <a-input :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && !qu1.event && typeof qu1.computeElement === 'undefined'" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue" style="width: 240px" :addonAfter="qu1.unit" />
+                    <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (!qu1.answers || qu1.answers.length === 0 || qu1.answers[0].elementTextValue === '')" />
+                    <a-date-picker :name="qu1.basisElementCopyId+''" v-if="qu1.simple < 0 && qu1.isWrite > 0 && qu1.event === 'showDate' && (qu1.answers && qu1.answers.length && qu1.answers[0].elementTextValue)" :defaultValue="moment(qu1.answers[0].elementTextValue)" />
                     <a-checkbox-group v-if="qu1.hasChild > 0 && qu1.isRadio < 0 && (qu1.logicValue <= 0 || (qu1.logicValue > 0 && qu1.basisElementId === 1))" v-model="qu1.elementId">
                       <a-checkbox  v-if="op.event!=='showList'" v-for="(op,index) in qu1.childList" :key="index" :value="op.basisElementCopyId" :name="qu1.basisElementCopyId+''">{{op.questionName}}</a-checkbox>
                     </a-checkbox-group>
@@ -72,7 +91,7 @@
                                 </a-radio-group>
                             </a-col>
                             <a-col :span="8" v-if="third.simple > 0 && third.logicValue > 0 && third.hasChild > 0 && third.childList[0].isWrite > 0 && third.basisElementId === 1">
-                              <a-input :name="third.childList[0].basisElementCopyId+''" :addonAfter="third.childList[0].unit" style="width:240px" :defaultValue="third.childList[0].taskExecuteRecord && third.childList[0].taskExecuteRecord.length && third.childList[0].taskExecuteRecord[0].elementTextValue"></a-input>
+                              <a-input :name="third.childList[0].basisElementCopyId+''" :addonAfter="third.childList[0].unit" style="width:240px"></a-input>
                             </a-col>
                             <a-row v-for="(fourth, index) in third.childList" v-if="third.hasChild > 0 && third.isRadio === 0">
                               <a-col :span="6">{{fourth.questionName}}</a-col>
@@ -89,7 +108,7 @@
                               <a-col :span="12" v-if="fourth.logicValue <= 0 || (fourth.logicValue > 0 && fourth.basisElementId === 1) && fourth.hasChild > 0 && fourth.childList[0].isWrite > 0">
                                 <a-col :span="6">{{fourth.childList[0].questionName}}</a-col>
                                 <a-col :span="12">
-                                  <a-input :addonAfter="fourth.childList[0].unit" :name="fourth.childList[0].basisElementCopyId+''" style="width:240px" :defaultValue="fourth.childList[0].taskExecuteRecord && fourth.childList[0].taskExecuteRecord.length && fourth.childList[0].taskExecuteRecord[0].elementTextValue"></a-input>
+                                  <a-input :addonAfter="fourth.childList[0].unit" :name="fourth.childList[0].basisElementCopyId+''" style="width:240px"></a-input>
                                 </a-col>
                               </a-col>
                             </a-row>
@@ -100,7 +119,7 @@
                     <!-- 一级联动 -->
                     <a-row v-for="(sub, index) in qu1.childList" :key="index" v-if="qu1.isRadio < 0 && sub.logicValue > 0 && qu1.elementId.indexOf(sub.basisElementCopyId) > -1">
                       <a-col :span="4">{{sub.childList[0].questionName}}</a-col>
-                      <a-col :span="4"><a-input :name="sub.childList[0].basisElementCopyId+''" :addonAfter="sub.childList[0].unit" :defaultValue="sub.childList[0].taskExecuteRecord && sub.childList[0].taskExecuteRecord.length && sub.childList[0].taskExecuteRecord[0].elementTextValue" style="width:240px" /></a-col>
+                      <a-col :span="4"><a-input :name="sub.childList[0].basisElementCopyId+''" :addonAfter="sub.childList[0].unit" :defaultValue="sub.childList[0].answers && sub.childList[0].answers.length && sub.childList[0].answers[0].elementTextValue" style="width:240px" /></a-col>
                     </a-row>
                     <!-- 有第二层 -->
                     <div v-if="qu1.hasChild > 0 && qu1.isRadio === 0">
@@ -112,11 +131,11 @@
                         <a-col :span="18" :class="{'ant-col-push-6': sub.questionName.length > 16}">
                           <!-- 是否，有无以及填写值 -->
                           <a-col :span="6" v-if="sub.isWrite > 0">
-                            <a-input v-if="sub.isWrite > 0 && !sub.event && typeof sub.computeElement !== 'undefined' && sub.computeElement === 0" :name="sub.basisElementCopyId+''" :defaultValue="sub.taskExecuteRecord && sub.taskExecuteRecord.length && sub.taskExecuteRecord[0].elementTextValue" :addonAfter="sub.unit" :readOnly="sub.computeElement === 0" v-model="computeMap[sub.basisElementCopyId]" style="width:240px" />
-                            <a-input v-if="sub.isWrite > 0 && !sub.event && typeof sub.computeElement === 'undefined'" :name="sub.basisElementCopyId+''" :defaultValue="sub.taskExecuteRecord && sub.taskExecuteRecord.length && sub.taskExecuteRecord[0].elementTextValue" :addonAfter="sub.unit" style="width:240px" />
-                            <a-input v-if="sub.isWrite > 0 && sub.event === 'compute'" :name="sub.basisElementCopyId+''" :defaultValue="sub.taskExecuteRecord && sub.taskExecuteRecord.length && sub.taskExecuteRecord[0].elementTextValue" :addonAfter="sub.unit" @blur="compute(sub.computeElement)" style="width:240px" />
-                            <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && (!sub.taskExecuteRecord || sub.taskExecuteRecord.length === 0 || sub.taskExecuteRecord[0].elementTextValue === '')" :name="sub.basisElementCopyId+''" style="width:240px" />
-                            <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && sub.taskExecuteRecord && sub.taskExecuteRecord.length && sub.taskExecuteRecord[0].elementTextValue" :name="sub.basisElementCopyId+''" :defaultValue="moment(sub.taskExecuteRecord[0].elementTextValue)" style="width:240px" />
+                            <a-input v-if="sub.isWrite > 0 && !sub.event && typeof sub.computeElement !== 'undefined' && sub.computeElement === 0" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" :readOnly="sub.computeElement === 0" v-model="computeMap[sub.basisElementCopyId]" style="width:240px" />
+                            <a-input v-if="sub.isWrite > 0 && !sub.event && typeof sub.computeElement === 'undefined'" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" style="width:240px" />
+                            <a-input v-if="sub.isWrite > 0 && sub.event === 'compute'" :name="sub.basisElementCopyId+''" :defaultValue="sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :addonAfter="sub.unit" @blur="compute(sub.computeElement)" style="width:240px" />
+                            <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && (!sub.answers || sub.answers.length === 0 || sub.answers[0].elementTextValue === '')" :name="sub.basisElementCopyId+''" style="width:240px" />
+                            <a-date-picker v-if="sub.isWrite > 0 && sub.event === 'showDate' && sub.answers && sub.answers.length && sub.answers[0].elementTextValue" :name="sub.basisElementCopyId+''" :defaultValue="moment(sub.answers[0].elementTextValue)" style="width:240px" />
                           </a-col>
                           <br v-if="sub.isWrite > 0">
                           <a-radio-group v-if="sub.simple === 1" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
@@ -138,7 +157,7 @@
                            <span v-for="(subOp, index) in sub.childList">
                              <a-checkbox v-if="subOp.event=='showList'" :name="subOp.parentId+''"    @change="showList($event,subOp.event,subOp.questionName)" :key="index" :value="subOp.basisElementCopyId">{{subOp.questionName}}</a-checkbox>
                              <div  v-if="subOp.event=='showList' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1&&subOp.questionName=='其他' "  style="display: inline-block;width: 300px;argin-right: 10px;">
-                                <a-input :name="subOp.childList[0].basisElementCopyId+''" :defaultValue="subOp.childList[0].taskExecuteRecord && subOp.childList[0].taskExecuteRecord.length&&subOp.childList[0].taskExecuteRecord[0].elementTextValue" @blur="blurInput($event,subOp.childList[0])"  :addonAfter="subOp.childList[0].unit"  />
+                                <a-input :name="subOp.childList[0].basisElementCopyId+''" :defaultValue="subOp.childList[0].answers && subOp.childList[0].answers.length&&subOp.childList[0].answers[0].elementTextValue" @blur="blurInput($event,subOp.childList[0])"  :addonAfter="subOp.childList[0].unit"  />
                              </div>
                              <add-table v-if="subOp.event=='showList' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1&&subOp.questionName!=='其他'"  v-model="optionDataSource[subOp.basisElementCopyId]" :dataSource=" subOp.medicineAllergyList?subOp.medicineAllergyList:optionDataSource[subOp.basisElementCopyId]"></add-table>
                              <add-table  v-if="subOp.event == 'showList' && subOp.questionName == '其他' && sub.elementId.indexOf(subOp.basisElementCopyId) > -1"  v-model="optionDataSource[subOp.childList[0].parentId]" :dataSource="subOp.medicineAllergyList?subOp.medicineAllergyList:optionDataSource[subOp.childList[0].parentId]"></add-table>
@@ -148,9 +167,9 @@
                           <a-row v-for="(third, index) in sub.childList" :key="index" v-if="sub.hasChild > 0 && sub.isRadio < 0 && third.hasChild > 0 && third.logicValue > 0 && sub.elementId.indexOf(third.basisElementCopyId) > -1" class="no-border">
                             <a-col :span="6" v-if="third.childList[0].isWrite > 0">{{third.childList[0].questionName}}</a-col>
                             <a-col :span="8" v-if="third.childList[0].isWrite > 0">
-                              <a-date-picker v-if="third.childList[0].event === 'showDate' && third.childList[0].taskExecuteRecord && third.childList[0].taskExecuteRecord.length && third.childList[0].taskExecuteRecord[0].elementTextValue" :defaultValue="moment(third.childList[0].taskExecuteRecord[0].elementTextValue)" :name="third.childList[0].basisElementCopyId+''" style="width:240px" />
-                              <a-date-picker v-if="third.childList[0].event === 'showDate' && (!third.childList[0].taskExecuteRecord || !third.childList[0].taskExecuteRecord.length || !third.childList[0].taskExecuteRecord[0].elementTextValue)" :name="third.childList[0].basisElementCopyId+''" style="width:240px" />
-                              <a-input v-if="!third.childList[0].event&&third.event!=='showList'" :addonAfter="third.childList[0].unit" :name="third.childList[0].basisElementCopyId+''" :defaultValue="third.childList[0].taskExecuteRecord && third.childList[0].taskExecuteRecord.length && third.childList[0].taskExecuteRecord[0].elementTextValue" style="width:240px" />
+                              <a-date-picker v-if="third.childList[0].event === 'showDate' && third.childList[0].answers && third.childList[0].answers.length && third.childList[0].answers[0].elementTextValue" :defaultValue="moment(third.childList[0].answers[0].elementTextValue)" :name="third.childList[0].basisElementCopyId+''" style="width:240px" />
+                              <a-date-picker v-if="third.childList[0].event === 'showDate' && (!third.childList[0].answers || !third.childList[0].answers.length || !third.childList[0].answers[0].elementTextValue)" :name="third.childList[0].basisElementCopyId+''" style="width:240px" />
+                              <a-input v-if="!third.childList[0].event&&third.event!=='showList'" :addonAfter="third.childList[0].unit" :name="third.childList[0].basisElementCopyId+''" :defaultValue="third.childList[0].answers && third.childList[0].answers.length && third.childList[0].answers[0].elementTextValue" style="width:240px" />
                             </a-col>
                             <a-col :span="6" v-if="third.isRadio > 0 && third.hasChild > 0">{{third.questionName}}</a-col>
                             <a-col :span="16" v-if="third.isRadio > 0 && third.hasChild > 0">
@@ -165,19 +184,26 @@
                           <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0 && (!sub.childList[0].event || sub.childList[0].event !== 'compute')" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
                             <a-radio v-for="(subOp,index) in sub.childList" :value="subOp.basisElementCopyId" :key="index">{{subOp.questionName}}</a-radio>
                           </a-radio-group>
+                          <!-- <a-row v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue === 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementCopyId === sub.basisElementId" v-for="(thirdSub, index) in sub.childList" :class="{'no-border': index === sub.childList.length - 1}">
+                            <a-col :span="6">{{thirdSub.childList[0].questionName}}todo</a-col>
+                            <a-col :span="8">
+                              <a-date-picker v-if="thirdSub.childList[0].event === 'showDate' && thirdSub.childList[0].answers && thirdSub.childList[0].answers.length && thirdSub.childList[0].answers[0].elementTextValue" :defaultValue="moment(thirdSub.childList[0].answers[0].elementTextValue)" :name="thirdSub.childList[0].basisElementCopyId+''" style="width:240px" />
+                              <a-date-picker v-if="thirdSub.childList[0].event === 'showDate' && (!thirdSub.childList[0].answers || !thirdSub.childList[0].answers.length || !thirdSub.childList[0].answers[0].elementTextValue)" :name="thirdSub.childList[0].basisElementCopyId+''" style="width:240px" />
+                              <a-input v-if="!thirdSub.childList[0].event" :addonAfter="thirdSub.childList[0].unit" :defaultValue="thirdSub.childList[0].answers && thirdSub.childList[0].answers.length && thirdSub.childList[0].answers[0].elementTextValue" style="width:240px" />
+                            </a-col>
+                          </a-row> -->
                           <div v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue <= 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementCopyId === sub.basisElementId" v-for="(thirdSub, index) in sub.childList">
                             <div v-if="thirdSub.isRadio === 0">
                               <a-row v-for="(fourth, index) in thirdSub.childList" :class="{'no-border': index === thirdSub.childList.length - 1}">
-                                <!-- total lung capacity -->
                                 <a-col :span="6">{{fourth.questionName}}</a-col>
                                 <a-radio-group v-if="fourth.simple === 2" v-model="fourth.basisElementId" :name="fourth.basisElementCopyId+''">
                                   <a-radio :value="1">有</a-radio>
                                   <a-radio :value="-1">无</a-radio>
                                 </a-radio-group>
-                                <a-input v-if="fourth.isWrite > 0" :addonAfter="fourth.unit" :name="fourth.basisElementCopyId+''" :defaultValue="fourth.taskExecuteRecord && fourth.taskExecuteRecord.length && fourth.taskExecuteRecord[0].elementTextValue" style="width: 240px"></a-input>
+                                <a-input v-if="fourth.isWrite > 0" :addonAfter="fourth.unit" :name="fourth.basisElementCopyId+''" :defaultValue="fourth.answers && fourth.answers.length && fourth.answers[0].elementTextValue" style="width: 240px"></a-input>
                                 <div v-if="fourth.hasChild > 0 && fourth.isRadio === 0">
                                   <a-row class="no-border" v-for="fifth in fourth.childList" v-if="fourth.logicValue <= 0 || fourth.basisElementId === 1">
-                                    <a-col :span="6">{{fifth.questionName}}fd</a-col>
+                                    <a-col :span="6">{{fifth.questionName}}</a-col>
                                     <a-col :span="4" v-if="fifth.simple === 2">
                                       <a-radio-group v-model="fifth.basisElementId" :name="fifth.basisElementCopyId+''">
                                         <a-radio :value="1">有</a-radio>
@@ -186,10 +212,10 @@
                                     </a-col>
                                     <div v-if="fifth.hasChild > 0 && (fifth.logicValue <= 0 || fifth.basisElementId === 1) && fifth.isRadio === 0">
                                       <a-col :span="4">{{fifth.childList[0].questionName}}</a-col>
-                                      <a-input v-if="fifth.childList[0].isWrite > 0" :span="8" style="width: 240px" :name="fifth.childList[0].basisElementCopyId+''" :defaultValue="fifth.childList[0].taskExecuteRecord && fifth.childList[0].taskExecuteRecord.length && fifth.childList[0].taskExecuteRecord[0].elementTextValue" :addonAfter="fifth.childList[0].unit"></a-input>
+                                      <a-input v-if="fifth.childList[0].isWrite > 0" :span="8" style="width: 240px" :name="fifth.childList[0].basisElementCopyId+''" :defaultValue="fifth.childList[0].answers && fifth.childList[0].answers.length && fifth.childList[0].answers[0].elementTextValue" :addonAfter="fifth.childList[0].unit"></a-input>
                                     </div>
                                     <a-col :span="4" v-if="fifth.isWrite > 0">
-                                      <a-input :name="fifth.basisElementCopyId+''" :addonAfter="fifth.unit" :defaultValue="fifth.taskExecuteRecord && fifth.taskExecuteRecord.length && fifth.taskExecuteRecord[0].elementTextValue" style="width:240px"></a-input>
+                                      <a-input :name="fifth.basisElementCopyId+''" :addonAfter="fifth.unit" :defaultValue="fifth.answers && fifth.answers[0].length && fifth.answers[0].elementTextValue" style="width:240px"></a-input>
                                     </a-col>
                                   </a-row>
                                 </div>
@@ -205,11 +231,11 @@
                           </div>
                           <a-col v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].isWrite > 0">
                             <a-col :span="6">{{sub.childList[0].questionName}}</a-col>
-                            <a-col :span="8"><a-input :name="sub.childList[0].basisElementCopyId+''" style="width:240px" :defaultValue="sub.childList[0].taskExecuteRecord && sub.childList[0].taskExecuteRecord.length && sub.childList[0].taskExecuteRecord[0].elementTextValue" /></a-col>
+                            <a-col :span="8"><a-input :name="sub.childList[0].basisElementCopyId+''" style="width:240px" /></a-col>
                           </a-col>
                           <a-row class="no-border" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue > 0 && secondSub.hasChild > 0" v-for="(secondSub, index) in sub.childList" :key="index">
                             <a-col :span="3" v-if="sub.basisElementId === secondSub.basisElementId">{{secondSub.childList[0].questionName}}</a-col>
-                            <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].taskExecuteRecord && secondSub.childList[0].taskExecuteRecord.length && secondSub.childList[0].taskExecuteRecord[0].elementTextValue" :name="secondSub.childList[0].basisElementCopyId+''" style="width:240px" /></a-col>
+                            <a-col :span="8" v-if="sub.basisElementId === secondSub.basisElementId"><a-input :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].answers && secondSub.childList[0].answers.length && secondSub.childList[0].answers[0].elementTextValue" :name="secondSub.childList[0].basisElementCopyId+''" style="width:240px" /></a-col>
                           </a-row>
                           <a-row v-if="sub.hasChild > 0 && sub.isRadio === 0 && (sub.logicValue <= 0 || sub.basisElementId === 1)" v-for="(subOp,index) in sub.childList" :class="{'ant-col-pull-6': subOp.level > 3 || subOp.display > 0, 'no-border': index === sub.childList.length - 1}">
                             <!-- <br> -->
@@ -224,9 +250,9 @@
                                 <a-radio :value="-1">无</a-radio>
                               </a-radio-group>
                               <a-col :span="6" v-if="subOp.isWrite > 0">
-                                <a-date-picker v-if="subOp.event === 'showDate' && subOp.taskExecuteRecord && subOp.taskExecuteRecord.length && subOp.taskExecuteRecord[0].elementTextValue" :name="subOp.basisElementCopyId+''" :defaultValue="moment(subOp.taskExecuteRecord[0].elementTextValue)" style="width:240px" />
-                                <a-date-picker v-if="subOp.event === 'showDate' && (!subOp.taskExecuteRecord || !subOp.taskExecuteRecord.length || !subOp.taskExecuteRecord[0].elementTextValue)" :name="subOp.basisElementCopyId+''" style="width:240px" />
-                                <a-input :name="subOp.basisElementCopyId+''" v-if="!subOp.event || subOp.event !== 'showDate'" :defaultValue="subOp.taskExecuteRecord && subOp.taskExecuteRecord.length && subOp.taskExecuteRecord[0].elementTextValue" :addonAfter="subOp.unit" style="width:240px" />
+                                <a-date-picker v-if="subOp.event === 'showDate' && subOp.answers && subOp.answers.length && subOp.answers[0].elementTextValue" :name="subOp.basisElementCopyId+''" :defaultValue="moment(subOp.answers[0].elementTextValue)" style="width:240px" />
+                                <a-date-picker v-if="subOp.event === 'showDate' && (!subOp.answers || !subOp.answers.length || !subOp.answers[0].elementTextValue)" :name="subOp.basisElementCopyId+''" style="width:240px" />
+                                <a-input :name="subOp.basisElementCopyId+''" v-if="!subOp.event || subOp.event !== 'showDate'" :defaultValue="subOp.answers && subOp.answers.length && subOp.answers[0].elementTextValue" :addonAfter="subOp.unit" style="width:240px" />
                               </a-col>
                               <a-col :span="24" v-if="subOp.hasChild > 0 && subOp.isRadio < 0 && (subOp.logicValue <= 0 || subOp.basisElementId === 1)">
                                 <a-checkbox-group v-model="subOp.elementId" v-if="subOp.childList[0].event !== 'showList'">
@@ -236,7 +262,7 @@
                                   <span v-for="(secondSub, index) in subOp.childList" >
                                     <a-checkbox v-if="secondSub.event=='showList'"  :name="secondSub.parentId+''" @change="showList($event,secondSub.event,secondSub.questionName)" :key="index" :value="secondSub.basisElementCopyId">{{secondSub.questionName}}</a-checkbox>
                                     <div  v-if="secondSub.event=='showList' && subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1&&secondSub.questionName=='其他' "  style="display: inline-block;width: 300px;margin-right: 10px;">
-                                       <a-input :name="secondSub.childList[0].basisElementCopyId+''"  @blur="blurInput($event,secondSub.childList[0])"  :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].taskExecuteRecord && secondSub.childList[0].taskExecuteRecord.length && secondSub.childList[0].taskExecuteRecord[0].elementTextValue" />
+                                       <a-input :name="secondSub.childList[0].basisElementCopyId+''"  @blur="blurInput($event,secondSub.childList[0])"  :addonAfter="secondSub.childList[0].unit" :defaultValue="secondSub.childList[0].answers && secondSub.childList[0].answers.length && secondSub.childList[0].answers[0].elementTextValue" />
                                     </div>
                                     <add-table v-if="secondSub.event=='showList' && subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1&&secondSub.questionName!=='其他'"  v-model="optionDataSource[secondSub.basisElementCopyId]" :dataSource="secondSub.medicineAllergyList?secondSub.medicineAllergyList:optionDataSource[secondSub.basisElementCopyId]"></add-table>
                                     <add-table v-if="secondSub.event=='showList' &&secondSub.questionName=='其他'&& subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1"  v-model="optionDataSource[secondSub.childList[0].parentId]" :dataSource="secondSub.medicineAllergyList?secondSub.medicineAllergyList:optionDataSource[secondSub.childList[0].parentId]"></add-table>
@@ -248,9 +274,9 @@
                                   <a-row v-for="(thirdSub, index) in secondSub.childList" class="no-border">
                                     <a-col :span="6" v-if="thirdSub.questionName">{{thirdSub.questionName}}</a-col>
                                     <a-col :span="8" v-if="thirdSub.isWrite > 0">
-                                      <a-input style="width: 240px;" :name="thirdSub.basisElementCopyId+''" :defaultValue="thirdSub.taskExecuteRecord && thirdSub.taskExecuteRecord.length && thirdSub.taskExecuteRecord[0].elementTextValue" v-if="!thirdSub.event && thirdSub.event == 'showList'" :addonAfter="thirdSub.unit"></a-input>
-                                      <a-date-picker v-if="thirdSub.event === 'showDate' && thirdSub.taskExecuteRecord && thirdSub.taskExecuteRecord.length && thirdSub.taskExecuteRecord[0].elementTextValue" :name="thirdSub.basisElementCopyId+''" :defaultValue="moment(thirdSub.taskExecuteRecord[0].elementTextValue)" style="width:240px" />
-                                      <a-date-picker v-if="thirdSub.event === 'showDate' && (!thirdSub.taskExecuteRecord || !thirdSub.taskExecuteRecord.length || !thirdSub.taskExecuteRecord[0].elementTextValue)" :name="thirdSub.basisElementCopyId+''" style="width:240px" />
+                                      <a-input style="width: 240px;" :name="thirdSub.basisElementCopyId+''" :defaultValue="thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" v-if="!thirdSub.event && thirdSub.event == 'showList'" :addonAfter="thirdSub.unit"></a-input>
+                                      <a-date-picker v-if="thirdSub.event === 'showDate' && thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" :name="thirdSub.basisElementCopyId+''" :defaultValue="moment(thirdSub.answers[0].elementTextValue)" style="width:240px" />
+                                      <a-date-picker v-if="thirdSub.event === 'showDate' && (!thirdSub.answers || !thirdSub.answers.length || !thirdSub.answers[0].elementTextValue)" :name="thirdSub.basisElementCopyId+''" style="width:240px" />
                                     </a-col>
                                   </a-row>
                                 </div>
@@ -264,7 +290,7 @@
                                 </div>
                               </div>
                               <!-- <a-col :span="6" v-if="secondSub.hasChild > 0 && (secondSub.logicValue === 0 || subOp.elementId.indexOf(secondSub.basisElementCopyId) > -1) && secondSub.isWrite > 0" v-for="(secondSub,index) in subOp.childList">
-                                <a-input style="width:240px;" :name="secondSub.basisElementCopyId+''" :defaultValue="secondSub.taskExecuteRecord && secondSub.taskExecuteRecord.length && secondSub.taskExecuteRecord[0].elementTextValue"></a-input>
+                                <a-input style="width:240px;" :name="secondSub.basisElementCopyId+''" :defaultValue="secondSub.answers && secondSub.answers.length && secondSub.answers[0].elementTextValue"></a-input>
                               </a-col> -->
                               <a-col :span="18" v-if="subOp.hasChild > 0 && subOp.isRadio > 0">
                                 <a-radio-group :name="subOp.basisElementCopyId+''" v-model="subOp.basisElementId">
@@ -275,7 +301,7 @@
                                 <a-col v-for="(thirdSub,index) in secondSub.childList">
                                   <a-col :span="6">{{thirdSub.questionName}}</a-col>
                                   <a-col :span="6" v-if="thirdSub.isWrite > 0">
-                                    <a-input :name="thirdSub.basisElementCopyId+''" :defaultValue="thirdSub.taskExecuteRecord && thirdSub.taskExecuteRecord.length && thirdSub.taskExecuteRecord[0].elementTextValue" style="width:240px" :addonAfter="thirdSub.unit"></a-input>
+                                    <a-input :name="thirdSub.basisElementCopyId+''" :defaultValue="thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" style="width:240px" :addonAfter="thirdSub.unit"></a-input>
                                   </a-col>
                                 </a-col>
                               </div>
@@ -287,9 +313,9 @@
                                     <a-radio :value="1">是</a-radio>
                                     <a-radio :value="-1">否</a-radio>
                                   </a-radio-group>
-                                  <a-date-picker v-if="thirdSub.event === 'showDate' && thirdSub.taskExecuteRecord && thirdSub.taskExecuteRecord.length && thirdSub.taskExecuteRecord[0].elementTextValue" :defaultValue="moment(thirdSub.taskExecuteRecord[0].elementTextValue)" :name="thirdSub.basisElementCopyId+''" style="width:240px" />
-                                  <a-date-picker v-if="thirdSub.event === 'showDate' && (!thirdSub.taskExecuteRecord || !thirdSub.taskExecuteRecord.length || !thirdSub.taskExecuteRecord[0].elementTextValue)" :name="thirdSub.basisElementCopyId+''" style="width:240px" />
-                                  <a-input v-if="thirdSub.isWrite > 0 && !thirdSub.event" :name="thirdSub.basisElementCopyId + ''" :defaultValue="thirdSub.taskExecuteRecord && thirdSub.taskExecuteRecord.length && thirdSub.taskExecuteRecord[0].elementTextValue" style="width:240px" :addonAfter="thirdSub.unit" />
+                                  <a-date-picker v-if="thirdSub.event === 'showDate' && thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" :defaultValue="moment(thirdSub.answers[0].elementTextValue)" :name="thirdSub.basisElementCopyId+''" style="width:240px" />
+                                  <a-date-picker v-if="thirdSub.event === 'showDate' && (!thirdSub.answers || !thirdSub.answers.length || !thirdSub.answers[0].elementTextValue)" :name="thirdSub.basisElementCopyId+''" style="width:240px" />
+                                  <a-input v-if="thirdSub.isWrite > 0 && !thirdSub.event" :name="thirdSub.basisElementCopyId + ''" :defaultValue="thirdSub.answers && thirdSub.answers.length && thirdSub.answers[0].elementTextValue" style="width:240px" :addonAfter="thirdSub.unit" />
                                     <!-- 注掉br是因为啰音类型会掉下去，别处需要换行再调整 -->
                                   <!-- <br v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && thirdSub.simple > 0"> -->
                                   <a-radio-group v-if="thirdSub.hasChild > 0 && thirdSub.isRadio > 0 && (thirdSub.logicValue <= 0 || thirdSub.basisElementId === 1)" :name="thirdSub.basisElementCopyId+''" v-model="thirdSub.basisElementId" style="width: 100%">
@@ -300,7 +326,7 @@
                                       <a-row class="no-border">
                                         <a-col :span="6">{{fourth.childList[0].questionName}}</a-col>
                                         <a-col :span="16" v-if="fourth.childList[0].isWrite > 0">
-                                          <a-input :name="fourth.childList[0].basisElementCopyId+''" style="width: 240px;" :defaultValue="fourth.childList[0].taskExecuteRecord && fourth.childList[0].taskExecuteRecord.length && fourth.childList[0].taskExecuteRecord[0].elementTextValue" :addonAfter="fourth.childList[0].unit"></a-input>
+                                          <a-input :name="fourth.childList[0].basisElementCopyId+''" style="width: 240px;" :defaultValue="fourth.childList[0].answers && fourth.childList[0].answers.length && fourth.childList[0].answers[0].elementTextValue" :addonAfter="fourth.childList[0].unit"></a-input>
                                         </a-col>
                                       </a-row>
                                     </div>
@@ -337,7 +363,7 @@
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-import { getElementsAnswer, saveVisitTask, getMedicineAllergyList,computeScore,getAllQuestionList, getTaskDetail } from '@/api/basis'
+import { getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList, getTaskDetail } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
@@ -398,6 +424,9 @@ export default {
       validateFlag: false,
       visitTaskId: this.$route.params.id,
       computeMap: {
+        1208: '',
+        2727: '', 
+        1160: '',
         4207: ''
       },
       disBlock :{
@@ -535,7 +564,7 @@ export default {
       _.each(this.list, function(item){
         if(item.simple > 0){
           result.push({
-            taskExecuteRecordId: (item.taskExecuteRecord && item.taskExecuteRecord.length) ? item.taskExecuteRecord[0].taskExecuteRecordId : '',
+            basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
             basisElementId: item.basisElementCopyId,
             elementNumValue: typeof $('input[name="' + item.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + item.basisElementCopyId + '"]:checked').val() : '',
             elementTextValue: ''
@@ -543,7 +572,7 @@ export default {
         }else if(item.isWrite > 0){
           var text = $('[name="' + item.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + item.basisElementCopyId + '"] input').val() : $('[name="' + item.basisElementCopyId + '"]').val()
           result.push({
-            taskExecuteRecordId: (item.taskExecuteRecord && item.taskExecuteRecord.length) ? item.taskExecuteRecord[0].taskExecuteRecordId : '',
+            basisAnswerId: (item.answers && item.answers.length) ? item.answers[0].basisAnswerId : '',
             basisElementId: item.basisElementCopyId,
             elementTextValue: text,
             elementNumValue: ''
@@ -555,7 +584,7 @@ export default {
               if(sub.isWrite > 0){
                 var text = $('[name="' + sub.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + sub.basisElementCopyId + '"] input').val() : $('[name="' + sub.basisElementCopyId + '"]').val()
                 result.push({
-                  taskExecuteRecordId: (sub.taskExecuteRecord && sub.taskExecuteRecord.length) ? sub.taskExecuteRecord[0].taskExecuteRecordId : '',
+                  basisAnswerId: (sub.answers && sub.answers.length) ? sub.answers[0].basisAnswerId : '',
                   basisElementId: sub.basisElementCopyId,
                   elementTextValue: text,
                   elementNumValue: ''
@@ -563,7 +592,7 @@ export default {
               }
               if(sub.simple > 0){
                 result.push({
-                  taskExecuteRecordId: (sub.taskExecuteRecord && sub.taskExecuteRecord.length) ? sub.taskExecuteRecord[0].taskExecuteRecordId : '',
+                  basisAnswerId: (sub.answers && sub.answers.length) ? sub.answers[0].basisAnswerId : '',
                   basisElementId: sub.basisElementCopyId,
                   elementNumValue: typeof $('input[name="' + sub.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + sub.basisElementCopyId + '"]:checked').val() : '',
                   elementTextValue: ''
@@ -574,7 +603,7 @@ export default {
                 if(sub.isRadio !== 0){
                   _.each(sub.childList, function(third){
                     result.push({
-                      taskExecuteRecordId: third.taskExecuteRecord && third.taskExecuteRecord.length ? third.taskExecuteRecord[0].taskExecuteRecordId : '',
+                      basisAnswerId: third.answers && third.answers.length ? third.answers[0].basisAnswerId : '',
                       basisElementId: third.basisElementCopyId,
                       elementNumValue: $('[value="' + third.basisElementCopyId + '"][name="' + third.parentId + '"]').prop('checked') ? 1 : -1,
                       elementTextValue: ''
@@ -584,7 +613,7 @@ export default {
                 _.each(sub.childList, function(third){
                   if(third.simple > 0){
                     result.push({
-                      taskExecuteRecordId: (third.taskExecuteRecord && third.taskExecuteRecord.length) ? third.taskExecuteRecord[0].taskExecuteRecordId : '',
+                      basisAnswerId: (third.answers && third.answers.length) ? third.answers[0].basisAnswerId : '',
                       basisElementId: third.basisElementCopyId,
                       elementNumValue: typeof $('input[name="' + third.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + third.basisElementCopyId + '"]:checked').val() : '',
                       elementTextValue: ''
@@ -593,7 +622,7 @@ export default {
                   if(third.isWrite > 0){
                     var text = $('[name="' + third.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + third.basisElementCopyId + '"] input').val() : $('[name="' + third.basisElementCopyId + '"]').val()
                     result.push({
-                      taskExecuteRecordId: (third.taskExecuteRecord && third.taskExecuteRecord.length) ? third.taskExecuteRecord[0].taskExecuteRecordId : '',
+                      basisAnswerId: (third.answers && third.answers.length) ? third.answers[0].basisAnswerId : '',
                       basisElementId: third.basisElementCopyId,
                       elementTextValue: text || '',
                       elementNumValue: ''
@@ -604,7 +633,7 @@ export default {
                     _.each(third.childList,function(fourth){
                       if(third.isRadio !== 0){
                         result.push({
-                          taskExecuteRecordId: fourth.taskExecuteRecord && fourth.taskExecuteRecord.length ? fourth.taskExecuteRecord[0].taskExecuteRecordId : '',
+                          basisAnswerId: fourth.answers && fourth.answers.length ? fourth.answers[0].basisAnswerId : '',
                           basisElementId: fourth.basisElementCopyId,
                           elementNumValue: $('[value="' + fourth.basisElementCopyId + '"][name="' + fourth.parentId + '"]').prop('checked') ? 1 : -1,
                           elementTextValue: ''
@@ -612,7 +641,7 @@ export default {
                       }
                       if(fourth.simple > 0){
                         result.push({
-                          taskExecuteRecordId: (fourth.taskExecuteRecord && fourth.taskExecuteRecord.length) ? fourth.taskExecuteRecord[0].taskExecuteRecordId : '',
+                          basisAnswerId: (fourth.answers && fourth.answers.length) ? fourth.answers[0].basisAnswerId : '',
                           basisElementId: fourth.basisElementCopyId,
                           elementNumValue: typeof $('input[name="' + fourth.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + fourth.basisElementCopyId + '"]:checked').val() : '',
                           elementTextValue: ''
@@ -621,7 +650,7 @@ export default {
                       if(fourth.isWrite > 0){
                         var text = $('[name="' + fourth.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + fourth.basisElementCopyId + '"] input').val() : $('[name="' + fourth.basisElementCopyId + '"]').val()
                         result.push({
-                          taskExecuteRecordId: (fourth.taskExecuteRecord && fourth.taskExecuteRecord.length) ? fourth.taskExecuteRecord[0].taskExecuteRecordId : '',
+                          basisAnswerId: (fourth.answers && fourth.answers.length) ? fourth.answers[0].basisAnswerId : '',
                           basisElementId: fourth.basisElementCopyId,
                           elementTextValue: text || '',
                           elementNumValue: ''
@@ -632,38 +661,17 @@ export default {
                           if(fifth.isWrite > 0){
                             var text = $('[name="' + fifth.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + fifth.basisElementCopyId + '"] input').val() : $('[name="' + fifth.basisElementCopyId + '"]').val()
                             result.push({
-                              taskExecuteRecordId: (fifth.taskExecuteRecord && fifth.taskExecuteRecord.length) ? fifth.taskExecuteRecord[0].taskExecuteRecordId : '',
+                              basisAnswerId: (fifth.answers && fifth.answers.length) ? fifth.answers[0].basisAnswerId : '',
                               basisElementId: fifth.basisElementCopyId,
                               elementTextValue: text || '',
                               elementNumValue: ''
-                            })
-                          }
-                          if(fifth.simple > 0){
-                            result.push({
-                              taskExecuteRecordId: (fifth.taskExecuteRecord && fifth.taskExecuteRecord.length) ? fifth.taskExecuteRecord[0].taskExecuteRecordId : '',
-                              basisElementId: fifth.basisElementCopyId,
-                              elementNumValue: typeof $('input[name="' + fifth.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + fifth.basisElementCopyId + '"]:checked').val() : '',
-                              elementTextValue: ''
-                            })
-                          }
-                          if(fifth.hasChild > 0 && fifth.isRadio === 0){
-                            _.each(fifth.childList, function(sixth){
-                              if(sixth.isWrite > 0){
-                                var text = $('[name="' + sixth.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + sixth.basisElementCopyId + '"] input').val() : $('[name="' + sixth.basisElementCopyId + '"]').val()
-                                result.push({
-                                  taskExecuteRecordId: (sixth.taskExecuteRecord && sixth.taskExecuteRecord.length) ? sixth.taskExecuteRecord[0].taskExecuteRecordId : '',
-                                  basisElementId: sixth.basisElementCopyId,
-                                  elementTextValue: text || '',
-                                  elementNumValue: ''
-                                })
-                              }
                             })
                           }
                         })
                       }else if(fourth.hasChild > 0 && fourth.isRadio !== 0){
                         _.each(fourth.childList, function(fifth){
                           result.push({
-                            taskExecuteRecordId: fifth.taskExecuteRecord && fifth.taskExecuteRecord.length ? fifth.taskExecuteRecord[0].taskExecuteRecordId : '',
+                            basisAnswerId: fifth.answers && fifth.answers.length ? fifth.answers[0].basisAnswerId : '',
                             basisElementId: fifth.basisElementCopyId,
                             elementNumValue: $('[value="' + fifth.basisElementCopyId + '"][name="' + fifth.parentId + '"]').prop('checked') ? 1 : -1,
                             elementTextValue: ''
@@ -680,7 +688,7 @@ export default {
             if(item.isRadio !== 0){
               _.each(item.childList, function(sub){
                 result.push({
-                  taskExecuteRecordId: sub.taskExecuteRecord && sub.taskExecuteRecord.length ? sub.taskExecuteRecord[0].taskExecuteRecordId : '',
+                  basisAnswerId: sub.answers && sub.answers.length ? sub.answers[0].basisAnswerId : '',
                   basisElementId: sub.basisElementCopyId,
                   elementNumValue: $('[value="' + sub.basisElementCopyId + '"][name="' + sub.parentId + '"]').prop('checked') ? 1 : -1,
                   elementTextValue: ''
@@ -688,7 +696,7 @@ export default {
                 // TODO:此处后面需看还有没有更多情况
                 if(sub.hasChild > 0 && sub.isWrite > 0){
                   result.push({
-                    basisAnswer: sub.childList[0].taskExecuteRecord && sub.childList[0].taskExecuteRecord.length ? sub.childList[0].taskExecuteRecord[0].taskExecuteRecordId : '',
+                    basisAnswer: sub.childList[0].answers && sub.childList[0].answers.length ? sub.childList[0].answers[0].basisAnswerId : '',
                     basisElementId: sub.childList[0].basisElementCopyId,
                     elementTextValue: $('[name="' + sub.childList[0].basisElementCopyId + '"]').val(),
                     elementNumValue: ''
@@ -717,13 +725,17 @@ export default {
             })
           })
       }
-      params.append('visitTaskStr', JSON.stringify(this.visitTask))
-      params.append('taskExecuteRecord', JSON.stringify(result))
+      params.append('basisAnswer', JSON.stringify(result))
+      params.append('patientBasis', JSON.stringify(this.patientBasis))
+      params.append('basisMarkId', this.basisMaskId)
       params.append('allergy', JSON.stringify(allergy))
-      saveVisitTask(params)
+      submit(params)
       .then(res => {
         console.log(res)
-        alert('保存成功')
+        that.$message.success('保存成功', 2, function(){
+          var href = location.href.replace(/\?markId=[\d]+/,'')
+          location.href = href + '?markId=' + that.basisMaskId
+        })
         // location.href = location.href
       })
       .catch(error => {
@@ -742,55 +754,36 @@ export default {
     initList (list){
       var that = this
       _.each(list, function(a){
-        if(a.simple > 0 && a.taskExecuteRecord && a.taskExecuteRecord.length){
-          a.basisElementId = a.taskExecuteRecord[0].elementNumValue
+        if(a.simple > 0 && a.answers && a.answers.length){
+          a.basisElementId = a.answers[0].elementNumValue
         }
-        if(typeof a.computeElement !== 'undefined' && a.computeElement === 0 && a.taskExecuteRecord && a.taskExecuteRecord.length) {
-          that.computeMap[a.basisElementCopyId] = a.taskExecuteRecord[0].elementTextValue
+        if(typeof a.computeElement !== 'undefined' && a.computeElement === 0 && a.answers && a.answers.length) {
+          that.computeMap[a.basisElementCopyId] = a.answers[0].elementTextValue
         }
         if(a.hasChild > 0 && a.isRadio === 0){
           _.each(a.childList,function(b){
-            if(typeof b.computeElement !== 'undefined' && b.computeElement === 0 && b.taskExecuteRecord && b.taskExecuteRecord.length) {
-              that.computeMap[b.basisElementCopyId] = b.taskExecuteRecord[0].elementTextValue
+            if(typeof b.computeElement !== 'undefined' && b.computeElement === 0 && b.answers && b.answers.length) {
+              that.computeMap[b.basisElementCopyId] = b.answers[0].elementTextValue
             }
-            if(b.simple > 0 && b.taskExecuteRecord && b.taskExecuteRecord.length){
-              b.basisElementId = b.taskExecuteRecord[0].elementNumValue
+            if(b.simple > 0 && b.answers && b.answers.length){
+              b.basisElementId = b.answers[0].elementNumValue
             }
             //单选
             if(b.hasChild > 0 && b.isRadio > 0){
-              var re = _.filter(b.childList, function(v){return v.taskExecuteRecord && v.taskExecuteRecord.length && v.taskExecuteRecord[0].elementNumValue > 0})
+              var re = _.filter(b.childList, function(v){return v.answers && v.answers.length && v.answers[0].elementNumValue > 0})
               if(re.length) b.basisElementId = re[0].basisElementId
-              _.each(b.childList, function(c){
-                if(c.logicValue > 0 && c.hasChild > 0 && c.isRadio === 0){
-                  _.each(c.childList, function(d){
-                    if(d.simple > 0 && d.taskExecuteRecord && d.taskExecuteRecord.length){
-                      d.basisElementId = d.taskExecuteRecord[0].elementNumValue
-                    }
-                    if(d.hasChild > 0 && d.isRadio === 0){
-                      _.each(d.childList, function(e){
-                        if(e.simple > 0 && e.taskExecuteRecord && e.taskExecuteRecord.length){
-                          e.basisElementId = e.taskExecuteRecord[0].elementNumValue
-                        }
-                      })
-                    }
-                  })
-                }
-                if(c.logicValue > 0 && c.hasChild > 0 && c.isRadio > 0){
-
-                }
-              })
             }
             //多选
             if(b.hasChild > 0 && b.isRadio < 0){
-              if(b.childList[0].taskExecuteRecord && b.childList[0].taskExecuteRecord.length){
-                b.elementId = _.map(_.filter(_.flatten(_.map(b.childList,function(v){return v.taskExecuteRecord})),function(v){return v.elementNumValue > 0}),function(v){return v.basisElementId})
+              if(b.childList[0].answers && b.childList[0].answers.length){
+                b.elementId = _.map(_.filter(_.flatten(_.map(b.childList,function(v){return v.answers})),function(v){return v.elementNumValue > 0}),function(v){return v.basisElementId})
               }else{
                 b.elementId = []
               }
               //多选框控制子选项
               _.each(b.childList,function(c){
-                if(c.logicValue > 0 && c.taskExecuteRecord && c.taskExecuteRecord.length && c.taskExecuteRecord[0].elementNumValue > 0){
-                  var selected = _.filter(_.flatten(_.map(c.childList,function(v){return v.taskExecuteRecord})),function(v){return v.elementNumValue > 0})
+                if(c.logicValue > 0 && c.answers && c.answers.length && c.answers[0].elementNumValue > 0){
+                  var selected = _.filter(_.flatten(_.map(c.childList,function(v){return v.answers})),function(v){return v.elementNumValue > 0})
                   if(selected.length){
                     c.basisElementId = _.map(selected,function(v){return v.basisElementId})[0]
                   }
@@ -800,23 +793,23 @@ export default {
             //子选项,第三层
             if(b.hasChild > 0 && b.isRadio === 0){
               _.each(b.childList, function(c){
-                if(c.simple > 0 && c.taskExecuteRecord && c.taskExecuteRecord.length){
-                  c.basisElementId = c.taskExecuteRecord[0].elementNumValue
+                if(c.simple > 0 && c.answers && c.answers.length){
+                  c.basisElementId = c.answers[0].elementNumValue
                 }
                 if(c.hasChild > 0 && c.isRadio === 0){
                   _.each(c.childList, function(d){
-                    if(d.simple > 0 && d.taskExecuteRecord && d.taskExecuteRecord.length){
-                      d.basisElementId = d.taskExecuteRecord[0].elementNumValue
+                    if(d.simple > 0 && d.answers && d.answers.length){
+                      d.basisElementId = d.answers[0].elementNumValue
                     }
                     if(d.hasChild > 0 && d.isRadio < 0){
-                      if(d.childList[0].taskExecuteRecord && d.childList[0].taskExecuteRecord.length){
-                        d.elementId = _.map(_.filter(_.flatten(_.map(d.childList,function(v){return v.taskExecuteRecord})),function(v){return v.elementNumValue > 0}),function(v){return v.basisElementId})
+                      if(d.childList[0].answers && d.childList[0].answers.length){
+                        d.elementId = _.map(_.filter(_.flatten(_.map(d.childList,function(v){return v.answers})),function(v){return v.elementNumValue > 0}),function(v){return v.basisElementId})
                       }else{
                         d.elementId = []
                       }
                     }else if(d.hasChild > 0 && d.isRadio > 0){
-                      if(d.childList[0].taskExecuteRecord && d.childList[0].taskExecuteRecord.length){
-                        var selected = _.filter(_.flatten(_.map(d.childList,function(v){ return v.taskExecuteRecord })),function(v){ return v.elementNumValue > 0 })
+                      if(d.childList[0].answers && d.childList[0].answers.length){
+                        var selected = _.filter(_.flatten(_.map(d.childList,function(v){ return v.answers })),function(v){ return v.elementNumValue > 0 })
                         if(selected.length){
                           d.basisElementId = _.map(selected,function(v){ return v.basisElementId })[0]
                         }
@@ -825,15 +818,15 @@ export default {
                   })
                 }
                 if(c.hasChild > 0 && c.isRadio < 0){
-                  if(c.childList[0].taskExecuteRecord && c.childList[0].taskExecuteRecord.length){
-                    c.elementId = _.map(_.filter(_.flatten(_.map(c.childList,function(v){return v.taskExecuteRecord})),function(v){return v.elementNumValue > 0}),function(v){return v.basisElementId})
+                  if(c.childList[0].answers && c.childList[0].answers.length){
+                    c.elementId = _.map(_.filter(_.flatten(_.map(c.childList,function(v){return v.answers})),function(v){return v.elementNumValue > 0}),function(v){return v.basisElementId})
                   }else{
                     c.elementId = []
                   }
                   _.each(c.childList, function(d){
                     if(d.hasChild > 0 && d.isRadio > 0){
-                      if(d.childList[0].taskExecuteRecord && d.childList[0].taskExecuteRecord.length){
-                        var selected = _.filter(_.flatten(_.map(d.childList,function(v){ return v.taskExecuteRecord })),function(v){ return v.elementNumValue > 0 })
+                      if(d.childList[0].answers && d.childList[0].answers.length){
+                        var selected = _.filter(_.flatten(_.map(d.childList,function(v){ return v.answers })),function(v){ return v.elementNumValue > 0 })
                         if(selected.length){
                           d.basisElementId = _.map(selected,function(v){ return v.basisElementId })[0]
                         }
@@ -842,8 +835,8 @@ export default {
                   })
                 }
                 if(c.hasChild > 0 && c.isRadio > 0){
-                  if(c.childList[0].taskExecuteRecord && c.childList[0].taskExecuteRecord.length){
-                    var selected = _.filter(_.flatten(_.map(c.childList,function(v){ return v.taskExecuteRecord })),function(v){ return v.elementNumValue > 0 })
+                  if(c.childList[0].answers && c.childList[0].answers.length){
+                    var selected = _.filter(_.flatten(_.map(c.childList,function(v){ return v.answers })),function(v){ return v.elementNumValue > 0 })
                     if(selected.length){
                       c.basisElementId = _.map(selected,function(v){ return v.basisElementId })[0]
                     }
@@ -853,13 +846,13 @@ export default {
             }
           })
         }else if(a.hasChild > 0 && a.isRadio < 0){
-          if(a.childList[0].taskExecuteRecord && a.childList[0].taskExecuteRecord.length){
-            a.elementId = _.map(_.filter(_.flatten(_.map(a.childList,function(v){return v.taskExecuteRecord})),function(v){return v.elementNumValue > 0}),function(v){return v.basisElementId})
+          if(a.childList[0].answers && a.childList[0].answers.length){
+            a.elementId = _.map(_.filter(_.flatten(_.map(a.childList,function(v){return v.answers})),function(v){return v.elementNumValue > 0}),function(v){return v.basisElementId})
           }else{
             a.elementId = []
           }
         }else if(a.hasChild > 0 && a.isRadio > 0){
-          var re = _.filter(a.childList, function(v){return v.taskExecuteRecord && v.taskExecuteRecord.length && v.taskExecuteRecord[0].elementNumValue > 0})
+          var re = _.filter(a.childList, function(v){return v.answers && v.answers.length && v.answers[0].elementNumValue > 0})
           if(re.length) a.basisElementId = re[0].basisElementId
         }
       })
