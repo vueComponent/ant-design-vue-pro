@@ -353,16 +353,6 @@ export default {
   data() {
     return {
       baselineInfoStyle:{
-<<<<<<< HEAD
-         overflow:"auto",
-         height:(window.screen.height-330)+'px',
-         "padding-right":"0px",
-         "border-right":"1px solid #ddd"
-       },
-      baselineFormStyle:{
-        height:(window.screen.height-350)+'px',
-      }, 
-=======
         overflow:"auto",
         height:(window.screen.height-330)+'px',
         "padding-right":"0px",
@@ -370,8 +360,7 @@ export default {
       },
       baselineFormStyle:{
         height:(window.screen.height-350)+'px',
-      },
->>>>>>> 6603678fb85e463c3e785b25cc9d6a224a89e3ef
+      }, 
       optionDataSource:[],
       checkedList:[],
       title: '支扩研究访视表',
