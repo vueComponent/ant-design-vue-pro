@@ -175,7 +175,7 @@
                             <div v-if="thirdSub.isRadio === 0">
                               <a-row v-for="(fourth, index) in thirdSub.childList" :class="{'no-border': index === thirdSub.childList.length - 1}">
                                 <a-col :span="6">{{fourth.questionName}}</a-col>
-                                <ocr-load v-if="fourth.event=='upload'" :basisMaskId="basisMaskId" :reportCollectBaseId="reportCollectBaseId" @OCRload="OCRload"></ocr-load>
+                                <!-- <ocr-load v-if="fourth.event=='upload'" :basisMaskId="basisMaskId" :reportCollectBaseId="reportCollectBaseId" @OCRload="OCRload"></ocr-load> -->
                                 <a-radio-group v-if="fourth.simple === 2" v-model="fourth.basisElementId" :name="fourth.basisElementCopyId+''">
                                   <a-radio :value="1">有</a-radio>
                                   <a-radio :value="-1">无</a-radio>
