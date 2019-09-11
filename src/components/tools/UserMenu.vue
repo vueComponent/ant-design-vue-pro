@@ -4,7 +4,7 @@
       <a-dropdown>
         <span class="action ant-dropdown-link user-dropdown-menu">
           <a-avatar class="avatar" size="small"  icon="user" />
-          <span>上海肺科医院</span>
+          <span>{{userName}}</span>
         </span>
         <a-menu slot="overlay" class="user-dropdown-menu-wrapper">
           <a-menu-item key="0" @click="$refs.userCenterModal.showModal()">
@@ -38,10 +38,18 @@ import changePassword from './changePassword'
 import { loginOut } from '@/api/login';
 export default {
   name: 'UserMenu',
+  data(){
+    return{
+      userName:""
+    }
+  },
   components: {
     NoticeIcon,
     userCenter,
     changePassword
+  },
+  created(){
+    this.userName=window.localStorage.getItem("userName")
   },
   methods: {
     ...mapActions(['Logout']),

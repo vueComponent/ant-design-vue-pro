@@ -96,6 +96,7 @@ export default {
               console.log(res);
                 if(res.code==0){
 					window.localStorage.setItem("doctorId",res.data.doctorId);
+					window.localStorage.setItem("userName",res.data.name);
                    that.loginSuccess(res)
                 }else{
                   that.$notification['error']({

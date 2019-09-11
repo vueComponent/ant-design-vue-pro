@@ -62,7 +62,7 @@
               <div class="card-wait-data">
                 <span class="myIcon"><my-icon type="iconziyuan1" /></span>
                 <div>
-                  <p>代办访视</p>
+                  <p>待办访视</p>
                   <h1>{{ myWork.nodoVisitsNum }}</h1>
                 </div>
               </div>
@@ -91,7 +91,7 @@
               <div class="card-wait-data">
                 <span class="myIcon"><my-icon type="iconziyuan" /></span>
                 <div>
-                                  <p>其他代办</p>
+                                  <p>其他待办</p>
                   <h1>{{ myWork.otherNum }}</h1>
                 </div>
 
