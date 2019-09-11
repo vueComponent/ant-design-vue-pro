@@ -350,6 +350,15 @@ export default {
   },
   data() {
     return {
+      baselineInfoStyle:{
+        overflow:"auto",
+        height:(window.screen.height-330)+'px',
+        "padding-right":"0px",
+        "border-right":"1px solid #ddd"
+      },
+      baselineFormStyle:{
+        height:(window.screen.height-350)+'px',
+      },
       optionDataSource:[],
       checkedList:[],
       title: '报告采集',
