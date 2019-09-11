@@ -86,10 +86,12 @@
                 <span>随访摘要：</span>
                  {{item.taskName}}
               </p>
+                <router-link :to="{path:'/list/task/' + item.visitTaskId}"> 
               <a-button type="primary" size="small" style="float:right;">
                 <my-icon type="iconxiangqing_huaban" />
                 执行
               </a-button>
+               </router-link>
             </div>
           </div>
           <div v-else class="userCard">
@@ -182,7 +184,7 @@ export default {
       return visitMap[value];
     },
     patientBasisType(type){
-      const patientBasisTypeMap=['','基线','半年随访','年随访']
+      const patientBasisTypeMap=['','基线','半年随访','年访视']
       return patientBasisTypeMap[type];
     }
   },
