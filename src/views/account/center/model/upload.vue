@@ -32,13 +32,13 @@ export default {
     reportCollectBaseId:{
       type:[String,Number],
       default:''
-    }
+    },
   },
   data() {
     return {
       spinning:false,
       url: process.env.VUE_APP_API_BASE_URL,
-       previewVisible: false,
+      previewVisible: false,
       previewImage: '',
       fileList:[]
     };
@@ -66,6 +66,7 @@ export default {
         const Params = new URLSearchParams();
         if (info.file.response.data.src) {
           that.fileList.push(info.file)
+          that.$emit("imgUrl",info.file.response.data.src)
           Params.append('url', info.file.response.data.src);
           Params.append('basisMarkId', that.basisMaskId);
           Params.append('reportCollectBaseId', that.reportCollectBaseId);

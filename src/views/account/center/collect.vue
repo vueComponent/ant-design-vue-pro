@@ -169,7 +169,7 @@
                               <a-row v-for="(fourth, index) in thirdSub.childList" :class="{'no-border': index === thirdSub.childList.length - 1}">
                                 <!-- total lung capacity -->
                                 <a-col :span="6">{{fourth.questionName}}</a-col>
-                                <ocr-load v-if="fourth.event=='upload'" :basisMaskId="basisMaskId" :reportCollectBaseId="reportCollectBaseId" @OCRload="OCRload"></ocr-load>
+                                <ocr-load v-if="fourth.event=='upload'" :fileList="fileList" :basisMaskId="basisMaskId" :reportCollectBaseId="reportCollectBaseId" ref="ocrloadModel" @OCRload="OCRload" @imgUrl="saveImgUrl"></ocr-load>
                                 <a-radio-group v-if="fourth.simple === 2" v-model="fourth.basisElementId" :name="fourth.basisElementCopyId+''">
                                   <a-radio :value="1">有</a-radio>
                                   <a-radio :value="-1">无</a-radio>
@@ -355,7 +355,6 @@ export default {
   data() {
     return {
       baselineInfoStyle:{
-<<<<<<< HEAD
          overflow:"auto",
          height:(window.screen.height-330)+'px',
          "padding-right":"0px",
@@ -364,16 +363,6 @@ export default {
       baselineFormStyle:{
         height:(window.screen.height-350)+'px',
       }, 
-=======
-        overflow:"auto",
-        height:(window.screen.height-330)+'px',
-        "padding-right":"0px",
-        "border-right":"1px solid #ddd"
-      },
-      baselineFormStyle:{
-        height:(window.screen.height-350)+'px',
-      },
->>>>>>> 6603678fb85e463c3e785b25cc9d6a224a89e3ef
       optionDataSource:[],
       checkedList:[],
       title: '报告采集',
@@ -421,7 +410,9 @@ export default {
       },
       bodyStyle: {
         'padding-left': '0px'
-      }
+      },
+      imgUrl:"",
+      fileList:[]
     }
   },
   beforeCreate (){
@@ -481,6 +472,9 @@ export default {
          this.list = this.initList(data.basisElementList)
       })
     },
+     saveImgUrl(data){
+      this.imgUrl=data;
+    },
     getMedicineAllergyList(value,index){
        const that = this
        const params = new URLSearchParams()
@@ -524,17 +518,6 @@ export default {
     handleCancel () {
       this.visible = false
     },
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
     getElementsAnswer (){
       var that = this;
       var params = new URLSearchParams();
@@ -542,6 +525,13 @@ export default {
       params.append('reportCollectBaseId', this.reportCollectBaseId)
       getCollectElements(params)
       .then(res => {
+        that.imgUrl=res.url;
+        that.fileList=[{
+          uid: '-1',
+          name: 'xxx.png',
+          status: 'done',
+          url: res.url,
+        }]
         that.list = that.initList(res.basisElementList)
       })
     },
@@ -724,6 +714,7 @@ export default {
       params.append('reportResult', JSON.stringify(result))
       params.append('reportCollectBaseId', this.reportCollectBaseId)
       params.append('basisMarkId', this.basisMaskId)
+      params.append('url', this.imgUrl)
       saveReport(params)
       .then(res => {
         console.log(res)
