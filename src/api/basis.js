@@ -142,3 +142,11 @@ export function importVtData(params) {
     data: params
   })
 }
+
+export function saveVisitTask(params) {
+  return axios({
+    url: '/visitTask/save',
+    method: 'post',
+    data: params
+  })
+}

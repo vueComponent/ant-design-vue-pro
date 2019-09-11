@@ -41,10 +41,10 @@
                     <a-radio-group v-if="qu1.type === 1" :name="qu1.questionTitleId+''" v-model="qu1.inputType">
                       <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
                     </a-radio-group>
-                    <a-checkbox-group v-if="qu1.type === 2" :name="qu1.questionTitleId+''">
-                      <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-checkbox>
+                    <a-checkbox-group v-if="qu1.type === 2" v-model="qu1.inputType">
+                      <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" :name="qu1.questionTitleId+''">{{item.name}}</a-checkbox>
                     </a-checkbox-group>
-                    <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" />
+                    <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue && moment(qu1.answers[0].questionOptionValue, 'YYYY-MM-DD')" />
                   </a-form-item>
                 </div>
                 <!-- 调查问卷结束 -->
@@ -92,7 +92,7 @@
                                 </a-radio-group>
                             </a-col>
                             <a-col :span="8" v-if="third.simple > 0 && third.logicValue > 0 && third.hasChild > 0 && third.childList[0].isWrite > 0 && third.basisElementId === 1">
-                              <a-input :name="third.childList[0].basisElementCopyId+''" :addonAfter="third.childList[0].unit" style="width:240px"></a-input>
+                              <a-input :name="third.childList[0].basisElementCopyId+''" :addonAfter="third.childList[0].unit" style="width:240px" :defaultValue="third.childList[0].answers && third.childList[0].answers.length && third.childList[0].answers[0].elementTextValue"></a-input>
                             </a-col>
                             <a-row v-for="(fourth, index) in third.childList" v-if="third.hasChild > 0 && third.isRadio === 0">
                               <a-col :span="6">{{fourth.questionName}}</a-col>
@@ -109,7 +109,7 @@
                               <a-col :span="12" v-if="fourth.logicValue <= 0 || (fourth.logicValue > 0 && fourth.basisElementId === 1) && fourth.hasChild > 0 && fourth.childList[0].isWrite > 0">
                                 <a-col :span="6">{{fourth.childList[0].questionName}}</a-col>
                                 <a-col :span="12">
-                                  <a-input :addonAfter="fourth.childList[0].unit" :name="fourth.childList[0].basisElementCopyId+''" style="width:240px"></a-input>
+                                  <a-input :addonAfter="fourth.childList[0].unit" :name="fourth.childList[0].basisElementCopyId+''" style="width:240px" :defaultValue="fourth.childList[0].answers && fourth.childList[0].answers.length && fourth.childList[0].answers[0].elementTextValue"></a-input>
                                 </a-col>
                               </a-col>
                             </a-row>
@@ -188,8 +188,8 @@
                           <div v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue <= 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementCopyId === sub.basisElementId" v-for="(thirdSub, index) in sub.childList">
                             <div v-if="thirdSub.isRadio === 0">
                               <a-row v-for="(fourth, index) in thirdSub.childList" :class="{'no-border': index === thirdSub.childList.length - 1}">
-                                <a-col :span="6">{{fourth.questionName}}fdfd</a-col>
-                                <a-icon type="cloud-upload" style="cursor: pointer;" v-if="fourth.event === 'upload'" />
+                                <!-- total lung capacity -->
+                                <a-col :span="6">{{fourth.questionName}}</a-col>
                                 <a-radio-group v-if="fourth.simple === 2" v-model="fourth.basisElementId" :name="fourth.basisElementCopyId+''">
                                   <a-radio :value="1">有</a-radio>
                                   <a-radio :value="-1">无</a-radio>
@@ -197,7 +197,7 @@
                                 <a-input v-if="fourth.isWrite > 0" :addonAfter="fourth.unit" :name="fourth.basisElementCopyId+''" :defaultValue="fourth.answers && fourth.answers.length && fourth.answers[0].elementTextValue" style="width: 240px"></a-input>
                                 <div v-if="fourth.hasChild > 0 && fourth.isRadio === 0">
                                   <a-row class="no-border" v-for="fifth in fourth.childList" v-if="fourth.logicValue <= 0 || fourth.basisElementId === 1">
-                                    <a-col :span="6">{{fifth.questionName}}</a-col>
+                                    <a-col :span="6">{{fifth.questionName}}fd</a-col>
                                     <a-col :span="4" v-if="fifth.simple === 2">
                                       <a-radio-group v-model="fifth.basisElementId" :name="fifth.basisElementCopyId+''">
                                         <a-radio :value="1">有</a-radio>
@@ -209,7 +209,7 @@
                                       <a-input v-if="fifth.childList[0].isWrite > 0" :span="8" style="width: 240px" :name="fifth.childList[0].basisElementCopyId+''" :defaultValue="fifth.childList[0].answers && fifth.childList[0].answers.length && fifth.childList[0].answers[0].elementTextValue" :addonAfter="fifth.childList[0].unit"></a-input>
                                     </div>
                                     <a-col :span="4" v-if="fifth.isWrite > 0">
-                                      <a-input :name="fifth.basisElementCopyId+''" :addonAfter="fifth.unit" :defaultValue="fifth.answers && fifth.answers[0].length && fifth.answers[0].elementTextValue" style="width:240px"></a-input>
+                                      <a-input :name="fifth.basisElementCopyId+''" :addonAfter="fifth.unit" :defaultValue="fifth.answers && fifth.answers.length && fifth.answers[0].elementTextValue" style="width:240px"></a-input>
                                     </a-col>
                                   </a-row>
                                 </div>
@@ -225,7 +225,7 @@
                           </div>
                           <a-col v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].isWrite > 0">
                             <a-col :span="6">{{sub.childList[0].questionName}}</a-col>
-                            <a-col :span="8"><a-input :name="sub.childList[0].basisElementCopyId+''" style="width:240px" /></a-col>
+                            <a-col :span="8"><a-input :name="sub.childList[0].basisElementCopyId+''" style="width:240px" :defaultValue="sub.childList[0].answers && sub.childList[0].answers.length && sub.childList[0].answers[0].elementTextValue" /></a-col>
                           </a-col>
                           <a-row class="no-border" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue > 0 && secondSub.hasChild > 0" v-for="(secondSub, index) in sub.childList" :key="index">
                             <a-col :span="3" v-if="sub.basisElementId === secondSub.basisElementId">{{secondSub.childList[0].questionName}}</a-col>
@@ -399,7 +399,7 @@
                                     <div v-if="fifth.isRadio > 0" v-for="(sixth, index) in fifth.childList">
                                       <div v-if="sixth.hasChild > 0 && sixth.logicValue > 0 && fifth.basisElementId === sixth.basisElementCopyId">
                                         <a-col :span="7" v-if="sixth.childList[0].isWrite > 0">
-                                          <a-input style="width: 240px" :addonAfter="sixth.childList[0].unit" :name="sixth.childList[0].basisElementCopyId+''"></a-input>
+                                          <a-input style="width: 240px" :addonAfter="sixth.childList[0].unit" :name="sixth.childList[0].basisElementCopyId+''" :defaultValue="sixth.childList[0].answers && sixth.childList[0].answers.length && sixth.childList[0].answers[0].elementTextValue"></a-input>
                                         </a-col>
                                       </div>
                                     </div>
@@ -836,6 +836,27 @@ export default {
                               elementNumValue: ''
                             })
                           }
+                          if(fifth.simple > 0){
+                            result.push({
+                              basisAnswerId: (fifth.answers && fifth.answers.length) ? fifth.answers[0].basisAnswerId : '',
+                              basisElementId: fifth.basisElementCopyId,
+                              elementNumValue: typeof $('input[name="' + fifth.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + fifth.basisElementCopyId + '"]:checked').val() : '',
+                              elementTextValue: ''
+                            })
+                          }
+                          if(fifth.hasChild > 0 && fifth.isRadio === 0){
+                            _.each(fifth.childList, function(sixth){
+                              if(sixth.isWrite > 0){
+                                var text = $('[name="' + sixth.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + sixth.basisElementCopyId + '"] input').val() : $('[name="' + sixth.basisElementCopyId + '"]').val()
+                                result.push({
+                                  basisAnswerId: (sixth.answers && sixth.answers.length) ? sixth.answers[0].basisAnswerId : '',
+                                  basisElementId: sixth.basisElementCopyId,
+                                  elementTextValue: text || '',
+                                  elementNumValue: ''
+                                })
+                              }
+                            })
+                          }
                         })
                       }else if(fourth.hasChild > 0 && fourth.isRadio !== 0){
                         _.each(fourth.childList, function(fifth){
@@ -903,7 +924,7 @@ export default {
                 value: $('[name="' + sub.questionTitleId + '"] input').val()
               })
             }
-            if(sub.type === 1 && sub.options && sub.options.length){
+            if((sub.type === 1 || sub.type === 2) && sub.options && sub.options.length){
               subOp = {
                 titleId: sub.questionTitleId,
                 options: []
@@ -936,9 +957,10 @@ export default {
         saveQuestion(params)
           .then(res => {
             console.log(res)
-            that.$message.success(res.msg)
-            var href = location.href.replace(/\?markId=[\d]+/,'')
-            location.href = href + '?markId=' + this.basisMaskId
+            that.$message.success(res.msg, function(){
+              var href = location.href.replace(/\?markId=[\d]+/,'')
+              location.href = href + '?markId=' + this.basisMaskId
+            })
           })
           .catch(error => {
             console.log(error)
@@ -969,9 +991,10 @@ export default {
         submit(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg)
-          var href = location.href.replace(/\?markId=[\d]+/,'')
-          location.href = href + '?markId=' + that.basisMaskId
+          that.$message.success(res.msg, function(){
+            var href = location.href.replace(/\?markId=[\d]+/,'')
+            location.href = href + '?markId=' + that.basisMaskId
+          })
         })
         .catch(error => {
           console.log(error)
@@ -1008,6 +1031,25 @@ export default {
             if(b.hasChild > 0 && b.isRadio > 0){
               var re = _.filter(b.childList, function(v){return v.answers && v.answers.length && v.answers[0].elementNumValue > 0})
               if(re.length) b.basisElementId = re[0].basisElementId
+              _.each(b.childList, function(c){
+                if(c.logicValue > 0 && c.hasChild > 0 && c.isRadio === 0){
+                  _.each(c.childList, function(d){
+                    if(d.simple > 0 && d.answers && d.answers.length){
+                      d.basisElementId = d.answers[0].elementNumValue
+                    }
+                    if(d.hasChild > 0 && d.isRadio === 0){
+                      _.each(d.childList, function(e){
+                        if(e.simple > 0 && e.answers && e.answers.length){
+                          e.basisElementId = e.answers[0].elementNumValue
+                        }
+                      })
+                    }
+                  })
+                }
+                if(c.logicValue > 0 && c.hasChild > 0 && c.isRadio > 0){
+
+                }
+              })
             }
             //多选
             if(b.hasChild > 0 && b.isRadio < 0){
@@ -1101,6 +1143,13 @@ export default {
             if(b.type === 1 && b.answers && b.answers.length){
               b.inputType = b.answers[0].questionOptionId
             }
+            if(b.type === 2){
+              if(b.answers && b.answers.length){
+                b.inputType = _.map(b.answers,function(v){return v.questionOptionId})
+              }else{
+                b.inputType = []
+              }
+            }
           })
         }
       })
@@ -1148,14 +1197,16 @@ export default {
     confirmImport() {
       var that = this
       var params = new URLSearchParams()
-      params.append('patientId', this.patient.patientId)
+      params.append('patientBasisId', this.patientBasisId)
       params.append('basisMarkId', this.basisMaskId)
+      params.append('visitBaseId', this.selectedRows[0].visitTaskId)
       importVtData(params)
         .then(res => {
           if(res.code === 0){
-            that.$message.success('导入成功')
-            var href = location.href.replace(/\?markId=[\d]+/,'')
-            location.href = href + '?markId=' + that.basisMaskId
+            that.$message.success('导入成功', function(){
+              var href = location.href.replace(/\?markId=[\d]+/,'')
+              location.href = href + '?markId=' + that.basisMaskId
+            })
           }else{
             that.$message.error(res.msg)
           }
