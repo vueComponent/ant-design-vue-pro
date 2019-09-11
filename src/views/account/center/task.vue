@@ -22,9 +22,9 @@
        </a-col>
        <a-col :span="19">
          <div style="overflow: hidden;">
-           <a-button class="btn fr" @click="">导入</a-button>
+           <!-- <a-button class="btn fr" @click="">导入</a-button> -->
            <a-button class="btn fr" @click="save">保存</a-button>
-           <a-button class="btn fr" type="primary" @click="submit">提交</a-button>
+           <!-- <a-button class="btn fr" type="primary" @click="submit">提交</a-button> -->
          </div>
          <div class="baselineForm" :style="baselineFormStyle">
               <a-form :form="form">
