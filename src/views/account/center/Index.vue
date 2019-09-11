@@ -199,8 +199,8 @@
                                   <a-row class="no-border" v-for="fifth in fourth.childList" v-if="fourth.logicValue <= 0 || fourth.basisElementId === 1">
                                     <a-col :span="6">{{fifth.questionName}}fd</a-col>
                                     <a-col :span="4" v-if="fifth.simple === 2">
-                                      <a-radio-group v-model="fifth.basisElementId" :name="fifth.basisElementCopyId+''">
-                                        <a-radio :value="1">有</a-radio>
+                                      <a-radio-group v-model="fifth.basisElementId" ref="" :name="fifth.basisElementCopyId+''">
+                                        <a-radio :value="1">有{{fifth.basisElementCopyId}}</a-radio>
                                         <a-radio :value="-1">无</a-radio>
                                       </a-radio-group>
                                     </a-col>
@@ -463,7 +463,8 @@ import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
 import AddTable from "./model/table"
-import { MyIcon } from '@/components/_util/util'
+import ocrLoad from "./model/upload"
+import { MyIcon } from '@/components/_util/util';
 
 const columns = [
   {
@@ -480,13 +481,13 @@ const columns = [
     customRender: planDate => moment(planDate).format('YYYY-MM-DD')
   }
 ]
-
 export default {
   name: 'success',
   components: {
     STree,
     AddTable,
-    MyIcon
+    MyIcon,
+    ocrLoad
   },
   data() {
     return {
@@ -641,6 +642,25 @@ export default {
          this.$set(this.optionDataSource,e.target.value,[])
       }
        
+    },
+    setUpload(){
+      
+      this[1445]=1
+      this[4904]="3.19"
+//       this.4903=1
+//       this.4903=1
+//       this.4903=1
+//       this.4903=1
+//       this.4903=1
+// 4904: 
+// 4905: 1
+// 4906: "96.6"
+// 4907: 1
+// 4908: "4.05"
+// 4909: 1
+// 4910: "98.4"
+// 4911: 1
+// 4912: "103.1"
     },
     getMedicineAllergyList(value,index){
        const that = this

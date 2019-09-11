@@ -16,7 +16,7 @@
     </a-card>
     <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 10px;padding-left: 0">
      <a-row :gutter="8">
-       <a-col :span="5" style="overflow: auto;height: 350px;">
+       <a-col :span="5" :style="baselineInfoStyle">
         <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
         </s-tree>
        </a-col>
@@ -74,6 +74,7 @@
                             </a-col>
                             <a-row v-for="(fourth, index) in third.childList" v-if="third.hasChild > 0 && third.isRadio === 0">
                               <a-col :span="6">{{fourth.questionName}}</a-col>
+                              
                               <a-col :span="6">
                                 <a-radio-group v-if="fourth.simple === 1" :name="fourth.basisElementCopyId+''" v-model="fourth.basisElementId">
                                   <a-radio :value="1">是</a-radio>
@@ -168,6 +169,7 @@
                               <a-row v-for="(fourth, index) in thirdSub.childList" :class="{'no-border': index === thirdSub.childList.length - 1}">
                                 <!-- total lung capacity -->
                                 <a-col :span="6">{{fourth.questionName}}</a-col>
+                                <ocr-load v-if="fourth.event=='upload'" :basisMaskId="basisMaskId" :reportCollectBaseId="reportCollectBaseId" @OCRload="OCRload"></ocr-load>
                                 <a-radio-group v-if="fourth.simple === 2" v-model="fourth.basisElementId" :name="fourth.basisElementCopyId+''">
                                   <a-radio :value="1">有</a-radio>
                                   <a-radio :value="-1">无</a-radio>
@@ -340,17 +342,29 @@ import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
 import AddTable from "./model/table"
+import ocrLoad from "./model/upload"
 import { MyIcon } from '@/components/_util/util';
 export default {
   name: 'success',
   components: {
     STree,
     AddTable,
-    MyIcon
+    MyIcon,
+    ocrLoad
   },
   data() {
     return {
       baselineInfoStyle:{
+<<<<<<< HEAD
+         overflow:"auto",
+         height:(window.screen.height-330)+'px',
+         "padding-right":"0px",
+         "border-right":"1px solid #ddd"
+       },
+      baselineFormStyle:{
+        height:(window.screen.height-350)+'px',
+      }, 
+=======
         overflow:"auto",
         height:(window.screen.height-330)+'px',
         "padding-right":"0px",
@@ -359,6 +373,7 @@ export default {
       baselineFormStyle:{
         height:(window.screen.height-350)+'px',
       },
+>>>>>>> 6603678fb85e463c3e785b25cc9d6a224a89e3ef
       optionDataSource:[],
       checkedList:[],
       title: '报告采集',
@@ -412,7 +427,11 @@ export default {
   beforeCreate (){
     this.form = this.$form.createForm(this, {onFieldsChange: this.onFieldsChange, onValuesChange: this.onValuesChange})
   },
+  activated() {
+    this.list = []
+  },
   created() {
+     this.list=[]
     var that = this
     this.CloseSidebar()
     // this.compute = _.debounce(this.compute, 300) //节流阀
@@ -455,6 +474,12 @@ export default {
          this.$set(this.optionDataSource,e.target.value,[])
       }
        
+    },
+    OCRload(data){
+      console.log(data);
+      this.$nextTick(function(){
+         this.list = this.initList(data.basisElementList)
+      })
     },
     getMedicineAllergyList(value,index){
        const that = this
