@@ -118,10 +118,12 @@
                       <a-progress  :percent="item.progress" status="active" />
                     </p>
                   </div>
-                  <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
+                   <router-link :to="{path:'/list/basis/' + item.patientBasisId}"> 
+                  <a-button type="primary" size="small"     style="float:right;margin-top:5px ;">
                     <my-icon type="iconxiangqing_huaban" />
                     详情
                   </a-button>
+                  </router-link>
                 </div>
               </a-timeline-item>
             </a-timeline>
@@ -180,7 +182,7 @@ export default {
       return visitMap[value];
     },
     patientBasisType(type){
-      const patientBasisTypeMap=['基线','半年随访','年随访']
+      const patientBasisTypeMap=['','基线','半年随访','年随访']
       return patientBasisTypeMap[type];
     }
   },

@@ -46,6 +46,13 @@ export function getChooseReportCollect(parameter) {
   })
 }
 
-
+//ocr识别
+export function ocrResult(parameter) {
+  return axios({
+    url: '/reportCollectBase/ocrResult',
+    method: 'post',
+    params: parameter
+  })
+}
 
 

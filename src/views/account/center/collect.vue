@@ -16,7 +16,7 @@
     </a-card>
     <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 10px;padding-left: 0">
      <a-row :gutter="8">
-       <a-col :span="5" style="overflow: auto;height: 350px;">
+       <a-col :span="5" :style="baselineInfoStyle">
         <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
         </s-tree>
        </a-col>
@@ -24,7 +24,7 @@
          <div style="overflow: hidden;">
            <a-button class="btn fr" @click="save">保存</a-button>
          </div>
-         <div class="baselineForm">
+         <div class="baselineForm" :style="baselineFormStyle">
               <a-form :form="form">
                 <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
                     <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
@@ -73,6 +73,7 @@
                             </a-col>
                             <a-row v-for="(fourth, index) in third.childList" v-if="third.hasChild > 0 && third.isRadio === 0">
                               <a-col :span="6">{{fourth.questionName}}</a-col>
+                              
                               <a-col :span="6">
                                 <a-radio-group v-if="fourth.simple === 1" :name="fourth.basisElementCopyId+''" v-model="fourth.basisElementId">
                                   <a-radio :value="1">是</a-radio>
@@ -174,6 +175,7 @@
                             <div v-if="thirdSub.isRadio === 0">
                               <a-row v-for="(fourth, index) in thirdSub.childList" :class="{'no-border': index === thirdSub.childList.length - 1}">
                                 <a-col :span="6">{{fourth.questionName}}</a-col>
+                                <ocr-load v-if="fourth.event=='upload'" :basisMaskId="basisMaskId" :reportCollectBaseId="reportCollectBaseId" @OCRload="OCRload"></ocr-load>
                                 <a-radio-group v-if="fourth.simple === 2" v-model="fourth.basisElementId" :name="fourth.basisElementCopyId+''">
                                   <a-radio :value="1">有</a-radio>
                                   <a-radio :value="-1">无</a-radio>
@@ -346,16 +348,27 @@ import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
 import AddTable from "./model/table"
+import ocrLoad from "./model/upload"
 import { MyIcon } from '@/components/_util/util';
 export default {
   name: 'success',
   components: {
     STree,
     AddTable,
-    MyIcon
+    MyIcon,
+    ocrLoad
   },
   data() {
     return {
+      baselineInfoStyle:{
+         overflow:"auto",
+         height:(window.screen.height-330)+'px',
+         "padding-right":"0px",
+         "border-right":"1px solid #ddd"
+       },
+      baselineFormStyle:{
+        height:(window.screen.height-350)+'px',
+      }, 
       optionDataSource:[],
       checkedList:[],
       title: '报告采集',
@@ -452,6 +465,10 @@ export default {
          this.$set(this.optionDataSource,e.target.value,[])
       }
        
+    },
+    OCRload(data){
+      this.list=[];
+       this.list = this.initList(data.basisElementList)
     },
     getMedicineAllergyList(value,index){
        const that = this

@@ -188,8 +188,7 @@
                           <div v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue <= 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementCopyId === sub.basisElementId" v-for="(thirdSub, index) in sub.childList">
                             <div v-if="thirdSub.isRadio === 0">
                               <a-row v-for="(fourth, index) in thirdSub.childList" :class="{'no-border': index === thirdSub.childList.length - 1}">
-                                <a-col :span="6">{{fourth.questionName}}fdfd</a-col>
-                                <a-icon type="cloud-upload" style="cursor: pointer;" v-if="fourth.event === 'upload'" />
+                                <a-col :span="6">{{fourth.questionName}}</a-col>
                                 <a-radio-group v-if="fourth.simple === 2" v-model="fourth.basisElementId" :name="fourth.basisElementCopyId+''">
                                   <a-radio :value="1">有</a-radio>
                                   <a-radio :value="-1">无</a-radio>
@@ -199,8 +198,8 @@
                                   <a-row class="no-border" v-for="fifth in fourth.childList" v-if="fourth.logicValue <= 0 || fourth.basisElementId === 1">
                                     <a-col :span="6">{{fifth.questionName}}</a-col>
                                     <a-col :span="4" v-if="fifth.simple === 2">
-                                      <a-radio-group v-model="fifth.basisElementId" :name="fifth.basisElementCopyId+''">
-                                        <a-radio :value="1">有</a-radio>
+                                      <a-radio-group v-model="fifth.basisElementId" ref="" :name="fifth.basisElementCopyId+''">
+                                        <a-radio :value="1">有{{fifth.basisElementCopyId}}</a-radio>
                                         <a-radio :value="-1">无</a-radio>
                                       </a-radio-group>
                                     </a-col>
@@ -444,13 +443,15 @@ import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
 import AddTable from "./model/table"
+import ocrLoad from "./model/upload"
 import { MyIcon } from '@/components/_util/util';
 export default {
   name: 'success',
   components: {
     STree,
     AddTable,
-    MyIcon
+    MyIcon,
+    ocrLoad
   },
   data() {
     return {
@@ -571,6 +572,25 @@ export default {
          this.$set(this.optionDataSource,e.target.value,[])
       }
        
+    },
+    setUpload(){
+      
+      this[1445]=1
+      this[4904]="3.19"
+//       this.4903=1
+//       this.4903=1
+//       this.4903=1
+//       this.4903=1
+//       this.4903=1
+// 4904: 
+// 4905: 1
+// 4906: "96.6"
+// 4907: 1
+// 4908: "4.05"
+// 4909: 1
+// 4910: "98.4"
+// 4911: 1
+// 4912: "103.1"
     },
     getMedicineAllergyList(value,index){
        const that = this
