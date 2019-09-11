@@ -22,7 +22,7 @@
        </a-col>
        <a-col :span="19">
          <div style="overflow: hidden;">
-           <!-- <a-button class="btn fr" @click="">导入</a-button> -->
+           <a-button class="btn fr" v-if="patientBasis.type === 3" @click="_import">导入</a-button>
            <a-button class="btn fr" @click="save" v-if="!questionFinished">保存</a-button>
            <!-- <a-button class="btn fr" type="primary" @click="submit">提交</a-button> -->
          </div>
@@ -41,10 +41,10 @@
                     <a-radio-group v-if="qu1.type === 1" :name="qu1.questionTitleId+''" v-model="qu1.inputType">
                       <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
                     </a-radio-group>
-                    <a-checkbox-group v-if="qu1.type === 2" :name="qu1.questionTitleId+''">
-                      <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-checkbox>
+                    <a-checkbox-group v-if="qu1.type === 2" v-model="qu1.inputType">
+                      <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" :name="qu1.questionTitleId+''">{{item.name}}</a-checkbox>
                     </a-checkbox-group>
-                    <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" />
+                    <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue && moment(qu1.answers[0].questionOptionValue, 'YYYY-MM-DD')" />
                   </a-form-item>
                 </div>
                 <!-- 调查问卷结束 -->
@@ -92,7 +92,7 @@
                                 </a-radio-group>
                             </a-col>
                             <a-col :span="8" v-if="third.simple > 0 && third.logicValue > 0 && third.hasChild > 0 && third.childList[0].isWrite > 0 && third.basisElementId === 1">
-                              <a-input :name="third.childList[0].basisElementCopyId+''" :addonAfter="third.childList[0].unit" style="width:240px"></a-input>
+                              <a-input :name="third.childList[0].basisElementCopyId+''" :addonAfter="third.childList[0].unit" style="width:240px" :defaultValue="third.childList[0].answers && third.childList[0].answers.length && third.childList[0].answers[0].elementTextValue"></a-input>
                             </a-col>
                             <a-row v-for="(fourth, index) in third.childList" v-if="third.hasChild > 0 && third.isRadio === 0">
                               <a-col :span="6">{{fourth.questionName}}</a-col>
@@ -109,7 +109,7 @@
                               <a-col :span="12" v-if="fourth.logicValue <= 0 || (fourth.logicValue > 0 && fourth.basisElementId === 1) && fourth.hasChild > 0 && fourth.childList[0].isWrite > 0">
                                 <a-col :span="6">{{fourth.childList[0].questionName}}</a-col>
                                 <a-col :span="12">
-                                  <a-input :addonAfter="fourth.childList[0].unit" :name="fourth.childList[0].basisElementCopyId+''" style="width:240px"></a-input>
+                                  <a-input :addonAfter="fourth.childList[0].unit" :name="fourth.childList[0].basisElementCopyId+''" style="width:240px" :defaultValue="fourth.childList[0].answers && fourth.childList[0].answers.length && fourth.childList[0].answers[0].elementTextValue"></a-input>
                                 </a-col>
                               </a-col>
                             </a-row>
@@ -188,6 +188,7 @@
                           <div v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue <= 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementCopyId === sub.basisElementId" v-for="(thirdSub, index) in sub.childList">
                             <div v-if="thirdSub.isRadio === 0">
                               <a-row v-for="(fourth, index) in thirdSub.childList" :class="{'no-border': index === thirdSub.childList.length - 1}">
+                                <!-- total lung capacity -->
                                 <a-col :span="6">{{fourth.questionName}}</a-col>
                                 <a-radio-group v-if="fourth.simple === 2" v-model="fourth.basisElementId" :name="fourth.basisElementCopyId+''">
                                   <a-radio :value="1">有</a-radio>
@@ -196,7 +197,7 @@
                                 <a-input v-if="fourth.isWrite > 0" :addonAfter="fourth.unit" :name="fourth.basisElementCopyId+''" :defaultValue="fourth.answers && fourth.answers.length && fourth.answers[0].elementTextValue" style="width: 240px"></a-input>
                                 <div v-if="fourth.hasChild > 0 && fourth.isRadio === 0">
                                   <a-row class="no-border" v-for="fifth in fourth.childList" v-if="fourth.logicValue <= 0 || fourth.basisElementId === 1">
-                                    <a-col :span="6">{{fifth.questionName}}</a-col>
+                                    <a-col :span="6">{{fifth.questionName}}fd</a-col>
                                     <a-col :span="4" v-if="fifth.simple === 2">
                                       <a-radio-group v-model="fifth.basisElementId" ref="" :name="fifth.basisElementCopyId+''">
                                         <a-radio :value="1">有{{fifth.basisElementCopyId}}</a-radio>
@@ -208,7 +209,7 @@
                                       <a-input v-if="fifth.childList[0].isWrite > 0" :span="8" style="width: 240px" :name="fifth.childList[0].basisElementCopyId+''" :defaultValue="fifth.childList[0].answers && fifth.childList[0].answers.length && fifth.childList[0].answers[0].elementTextValue" :addonAfter="fifth.childList[0].unit"></a-input>
                                     </div>
                                     <a-col :span="4" v-if="fifth.isWrite > 0">
-                                      <a-input :name="fifth.basisElementCopyId+''" :addonAfter="fifth.unit" :defaultValue="fifth.answers && fifth.answers[0].length && fifth.answers[0].elementTextValue" style="width:240px"></a-input>
+                                      <a-input :name="fifth.basisElementCopyId+''" :addonAfter="fifth.unit" :defaultValue="fifth.answers && fifth.answers.length && fifth.answers[0].elementTextValue" style="width:240px"></a-input>
                                     </a-col>
                                   </a-row>
                                 </div>
@@ -224,7 +225,7 @@
                           </div>
                           <a-col v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].isWrite > 0">
                             <a-col :span="6">{{sub.childList[0].questionName}}</a-col>
-                            <a-col :span="8"><a-input :name="sub.childList[0].basisElementCopyId+''" style="width:240px" /></a-col>
+                            <a-col :span="8"><a-input :name="sub.childList[0].basisElementCopyId+''" style="width:240px" :defaultValue="sub.childList[0].answers && sub.childList[0].answers.length && sub.childList[0].answers[0].elementTextValue" /></a-col>
                           </a-col>
                           <a-row class="no-border" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue > 0 && secondSub.hasChild > 0" v-for="(secondSub, index) in sub.childList" :key="index">
                             <a-col :span="3" v-if="sub.basisElementId === secondSub.basisElementId">{{secondSub.childList[0].questionName}}</a-col>
@@ -398,7 +399,7 @@
                                     <div v-if="fifth.isRadio > 0" v-for="(sixth, index) in fifth.childList">
                                       <div v-if="sixth.hasChild > 0 && sixth.logicValue > 0 && fifth.basisElementId === sixth.basisElementCopyId">
                                         <a-col :span="7" v-if="sixth.childList[0].isWrite > 0">
-                                          <a-input style="width: 240px" :addonAfter="sixth.childList[0].unit" :name="sixth.childList[0].basisElementCopyId+''"></a-input>
+                                          <a-input style="width: 240px" :addonAfter="sixth.childList[0].unit" :name="sixth.childList[0].basisElementCopyId+''" :defaultValue="sixth.childList[0].answers && sixth.childList[0].answers.length && sixth.childList[0].answers[0].elementTextValue"></a-input>
                                         </a-col>
                                       </div>
                                     </div>
@@ -432,19 +433,54 @@
        </a-col>
      </a-row>
      </a-card>
+    <a-modal 
+      title="导入访视任务"
+      :width="600"
+      :destroyOnClose="destroyOnClose"
+      :bodyStyle="bodyStyle"
+      :centered="centered"
+      :visible="visible"
+      :confirmLoading="confirmLoading"
+      @ok="confirmImport"
+      @cancel="handleCancel"
+    >
+      <a-spin :spinning="confirmLoading">
+        <a-table :columns="columns" :rowSelection="rowSelection" :dataSource="importData" :pagination="pagination" :loading="loading">
+          <template slot="name" slot-scope="name">
+            {{ name.first }} {{ name.last }}
+          </template>
+        </a-table>
+      </a-spin>
+    </a-modal>
   </div>
 </template>
 
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList, saveQuestion } from '@/api/basis'
+import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList, saveQuestion, getVtList, importVtData } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
 import AddTable from "./model/table"
 import ocrLoad from "./model/upload"
 import { MyIcon } from '@/components/_util/util';
+
+const columns = [
+  {
+    title: '档案号',
+    dataIndex: 'fileCode'
+  },
+  {
+    title: '患者姓名',
+    dataIndex: 'patientName'
+  },
+  {
+    title: '计划日期',
+    dataIndex: 'planDate',
+    customRender: planDate => moment(planDate).format('YYYY-MM-DD')
+  }
+]
 export default {
   name: 'success',
   components: {
@@ -455,15 +491,21 @@ export default {
   },
   data() {
     return {
-        baselineInfoStyle:{
-          overflow:"auto",
-          height:(window.screen.height-330)+'px',
-          "padding-right":"0px",
-          "border-right":"1px solid #ddd"
-        },
-       baselineFormStyle:{
-         height:(window.screen.height-350)+'px',
-       },  
+      columns,
+      bodyStyle: {
+        height: '500px',
+        overflow: 'auto'
+      },
+      destroyOnClose: true,
+      baselineInfoStyle:{
+        overflow:"auto",
+        height:(window.screen.height-330)+'px',
+        "padding-right":"0px",
+        "border-right":"1px solid #ddd"
+      },
+      baselineFormStyle:{
+        height:(window.screen.height-350)+'px',
+      },
       optionDataSource:[],
       checkedList:[],
       title: '',
@@ -515,7 +557,20 @@ export default {
         'padding-bottom':'0px'
       },
       answersList: [],
-      questionFinished: false
+      questionFinished: false,
+      importData: [],
+      pagination: {
+        defaultPageSize: 5,
+        pageSize: 5,
+        hideOnSinglePage: true,
+        total: 0
+      },
+      loading: false,
+      columns,
+      visible: false,
+      confirmLoading: false,
+      centered: true,
+      selectedRows: {}
     }
   },
   beforeCreate (){
@@ -533,11 +588,11 @@ export default {
       that.patientBasis = res.data.patientBasis
       that.orgTree = res.data.list
       if(that.patientBasis.type === 1){
-        that.title = '支扩研究基线表'
+        that.title = '基线'
       }else if(that.patientBasis.type === 2){
-        that.title = '支扩研究随访表'
+        that.title = '半年随访'
       }else if(that.patientBasis.type === 3){
-        that.title = '访视任务'
+        that.title = '年访视'
       }
       if(typeof this.$route.query.markId === 'undefined'){
         that.basisMaskId = that.orgTree[0].basisMarkId
@@ -558,6 +613,21 @@ export default {
         var first = this.list[index]
         if(first.required > 0) return 'error'
       }
+    },
+    rowSelection() {
+      const { selectedRowKeys } = this;
+      return {
+        type: 'radio',
+        onChange: (selectedRowKeys, selectedRows) => {
+          this.selectedRows = selectedRows;
+        },
+        getCheckboxProps: record => ({
+          props: {
+            disabled: record.name === 'Disabled User', // Column configuration not to be checked
+            name: record.name
+          }
+        })
+      };
     }
   },
   methods: {
@@ -786,6 +856,27 @@ export default {
                               elementNumValue: ''
                             })
                           }
+                          if(fifth.simple > 0){
+                            result.push({
+                              basisAnswerId: (fifth.answers && fifth.answers.length) ? fifth.answers[0].basisAnswerId : '',
+                              basisElementId: fifth.basisElementCopyId,
+                              elementNumValue: typeof $('input[name="' + fifth.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + fifth.basisElementCopyId + '"]:checked').val() : '',
+                              elementTextValue: ''
+                            })
+                          }
+                          if(fifth.hasChild > 0 && fifth.isRadio === 0){
+                            _.each(fifth.childList, function(sixth){
+                              if(sixth.isWrite > 0){
+                                var text = $('[name="' + sixth.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + sixth.basisElementCopyId + '"] input').val() : $('[name="' + sixth.basisElementCopyId + '"]').val()
+                                result.push({
+                                  basisAnswerId: (sixth.answers && sixth.answers.length) ? sixth.answers[0].basisAnswerId : '',
+                                  basisElementId: sixth.basisElementCopyId,
+                                  elementTextValue: text || '',
+                                  elementNumValue: ''
+                                })
+                              }
+                            })
+                          }
                         })
                       }else if(fourth.hasChild > 0 && fourth.isRadio !== 0){
                         _.each(fourth.childList, function(fifth){
@@ -853,7 +944,7 @@ export default {
                 value: $('[name="' + sub.questionTitleId + '"] input').val()
               })
             }
-            if(sub.type === 1 && sub.options && sub.options.length){
+            if((sub.type === 1 || sub.type === 2) && sub.options && sub.options.length){
               subOp = {
                 titleId: sub.questionTitleId,
                 options: []
@@ -886,9 +977,10 @@ export default {
         saveQuestion(params)
           .then(res => {
             console.log(res)
-            that.$message.success(res.msg)
-            var href = location.href.replace(/\?markId=[\d]+/,'')
-            location.href = href + '?markId=' + this.basisMaskId
+            that.$message.success(res.msg, function(){
+              var href = location.href.replace(/\?markId=[\d]+/,'')
+              location.href = href + '?markId=' + this.basisMaskId
+            })
           })
           .catch(error => {
             console.log(error)
@@ -919,9 +1011,10 @@ export default {
         submit(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg)
-          var href = location.href.replace(/\?markId=[\d]+/,'')
-          location.href = href + '?markId=' + that.basisMaskId
+          that.$message.success(res.msg, function(){
+            var href = location.href.replace(/\?markId=[\d]+/,'')
+            location.href = href + '?markId=' + that.basisMaskId
+          })
         })
         .catch(error => {
           console.log(error)
@@ -958,6 +1051,25 @@ export default {
             if(b.hasChild > 0 && b.isRadio > 0){
               var re = _.filter(b.childList, function(v){return v.answers && v.answers.length && v.answers[0].elementNumValue > 0})
               if(re.length) b.basisElementId = re[0].basisElementId
+              _.each(b.childList, function(c){
+                if(c.logicValue > 0 && c.hasChild > 0 && c.isRadio === 0){
+                  _.each(c.childList, function(d){
+                    if(d.simple > 0 && d.answers && d.answers.length){
+                      d.basisElementId = d.answers[0].elementNumValue
+                    }
+                    if(d.hasChild > 0 && d.isRadio === 0){
+                      _.each(d.childList, function(e){
+                        if(e.simple > 0 && e.answers && e.answers.length){
+                          e.basisElementId = e.answers[0].elementNumValue
+                        }
+                      })
+                    }
+                  })
+                }
+                if(c.logicValue > 0 && c.hasChild > 0 && c.isRadio > 0){
+
+                }
+              })
             }
             //多选
             if(b.hasChild > 0 && b.isRadio < 0){
@@ -1051,6 +1163,13 @@ export default {
             if(b.type === 1 && b.answers && b.answers.length){
               b.inputType = b.answers[0].questionOptionId
             }
+            if(b.type === 2){
+              if(b.answers && b.answers.length){
+                b.inputType = _.map(b.answers,function(v){return v.questionOptionId})
+              }else{
+                b.inputType = []
+              }
+            }
           })
         }
       })
@@ -1069,6 +1188,47 @@ export default {
           console.log('计算成功,结果为:' + res.data[id])
           if(typeof res.data[id] !== 'undefined') {
             that.computeMap[id] = res.data[id]
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    _import() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientId', this.patient.patientId)
+      params.append('basisMarkId', this.basisMaskId)
+      that.confirmLoading = true
+      getVtList(params)
+        .then(res => {
+          that.importData = res.data
+          that.pagination.total = res.total
+          that.confirmLoading = false
+          that.visible = true
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    handleCancel() {
+      this.visible = false
+    },
+    confirmImport() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.basisMaskId)
+      params.append('visitBaseId', this.selectedRows[0].visitTaskId)
+      importVtData(params)
+        .then(res => {
+          if(res.code === 0){
+            that.$message.success('导入成功', function(){
+              var href = location.href.replace(/\?markId=[\d]+/,'')
+              location.href = href + '?markId=' + that.basisMaskId
+            })
+          }else{
+            that.$message.error(res.msg)
           }
         })
         .catch(error => {

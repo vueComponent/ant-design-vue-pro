@@ -128,16 +128,15 @@ export default {
       keyword:'',
       // 表头
       columns: [
-         {
-          title: '预警',
-          dataIndex: 'warnStatus',
-          scopedSlots: { customRender: 'warnStatus' },
-          width:"70px"
-        },
         {
           title: '任务编号',
-          dataIndex: 'fileCode',
+          dataIndex: 'taskCode',
             width:"120px"
+        },
+        {
+          title: '任务名称',
+          dataIndex: 'taskName',
+            width:"100px"
         },
         {
           title: '患者姓名',

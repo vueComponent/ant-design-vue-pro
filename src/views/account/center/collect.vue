@@ -26,6 +26,7 @@
          </div>
          <div class="baselineForm" :style="baselineFormStyle">
               <a-form :form="form">
+                <!-- 基线或访视 -->
                 <a-form-item v-for="(qu1, index) in list" :key="index" :label="[qu1.sort + '.' + qu1.questionName]" :labelCol="qu1.type === 0 ? labelColVer : labelColHor" :wrapperCol="qu1.type === 0 ? wrapperVer : wrapperHor">
                     <a-radio-group v-if="qu1.simple === 1" :name="qu1.basisElementCopyId+''" v-model="qu1.basisElementId">
                       <a-radio :value="1">是</a-radio>
@@ -69,7 +70,7 @@
                                 </a-radio-group>
                             </a-col>
                             <a-col :span="8" v-if="third.simple > 0 && third.logicValue > 0 && third.hasChild > 0 && third.childList[0].isWrite > 0 && third.basisElementId === 1">
-                              <a-input :name="third.childList[0].basisElementCopyId+''" :addonAfter="third.childList[0].unit" style="width:240px"></a-input>
+                              <a-input :name="third.childList[0].basisElementCopyId+''" :addonAfter="third.childList[0].unit" style="width:240px" :defaultValue="third.childList[0].reportResultList && third.childList[0].reportResultList.length && third.childList[0].reportResultList[0].elementTextValue"></a-input>
                             </a-col>
                             <a-row v-for="(fourth, index) in third.childList" v-if="third.hasChild > 0 && third.isRadio === 0">
                               <a-col :span="6">{{fourth.questionName}}</a-col>
@@ -87,7 +88,7 @@
                               <a-col :span="12" v-if="fourth.logicValue <= 0 || (fourth.logicValue > 0 && fourth.basisElementId === 1) && fourth.hasChild > 0 && fourth.childList[0].isWrite > 0">
                                 <a-col :span="6">{{fourth.childList[0].questionName}}</a-col>
                                 <a-col :span="12">
-                                  <a-input :addonAfter="fourth.childList[0].unit" :name="fourth.childList[0].basisElementCopyId+''" style="width:240px"></a-input>
+                                  <a-input :addonAfter="fourth.childList[0].unit" :name="fourth.childList[0].basisElementCopyId+''" style="width:240px" :defaultValue="fourth.childList[0].reportResultList && fourth.childList[0].reportResultList.length && fourth.childList[0].reportResultList[0].elementTextValue"></a-input>
                                 </a-col>
                               </a-col>
                             </a-row>
@@ -163,19 +164,12 @@
                           <a-radio-group v-if="sub.hasChild > 0 && sub.isRadio > 0 && (!sub.childList[0].event || sub.childList[0].event !== 'compute')" v-model="sub.basisElementId" :name="sub.basisElementCopyId+''">
                             <a-radio v-for="(subOp,index) in sub.childList" :value="subOp.basisElementCopyId" :key="index">{{subOp.questionName}}</a-radio>
                           </a-radio-group>
-                          <!-- <a-row v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue === 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementCopyId === sub.basisElementId" v-for="(thirdSub, index) in sub.childList" :class="{'no-border': index === sub.childList.length - 1}">
-                            <a-col :span="6">{{thirdSub.childList[0].questionName}}todo</a-col>
-                            <a-col :span="8">
-                              <a-date-picker v-if="thirdSub.childList[0].event === 'showDate' && thirdSub.childList[0].reportResultList && thirdSub.childList[0].reportResultList.length && thirdSub.childList[0].reportResultList[0].elementTextValue" :defaultValue="moment(thirdSub.childList[0].reportResultList[0].elementTextValue)" :name="thirdSub.childList[0].basisElementCopyId+''" style="width:240px" />
-                              <a-date-picker v-if="thirdSub.childList[0].event === 'showDate' && (!thirdSub.childList[0].reportResultList || !thirdSub.childList[0].reportResultList.length || !thirdSub.childList[0].reportResultList[0].elementTextValue)" :name="thirdSub.childList[0].basisElementCopyId+''" style="width:240px" />
-                              <a-input v-if="!thirdSub.childList[0].event" :addonAfter="thirdSub.childList[0].unit" :defaultValue="thirdSub.childList[0].reportResultList && thirdSub.childList[0].reportResultList.length && thirdSub.childList[0].reportResultList[0].elementTextValue" style="width:240px" />
-                            </a-col>
-                          </a-row> -->
                           <div v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue <= 0 && thirdSub.logicValue > 0 && thirdSub.hasChild > 0 && thirdSub.basisElementCopyId === sub.basisElementId" v-for="(thirdSub, index) in sub.childList">
                             <div v-if="thirdSub.isRadio === 0">
                               <a-row v-for="(fourth, index) in thirdSub.childList" :class="{'no-border': index === thirdSub.childList.length - 1}">
+                                <!-- total lung capacity -->
                                 <a-col :span="6">{{fourth.questionName}}</a-col>
-                                <!-- <ocr-load v-if="fourth.event=='upload'" :basisMaskId="basisMaskId" :reportCollectBaseId="reportCollectBaseId" @OCRload="OCRload"></ocr-load> -->
+                                <ocr-load v-if="fourth.event=='upload'" :basisMaskId="basisMaskId" :reportCollectBaseId="reportCollectBaseId" @OCRload="OCRload"></ocr-load>
                                 <a-radio-group v-if="fourth.simple === 2" v-model="fourth.basisElementId" :name="fourth.basisElementCopyId+''">
                                   <a-radio :value="1">有</a-radio>
                                   <a-radio :value="-1">无</a-radio>
@@ -195,7 +189,7 @@
                                       <a-input v-if="fifth.childList[0].isWrite > 0" :span="8" style="width: 240px" :name="fifth.childList[0].basisElementCopyId+''" :defaultValue="fifth.childList[0].reportResultList && fifth.childList[0].reportResultList.length && fifth.childList[0].reportResultList[0].elementTextValue" :addonAfter="fifth.childList[0].unit"></a-input>
                                     </div>
                                     <a-col :span="4" v-if="fifth.isWrite > 0">
-                                      <a-input :name="fifth.basisElementCopyId+''" :addonAfter="fifth.unit" :defaultValue="fifth.reportResultList && fifth.reportResultList[0].length && fifth.reportResultList[0].elementTextValue" style="width:240px"></a-input>
+                                      <a-input :name="fifth.basisElementCopyId+''" :addonAfter="fifth.unit" :defaultValue="fifth.reportResultList && fifth.reportResultList.length && fifth.reportResultList[0].elementTextValue" style="width:240px"></a-input>
                                     </a-col>
                                   </a-row>
                                 </div>
@@ -211,7 +205,7 @@
                           </div>
                           <a-col v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.childList[0].isWrite > 0">
                             <a-col :span="6">{{sub.childList[0].questionName}}</a-col>
-                            <a-col :span="8"><a-input :name="sub.childList[0].basisElementCopyId+''" style="width:240px" /></a-col>
+                            <a-col :span="8"><a-input :name="sub.childList[0].basisElementCopyId+''" style="width:240px" :defaultValue="sub.childList[0].reportResultList && sub.childList[0].reportResultList.length && sub.childList[0].reportResultList[0].elementTextValue" /></a-col>
                           </a-col>
                           <a-row class="no-border" v-if="sub.hasChild > 0 && sub.isRadio > 0 && sub.logicValue > 0 && secondSub.hasChild > 0" v-for="(secondSub, index) in sub.childList" :key="index">
                             <a-col :span="3" v-if="sub.basisElementId === secondSub.basisElementId">{{secondSub.childList[0].questionName}}</a-col>
@@ -422,7 +416,11 @@ export default {
   beforeCreate (){
     this.form = this.$form.createForm(this, {onFieldsChange: this.onFieldsChange, onValuesChange: this.onValuesChange})
   },
+  activated() {
+    this.list = []
+  },
   created() {
+     this.list=[]
     var that = this
     this.CloseSidebar()
     // this.compute = _.debounce(this.compute, 300) //节流阀
@@ -467,8 +465,10 @@ export default {
        
     },
     OCRload(data){
-      this.list=[];
-       this.list = this.initList(data.basisElementList)
+      console.log(data);
+      this.$nextTick(function(){
+         this.list = this.initList(data.basisElementList)
+      })
     },
     getMedicineAllergyList(value,index){
        const that = this
@@ -642,6 +642,27 @@ export default {
                               elementNumValue: ''
                             })
                           }
+                          if(fifth.simple > 0){
+                            result.push({
+                              basisAnswerId: (fifth.reportResultList && fifth.reportResultList.length) ? fifth.reportResultList[0].basisAnswerId : '',
+                              basisElementId: fifth.basisElementCopyId,
+                              elementNumValue: typeof $('input[name="' + fifth.basisElementCopyId + '"]:checked').val() !== 'undefined' ? $('input[name="' + fifth.basisElementCopyId + '"]:checked').val() : '',
+                              elementTextValue: ''
+                            })
+                          }
+                          if(fifth.hasChild > 0 && fifth.isRadio === 0){
+                            _.each(fifth.childList, function(sixth){
+                              if(sixth.isWrite > 0){
+                                var text = $('[name="' + sixth.basisElementCopyId + '"]').hasClass('ant-calendar-picker') ? $('[name="' + sixth.basisElementCopyId + '"] input').val() : $('[name="' + sixth.basisElementCopyId + '"]').val()
+                                result.push({
+                                  basisAnswerId: (sixth.reportResultList && sixth.reportResultList.length) ? sixth.reportResultList[0].basisAnswerId : '',
+                                  basisElementId: sixth.basisElementCopyId,
+                                  elementTextValue: text || '',
+                                  elementNumValue: ''
+                                })
+                              }
+                            })
+                          }
                         })
                       }else if(fourth.hasChild > 0 && fourth.isRadio !== 0){
                         _.each(fourth.childList, function(fifth){
@@ -695,9 +716,10 @@ export default {
       saveReport(params)
       .then(res => {
         console.log(res)
-        that.$message.success(res.msg)
-        var href = location.href.replace(/\?markId=[\d]+/,'')
-        location.href = href + '?markId=' + that.basisMaskId
+        that.$message.success(res.msg, function(){
+          var href = location.href.replace(/\?markId=[\d]+/,'')
+          location.href = href + '?markId=' + that.basisMaskId
+        })
       })
       .catch(error => {
         console.log(error)
@@ -733,6 +755,25 @@ export default {
             if(b.hasChild > 0 && b.isRadio > 0){
               var re = _.filter(b.childList, function(v){return v.reportResultList && v.reportResultList.length && v.reportResultList[0].elementNumValue > 0})
               if(re.length) b.basisElementId = re[0].basisElementId
+              _.each(b.childList, function(c){
+                if(c.logicValue > 0 && c.hasChild > 0 && c.isRadio === 0){
+                  _.each(c.childList, function(d){
+                    if(d.simple > 0 && d.reportResultList && d.reportResultList.length){
+                      d.basisElementId = d.reportResultList[0].elementNumValue
+                    }
+                    if(d.hasChild > 0 && d.isRadio === 0){
+                      _.each(d.childList, function(e){
+                        if(e.simple > 0 && e.reportResultList && e.reportResultList.length){
+                          e.basisElementId = e.reportResultList[0].elementNumValue
+                        }
+                      })
+                    }
+                  })
+                }
+                if(c.logicValue > 0 && c.hasChild > 0 && c.isRadio > 0){
+
+                }
+              })
             }
             //多选
             if(b.hasChild > 0 && b.isRadio < 0){

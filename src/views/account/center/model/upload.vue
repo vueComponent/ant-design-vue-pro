@@ -1,12 +1,13 @@
 <template>
    <div class="clearfix">
+     <a-spin :spinning="spinning">
     <a-upload
       name="file"
       :action="url"
       listType="picture-card"
       @preview="handlePreview"
       @change="handleChange"
-      @remove="handleRemove"
+      :remove="handleRemove"
     >
      <div v-if="fileList.length<1">
         <a-icon type="plus" />
@@ -16,6 +17,7 @@
     <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
       <img alt="example" style="width: 100%" :src="previewImage" />
     </a-modal>
+    </a-spin>
   </div>
 </template>
 <script>
@@ -34,6 +36,7 @@ export default {
   },
   data() {
     return {
+      spinning:false,
       url: process.env.VUE_APP_API_BASE_URL,
        previewVisible: false,
       previewImage: '',
@@ -55,6 +58,7 @@ export default {
     },
     handleChange(info) {
       const that=this;
+      this.spinning=true;
       const status = info.file.status;
       if (status !== 'uploading') {
       }
@@ -67,6 +71,7 @@ export default {
           Params.append('reportCollectBaseId', that.reportCollectBaseId);
           ocrResult(Params).then(res => {
             that.$emit('OCRload', res)
+            that.spinning=false;
             that.$message.success(`识别成功`);
           });
         }

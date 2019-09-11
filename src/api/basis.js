@@ -126,3 +126,27 @@ export function saveReport(params) {
     data: params
   })
 }
+
+export function getVtList(params) {
+  return axios({
+    url: '/visitTask/getVtList',
+    method: 'post',
+    data: params
+  })
+}
+
+export function importVtData(params) {
+  return axios({
+    url: '/visitTask/importVtData',
+    method: 'post',
+    data: params
+  })
+}
+
+export function saveVisitTask(params) {
+  return axios({
+    url: '/visitTask/save',
+    method: 'post',
+    data: params
+  })
+}
