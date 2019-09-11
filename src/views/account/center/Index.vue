@@ -22,7 +22,7 @@
        </a-col>
        <a-col :span="19">
          <div style="overflow: hidden;">
-           <!-- <a-button class="btn fr" @click="">导入</a-button> -->
+           <a-button class="btn fr" v-if="patientBasis.type === 3" @click="_import">导入</a-button>
            <a-button class="btn fr" @click="save" v-if="!questionFinished">保存</a-button>
            <!-- <a-button class="btn fr" type="primary" @click="submit">提交</a-button> -->
          </div>
@@ -433,18 +433,54 @@
        </a-col>
      </a-row>
      </a-card>
+    <a-modal 
+      title="导入访视任务"
+      :width="600"
+      :destroyOnClose="destroyOnClose"
+      :bodyStyle="bodyStyle"
+      :centered="centered"
+      :visible="visible"
+      :confirmLoading="confirmLoading"
+      @ok="confirmImport"
+      @cancel="handleCancel"
+    >
+      <a-spin :spinning="confirmLoading">
+        <a-table :columns="columns" :rowSelection="rowSelection" :dataSource="importData" :pagination="pagination" :loading="loading">
+          <template slot="name" slot-scope="name">
+            {{ name.first }} {{ name.last }}
+          </template>
+        </a-table>
+      </a-spin>
+    </a-modal>
   </div>
 </template>
 
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList, saveQuestion } from '@/api/basis'
+import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList, saveQuestion, getVtList, importVtData } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
 import AddTable from "./model/table"
-import { MyIcon } from '@/components/_util/util';
+import { MyIcon } from '@/components/_util/util'
+
+const columns = [
+  {
+    title: '档案号',
+    dataIndex: 'fileCode'
+  },
+  {
+    title: '患者姓名',
+    dataIndex: 'patientName'
+  },
+  {
+    title: '计划日期',
+    dataIndex: 'planDate',
+    customRender: planDate => moment(planDate).format('YYYY-MM-DD')
+  }
+]
+
 export default {
   name: 'success',
   components: {
@@ -454,15 +490,21 @@ export default {
   },
   data() {
     return {
-        baselineInfoStyle:{
-          overflow:"auto",
-          height:(window.screen.height-330)+'px',
-          "padding-right":"0px",
-          "border-right":"1px solid #ddd"
-        },
-       baselineFormStyle:{
-         height:(window.screen.height-350)+'px',
-       },  
+      columns,
+      bodyStyle: {
+        height: '500px',
+        overflow: 'auto'
+      },
+      destroyOnClose: true,
+      baselineInfoStyle:{
+        overflow:"auto",
+        height:(window.screen.height-330)+'px',
+        "padding-right":"0px",
+        "border-right":"1px solid #ddd"
+      },
+      baselineFormStyle:{
+        height:(window.screen.height-350)+'px',
+      },
       optionDataSource:[],
       checkedList:[],
       title: '',
@@ -514,7 +556,20 @@ export default {
         'padding-bottom':'0px'
       },
       answersList: [],
-      questionFinished: false
+      questionFinished: false,
+      importData: [],
+      pagination: {
+        defaultPageSize: 5,
+        pageSize: 5,
+        hideOnSinglePage: true,
+        total: 0
+      },
+      loading: false,
+      columns,
+      visible: false,
+      confirmLoading: false,
+      centered: true,
+      selectedRows: {}
     }
   },
   beforeCreate (){
@@ -532,11 +587,11 @@ export default {
       that.patientBasis = res.data.patientBasis
       that.orgTree = res.data.list
       if(that.patientBasis.type === 1){
-        that.title = '支扩研究基线表'
+        that.title = '基线'
       }else if(that.patientBasis.type === 2){
-        that.title = '支扩研究随访表'
+        that.title = '半年随访'
       }else if(that.patientBasis.type === 3){
-        that.title = '访视任务'
+        that.title = '年访视'
       }
       if(typeof this.$route.query.markId === 'undefined'){
         that.basisMaskId = that.orgTree[0].basisMarkId
@@ -557,6 +612,21 @@ export default {
         var first = this.list[index]
         if(first.required > 0) return 'error'
       }
+    },
+    rowSelection() {
+      const { selectedRowKeys } = this;
+      return {
+        type: 'radio',
+        onChange: (selectedRowKeys, selectedRows) => {
+          this.selectedRows = selectedRows;
+        },
+        getCheckboxProps: record => ({
+          props: {
+            disabled: record.name === 'Disabled User', // Column configuration not to be checked
+            name: record.name
+          }
+        })
+      };
     }
   },
   methods: {
@@ -1049,6 +1119,45 @@ export default {
           console.log('计算成功,结果为:' + res.data[id])
           if(typeof res.data[id] !== 'undefined') {
             that.computeMap[id] = res.data[id]
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    _import() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientId', this.patient.patientId)
+      params.append('basisMarkId', this.basisMaskId)
+      that.confirmLoading = true
+      getVtList(params)
+        .then(res => {
+          that.importData = res.data
+          that.pagination.total = res.total
+          that.confirmLoading = false
+          that.visible = true
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    handleCancel() {
+      this.visible = false
+    },
+    confirmImport() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientId', this.patient.patientId)
+      params.append('basisMarkId', this.basisMaskId)
+      importVtData(params)
+        .then(res => {
+          if(res.code === 0){
+            that.$message.success('导入成功')
+            var href = location.href.replace(/\?markId=[\d]+/,'')
+            location.href = href + '?markId=' + that.basisMaskId
+          }else{
+            that.$message.error(res.msg)
           }
         })
         .catch(error => {
