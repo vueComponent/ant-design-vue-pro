@@ -99,19 +99,23 @@ import { addVasit } from '@/api/basis'
 const visitMap = {
   0: {
     status: 'default',
-    text: '忽略'
+    text: '死亡'
   },
   1: {
     status: 'processing',
-    text: '未执行'
+    text: '跟踪'
   },
   2: {
     status: 'success',
-    text: '执行中'
+    text: '完成'
   },
   3: {
     status: 'error',
-    text: '已完成'
+    text: '失访'
+  },
+  4:{
+    status:"warning",
+    text:"警告"
   }
 };
 
