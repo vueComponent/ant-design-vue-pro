@@ -345,7 +345,7 @@ import AddTable from "./model/table"
 import ocrLoad from "./model/upload"
 import { MyIcon } from '@/components/_util/util';
 export default {
-  name: 'success',
+  name: 'collectDetail',
   components: {
     STree,
     AddTable,
