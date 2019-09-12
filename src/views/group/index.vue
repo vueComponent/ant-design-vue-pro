@@ -113,7 +113,7 @@ const visitMap = {
 };
 
 export default {
-  name: 'TableList',
+  name: 'Group',
   components: {
     STable,
     Ellipsis,

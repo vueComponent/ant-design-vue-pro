@@ -105,7 +105,7 @@ const executeStatusMap = {
   }
 };
 export default {
-  name: 'TableList',
+  name: 'Task',
   components: {
     STable,
     Ellipsis,

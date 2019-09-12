@@ -88,7 +88,7 @@ const statusMap = {
 }
 
 export default {
-  name: 'TableList',
+  name: 'Gallery',
   components: {
     STable,
     Ellipsis,

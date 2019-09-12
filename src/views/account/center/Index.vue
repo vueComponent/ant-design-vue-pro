@@ -482,7 +482,7 @@ const columns = [
   }
 ]
 export default {
-  name: 'success',
+  name: 'basis',
   components: {
     STree,
     AddTable,
