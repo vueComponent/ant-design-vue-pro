@@ -83,7 +83,7 @@ export default {
           {this.renderTreeIcon(item.progress)}
           { this.renderIcon(item.icon) }
           <span class="treeSubTitle">{ item.basisMarkName }</span>
-          <span class="treeSubPercentage">{item.progress>0?parseInt(item.progress)+"%":item.progress}</span>
+          <span class="treeSubPercentage">{parseInt(item.progress)>0?parseInt(item.progress)+"%":item.progress}</span>
           </div>
         </Item>
       )
