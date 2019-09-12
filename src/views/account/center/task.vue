@@ -177,7 +177,7 @@
                                 <a-input v-if="fourth.isWrite > 0" :addonAfter="fourth.unit" :name="fourth.basisElementCopyId+''" :defaultValue="fourth.taskExecuteRecord && fourth.taskExecuteRecord.length && fourth.taskExecuteRecord[0].elementTextValue" style="width: 240px"></a-input>
                                 <div v-if="fourth.hasChild > 0 && fourth.isRadio === 0">
                                   <a-row class="no-border" v-for="fifth in fourth.childList" v-if="fourth.logicValue <= 0 || fourth.basisElementId === 1">
-                                    <a-col :span="6">{{fifth.questionName}}fd</a-col>
+                                    <a-col :span="6">{{fifth.questionName}}</a-col>
                                     <a-col :span="4" v-if="fifth.simple === 2">
                                       <a-radio-group v-model="fifth.basisElementId" :name="fifth.basisElementCopyId+''">
                                         <a-radio :value="1">有</a-radio>
