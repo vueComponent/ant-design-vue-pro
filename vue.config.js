@@ -11,7 +11,7 @@ function resolve (dir) {
  * @returns {boolean}
  */
 function isProd () {
-  return process.env.NODE_ENV === 'production' || process.env.VUE_APP_PREVIEW === 'true'
+  return process.env.NODE_ENV === 'production'
 }
 
 const assetsCDN = {
@@ -111,7 +111,8 @@ const vueConfig = {
 }
 
 // preview.pro.loacg.com only do not use in your production;
-if (!isProd()) {
+if (process.env.VUE_APP_PREVIEW === 'true') {
+  console.log('VUE_APP_PREVIEW', true)
   // add `ThemeColorReplacer` plugin to webpack plugins
   vueConfig.configureWebpack.plugins.push(createThemeColorReplacerPlugin())
 }
