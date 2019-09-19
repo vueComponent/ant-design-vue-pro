@@ -8,6 +8,7 @@ import { asyncRouterMap, constantRouterMap } from '@/config/router.config'
  * @returns {boolean}
  */
 function hasPermission (permission, route) {
+  // 判断菜单是否设置权限，无权限直接返回真，有权限则判断后再返回
   if (route.meta && route.meta.permission) {
     let flag = false
     for (let i = 0, len = permission.length; i < len; i++) {
@@ -58,6 +59,7 @@ const permission = {
   mutations: {
     SET_ROUTERS: (state, routers) => {
       state.addRouters = routers
+      // 页面菜单=公共菜单+用户权限菜单
       state.routers = constantRouterMap.concat(routers)
     }
   },

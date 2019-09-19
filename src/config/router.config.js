@@ -11,19 +11,121 @@ export const asyncRouterMap = [
     meta: { title: '首页' },
     redirect: '/dashboard/workplace',
     children: [
+
+      // 自控所伺服系统-研发过程数据管理
+      {
+        path: '/processdate',
+        name: 'processdate',
+        redirect: '/processdate/base',
+        component: RouteView,
+        meta: { title: '研发过程数据管理', keepAlive: true, icon: bxAnaalyse, permission: [ 'dashboard' ] },
+        children: [
+          {
+            path: '/processdate/project',
+            name: 'Project',
+            component: () => import('@/views/dashboard/Analysis'),
+            meta: { title: '项目管理', keepAlive: true, permission: [ 'dashboard' ] }
+          },
+          {
+            path: '/processdate/structure',
+            name: 'Structure',
+            component: () => import('@/views/dashboard/Analysis'),
+            meta: { title: '过程数据结构管理', keepAlive: false, permission: [ 'dashboard' ] }
+          },
+          {
+            path: '/processdate/data',
+            name: 'data',
+            component: () => import('@/views/dashboard/Workplace'),
+            meta: { title: '过程数据管理', keepAlive: false, permission: [ 'dashboard' ] }
+          }
+        ]
+      },
+
+      // 自控所伺服系统-研发基础数据管理
+      {
+        path: '/database',
+        name: 'database',
+        redirect: '/database/base',
+        component: RouteView,
+        meta: { title: '数据库分类管理', keepAlive: false, icon: bxAnaalyse, permission: [ 'dashboard' ] },
+        children: [
+          {
+            path: '/database/structure',
+            name: 'Structure',
+            component: () => import('@/views/dashboard/Analysis'),
+            meta: { title: '数据库结构管理', keepAlive: false, permission: [ 'dashboard' ] }
+          },
+          {
+            path: '/database/data',
+            name: 'Data',
+            component: () => import('@/views/dashboard/Analysis'),
+            meta: { title: '数据库数据管理', keepAlive: false, permission: [ 'dashboard' ] }
+          }
+        ]
+      },
+
+      // 自控所伺服系统-用户信息管理
+      // list
+      {
+        path: '/list',
+        name: 'list',
+        component: PageView,
+        redirect: '/list/table-list',
+        meta: { title: '列表页', icon: 'table', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/list/table-list/:pageNo([1-9]\\d*)?',
+            name: 'TableListWrapper',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/list/TableList'),
+            meta: { title: '查询表格', keepAlive: true, permission: [ 'table' ] }
+          }
+        ]
+      },
+
+      {
+        path: '/userinfo',
+        component: PageView,
+        name: 'userinfo',
+        meta: { title: '用户信息管理', icon: bxAnaalyse, permission: [ 'dashboard' ] },
+        children: [
+          {
+            path: '/userinfo/userlist',
+            name: 'User',
+            hideChildrenInMenu: true,
+            component: () => import('@/views/userinfo/UserList'),
+            meta: { title: '用户管理', keepAlive: false, permission: [ 'dashboard' ] }
+          },
+
+          // 外部链接
+          {
+            path: '/usermanager/analysis',
+            name: 'Role',
+            component: () => import('@/views/userinfo/RoleList'),
+            meta: { title: '角色管理' }
+          },
+          {
+            path: '/usermanager/workplace',
+            name: 'privilege',
+            component: () => import('@/views/dashboard/Workplace'),
+            meta: { title: '权限管理', keepAlive: false, permission: [ 'dashboard' ] }
+          }
+        ]
+      },
+
       // dashboard
       {
         path: '/dashboard',
         name: 'dashboard',
         redirect: '/dashboard/workplace',
         component: RouteView,
-        meta: { title: '仪表盘', keepAlive: true, icon: bxAnaalyse, permission: [ 'dashboard' ] },
+        meta: { title: '仪表盘1', keepAlive: false, icon: bxAnaalyse, permission: [ 'dashboard' ] },
         children: [
           {
             path: '/dashboard/analysis',
             name: 'Analysis',
             component: () => import('@/views/dashboard/Analysis'),
-            meta: { title: '分析页', keepAlive: false, permission: [ 'dashboard' ] }
+            meta: { title: '分析页2', keepAlive: false, permission: [ 'dashboard' ] }
           },
           // 外部链接
           {

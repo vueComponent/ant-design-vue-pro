@@ -26,8 +26,8 @@ router.beforeEach((to, from, next) => {
           .dispatch('GetInfo')
           .then(res => {
             const roles = res.result && res.result.role
+            // 根据roles权限生成可访问的路由表
             store.dispatch('GenerateRoutes', { roles }).then(() => {
-              // 根据roles权限生成可访问的路由表
               // 动态添加可访问路由表
               router.addRoutes(store.getters.addRouters)
               const redirect = decodeURIComponent(from.query.redirect || to.path)
