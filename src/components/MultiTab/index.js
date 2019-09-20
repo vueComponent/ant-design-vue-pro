@@ -10,6 +10,9 @@ const api = {
   open: function (config) {
     events.$emit('open', config)
   },
+  rename: function (key, name) {
+    events.$emit('rename', { key: key, name: name })
+  },
   /**
    * close current page
    */

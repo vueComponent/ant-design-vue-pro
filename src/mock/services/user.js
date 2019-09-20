@@ -375,7 +375,7 @@ const userNav = (options) => {
     // dashboard
     {
       'name': 'dashboard',
-      'parentId': -1,
+      'parentId': 0,
       'id': 1,
       'meta': {
         'icon': 'dashboard',
@@ -430,7 +430,7 @@ const userNav = (options) => {
     // form
     {
       'name': 'form',
-      'parentId': -1,
+      'parentId': 0,
       'id': 10,
       'meta': {
         'icon': 'form',
@@ -470,7 +470,7 @@ const userNav = (options) => {
     // list
     {
       'name': 'list',
-      'parentId': -1,
+      'parentId': 0,
       'id': 10010,
       'meta': {
         'icon': 'table',
@@ -556,7 +556,7 @@ const userNav = (options) => {
     // profile
     {
       'name': 'profile',
-      'parentId': -1,
+      'parentId': 0,
       'id': 10018,
       'meta': {
         'title': '详情页',
@@ -590,7 +590,7 @@ const userNav = (options) => {
     // result
     {
       'name': 'result',
-      'parentId': -1,
+      'parentId': 0,
       'id': 10021,
       'meta': {
         'title': '结果页',
@@ -626,7 +626,7 @@ const userNav = (options) => {
     // Exception
     {
       'name': 'exception',
-      'parentId': -1,
+      'parentId': 0,
       'id': 10024,
       'meta': {
         'title': '异常页',
@@ -670,7 +670,7 @@ const userNav = (options) => {
     // account
     {
       'name': 'account',
-      'parentId': -1,
+      'parentId': 0,
       'id': 10028,
       'meta': {
         'title': '个人页',
@@ -760,7 +760,9 @@ const userNav = (options) => {
       'component': 'NotificationSettings'
     }
   ]
-  return builder(nav)
+  const json = builder(nav)
+  console.log('json', json)
+  return json
 }
 
 Mock.mock(/\/api\/user\/info/, 'get', info)

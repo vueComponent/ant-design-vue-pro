@@ -24,6 +24,14 @@ export default {
         return
       }
       this.closeThat(val)
+    }).$on('rename', ({ key, name }) => {
+      console.log('rename', key, name)
+      try {
+        const item = this.pages.find(item => item.path === key)
+        item.meta.customTitle = name
+        this.$forceUpdate()
+      } catch (e) {
+      }
     })
 
     this.pages.push(this.$route)
@@ -129,7 +137,7 @@ export default {
       return (
         <a-tab-pane
           style={{ height: 0 }}
-          tab={this.renderTabPane(page.meta.title, page.fullPath)}
+          tab={this.renderTabPane(page.meta.customTitle || page.meta.title, page.fullPath)}
           key={page.fullPath} closable={pages.length > 1}
         >
         </a-tab-pane>)
