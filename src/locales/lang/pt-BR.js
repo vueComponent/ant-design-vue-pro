@@ -1,4 +1,7 @@
 export default {
+  route: {
+    Analysis: '...'
+  },
   dashboard: {
     workplace: {
       project: '...',

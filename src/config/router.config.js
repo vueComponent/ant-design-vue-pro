@@ -23,7 +23,7 @@ export const asyncRouterMap = [
             path: '/dashboard/analysis',
             name: 'Analysis',
             component: () => import('@/views/dashboard/Analysis'),
-            meta: { title: '分析页', keepAlive: false, permission: [ 'dashboard' ] }
+            meta: { title: 'Analysis', keepAlive: false, permission: [ 'dashboard' ] }
           },
           // 外部链接
           {

@@ -1,5 +1,6 @@
 import Menu from 'ant-design-vue/es/menu'
 import Icon from 'ant-design-vue/es/icon'
+import { generateTitle } from '@/utils/i18n'
 
 const { Item, SubMenu } = Menu
 
@@ -117,7 +118,7 @@ export default {
         <Item {...{ key: menu.path }}>
           <tag {...{ props, attrs }}>
             {this.renderIcon(menu.meta.icon)}
-            <span>{menu.meta.title}</span>
+            <span>{generateTitle.call(this, menu.meta.title)}</span>
           </tag>
         </Item>
       )
@@ -131,7 +132,7 @@ export default {
         <SubMenu {...{ key: menu.path }}>
           <span slot="title">
             {this.renderIcon(menu.meta.icon)}
-            <span>{menu.meta.title}</span>
+            <span>{generateTitle.call(this, menu.meta.title)}</span>
           </span>
           {itemArr}
         </SubMenu>

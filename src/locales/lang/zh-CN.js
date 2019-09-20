@@ -1,4 +1,7 @@
 export default {
+  route: {
+    Analysis: '分析页'
+  },
   dashboard: {
     workplace: {
       project: '项目数',
