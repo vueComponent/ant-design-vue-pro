@@ -407,14 +407,15 @@ const userNav = (options) => {
       }
     },
     {
-      'name': 'analysis',
+      'name': 'Analysis',
       'parentId': 1,
       'id': 2,
       'meta': {
         'title': '分析页',
         'show': true
       },
-      'component': 'Analysis'
+      'component': 'Analysis',
+      'path': '/dashboard/analysis'
     },
     {
       'name': 'tests',
