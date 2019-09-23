@@ -58,17 +58,20 @@
       <span slot="serial" slot-scope="text, record, index">{{ index + 1 }}</span>
       <span slot="visit" slot-scope="text"><a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <span slot="basisList" slot-scope="basisList">
-        <div v-for="pro in basisList" class="progressTag">
-           <router-link :to="{path:'/list/basis/' + pro.patientBasisId}"> 
-          <div class="progressTagContent">
-            <p class="progressTagTitle">{{ pro.typeName }}</p>
-            <a-progress class="progressline" :strokeColor="pro.progress == 100 ? '#4BC5AC' : '#00A0E9'"  :strokeWidth="10" :showInfo="false" :percent="parseInt(pro.progress)" size="small" />
-          </div>
-          <a-icon v-if="pro.progress == 100" type="check-circle" theme="filled" />
-          <span class="ant-progress-span" v-if="pro.progress < 100 && pro.progress > 0">{{pro.progress}}%</span>
-          <a-icon style="color:#00A0E9" v-if="pro.progress == 0" type="clock-circle" theme="filled" />
+        <div class="progressTag" >
+           <router-link :to="{path:'/list/basis/' + basisList[0].patientBasisId}"> 
+            <p class="progressTagTitle">{{ basisList[0].typeName }}</p>
+            <div style="margin-right: 15px;display: inline-block;width: 130px;">
+                <div class="progressTagContent">
+                <a-progress class="progressline" :strokeColor="basisList[0].progress == 100 ? '#4BC5AC' : '#00A0E9'"  :strokeWidth="10" :showInfo="false" :percent="parseInt(basisList[0].progress)" size="small" />
+              </div>
+              <a-icon v-if="basisList[0].progress == 100" type="check-circle" theme="filled" />
+              <span class="ant-progress-span" v-if="basisList[0].progress < 100 && basisList[0].progress > 0">{{basisList[0].progress}}%</span>
+              <a-icon style="color:#00A0E9" v-if="basisList[0].progress == 0" type="clock-circle" theme="filled" />
+            </div>
            </router-link>
-        </div>
+            <Visit v-if="basisList.length>1"></Visit>
+        </div>        
       </span>
       <span slot="description" slot-scope="text">
         <ellipsis :length="8" tooltip>{{ text }}</ellipsis>
@@ -94,6 +97,7 @@ import StepByStepModal from './modules/StepByStepModal';
 import CreateForm from './modules/CreateForm';
 import { getPatientList } from '@/api/patient';
 import UserDetail from './modules/UserDetail';
+import Visit from './modules/Visit';
 import { addVasit } from '@/api/basis'
 
 const visitMap = {
@@ -126,7 +130,8 @@ export default {
     Ellipsis,
     CreateForm,
     StepByStepModal,
-    UserDetail
+    UserDetail,
+    Visit
   },
   data() {
     return {
@@ -305,7 +310,7 @@ export default {
   } 
 .progressTag {
   display: inline-block;
-  width: 120px;
+  width: 250px;
 
   /deep/ .progressTagContent {
     display: inline-block;
@@ -317,6 +322,8 @@ export default {
     text-align: center;
     color: #000;
     margin-bottom: 0;
+    margin-right: 15px;
+    display: inline-block;
   }
   /deep/ .progressTag .anticon {
     color: #4bc5ac;
