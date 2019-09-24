@@ -1626,10 +1626,10 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ant-design-vue@1.3.16:
-  version "1.3.16"
-  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.3.16.tgz#b18f7fa265edc7c798a5a65d15d92d72d3a0beb1"
-  integrity sha1-sY9/omXtx8eYpaZdFdktctOgvrE=
+ant-design-vue@1.4.0-beta.0:
+  version "1.4.0-beta.0"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.4.0-beta.0.tgz#a2c7d9683804101691bcb3c518e0114dc67efe6f"
+  integrity sha512-MZnb5Pwr4mlYoE2pHB5XMeL22pmPlKF7WkQszS18t7VygS9Q/gF8nJl94nebv6EHJRrKg0i/6Axh1gR0vXb6Hg==
   dependencies:
     "@ant-design/icons" "^2.1.1"
     "@ant-design/icons-vue" "^2.0.0"
@@ -10789,11 +10789,6 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.3"
   resolved "https://registry.npmjs.org/vue-hot-reload-api/-/vue-hot-reload-api-2.3.3.tgz#2756f46cb3258054c5f4723de8ae7e87302a1ccf"
   integrity sha512-KmvZVtmM26BQOMK1rwUZsrqxEGeKiYSZGA7SNWE6uExx8UX/cj9hq2MRV/wWC3Cq6AoeDGk57rL9YMFRel/q+g==
-
-vue-i18n@^8.14.0:
-  version "8.14.0"
-  resolved "https://registry.npm.taobao.org/vue-i18n/download/vue-i18n-8.14.0.tgz?cache=0&sync_timestamp=1565612880763&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-i18n%2Fdownload%2Fvue-i18n-8.14.0.tgz#613cbbc21d71dc608cd085f8a94ea3a40badcd33"
-  integrity sha1-YTy7wh1x3GCM0IX4qU6jpAutzTM=
 
 vue-jest@^3.0.4:
   version "3.0.4"

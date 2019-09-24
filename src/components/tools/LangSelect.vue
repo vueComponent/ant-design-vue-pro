@@ -29,18 +29,18 @@
 </template>
 
 <script>
-import { mixin as langMixin } from '@/store/i18n-mixin'
+// import { mixin as langMixin } from '@/store/i18n-mixin'
 
 export default {
   name: 'LangSelect',
-  mixins: [langMixin],
+  // mixins: [langMixin],
   data () {
     return {}
   },
   methods: {
-    SwitchLang (row) {
-      this.setLang(row.key)
-    }
+    // SwitchLang (row) {
+    //   this.setLang(row.key)
+    // }
   }
 }
 </script>
