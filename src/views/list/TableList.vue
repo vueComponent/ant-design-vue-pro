@@ -57,7 +57,7 @@
       </span>
       <span slot="serial" slot-scope="text, record, index">{{ index + 1 }}</span>
       <span slot="visit" slot-scope="text"><a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
-      <span slot="basisList" slot-scope="basisList">
+      <span slot="basisList" slot-scope="basisList" v-if="basisList.length">
         <div class="progressTag" >
            <router-link :to="{path:'/list/basis/' + basisList[0].patientBasisId}"> 
             <p class="progressTagTitle">{{ basisList[0].typeName }}</p>
