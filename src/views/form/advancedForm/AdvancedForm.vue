@@ -198,27 +198,27 @@ export default {
           resolve({ loop: false })
         }, 800)
       }).then(() => {
-        const target = this.data.filter(item => item.key === key)[0]
+        const target = this.data.find(item => item.key === key)
         target.editable = false
         target.isNew = false
         this.memberLoading = false
       })
     },
     toggle (key) {
-      const target = this.data.filter(item => item.key === key)[0]
+      const target = this.data.find(item => item.key === key)
       target.editable = !target.editable
     },
     getRowByKey (key, newData) {
       const data = this.data
-      return (newData || data).filter(item => item.key === key)[0]
+      return (newData || data).find(item => item.key === key)
     },
     cancel (key) {
-      const target = this.data.filter(item => item.key === key)[0]
+      const target = this.data.find(item => item.key === key)
       target.editable = false
     },
     handleChange (value, key, column) {
       const newData = [...this.data]
-      const target = newData.filter(item => key === item.key)[0]
+      const target = newData.find(item => key === item.key)
       if (target) {
         target[column] = value
         this.data = newData
