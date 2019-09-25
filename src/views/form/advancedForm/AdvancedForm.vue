@@ -206,6 +206,7 @@ export default {
     },
     toggle (key) {
       const target = this.data.find(item => item.key === key)
+      target._originalData = { ...target }
       target.editable = !target.editable
     },
     getRowByKey (key, newData) {
@@ -214,7 +215,8 @@ export default {
     },
     cancel (key) {
       const target = this.data.find(item => item.key === key)
-      target.editable = false
+      Object.keys(target).forEach(key => { target[key] = target._originalData[key] })
+      target._originalData = undefined
     },
     handleChange (value, key, column) {
       const newData = [...this.data]
