@@ -7,7 +7,8 @@ const getAntdSerials = (color) => {
     return ThemeColorReplacer.varyColor.lighten(color, i / 10)
   })
   const colorPalettes = generate(color)
-  return lightens.concat(colorPalettes)
+  const rgb = ThemeColorReplacer.varyColor.toNum3(color.replace('#', '')).join(',')
+  return lightens.concat(colorPalettes).concat(rgb)
 }
 
 const themePluginOption = {
