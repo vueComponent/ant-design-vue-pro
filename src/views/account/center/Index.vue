@@ -21,15 +21,7 @@
         </s-tree>
        </a-col>
        <a-col :span="19">
-        <a-form :form="form" @submit="handleSubmit">
-         <div style="overflow: hidden;">
-           <a-button class="btn fr" v-if="patientBasis.type === 3" @click="_import">导入</a-button>
-           <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
-           <a-button class="btn fr" @click="save">保存</a-button>
-         </div>
          <!-- 支扩病史资料 -->
-         <mask-wrap :maskId="basisMaskId"></mask-wrap>
-        </a-form>
        </a-col>
      </a-row>
      </a-card>
@@ -39,7 +31,7 @@
 <script>
 import STree from '@/components/Tree/Tree'
 import { mapActions } from 'vuex'
-import { getPatientBasis, getElementsAnswer, submit,getMedicineAllergyList,computeScore,getAllQuestionList, saveQuestion, getVtList, importVtData } from '@/api/basis'
+import { getPatientBasis, getElementsAnswer, getMedicineAllergyList,computeScore,getAllQuestionList, saveQuestion, getVtList, importVtData } from '@/api/basis'
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
@@ -135,8 +127,7 @@ export default {
       visible: false,
       confirmLoading: false,
       centered: true,
-      selectedRows: {},
-      form: this.$form.createForm(this),
+      selectedRows: {}
       
     }
   },
@@ -166,6 +157,7 @@ export default {
         that.basisMaskId = that.orgTree[0].basisMarkId
         // that.getElementsAnswer()
         that.defaultSelectedKeys = [that.basisMaskId]
+        that.$router.replace('/list/basis/' + that.patientBasisId + '/' + that.basisMaskId)
       }
     })
     if(this.$route.query.markId){
@@ -196,6 +188,9 @@ export default {
           }
         })
       };
+    },
+    aa() {
+      return parseInt(this.patientBasisId)
     }
   },
   methods: {
@@ -551,6 +546,9 @@ export default {
     },
     save (){
       // 问卷调查
+      debugger
+      var re = this.form.getFieldsValue()
+      return false
       const that=this;
       if(!_.isEmpty(this.question)){
         var result = this.generateQuestionAnswers()

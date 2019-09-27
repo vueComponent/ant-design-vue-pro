@@ -1,7 +1,7 @@
 import api from './index'
 import { axios } from '@/utils/request'
 
-export function submit(params) {
+export function saveBasis(params) {
   return axios({
     url: '/basis/saveBasis',
     method: 'post',
@@ -146,6 +146,14 @@ export function importVtData(params) {
 export function saveVisitTask(params) {
   return axios({
     url: '/visitTask/save',
+    method: 'post',
+    data: params
+  })
+}
+
+export function getBasisForm(params) {
+  return axios({
+    url: '/basis/getFormData',
     method: 'post',
     data: params
   })

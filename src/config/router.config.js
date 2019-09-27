@@ -31,6 +31,22 @@ export const asyncRouterMap = [
         component: () => import('@/views/account/center/Index'),
       },
       {
+        path: '/list/basis/:id(\\d+)/1',
+        name: 'mask1',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/account/center/components/mask-1'),
+        meta: {maskId: 1}
+      },
+      {
+        path: '/list/basis/:id(\\d+)/2',
+        name: 'mask2',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/account/center/components/mask-2'),
+        meta: {maskId: 2}
+      },
+      {
         path: '/list/task/:id(\\d*)',
         name: 'taskDetail',
         hidden: true,

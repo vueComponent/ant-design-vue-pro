@@ -29,6 +29,9 @@ export default {
   created () {
     
   },
+  activated() {
+    this.selectedKeys = this.defaultSelectedKeys
+  },
   data () {
     return {
       localOpenKeys: [],
