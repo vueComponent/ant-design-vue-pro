@@ -24,6 +24,12 @@ export const asyncRouterMap = [
         meta: { title: '病例管理', keepAlive: true, icon: bingli}
       },
       {
+        path: '/acute/index',
+        name: 'list2',
+        component: () => import('@/views/acute/TableList'),
+        meta: { title: '急性加重', keepAlive: true, icon: bingli}
+      },
+      {
         path: '/list/basis/:id(\\d*)',
         name: 'basis',
         hidden:true,
@@ -48,6 +54,12 @@ export const asyncRouterMap = [
         name: 'Gallery',
         component: () => import('@/views/gallery/index'),
         meta: { title: '报告采集', keepAlive: true, icon: baogao,isBack:false}
+      },
+      {
+        path: '/caseTransfer/index',
+        name: 'CaseTransfer',
+        component: () => import('@/views/caseTransfer/index'),
+        meta: { title: '病例转移申请', keepAlive: true, icon: baogao,isBack:false}
       },
       {
         path: '/gallery/detail/:id(\\d*)',

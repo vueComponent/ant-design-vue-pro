@@ -28,3 +28,12 @@ export function getPatientDetail (parameter) {
     params: parameter
   })
 }
+
+//根据身份证号获取患者详情
+export function getPatientDetailByCard (parameter) {
+  return axios({
+    url: '/patient/getPatientDetailByCard',
+    method: 'post',
+    params: parameter
+  })
+}
