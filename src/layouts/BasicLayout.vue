@@ -40,7 +40,7 @@
       />
 
       <!-- layout content -->
-      <a-layout-content :style="{ height: height,overflowY:'auto',overflowX:'hidden', margin: '10px 10px 0', paddingTop: fixedHeader ? '64px' : '0' }">
+      <a-layout-content :style="{ height: height,overflowY:'hidden',overflowX:'hidden', margin: '10px 10px 0', paddingTop: fixedHeader ? '64px' : '0' }">
         <multi-tab v-if="multiTab"></multi-tab>
         <transition name="page-transition">
           <route-view />

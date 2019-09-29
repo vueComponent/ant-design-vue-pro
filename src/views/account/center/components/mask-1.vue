@@ -24,7 +24,7 @@
         </a-col>
         <a-col :span="19">
           <a-form :form="form" @submit="handleSubmit">
-            <div style="overflow: hidden;">
+            <div style="overflow: hidden;margin-top: 10px;">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
@@ -479,12 +479,13 @@ export default {
       },
       baselineInfoStyle: {
         overflow: "auto",
-        height: (window.screen.height - 330) + 'px',
+        height: (window.screen.height - 300) + 'px',
         "padding-right": "0px",
-        "border-right": "1px solid #ddd"
+        "border-right": "1px solid #ddd",
+        boxShadow: '3px 0 3px #ccc'
       },
       baselineFormStyle: {
-        height: (window.screen.height - 350) + 'px',
+        height: (window.screen.height - 320) + 'px',
       },
       labelColHor: {
         xs: { span: 24 },
@@ -826,6 +827,9 @@ export default {
     padding: 10px
   }
 }
+.ant-row.ant-form-item:hover{
+  background-color: #e6f7ff;
+}
 
 .ml-10 {
   margin-left: 10px;
@@ -872,7 +876,7 @@ export default {
 
 .page-header-index-wide {
   /deep/ .ant-card-wider-padding .ant-card-body {
-    padding: 18px 32px;
+    padding: 0;
   }
 
   /deep/ .tree-title {
