@@ -47,10 +47,10 @@
                 <a-input v-decorator="['a5', {...inputRequired, initialValue: initValue('a5')}]" style="width: 240px;"></a-input>
               </a-form-item>
               <a-form-item label="(6) 身高:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a6', {...inputRequired, initialValue: initValue('a6')}]" style="width: 240px;" addonAfter="cm" @change="computBMI"></a-input>
+                <a-input v-decorator="['a6', {...inputRequired, initialValue: initValue('a6')}]" style="width: 240px;" addonAfter="cm" @change="computeBMI"></a-input>
               </a-form-item>
               <a-form-item label="(7) 体重:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="computBMI"></a-input>
+                <a-input v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="computeBMI"></a-input>
               </a-form-item>
               <a-form-item label="(8) BMI(自动演算出):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input v-decorator="['a8', {...inputRequired, initialValue: initValue('a8')}]" :readOnly="true" style="width: 240px;"></a-input>
@@ -277,14 +277,14 @@ export default {
         })
       return false
     },
-    computBMI() {
+    computeBMI() {
       var that = this
       var height = this.form.getFieldValue('a6')
       var weight = this.form.getFieldValue('a7')
       if (height && weight) {
         var params = new URLSearchParams()
         params.append('scoreType', 'bmi')
-        params.append('tgjcStr', JSON.stringify({ a_6: height, a_7: weight }))
+        params.append('tgjcStr', JSON.stringify({ a6: height, a7: weight }))
         computeScore(params)
           .then(res => {
             console.log(res.data.a8)
