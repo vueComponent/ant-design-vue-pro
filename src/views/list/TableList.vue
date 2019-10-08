@@ -96,9 +96,10 @@
         <ellipsis :length="4" tooltip>{{ text }}</ellipsis>
       </span>
 
-      <span slot="action" slot-scope="text, record">
+      <span slot="action" slot-scope="text, record, index">
         <template>
-          <a @click="handleEdit(record)">配置</a>
+          <router-link :to="{ name: 'TableListWrapper', query: { id: index } }" v-if="index < 2">新页面</router-link>
+          <a v-else @click="handleEdit(record)">配置</a>
           <a-divider type="vertical" />
           <a @click="handleSub(record)">订阅报警</a>
         </template>
