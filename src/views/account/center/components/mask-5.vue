@@ -175,7 +175,7 @@
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, computeScore } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 export default {
   name: 'mask5',

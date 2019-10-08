@@ -5,7 +5,7 @@
         <a-col :md="1" :sm="4">
           <a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" />
         </a-col>
-        <a-col :md="4" :sm="20" class="UserNameCard">
+        <a-col :md="5" :sm="20" class="UserNameCard">
           <my-icon type="iconshoufangzhehuaban" />
           受访者:{{ patient.name }}
         </a-col>
@@ -13,7 +13,7 @@
           <my-icon type="iconshenfenzhenghuaban" />
           {{ patient.card }}
         </a-col>
-        <a-col :md="13" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
+        <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
     </a-card>
     <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 10px;padding-left: 0">
