@@ -481,8 +481,7 @@ export default {
         overflow: "auto",
         height: (window.screen.height - 300) + 'px',
         "padding-right": "0px",
-        "border-right": "1px solid #ddd",
-        boxShadow: '3px 0 3px #ccc'
+        boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
       },
       baselineFormStyle: {
         height: (window.screen.height - 320) + 'px',
@@ -801,7 +800,6 @@ export default {
       if (this.zkbszl && this.zkbszl.zkbszlId) {
         re.zkbszlId = this.zkbszl.zkbszlId
       }
-      debugger
       params.append('formData', JSON.stringify(re))
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
@@ -859,9 +857,21 @@ export default {
 }
 
 /deep/.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: #CFF4FF;
+  background-color: #1890FF;
+  color: #FFF;
+  .anticon.anticon-clock-circle,
+  .anticon.anticon-check-circle{
+    color: #FFF;
+  }
+}
+/deep/ .anticon.anticon-clock-circle,
+/deep/ .anticon.anticon-check-circle{
+  font-size: 18px;
 }
 
+/deep/ .ant-menu-item:hover, .ant-menu-item-active, .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active, .ant-menu-submenu-title:hover{
+  background-color: #e6f7ff;
+}
 
 /deep/.ant-menu-vertical .ant-menu-item:after,
 .ant-menu-vertical-left .ant-menu-item:after,
@@ -880,18 +890,15 @@ export default {
   }
 
   /deep/ .tree-title {
-    border-right: 1px solid #e8e8e8;
     color: #25aefe;
-    font-size: 22px;
+    font-size: 20px;
     padding-left: 70px;
-    padding-top: 5px;
+    padding-top: 18px;
     padding-bottom: 10px;
     background-image: url(../../../../assets/treeTop.png);
     background-repeat: no-repeat;
     border-bottom: 1px solid #eee;
-    padding-left: 20p;
-    background-position-x: 15px;
-    padding-bottom: 26px;
+    background-position: 8px 10px;
   }
 
   /deep/ .ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title,
@@ -905,6 +912,14 @@ export default {
   /deep/ .ant-menu-submenu-title {
     height: 50px;
     line-height: 50px;
+  }
+
+  /deep/ .anticon.anticon-clock-circle{
+    color: #00A0E9;
+  }
+
+  /deep/ .anticon.anticon-clock-circle{
+    color: #8ac51b;
   }
 
   /deep/ li.ant-menu-submenu.ant-menu-submenu-inline.ant-menu-submenu-open {
@@ -936,14 +951,6 @@ export default {
     line-height: 50px;
     border-bottom: 1px solid #eeeeee;
     margin: 0;
-
-    .ant-menu-item:hover,
-    .ant-menu-item-active,
-    .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
-    .ant-menu-submenu-active,
-    .ant-menu-submenu-title:hover {
-      background-color: #eaf2fd;
-    }
 
     .placeholderI {
       display: inline-block;

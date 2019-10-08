@@ -5,7 +5,7 @@
         <a-col :md="1" :sm="4">
           <a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" />
         </a-col>
-        <a-col :md="4" :sm="20" class="UserNameCard">
+        <a-col :md="5" :sm="20" class="UserNameCard">
           <my-icon type="iconshoufangzhehuaban" />
           受访者:{{ patient.name }}
         </a-col>
@@ -13,7 +13,7 @@
           <my-icon type="iconshenfenzhenghuaban" />
           {{ patient.card }}
         </a-col>
-        <a-col :md="13" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
+        <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
     </a-card>
     <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 10px;padding-left: 0">
@@ -30,50 +30,140 @@
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <div class="title">1.体格检查</div>
-              <a-form-item label="(1) T:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a1', inputRequired]" style="width: 240px;"></a-input>
+              <div class="title">1.CT基本信息</div>
+              <a-form-item label="(1) CT检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]"></a-date-picker>
               </a-form-item>
-              <a-form-item label="(2) BP:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a2', inputRequired]" style="width: 240px;"></a-input>
-              </a-form-item>
-              <a-form-item label="(3) R:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a3', inputRequired]" style="width: 240px;"></a-input>
-              </a-form-item>
-              <a-form-item label="(4) HR:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a4', inputRequired]" style="width: 240px;"></a-input>
-              </a-form-item>
-              <a-form-item label="(5) SpO2:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a5', inputRequired]" style="width: 240px;"></a-input>
-              </a-form-item>
-              <a-form-item label="(6) 身高:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a6', inputRequired]" style="width: 240px;" addonAfter="cm" @change="computBMI"></a-input>
-              </a-form-item>
-              <a-form-item label="(7) 体重:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a7', inputRequired]" style="width: 240px;" addonAfter="kg" @change="computBMI"></a-input>
-              </a-form-item>
-              <a-form-item label="(8) BMI(自动演算出):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a8', inputRequired]" :readOnly="true" style="width: 240px;"></a-input>
-              </a-form-item>
-              <a-form-item label="(9) 肺部体征：双肺呼吸音:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-              </a-form-item>
-              <a-form-item label="啰音" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-radio-group v-decorator="['a9', require2]" @change="changeRadio($event, 'controla9')">
-                  <a-radio value="1">有</a-radio>
-                  <a-radio value="-1">无</a-radio>
+              <a-form-item label="(2) 图像类型:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a2', {...require1, initialValue: initValue('a2')}]">
+                  <a-radio value="1">HRCT</a-radio>
+                  <a-radio value="2">CT</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <div v-if="controla9">
-                <a-form-item label="啰音类型" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-radio-group v-decorator="['a91', selectRequired]">
-                    <a-radio value="1">湿罗音</a-radio>
-                    <a-radio value="2">干啰音</a-radio>
-                  </a-radio-group>
-                </a-form-item>
-                <a-form-item label="啰音部位" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-input style="width: 240px;" v-decorator="['a92', inputRequired]"></a-input>
-                </a-form-item>
-              </div>
+              <div class="title">2.支扩位于CT图像上</div>
+              <a-form-item label="(1) 右上叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a3', {...require1, initialValue: initValue('a3')}]">
+                  <a-radio value="1">无支扩</a-radio>
+                  <a-radio value="2">柱状</a-radio>
+                  <a-radio value="3">静脉曲张型</a-radio>
+                  <a-radio value="4">囊状</a-radio>
+                  <a-radio value="5">严重度不明</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(2) 左上叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a4', {...require1, initialValue: initValue('a4')}]">
+                  <a-radio value="1">无支扩</a-radio>
+                  <a-radio value="2">柱状</a-radio>
+                  <a-radio value="3">静脉曲张型</a-radio>
+                  <a-radio value="4">囊状</a-radio>
+                  <a-radio value="5">严重度不明</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(3) 右中叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a5', {...require1, initialValue: initValue('a5')}]">
+                  <a-radio value="1">无支扩</a-radio>
+                  <a-radio value="2">柱状</a-radio>
+                  <a-radio value="3">静脉曲张型</a-radio>
+                  <a-radio value="4">囊状</a-radio>
+                  <a-radio value="5">严重度不明</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(4) 左舌叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a6', {...require1, initialValue: initValue('a6')}]">
+                  <a-radio value="1">无支扩</a-radio>
+                  <a-radio value="2">柱状</a-radio>
+                  <a-radio value="3">静脉曲张型</a-radio>
+                  <a-radio value="4">囊状</a-radio>
+                  <a-radio value="5">严重度不明</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(5) 右下叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a7', {...require1, initialValue: initValue('a7')}]">
+                  <a-radio value="1">无支扩</a-radio>
+                  <a-radio value="2">柱状</a-radio>
+                  <a-radio value="3">静脉曲张型</a-radio>
+                  <a-radio value="4">囊状</a-radio>
+                  <a-radio value="5">严重度不明</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(6) 左下叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a8', {...require1, initialValue: initValue('a8')}]">
+                  <a-radio value="1">无支扩</a-radio>
+                  <a-radio value="2">柱状</a-radio>
+                  <a-radio value="3">静脉曲张型</a-radio>
+                  <a-radio value="4">囊状</a-radio>
+                  <a-radio value="5">严重度不明</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(7) 影像Reiff评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['a9', {initialValue: initValue('a9')}]" :readOnly="true"></a-input>
+              </a-form-item>
+              <div class="title">3.Bhalla影像学评分</div>
+              <a-form-item label="(1) 支气管扩张程度：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a10', {...require1, initialValue: initValue('a10')}]">
+                  <a-radio value="1">无</a-radio>
+                  <a-radio value="2">轻度（管腔直径为临近血管直径的1-2倍）</a-radio>
+                  <a-radio value="3">中度（管腔直径为临近血管直径的2-3倍）</a-radio>
+                  <a-radio value="4">重度（管腔直径超过临近血管直径的3倍）</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(2) 支气管壁增厚情况" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a11', {...require1, initialValue: initValue('a11')}]">
+                  <a-radio value="1">无</a-radio>
+                  <a-radio value="2">轻度（支气管壁的厚度相当于临近血管壁厚度）</a-radio>
+                  <a-radio value="3">中度（支气管壁的厚度相当于临近血管壁厚度的1-2倍）</a-radio>
+                  <a-radio value="4">重度（支气管壁的厚度相当于临近血管壁厚度的2倍）</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(3) 支气管扩张的范围（肺段数）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['a12', {...inputRequired, initialValue: initValue('a12')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="(4) 支气管管腔黏液阻塞的范围（肺段数）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['a13', {...inputRequired, initialValue: initValue('a13')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="(5) 存在脓肿的范围（肺段数）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['a14', {...inputRequired, initialValue: initValue('a14')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="(6) 扩张支气管的分级数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a15', {...require1, initialValue: initValue('a15')}]">
+                  <a-radio value="1">无</a-radio>
+                  <a-radio value="2">超过4级</a-radio>
+                  <a-radio value="3">超过5级</a-radio>
+                  <a-radio value="4">超过6级</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(7) 肺大疱数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a16', {...require1, initialValue: initValue('a16')}]">
+                  <a-radio value="1">无</a-radio>
+                  <a-radio value="2">单侧(&lt;4)</a-radio>
+                  <a-radio value="3">双侧(&lt;4)</a-radio>
+                  <a-radio value="4">&gt;4</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(8) 肺气肿的范围" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a17', {...require1, initialValue: initValue('a17')}]">
+                  <a-radio value="1">无</a-radio>
+                  <a-radio value="2">1-5</a-radio>
+                  <a-radio value="4">&gt;5</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(9) 肺不张/实变的" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a18', {...require1, initialValue: initValue('a18')}]">
+                  <a-radio value="1">无</a-radio>
+                  <a-radio value="2">肺亚段</a-radio>
+                  <a-radio value="3">肺段/肺叶</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(10) 支扩类型" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a20', {...require1, initialValue: initValue('a20')}]">
+                  <a-radio value="1">囊状</a-radio>
+                  <a-radio value="2">柱状</a-radio>
+                  <a-radio value="3">静脉曲张型</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(11) Bhalla影像学评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['a19', {initialValue: initValue('a19')}]" :readOnly="true"></a-input>
+              </a-form-item>
             </div>
           </a-form>
         </a-col>
@@ -85,20 +175,20 @@
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 export default {
-  name: 'mask2',
+  name: 'mask5',
   components: {
     STree,
     MyIcon
   },
   data() {
     return {
-      markName: 'tgjc',
+      markName: 'xbyxx',
       title: '',
       openKeys: [],
-      defaultSelectedKeys: [2],
+      defaultSelectedKeys: [5],
       orgTree: [],
       patient: {},
       patientBasis: {},
@@ -157,12 +247,12 @@ export default {
       maskId: this.$route.meta.maskId,
       patientBasisId: this.$route.params.id,
       controla9: false,
-      tgjc: undefined
+      xbyxx: undefined
     }
   },
   created() {
     var that = this
-    this.defaultSelectedKeys = [2]
+    this.defaultSelectedKeys = [5]
     this.CloseSidebar()
     var params = new URLSearchParams()
     params.append('patientBasisId', this.patientBasisId)
@@ -179,9 +269,18 @@ export default {
           that.title = '年访视'
         }
       })
+    params.append('basisMarkId', this.maskId)
+    getBasisForm(params)
+      .then(res => {
+        if (res.data && res.data.xbyxx)
+          that.xbyxx = that.dealAnswers(res.data.xbyxx)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
   activated() {
-    this.defaultSelectedKeys = [2]
+    this.defaultSelectedKeys = [5]
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -229,6 +328,25 @@ export default {
     },
     computBMI() {
     
+    },
+    initValue(key, type = 'normal') {
+      if (!this.xbyxx) return type === 'array' ? [] : type === 'time' ? undefined : ''
+      if (!this.xbyxx[key]) return type === 'array' ? [] : type === 'time' ? undefined : ''
+      if (type === 'time') {
+        return moment(this.xbyxx[key])
+      } else if (type === 'array') {
+        return this.xbyxx[key].split(',')
+      } else {
+        return this.xbyxx[key] + ''
+      }
+    },
+    dealAnswers(answer) {
+      var that = this
+      if (answer && !_.isEmpty(answer)) {
+        var splitArr = []
+        
+      }
+      return answer
     }
   }
 }
