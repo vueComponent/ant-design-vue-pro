@@ -86,6 +86,12 @@ export const asyncRouterMap = [
         meta: { title: '病例转移申请', keepAlive: true, icon: baogao,isBack:false}
       },
       {
+        path: '/caseTransfer/review',
+        name: 'caseTransferReview',
+        component: () => import('@/views/caseTransfer/review'),
+        meta: { title: '病例转移审核', keepAlive: true, icon: baogao,isBack:false}
+      },
+      {
         path: '/gallery/detail/:id(\\d*)',
         name: 'collectDetail',
         hidden: true,

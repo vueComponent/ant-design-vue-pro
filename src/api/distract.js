@@ -23,5 +23,20 @@ export function addDistract (parameter) {
   })
 }
 
+export function getSqDataList (parameter) {
+    return axios({
+      url: '/distract/getSqDataList',
+      method: 'post',
+      params: parameter
+    })
+  }
+
+  export function verifyDistract (parameter) {
+    return axios({
+      url: '/distract/verifyDistract',
+      method: 'post',
+      params: parameter
+    })
+  }
 
 
