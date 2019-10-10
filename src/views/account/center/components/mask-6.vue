@@ -74,7 +74,7 @@
                   <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controla416')">金黄色葡萄球菌</a-checkbox>
                   <add-table :dataSource="optionDataSource[6]" v-if="controla416"></add-table>
                   <a-checkbox value="7" @change="showList($event, '其他', 'controla417')">其他</a-checkbox>
-                  <a-input style="width: 240px;margin-right: 10px;" v-if="controla417"></a-input>
+                  <a-input style="width: 240px;margin-right: 10px;" v-if="controla417" @change="otherChange($event, 7)"></a-input>
                   <add-table :dataSource="optionDataSource[7]" v-if="controla417"></add-table>
                 </a-checkbox-group>
               </a-form-item>
@@ -343,7 +343,49 @@ export default {
       })
     },
     save() {
-
+      const allergy = []
+      for (var key in this.optionDataSource) {
+        _.each(this.optionDataSource[key], function(item) {
+          allergy.push({
+            markId: 1,
+            microbeName: item.microbeName,
+            antibiotic: item.antibiotic,
+            antibioticResult: item.antibioticResult,
+            allergyValue: item.allergyValue
+          })
+        })
+      }
+      var re = this.form.getFieldsValue()
+      var that = this
+      re = {
+        ...re,
+        'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
+        'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
+        'c1': typeof re['c1'] !== 'undefined' ? re['c1'].format('YYYY-MM-DD') : '',
+        'a41': typeof re['a41'] !== 'undefined' ? re['a41'].join(',') : '',
+      }
+      console.log(re)
+      this.patientBasis.status = 1
+      var params = new URLSearchParams()
+      if (this.bywsw && this.bywsw.bywswId) {
+        re.bywswId = this.bywsw.bywswId
+      }
+      params.append('formData', JSON.stringify(re))
+      params.append('patientBasis', JSON.stringify(this.patientBasis))
+      params.append('basisMarkId', this.maskId)
+      params.append('markName', this.markName)
+      params.append('allergy', JSON.stringify(allergy))
+      saveBasis(params)
+        .then(res => {
+          console.log(res)
+          that.$message.success(res.msg, function() {
+            location.href = location.href
+          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      return false
     },
     initValue(key, type = 'normal') {
       if (!this.bywsw) return type === 'array' ? [] : type === 'time' ? undefined : ''
@@ -378,9 +420,9 @@ export default {
       const params = new URLSearchParams()
       params.append('microbeName', value)
       getMedicineAllergyList(params).then(res => {
-        const optionDataSource = _.map(res.data, function(v) {
+        const optionDataSource = _.map(res.data, function(v, i) {
           return {
-            keyW: v.keyW,
+            keyW: i,
             microbeName: v.microbeName,
             antibiotic: v.antibiotic,
             antibioticResult: v.antibioticResult,
@@ -389,6 +431,9 @@ export default {
         })
         that.$set(that.optionDataSource, index, optionDataSource)
       })
+    },
+    otherChange(e, index) {
+      this.getMedicineAllergyList(e.target.value, index)
     }
   }
 }
