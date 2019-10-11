@@ -57,8 +57,140 @@
                   <a-radio value="-1">否</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <div class="title">1.急性加重期</div>
-              <div class="title">1.分支杆菌标本</div>
+              <a-form-item label="分离方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla4">
+                <a-radio-group v-decorator="['a41', {...selectRequired, initialValue: initValue('a41')}]">
+                  <a-radio value="1">纸片法</a-radio>
+                  <a-radio value="2">肉汤稀释法</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla4">
+                <a-checkbox-group v-decorator="['a42', {...selectRequired, initialValue: initValue('a42', 'array')}]">
+                  <a-checkbox value="0" @change="showList($event, '铜绿假单胞菌', 'controla420', true)">铜绿假单胞菌</a-checkbox>
+                  <add-table :dataSource="optionDataSource[0]" v-if="controla420"></add-table>
+                  <a-checkbox value="1" @change="showList($event, '阴沟肠杆菌', 'controla421', true)">阴沟肠杆菌</a-checkbox>
+                  <add-table :dataSource="optionDataSource[1]" v-if="controla421"></add-table>
+                  <a-checkbox value="2" @change="showList($event, '肺炎克雷伯菌', 'controla422', true)">肺炎克雷伯菌</a-checkbox>
+                  <add-table :dataSource="optionDataSource[2]" v-if="controla422"></add-table>
+                  <a-checkbox value="3" @change="showList($event, '肺炎链球菌', 'controla423', true)">肺炎链球菌</a-checkbox>
+                  <add-table :dataSource="optionDataSource[3]" v-if="controla423"></add-table>
+                  <a-checkbox value="4" @change="showList($event, '副流感嗜血杆菌', 'controla424', true)">副流感嗜血杆菌</a-checkbox>
+                  <add-table :dataSource="optionDataSource[4]" v-if="controla424"></add-table>
+                  <a-checkbox value="5" @change="showList($event, '鲍曼不动杆菌', 'controla425', true)">鲍曼不动杆菌</a-checkbox>
+                  <add-table :dataSource="optionDataSource[5]" v-if="controla425"></add-table>
+                  <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controla426', true)">金黄色葡萄球菌</a-checkbox>
+                  <add-table :dataSource="optionDataSource[6]" v-if="controla426"></add-table>
+                  <a-checkbox value="7" @change="showList($event, '其他', 'controla427', true)">其他</a-checkbox>
+                  <a-input style="width: 240px;margin-right: 10px;" v-if="controla427" @change="otherChange($event, 7, true)"></a-input>
+                  <add-table :dataSource="optionDataSource[7]" v-if="controla427"></add-table>
+                </a-checkbox-group>
+              </a-form-item>
+              <div class="title">2.急性加重期</div>
+              <a-form-item label="(2) 急性加重期:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-radio-group v-decorator="['b', {...require1, initialValue: initValue('b')}]" @change="changeRadio($event, 'controlb')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <div v-if="controlb">
+                <a-form-item label="取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b1', {...dateRequire, initialValue: initValue('b1', 'time')}]"></a-date-picker>
+                </a-form-item>
+                <a-form-item label="是否本院:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                  <a-radio-group v-decorator="['b2', {...require1, initialValue: initValue('b2')}]" @change="changeRadio($event, 'controlb2')">
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="-1">否</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb2">
+                  <a-input style="width: 240px;" v-decorator="['b21', {...inputRequired, initialValue: initValue('b21')}]"></a-input>
+                </a-form-item>
+                <a-form-item label="标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['b3', {...require1, initialValue: initValue('b3')}]">
+                    <a-radio value="1">痰液</a-radio>
+                    <a-radio value="2">诱导痰</a-radio>
+                    <a-radio value="3">支气管肺泡灌洗液</a-radio>
+                    <a-radio value="4">咽拭子</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="是否分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['b4', {...require1, initialValue: initValue('b4')}]" @change="changeRadio($event, 'controlb4')">
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="-1">否</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="分离方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb4">
+                  <a-radio-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41')}]">
+                    <a-radio value="1">纸片法</a-radio>
+                    <a-radio value="2">肉汤稀释法</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb4">
+                  <a-checkbox-group v-decorator="['b42', {...selectRequired, initialValue: initValue('b42', 'array')}]">
+                    <a-checkbox value="0" @change="showList($event, '铜绿假单胞菌', 'controlb420')">铜绿假单胞菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource2[0]" v-if="controla420"></add-table>
+                    <a-checkbox value="1" @change="showList($event, '阴沟肠杆菌', 'controlb421')">阴沟肠杆菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource2[1]" v-if="controla421"></add-table>
+                    <a-checkbox value="2" @change="showList($event, '肺炎克雷伯菌', 'controlb422')">肺炎克雷伯菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource2[2]" v-if="controla422"></add-table>
+                    <a-checkbox value="3" @change="showList($event, '肺炎链球菌', 'controlb423')">肺炎链球菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource2[3]" v-if="controla423"></add-table>
+                    <a-checkbox value="4" @change="showList($event, '副流感嗜血杆菌', 'controlb424')">副流感嗜血杆菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource2[4]" v-if="controla424"></add-table>
+                    <a-checkbox value="5" @change="showList($event, '鲍曼不动杆菌', 'controlb425')">鲍曼不动杆菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource2[5]" v-if="controla425"></add-table>
+                    <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controlb426')">金黄色葡萄球菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource2[6]" v-if="controla426"></add-table>
+                    <a-checkbox value="7" @change="showList($event, '其他', 'controlb427')">其他</a-checkbox>
+                    <a-input style="width: 240px;margin-right: 10px;" v-if="controlb427" @change="otherChange($event, 7)"></a-input>
+                    <add-table :dataSource="optionDataSource2[7]" v-if="controlb427"></add-table>
+                  </a-checkbox-group>
+                </a-form-item>
+              </div>
+              <div class="title">3.分支杆菌标本</div>
+              <a-form-item label="(1) 取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['c1', {...dateRequire, initialValue: initValue('c1', 'time')}]"></a-date-picker>
+              </a-form-item>
+              <a-form-item label="(2) 是否本院:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-radio-group v-decorator="['c2', {...require1, initialValue: initValue('c2')}]" @change="changeRadio($event, 'controlc2')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlc2">
+                <a-input style="width: 240px;" v-decorator="['c21', {...inputRequired, initialValue: initValue('c21')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="(3) 标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['c3', {...require1, initialValue: initValue('c3')}]">
+                  <a-radio value="1">痰液</a-radio>
+                  <a-radio value="2">诱导痰</a-radio>
+                  <a-radio value="3">支气管肺泡灌洗液</a-radio>
+                  <a-radio value="4">咽拭子</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(4) 是否分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['c4', {...require1, initialValue: initValue('c4')}]" @change="changeRadio($event, 'controlc4')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(5) 患者是否曾分离培养到铜绿假单细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['c5', {...require1, initialValue: initValue('c5')}]" @change="changeRadio($event, 'controlc5')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <div v-if="controlc5">
+                <a-form-item label="最近一次分离到铜绿假单胞菌是什么时候:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['c51', {...dateRequire, initialValue: initValue('c51', 'time')}]"></a-date-picker>
+                </a-form-item>
+                <a-form-item label="类型:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['c52', {...require1, initialValue: initValue('c52')}]">
+                    <a-radio value="1">黏液型</a-radio>
+                    <a-radio value="2">非黏液型</a-radio>
+                    <a-radio value="3">不详</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+              </div>
             </div>
           </a-form>
         </a-col>
@@ -70,9 +202,10 @@
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm, computeScore } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, computeScore, getMedicineAllergyList } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 import AddTable from "../model/table"
+import _ from 'lodash'
 export default {
   name: 'mask6',
   components: {
@@ -82,6 +215,8 @@ export default {
   },
   data() {
     return {
+      optionDataSource: [],
+      optionDataSource2: [],
       markName: 'bywsw',
       title: '',
       openKeys: [],
@@ -105,7 +240,7 @@ export default {
       labelColHor: {
         xs: { span: 24 },
         sm: { span: 6 },
-        md: { span: 6 }
+        md: { span: 7 }
       },
       wrapper18: {
         md: { span: 18 }
@@ -118,12 +253,18 @@ export default {
       wrapperHor: {
         xs: { span: 24 },
         sm: { span: 18 },
-        md: { span: 18 }
+        md: { span: 17 }
       },
       wrapperVer: {
         xs: { span: 24 },
         sm: { span: 24 },
         md: { span: 24 }
+      },
+      labelColOffset: {
+        md: { span: 6, offset: 6 }
+      },
+      wrapperOffset: {
+        md: { span: 12 }
       },
       dateRequire: {
         rules: [{ type: 'object', required: true, message: '请选择时间！' }]
@@ -145,7 +286,29 @@ export default {
       patientBasisId: this.$route.params.id,
       bywsw: undefined,
       controla2: false,
-      controla4: false
+      controla4: false,
+      controlb: false,
+      controlb2: false,
+      controlb4: false,
+      controlc2: false,
+      controlc4: false,
+      controlc5: false,
+      controla420: false,
+      controla421: false,
+      controla422: false,
+      controla423: false,
+      controla424: false,
+      controla425: false,
+      controla426: false,
+      controla427: false,
+      controlb420: false,
+      controlb421: false,
+      controlb422: false,
+      controlb423: false,
+      controlb424: false,
+      controlb425: false,
+      controlb426: false,
+      controlb427: false,
     }
   },
   created() {
@@ -171,7 +334,7 @@ export default {
     getBasisForm(params)
       .then(res => {
         if (res.data && res.data.bywsw)
-          that.bywsw = that.dealAnswers(res.data.bywsw)
+          that.bywsw = that.dealAnswers(res.data)
       })
       .catch(error => {
         console.log(error)
@@ -187,7 +350,7 @@ export default {
       this[t] = e.target.checked
     },
     changeRadio(e, t) {
-      if (t === 'controla2') {
+      if (t === 'controla2' || t === 'controlb2' || t === 'controlc2') {
         if (e.target.value === '-1') {
           this[t] = true
         } else {
@@ -222,7 +385,61 @@ export default {
       })
     },
     save() {
-
+      const allergy = []
+      for (var key in this.optionDataSource) {
+        _.each(this.optionDataSource[key], function(item) {
+          allergy.push({
+            markId: 1,
+            microbeName: item.microbeName,
+            antibiotic: item.antibiotic,
+            antibioticResult: item.antibioticResult,
+            allergyValue: item.allergyValue
+          })
+        })
+      }
+      for (var key in this.optionDataSource2) {
+        _.each(this.optionDataSource2[key], function(item) {
+          allergy.push({
+            markId: 2,
+            microbeName: item.microbeName,
+            antibiotic: item.antibiotic,
+            antibioticResult: item.antibioticResult,
+            allergyValue: item.allergyValue
+          })
+        })
+      }
+      var re = this.form.getFieldsValue()
+      var that = this
+      re = {
+        ...re,
+        'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
+        'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
+        'c1': typeof re['c1'] !== 'undefined' ? re['c1'].format('YYYY-MM-DD') : '',
+        'a42': typeof re['a42'] !== 'undefined' ? re['a42'].join(',') : '',
+        'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : ''
+      }
+      console.log(re)
+      this.patientBasis.status = 1
+      var params = new URLSearchParams()
+      if (this.bywsw && this.bywsw.bywswId) {
+        re.bywswId = this.bywsw.bywswId
+      }
+      params.append('formData', JSON.stringify(re))
+      params.append('patientBasis', JSON.stringify(this.patientBasis))
+      params.append('basisMarkId', this.maskId)
+      params.append('markName', this.markName)
+      params.append('allergy', JSON.stringify(allergy))
+      saveBasis(params)
+        .then(res => {
+          console.log(res)
+          that.$message.success(res.msg, function() {
+            location.href = location.href
+          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      return false
     },
     initValue(key, type = 'normal') {
       if (!this.bywsw) return type === 'array' ? [] : type === 'time' ? undefined : ''
@@ -230,17 +447,133 @@ export default {
       if (type === 'time') {
         return moment(this.bywsw[key])
       } else if (type === 'array') {
+        debugger
         return this.bywsw[key].split(',')
       } else {
         return this.bywsw[key] + ''
       }
     },
-    dealAnswers(answer) {
+    dealAnswers(data) {
+      var that = this
+      var answer = data.bywsw
+      var alList = ['铜绿假单胞菌', '阴沟肠杆菌', '肺炎克雷伯菌', '肺炎链球菌', '副流感嗜血杆菌', '鲍曼不动杆菌', '金黄色葡萄球菌']
       if (answer && !_.isEmpty(answer)) {
         var splitArr = []
-
+        if (answer.a2 && answer.a2 === -1) {
+          this.controla2 = true
+        }
+        if (answer.a4 && answer.a4 === 1) {
+          this.controla4 = true
+        }
+        if (answer.a42) {
+          splitArr = answer.a42.split(',')
+          if (splitArr.indexOf('0') > -1) {
+            this.controla420 = true
+          }
+          if (splitArr.indexOf('1') > -1) {
+            this.controla421 = true
+          }
+          if (splitArr.indexOf('2') > -1) {
+            this.controla422 = true
+          }
+          if (splitArr.indexOf('3') > -1) {
+            this.controla423 = true
+          }
+          if (splitArr.indexOf('4') > -1) {
+            this.controla424 = true
+          }
+          if (splitArr.indexOf('5') > -1) {
+            this.controla425 = true
+          }
+          if (splitArr.indexOf('6') > -1) {
+            this.controla426 = true
+          }
+          if (splitArr.indexOf('7') > -1) {
+            this.controla427 = true
+          }
+        }
+        if (data[1]) {
+          _.each(alList, function(v, i) {
+            if (data[1][v]) {
+              that.optionDataSource[i] = data[1][v]
+            }
+          })
+        }
+        if (answer.b42) {
+          splitArr = answer.b42.split(',')
+          if (splitArr.indexOf('0') > -1) {
+            this.controlb420 = true
+          }
+          if (splitArr.indexOf('1') > -1) {
+            this.controlb421 = true
+          }
+          if (splitArr.indexOf('2') > -1) {
+            this.controlb422 = true
+          }
+          if (splitArr.indexOf('3') > -1) {
+            this.controlb423 = true
+          }
+          if (splitArr.indexOf('4') > -1) {
+            this.controlb424 = true
+          }
+          if (splitArr.indexOf('5') > -1) {
+            this.controlb425 = true
+          }
+          if (splitArr.indexOf('6') > -1) {
+            this.controlb426 = true
+          }
+          if (splitArr.indexOf('7') > -1) {
+            this.controlb427 = true
+          }
+        }
+        if (data[2]) {
+          _.each(alList, function(v, i) {
+            if (data[2][v]) {
+              that.optionDataSource2[i] = data[2][v]
+            }
+          })
+        }
       }
       return answer
+    },
+    showList(e, name, controlNode, isSimple) {
+      if (e.target.checked) {
+        this[controlNode] = true
+        if (name == "其他") return
+        this.getMedicineAllergyList(name, e.target.value, isSimple)
+      } else {
+        this[controlNode] = false
+        if (isSimple) {
+          this.$set(this.optionDataSource, e.target.value, [])
+        } else {
+          this.$set(this.optionDataSource2, e.target.value, [])
+        }
+
+      }
+    },
+    getMedicineAllergyList(value, index, isSimple) {
+      const that = this
+      const params = new URLSearchParams()
+      params.append('microbeName', value)
+      getMedicineAllergyList(params).then(res => {
+        const optionDataSource = _.map(res.data, function(v, i) {
+          return {
+            keyW: i,
+            microbeName: v.microbeName,
+            antibiotic: v.antibiotic,
+            antibioticResult: v.antibioticResult,
+            allergyValue: v.allergyValue
+          };
+        })
+        if (isSimple) {
+          that.$set(that.optionDataSource, index, optionDataSource)
+        }else{
+          that.$set(that.optionDataSource2, index, optionDataSource)
+        }
+      })
+    },
+    otherChange(e, index, isSimple) {
+      this.getMedicineAllergyList(e.target.value, index, isSimple)
     }
   }
 }

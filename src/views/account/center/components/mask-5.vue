@@ -246,7 +246,6 @@ export default {
       form: this.$form.createForm(this),
       maskId: this.$route.meta.maskId,
       patientBasisId: this.$route.params.id,
-      controla9: false,
       xbyxx: undefined
     }
   },
@@ -318,7 +317,33 @@ export default {
       })
     },
     save() {
-
+      var re = this.form.getFieldsValue()
+      var that = this
+      re = {
+        ...re,
+        'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : ''
+      }
+      console.log(re)
+      this.patientBasis.status = 1
+      var params = new URLSearchParams()
+      if (this.xbyxx && this.xbyxx.xbyxxId) {
+        re.xbyxxId = this.xbyxx.xbyxxId
+      }
+      params.append('formData', JSON.stringify(re))
+      params.append('patientBasis', JSON.stringify(this.patientBasis))
+      params.append('basisMarkId', this.maskId)
+      params.append('markName', this.markName)
+      saveBasis(params)
+        .then(res => {
+          console.log(res)
+          that.$message.success(res.msg, function() {
+            location.href = location.href
+          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      return false
     },
     initValue(key, type = 'normal') {
       if (!this.xbyxx) return type === 'array' ? [] : type === 'time' ? undefined : ''
