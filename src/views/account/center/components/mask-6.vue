@@ -72,7 +72,7 @@ import moment from 'moment'
 import { mapActions } from 'vuex'
 import { getPatientBasis, saveBasis, getBasisForm, computeScore } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
-import AddTable from "./model/table"
+import AddTable from "../model/table"
 export default {
   name: 'mask6',
   components: {

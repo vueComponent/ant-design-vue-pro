@@ -100,6 +100,37 @@ export const asyncRouterMap = [
         meta: { title: '病例转移审核', keepAlive: true, icon: baogao,isBack:false}
       },
       {
+        path: '/wx/userAudit',
+        name: 'wxUserAudit',
+        component: () => import('@/views/wx/userAudit'),
+        meta: { title: '微信用户审核', keepAlive: true, icon: baogao,isBack:false}
+      },
+      {
+        path: '/wx/questionReview',
+        name: 'wxQuestionReview',
+        component: () => import('@/views/wx/questionReview'),
+        meta: { title: '微信问卷审阅', keepAlive: true, icon: baogao,isBack:false}
+      },
+      {
+        path: '/wx/questionDetail/:id(\\d*)',
+        name: 'wxQuestionDetail',
+        hidden: true,
+        hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+        component: () => import('@/views/wx/questionDetail'),
+      },
+      {
+        path: '/wx/patientReportReview',
+        name: 'wxPatientReportReview',
+        component: () => import('@/views/wx/patientReportReview'),
+        meta: { title: '患者报告审阅', keepAlive: true, icon: baogao,isBack:false}
+      },
+      {
+        path: '/wx/ticketRegister',
+        name: 'wxTicketRegister',
+        component: () => import('@/views/wx/ticketRegister'),
+        meta: { title: '活动券登记', keepAlive: true, icon: baogao,isBack:false}
+      },
+      {
         path: '/gallery/detail/:id(\\d*)',
         name: 'collectDetail',
         hidden: true,

@@ -44,7 +44,7 @@
                       </a-form-item>
                       <a-form-item label="创建日期" style="margin-bottom:0;">
                         <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
-                      </a-form-item>、
+                      </a-form-item>
                       <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
                         <a-button type="primary" @click="clearForm()">清空</a-button>
                         <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
