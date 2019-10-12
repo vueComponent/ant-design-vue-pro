@@ -60,7 +60,8 @@
       </span>
       <span slot="operation" slot-scope="text, record">
         <template>
-          <router-link :to="{path:'/wx/questionDetail/' + record.questionTaskId}">审阅</router-link>
+          <!-- <router-link :to="{path:'/wx/questionDetail/' + record.questionTaskId}">审阅</router-link> -->
+          <router-link :to="{name:'wxQuestionDetail' ,params: {'id': record.questionTaskId, 'name' : record.name, 'card' : record.card, 'createTime' : record.createTime}}">审阅</router-link>
         </template>
       </span>
     </s-table>

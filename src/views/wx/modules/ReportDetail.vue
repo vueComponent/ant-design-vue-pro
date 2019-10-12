@@ -47,12 +47,15 @@
     methods: {
       show(id) {
         this.visible = true;
-        this.confirmLoading = false
         this.checkId = id
+
+        this.confirmLoading = true
+
         const params = {
           checkId: id
         }
         getReportInfo(params).then(res => {
+          this.confirmLoading = false
           this.imgList = res.data.annexList
           this.attachsPrefix = res.data.attachsPrefix
 

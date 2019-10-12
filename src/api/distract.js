@@ -79,3 +79,11 @@ export function getWxQuestionDetail (parameter) {
   })
 }
 
+export function questionReview (parameter) {
+  return axios({
+    url: '/question/questionReview',
+    method: 'post',
+    params: parameter
+  })
+}
+
