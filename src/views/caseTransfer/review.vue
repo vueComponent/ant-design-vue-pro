@@ -32,7 +32,7 @@
   import moment from 'moment'
   import { getSqDataList } from '@/api/distract'
   import { STable } from '@/components'
-  import ReviewForm from './modules/reviewForm'
+  import ReviewForm from './modules/ReviewForm'
   export default {
     components: {
       STable,
