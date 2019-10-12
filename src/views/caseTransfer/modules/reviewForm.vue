@@ -67,13 +67,15 @@
     methods: {
       show(recode) {
         this.visible = true;
+        this.confirmLoading = false;
         this.$nextTick(() => {
           this.form.setFieldsValue(recode);
         })
       },
       handleSubmit() {
+        this.confirmLoading = true;
+
         const { form: { validateFields } } = this;
-        this.confirmLoading = false;
 
         validateFields((errors, fieldsValue) => {
           const that = this;
@@ -81,7 +83,7 @@
             this.confirmLoading = false;
             return;
           }
-          let params = {
+          const params = {
             distract: {
               ...this.form.getFieldsValue(),
               createDate: fieldsValue['createDate'].format('YYYY-MM-DD')

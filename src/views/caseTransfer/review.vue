@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="18">
             <a-form-item>
-              <a-input v-model="keyword" placeholder="搜索患者姓名、身份证号" />
+              <a-input v-model="queryParam.keyword" placeholder="搜索患者姓名、身份证号" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="6">
@@ -32,11 +32,11 @@
   import moment from 'moment'
   import { getSqDataList } from '@/api/distract'
   import { STable } from '@/components'
-  import reviewForm from './modules/reviewForm'
+  import ReviewForm from './modules/ReviewForm'
   export default {
     components: {
       STable,
-      reviewForm
+      ReviewForm
     },
     data() {
       return {
@@ -44,13 +44,15 @@
           padding: '10px',
           paddingBottom: '0px'
         },
-        keyword: '',
+        // 查询参数
+        queryParam: {},
         scroll: false,
         loadData: parameter => {
           return getSqDataList(Object.assign(parameter, this.queryParam)).then(res => {
             return res
           })
         },
+        selectedRowKeys: [],
         options: {
           alert: {
             show: false,
@@ -130,4 +132,7 @@
 </script>
 
 <style lang="less" scoped>
+  /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
+    margin-bottom: 10px;
+  }
 </style>
