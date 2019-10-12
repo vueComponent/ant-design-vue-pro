@@ -42,13 +42,181 @@
               </a-form-item>
               <div v-if="controla1p">
                 <div style="margin-top: 10px;">吸入支气管舒张剂前:</div>
-                <a-form-item label="FEV1:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
+                <a-form-item label="FEV1:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
                   <a-radio-group v-decorator="['a21', {...require2, initialValue: initValue('a21')}]" @change="changeRadio($event, 'controla21')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
                   </a-radio-group>
                 </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla21" class="border-dotted">
+                  <a-input style="width: 240px;" v-decorator="['a22', {...inputRequired, initialValue: initValue('a22')}]" addonAfter="L"></a-input>
+                </a-form-item>
+                <a-form-item label="FEV1%pred:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
+                  <a-radio-group v-decorator="['a31', {...require2, initialValue: initValue('a31')}]" @change="changeRadio($event, 'controla31')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla31" class="border-dotted">
+                  <a-input style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]" addonAfter="%"></a-input>
+                </a-form-item>
+                <a-form-item label="FVC:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
+                  <a-radio-group v-decorator="['a41', {...require2, initialValue: initValue('a41')}]" @change="changeRadio($event, 'controla41')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla41" class="border-dotted">
+                  <a-input style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]" addonAfter="L"></a-input>
+                </a-form-item>
+                <a-form-item label="FVC%pred:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
+                  <a-radio-group v-decorator="['a51', {...require2, initialValue: initValue('a51')}]" @change="changeRadio($event, 'controla51')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla51" class="border-dotted">
+                  <a-input style="width: 240px;" v-decorator="['a52', {...inputRequired, initialValue: initValue('a52')}]" addonAfter="%"></a-input>
+                </a-form-item>
+                <a-form-item label="FEV1/FVC%pred:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
+                  <a-radio-group v-decorator="['a61', {...require2, initialValue: initValue('a61')}]" @change="changeRadio($event, 'controla61')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla61" class="border-dotted">
+                  <a-input style="width: 240px;" v-decorator="['a62', {...inputRequired, initialValue: initValue('a62')}]" addonAfter="%"></a-input>
+                </a-form-item>
+                <div style="margin-top: 10px;">吸入支气管舒张剂后:</div>
+                <a-form-item label="FEV1:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
+                  <a-radio-group v-decorator="['b23', {...require2, initialValue: initValue('b23')}]" @change="changeRadio($event, 'controlb23')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb23" class="border-dotted">
+                  <a-input style="width: 240px;" v-decorator="['b24', {...inputRequired, initialValue: initValue('b24')}]" addonAfter="L"></a-input>
+                </a-form-item>
+                <a-form-item label="FEV1%pred:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
+                  <a-radio-group v-decorator="['b33', {...require2, initialValue: initValue('b33')}]" @change="changeRadio($event, 'controlb33')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb33" class="border-dotted">
+                  <a-input style="width: 240px;" v-decorator="['b34', {...inputRequired, initialValue: initValue('b34')}]" addonAfter="%"></a-input>
+                </a-form-item>
+                <a-form-item label="FVC:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
+                  <a-radio-group v-decorator="['b43', {...require2, initialValue: initValue('b43')}]" @change="changeRadio($event, 'controlb43')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb43" class="border-dotted">
+                  <a-input style="width: 240px;" v-decorator="['b44', {...inputRequired, initialValue: initValue('b44')}]" addonAfter="L"></a-input>
+                </a-form-item>
+                <a-form-item label="FVC%pred:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
+                  <a-radio-group v-decorator="['b53', {...require2, initialValue: initValue('b53')}]" @change="changeRadio($event, 'controlb53')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb53" class="border-dotted">
+                  <a-input style="width: 240px;" v-decorator="['b54', {...inputRequired, initialValue: initValue('b54')}]" addonAfter="%"></a-input>
+                </a-form-item>
+                <a-form-item label="FEV1/FVC%pred:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
+                  <a-radio-group v-decorator="['b63', {...require2, initialValue: initValue('b63')}]" @change="changeRadio($event, 'controlb63')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb63" class="border-dotted">
+                  <a-input style="width: 240px;" v-decorator="['b64', {...inputRequired, initialValue: initValue('b64')}]" addonAfter="%"></a-input>
+                </a-form-item>
               </div>
+              <a-form-item label="(2) 是否还有其他肺功能数据:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-radio-group v-decorator="['c1', {...require1, initialValue: initValue('c1')}]" @change="changeRadio($event, 'controlc1')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <div v-if="controlc1">
+                <a-form-item label="Total Lung Capacity:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                  <a-radio-group v-decorator="['c11', {...require2, initialValue: initValue('c11')}]" @change="changeRadio($event, 'controlc11')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlc11">
+                  <a-input addonAfter="L" style="width: 240px;" v-decorator="['c12', {...inputRequired, initialValue: initValue('c12')}]"></a-input>
+                </a-form-item>
+                <a-form-item label="Diffusing capacity（DLCO）:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                  <a-radio-group v-decorator="['c21', {...require2, initialValue: initValue('c21')}]" @change="changeRadio($event, 'controlc21')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlc21">
+                  <a-input addonAfter="L" style="width: 240px;" v-decorator="['c22', {...inputRequired, initialValue: initValue('c22')}]"></a-input>
+                </a-form-item>
+                <a-form-item label="Residual Volume:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                  <a-radio-group v-decorator="['c31', {...require2, initialValue: initValue('c31')}]" @change="changeRadio($event, 'controlc31')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlc31">
+                  <a-input addonAfter="L" style="width: 240px;" v-decorator="['c32', {...inputRequired, initialValue: initValue('c32')}]"></a-input>
+                </a-form-item>
+                <a-form-item label="Inspiratory capacity（DLCO）:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                  <a-radio-group v-decorator="['c41', {...require2, initialValue: initValue('c41')}]" @change="changeRadio($event, 'controlc41')">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlc41">
+                  <a-input addonAfter="L" style="width: 240px;" v-decorator="['c42', {...inputRequired, initialValue: initValue('c42')}]"></a-input>
+                </a-form-item>
+              </div>
+              <a-form-item label="(3) 肺功能结论:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-radio-group v-decorator="['e1', {...require1, initialValue: initValue('e1')}]" @change="changeRadio($event, 'controle1')">
+                  <a-radio value="1">通气功能正常</a-radio>
+                  <a-radio value="-1">通气功能减退</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="通气功能减退类型:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controle1">
+                <a-radio-group v-decorator="['e12', {...require1, initialValue: initValue('e12')}]">
+                  <a-radio value="1">阻塞性</a-radio>
+                  <a-radio value="2">限制性</a-radio>
+                  <a-radio value="3">混合型</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(4) 呼出气一氧化氮(eNO):" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-input addonAfter="ppb" style="width: 240px;" v-decorator="['f1', {...inputRequired, initialValue: initValue('f1')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="(5) 6分钟步行试验总距离:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-input addonAfter="m" style="width: 240px;" v-decorator="['g2', {...inputRequired, initialValue: initValue('g2')}]"></a-input>
+              </a-form-item>
+              <div style="margin-top: 10px;">开始时:</div>
+              <a-form-item label="血压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-input addonAfter="mmhg" style="width: 240px;" v-decorator="['g21', {...inputRequired, initialValue: initValue('g21')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="HR:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-input addonAfter="次/分" style="width: 240px;" v-decorator="['g22', {...inputRequired, initialValue: initValue('g22')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="氧饱和度:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-input addonAfter="%" style="width: 240px;" v-decorator="['g23', {...inputRequired, initialValue: initValue('g23')}]"></a-input>
+              </a-form-item>
+              <div style="margin-top: 10px;">结束时:</div>
+              <a-form-item label="血压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-input addonAfter="mmhg" style="width: 240px;" v-decorator="['g31', {...inputRequired, initialValue: initValue('g31')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="HR:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-input addonAfter="次/分" style="width: 240px;" v-decorator="['g32', {...inputRequired, initialValue: initValue('g32')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="氧饱和度:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-input addonAfter="%" style="width: 240px;" v-decorator="['g33', {...inputRequired, initialValue: initValue('g33')}]"></a-input>
+              </a-form-item>
             </div>
           </a-form>
         </a-col>
@@ -92,8 +260,8 @@ export default {
       },
       labelColHor: {
         xs: { span: 24 },
-        sm: { span: 6 },
-        md: { span: 6 }
+        sm: { span: 7 },
+        md: { span: 7 }
       },
       wrapper18: {
         md: { span: 18 }
@@ -105,8 +273,8 @@ export default {
       },
       wrapperHor: {
         xs: { span: 24 },
-        sm: { span: 18 },
-        md: { span: 18 }
+        sm: { span: 17 },
+        md: { span: 17 }
       },
       wrapperVer: {
         xs: { span: 24 },
@@ -114,10 +282,10 @@ export default {
         md: { span: 24 }
       },
       labelColOffset: {
-        md: { span: 6, offset: 6 }
+        md: { span: 4, offset: 7 }
       },
       wrapperOffset: {
-        md: { span: 12 }
+        md: { span: 13 }
       },
       dateRequire: {
         rules: [{ type: 'object', required: true, message: '请选择时间！' }]
@@ -140,7 +308,22 @@ export default {
       fgnxgjc: undefined,
       controla1p: false,
       controla1n: false,
-      controla21: false
+      controla21: false,
+      controla31: false,
+      controla41: false,
+      controla51: false,
+      controla61: false,
+      controlb23: false,
+      controlb33: false,
+      controlb43: false,
+      controlb53: false,
+      controlb63: false,
+      controlc1: false,
+      controlc11: false,
+      controlc21: false,
+      controlc31: false,
+      controlc41: false,
+      controle1: false
     }
   },
   created() {
@@ -165,8 +348,8 @@ export default {
     params.append('basisMarkId', this.maskId)
     getBasisForm(params)
       .then(res => {
-        if (res.data && res.data.byxxgjc)
-          that.byxxgjc = that.dealAnswers(res.data.byxxgjc)
+        if (res.data && res.data.fgnxgjc)
+          that.fgnxgjc = that.dealAnswers(res.data.fgnxgjc)
       })
       .catch(error => {
         console.log(error)
@@ -190,8 +373,8 @@ export default {
           this.controla1n = true
           this.controla1p = false
         }
-      } else if (t === 'controla52') {
-        if (e.target.value === '3') {
+      } else if (t === 'controle1') {
+        if (e.target.value === '-1') {
           this[t] = true
         } else {
           this[t] = false
@@ -237,17 +420,67 @@ export default {
     },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
-
+        if (answer.a1 === 1) {
+          this.controla1p = true
+          this.controla1n = false
+        } else if (answer.a1 === -1) {
+          this.controla1p = false
+          this.controla1n = false
+        }
+        if(answer.a21 === 1){
+          this.controla21 = true
+        }
+        if(answer.a31 === 1){
+          this.controla31 = true
+        }
+        if(answer.a41 === 1){
+          this.controla41 = true
+        }
+        if(answer.a51 === 1){
+          this.controla51 = true
+        }
+        if(answer.a61 === 1){
+          this.controla61 = true
+        }
+        if(answer.b23 === 1){
+          this.controlb23 = true
+        }
+        if(answer.b33 === 1){
+          this.controlb33 = true
+        }
+        if(answer.b43 === 1){
+          this.controlb43 = true
+        }
+        if(answer.b53 === 1){
+          this.controlb53 = true
+        }
+        if(answer.b63 === 1){
+          this.controlb63 = true
+        }
+        if(answer.c1 === 1){
+          this.controlc1 = true
+        }
+        if(answer.c11 === 1){
+          this.controlc11 = true
+        }
+        if(answer.c21 === 1){
+          this.controlc21 = true
+        }
+        if(answer.c31 === 1){
+          this.controlc31 = true
+        }
+        if(answer.c41 === 1){
+          this.controlc41 = true
+        }
+        if(answer.e1 === -1){
+          this.controle1 = true
+        }
       }
       return answer
     },
     save() {
       var re = this.form.getFieldsValue()
       var that = this
-      re = {
-        ...re,
-        'a9': typeof re['a9'] !== 'undefined' ? re['a9'].join(',') : ''
-      }
       console.log(re)
       this.patientBasis.status = 1
       var params = new URLSearchParams()
