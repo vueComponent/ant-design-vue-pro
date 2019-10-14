@@ -264,7 +264,7 @@ export default {
       patient: {},
       patientBasis: {},
       bodyStyle: {
-        height: '500px',
+        height: '550px',
         overflow: 'auto'
       },
       baselineInfoStyle: {

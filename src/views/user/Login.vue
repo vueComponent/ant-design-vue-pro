@@ -2,39 +2,28 @@
   <div class="main">
     <a-form id="formLogin" class="user-layout-login" ref="formLogin" :form="form" @submit="handleSubmit">
       <a-form-item>
-        <a-input
-          size="large"
-          type="text"
-          placeholder="账号"
-          v-decorator="['account', { rules: [{ required: true, message: '请输入账号' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change' }]"
-        >
+        <a-input size="large" type="text" placeholder="账号" v-decorator="['account', { rules: [{ required: true, message: '请输入账号' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change' }]">
           <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }" />
         </a-input>
       </a-form-item>
       <a-form-item>
-        <a-input
-          size="large"
-          type="password"
-          autocomplete="false"
-          placeholder="密码"
-          v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur' }]"
-        >
+        <a-input size="large" type="password" autocomplete="false" placeholder="密码" v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur' }]">
           <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
         </a-input>
       </a-form-item>
-      <a-form-item><a-checkbox v-decorator="['rememberMe']">记住密码</a-checkbox></a-form-item>
+      <a-form-item>
+        <a-checkbox v-decorator="['rememberMe']">记住密码</a-checkbox>
+      </a-form-item>
       <a-form-item style="margin-top:24px">
         <a-button size="large" type="primary" htmlType="submit" class="login-button" :loading="state.loginBtn" :disabled="state.loginBtn">登陆</a-button>
       </a-form-item>
     </a-form>
   </div>
 </template>
-
 <script>
-import md5 from 'md5';
-import { mapActions } from 'vuex';
-import { timeFix } from '@/utils/util';
-import { loginCheck } from '@/api/login';
+import md5 from 'md5'
+import { mapActions } from 'vuex'
+import { timeFix } from '@/utils/util'
 
 export default {
   components: {},
@@ -73,7 +62,7 @@ export default {
       callback();
     },
     handleSubmit(e) {
-      const that=this;
+      const that = this;
       e.preventDefault();
       const {
         form: { validateFields },
@@ -90,21 +79,18 @@ export default {
         if (!err) {
           console.log('login form', values);
           const loginParams = { ...values };
-          console.log("loginParams",loginParams)
-          loginCheck(loginParams)
-            .then(function(res){
-              console.log(res);
-                if(res.code==0){
-					window.localStorage.setItem("doctorId",res.data.doctorId);
-					window.localStorage.setItem("userName",res.data.name);
-                   that.loginSuccess(res)
-                }else{
-                  that.$notification['error']({
-                    message: '错误',
-                    description: res.msg,
-                    duration: 4
-                  });
-                }
+          console.log("loginParams", loginParams)
+          Login(loginParams)
+            .then(function(res) {
+              console.log(res)
+              that.loginSuccess(res)
+            })
+            .catch(error => {
+              that.$notification['error']({
+                message: '错误',
+                description: error,
+                duration: 4
+              })
             })
             .finally(() => {
               state.loginBtn = false;
@@ -137,7 +123,6 @@ export default {
   }
 };
 </script>
-
 <style lang="less" scoped>
 .user-layout-login {
   label {

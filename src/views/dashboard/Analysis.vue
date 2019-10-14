@@ -138,7 +138,7 @@
 
 <script>
 import moment from 'moment';
-import { Pie, ChartCard, MiniArea, MiniBar, MiniProgress, RankList, Bar, NumberInfo, MiniSmoothArea } from '@/components';
+import { Pie, ChartCard, MiniArea, MiniBar, MiniProgress, RankList, Bar, Trend, NumberInfo, MiniSmoothArea } from '@/components';
 import { mixinDevice } from '@/utils/mixin';
 import { getAllNumbers, getMyWork, getPatientsAndBasiss, getProvinceCompare } from '@/api/home';
 import { MyIcon } from '@/components/_util/util';
@@ -166,7 +166,8 @@ export default {
     NumberInfo,
     MiniSmoothArea,
     Pie,
-    MyIcon
+    MyIcon,
+    Trend
   },
   data() {
     return {
