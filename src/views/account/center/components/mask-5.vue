@@ -100,7 +100,7 @@
               </a-form-item>
               <div class="title">3.Bhalla影像学评分</div>
               <a-form-item label="(1) 支气管扩张程度：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a10', {...require1, initialValue: initValue('a10')}]" @change="computeBhalla">
+                <a-radio-group v-decorator="['a10', {initialValue: initValue('a10')}]" @change="computeBhalla">
                   <a-radio value="1">无</a-radio>
                   <a-radio value="2">轻度（管腔直径为临近血管直径的1-2倍）</a-radio>
                   <a-radio value="3">中度（管腔直径为临近血管直径的2-3倍）</a-radio>
@@ -108,7 +108,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(2) 支气管壁增厚情况" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a11', {...require1, initialValue: initValue('a11')}]" @change="computeBhalla">
+                <a-radio-group v-decorator="['a11', {initialValue: initValue('a11')}]" @change="computeBhalla">
                   <a-radio value="1">无</a-radio>
                   <a-radio value="2">轻度（支气管壁的厚度相当于临近血管壁厚度）</a-radio>
                   <a-radio value="3">中度（支气管壁的厚度相当于临近血管壁厚度的1-2倍）</a-radio>
@@ -116,16 +116,16 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(3) 支气管扩张的范围（肺段数）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['a12', {...inputRequired, initialValue: initValue('a12')}]" @change="computeBhalla"></a-input>
+                <a-input style="width: 240px;" v-decorator="['a12', { initialValue: initValue('a12')}]" @change="computeBhalla"></a-input>
               </a-form-item>
               <a-form-item label="(4) 支气管管腔黏液阻塞的范围（肺段数）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['a13', {...inputRequired, initialValue: initValue('a13')}]" @change="computeBhalla"></a-input>
+                <a-input style="width: 240px;" v-decorator="['a13', { initialValue: initValue('a13')}]" @change="computeBhalla"></a-input>
               </a-form-item>
               <a-form-item label="(5) 存在脓肿的范围（肺段数）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['a14', {...inputRequired, initialValue: initValue('a14')}]" @change="computeBhalla"></a-input>
+                <a-input style="width: 240px;" v-decorator="['a14', { initialValue: initValue('a14')}]" @change="computeBhalla"></a-input>
               </a-form-item>
               <a-form-item label="(6) 扩张支气管的分级数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a15', {...require1, initialValue: initValue('a15')}]" @change="computeBhalla">
+                <a-radio-group v-decorator="['a15', {initialValue: initValue('a15')}]" @change="computeBhalla">
                   <a-radio value="1">无</a-radio>
                   <a-radio value="2">超过4级</a-radio>
                   <a-radio value="3">超过5级</a-radio>
@@ -133,7 +133,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(7) 肺大疱数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a16', {...require1, initialValue: initValue('a16')}]" @change="computeBhalla">
+                <a-radio-group v-decorator="['a16', { initialValue: initValue('a16')}]" @change="computeBhalla">
                   <a-radio value="1">无</a-radio>
                   <a-radio value="2">单侧(&lt;4)</a-radio>
                   <a-radio value="3">双侧(&lt;4)</a-radio>
@@ -141,21 +141,21 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(8) 肺气肿的范围" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a17', {...require1, initialValue: initValue('a17')}]" @change="computeBhalla">
+                <a-radio-group v-decorator="['a17', { initialValue: initValue('a17')}]" @change="computeBhalla">
                   <a-radio value="1">无</a-radio>
                   <a-radio value="2">1-5</a-radio>
                   <a-radio value="4">&gt;5</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(9) 肺不张/实变的" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a18', {...require1, initialValue: initValue('a18')}]" @change="computeBhalla">
+                <a-radio-group v-decorator="['a18', { initialValue: initValue('a18')}]" @change="computeBhalla">
                   <a-radio value="1">无</a-radio>
                   <a-radio value="2">肺亚段</a-radio>
                   <a-radio value="3">肺段/肺叶</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(10) 支扩类型" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a20', {...require1, initialValue: initValue('a20')}]" @change="computeBhalla">
+                <a-radio-group v-decorator="['a20', {initialValue: initValue('a20')}]" @change="computeBhalla">
                   <a-radio value="1">囊状</a-radio>
                   <a-radio value="2">柱状</a-radio>
                   <a-radio value="3">静脉曲张型</a-radio>
