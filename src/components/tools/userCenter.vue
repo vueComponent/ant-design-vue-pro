@@ -30,7 +30,6 @@ export default {
     };
   },
   created() {
-    debugger
     this.getUDetailById(this.token.doctorId);
   },
   computed: {
