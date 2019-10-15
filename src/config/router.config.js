@@ -171,6 +171,18 @@ export const asyncRouterMap = [
         meta: { title: '活动券登记', keepAlive: true, icon: baogao,isBack:false}
       },
       {
+        path: '/wx/healthknowledge',
+        name: 'healthknowledge',
+        component: () => import('@/views/wx/healthknowledge'),
+        meta: { title: '健康知识', keepAlive: true, icon: baogao,isBack:false}
+      },
+      {
+        path: '/wx/famousDoctor',
+        name: 'famousDoctor',
+        component: () => import('@/views/wx/famousDoctor'),
+        meta: { title: '名医专家', keepAlive: true, icon: baogao,isBack:false}
+      },
+      {
         path: '/gallery/detail/:id(\\d*)',
         name: 'collectDetail',
         hidden: true,
