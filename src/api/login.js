@@ -40,11 +40,8 @@ export function getInfo () {
 
 export function logout () {
   return axios({
-    url: '/auth/logout',
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
-    }
+    url: '/login/loginOut',
+    method: 'post'
   })
 }
 
@@ -63,22 +60,6 @@ export function get2step (parameter) {
 export function getDetailById (parameter) {
   return axios({
     url: '/login/getDetailById',
-    method: 'post',
-    params: parameter
-  })
-}
-
-
-export function loginCheck(parameter) {
-  return axios({
-    url: '/login/loginCheck',
-    method: 'post',
-    params: parameter
-  })
-}
-export function loginOut(parameter) {
-  return axios({
-    url: '/login/loginOut',
     method: 'post',
     params: parameter
   })

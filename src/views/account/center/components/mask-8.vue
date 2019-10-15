@@ -199,23 +199,40 @@
               </a-form-item>
               <div style="margin-top: 10px;">开始时:</div>
               <a-form-item label="血压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input addonAfter="mmhg" style="width: 240px;" v-decorator="['g21', {...inputRequired, initialValue: initValue('g21')}]"></a-input>
+                <a-input addonAfter="mmhg" style="width: 240px;" v-decorator="['g21', {initialValue: initValue('g21')}]"></a-input>
               </a-form-item>
               <a-form-item label="HR:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input addonAfter="次/分" style="width: 240px;" v-decorator="['g22', {...inputRequired, initialValue: initValue('g22')}]"></a-input>
+                <a-input addonAfter="次/分" style="width: 240px;" v-decorator="['g22', {initialValue: initValue('g22')}]"></a-input>
               </a-form-item>
               <a-form-item label="氧饱和度:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input addonAfter="%" style="width: 240px;" v-decorator="['g23', {...inputRequired, initialValue: initValue('g23')}]"></a-input>
+                <a-input addonAfter="%" style="width: 240px;" v-decorator="['g23', {initialValue: initValue('g23')}]"></a-input>
               </a-form-item>
               <div style="margin-top: 10px;">结束时:</div>
               <a-form-item label="血压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input addonAfter="mmhg" style="width: 240px;" v-decorator="['g31', {...inputRequired, initialValue: initValue('g31')}]"></a-input>
+                <a-input addonAfter="mmhg" style="width: 240px;" v-decorator="['g31', {initialValue: initValue('g31')}]"></a-input>
               </a-form-item>
               <a-form-item label="HR:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input addonAfter="次/分" style="width: 240px;" v-decorator="['g32', {...inputRequired, initialValue: initValue('g32')}]"></a-input>
+                <a-input addonAfter="次/分" style="width: 240px;" v-decorator="['g32', {initialValue: initValue('g32')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="氧饱和度:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input addonAfter="%" style="width: 240px;" v-decorator="['g33', {initialValue: initValue('g33')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="(6) 血气分析:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              </a-form-item>
+              <a-form-item label="PH:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-input style="width: 240px;" v-decorator="['h1', {...inputRequired, initialValue: initValue('h1')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="氧分压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-input style="width: 240px;" v-decorator="['h2', {...inputRequired, initialValue: initValue('h2')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="二氧化碳分压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-input style="width: 240px;" v-decorator="['h3', {...inputRequired, initialValue: initValue('h3')}]"></a-input>
+              </a-form-item>
+              <a-form-item label="肺动脉氧分压差:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-input style="width: 240px;" v-decorator="['h4', {...inputRequired, initialValue: initValue('h4')}]"></a-input>
               </a-form-item>
               <a-form-item label="氧饱和度:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input addonAfter="%" style="width: 240px;" v-decorator="['g33', {...inputRequired, initialValue: initValue('g33')}]"></a-input>
+                <a-input style="width: 240px;" v-decorator="['h5', {...inputRequired, initialValue: initValue('h5')}]"></a-input>
               </a-form-item>
             </div>
           </a-form>

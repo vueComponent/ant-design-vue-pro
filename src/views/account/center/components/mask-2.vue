@@ -32,16 +32,16 @@
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.体格检查</div>
               <a-form-item label="(1) T:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a1', {...inputRequired, initialValue: initValue('a1')}]" style="width: 240px;"></a-input>
+                <a-input v-decorator="['a1', {initialValue: initValue('a1')}]" style="width: 240px;"></a-input>
               </a-form-item>
               <a-form-item label="(2) BP:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a2', {...inputRequired, initialValue: initValue('a2')}]" style="width: 240px;"></a-input>
+                <a-input v-decorator="['a2', {initialValue: initValue('a2')}]" style="width: 240px;"></a-input>
               </a-form-item>
               <a-form-item label="(3) R:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a3', {...inputRequired, initialValue: initValue('a3')}]" style="width: 240px;"></a-input>
+                <a-input v-decorator="['a3', {initialValue: initValue('a3')}]" style="width: 240px;"></a-input>
               </a-form-item>
               <a-form-item label="(4) HR:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a4', {...inputRequired, initialValue: initValue('a4')}]" style="width: 240px;"></a-input>
+                <a-input v-decorator="['a4', {initialValue: initValue('a4')}]" style="width: 240px;"></a-input>
               </a-form-item>
               <a-form-item label="(5) SpO2:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input v-decorator="['a5', {...inputRequired, initialValue: initValue('a5')}]" style="width: 240px;"></a-input>
