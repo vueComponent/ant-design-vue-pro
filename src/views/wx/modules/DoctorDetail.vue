@@ -153,9 +153,9 @@
 </script>
 
 <style lang="less" scoped>
-  .textarea {
-    /deep/.ant-form-item-control {
-      line-height: 1;
-    }
-  }
+//   .textarea {
+//     /deep/.ant-form-item-control {
+//       line-height: 1;
+//     }
+//   }
 </style>
