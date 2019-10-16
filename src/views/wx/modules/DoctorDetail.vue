@@ -18,13 +18,16 @@
             </template>
           </a-select>
         </a-form-item>
-        <a-form-item label="擅长领域" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['disease', requiredRule]" placeholder="请输入擅长领域" />
-        </a-form-item>
-        <a-form-item label="医生简介" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item class="textarea" label="医生简介" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <!-- <quill-editor v-decorator="['detail', requiredRule]"></quill-editor> -->
           <a-textarea rows="5" v-decorator="['detail', requiredRule]" placeholder="请输入医生简介" />
         </a-form-item>
-        <a-form-item label="获得荣誉" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item class="textarea" label="擅长领域" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <!-- <quill-editor v-decorator="['disease', requiredRule]"></quill-editor> -->
+          <a-input v-decorator="['disease', requiredRule]" placeholder="请输入擅长领域" />
+        </a-form-item>
+        <a-form-item class="textarea" label="获得荣誉" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <!-- <quill-editor v-decorator="['honor', requiredRule]"></quill-editor> -->
           <a-textarea rows="8" v-decorator="['honor', requiredRule]" placeholder="请输入获得荣誉" />
         </a-form-item>
         <a-form-item label="是否启用" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -41,7 +44,7 @@
 <script>
   import moment from 'moment'
   import { getDoctorDetail, saveDoctor, getCenter } from '@/api/famousDoctor'
-  //   import QuillEditor from '@components/Editor/QuillEditor'
+  //   import QuillEditor from '@/components/Editor/QuillEditor'
   export default {
     // components: {
     //   QuillEditor
@@ -97,8 +100,8 @@
               job: res.data.doctorDetail.job,
               department: res.data.doctorDetail.department,
               centerId: res.data.doctorDetail.centerId,
-              disease: res.data.doctorDetail.disease,
               detail: res.data.doctorDetail.detail,
+              disease: res.data.doctorDetail.disease,
               honor: res.data.doctorDetail.honor,
               isUser: String(res.data.doctorDetail.isUser)
             });
@@ -150,4 +153,9 @@
 </script>
 
 <style lang="less" scoped>
+  .textarea {
+    /deep/.ant-form-item-control {
+      line-height: 1;
+    }
+  }
 </style>

@@ -24,3 +24,11 @@ export function addOrEdit(parameter) {
     params: parameter
   })
 }
+
+export function getUrl(parameter) {
+    return axios({
+      url: `/text/add`,
+      method: 'get',
+      params: parameter
+    })
+  }
