@@ -25,7 +25,7 @@ export const asyncRouterMap = [
       },
       {
         path: '/acute/index',
-        name: 'list2',
+        name: 'acute',
         component: () => import('@/views/acute/TableList'),
         meta: { title: '急性加重', keepAlive: true, icon: bingli, permission: [ 'center' ]}
       },

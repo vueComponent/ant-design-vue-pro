@@ -124,7 +124,7 @@ const visitMap = {
 };
 
 export default {
-  name: 'TableList',
+  name: 'acute',
   components: {
     STable,
     Ellipsis,
