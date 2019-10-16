@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import { getWxArticleDetail, addOrEdit } from '@/api/textWx'
+  import { getWxArticleDetail, addOrEdit } from '@/api/text'
   //   import QuillEditor from '@components/Editor/QuillEditor'
   export default {
     // components: {

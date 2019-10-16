@@ -18,8 +18,8 @@
             </template>
           </a-select>
         </a-form-item>
-        <a-form-item label="擅长疾病" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['disease', requiredRule]" placeholder="请输入擅长疾病" />
+        <a-form-item label="擅长领域" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['disease', requiredRule]" placeholder="请输入擅长领域" />
         </a-form-item>
         <a-form-item label="医生简介" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea rows="5" v-decorator="['detail', requiredRule]" placeholder="请输入医生简介" />
@@ -29,8 +29,8 @@
         </a-form-item>
         <a-form-item label="是否启用" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['isUser', requiredRule]">
-            <a-radio value="1">是</a-radio>
-            <a-radio value="0">否</a-radio>
+            <a-radio value="1">启用</a-radio>
+            <a-radio value="0">停用</a-radio>
           </a-radio-group>
         </a-form-item>
       </a-form>
@@ -125,14 +125,14 @@
           const params = {
             doctorDetail: {
               ...this.form.getFieldsValue(),
-              creatorId: this.creatorId
+              isUser: Number(fieldsValue['isUser'])
             }
           }
 
           if (this.doctorId) {
             params.doctorDetail.doctorDetailId = this.doctorId
+            params.doctorDetail.creatorId = this.creatorId
           }
-          console.log('params=>', params)
 
           saveDoctor(params).then(res => {
             this.$message.success(res.msg);

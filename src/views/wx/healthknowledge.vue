@@ -34,7 +34,7 @@
 
 <script>
   import moment from 'moment'
-  import { getWxArticleList } from '@/api/textWx'
+  import { getWxArticleList } from '@/api/text'
   import { STable } from '@/components'
   import ArticleDetail from './modules/ArticleDetail'
   export default {

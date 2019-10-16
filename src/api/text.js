@@ -4,7 +4,7 @@ import {
 
 export function getWxArticleList(parameter) {
   return axios({
-    url: '/textWx/getDataList',
+    url: '/text/getDataList',
     method: 'get',
     params: parameter
   })
@@ -12,14 +12,14 @@ export function getWxArticleList(parameter) {
 
 export function getWxArticleDetail(parameter) {
   return axios({
-    url: `/textWx/${parameter}/view`,
+    url: `/text/${parameter}/view`,
     method: 'get',
   })
 }
 
 export function addOrEdit(parameter) {
   return axios({
-    url: `/textWx/addOrEdit`,
+    url: `/text/addOrEdit`,
     method: 'post',
     params: parameter
   })

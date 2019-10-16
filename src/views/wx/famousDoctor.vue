@@ -25,9 +25,9 @@
               <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
-                    <p @click="tableSearch(5)">已启用医生</p>
-                    <p @click="tableSearch(5)">未启用医生</p>
-                    <p @click="tableSearch(0)">全部医生</p>
+                    <p @click="tableSearch(1)">已启用医生</p>
+                    <p @click="tableSearch(0)">未启用医生</p>
+                    <p @click="tableSearch()">全部医生</p>
                   </div>
                 </a-tab-pane>
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -154,9 +154,9 @@
         this.queryParam = {}
       },
       tableSearch(type) {
-        if (type == 0) {
+        if (type == 0 || type == 1) {
           const keyWord = {
-            executeStatus: type
+            isUser: type
           }
           this.$refs.table.search(keyWord)
         } else {
