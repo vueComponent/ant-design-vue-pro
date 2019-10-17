@@ -158,3 +158,19 @@ export function getBasisForm(params) {
     data: params
   })
 }
+
+export function getSFJxDataList(params) {
+  return axios({
+    url: '/basis/getSFJxDataList',
+    method: 'post',
+    params: params
+  })
+}
+
+export function createSFJx(params) {
+  return axios({
+    url: '/basis/createSFJx',
+    method: 'post',
+    data: params
+  })
+}
