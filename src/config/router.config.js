@@ -32,9 +32,17 @@ export const asyncRouterMap = [
       {
         path: '/list/basis/:id(\\d*)',
         name: 'basis',
-        hidden:true,
+        hidden: true,
         hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
         component: () => import('@/views/account/center/Index'),
+        meta: { permission: [ 'center' ] }
+      },
+      {
+        path: '/jxjzq/:id(\\d*)',
+        name: 'jxjzq',
+        hidden: true,
+        hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+        component: () => import('@/views/account/center/jxjzq'),
         meta: { permission: [ 'center' ] }
       },
       {

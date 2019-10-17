@@ -59,7 +59,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="small" :scroll="scroll" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="small" :scroll="scroll" rowKey="patientBasisId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="patientName" slot-scope="text, record" @click="showUser(record)">
         <p class="userName">{{ text }}</p>
       </span>
@@ -210,7 +210,8 @@ export default {
       this.$refs.detailModal.show(record);
     },
     exec(record) {
-      this.$refs.createModal.edit(record);
+      console.log(record)
+      this.$router.push('/jxjzq/' + record.patientBasisId)
     },
     handleOk() {
       this.$refs.table.refresh();

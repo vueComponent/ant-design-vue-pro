@@ -90,7 +90,7 @@
                 <a-form-item label="吸入/雾化抗生素药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['b42', {...inputRequired, initialValue: initValue('b42')}]"></a-input>
                 </a-form-item>
-                <a-form-item label="周期性抗生素治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="祛痰类药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['b43', {...selectRequired, initialValue: initValue('b43')}]">
                     <a-radio value="1">N乙酰半胱氨酸</a-radio>
                     <a-radio value="2">氨溴索</a-radio>
