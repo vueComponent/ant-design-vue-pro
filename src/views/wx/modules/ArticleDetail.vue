@@ -1,5 +1,5 @@
 <template>
-  <a-modal :title="title" okText="发布" :width="900" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
+  <a-modal :title="title" okText="发布" :width="1000" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="文章标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -31,8 +31,8 @@
           <a-input v-decorator="['publisher', requiredRule]" />
         </a-form-item>
         <a-form-item class="textarea" label="文章内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <quill-editor v-decorator="['text', requiredRule]"></quill-editor>
-          <!-- <a-textarea rows="7" v-decorator="['text', requiredRule]" /> -->
+          <!-- <quill-editor v-decorator="['text', requiredRule]"></quill-editor> -->
+          <a-textarea rows="7" v-decorator="['text', requiredRule]" />
         </a-form-item>
         <a-form-item label="发布终端" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-checkbox-group v-decorator="['terminal', requiredRule]">
@@ -47,11 +47,11 @@
 
 <script>
   import { getWxArticleDetail, addOrEdit, getUrl } from '@/api/text'
-  import QuillEditor from '@/components/Editor/QuillEditor'
+//   import QuillEditor from '@/components/Editor/QuillEditor'
   export default {
-    components: {
-      QuillEditor
-    },
+    // components: {
+    //   QuillEditor
+    // },
     data() {
       return {
         title: '',
@@ -177,9 +177,9 @@
 </script>
 
 <style lang="less" scoped>
-  .textarea {
-    /deep/.ant-form-item-control {
-      line-height: 1;
-    }
-  }
+//   .textarea {
+//     /deep/.ant-form-item-control {
+//       line-height: 1;
+//     }
+//   }
 </style>

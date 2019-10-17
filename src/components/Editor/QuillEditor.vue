@@ -1,99 +1,88 @@
 <template>
-    <div class="quill-editor-example">
-        <quill-editor
-        v-model="content"
-        ref="myQuillEditor"
-        :options="editorOption"
-        @blur="onEditorBlur($event)"
-        @focus="onEditorFocus($event)"
-        @ready="onEditorReady($event)"
-        @change="onEditorChange($event)">
-        </quill-editor>
-    </div>
+  <div>
+    <quill-editor ref="newEditor" v-model="content" :options="editorOption"></quill-editor>
+    <!-- <a-upload :action="action" ref="uniqueId" id="uniqueId" style="display:none" @change="handleChange"></a-upload> -->
+  </div>
 </template>
 
 <script>
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+  import 'quill/dist/quill.core.css'
+  import 'quill/dist/quill.snow.css'
+  import 'quill/dist/quill.bubble.css'
 
-import { quillEditor } from 'vue-quill-editor'
+  import { quillEditor } from 'vue-quill-editor'
 
-export default {
-  name: 'QuillEditor',
-  components: {
-    quillEditor
-  },
-  props: {
-    value: {
-      type: String
-    }
-  },
-  data () {
-    return {
-      content: null,
-      editorOption: {
-        // some quill options
-        placeholder: '请输入内容',
-        modules: {
-            toolbar: [
-              ['bold', 'italic', 'underline', 'strike'],
-              ['blockquote', 'code-block'],
-              [{ 'header': 1 }, { 'header': 2 }],
-              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-              [{ 'script': 'sub' }, { 'script': 'super' }],
-              [{ 'indent': '-1' }, { 'indent': '+1' }],
-              [{ 'direction': 'rtl' }],
-              [{ 'size': ['small', false, 'large', 'huge'] }],
-              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-              [{ 'font': [] }],
-              [{ 'color': [] }, { 'background': [] }],
-              [{ 'align': [] }],
-              ['clean'],
-              ['link', 'image', 'video']
-            ],
+  export default {
+    name: 'QuillEditor',
+    components: {
+      quillEditor
+    },
+    props: {
+      value: {
+        type: String
+      }
+    },
+    data() {
+      return {
+        // action: 'http://www.dtp-cloud.com:18780/file-server/file/uploadFile',
+        content: null,
+        editorOption: {
+          // some quill options
+          placeholder: '请输入内容',
+          //   modules: {
+          //     toolbar: {
+          //       container: [
+          //         ['bold', 'italic', 'underline', 'strike'],
+          //         ['blockquote', 'code-block'],
+          //         [{ 'header': 1 }, { 'header': 2 }],
+          //         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+          //         [{ 'script': 'sub' }, { 'script': 'super' }],
+          //         [{ 'indent': '-1' }, { 'indent': '+1' }],
+          //         [{ 'direction': 'rtl' }],
+          //         [{ 'size': ['small', false, 'large', 'huge'] }],
+          //         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          //         [{ 'color': [] }, { 'background': [] }],
+          //         [{ 'font': [] }],
+          //         [{ 'align': [] }],
+          //         ['clean'],
+          //         ['link', 'image', 'video']
+          //       ],
+          //       handlers: {
+          //         'image': val => {
+          //           var fileInput = document.querySelector('#uniqueId') //隐藏的file元素
+          //           fileInput.click() //触发事件
+          //         }
+          //       }
+          //     }
+          //   }
         }
       }
-    }
-  },
-  methods: {
-    onEditorBlur (quill) {
-      console.log('editor blur!', quill)
     },
-    onEditorFocus (quill) {
-      console.log('editor focus!', quill)
-    },
-    onEditorReady (quill) {
-      console.log('editor ready!', quill)
-    },
-    onEditorChange ({ quill, html, text }) {
-      console.log('editor change!', quill, html, text)
-      this.$emit('change', html)
-    }
-  },
-  watch: {
-    value (val) {
-      this.content = val
+    // methods: {
+    //   handleChange(info) {
+    //     console.log('info=>', info)
+    //     let quill = this.$refs.newEditor.quill
+    //     // // 获取光标所在位置
+    //     let length = this.quill.getSelection().index;
+    //     // // 插入图片 res.info为服务器返回的图片地址
+    //     this.quill.insertEmbed(length, 'image', info.file.response.data.src)
+    //     // // 调整光标到最后
+    //     this.quill.setSelection(length + 1)
+    //     console.log(this.quill)
+    //   }
+    // },
+    watch: {
+      value(val) {
+        this.content = val
+      }
     }
   }
-}
 </script>
 
 <style lang="less" scoped>
-// @import url('../index.less');
-
-// /* 覆盖 quill 默认边框圆角为 ant 默认圆角，用于统一 ant 组件风格 */
-// .ant-editor-quill {
-//   /deep/ .ql-toolbar.ql-snow {
-//     border-radius: @border-radius-base @border-radius-base 0 0;
-//   }
-//   /deep/ .ql-container.ql-snow {
-//     border-radius: 0 0 @border-radius-base @border-radius-base;
-//   }
-// }
-.quill-editor {
+  .quill-editor {
     display: flex;
     flex-direction: column;
     height: 300px;
-}
+  }
 </style>
