@@ -4,64 +4,73 @@
       <a-form layout="inline">
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
-            <a-form-item ><a-input v-model="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" /></a-form-item>
+            <a-form-item>
+              <a-input v-model="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" />
+            </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="refreshTable">查询</a-button>
-                <a @click="toggleAdvanced" style="margin-left: 8px">
-                  更多筛选
+              <a @click="toggleAdvanced" style="margin-left: 8px">
+                更多筛选
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
             </a-form-item>
           </a-col>
           <a-col :md="13" style="text-align:right" :sm="24">
-            <a-button type="primary"  style="margin-left: 10px;">导出</a-button>
+            <a-button type="primary" style="margin-left: 10px;">导出</a-button>
           </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
-              <div>
-                <a-tabs defaultActiveKey="1">
-                  <a-tab-pane tab="常用检索" key="1">
-                    <div class="commonRetrieval">                      
-                      <p @click="tableSearch(0)">忽略任务</p>
-                      <p @click="tableSearch(1)">未执行任务</p>
-                      <p @click="tableSearch(2)">执行中任务</p>
-                      <p @click="tableSearch(3)">已完成任务</p>
-                    </div>
-                  </a-tab-pane>
-                  <a-tab-pane tab="自定义检索" key="2" forceRender>
-                    <a-card  :bordered="false">
-                      <a-form>
-                        <a-form-item  label="档案号"><a-input v-model="queryParam.code" style="width: 100%" /></a-form-item>
-                        <a-form-item  label="姓名"><a-input v-model="queryParam.name" style="width: 100%" /></a-form-item>
-                        <a-form-item  label="身份证号"><a-input v-model="queryParam.card" style="width: 100%" /></a-form-item>
-                      <a-form-item label="创建日期" style="margin-bottom:0;">
-                              <a-range-picker @change="changeTime" style="width: 100%"  :value="dateArr"/>
-                       </a-form-item>
-                      <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
-                          <a-button type="primary"  @click="clearForm()">清空</a-button>
-                         <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
+            <div>
+              <a-tabs defaultActiveKey="1">
+                <a-tab-pane tab="常用检索" key="1">
+                  <div class="commonRetrieval">
+                    <p @click="tableSearch(0)">忽略任务</p>
+                    <p @click="tableSearch(1)">未执行任务</p>
+                    <p @click="tableSearch(2)">执行中任务</p>
+                    <p @click="tableSearch(3)">已完成任务</p>
+                  </div>
+                </a-tab-pane>
+                <a-tab-pane tab="自定义检索" key="2" forceRender>
+                  <a-card :bordered="false">
+                    <a-form>
+                      <a-form-item label="档案号">
+                        <a-input v-model="queryParam.code" style="width: 100%" />
                       </a-form-item>
-                      </a-form>
-                    </a-card>
-                  </a-tab-pane>
-                </a-tabs>
-              </div>
+                      <a-form-item label="姓名">
+                        <a-input v-model="queryParam.name" style="width: 100%" />
+                      </a-form-item>
+                      <a-form-item label="身份证号">
+                        <a-input v-model="queryParam.card" style="width: 100%" />
+                      </a-form-item>
+                      <a-form-item label="创建日期" style="margin-bottom:0;">
+                        <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
+                      </a-form-item>
+                      <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
+                        <a-button type="primary" @click="clearForm()">清空</a-button>
+                        <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
+                      </a-form-item>
+                    </a-form>
+                  </a-card>
+                </a-tab-pane>
+              </a-tabs>
+            </div>
           </a-col>
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" :scroll="scroll" size="small" rowKey="visitTaskId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-       <span slot="warnStatus" slot-scope="text">
+    <s-table ref="table" :scroll="scroll" size="small" rowKey="patientBasisId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+      <span slot="warnStatus" slot-scope="text">
         <my-icon type="iconyujing_huaban" :class="text|warnStatusType"></my-icon>
       </span>
-      <span slot="name"  slot-scope="text,record" @click="showUser(record)">
+      <span slot="name" slot-scope="text,record" @click="showUser(record)">
         <p class="userName">{{text}}</p>
       </span>
       <span slot="warnStatus" slot-scope="text">
         <my-icon type="iconyujing_huaban" :class="text|warnStatusType"></my-icon>
       </span>
-      <span slot="executeStatus" slot-scope="text"><a-badge :status="text | executeStatusTypeFilter" :text="text | executeStatusFilter" /></span>
+      <span slot="executeStatus" slot-scope="text">
+        <a-badge :status="text | executeStatusTypeFilter" :text="text | executeStatusFilter" /></span>
       <span slot="action" slot-scope="text, record">
         <template>
           <a @click="implement(record)">
@@ -74,20 +83,18 @@
         </template>
       </span>
     </s-table>
-    
-    <user-detail ref="detailModal"/>
+    <user-detail ref="detailModal" />
   </a-card>
 </template>
-
 <script>
 import moment from 'moment';
 import { STable, Ellipsis } from '@/components';
-import { getVisitTask,ignoreTask } from '@/api/task';
+import { getVisitTask, ignoreTask } from '@/api/task';
 import { MyIcon } from '@/components/_util/util';
 import UserDetail from '../list/modules/UserDetail'
 
 const executeStatusMap = {
-  0:{
+  0: {
     status: 'default',
     text: '忽略'
   },
@@ -114,58 +121,58 @@ export default {
   },
   data() {
     return {
-       bodyStyle:{
-                padding:"10px",
-        paddingBottom:"0px"
+      bodyStyle: {
+        padding: "10px",
+        paddingBottom: "0px"
       },
       mdl: {},
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
       queryParam: {
-        params:1
+        params: 1
       },
-      keyword:'',
+      keyword: '',
       // 表头
-      columns: [
-        {
+      columns: [{
           title: '任务编号',
           dataIndex: 'taskCode',
-            width:"120px"
+          width: "120px"
         },
         {
           title: '任务名称',
           dataIndex: 'taskName',
-            width:"100px"
+          width: "100px"
         },
         {
           title: '患者姓名',
           dataIndex: 'patientName',
           scopedSlots: { customRender: 'name' },
-             width: '120px',
+          width: '120px',
         },
         {
           title: '身份证号',
           dataIndex: 'card',
-               width: '180px',
-        },{
+          width: '180px',
+        }, {
           title: '联系电话',
-          dataIndex: 'telephone',
-               width: '150px',
+          dataIndex: 'telephone1',
+          width: '150px',
         },
         {
           title: '创建日期',
           dataIndex: 'createDate',
-              width: '110px',
+          width: '110px',
+          customRender: createDate => moment(createDate).format('YYYY-MM-DD')
         },
-         {
+        {
           title: '到期时间',
           dataIndex: 'planDate',
-                width: '110px',
+          width: '110px',
         },
         {
           title: '任务状态',
-          dataIndex: 'executeStatus',
+          dataIndex: 'status',
           scopedSlots: { customRender: 'executeStatus' },
           width: '110px',
         },
@@ -178,7 +185,7 @@ export default {
         }
       ],
       // 加载数据方法 必须为 Promise 对象
-      loadData:parameter => {
+      loadData: parameter => {
         return getVisitTask(Object.assign(parameter, this.queryParam)).then(res => {
           return res;
         });
@@ -195,11 +202,11 @@ export default {
       //   });
       // },
 
-      
+
       selectedRowKeys: [],
       selectedRows: [],
-      scroll:false,
-      dateArr:[],
+      scroll: false,
+      dateArr: [],
       // custom table alert & rowSelection
       options: {
         alert: {
@@ -217,9 +224,9 @@ export default {
     };
   },
   filters: {
-    warnStatusType(type){
-      const warnStatusMap=["warningColor",'approachColor',"safeColor"]
-      return warnStatusMap[type+1]
+    warnStatusType(type) {
+      const warnStatusMap = ["warningColor", 'approachColor', "safeColor"]
+      return warnStatusMap[type + 1]
     },
     executeStatusFilter(type) {
       return executeStatusMap[type].text;
@@ -229,48 +236,48 @@ export default {
     }
   },
   created() {
-   this.scroll={
-        y: (window.screen.height-368)+"px"
-      }
+    this.scroll = {
+      y: (window.screen.height - 368) + "px"
+    }
   },
   methods: {
-    clearForm(){
-      this.queryParam={}
-      this.dateArr=[]
+    clearForm() {
+      this.queryParam = {}
+      this.dateArr = []
     },
-    refreshTable(){
-        this.advanced=false;
-        this.$refs.table.refresh();
+    refreshTable() {
+      this.advanced = false;
+      this.$refs.table.refresh();
     },
-    tableSearch(type){
-      const keyWord={
-        "type":type
+    tableSearch(type) {
+      const keyWord = {
+        "type": type
       }
-       this.$refs.table.search(keyWord);
-       this.advanced=false;
+      this.$refs.table.search(keyWord);
+      this.advanced = false;
     },
-    showUser(record){
+    showUser(record) {
       this.$refs.detailModal.show(record);
     },
     implement(record) {
       //执行
-      this.$router.push('/list/task/' + record.visitTaskId)     
+      this.$router.push('/list/task/' + record.patientBasisId)
     },
     ignore(record) {
       //忽略
-      const that=this;
-       this.$confirm({
+      const that = this;
+      this.$confirm({
         title: '确认忽略该项任务',
-        onOk() {          
+        onOk() {
           const Params = new URLSearchParams();
-          Params.append('visitTaskId', record.visitTaskId);
+          Params.append('visitTaskId', record.patientBasisId);
           ignoreTask(Params).then(res => {
             that.$refs.table.refresh(true)
           });
         },
         onCancel() {},
       });
-     
+
     },
     onSelectChange(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys;
@@ -280,36 +287,45 @@ export default {
       this.advanced = !this.advanced;
     },
     changeTime1(time) {
-            this.dateArr=time;
-       this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD');
-       this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD');
+      this.dateArr = time;
+      this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD');
+      this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD');
     }
   }
 };
 </script>
 <style lang="less" scoped>
-   /deep/th.operation {
-    text-align: center !important;
-  }
-   /deep/.ant-table-tbody > tr > td.operation {
-    text-align: center !important;
-  }
-  /deep/.ant-table td { white-space: nowrap; }
-   /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item{
-    margin-bottom: 10px
-  }
-  .warningColor{
-    font-size:20px; 
-    color: #EB352D;
-  } 
-   .approachColor{
-     font-size:20px;
-     color: #F7B430;
-   }
-   .safeColor{
-     font-size:20px;
-     color: #23AC3A;
-   }
+/deep/th.operation {
+  text-align: center !important;
+}
+
+/deep/.ant-table-tbody>tr>td.operation {
+  text-align: center !important;
+}
+
+/deep/.ant-table td {
+  white-space: nowrap;
+}
+
+/deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
+  margin-bottom: 10px
+}
+
+.warningColor {
+  font-size: 20px;
+  color: #EB352D;
+}
+
+.approachColor {
+  font-size: 20px;
+  color: #F7B430;
+}
+
+.safeColor {
+  font-size: 20px;
+  color: #23AC3A;
+}
+
 .progressTag {
   display: inline-block;
   width: 140px;
@@ -319,18 +335,22 @@ export default {
     width: 100px;
     margin-right: 5px;
   }
+
   /deep/ .progressTagTitle {
     padding-left: 40px;
     margin-bottom: 2px;
   }
+
   /deep/ .progressTag .anticon {
     color: #4bc5ac;
     font-size: 18px;
     vertical-align: bottom;
   }
+
   /deep/ .ant-progress-inner {
     background-color: #e5f6ff;
   }
+
   /deep/ .progressTag .ant-progress-span {
     color: rgb(0, 160, 233);
   }
@@ -342,11 +362,14 @@ export default {
   top: 52px;
   box-shadow: 4px 4px 10px #ddd;
   z-index: 100;
-  /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
+
+  /deep/ .ant-card-body .ant-form-horizontal .ant-form-item>.ant-form-item-label {
     width: 70px !important;
   }
+
   .commonRetrieval {
-      padding: 10px;
+    padding: 10px;
+
     p {
       &:hover {
         cursor: pointer;
@@ -355,9 +378,11 @@ export default {
     }
   }
 }
+
 .userName {
   color: #1fb2fa;
   margin: 0;
+
   &:active,
   &:hover {
     text-decoration: underline;

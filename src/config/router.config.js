@@ -119,12 +119,93 @@ export const asyncRouterMap = [
       },
       {
         path: '/list/task/:id(\\d*)',
-        name: 'taskDetail',
+        name: 'taskTotal',
         hidden: true,
         hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-        component: () => import('@/views/account/center/task'),
+        component: () => import('@/views/task/total'),
         meta: { permission: [ 'center' ] }
       },
+      {
+        path: '/list/task/:id(\\d+)/14',
+        name: 'task14',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/task/components/mask-14'),
+        meta: {maskId: 14, permission: [ 'center' ]}
+      },
+      {
+        path: '/list/task/:id(\\d+)/15',
+        name: 'task15',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/task/components/mask-15'),
+        meta: {maskId: 15, permission: [ 'center' ]}
+      },
+      {
+        path: '/list/task/:id(\\d+)/19',
+        name: 'task19',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/task/components/mask-19'),
+        meta: {maskId: 19, permission: [ 'center' ]}
+      },
+      {
+        path: '/list/task/:id(\\d+)/20',
+        name: 'task20',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/task/components/mask-20'),
+        meta: {maskId: 20, permission: [ 'center' ]}
+      },
+      {
+        path: '/list/task/:id(\\d+)/21',
+        name: 'task21',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/task/components/mask-21'),
+        meta: {maskId: 21, permission: [ 'center' ]}
+      },
+      {
+        path: '/list/task/:id(\\d+)/22',
+        name: 'task22',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/task/components/mask-22'),
+        meta: {maskId: 22, permission: [ 'center' ]}
+      },
+      {
+        path: '/list/task/:id(\\d+)/23',
+        name: 'task23',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/task/components/mask-23'),
+        meta: {maskId: 23, permission: [ 'center' ]}
+      },
+      {
+        path: '/list/task/:id(\\d+)/24',
+        name: 'task24',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/task/components/mask-24'),
+        meta: {maskId: 24, permission: [ 'center' ]}
+      },
+      {
+        path: '/list/task/:id(\\d+)/17',
+        name: 'task17',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/task/components/mask-17'),
+        meta: {maskId: 17, permission: [ 'center' ]}
+      },
+      {
+        path: '/list/task/:id(\\d+)/18',
+        name: 'task18',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/task/components/mask-18'),
+        meta: {maskId: 18, permission: [ 'center' ]}
+      },
+      
       {
         path: '/task/index',
         name: 'Task',

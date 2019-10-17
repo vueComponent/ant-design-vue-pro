@@ -36,10 +36,7 @@ import { getPatientBasis, getElementsAnswer, getMedicineAllergyList, computeScor
 import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
-import AddTable from "./model/table"
-import ocrLoad from "./model/upload"
 import { MyIcon } from '@/components/_util/util'
-import MaskWrap from '@/views/account/maskWrap'
 
 const columns = [{
     title: '档案号',
@@ -56,13 +53,10 @@ const columns = [{
   }
 ]
 export default {
-  name: 'basis',
+  name: 'taskTotal',
   components: {
     STree,
-    AddTable,
-    MyIcon,
-    ocrLoad,
-    MaskWrap
+    MyIcon
   },
   data() {
     return {
@@ -100,12 +94,6 @@ export default {
       patientBasisId: this.$route.params.id,
       basisMaskId: -1,
       validateFlag: false,
-      computeMap: {
-        1208: '',
-        2727: '',
-        1160: '',
-        4207: ''
-      },
       disBlock: {
         display: 'block',
       },
@@ -131,10 +119,7 @@ export default {
 
     }
   },
-  beforeCreate() {
-    // this.form = this.$form.createForm(this, {onFieldsChange: this.onFieldsChange, onValuesChange: this.onValuesChange})
-    // this.form = this.$form.createForm(this)
-  },
+  beforeCreate() {},
   created() {
     var that = this
     this.CloseSidebar()
@@ -146,17 +131,10 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        if (that.patientBasis.type === 1) {
-          that.title = '基线'
-        } else if (that.patientBasis.type === 2) {
-          that.title = '半年随访'
-        } else if (that.patientBasis.type === 3) {
-          that.title = '年访视'
-        }
+        that.title = '年访视'
         that.basisMaskId = that.orgTree[0].basisMarkId
-        // that.getElementsAnswer()
         that.defaultSelectedKeys = [that.basisMaskId]
-        that.$router.replace('/list/basis/' + that.patientBasisId + '/' + that.basisMaskId)
+        that.$router.replace('/list/task/' + that.patientBasisId + '/' + that.basisMaskId)
       })
   },
   computed: {
@@ -789,28 +767,6 @@ export default {
     },
     handleCancel() {
       this.visible = false
-    },
-    confirmImport() {
-      var that = this
-      var params = new URLSearchParams()
-      params.append('patientBasisId', this.patientBasisId)
-      params.append('basisMarkId', this.basisMaskId)
-      params.append('visitBaseId', this.selectedRows[0].visitTaskId)
-      importVtData(params)
-        .then(res => {
-          if (res.code === 0) {
-            that.visible = false
-            that.$message.success('导入成功', function() {
-              var href = location.href.replace(/\?markId=[\d]+/, '')
-              location.href = href + '?markId=' + that.basisMaskId
-            })
-          } else {
-            that.$message.error(res.msg)
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
     }
   }
 }
@@ -878,7 +834,7 @@ export default {
     padding-left: 70px;
     padding-top: 5px;
     padding-bottom: 10px;
-    background-image: url(../../../assets/treeTop.png);
+    background-image: url(../../assets/treeTop.png);
     background-repeat: no-repeat;
     border-bottom: 1px solid #eee;
     padding-left: 20p;

@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 
 export function getVisitTask(parameter) {
   return axios({
-    url: '/visitTask/getDataList',
+    url: '/basis/getFsDataList',
     method: 'post',
     params: parameter
   })
