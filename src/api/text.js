@@ -4,7 +4,7 @@ import {
 
 export function getWxArticleList(parameter) {
   return axios({
-    url: '/text/getDataList',
+    url: '/text/getForm',
     method: 'get',
     params: parameter
   })

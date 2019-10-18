@@ -35,10 +35,10 @@
           <a-textarea rows="7" v-decorator="['text', requiredRule]" />
         </a-form-item>
         <a-form-item label="发布终端" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-checkbox-group v-decorator="['terminal', requiredRule]">
-            <a-checkbox :value="1">微信端</a-checkbox>
-            <a-checkbox :value="2">pc端</a-checkbox>
-          </a-checkbox-group>
+          <a-radio-group v-decorator="['terminal', requiredRule]">
+            <a-radio value="1">微信端</a-radio>
+            <a-radio value="2">官网</a-radio>
+          </a-radio-group>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -47,7 +47,7 @@
 
 <script>
   import { getWxArticleDetail, addOrEdit, getUrl } from '@/api/text'
-//   import QuillEditor from '@/components/Editor/QuillEditor'
+  //   import QuillEditor from '@/components/Editor/QuillEditor'
   export default {
     // components: {
     //   QuillEditor
@@ -104,14 +104,16 @@
               type: String(res.data.textWx.type),
               publisher: res.data.textWx.publisher,
               text: res.data.textWx.text,
-              terminal: []
+              terminal: ''
             });
-            this.fileList = [{
-              uid: '1',
-              name: '',
-              status: 'done',
-              url: this.attachsPrefix + res.data.textWx.url
-            }]
+            if (res.data.textWx.url) {
+              this.fileList = [{
+                uid: '1',
+                name: '',
+                status: 'done',
+                url: this.attachsPrefix + res.data.textWx.url
+              }]
+            }
           })
         } else {
           this.title = '新增'
@@ -152,14 +154,7 @@
             textWx.textId = this.textId
           }
           params.append('entity', JSON.stringify(textWx))
-
-          let terminal = fieldsValue['terminal']
-          if (terminal.length == 2) {
-            terminal = 3
-          } else {
-            terminal = terminal.join('') == 1 ? 1 : 2
-          }
-          params.append('terminal', terminal)
+          params.append('terminal', fieldsValue['terminal'])
 
           addOrEdit(params).then(res => {
             this.$message.success(res.msg);
@@ -177,9 +172,9 @@
 </script>
 
 <style lang="less" scoped>
-//   .textarea {
-//     /deep/.ant-form-item-control {
-//       line-height: 1;
-//     }
-//   }
+  //   .textarea {
+  //     /deep/.ant-form-item-control {
+  //       line-height: 1;
+  //     }
+  //   }
 </style>
