@@ -257,7 +257,7 @@ export default {
   data() {
     return {
       markName: 'hxxt',
-      title: '',
+      title: '基线',
       openKeys: [],
       defaultSelectedKeys: [4],
       orgTree: [],
@@ -347,19 +347,12 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        if (that.patientBasis.type === 1) {
-          that.title = '基线'
-        } else if (that.patientBasis.type === 2) {
-          that.title = '半年随访'
-        } else if (that.patientBasis.type === 3) {
-          that.title = '年访视'
-        }
       })
     params.append('basisMarkId', this.maskId)
     getBasisForm(params)
       .then(res => {
-        if (res.data && res.data.qtsyjc)
-          that.qtsyjc = that.dealAnswers(res.data.qtsyjc)
+        if (res.data && res.data.hxxt)
+          that.hxxt = that.dealAnswers(res.data.hxxt)
       })
       .catch(error => {
         console.log(error)
@@ -428,19 +421,34 @@ export default {
       })
     },
     initValue(key, type = 'normal') {
-      if (!this.qtsyjc) return type === 'array' ? [] : type === 'time' ? undefined : ''
-      if (!this.qtsyjc[key]) return type === 'array' ? [] : type === 'time' ? undefined : ''
+      if (!this.hxxt) return type === 'array' ? [] : type === 'time' ? undefined : ''
+      if (!this.hxxt[key]) return type === 'array' ? [] : type === 'time' ? undefined : ''
       if (type === 'time') {
-        return moment(this.qtsyjc[key])
+        return moment(this.hxxt[key])
       } else if (type === 'array') {
-        return this.qtsyjc[key].split(',')
+        return this.hxxt[key].split(',')
       } else {
-        return this.qtsyjc[key] + ''
+        return this.hxxt[key] + ''
       }
     },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
-
+        if(answer.b3 === 1){
+          this.controlb3 = true
+        }
+        if(answer.b4 === 1){
+          this.controlb4 = true
+        }
+        if(answer.b5 === 1){
+          this.controlb5 = true
+        }
+        if(answer.b6 === 1){
+          this.controlb6 = true
+        }
+        if(answer.b7 === 1){
+          this.controlb7 = true
+        }
+        
       }
       return answer
     },
@@ -450,8 +458,8 @@ export default {
       console.log(re)
       this.patientBasis.status = 1
       var params = new URLSearchParams()
-      if (this.qtsyjc && this.qtsyjc.qtsyjcId) {
-        re.qtsyjcId = this.qtsyjc.qtsyjcId
+      if (this.hxxt && this.hxxt.hxxtId) {
+        re.hxxtId = this.hxxt.hxxtId
       }
       params.append('formData', JSON.stringify(re))
       params.append('patientBasis', JSON.stringify(this.patientBasis))
