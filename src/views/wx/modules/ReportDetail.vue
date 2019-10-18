@@ -2,11 +2,11 @@
   <a-modal title="审阅" okText="审阅" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item label="申请单号">
+        <a-form-item label="报告标题">
           <a-input v-decorator="['reportTitle']" readOnly />
         </a-form-item>
-        <a-form-item label="档案号">
-          <a-input v-decorator="['reprotDescription']" readOnly />
+        <a-form-item label="报告详情">
+          <a-textarea rows="3" v-decorator="['reprotDescription']" readOnly />
         </a-form-item>
         <a-form-item label="上报时间">
           <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['executeDate']" disabled />

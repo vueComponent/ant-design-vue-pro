@@ -5,6 +5,16 @@
         <a-form-item label="医生姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['doctorName', requiredRule]" placeholder="请输入医生姓名" />
         </a-form-item>
+        <a-form-item label="头像上传" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-upload v-decorator="[ 'fileName', { ...requiredRule, valuePropName: 'fileList', getValueFromEvent: normFile }]" :action="action" list-type="picture" @preview="handlePreview" :remove="handleRemove">
+            <a-button v-if="!isFileLen">
+              <a-icon type="upload" />点击上传
+            </a-button>
+          </a-upload>
+          <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible=false">
+            <img alt="example" style="width: 100%" :src="previewImage" />
+          </a-modal>
+        </a-form-item>
         <a-form-item label="职称" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['job', requiredRule]" placeholder="请输入职称" />
         </a-form-item>
@@ -72,14 +82,22 @@
         requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
         doctorId: '',
         centerList: [],
-        creatorId: ''
+        creatorId: '',
+        previewVisible: false,
+        previewImage: '',
+        action: '',
+        attachsPrefix: '',
+        fileName: '',
+        isFileLen: false
       }
+    },
+    mounted() {
+      this.getCenterList()
     },
     methods: {
       show(id) {
         this.visible = true
 
-        this.getCenterList()
 
         this.doctorId = id
 
@@ -113,6 +131,24 @@
         getCenter().then(res => {
           this.centerList = res.data.centerList
         })
+      },
+      normFile(e) {
+        if (Array.isArray(e)) {
+          return e;
+        }
+        if (e.file.status == 'done') {
+          this.fileName = e.file.response.fileName
+          this.isFileLen = true
+        }
+        return e && e.fileList;
+      },
+      handleRemove(file) {
+        this.fileName = ''
+        this.isFileLen = false
+      },
+      handlePreview(file) {
+        this.previewImage = file.url || file.thumbUrl;
+        this.previewVisible = true;
       },
       handleSubmit() {
         this.confirmLoading = true
@@ -152,9 +188,9 @@
 </script>
 
 <style lang="less" scoped>
-//   .textarea {
-//     /deep/.ant-form-item-control {
-//       line-height: 1;
-//     }
-//   }
+  //   .textarea {
+  //     /deep/.ant-form-item-control {
+  //       line-height: 1;
+  //     }
+  //   }
 </style>

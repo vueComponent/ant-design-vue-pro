@@ -6,12 +6,10 @@
           <a-input v-decorator="['title', requiredRule]" />
         </a-form-item>
         <a-form-item label="标题配图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-upload :fileList="fileList" :action="action" list-type="picture" @preview="handlePreview" @change="handleChange" :remove="handleRemove">
-            <div v-if="fileList.length < 1">
-              <a-button>
-                <a-icon type="upload" />点击上传
-              </a-button>
-            </div>
+          <a-upload v-decorator="[ 'url', { ...requiredRule, valuePropName: 'fileList', getValueFromEvent: normFile }]" :action="action" list-type="picture" @preview="handlePreview" :remove="handleRemove">
+            <a-button v-if="!isFileLen">
+              <a-icon type="upload" />点击上传
+            </a-button>
           </a-upload>
           <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible=false">
             <img alt="example" style="width: 100%" :src="previewImage" />
@@ -75,12 +73,12 @@
         },
         requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
         textId: '',
-        action: '',
-        attachsPrefix: '',
         previewVisible: false,
         previewImage: '',
-        fileList: [],
-        fileName: ''
+        action: '',
+        attachsPrefix: '',
+        fileName: '',
+        isFileLen: false
       }
     },
     mounted() {
@@ -107,29 +105,40 @@
               terminal: ''
             });
             if (res.data.textWx.url) {
-              this.fileList = [{
-                uid: '1',
-                name: '',
-                status: 'done',
-                url: this.attachsPrefix + res.data.textWx.url
-              }]
+              this.form.setFieldsValue({
+                url: [{
+                  uid: '1',
+                  name: res.data.textWx.url,
+                  status: 'done',
+                  url: res.data.attachsPrefix + res.data.textWx.url
+                }],
+              })
             }
+            this.fileName = res.data.textWx.url
+            this.isFileLen = true
           })
         } else {
           this.title = '新增'
+          this.isFileLen = false
         }
       },
+      normFile(e) {
+        if (Array.isArray(e)) {
+          return e;
+        }
+        if (e.file.status == 'done') {
+          this.fileName = e.file.response.fileName
+          this.isFileLen = true
+        }
+        return e && e.fileList;
+      },
       handleRemove(file) {
-        this.fileList = []
         this.fileName = ''
+        this.isFileLen = false
       },
       handlePreview(file) {
         this.previewImage = file.url || file.thumbUrl;
         this.previewVisible = true;
-      },
-      handleChange({ file, fileList }) {
-        this.fileList = fileList
-        this.fileName = file.response.fileName
       },
       handleSubmit() {
         this.confirmLoading = true
@@ -144,11 +153,8 @@
 
           const params = new URLSearchParams()
           const textWx = {
-            title: fieldsValue['title'],
+            ...fieldsValue,
             url: this.fileName,
-            type: fieldsValue['type'],
-            publisher: fieldsValue['publisher'],
-            text: fieldsValue['text']
           }
           if (this.textId) {
             textWx.textId = this.textId

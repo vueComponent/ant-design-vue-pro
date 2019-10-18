@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model="queryParam.keyword" placeholder="搜索患者姓名、身份证号" />
+              <a-input v-model="queryParam.keyword" placeholder="搜索姓名、身份证号" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
@@ -55,7 +55,7 @@
     <s-table ref="table" :scroll="scroll" size="small" rowKey="ticketId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="operation" slot-scope="text, record">
         <template>
-          <span v-if="record.executeStatus == 1">已注销</span>
+          <span v-if="record.executeStatus == 1">注销</span>
           <a v-else @click="handleLogout(record)">注销</a>
         </template>
       </span>
@@ -168,12 +168,13 @@
         this.advanced = false
       },
       handleLogout(record) {
+        let that = this
         this.$confirm({
-          title: '确定要注销该项吗？',
+          title: '确定要注销该活动券吗？',
           onOk() {
             const params = { ticketId: record.ticketId }
             logoutTicket(params).then(res => {
-              this.$refs.table.refresh()
+              that.$refs.table.refresh()
             })
           },
           onCancel() { },

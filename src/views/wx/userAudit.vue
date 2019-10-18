@@ -30,7 +30,7 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="档案号">
-                        <a-input v-model="queryParam.code" />
+                        <a-input v-model="queryParam.fileCode" />
                       </a-form-item>
                       <a-form-item label="姓名">
                         <a-input v-model="queryParam.name" />
@@ -58,7 +58,7 @@
       </span>
       <span slot="operation" slot-scope="text, record">
         <template>
-          <span v-if="record.bindStatus == 2">已审核</span>
+          <span v-if="record.bindStatus == 2">审核</span>
           <a v-else @click="handleReview(record)">审核</a>
         </template>
       </span>
@@ -108,6 +108,11 @@
         },
         columns: [
           {
+            title: '档案号',
+            dataIndex: 'fileCode',
+            width: '120px'
+          },
+          {
             title: '患者姓名',
             dataIndex: 'name',
             width: '120px'
@@ -136,11 +141,6 @@
             title: '注册时间',
             dataIndex: 'registeredDate',
             customRender: registeredDate => moment(registeredDate).format('YYYY-MM-DD'),
-            width: '120px'
-          },
-          {
-            title: '档案号',
-            dataIndex: 'code',
             width: '120px'
           },
           {

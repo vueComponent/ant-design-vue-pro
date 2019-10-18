@@ -30,7 +30,7 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="档案号">
-                        <a-input v-model="queryParam.patientCode" />
+                        <a-input v-model="queryParam.fileCode" />
                       </a-form-item>
                       <a-form-item label="姓名">
                         <a-input v-model="queryParam.name" />
@@ -108,7 +108,7 @@
         columns: [
           {
             title: '档案号',
-            dataIndex: 'code',
+            dataIndex: 'fileCode',
             width: '120px'
           },
           {

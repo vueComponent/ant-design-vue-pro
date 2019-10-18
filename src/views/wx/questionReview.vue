@@ -30,7 +30,7 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="档案号">
-                        <a-input v-model="queryParam.code" />
+                        <a-input v-model="queryParam.fileCode" />
                       </a-form-item>
                       <a-form-item label="姓名">
                         <a-input v-model="queryParam.name" />
@@ -60,7 +60,6 @@
       </span>
       <span slot="operation" slot-scope="text, record">
         <template>
-          <!-- <router-link :to="{path:'/wx/questionDetail/' + record.questionTaskId}">审阅</router-link> -->
           <router-link :to="{name:'wxQuestionDetail' ,params: {'id': record.questionTaskId, 'name' : record.name, 'card' : record.card, 'createTime' : record.createTime}}">审阅</router-link>
         </template>
       </span>
@@ -108,13 +107,13 @@
         columns: [
           {
             title: '档案号',
-            dataIndex: 'code',
-            width: '120px'
+            dataIndex: 'fileCode',
+            width: '150px'
           },
           {
             title: '问卷名称',
             dataIndex: 'questionName',
-            width: '200px'
+            width: '120px'
           },
           {
             title: '微信号',
@@ -130,12 +129,6 @@
             title: '身份证号',
             dataIndex: 'card',
             width: '150px'
-          },
-          {
-            title: '预计完成日期',
-            dataIndex: 'expectExecuteTime',
-            customRender: expectExecuteTime => moment(expectExecuteTime).format('YYYY-MM-DD'),
-            width: '120px'
           },
           {
             title: '填写日期',
