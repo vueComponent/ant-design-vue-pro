@@ -44,7 +44,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(3) 患者支扩确诊时间:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]"></a-date-picker style="width: 240px;">
+                <a-date-picker placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]" style="width: 240px;"></a-date-picker>
               </a-form-item>
               <a-form-item label="(4) 主要临床症状（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4', 'array')}]">
@@ -506,10 +506,25 @@ export default {
         md: { span: 24 }
       },
       labelColOffset: {
-        md: {span: 6, offset: 6}
+        md: { span: 6, offset: 6 }
       },
       wrapperOffset: {
-        md: {span: 12}
+        md: { span: 12 }
+      },
+      dateRequire: {
+        rules: [{ type: 'object', required: true, message: '请选择时间！' }]
+      },
+      require1: {
+        rules: [{ required: true, message: '请选择是或否！' }]
+      },
+      require2: {
+        rules: [{ required: true, message: '请选择有或无！' }]
+      },
+      selectRequired: {
+        rules: [{ required: true, message: '请选择！' }]
+      },
+      inputRequired: {
+        rules: [{ required: true, message: '请填写！' }]
       },
       form: this.$form.createForm(this),
       maskId: this.$route.meta.maskId,
@@ -583,31 +598,6 @@ export default {
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
-    require1() {
-      return {
-        rules: [{ required: true, message: '请选择是或否！' }]
-      }
-    },
-    require2() {
-      return {
-        rules: [{ required: true, message: '请选择有或无！' }]
-      }
-    },
-    dateRequire() {
-      return {
-        rules: [{ type: 'object', required: true, message: '请选择时间！' }]
-      }
-    },
-    selectRequired() {
-      return {
-        rules: [{ type: 'object', required: true, message: '请选择！' }]
-      }
-    },
-    inputRequired() {
-      return {
-        rules: [{ type: 'object', required: true, message: '请填写！' }]
-      }
-    },
     initValue(key, type = 'normal') {
       if (!this.zkbszl) return type === 'array' ? [] : type === 'time' ? undefined : ''
       if (!this.zkbszl[key]) return type === 'array' ? [] : type === 'time' ? undefined : ''
@@ -760,8 +750,22 @@ export default {
       // location.href = '/list/basis/' + this.patientBasisId + '/' + this.maskId
       this.$router.push('/list/basis/' + this.patientBasisId + '/' + this.maskId)
     },
-    handleSubmit() {
-
+    handleSubmit(e) {
+      e.preventDefault()
+      const { form: { validateFields } } = this
+      this.confirmLoading = true
+      validateFields((errors, values) => {
+        if (!errors) {
+          console.log('values', values)
+          setTimeout(() => {
+            this.visible = false
+            this.confirmLoading = false
+            this.$emit('ok', values)
+          }, 1500)
+        } else {
+          this.confirmLoading = false
+        }
+      })
     },
     save() {
       var re = this.form.getFieldsValue()
@@ -821,7 +825,8 @@ export default {
     padding: 10px
   }
 }
-.ant-row.ant-form-item:hover{
+
+.ant-row.ant-form-item:hover {
   background-color: #e6f7ff;
 }
 
@@ -844,7 +849,7 @@ export default {
   clear: both;
 }
 
-.ant-calendar-picker{
+.ant-calendar-picker {
   width: 240px;
 }
 
@@ -855,17 +860,23 @@ export default {
 /deep/.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: #1890FF;
   color: #FFF;
+
   .anticon.anticon-clock-circle,
-  .anticon.anticon-check-circle{
+  .anticon.anticon-check-circle {
     color: #FFF;
   }
 }
+
 /deep/ .anticon.anticon-clock-circle,
-/deep/ .anticon.anticon-check-circle{
+/deep/ .anticon.anticon-check-circle {
   font-size: 18px;
 }
 
-/deep/ .ant-menu-item:hover, .ant-menu-item-active, .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active, .ant-menu-submenu-title:hover{
+/deep/ .ant-menu-item:hover,
+.ant-menu-item-active,
+.ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+.ant-menu-submenu-active,
+.ant-menu-submenu-title:hover {
   background-color: #e6f7ff;
 }
 
@@ -910,11 +921,11 @@ export default {
     line-height: 50px;
   }
 
-  /deep/ .anticon.anticon-clock-circle{
+  /deep/ .anticon.anticon-clock-circle {
     color: #00A0E9;
   }
 
-  /deep/ .anticon.anticon-clock-circle{
+  /deep/ .anticon.anticon-clock-circle {
     color: #8ac51b;
   }
 

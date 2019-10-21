@@ -10,7 +10,7 @@ console.log(process.env.NODE_ENV)
 console.log(process.env.NODE_ENV === 'production')
 console.log(process.env.NODE_ENV === 'production' ? '' : '/api')
 const service = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? 'localhost:9996/zklm-web/' : '/api', // api base_url
+  baseURL: process.env.NODE_ENV === 'production' ? 'localhost:9999/zklm-web/' : '/api', // api base_url
   timeout: 6000 // 请求超时时间
 })
 
