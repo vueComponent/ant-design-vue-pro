@@ -16,7 +16,7 @@
         <a-col :md="13" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
     </a-card>
-    <a-card :bordered="false" :bodyStyle="bodyStyle" style="margin-top: 10px;padding-left: 0">
+    <a-card :bordered="false" style="margin-top: 10px;padding-left: 0">
       <a-row :gutter="8">
         <a-col :span="5" :style="baselineInfoStyle">
           <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
@@ -75,12 +75,12 @@ export default {
       destroyOnClose: true,
       baselineInfoStyle: {
         overflow: "auto",
-        height: (window.screen.height - 330) + 'px',
+        height: '630px',
         "padding-right": "0px",
         "border-right": "1px solid #ddd"
       },
       baselineFormStyle: {
-        height: (window.screen.height - 350) + 'px',
+        height: '580px',
       },
       optionDataSource: [],
       checkedList: [],
@@ -821,6 +821,9 @@ export default {
     padding: 10px
   }
 }
+.ant-row.ant-form-item:hover{
+  background-color: #e6f7ff;
+}
 
 .ml-10 {
   margin-left: 10px;
@@ -841,9 +844,8 @@ export default {
   clear: both;
 }
 
-.ant-col-4 .ant-calendar-picker,
-.ant-col-6 .ant-calendar-picker {
-  width: 100%;
+.ant-calendar-picker{
+  width: 240px;
 }
 
 .ant-checkbox-wrapper+.ant-checkbox-wrapper {
@@ -851,9 +853,21 @@ export default {
 }
 
 /deep/.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: #CFF4FF;
+  background-color: #1890FF;
+  color: #FFF;
+  .anticon.anticon-clock-circle,
+  .anticon.anticon-check-circle{
+    color: #FFF;
+  }
+}
+/deep/ .anticon.anticon-clock-circle,
+/deep/ .anticon.anticon-check-circle{
+  font-size: 18px;
 }
 
+/deep/ .ant-menu-item:hover, .ant-menu-item-active, .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active, .ant-menu-submenu-title:hover{
+  background-color: #e6f7ff;
+}
 
 /deep/.ant-menu-vertical .ant-menu-item:after,
 .ant-menu-vertical-left .ant-menu-item:after,
@@ -868,22 +882,19 @@ export default {
 
 .page-header-index-wide {
   /deep/ .ant-card-wider-padding .ant-card-body {
-    padding: 18px 32px;
+    padding: 0;
   }
 
   /deep/ .tree-title {
-    border-right: 1px solid #e8e8e8;
     color: #25aefe;
-    font-size: 22px;
+    font-size: 20px;
     padding-left: 70px;
-    padding-top: 5px;
+    padding-top: 18px;
     padding-bottom: 10px;
-    background-image: url(../../../assets/treeTop.png);
+    background-image: url(../../../../assets/treeTop.png);
     background-repeat: no-repeat;
     border-bottom: 1px solid #eee;
-    padding-left: 20p;
-    background-position-x: 15px;
-    padding-bottom: 26px;
+    background-position: 8px 10px;
   }
 
   /deep/ .ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title,
@@ -897,6 +908,14 @@ export default {
   /deep/ .ant-menu-submenu-title {
     height: 50px;
     line-height: 50px;
+  }
+
+  /deep/ .anticon.anticon-clock-circle{
+    color: #00A0E9;
+  }
+
+  /deep/ .anticon.anticon-clock-circle{
+    color: #8ac51b;
   }
 
   /deep/ li.ant-menu-submenu.ant-menu-submenu-inline.ant-menu-submenu-open {
@@ -928,14 +947,6 @@ export default {
     line-height: 50px;
     border-bottom: 1px solid #eeeeee;
     margin: 0;
-
-    .ant-menu-item:hover,
-    .ant-menu-item-active,
-    .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
-    .ant-menu-submenu-active,
-    .ant-menu-submenu-title:hover {
-      background-color: #eaf2fd;
-    }
 
     .placeholderI {
       display: inline-block;

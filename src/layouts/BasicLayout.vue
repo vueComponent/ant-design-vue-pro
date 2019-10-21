@@ -28,7 +28,7 @@
       :collapsible="true"
     ></side-menu>
 
-    <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: contentPaddingLeft, minHeight: '100vh' }">
+    <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: contentPaddingLeft, minHeight: '100vh', height: '100vh' }">
       <!-- layout header -->
       <global-header
         :mode="layoutMode"
@@ -40,7 +40,7 @@
       />
 
       <!-- layout content -->
-      <a-layout-content :style="{ height: height,overflowY:'hidden',overflowX:'hidden', margin: '10px 10px 0', paddingTop: fixedHeader ? '64px' : '0' }">
+      <a-layout-content :style="{ overflowY:'auto',overflowX:'hidden', margin: '10px 10px 0', paddingTop: fixedHeader ? '64px' : '0' }">
         <multi-tab v-if="multiTab"></multi-tab>
         <transition name="page-transition">
           <route-view />
@@ -180,5 +180,8 @@ export default {
 .page-transition-leave-active .page-transition-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+.ant-layout-sider{
+  min-height: 100vh;
 }
 </style>
