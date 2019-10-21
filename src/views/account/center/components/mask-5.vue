@@ -40,6 +40,17 @@
                   <a-radio value="2">CT</a-radio>
                 </a-radio-group>
               </a-form-item>
+              <div class="clearfix" style="margin-top: 10px;">
+                <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
+                  <div v-if="fileList.length < 4">
+                    <a-icon type="plus" />
+                    <div class="ant-upload-text">Upload</div>
+                  </div>
+                </a-upload>
+                <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                  <img alt="example" style="width: 100%" :src="previewImage" />
+                </a-modal>
+              </div>
               <div class="title">2.支扩位于CT图像上</div>
               <a-form-item label="(1) 右上叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a3', {...require1, initialValue: initValue('a3')}]" @change="computeReiff">
@@ -187,17 +198,18 @@ export default {
     return {
       previewVisible: false,
       previewImage: '',
-      uploadUrl: process.env.VUE_APP_API_BASE_URL,
+      uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
+      viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
       fileList: [],
       markName: 'xbyxx',
-      title: '',
+      title: '基线',
       openKeys: [],
       defaultSelectedKeys: [5],
       orgTree: [],
       patient: {},
       patientBasis: {},
       baselineInfoStyle: {
-        overflow: "hidden",
+        overflow: "auto",
         height: '486px',
         "padding-right": "0px",
         "border-right": "1px solid #ddd"
@@ -260,26 +272,25 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        if (that.patientBasis.type === 1) {
-          that.title = '基线'
-        } else if (that.patientBasis.type === 2) {
-          that.title = '半年随访'
-        } else if (that.patientBasis.type === 3) {
-          that.title = '年访视'
-        }
       })
     params.append('basisMarkId', this.maskId)
     getBasisForm(params)
       .then(res => {
-        if (res.data && res.data.xbyxx)
+        if (res.data && res.data.xbyxx) {
           that.xbyxx = that.dealAnswers(res.data.xbyxx)
+          that.fileList = _.map(res.data.annexListXbyxx, function(v) {
+            return {
+              uid: v.annexId,
+              url: that.viewPicUrl + v.annexAddress,
+              name: v.annexAddress,
+              status: 'done'
+            }
+          })
+        }
       })
       .catch(error => {
         console.log(error)
       })
-  },
-  activated() {
-    this.defaultSelectedKeys = [5]
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -317,6 +328,7 @@ export default {
       })
     },
     save() {
+      debugger
       var re = this.form.getFieldsValue()
       var that = this
       re = {
@@ -329,6 +341,16 @@ export default {
       if (this.xbyxx && this.xbyxx.xbyxxId) {
         re.xbyxxId = this.xbyxx.xbyxxId
       }
+      //附件
+      if (this.fileList && this.fileList.length) {
+        var a = []
+        _.each(this.fileList, function(v) {
+          if (v.response) a.push(v.response.fileName)
+          else a.push(v.name)
+        })
+        // var fileName = _.map(this.fileList, function(v) { return v.response ? v.response.fileName : v.name })
+        params.append('fileName', JSON.stringify(a))
+      }
       params.append('formData', JSON.stringify(re))
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
@@ -336,9 +358,7 @@ export default {
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg, function() {
-            location.href = location.href
-          })
+          that.$message.success(res.msg)
         })
         .catch(error => {
           console.log(error)
