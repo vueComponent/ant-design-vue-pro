@@ -26,7 +26,7 @@
             </a-row>
             <a-row>
               <a-button class="btn fr" type="primary" @click="save(4)">通过</a-button>
-              <a-button class="btn fr" @click="save(4)">不通过</a-button>
+              <a-button class="btn fr" @click="save(3)">不通过</a-button>
             </a-row>
           </div>
           <div class="baselineForm" :style="baselineFormStyle">

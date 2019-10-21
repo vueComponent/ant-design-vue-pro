@@ -163,9 +163,16 @@
           }
           const params = {
             doctorDetail: {
-              ...this.form.getFieldsValue(),
+              doctorName: fieldsValue['doctorName'],
+              job: fieldsValue['job'],
+              department: fieldsValue['department'],
+              centerId: fieldsValue['centerId'],
+              detail: fieldsValue['detail'],
+              disease: fieldsValue['disease'],
+              honor: fieldsValue['honor'],
               isUser: Number(fieldsValue['isUser'])
-            }
+            },
+            fileName: this.fileName
           }
 
           if (this.doctorId) {
