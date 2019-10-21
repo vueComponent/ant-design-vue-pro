@@ -475,12 +475,12 @@ export default {
       patientBasis: {},
       baselineInfoStyle: {
         overflow: "auto",
-        height: '630px',
+        height: '486px',
         "padding-right": "0px",
         boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
       },
       baselineFormStyle: {
-        height: '580px',
+        height: '444px',
       },
       labelColHor: {
         xs: { span: 24 },

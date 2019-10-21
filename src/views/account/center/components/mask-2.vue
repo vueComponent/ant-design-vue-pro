@@ -53,7 +53,7 @@
                 <a-input v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="computeBMI"></a-input>
               </a-form-item>
               <a-form-item label="(8) BMI(自动演算出):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a8', {...inputRequired, initialValue: initValue('a8')}]" :readOnly="true" style="width: 240px;"></a-input>
+                <a-input v-decorator="['a8', {initialValue: initValue('a8')}]" :readOnly="true" style="width: 240px;"></a-input>
               </a-form-item>
               <a-form-item label="(9) 肺部体征：双肺呼吸音:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
               </a-form-item>
@@ -104,12 +104,12 @@ export default {
       patientBasis: {},
       baselineInfoStyle: {
         overflow: "auto",
-        height: '630px',
+        height: '486px',
         "padding-right": "0px",
         "border-right": "1px solid #ddd"
       },
       baselineFormStyle: {
-        height: '580px',
+        height: '444px',
       },
       labelColHor: {
         xs: { span: 24 },

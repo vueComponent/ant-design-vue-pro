@@ -97,18 +97,14 @@ export default {
       orgTree: [],
       patient: {},
       patientBasis: {},
-      bodyStyle: {
-        height: '500px',
-        overflow: 'auto'
-      },
       baselineInfoStyle: {
         overflow: "auto",
-        height: '630px',
+        height: '486px',
         "padding-right": "0px",
         "border-right": "1px solid #ddd"
       },
       baselineFormStyle: {
-        height: (window.screen.height - 350) + 'px',
+        height: '444px',
       },
       labelColHor: {
         xs: { span: 24 },

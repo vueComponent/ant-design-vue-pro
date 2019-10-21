@@ -360,18 +360,14 @@ export default {
       patient: {},
       patientBasis: {},
       defaultSelectedKeys: [],
-      bodyStyle: {
-        height: '500px',
-        overflow: 'auto'
-      },
       baselineInfoStyle: {
         overflow: "auto",
-        height: '630px',
+        height: '486px',
         "padding-right": "0px",
         "border-right": "1px solid #ddd"
       },
       baselineFormStyle: {
-        height: '580px',
+        height: '444px',
       },
       labelColHor: {
         xs: { span: 24 },

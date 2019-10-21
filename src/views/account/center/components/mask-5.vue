@@ -185,6 +185,10 @@ export default {
   },
   data() {
     return {
+      previewVisible: false,
+      previewImage: '',
+      uploadUrl: process.env.VUE_APP_API_BASE_URL,
+      fileList: [],
       markName: 'xbyxx',
       title: '',
       openKeys: [],
@@ -192,18 +196,14 @@ export default {
       orgTree: [],
       patient: {},
       patientBasis: {},
-      bodyStyle: {
-        height: '500px',
-        overflow: 'auto'
-      },
       baselineInfoStyle: {
-        overflow: "auto",
-        height: '630px',
+        overflow: "hidden",
+        height: '486px',
         "padding-right": "0px",
         "border-right": "1px solid #ddd"
       },
       baselineFormStyle: {
-        height: '580px',
+        height: '444px',
       },
       labelColHor: {
         xs: { span: 24 },
@@ -394,6 +394,16 @@ export default {
             console.log(error)
           })
       })
+    },
+    handleCancel() {
+      this.previewVisible = false;
+    },
+    handlePreview(file) {
+      this.previewImage = file.url || file.thumbUrl;
+      this.previewVisible = true;
+    },
+    handleChange({ fileList }) {
+      this.fileList = fileList;
     }
   }
 }
