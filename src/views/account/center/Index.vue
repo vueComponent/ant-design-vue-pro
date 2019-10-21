@@ -67,11 +67,6 @@ export default {
   data() {
     return {
       columns,
-
-      bodyStyle: {
-        height: '500px',
-        overflow: 'auto'
-      },
       destroyOnClose: true,
       baselineInfoStyle: {
         overflow: "auto",
@@ -891,7 +886,7 @@ export default {
     padding-left: 70px;
     padding-top: 18px;
     padding-bottom: 10px;
-    background-image: url(../../../../assets/treeTop.png);
+    background-image: url(../../../assets/treeTop.png);
     background-repeat: no-repeat;
     border-bottom: 1px solid #eee;
     background-position: 8px 10px;
