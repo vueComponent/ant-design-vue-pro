@@ -5,24 +5,24 @@ if (IS_PROD) {
   plugins.push('transform-remove-console')
 }
 
+// lazy load ant-design-vue
+// if your use import on Demand, Use this code
+plugins.push(['import', {
+  'libraryName': 'ant-design-vue',
+  'libraryDirectory': 'es',
+  'style': true // `style: true` 会加载 less 文件
+}])
+
 module.exports = {
   presets: [
-    '@vue/app',
+    '@vue/cli-plugin-babel/preset',
     [
       '@babel/preset-env',
       {
-        'useBuiltIns': 'entry'
+        'useBuiltIns': 'entry',
+        'corejs': 3
       }
     ]
   ],
   plugins
-  // if your use import on Demand, Use this code
-  // ,
-  // plugins: [
-  //   [ 'import', {
-  //     'libraryName': 'ant-design-vue',
-  //     'libraryDirectory': 'es',
-  //     'style': true // `style: true` 会加载 less 文件
-  //   } ]
-  // ]
 }
