@@ -1,5 +1,5 @@
 <template>
-  <a-modal :title="title" okText="保存" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
+  <a-modal :title="title" okText="保存" :width="1000" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="医生姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -29,15 +29,15 @@
           </a-select>
         </a-form-item>
         <a-form-item class="textarea" label="医生简介" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <!-- <quill-editor v-decorator="['detail', requiredRule]"></quill-editor> -->
-          <a-textarea rows="5" v-decorator="['detail', requiredRule]" placeholder="请输入医生简介" />
+          <quill-editor v-decorator="['detail', requiredRule]"></quill-editor>
+          <!-- <a-textarea rows="5" v-decorator="['detail', requiredRule]" placeholder="请输入医生简介" /> -->
         </a-form-item>
         <a-form-item label="擅长领域" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['disease', requiredRule]" placeholder="请输入擅长领域" />
         </a-form-item>
         <a-form-item class="textarea" label="获得荣誉" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <!-- <quill-editor v-decorator="['honor', requiredRule]"></quill-editor> -->
-          <a-textarea rows="8" v-decorator="['honor', requiredRule]" placeholder="请输入获得荣誉" />
+          <quill-editor v-decorator="['honor', requiredRule]"></quill-editor>
+          <!-- <a-textarea rows="8" v-decorator="['honor', requiredRule]" placeholder="请输入获得荣誉" /> -->
         </a-form-item>
         <a-form-item label="是否启用" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['isUser', requiredRule]">
@@ -53,11 +53,11 @@
 <script>
   import moment from 'moment'
   import { getDoctorDetail, saveDoctor, getCenter } from '@/api/famousDoctor'
-  //   import QuillEditor from '@/components/Editor/QuillEditor'
+  import QuillEditor from '@/components/Editor/QuillEditor'
   export default {
-    // components: {
-    //   QuillEditor
-    // },
+    components: {
+      QuillEditor
+    },
     data() {
       return {
         title: '',
@@ -95,6 +95,7 @@
       this.getCenterList()
     },
     methods: {
+      onEditorReady(editor) { },
       show(id) {
         this.visible = true
 
@@ -188,9 +189,9 @@
 </script>
 
 <style lang="less" scoped>
-  //   .textarea {
-  //     /deep/.ant-form-item-control {
-  //       line-height: 1;
-  //     }
-  //   }
+  .textarea {
+    /deep/.ant-form-item-control {
+      line-height: 1;
+    }
+  }
 </style>

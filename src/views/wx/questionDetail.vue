@@ -1,52 +1,63 @@
 <template>
   <div id="baselineInfo" class="page-header-index-wide page-header-wrapper-grid-content-main">
-    <a-card :bordered="false" id="baselineHeader" style="background-color: #0399EC;color:#FFFFFF;">
-      <a-row :gutter="30" style="line-height: 34px;">
-        <a-col :md="1" :sm="4">
-          <a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" />
-        </a-col>
-        <a-col :md="5" :sm="20" class="UserNameCard">
-          <my-icon type="iconshoufangzhe_huaban" />
-          受访者:{{ info.name }}
-        </a-col>
-        <a-col :md="6" :sm="24" class="UserNameCard">
-          <my-icon type="iconshenfenzheng_huaban" />
-          {{ info.card }}
-        </a-col>
-        <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{info.createTime | moment}}</a-col>
-      </a-row>
-    </a-card>
-    <a-card :bordered="false" style="margin-top: 10px;padding-left: 0">
-      <a-row :gutter="8">
-        <div style="overflow: hidden;">
-          <a-button class="btn fr" type="primary" @click="save(4)">通过</a-button>
-          <a-button class="btn fr" @click="save(4)">不通过</a-button>
-        </div>
-        <div class="baselineForm" :style="baselineFormStyle">
-          <a-form :form="form">
-            <!-- 调查问卷 -->
-            <a-form-item>
+    <a-spin :spinning="isLoading">
+      <a-card :bordered="false" id="baselineHeader" style="background-color: #0399EC;color:#FFFFFF;">
+        <a-row :gutter="30" style="line-height: 34px;">
+          <a-col :md="1" :sm="4">
+            <a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" />
+          </a-col>
+          <a-col :md="5" :sm="20" class="UserNameCard">
+            <my-icon type="iconshoufangzhe_huaban" />
+            受访者:{{ info.name }}
+          </a-col>
+          <a-col :md="6" :sm="24" class="UserNameCard">
+            <my-icon type="iconshenfenzheng_huaban" />
+            {{ info.card }}
+          </a-col>
+          <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{info.createTime | moment}}</a-col>
+        </a-row>
+      </a-card>
+      <a-card :bordered="false" style="margin-top: 10px;padding-left: 0">
+        <a-row type="flex" style="overflow: auto;flex-direction: column;">
+          <div class="head-bar">
+            <a-row type="flex">
+              <span class="head-icon"></span>
               <div v-if="question.name" class="question-title">{{question.name}}</div>
-              <div v-if="question.remark" class="question-des">{{question.remark}}</div>
-            </a-form-item>
-            <div v-for="item in listArr" :key="item.id">
-              <div class="question-t">{{item.name}}</div><br />
-              <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
-                <p v-if="qu1.type == 5">{{qu1.name}}</p>
-                <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue" readOnly />
-                <a-radio-group v-if="qu1.type === 1" :name="qu1.questionTitleId+''" v-model="qu1.inputType">
-                  <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" disabled>{{item.name}}</a-radio>
-                </a-radio-group>
-                <a-checkbox-group v-if="qu1.type === 2" v-model="qu1.inputType">
-                  <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" :name="qu1.questionTitleId+''" disabled>{{item.name}}</a-checkbox>
-                </a-checkbox-group>
-                <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue && moment(qu1.answers[0].questionOptionValue, 'YYYY-MM-DD')" disabled />
-              </a-form-item>
-            </div>
-          </a-form>
-        </div>
-      </a-row>
-    </a-card>
+            </a-row>
+            <a-row>
+              <a-button class="btn fr" type="primary" @click="save(4)">通过</a-button>
+              <a-button class="btn fr" @click="save(4)">不通过</a-button>
+            </a-row>
+          </div>
+          <div class="baselineForm" :style="baselineFormStyle">
+            <!-- 调查问卷 -->
+            <div v-if="question.remark" class="question-des"><span style="color:#3398dc">说明：</span>{{question.remark}}</div>
+            <a-form :form="form">
+              <div v-for="item in listArr" :key="item.id">
+                <div class="question-t">
+                  <span class="question-icon"></span>
+                  <span>{{item.name}}</span>
+                </div>
+                <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
+                  <p v-if="qu1.type == 5" class="question-tip">
+                    <span class="tip-icon"></span>
+                    <span>{{qu1.name}}</span>
+                  </p>
+                  <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue" readOnly />
+                  <a-radio-group v-if="qu1.type === 1" :name="qu1.questionTitleId+''" v-model="qu1.inputType">
+                    <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" disabled>{{item.name}}</a-radio>
+                  </a-radio-group>
+                  <a-checkbox-group v-if="qu1.type === 2" v-model="qu1.inputType">
+                    <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" :name="qu1.questionTitleId+''" disabled>{{item.name}}</a-checkbox>
+                  </a-checkbox-group>
+                  <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue && moment(qu1.answers[0].questionOptionValue, 'YYYY-MM-DD')" disabled />
+                </a-form-item>
+              </div>
+            </a-form>
+          </div>
+        </a-row>
+      </a-card>
+    </a-spin>
   </div>
 </template>
 <script>
@@ -60,6 +71,7 @@
     },
     data() {
       return {
+        isLoading: true,
         info: {},
         baselineFormStyle: {
           height: (window.screen.height - 350) + 'px',
@@ -92,6 +104,7 @@
         questionTaskId: this.$route.params.id
       }
       getWxQuestionDetail(params).then(res => {
+        this.isLoading = false
         this.listArr = this.initQuestionAnswers(res.data.topTitles)
         this.question = res.data.question
       })
@@ -144,6 +157,34 @@
         left: -5px;
       }
     }
+    .head-bar {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #f7ffff;
+      border: 2px solid #079ce9;
+      box-shadow: 4px 4px 0px #b9b4ac;
+      margin: 0 20px;
+      padding: 0 15px;
+      /deep/ .ant-btn {
+        height: 40px;
+        padding: 0 20px;
+        font-size: 16px;
+      }
+      .question-title {
+        font-size: 30px;
+        color: #3398dc;
+        font-weight: bold;
+        margin-left: 15px;
+      }
+      .head-icon {
+        width: 50px;
+        height: 50px;
+        background-image: url('../../assets/head-icon.png');
+        background-size: 100% 100%;
+      }
+    }
 
     .ant-row.ant-form-item:hover {
       background-color: #e6f7ff;
@@ -162,23 +203,44 @@
     }
 
     .baselineForm {
-      overflow: auto;
       padding: 20px;
 
-      .question-title {
-        text-align: center;
-        font-size: 22px;
-        color: #3398dc;
+      /deep/ .ant-radio-disabled + span {
+        color: inherit;
       }
+
       .question-des {
         font-size: 16px;
-        padding: 0 10px;
+        margin-bottom: 30px;
       }
 
       .question-t {
-        font-size: 18px;
+        display: flex;
         line-height: 40px;
+        font-size: 18px;
         font-weight: 700;
+        border-bottom: 2px solid #3398dc;
+        padding-bottom: 5px;
+        .question-icon {
+          width: 40px;
+          height: 40px;
+          background-image: url('../../assets/question-icon.png');
+          background-size: 100% 100%;
+          margin-right: 10px;
+        }
+      }
+      .question-tip {
+        line-height: 40px;
+        display: flex;
+        margin-top: 12px;
+        .tip-icon {
+          width: 30px;
+          height: 40px;
+          background-image: url('../../assets/tip-icon.png');
+          background-size: 60% 50%;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
       }
 
       .ant-form-item {
@@ -198,6 +260,10 @@
           padding-left: 15px;
           border-top: 1px solid #eee;
         }
+      }
+
+      /deep/ .ant-form-item-control-wrapper {
+        padding: 5px 0;
       }
     }
   }

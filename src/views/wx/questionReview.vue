@@ -142,11 +142,11 @@
             customRender: createTime => moment(createTime).format('YYYY-MM-DD'),
             width: '120px'
           },
-          {
-            title: '访视类型',
-            dataIndex: 'visitType',
-            width: '100px'
-          },
+        //   {
+        //     title: '访视类型',
+        //     dataIndex: 'visitType',
+        //     width: '100px'
+        //   },
           {
             title: '审阅状态',
             dataIndex: 'status',
