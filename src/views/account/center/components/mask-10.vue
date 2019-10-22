@@ -30,6 +30,19 @@
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
+              <a-form-item label="血常规报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <div class="clearfix" style="margin-top: 10px;">
+                  <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
+                    <div v-if="fileList1.length < 4">
+                      <a-icon type="plus" />
+                      <div class="ant-upload-text">Upload</div>
+                    </div>
+                  </a-upload>
+                  <a-modal :visible="previewVisible1" :footer="null" @cancel="handleCancel1">
+                    <img alt="example" style="width: 100%" :src="previewImage1" />
+                  </a-modal>
+                </div>
+              </a-form-item>
               <div class="title">1.血常规</div>
               <a-form-item label="(1) 血红蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="g/L"></a-input>
@@ -48,6 +61,19 @@
               </a-form-item>
               <a-form-item label="(6) 嗜酸细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['b6', { initialValue: initValue('b6')}]" addonAfter="10^9/L"></a-input>
+              </a-form-item>
+              <a-form-item label="血生化报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 40px;">
+                <div class="clearfix">
+                  <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
+                    <div v-if="fileList2.length < 4">
+                      <a-icon type="plus" />
+                      <div class="ant-upload-text">Upload</div>
+                    </div>
+                  </a-upload>
+                  <a-modal :visible="previewVisible2" :footer="null" @cancel="handleCancel2">
+                    <img alt="example" style="width: 100%" :src="previewImage2" />
+                  </a-modal>
+                </div>
               </a-form-item>
               <div class="title">2.血生化</div>
               <a-form-item label="(1) 血糖:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -285,8 +311,29 @@ export default {
       params.append('basisMarkId', this.maskId)
       getBasisForm(params)
         .then(res => {
-          if (res.data && res.data.qtsyjc)
+          if (res.data && res.data.qtsyjc) {
             that.qtsyjc = that.dealAnswers(res.data.qtsyjc)
+          }
+          if (res.data.annexListXcg && res.data.annexListXcg.length) {
+            that.fileList1 = _.map(res.data.annexListXcg, function(v) {
+              return {
+                uid: v.annexId,
+                url: that.viewPicUrl + v.annexAddress,
+                name: v.annexAddress,
+                status: 'done'
+              }
+            })
+          }
+          if (res.data.annexListXsh && res.data.annexListXsh.length) {
+            that.fileList2 = _.map(res.data.annexListXsh, function(v) {
+              return {
+                uid: v.annexId,
+                url: that.viewPicUrl + v.annexAddress,
+                name: v.annexAddress,
+                status: 'done'
+              }
+            })
+          }
         })
         .catch(error => {
           console.log(error)
@@ -300,6 +347,24 @@ export default {
       var params = new URLSearchParams()
       if (this.qtsyjc && this.qtsyjc.qtsyjcId) {
         re.qtsyjcId = this.qtsyjc.qtsyjcId
+      }
+      //附件
+      if (this.fileList1 && this.fileList1.length) {
+        var a = []
+        _.each(this.fileList1, function(v) {
+          if (v.response) a.push(v.response.fileName)
+          else a.push(v.name)
+        })
+        params.append('fileName', JSON.stringify(a))
+      }
+      //附件
+      if (this.fileList2 && this.fileList2.length) {
+        var a = []
+        _.each(this.fileList2, function(v) {
+          if (v.response) a.push(v.response.fileName)
+          else a.push(v.name)
+        })
+        params.append('fileNameOther', JSON.stringify(a))
       }
       params.append('formData', JSON.stringify(re))
       params.append('patientBasis', JSON.stringify(this.patientBasis))
@@ -315,6 +380,26 @@ export default {
           console.log(error)
         })
       return false
+    },
+    handleCancel1() {
+      this.previewVisible1 = false;
+    },
+    handlePreview1(file) {
+      this.previewImage1 = file.url || file.thumbUrl;
+      this.previewVisible1 = true;
+    },
+    handleChange1({ fileList }) {
+      this.fileList1 = fileList;
+    },
+    handleCancel2() {
+      this.previewVisible2 = false;
+    },
+    handlePreview2(file) {
+      this.previewImage2 = file.url || file.thumbUrl;
+      this.previewVisible2 = true;
+    },
+    handleChange2({ fileList }) {
+      this.fileList2 = fileList;
     }
   }
 }

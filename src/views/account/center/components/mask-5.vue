@@ -334,7 +334,6 @@ export default {
         })
     },
     save() {
-      debugger
       var re = this.form.getFieldsValue()
       var that = this
       re = {
