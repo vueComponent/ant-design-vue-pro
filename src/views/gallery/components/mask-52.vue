@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19">
-          <!-- 吸入支气管舒张剂前 -->
+          <!-- 血生化 -->
           <a-form :form="form" @submit="handleSubmit">
             <div style="overflow: hidden;margin-top: 10px;">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
@@ -31,7 +31,7 @@
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <div class="title">吸入支气管舒张剂前</div>
+              <div class="title">血生化</div>
               <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
@@ -45,50 +45,75 @@
                   </a-modal>
                 </div>
               </a-form-item>
-              <a-form-item label="FEV1:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a21', {...require2, initialValue: initValue('a21')}]" @change="changeRadio($event, 'controla21')">
-                  <a-radio value="1">有</a-radio>
-                  <a-radio value="-1">无</a-radio>
+              <a-form-item label="血糖:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c1', { initialValue: initValue('c1')}]" addonAfter="mmol/L"></a-input>
+              </a-form-item>
+              <a-form-item label="谷丙转氨酶:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c2', { initialValue: initValue('c2')}]" addonAfter="IU/L"></a-input>
+              </a-form-item>
+              <a-form-item label="谷草转氨酶:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c3', { initialValue: initValue('c3')}]" addonAfter="IU/L"></a-input>
+              </a-form-item>
+              <a-form-item label="白蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c4', { initialValue: initValue('c4')}]" addonAfter="g/L"></a-input>
+              </a-form-item>
+              <a-form-item label="前白蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c5', { initialValue: initValue('c5')}]" addonAfter="g/L"></a-input>
+              </a-form-item>
+              <a-form-item label="球蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c6', { initialValue: initValue('c6')}]" addonAfter="g/L"></a-input>
+              </a-form-item>
+              <a-form-item label="肌酐:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c7', { initialValue: initValue('c7')}]" addonAfter="mmol/L"></a-input>
+              </a-form-item>
+              <a-form-item label="尿素:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c8', { initialValue: initValue('c8')}]" addonAfter="mmol/L"></a-input>
+              </a-form-item>
+              <a-form-item label="钾:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c9', { initialValue: initValue('c9')}]" addonAfter="mmol/L"></a-input>
+              </a-form-item>
+              <a-form-item label="钠:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c10', { initialValue: initValue('c10')}]" addonAfter="mmol/L"></a-input>
+              </a-form-item>
+              <a-form-item label="钙:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c11', { initialValue: initValue('c11')}]" addonAfter="mmol/L"></a-input>
+              </a-form-item>
+              <a-form-item label="磷:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c12', { initialValue: initValue('c12')}]" addonAfter="mmol/L"></a-input>
+              </a-form-item>
+              <a-form-item label="总胆固醇:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c13', { initialValue: initValue('c13')}]" addonAfter="mmol/L"></a-input>
+              </a-form-item>
+              <a-form-item label="甘油三脂:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c14', { initialValue: initValue('c14')}]" addonAfter="mmol/L"></a-input>
+              </a-form-item>
+              <a-form-item label="高密度脂蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c15', { initialValue: initValue('c15')}]" addonAfter="g/L"></a-input>
+              </a-form-item>
+              <a-form-item label="低密度脂蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['c16', { initialValue: initValue('c16')}]" addonAfter="g/L"></a-input>
+              </a-form-item>
+              <a-form-item label="DD二聚体:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-input style="width: 240px;" v-decorator="['c17', { initialValue: initValue('c17')}]" addonAfter="ng/ml"></a-input>
+              </a-form-item>
+              <a-form-item label="DD二聚体:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['c171', { initialValue: initValue('c171')}]">
+                  <a-radio value="1">正常</a-radio>
+                  <a-radio value="2">降低</a-radio>
+                  <a-radio value="3">升高</a-radio>
+                  <a-radio value="4">未测量</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla21" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a22', {...inputRequired, initialValue: initValue('a22')}]" addonAfter="L"></a-input>
+              <a-form-item label="维生素D:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-input style="width: 240px;" v-decorator="['c18', { initialValue: initValue('c18')}]" addonAfter="nmol/l"></a-input>
               </a-form-item>
-              <a-form-item label="FEV1%pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a31', {...require2, initialValue: initValue('a31')}]" @change="changeRadio($event, 'controla31')">
-                  <a-radio value="1">有</a-radio>
-                  <a-radio value="-1">无</a-radio>
+              <a-form-item label="维生素D:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['c181', { initialValue: initValue('c181')}]">
+                  <a-radio value="1">正常</a-radio>
+                  <a-radio value="2">降低</a-radio>
+                  <a-radio value="3">升高</a-radio>
+                  <a-radio value="4">未测量</a-radio>
                 </a-radio-group>
-              </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla31" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]" addonAfter="%"></a-input>
-              </a-form-item>
-              <a-form-item label="FVC:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a41', {...require2, initialValue: initValue('a41')}]" @change="changeRadio($event, 'controla41')">
-                  <a-radio value="1">有</a-radio>
-                  <a-radio value="-1">无</a-radio>
-                </a-radio-group>
-              </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla41" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]" addonAfter="L"></a-input>
-              </a-form-item>
-              <a-form-item label="FVC%pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a51', {...require2, initialValue: initValue('a51')}]" @change="changeRadio($event, 'controla51')">
-                  <a-radio value="1">有</a-radio>
-                  <a-radio value="-1">无</a-radio>
-                </a-radio-group>
-              </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla51" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a52', {...inputRequired, initialValue: initValue('a52')}]" addonAfter="%"></a-input>
-              </a-form-item>
-              <a-form-item label="FEV1/FVC%pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a61', {...require2, initialValue: initValue('a61')}]" @change="changeRadio($event, 'controla61')">
-                  <a-radio value="1">有</a-radio>
-                  <a-radio value="-1">无</a-radio>
-                </a-radio-group>
-              </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla61" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a62', {...inputRequired, initialValue: initValue('a62')}]" addonAfter="%"></a-input>
               </a-form-item>
             </div>
           </a-form>
@@ -107,7 +132,7 @@ import { MyIcon } from '@/components/_util/util'
 import { getReportTypeMark, saveReport, getReportFormData } from '@/api/report'
 
 export default {
-  name: 'exec53',
+  name: 'exec52',
   components: {
     STree,
     MyIcon
@@ -169,7 +194,7 @@ export default {
       },
       form: this.$form.createForm(this),
       openKeys: [],
-      defaultSelectedKeys: [53],
+      defaultSelectedKeys: [52],
       orgTree: [],
       patient: {},
       patientBasis: {},
@@ -180,8 +205,8 @@ export default {
       controla51: false,
       controla61: false,
       formData: undefined,
-      businessType: 3,
-      reportTypeId: 53,
+      businessType: 7,
+      reportTypeId: 52,
       reportCollectDetailId: undefined
     }
   },
@@ -245,21 +270,7 @@ export default {
     },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
-        if (answer.a21 === 1) {
-          this.controla21 = true
-        }
-        if (answer.a31 === 1) {
-          this.controla31 = true
-        }
-        if (answer.a41 === 1) {
-          this.controla41 = true
-        }
-        if (answer.a51 === 1) {
-          this.controla51 = true
-        }
-        if (answer.a61 === 1) {
-          this.controla61 = true
-        }
+        
       }
       return answer
     },
@@ -276,8 +287,8 @@ export default {
       var re = this.form.getFieldsValue()
       var that = this
       var params = new URLSearchParams()
-      if (this.formData && this.formData.fgnqId) {
-        re.fgnqId = this.formData.fgnqId
+      if (this.formData && this.formData.xshId) {
+        re.xshId = this.formData.xshId
       }
       params.append('formData', JSON.stringify(re))
       params.append('reportCollectBase', JSON.stringify({ reportCollectBaseId: this.reportCollectBaseId, status: 1 }))

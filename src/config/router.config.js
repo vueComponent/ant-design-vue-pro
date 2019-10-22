@@ -227,6 +227,30 @@ export const asyncRouterMap = [
         meta: {maskId: 53, permission: [ 'center' ]}
       },
       {
+        path: '/gallery/execute/:id(\\d+)/51',
+        name: 'exec51',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/gallery/components/mask-51'),
+        meta: {maskId: 51, permission: [ 'center' ]}
+      },
+      {
+        path: '/gallery/execute/:id(\\d+)/52',
+        name: 'exec52',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/gallery/components/mask-52'),
+        meta: {maskId: 52, permission: [ 'center' ]}
+      },
+      {
+        path: '/gallery/execute/:id(\\d+)/54',
+        name: 'exec54',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/gallery/components/mask-54'),
+        meta: {maskId: 54, permission: [ 'center' ]}
+      },
+      {
         path: '/gallery/execute/:id(\\d+)',
         name: 'galleryExec',
         hidden: true,

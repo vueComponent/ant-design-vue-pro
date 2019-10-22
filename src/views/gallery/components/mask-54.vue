@@ -46,49 +46,49 @@
                 </div>
               </a-form-item>
               <a-form-item label="FEV1:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a21', {...require2, initialValue: initValue('a21')}]" @change="changeRadio($event, 'controla21')">
+                <a-radio-group v-decorator="['b23', {...require2, initialValue: initValue('b23')}]" @change="changeRadio($event, 'controlb23')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla21" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a22', {...inputRequired, initialValue: initValue('a22')}]" addonAfter="L"></a-input>
+              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb23" class="border-dotted">
+                <a-input style="width: 240px;" v-decorator="['b24', {...inputRequired, initialValue: initValue('b24')}]" addonAfter="L"></a-input>
               </a-form-item>
               <a-form-item label="FEV1%pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a31', {...require2, initialValue: initValue('a31')}]" @change="changeRadio($event, 'controla31')">
+                <a-radio-group v-decorator="['b33', {...require2, initialValue: initValue('b33')}]" @change="changeRadio($event, 'controlb33')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla31" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]" addonAfter="%"></a-input>
+              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb33" class="border-dotted">
+                <a-input style="width: 240px;" v-decorator="['b34', {...inputRequired, initialValue: initValue('b34')}]" addonAfter="%"></a-input>
               </a-form-item>
               <a-form-item label="FVC:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a41', {...require2, initialValue: initValue('a41')}]" @change="changeRadio($event, 'controla41')">
+                <a-radio-group v-decorator="['b43', {...require2, initialValue: initValue('b43')}]" @change="changeRadio($event, 'controlb43')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla41" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]" addonAfter="L"></a-input>
+              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb43" class="border-dotted">
+                <a-input style="width: 240px;" v-decorator="['b44', {...inputRequired, initialValue: initValue('b44')}]" addonAfter="L"></a-input>
               </a-form-item>
               <a-form-item label="FVC%pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a51', {...require2, initialValue: initValue('a51')}]" @change="changeRadio($event, 'controla51')">
+                <a-radio-group v-decorator="['b53', {...require2, initialValue: initValue('b53')}]" @change="changeRadio($event, 'controlb53')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla51" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a52', {...inputRequired, initialValue: initValue('a52')}]" addonAfter="%"></a-input>
+              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb53" class="border-dotted">
+                <a-input style="width: 240px;" v-decorator="['b54', {...inputRequired, initialValue: initValue('b54')}]" addonAfter="%"></a-input>
               </a-form-item>
               <a-form-item label="FEV1/FVC%pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a61', {...require2, initialValue: initValue('a61')}]" @change="changeRadio($event, 'controla61')">
+                <a-radio-group v-decorator="['b63', {...require2, initialValue: initValue('b63')}]" @change="changeRadio($event, 'controlb63')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla61" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a62', {...inputRequired, initialValue: initValue('a62')}]" addonAfter="%"></a-input>
+              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb63" class="border-dotted">
+                <a-input style="width: 240px;" v-decorator="['b64', {...inputRequired, initialValue: initValue('b64')}]" addonAfter="%"></a-input>
               </a-form-item>
             </div>
           </a-form>
@@ -107,7 +107,7 @@ import { MyIcon } from '@/components/_util/util'
 import { getReportTypeMark, saveReport, getReportFormData } from '@/api/report'
 
 export default {
-  name: 'exec53',
+  name: 'exec54',
   components: {
     STree,
     MyIcon
@@ -169,19 +169,19 @@ export default {
       },
       form: this.$form.createForm(this),
       openKeys: [],
-      defaultSelectedKeys: [53],
+      defaultSelectedKeys: [54],
       orgTree: [],
       patient: {},
       patientBasis: {},
       reportCollectBaseId: parseInt(this.$route.params.id),
-      controla21: false,
-      controla31: false,
-      controla41: false,
-      controla51: false,
-      controla61: false,
+      controlb23: false,
+      controlb33: false,
+      controlb43: false,
+      controlb53: false,
+      controlb63: false,
       formData: undefined,
-      businessType: 3,
-      reportTypeId: 53,
+      businessType: 4,
+      reportTypeId: 54,
       reportCollectDetailId: undefined
     }
   },
@@ -193,7 +193,7 @@ export default {
     getReportTypeMark(params)
       .then(res => {
         that.orgTree = res.data
-        that.reportCollectDetailId = _.find(res.data, function(v) { return v.reportTypeId === 53 }).reportCollectDetailId
+        that.reportCollectDetailId = _.find(res.data, function(v) { return v.reportTypeId === 54 }).reportCollectDetailId
         that.getFormData()
       })
       .catch(error => {
@@ -245,20 +245,20 @@ export default {
     },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
-        if (answer.a21 === 1) {
-          this.controla21 = true
+        if (answer.b23 === 1) {
+          this.controlb23 = true
         }
-        if (answer.a31 === 1) {
-          this.controla31 = true
+        if (answer.b33 === 1) {
+          this.controlb33 = true
         }
-        if (answer.a41 === 1) {
-          this.controla41 = true
+        if (answer.b43 === 1) {
+          this.controlb43 = true
         }
-        if (answer.a51 === 1) {
-          this.controla51 = true
+        if (answer.b53 === 1) {
+          this.controlb53 = true
         }
-        if (answer.a61 === 1) {
-          this.controla61 = true
+        if (answer.b63 === 1) {
+          this.controlb63 = true
         }
       }
       return answer
@@ -276,8 +276,8 @@ export default {
       var re = this.form.getFieldsValue()
       var that = this
       var params = new URLSearchParams()
-      if (this.formData && this.formData.fgnqId) {
-        re.fgnqId = this.formData.fgnqId
+      if (this.formData && this.formData.fgnhId) {
+        re.fgnhId = this.formData.fgnhId
       }
       params.append('formData', JSON.stringify(re))
       params.append('reportCollectBase', JSON.stringify({ reportCollectBaseId: this.reportCollectBaseId, status: 1 }))

@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19">
-          <!-- 吸入支气管舒张剂前 -->
+          <!-- 血常规 -->
           <a-form :form="form" @submit="handleSubmit">
             <div style="overflow: hidden;margin-top: 10px;">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
@@ -31,7 +31,7 @@
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <div class="title">吸入支气管舒张剂前</div>
+              <div class="title">血常规</div>
               <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
@@ -45,50 +45,23 @@
                   </a-modal>
                 </div>
               </a-form-item>
-              <a-form-item label="FEV1:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a21', {...require2, initialValue: initValue('a21')}]" @change="changeRadio($event, 'controla21')">
-                  <a-radio value="1">有</a-radio>
-                  <a-radio value="-1">无</a-radio>
-                </a-radio-group>
+              <a-form-item label="血红蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="g/L"></a-input>
               </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla21" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a22', {...inputRequired, initialValue: initValue('a22')}]" addonAfter="L"></a-input>
+              <a-form-item label="白细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['b2', { initialValue: initValue('b2')}]" addonAfter="10^9/L"></a-input>
               </a-form-item>
-              <a-form-item label="FEV1%pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a31', {...require2, initialValue: initValue('a31')}]" @change="changeRadio($event, 'controla31')">
-                  <a-radio value="1">有</a-radio>
-                  <a-radio value="-1">无</a-radio>
-                </a-radio-group>
+              <a-form-item label="红细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['b3', { initialValue: initValue('b3')}]" addonAfter="10^12/L"></a-input>
               </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla31" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]" addonAfter="%"></a-input>
+              <a-form-item label="血小板:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['b4', { initialValue: initValue('b4')}]" addonAfter="10^9/L"></a-input>
               </a-form-item>
-              <a-form-item label="FVC:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a41', {...require2, initialValue: initValue('a41')}]" @change="changeRadio($event, 'controla41')">
-                  <a-radio value="1">有</a-radio>
-                  <a-radio value="-1">无</a-radio>
-                </a-radio-group>
+              <a-form-item label="中性粒细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['b5', { initialValue: initValue('b5')}]" addonAfter="10^9/L"></a-input>
               </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla41" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]" addonAfter="L"></a-input>
-              </a-form-item>
-              <a-form-item label="FVC%pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a51', {...require2, initialValue: initValue('a51')}]" @change="changeRadio($event, 'controla51')">
-                  <a-radio value="1">有</a-radio>
-                  <a-radio value="-1">无</a-radio>
-                </a-radio-group>
-              </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla51" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a52', {...inputRequired, initialValue: initValue('a52')}]" addonAfter="%"></a-input>
-              </a-form-item>
-              <a-form-item label="FEV1/FVC%pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
-                <a-radio-group v-decorator="['a61', {...require2, initialValue: initValue('a61')}]" @change="changeRadio($event, 'controla61')">
-                  <a-radio value="1">有</a-radio>
-                  <a-radio value="-1">无</a-radio>
-                </a-radio-group>
-              </a-form-item>
-              <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla61" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a62', {...inputRequired, initialValue: initValue('a62')}]" addonAfter="%"></a-input>
+              <a-form-item label="嗜酸细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['b6', { initialValue: initValue('b6')}]" addonAfter="10^9/L"></a-input>
               </a-form-item>
             </div>
           </a-form>
@@ -107,7 +80,7 @@ import { MyIcon } from '@/components/_util/util'
 import { getReportTypeMark, saveReport, getReportFormData } from '@/api/report'
 
 export default {
-  name: 'exec53',
+  name: 'exec51',
   components: {
     STree,
     MyIcon
@@ -169,19 +142,14 @@ export default {
       },
       form: this.$form.createForm(this),
       openKeys: [],
-      defaultSelectedKeys: [53],
+      defaultSelectedKeys: [51],
       orgTree: [],
       patient: {},
       patientBasis: {},
       reportCollectBaseId: parseInt(this.$route.params.id),
-      controla21: false,
-      controla31: false,
-      controla41: false,
-      controla51: false,
-      controla61: false,
       formData: undefined,
-      businessType: 3,
-      reportTypeId: 53,
+      businessType: 6,
+      reportTypeId: 51,
       reportCollectDetailId: undefined
     }
   },
@@ -193,7 +161,7 @@ export default {
     getReportTypeMark(params)
       .then(res => {
         that.orgTree = res.data
-        that.reportCollectDetailId = _.find(res.data, function(v) { return v.reportTypeId === 53 }).reportCollectDetailId
+        that.reportCollectDetailId = _.find(res.data, function(v) { return v.reportTypeId === 51 }).reportCollectDetailId
         that.getFormData()
       })
       .catch(error => {
@@ -245,21 +213,7 @@ export default {
     },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
-        if (answer.a21 === 1) {
-          this.controla21 = true
-        }
-        if (answer.a31 === 1) {
-          this.controla31 = true
-        }
-        if (answer.a41 === 1) {
-          this.controla41 = true
-        }
-        if (answer.a51 === 1) {
-          this.controla51 = true
-        }
-        if (answer.a61 === 1) {
-          this.controla61 = true
-        }
+
       }
       return answer
     },
@@ -276,8 +230,8 @@ export default {
       var re = this.form.getFieldsValue()
       var that = this
       var params = new URLSearchParams()
-      if (this.formData && this.formData.fgnqId) {
-        re.fgnqId = this.formData.fgnqId
+      if (this.formData && this.formData.xcgId) {
+        re.xcgId = this.formData.xcgId
       }
       params.append('formData', JSON.stringify(re))
       params.append('reportCollectBase', JSON.stringify({ reportCollectBaseId: this.reportCollectBaseId, status: 1 }))
