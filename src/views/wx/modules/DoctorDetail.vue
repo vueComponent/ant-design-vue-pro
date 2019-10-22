@@ -6,7 +6,7 @@
           <a-input v-decorator="['doctorName', requiredRule]" placeholder="请输入医生姓名" />
         </a-form-item>
         <a-form-item label="头像上传" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-upload v-decorator="[ 'fileName', { ...requiredRule, valuePropName: 'fileList', getValueFromEvent: normFile }]" :action="action" list-type="picture" @preview="handlePreview" :remove="handleRemove">
+          <a-upload v-decorator="[ 'url', { ...requiredRule, valuePropName: 'fileList', getValueFromEvent: normFile }]" :action="action" list-type="picture" @preview="handlePreview" :remove="handleRemove">
             <a-button v-if="!isFileLen">
               <a-icon type="upload" />点击上传
             </a-button>
@@ -85,8 +85,8 @@
         creatorId: '',
         previewVisible: false,
         previewImage: '',
-        action: '',
-        attachsPrefix: '',
+        action: process.env.VUE_APP_API_UPLOAD_URL,
+        attachsPrefix: process.env.VUE_APP_API_VIEW_PIC_URL,
         fileName: '',
         isFileLen: false
       }
@@ -98,7 +98,6 @@
       onEditorReady(editor) { },
       show(id) {
         this.visible = true
-
 
         this.doctorId = id
 
@@ -123,6 +122,18 @@
               honor: res.data.doctorDetail.honor,
               isUser: String(res.data.doctorDetail.isUser)
             });
+            if (res.data.annexList[0].annexAddress) {
+              this.form.setFieldsValue({
+                url: [{
+                  uid: '1',
+                  name: res.data.annexList[0].annexAddress,
+                  status: 'done',
+                  url: this.attachsPrefix + res.data.annexList[0].annexAddress
+                }],
+              })
+            }
+            this.fileName = res.data.annexList[0].annexAddress
+            this.isFileLen = true
           })
         } else {
           this.title = '新增'
@@ -161,6 +172,7 @@
             this.confirmLoading = false;
             return;
           }
+
           const params = {
             doctorDetail: {
               doctorName: fieldsValue['doctorName'],
