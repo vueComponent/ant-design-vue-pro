@@ -219,6 +219,22 @@ export const asyncRouterMap = [
         meta: { title: '报告采集', keepAlive: true, icon: baogao,isBack:false, permission: [ 'center' ]}
       },
       {
+        path: '/gallery/execute/:id(\\d+)/53',
+        name: 'exec53',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/gallery/components/mask-53'),
+        meta: {maskId: 53, permission: [ 'center' ]}
+      },
+      {
+        path: '/gallery/execute/:id(\\d+)',
+        name: 'galleryExec',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/gallery/execute'),
+        meta: {permission: [ 'center' ]}
+      },
+      {
         path: '/caseTransfer/index',
         name: 'CaseTransfer',
         component: () => import('@/views/caseTransfer/index'),

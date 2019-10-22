@@ -48,4 +48,26 @@ export function getReportType(parameter) {
   })
 }
 
+export function getReportTypeMark(parameter) {
+  return axios({
+    url: '/reportCollectBase/getReportTypeMark',
+    method: 'post',
+    params: parameter
+  })
+}
 
+export function saveReport(parameter) {
+  return axios({
+    url: '/reportCollectBase/saveReport',
+    method: 'post',
+    params: parameter
+  })
+}
+
+export function getReportFormData(parameter) {
+  return axios({
+    url: '/reportCollectBase/getReportFormData',
+    method: 'post',
+    params: parameter
+  })
+}

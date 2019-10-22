@@ -215,7 +215,7 @@ export default {
       this.$refs.table.refresh()
     },
     handleEdit (record) {
-      this.$router.push('/gallery/detail/' + record.reportCollectBaseId)
+      this.$router.push('/gallery/execute/' + record.reportCollectBaseId)
     },
     changeTime(time) {
       this.dateArr=time;

@@ -467,7 +467,7 @@ export default {
   data() {
     return {
       markName: 'zkbszl',
-      title: '',
+      title: '基线',
       openKeys: [],
       defaultSelectedKeys: [1],
       orgTree: [],
@@ -571,13 +571,6 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        if (that.patientBasis.type === 1) {
-          that.title = '基线'
-        } else if (that.patientBasis.type === 2) {
-          that.title = '半年随访'
-        } else if (that.patientBasis.type === 3) {
-          that.title = '年访视'
-        }
       })
       .catch(error => {
         console.log(error)
