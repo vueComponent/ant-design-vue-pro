@@ -212,7 +212,7 @@ export default {
       this.advanced = !this.advanced
     },
     handleOk () {
-      // this.$refs.table.refresh()
+      this.$refs.table.refresh()
     },
     handleEdit (record) {
       this.$router.push('/gallery/detail/' + record.reportCollectBaseId)

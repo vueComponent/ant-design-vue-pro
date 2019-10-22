@@ -30,11 +30,6 @@ const columns = [{
   {
     title: '联系方式',
     dataIndex: 'telephone1'
-  },
-  {
-    title: '创建日期',
-    dataIndex: 'createDate',
-    customRender: createDate => moment(createDate).format('YYYY-MM-DD')
   }
 ];
 export default {
@@ -105,7 +100,6 @@ export default {
         this.$message.error('请选择患者')
       } else {
         const p = new URLSearchParams();
-        debugger
         p.append('patientId', this.patientId)
         createSFJx(p)
           .then(res => {
@@ -114,7 +108,7 @@ export default {
             })
           })
       }
-      return fasle;
+      return false;
     },
     handleCancel() {
       this.visible = false;

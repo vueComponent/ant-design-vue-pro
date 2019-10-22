@@ -256,7 +256,7 @@ export default {
   data() {
     return {
       markName: 'fgnxgjc',
-      title: '',
+      title: '基线',
       openKeys: [],
       defaultSelectedKeys: [8],
       orgTree: [],
@@ -350,23 +350,8 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        if (that.patientBasis.type === 1) {
-          that.title = '基线'
-        } else if (that.patientBasis.type === 2) {
-          that.title = '半年随访'
-        } else if (that.patientBasis.type === 3) {
-          that.title = '年访视'
-        }
       })
-    params.append('basisMarkId', this.maskId)
-    getBasisForm(params)
-      .then(res => {
-        if (res.data && res.data.fgnxgjc)
-          that.fgnxgjc = that.dealAnswers(res.data.fgnxgjc)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.getFormData()
   },
   activated() {
     this.defaultSelectedKeys = [8]
@@ -440,56 +425,70 @@ export default {
           this.controla1p = false
           this.controla1n = false
         }
-        if(answer.a21 === 1){
+        if (answer.a21 === 1) {
           this.controla21 = true
         }
-        if(answer.a31 === 1){
+        if (answer.a31 === 1) {
           this.controla31 = true
         }
-        if(answer.a41 === 1){
+        if (answer.a41 === 1) {
           this.controla41 = true
         }
-        if(answer.a51 === 1){
+        if (answer.a51 === 1) {
           this.controla51 = true
         }
-        if(answer.a61 === 1){
+        if (answer.a61 === 1) {
           this.controla61 = true
         }
-        if(answer.b23 === 1){
+        if (answer.b23 === 1) {
           this.controlb23 = true
         }
-        if(answer.b33 === 1){
+        if (answer.b33 === 1) {
           this.controlb33 = true
         }
-        if(answer.b43 === 1){
+        if (answer.b43 === 1) {
           this.controlb43 = true
         }
-        if(answer.b53 === 1){
+        if (answer.b53 === 1) {
           this.controlb53 = true
         }
-        if(answer.b63 === 1){
+        if (answer.b63 === 1) {
           this.controlb63 = true
         }
-        if(answer.c1 === 1){
+        if (answer.c1 === 1) {
           this.controlc1 = true
         }
-        if(answer.c11 === 1){
+        if (answer.c11 === 1) {
           this.controlc11 = true
         }
-        if(answer.c21 === 1){
+        if (answer.c21 === 1) {
           this.controlc21 = true
         }
-        if(answer.c31 === 1){
+        if (answer.c31 === 1) {
           this.controlc31 = true
         }
-        if(answer.c41 === 1){
+        if (answer.c41 === 1) {
           this.controlc41 = true
         }
-        if(answer.e1 === -1){
+        if (answer.e1 === -1) {
           this.controle1 = true
         }
       }
       return answer
+    },
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.fgnxgjc)
+            that.fgnxgjc = that.dealAnswers(res.data.fgnxgjc)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     save() {
       var re = this.form.getFieldsValue()
@@ -507,14 +506,23 @@ export default {
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg, function() {
-            location.href = location.href
-          })
+          that.getFormData()
+          that.$message.success(res.msg)
         })
         .catch(error => {
           console.log(error)
         })
       return false
+    },
+    handleCancel() {
+      this.previewVisible = false;
+    },
+    handlePreview(file) {
+      this.previewImage = file.url || file.thumbUrl;
+      this.previewVisible = true;
+    },
+    handleChange({ fileList }) {
+      this.fileList = fileList;
     }
   }
 }

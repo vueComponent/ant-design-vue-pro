@@ -141,8 +141,16 @@ export default {
   },
   data() {
     return {
+      previewVisible1: false,
+      previewImage1: '',
+      previewVisible2: false,
+      previewImage2: '',
+      uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
+      viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
+      fileList1: [],
+      fileList2: [],
       markName: 'qtsyjc',
-      title: '',
+      title: '基线',
       openKeys: [],
       defaultSelectedKeys: [10],
       orgTree: [],
@@ -150,12 +158,12 @@ export default {
       patientBasis: {},
       baselineInfoStyle: {
         overflow: "auto",
-        height: '630px',
+        height: '486px',
         "padding-right": "0px",
         "border-right": "1px solid #ddd"
       },
       baselineFormStyle: {
-        height: '580px',
+        height: '444px',
       },
       labelColHor: {
         xs: { span: 24 },
@@ -218,23 +226,8 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        if (that.patientBasis.type === 1) {
-          that.title = '基线'
-        } else if (that.patientBasis.type === 2) {
-          that.title = '半年随访'
-        } else if (that.patientBasis.type === 3) {
-          that.title = '年访视'
-        }
       })
-    params.append('basisMarkId', this.maskId)
-    getBasisForm(params)
-      .then(res => {
-        if (res.data && res.data.qtsyjc)
-          that.qtsyjc = that.dealAnswers(res.data.qtsyjc)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.getFormData()
   },
   activated() {
     this.defaultSelectedKeys = [10]
@@ -285,6 +278,20 @@ export default {
       }
       return answer
     },
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.qtsyjc)
+            that.qtsyjc = that.dealAnswers(res.data.qtsyjc)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     save() {
       var re = this.form.getFieldsValue()
       var that = this
@@ -301,9 +308,8 @@ export default {
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg, function() {
-            location.href = location.href
-          })
+          that.getFormData()
+          that.$message.success(res.msg)
         })
         .catch(error => {
           console.log(error)

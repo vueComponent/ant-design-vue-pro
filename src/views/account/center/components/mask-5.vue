@@ -273,24 +273,7 @@ export default {
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
       })
-    params.append('basisMarkId', this.maskId)
-    getBasisForm(params)
-      .then(res => {
-        if (res.data && res.data.xbyxx) {
-          that.xbyxx = that.dealAnswers(res.data.xbyxx)
-          that.fileList = _.map(res.data.annexListXbyxx, function(v) {
-            return {
-              uid: v.annexId,
-              url: that.viewPicUrl + v.annexAddress,
-              name: v.annexAddress,
-              status: 'done'
-            }
-          })
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.getFormData()
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -327,6 +310,29 @@ export default {
         }
       })
     },
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.xbyxx) {
+            that.xbyxx = that.dealAnswers(res.data.xbyxx)
+            that.fileList = _.map(res.data.annexListXbyxx, function(v) {
+              return {
+                uid: v.annexId,
+                url: that.viewPicUrl + v.annexAddress,
+                name: v.annexAddress,
+                status: 'done'
+              }
+            })
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     save() {
       debugger
       var re = this.form.getFieldsValue()
@@ -358,6 +364,7 @@ export default {
       saveBasis(params)
         .then(res => {
           console.log(res)
+          that.getFormData()
           that.$message.success(res.msg)
         })
         .catch(error => {
