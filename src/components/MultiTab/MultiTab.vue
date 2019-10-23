@@ -5,9 +5,11 @@ export default {
   name: 'MultiTab',
   data () {
     return {
-      fullPathList: [],
+      allPathMap: {},
+      pathList: [],
       pages: [],
       activeKey: '',
+      activePath: '', // tab选中的path
       newTabIndex: 0
     }
   },
@@ -35,7 +37,8 @@ export default {
     })
 
     this.pages.push(this.$route)
-    this.fullPathList.push(this.$route.fullPath)
+    this.pathList.push(this.$route.path)
+    this.addAllPath(this.$route.path, this.$route.fullPath)
     this.selectedLastPath()
   },
   methods: {
@@ -44,29 +47,50 @@ export default {
     },
     remove (targetKey) {
       this.pages = this.pages.filter(page => page.fullPath !== targetKey)
-      this.fullPathList = this.fullPathList.filter(path => path !== targetKey)
+      this.pathList = this.pathList.filter(path => path !== targetKey)
       // 判断当前标签是否关闭，若关闭则跳转到最后一个还存在的标签页
-      if (!this.fullPathList.includes(this.activeKey)) {
+      if (!this.pathList.includes(this.activeKey)) {
         this.selectedLastPath()
       }
     },
     selectedLastPath () {
-      this.activeKey = this.fullPathList[this.fullPathList.length - 1]
+      this.activeKey = this.pathList[this.pathList.length - 1]
     },
-
+    // 加入tab key与path的map
+    addAllPath (key, path) {
+      this.allPathMap[key] = path
+    },
+    // 该路由path属于那个tab
+    findTabKey (path) {
+      let tabKey = ''
+      for (const key in this.allPathMap) {
+        if (this.allPathMap[key] === path) {
+          tabKey = key
+        }
+      }
+      console.log('findTabKey:' + tabKey)
+      return tabKey
+    },
+    // 该tab最后存储的path
+    findTabPath (key) {
+      let tabPath = ''
+      tabPath = this.allPathMap[key]
+      console.log('findTabPath:' + tabPath)
+      return tabPath
+    },
     // content menu
     closeThat (e) {
       // 判断是否为最后一个标签页，如果是最后一个，则无法被关闭
-      if (this.fullPathList.length > 1) {
+      if (this.pathList.length > 1) {
         this.remove(e)
       } else {
         this.$message.info('这是最后一个标签了, 无法被关闭')
       }
     },
     closeLeft (e) {
-      const currentIndex = this.fullPathList.indexOf(e)
+      const currentIndex = this.pathList.indexOf(e)
       if (currentIndex > 0) {
-        this.fullPathList.forEach((item, index) => {
+        this.pathList.forEach((item, index) => {
           if (index < currentIndex) {
             this.remove(item)
           }
@@ -76,9 +100,9 @@ export default {
       }
     },
     closeRight (e) {
-      const currentIndex = this.fullPathList.indexOf(e)
-      if (currentIndex < (this.fullPathList.length - 1)) {
-        this.fullPathList.forEach((item, index) => {
+      const currentIndex = this.pathList.indexOf(e)
+      if (currentIndex < (this.pathList.length - 1)) {
+        this.pathList.forEach((item, index) => {
           if (index > currentIndex) {
             this.remove(item)
           }
@@ -88,8 +112,8 @@ export default {
       }
     },
     closeAll (e) {
-      const currentIndex = this.fullPathList.indexOf(e)
-      this.fullPathList.forEach((item, index) => {
+      const currentIndex = this.pathList.indexOf(e)
+      this.pathList.forEach((item, index) => {
         if (index !== currentIndex) {
           this.remove(item)
         }
@@ -121,14 +145,20 @@ export default {
   },
   watch: {
     '$route': function (newVal) {
-      this.activeKey = newVal.fullPath
-      if (this.fullPathList.indexOf(newVal.fullPath) < 0) {
-        this.fullPathList.push(newVal.fullPath)
+      this.activePath = newVal.fullPath
+      this.addAllPath(newVal.path, newVal.fullPath)
+      if (this.pathList.indexOf(newVal.path) < 0) {
+        this.pathList.push(newVal.path)
         this.pages.push(newVal)
       }
     },
     activeKey: function (newPathKey) {
+      const lastPath = this.findTabPath(newTabKey)
+      this.$router.push({ path: lastPath })
+    },
+    activePath: function (newPathKey) {
       this.$router.push({ path: newPathKey })
+      this.activeKey = this.findTabKey(newPathKey)
     }
   },
   render () {
