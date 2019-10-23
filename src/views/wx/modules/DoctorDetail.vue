@@ -51,7 +51,6 @@
 </template>
 
 <script>
-  import moment from 'moment'
   import { getDoctorDetail, saveDoctor, getCenter } from '@/api/famousDoctor'
   import QuillEditor from '@/components/Editor/QuillEditor'
   export default {
@@ -147,12 +146,17 @@
       normFile(e) {
         if (Array.isArray(e)) {
           return e;
+        } const isJPG = e.file.type === 'image/jpeg';
+        const isPNG = e.file.type === 'image/png';
+        if (!isJPG || !isPNG) {
+          this.$message.error('请上传正确的图片格式');
+        } else {
+          if (e.file.status == 'done') {
+            this.fileName = e.file.response.fileName
+            this.isFileLen = true
+          }
+          return e && e.fileList;
         }
-        if (e.file.status == 'done') {
-          this.fileName = e.file.response.fileName
-          this.isFileLen = true
-        }
-        return e && e.fileList;
       },
       handleRemove(file) {
         this.fileName = ''
