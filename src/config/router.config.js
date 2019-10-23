@@ -220,7 +220,7 @@ export const asyncRouterMap = [
       },
       {
         path: '/gallery/execute/:id(\\d+)/53',
-        name: 'exec53',
+        name: 'Exec53',
         hidden: true,
         hideChildrenInMenu: true,
         component: () => import('@/views/gallery/components/mask-53'),
@@ -228,7 +228,7 @@ export const asyncRouterMap = [
       },
       {
         path: '/gallery/execute/:id(\\d+)/51',
-        name: 'exec51',
+        name: 'Exec51',
         hidden: true,
         hideChildrenInMenu: true,
         component: () => import('@/views/gallery/components/mask-51'),
@@ -236,7 +236,7 @@ export const asyncRouterMap = [
       },
       {
         path: '/gallery/execute/:id(\\d+)/52',
-        name: 'exec52',
+        name: 'Exec52',
         hidden: true,
         hideChildrenInMenu: true,
         component: () => import('@/views/gallery/components/mask-52'),
@@ -244,7 +244,7 @@ export const asyncRouterMap = [
       },
       {
         path: '/gallery/execute/:id(\\d+)/54',
-        name: 'exec54',
+        name: 'Exec54',
         hidden: true,
         hideChildrenInMenu: true,
         component: () => import('@/views/gallery/components/mask-54'),
@@ -306,13 +306,13 @@ export const asyncRouterMap = [
         path: '/wx/healthknowledge',
         name: 'healthknowledge',
         component: () => import('@/views/wx/healthknowledge'),
-        meta: { title: '健康知识', keepAlive: true, icon: baogao,isBack:false}
+        meta: { title: '健康知识', keepAlive: true, icon: baogao,isBack:false, permission: ['group']}
       },
       {
         path: '/wx/famousDoctor',
         name: 'famousDoctor',
         component: () => import('@/views/wx/famousDoctor'),
-        meta: { title: '名医专家', keepAlive: true, icon: baogao,isBack:false}
+        meta: { title: '名医专家', keepAlive: true, icon: baogao,isBack:false, permission: ['group']}
       },
       {
         path: '/gallery/detail/:id(\\d*)',

@@ -1,23 +1,28 @@
 <template>
-  <a-card :bordered="false"  :bodyStyle="bodyStyle">
+  <a-card :bordered="false" :bodyStyle="bodyStyle">
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
-            <a-form-item ><a-input v-model="queryParam.keyword"  placeholder="搜索患者姓名、身份证号" /></a-form-item>
+            <a-form-item>
+              <a-input v-model="queryParam.keyword" placeholder="搜索患者姓名、身份证号" />
+            </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="refreshTable">查询</a-button>
               <a @click="toggleAdvanced" style="margin-left: 8px">
-               更多筛选
+                更多筛选
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
             </a-form-item>
           </a-col>
-          <a-col :md="13" style="text-align:right" :sm="24"><a-button type="primary"  @click="$refs.registerModal.add()">添加采集</a-button><a-button type="primary"  style="margin-left: 10px;">导出</a-button></a-col>
+          <a-col :md="13" style="text-align:right" :sm="24">
+            <a-button type="primary" @click="$refs.registerModal.add()">添加采集</a-button>
+            <a-button type="primary" style="margin-left: 10px;">导出</a-button>
+          </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
-             <div>
+            <div>
               <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
@@ -29,16 +34,22 @@
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
                   <a-card :bordered="false">
                     <a-form>
-                      <a-form-item  label="档案号"><a-input v-model="queryParam.reportCode" style="width: 100%" /></a-form-item>
-                      <a-form-item  label="姓名"><a-input v-model="queryParam.patientName" style="width: 100%" /></a-form-item>
-                      <a-form-item  label="身份证号"><a-input v-model="queryParam.card" style="width: 100%" /></a-form-item>
-                    <a-form-item label="创建日期" style="margin-bottom:0;">
-                      <a-range-picker @change="changeTime" style="width: 100%"  :value="dateArr"/>
-                     </a-form-item>
-                    、<a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
-                        <a-button type="primary"  @click="clearForm()">清空</a-button>
-                       <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
-                    </a-form-item>
+                      <a-form-item label="档案号">
+                        <a-input v-model="queryParam.reportCode" style="width: 100%" />
+                      </a-form-item>
+                      <a-form-item label="姓名">
+                        <a-input v-model="queryParam.patientName" style="width: 100%" />
+                      </a-form-item>
+                      <a-form-item label="身份证号">
+                        <a-input v-model="queryParam.card" style="width: 100%" />
+                      </a-form-item>
+                      <a-form-item label="创建日期" style="margin-bottom:0;">
+                        <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
+                      </a-form-item>
+                      、<a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
+                        <a-button type="primary" @click="clearForm()">清空</a-button>
+                        <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
+                      </a-form-item>
                     </a-form>
                   </a-card>
                 </a-tab-pane>
@@ -48,11 +59,12 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" :scroll="scroll" size="small"  rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-      <span slot="collectStatus" slot-scope="text"><a-badge :status="text | statusTypeFilter" :text="text | statusFilter" /></span>
-           <span slot="name"  slot-scope="text,record" @click="showUser(record)">
-       <p class="userName">{{text}}</p>
-     </span>
+    <s-table ref="table" :scroll="scroll" size="small" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+      <span slot="collectStatus" slot-scope="text">
+        <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" /></span>
+      <span slot="name" slot-scope="text,record" @click="showUser(record)">
+        <p class="userName">{{text}}</p>
+      </span>
       <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">
@@ -61,11 +73,10 @@
         </template>
       </span>
     </s-table>
-        <user-detail ref="detailModal"/>
+    <user-detail ref="detailModal" />
     <register-form ref="registerModal" @ok="handleOk"></register-form>
   </a-card>
 </template>
-
 <script>
 import moment from 'moment'
 import { STable, Ellipsis } from '@/components'
@@ -95,21 +106,20 @@ export default {
     RegisterForm,
     UserDetail
   },
-  data () {
+  data() {
     return {
-       dateArr:[],
-          bodyStyle:{
-                      padding:"10px",
-         paddingBottom:"0px"
-       },
+      dateArr: [],
+      bodyStyle: {
+        padding: "10px",
+        paddingBottom: "0px"
+      },
       mdl: {},
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
       queryParam: {},
       // 表头
-      columns: [
-        {
+      columns: [{
           title: '报告编号',
           dataIndex: 'reportCode',
           width: '150px',
@@ -122,8 +132,8 @@ export default {
         {
           title: '患者姓名',
           dataIndex: 'patientName',
-           scopedSlots: { customRender: 'name' },
-           width: '120px',
+          scopedSlots: { customRender: 'name' },
+          width: '120px',
         },
         {
           title: '身份证号',
@@ -134,19 +144,19 @@ export default {
           title: '创建时间',
           dataIndex: 'collectDate',
           customRender: collectDate => moment(collectDate).format('YYYY-MM-DD'),
-           width: '180px',
+          width: '180px',
         },
         {
           title: '采集状态',
           dataIndex: 'collectStatus',
           scopedSlots: { customRender: 'collectStatus' },
-		     width: '180px',
+          width: '180px',
         },
         {
           title: '操作',
           dataIndex: 'action',
           width: '100px',
-           className: 'operation',
+          className: 'operation',
           scopedSlots: { customRender: 'action' }
         }
       ],
@@ -159,7 +169,7 @@ export default {
       },
       selectedRowKeys: [],
       selectedRows: [],
-       scroll:false,
+      scroll: false,
       // custom table alert & rowSelection
       options: {
         alert: {
@@ -177,71 +187,77 @@ export default {
     }
   },
   filters: {
-    statusFilter (type) {
+    statusFilter(type) {
       return statusMap[type].text
     },
-    statusTypeFilter (type) {
+    statusTypeFilter(type) {
       return statusMap[type].status
     }
   },
-  created () {
-       this.scroll={
-      y: (window.screen.height-368)+"px"
+  created() {
+    this.scroll = {
+      y: (window.screen.height - 368) + "px"
     }
   },
   methods: {
-    clearForm(){
-      this.queryParam={}
-        this.dateArr=[]
+    clearForm() {
+      this.queryParam = {}
+      this.dateArr = []
     },
-      tableSearch(type){
-       const keyWord={
-         "type":type
-       }
-        this.$refs.table.search(keyWord);
-        this.advanced=false;
-     },
-     refreshTable(){
-         this.advanced=false;
-         this.$refs.table.refresh();
-     },
-    showUser(record){
-      this.$refs.detailModal.show(record);
+    tableSearch(type) {
+      const keyWord = {
+        "type": type
+      }
+      this.$refs.table.search(keyWord)
+      this.advanced = false
     },
-    toggleAdvanced () {
-      this.advanced = !this.advanced
-    },
-    handleOk () {
+    refreshTable() {
+      this.advanced = false
       this.$refs.table.refresh()
     },
-    handleEdit (record) {
+    showUser(record) {
+      this.$refs.detailModal.show(record)
+    },
+    toggleAdvanced() {
+      this.advanced = !this.advanced
+    },
+    handleOk() {
+      this.$refs.table.refresh()
+    },
+    handleEdit(record) {
       this.$router.push('/gallery/execute/' + record.reportCollectBaseId)
     },
     changeTime(time) {
-      this.dateArr=time;
-      this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD');
-      this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
-    },
+      this.dateArr = time;
+      this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD')
+      this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD')
+    }
   }
 }
 </script>
 <style lang="less" scoped>
-  td.operation {
+td.operation {
   text-align: center !important;
 }
-   /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item{
-    margin-bottom: 10px
-  }
+
+/deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
+  margin-bottom: 10px
+}
+
 .tableSearch {
   background: #ffffff;
   position: absolute;
-  top: 52px;box-shadow: 4px 4px 10px #ddd;
+  top: 52px;
+  box-shadow: 4px 4px 10px #ddd;
   z-index: 100;
-  /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
+
+  /deep/ .ant-card-body .ant-form-horizontal .ant-form-item>.ant-form-item-label {
     width: 70px !important;
   }
+
   .commonRetrieval {
     padding: 10px;
+
     p {
       &:hover {
         cursor: pointer;
@@ -250,9 +266,11 @@ export default {
     }
   }
 }
+
 .userName {
   color: #1fb2fa;
   margin: 0;
+
   &:active,
   &:hover {
     text-decoration: underline;

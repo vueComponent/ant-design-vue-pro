@@ -80,7 +80,7 @@ import { MyIcon } from '@/components/_util/util'
 import { getReportTypeMark, saveReport, getReportFormData } from '@/api/report'
 
 export default {
-  name: 'exec51',
+  name: 'Exec51',
   components: {
     STree,
     MyIcon
@@ -93,10 +93,10 @@ export default {
       viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
       fileList: [],
       baselineInfoStyle: {
-        overflow: "auto",
+        overflow: 'auto',
         height: '486px',
-        "padding-right": "0px",
-        "border-right": "1px solid #ddd"
+        'padding-right': '0px',
+        'border-right': '1px solid #ddd'
       },
       title: '报告采集',
       baselineFormStyle: {
@@ -273,11 +273,11 @@ export default {
       this.previewVisible = false;
     },
     handlePreview(file) {
-      this.previewImage = file.url || file.thumbUrl;
-      this.previewVisible = true;
+      this.previewImage = file.url || file.thumbUrl
+      this.previewVisible = true
     },
     handleChange({ fileList }) {
-      this.fileList = fileList;
+      this.fileList = fileList
     }
   }
 }
