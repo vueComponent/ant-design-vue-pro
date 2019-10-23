@@ -7,7 +7,7 @@ export const asyncRouterMap = [
     path: '/',
     name: 'index',
     component: BasicLayout,
-    meta: { title: '首页', permission: ['center'] },
+    meta: { title: '首页', permission: ['center', 'group'] },
     redirect: '/dashboard/analysis',
     children: [
       // dashboard
@@ -15,7 +15,7 @@ export const asyncRouterMap = [
         path: '/dashboard/analysis',
         name: 'Analysis',
         component: () => import('@/views/dashboard/Analysis'),
-        meta: { title: '首页', keepAlive: true, icon: home, permission: [ 'center' ] }
+        meta: { title: '首页', keepAlive: true, icon: home, permission: [ 'center', 'group' ] }
       },
       {
         path: '/list/index',
@@ -337,7 +337,6 @@ export const asyncRouterMap = [
       }
     ]
   },
- 
   {
     path: '*', redirect: '/404', hidden: true
   }
