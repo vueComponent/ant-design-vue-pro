@@ -741,7 +741,11 @@ export default {
       this.maskId = e.key
       // this.getElementsAnswer()
       // location.href = '/list/basis/' + this.patientBasisId + '/' + this.maskId
-      this.$router.push('/list/basis/' + this.patientBasisId + '/' + this.maskId)
+      if (e.key >= 31 && e.key <= 36) {
+        this.$router.push('/basis/question/' + this.patientBasisId + '/' + this.maskId)
+      } else {
+        this.$router.push('/list/basis/' + this.patientBasisId + '/' + this.maskId)
+      }
     },
     handleSubmit(e) {
       e.preventDefault()

@@ -118,6 +118,14 @@ export const asyncRouterMap = [
         meta: {maskId: 4, permission: [ 'center' ]}
       },
       {
+        path: '/basis/question/:id(\\d+)/:qid(\\d+)',
+        name: 'BasisQuestion',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/account/center/question'),
+        meta: {permission: [ 'center' ]}
+      },
+      {
         path: '/list/task/:id(\\d*)',
         name: 'taskTotal',
         hidden: true,

@@ -174,3 +174,11 @@ export function createSFJx(params) {
     data: params
   })
 }
+
+export function getQuestionDetail(params) {
+  return axios({
+    url: '/question/detail',
+    method: 'post',
+    data: params
+  })
+}
