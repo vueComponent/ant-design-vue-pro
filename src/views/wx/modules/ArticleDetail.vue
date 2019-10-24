@@ -45,7 +45,7 @@
 
 <script>
   import { getWxArticleDetail, addOrEdit, getUrl } from '@/api/text'
-    import QuillEditor from '@/components/Editor/QuillEditor'
+  import QuillEditor from '@/components/Editor/QuillEditor'
   export default {
     components: {
       QuillEditor
@@ -126,11 +126,17 @@
         if (Array.isArray(e)) {
           return e;
         }
-        if (e.file.status == 'done') {
-          this.fileName = e.file.response.fileName
-          this.isFileLen = true
+        const isJPG = e.file.type === 'image/jpeg';
+        const isPNG = e.file.type === 'image/png';
+        if (!isJPG || !isPNG) {
+          this.$message.error('请上传正确的图片格式');
+        } else {
+          if (e.file.status == 'done') {
+            this.fileName = e.file.response.fileName
+            this.isFileLen = true
+          }
+          return e && e.fileList;
         }
-        return e && e.fileList;
       },
       handleRemove(file) {
         this.fileName = ''
@@ -178,9 +184,9 @@
 </script>
 
 <style lang="less" scoped>
-    .textarea {
-      /deep/.ant-form-item-control {
-        line-height: 1;
-      }
+  .textarea {
+    /deep/.ant-form-item-control {
+      line-height: 1;
     }
+  }
 </style>

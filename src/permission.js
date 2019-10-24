@@ -22,7 +22,7 @@ router.beforeEach((to, from, next) => {
       NProgress.done()
     } else {
       if (store.getters.roles.length === 0) {
-        var role = typeof Vue.ls.get(ACCESS_TOKEN).doctorId !== 'undefined' ? ['center'] : ['group']
+        var role = typeof Vue.ls.get(ACCESS_TOKEN).centerId !== 'undefined' ? ['center'] : ['group']
         store
           .dispatch('GetInfo', role)
           .then(res => {

@@ -248,6 +248,10 @@
         border-bottom: 1px solid #eee;
       }
 
+      .ant-form-item label {
+        margin: 5px 0;
+      }
+
       /deep/ .ant-form-item-label {
         text-align: left;
 
