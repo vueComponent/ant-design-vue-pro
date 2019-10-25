@@ -1,16 +1,5 @@
 <template>
-  <a-modal
-    :title="options.title"
-    :width=" 600"
-    :bodyStyle="bodyStyle"
-    :maskClosable="maskClosable"
-    :destroyOnClose="destroyOnClose"
-    :centered="centered"
-    :visible="visible"
-    :confirmLoading="confirmLoading"
-    @ok="handleSubmit"
-    @cancel="handleCancel"
-  >
+  <a-modal :title="options.title" :width=" 600" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :destroyOnClose="destroyOnClose" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="病例识别号" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -18,9 +7,11 @@
         </a-form-item>
         <!-- <a-form-item label="病例档案号" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['card', { rules: [{ required: true }] }]" /></a-form-item> -->
         <a-form-item label="患者同意注册日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker style="width: 100%"  format="YYYY-MM-DD" v-decorator="['registerDate', requiredRule]" />
+          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['registerDate', requiredRule]" />
         </a-form-item>
-        <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['name', requiredRule]" /></a-form-item>
+        <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['name', requiredRule]" />
+        </a-form-item>
         <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['sex', requiredRule]" style="width: 100%">
             <a-radio :value="1">男</a-radio>
@@ -28,36 +19,46 @@
           </a-radio-group>
         </a-form-item>
         <a-form-item label="出生日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker style="width: 100%"  format="YYYY-MM-DD" v-decorator="['birthDate', requiredRule]" />
+          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['birthDate', requiredRule]" />
         </a-form-item>
         <a-form-item label="常居住地" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-row :gutter="8">
             <a-col :span="12">
-              <a-cascader
-                v-decorator="['residence', requiredRule]"
-                :options="residences"
-                :fieldNames="{ label: 'city', value: 'cityId', children: 'children' }"
-                placeholder="选择省/市"
-              />
+              <a-cascader v-decorator="['residence', requiredRule]" :options="residences" :fieldNames="{ label: 'city', value: 'cityId', children: 'children' }" placeholder="选择省/市" />
             </a-col>
-            <a-col :span="12"><a-input placeholder="请输入详细地址" v-decorator="['address', requiredRule]" /></a-col>
+            <a-col :span="12">
+              <a-input placeholder="请输入详细地址" v-decorator="['address', requiredRule]" />
+            </a-col>
           </a-row>
         </a-form-item>
-        <a-form-item label="民族" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-select v-decorator="['nation', requiredRule]" :options="nationList"></a-select></a-form-item>
-        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="职业"><a-radio-group :options="professionList" v-decorator="['work', requiredRule]" /></a-form-item>
-        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="文化程度"><a-radio-group :options="censusList" v-decorator="['census', requiredRule]" /></a-form-item>
-        <a-form-item label="家庭年收入" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['income', requiredRule]" addonAfter="万元" /></a-form-item>
+        <a-form-item label="民族" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-select v-decorator="['nation', requiredRule]" :options="nationList"></a-select>
+        </a-form-item>
+        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="职业">
+          <a-radio-group :options="professionList" v-decorator="['work', requiredRule]" />
+        </a-form-item>
+        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="文化程度">
+          <a-radio-group :options="censusList" v-decorator="['census', requiredRule]" />
+        </a-form-item>
+        <a-form-item label="家庭年收入" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['income', requiredRule]" addonAfter="万元" />
+        </a-form-item>
         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="医疗费用支付情况">
           <a-radio-group :options="payTypeList" v-decorator="['payType', requiredRule]" />
         </a-form-item>
-        <a-form-item label="联系电话1" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone1', requiredRule]" /></a-form-item>
-        <a-form-item label="联系电话2" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone2']" /></a-form-item>
-        <a-form-item label="联系电话3" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone3']" /></a-form-item>
+        <a-form-item label="联系电话1" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['telephone1', requiredRule]" />
+        </a-form-item>
+        <a-form-item label="联系电话2" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['telephone2']" />
+        </a-form-item>
+        <a-form-item label="联系电话3" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['telephone3']" />
+        </a-form-item>
       </a-form>
     </a-spin>
   </a-modal>
 </template>
-
 <script>
 import { getProvinceAndCity, getNation, getDictionaryAttributeByDictionaryId, addOrUpdate } from '@/api/basis';
 import moment from 'moment';
@@ -70,7 +71,7 @@ export default {
       nationList: [],
       professionList: [],
       censusList: [],
-      maskClosable:false,
+      maskClosable: false,
       payTypeList: [],
       labelCol: {
         xs: { span: 24 },
@@ -89,7 +90,8 @@ export default {
         overflow: 'auto'
       },
       form: this.$form.createForm(this),
-      requiredRule: { rules: [{ required: true, message: '该选项必填' }] }
+      requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
+      patientId: undefined
     };
   },
   created() {
@@ -168,14 +170,15 @@ export default {
       //     "name":'123'
       //   });
       // });
-      value.birthDate = moment(value.birthDate, 'x');
-      value.registerDate = moment(value.registerDate, 'x');
-      value.residence = [value.addressP, value.addressC];
+      value.birthDate = moment(value.birthDate, 'x')
+      value.registerDate = moment(value.registerDate, 'x')
+      value.residence = [value.addressP, value.addressC]
+      this.patientId = value.patientId
       // value.birthDate=moment(value.birthDate, 'YYYY-MM-DD');
       setTimeout(() => {
-        this.form.setFieldsValue(value);
+        this.form.setFieldsValue(value)
       }, 0);
-      this.visible = true;
+      this.visible = true
     },
     handleSubmit() {
       const {
@@ -196,7 +199,8 @@ export default {
           birthDate: fieldsValue['birthDate'].format('YYYY-MM-DD'),
           registerDate: fieldsValue['registerDate'].format('YYYY-MM-DD'),
           addressP: residence[0],
-          addressC: residence[1]
+          addressC: residence[1],
+          patientId: this.patientId
         };
         const params = new URLSearchParams();
         params.append('patientStr', JSON.stringify(values));
@@ -332,12 +336,13 @@ export default {
 };
 </script>
 <style>
- .ant-modal-header {
-    padding: 12px 24px!important;
+.ant-modal-header {
+  padding: 12px 24px !important;
 }
-  .ant-modal-close-x {
-    width: 50px!important;
-    height: 50px!important;
-    line-height: 50px!important;
+
+.ant-modal-close-x {
+  width: 50px !important;
+  height: 50px !important;
+  line-height: 50px !important;
 }
 </style>

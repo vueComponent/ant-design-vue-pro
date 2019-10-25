@@ -274,6 +274,7 @@ export default {
       return false
     },
     computeBMI() {
+      debugger
       var that = this
       var height = this.form.getFieldValue('a6')
       var weight = this.form.getFieldValue('a7')
