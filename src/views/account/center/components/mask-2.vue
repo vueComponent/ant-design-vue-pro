@@ -47,10 +47,10 @@
                 <a-input v-decorator="['a5', {...inputRequired, initialValue: initValue('a5')}]" style="width: 240px;"></a-input>
               </a-form-item>
               <a-form-item label="(6) 身高:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a6', {...inputRequired, initialValue: initValue('a6')}]" style="width: 240px;" addonAfter="cm" @change="computeBMI"></a-input>
+                <a-input v-decorator="['a6', {...inputRequired, initialValue: initValue('a6')}]" style="width: 240px;" addonAfter="cm" @change="changeHeight($event)"></a-input>
               </a-form-item>
               <a-form-item label="(7) 体重:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="computeBMI"></a-input>
+                <a-input v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="changeWeight($event)"></a-input>
               </a-form-item>
               <a-form-item label="(8) BMI(自动演算出):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input v-decorator="['a8', {initialValue: initValue('a8')}]" :readOnly="true" style="width: 240px;"></a-input>
@@ -96,7 +96,7 @@ export default {
   data() {
     return {
       markName: 'tgjc',
-      title: '',
+      title: '基线',
       openKeys: [],
       defaultSelectedKeys: [2],
       orgTree: [],
@@ -153,7 +153,9 @@ export default {
       maskId: this.$route.meta.maskId,
       patientBasisId: this.$route.params.id,
       controla9: false,
-      tgjc: undefined
+      tgjc: undefined,
+      height: undefined,
+      weight: undefined
     }
   },
   created() {
@@ -167,23 +169,8 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        if (that.patientBasis.type === 1) {
-          that.title = '基线'
-        } else if (that.patientBasis.type === 2) {
-          that.title = '半年随访'
-        } else if (that.patientBasis.type === 3) {
-          that.title = '年访视'
-        }
       })
-    params.append('basisMarkId', this.maskId)
-    getBasisForm(params)
-      .then(res => {
-        if (res.data && res.data.tgjc)
-          that.tgjc = that.dealAnswers(res.data.tgjc)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.getFormData()
   },
   activated() {
     this.defaultSelectedKeys = [2]
@@ -211,6 +198,20 @@ export default {
       this.maskId = e.key
       // this.getElementsAnswer()
       this.$router.push('/list/basis/' + this.patientBasisId + '/' + this.maskId)
+    },
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.tgjc)
+            that.tgjc = that.dealAnswers(res.data.tgjc)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     handleSubmit(e) {
       e.preventDefault()
@@ -245,6 +246,12 @@ export default {
         if (answer.a9 === '1') {
           this.controla9 = true
         }
+        if (answer.a6) {
+          this.height = answer.a6
+        }
+        if (answer.a7) {
+          this.weight = answer.a7
+        }
       }
       return answer
     },
@@ -264,9 +271,8 @@ export default {
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg, function() {
-            location.href = location.href
-          })
+          that.getFormData()
+          that.$message.success(res.msg)
         })
         .catch(error => {
           console.log(error)
@@ -274,10 +280,9 @@ export default {
       return false
     },
     computeBMI() {
-      debugger
       var that = this
-      var height = this.form.getFieldValue('a6')
-      var weight = this.form.getFieldValue('a7')
+      var height = this.height
+      var weight = this.weight
       if (height && weight) {
         var params = new URLSearchParams()
         params.append('scoreType', 'bmi')
@@ -293,6 +298,14 @@ export default {
             console.log(error)
           })
       }
+    },
+    changeHeight(e) {
+      this.height = e.target.value
+      this.computeBMI()
+    },
+    changeWeight(e) {
+      this.weight = e.target.value
+      this.computeBMI()
     }
   }
 }

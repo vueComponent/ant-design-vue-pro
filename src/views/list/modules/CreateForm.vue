@@ -210,6 +210,7 @@ export default {
           console.log(res);
           that.visible = false;
           that.confirmLoading = false;
+          that.$message.success(res.msg)
           that.$emit('ok', values);
         });
       });
