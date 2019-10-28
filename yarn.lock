@@ -7438,10 +7438,10 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@0.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.
   dependencies:
     minimist "0.0.8"
 
-mockjs2@1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/mockjs2/-/mockjs2-1.0.7.tgz#3aca24630b6a49f13b3087deb174fd00ef5a5396"
-  integrity sha512-/CS9HBvBp0wIEFKssRT90z1fiE97/3pzFTUe8CYF4EVH1sKzckssCTJUmL6pPoEFBWvCIN07T/jrKNg23evFtw==
+mockjs2@1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/mockjs2/-/mockjs2-1.0.8.tgz#37ca061d6c3319d888292aef656434380971c94c"
+  integrity sha512-IXY9wzq3Pr2tybkJnT+dzrTz0GBRTtgXc7Cke/UUQyyWtbjDrck8uZ3NmMF4LaWgAD8vm8EMGcBk4Itc6nzpRg==
   dependencies:
     commander "*"
 
