@@ -282,7 +282,7 @@
               <a-form-item label="(8) 其他:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['a8', {...inputRequired, initialValue: initValue('a8')}]"></a-input>
               </a-form-item>
-              <a-form-item label="(9) 小结：根据实验室检查及既往病史判断:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(9) 小结：根据实验室检查及既往病史判断(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a9', {...selectRequired, initialValue: initValue('a9', 'array')}]">
                   <a-checkbox value="1">特发性</a-checkbox>
                   <a-checkbox value="2">感染后性</a-checkbox>
