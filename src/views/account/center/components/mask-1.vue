@@ -44,7 +44,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(3) 患者支扩确诊时间:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]" style="width: 240px;"></a-date-picker>
+                <a-date-picker placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
               </a-form-item>
               <a-form-item label="(4) 主要临床症状（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4', 'array')}]">
@@ -79,7 +79,7 @@
                 <a-input addonAfter="次" style="width: 240px;" v-decorator="['b3', {...inputRequired, initialValue: initValue('b3')}]"></a-input>
               </a-form-item>
               <a-form-item label="(4) 最后一次急性加重的时间:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b4', {...dateRequire, initialValue: initValue('b4', 'time')}]"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['b4', {...dateRequire, initialValue: initValue('b4', 'time')}]"></a-date-picker>
               </a-form-item>
               <a-form-item label="(5) 有无以下疾病及事件（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['b5', {...selectRequired, initialValue: initValue('b5', 'array')}]">
@@ -601,6 +601,10 @@ export default {
       } else {
         return this.zkbszl[key] + ''
       }
+    },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current > moment().endOf('day');
     },
     dealAnswers(answer) {
       var that = this
