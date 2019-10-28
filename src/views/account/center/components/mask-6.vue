@@ -32,7 +32,7 @@
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.稳定期</div>
               <a-form-item label="(1) 取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item label="(2) 是否本院:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-radio-group v-decorator="['a2', {...require1, initialValue: initValue('a2')}]" @change="changeRadio($event, 'controla2')">
@@ -93,7 +93,7 @@
               </a-form-item>
               <div v-if="controlb">
                 <a-form-item label="取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b1', {...dateRequire, initialValue: initValue('b1', 'time')}]"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b1', {...dateRequire, initialValue: initValue('b1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="是否本院:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                   <a-radio-group v-decorator="['b2', {...require1, initialValue: initValue('b2')}]" @change="changeRadio($event, 'controlb2')">
@@ -148,7 +148,7 @@
               </div>
               <div class="title">3.分支杆菌标本</div>
               <a-form-item label="(1) 取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['c1', {...dateRequire, initialValue: initValue('c1', 'time')}]"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['c1', {...dateRequire, initialValue: initValue('c1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item label="(2) 是否本院:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-radio-group v-decorator="['c2', {...require1, initialValue: initValue('c2')}]" @change="changeRadio($event, 'controlc2')">
@@ -173,6 +173,26 @@
                   <a-radio value="-1">否</a-radio>
                 </a-radio-group>
               </a-form-item>
+              <div v-if="controlc4">
+                <a-form-item label="分离方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                  <a-radio-group v-decorator="['c41', {...selectRequired, initialValue: initValue('c41')}]">
+                    <a-radio value="1">纸片法</a-radio>
+                    <a-radio value="2">肉汤稀释法</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['c42', {...selectRequired, initialValue: initValue('c42', 'array')}]">
+                    <a-checkbox value="0">结核分枝杆菌</a-checkbox>
+                    <a-checkbox value="1">非结核分支杆菌</a-checkbox>
+                    <a-checkbox value="2">堪萨斯分枝杆菌</a-checkbox>
+                    <a-checkbox value="3">龟分枝杆菌</a-checkbox>
+                    <a-checkbox value="4">脓肿分支杆菌</a-checkbox>
+                    <a-checkbox value="5">鸟分枝杆菌复合群(MAC)</a-checkbox>
+                    <a-checkbox value="6" @change="changeSelect($event, 'controlc426')">其他</a-checkbox>
+                    <a-input style="width: 240px;margin-right: 10px;" v-if="controlc426"></a-input>
+                  </a-checkbox-group>
+                </a-form-item>
+              </div>
               <a-form-item label="(5) 患者是否曾分离培养到铜绿假单细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['c5', {...require1, initialValue: initValue('c5')}]" @change="changeRadio($event, 'controlc5')">
                   <a-radio value="1">是</a-radio>
@@ -218,7 +238,7 @@ export default {
       optionDataSource: [],
       optionDataSource2: [],
       markName: 'bywsw',
-      title: '',
+      title: '基线',
       openKeys: [],
       defaultSelectedKeys: [6],
       orgTree: [],
@@ -305,6 +325,7 @@ export default {
       controlb425: false,
       controlb426: false,
       controlb427: false,
+      controlc426: false
     }
   },
   created() {
@@ -318,13 +339,6 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        if (that.patientBasis.type === 1) {
-          that.title = '基线'
-        } else if (that.patientBasis.type === 2) {
-          that.title = '半年随访'
-        } else if (that.patientBasis.type === 3) {
-          that.title = '年访视'
-        }
       })
     params.append('basisMarkId', this.maskId)
     getBasisForm(params)
@@ -412,7 +426,8 @@ export default {
         'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
         'c1': typeof re['c1'] !== 'undefined' ? re['c1'].format('YYYY-MM-DD') : '',
         'a42': typeof re['a42'] !== 'undefined' ? re['a42'].join(',') : '',
-        'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : ''
+        'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : '',
+        'c42': typeof re['c42'] !== 'undefined' ? re['c42'].join(',') : ''
       }
       console.log(re)
       this.patientBasis.status = 1
@@ -460,6 +475,18 @@ export default {
         }
         if (answer.a4 && answer.a4 === 1) {
           this.controla4 = true
+        }
+        if (answer.b2 && answer.b2 === -1) {
+          this.controlb2 = true
+        }
+        if (answer.b4 && answer.b4 === 1) {
+          this.controlb4 = true
+        }
+        if (answer.c2 && answer.c2 === -1) {
+          this.controlc2 = true
+        }
+        if (answer.c4 && answer.c4 === 1) {
+          this.controlc4 = true
         }
         if (answer.a42) {
           splitArr = answer.a42.split(',')
@@ -529,8 +556,18 @@ export default {
             }
           })
         }
+        if (answer.c42) {
+          splitArr = answer.c42.split(',')
+          if (splitArr.indexOf('6') > -1) {
+            this.controlc426 = true
+          }
+        }
       }
       return answer
+    },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current > moment().endOf('day');
     },
     showList(e, name, controlNode, isSimple) {
       if (e.target.checked) {
@@ -563,7 +600,7 @@ export default {
         })
         if (isSimple) {
           that.$set(that.optionDataSource, index, optionDataSource)
-        }else{
+        } else {
           that.$set(that.optionDataSource2, index, optionDataSource)
         }
       })
