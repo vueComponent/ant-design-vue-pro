@@ -306,7 +306,7 @@
                   <a-checkbox value="20" @change="changeSelect($event, 'controla920')">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item label="具体描述" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla920">
+              <a-form-item label="具体描述" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controla920">
                 <a-input style="width: 240px;" v-decorator="['a91', {...inputRequired, initialValue: initValue('a91')}]"></a-input>
               </a-form-item>
             </div>
