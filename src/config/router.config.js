@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import { UserLayout, BasicLayout, RouteView, BlankLayout, PageView } from '@/layouts'
-import { bxAnaalyse,baogao,bingli,fangshi,ruzhu,wenjuan,zhanghao,home } from '@/core/icons'
+import { bxAnaalyse,baogao,bingli,fangshi,ruzhu,zhanghao,home,jixing,blzysq,blzysh,wxyhsh,wenjuan,hzbgsy,huodongquan,jkzs,myzj } from '@/core/icons'
 export const asyncRouterMap = [
 
   {
@@ -27,7 +27,7 @@ export const asyncRouterMap = [
         path: '/acute/index',
         name: 'acute',
         component: () => import('@/views/acute/TableList'),
-        meta: { title: '急性加重', keepAlive: true, icon: bingli, permission: [ 'center' ]}
+        meta: { title: '急性加重', keepAlive: true, icon: jixing, permission: [ 'center' ]}
       },
       {
         path: '/list/basis/:id(\\d*)',
@@ -270,25 +270,25 @@ export const asyncRouterMap = [
         path: '/caseTransfer/index',
         name: 'CaseTransfer',
         component: () => import('@/views/caseTransfer/index'),
-        meta: { title: '病例转移申请', keepAlive: true, icon: baogao,isBack:false, permission: [ 'center' ]}
+        meta: { title: '病例转移申请', keepAlive: true, icon: blzysq,isBack:false, permission: [ 'center' ]}
       },
       {
         path: '/caseTransfer/review',
         name: 'caseTransferReview',
         component: () => import('@/views/caseTransfer/review'),
-        meta: { title: '病例转移审核', keepAlive: true, icon: baogao,isBack:false, permission: [ 'center' ]}
+        meta: { title: '病例转移审核', keepAlive: true, icon: blzysh,isBack:false, permission: [ 'center' ]}
       },
       {
         path: '/wx/userAudit',
         name: 'wxUserAudit',
         component: () => import('@/views/wx/userAudit'),
-        meta: { title: '微信用户审核', keepAlive: true, icon: baogao,isBack:false, permission: [ 'center' ]}
+        meta: { title: '微信用户审核', keepAlive: true, icon: wxyhsh,isBack:false, permission: [ 'center' ]}
       },
       {
         path: '/wx/questionReview',
         name: 'wxQuestionReview',
         component: () => import('@/views/wx/questionReview'),
-        meta: { title: '微信问卷审阅', keepAlive: true, icon: baogao,isBack:false, permission: [ 'center' ]}
+        meta: { title: '微信问卷审阅', keepAlive: true, icon: wenjuan,isBack:false, permission: [ 'center' ]}
       },
       {
         path: '/wx/questionDetail/:id(\\d*)',
@@ -302,25 +302,25 @@ export const asyncRouterMap = [
         path: '/wx/patientReportReview',
         name: 'wxPatientReportReview',
         component: () => import('@/views/wx/patientReportReview'),
-        meta: { title: '患者报告审阅', keepAlive: true, icon: baogao,isBack:false, permission: [ 'center' ]}
+        meta: { title: '患者报告审阅', keepAlive: true, icon: hzbgsy,isBack:false, permission: [ 'center' ]}
       },
       {
         path: '/wx/ticketRegister',
         name: 'wxTicketRegister',
         component: () => import('@/views/wx/ticketRegister'),
-        meta: { title: '活动券登记', keepAlive: true, icon: baogao,isBack:false, permission: [ 'center' ]}
+        meta: { title: '活动券登记', keepAlive: true, icon: huodongquan,isBack:false, permission: [ 'center' ]}
       },
       {
         path: '/wx/healthknowledge',
         name: 'healthknowledge',
         component: () => import('@/views/wx/healthknowledge'),
-        meta: { title: '健康知识', keepAlive: true, icon: baogao,isBack:false, permission: ['group']}
+        meta: { title: '健康知识', keepAlive: true, icon: jkzs,isBack:false, permission: ['group']}
       },
       {
         path: '/wx/famousDoctor',
         name: 'famousDoctor',
         component: () => import('@/views/wx/famousDoctor'),
-        meta: { title: '名医专家', keepAlive: true, icon: baogao,isBack:false, permission: ['group']}
+        meta: { title: '名医专家', keepAlive: true, icon: myzj,isBack:false, permission: ['group']}
       },
       {
         path: '/gallery/detail/:id(\\d*)',
