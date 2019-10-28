@@ -152,7 +152,7 @@
                   <a-checkbox value="4">慢性肝病</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item class="no-border" label="炎性肠病:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb8 && controlb811">
+              <a-form-item class="no-border" label="炎性肠病::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb8 && controlb811">
                 <a-radio-group v-decorator="['b811', {...require2, initialValue: initValue('b811')}]">
                   <a-radio value="1">溃疡性结肠炎</a-radio>
                   <a-radio value="2">克罗恩病</a-radio>
@@ -175,7 +175,7 @@
                   <a-checkbox value="7">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item class="no-border" label="糖尿病:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb9 && controlb911">
+              <a-form-item class="no-border" label="糖尿病::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb9 && controlb911">
                 <a-radio-group v-decorator="['b911', {...require2, initialValue: initValue('b911')}]">
                   <a-radio value="1">I型</a-radio>
                   <a-radio value="2">II型</a-radio>
@@ -195,7 +195,7 @@
                   <a-checkbox value="4">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item class="no-border" label="缺铁性贫血:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb10 && controlb1011">
+              <a-form-item class="no-border" label="缺铁性贫血::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb10 && controlb1011">
                 <a-radio-group v-decorator="['b1011', {...require2, initialValue: initValue('b1011')}]">
                   <a-radio value="1">I型</a-radio>
                   <a-radio value="2">II型</a-radio>
@@ -214,7 +214,7 @@
                   <a-checkbox value="3">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item class="no-border" label="慢性肾病:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb11 && controlb1111">
+              <a-form-item class="no-border" label="慢性肾病::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb11 && controlb1111">
                 <a-radio-group v-decorator="['b1111', {...require2, initialValue: initValue('b1111')}]">
                   <a-radio value="1">有透析</a-radio>
                   <a-radio value="-1">无透析</a-radio>
@@ -339,7 +339,7 @@
               </a-form-item>
               <a-row v-if="controlb171">
                 <a-col :span="18" :push="6">
-                  <a-form-item label="他汀类:" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
+                  <a-form-item label="他汀类::" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
                     <a-radio-group v-decorator="['b1711', {...require1, initialValue: initValue('b1711')}]">
                       <a-radio value="1">是</a-radio>
                       <a-radio value="-1">否</a-radio>
@@ -355,19 +355,19 @@
               </a-form-item>
               <a-row v-if="controlb172">
                 <a-col :span="18" :push="6">
-                  <a-form-item label="阿司匹林:" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
+                  <a-form-item label="阿司匹林::" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
                     <a-radio-group v-decorator="['b1721', {...require1, initialValue: initValue('b1721')}]">
                       <a-radio value="1">是</a-radio>
                       <a-radio value="-1">否</a-radio>
                     </a-radio-group>
                   </a-form-item>
-                  <a-form-item label="非阿司匹林抑制剂（如：氯吡格雷）:" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted label-overflow">
+                  <a-form-item label="非阿司匹林抑制剂（如：氯吡格雷）::" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted label-overflow">
                     <a-radio-group v-decorator="['b1722', {...require1, initialValue: initValue('b1722')}]">
                       <a-radio value="1">是</a-radio>
                       <a-radio value="-1">否</a-radio>
                     </a-radio-group>
                   </a-form-item>
-                  <a-form-item label="华法林/口服抗凝药:" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
+                  <a-form-item label="华法林/口服抗凝药::" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
                     <a-radio-group v-decorator="['b1723', {...require1, initialValue: initValue('b1723')}]">
                       <a-radio value="1">是</a-radio>
                       <a-radio value="-1">否</a-radio>
@@ -424,7 +424,7 @@
                   <a-checkbox value="6">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item label="肺叶切除术:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlb20 && controlb202">
+              <a-form-item label="肺叶切除术::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlb20 && controlb202">
                 <a-radio-group v-decorator="['b202', {...require2, initialValue: initValue('b202')}]">
                   <a-radio value="1">I型</a-radio>
                   <a-radio value="2">II型</a-radio>
@@ -466,7 +466,7 @@ export default {
   },
   data() {
     return {
-      formLayout: 'vertical',
+      formLayout: 'horizontal',
       markName: 'zkbszl',
       title: '基线',
       openKeys: [],

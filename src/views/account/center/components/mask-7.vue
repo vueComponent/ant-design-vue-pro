@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19">
-          <a-form :form="form" @submit="handleSubmit">
+          <a-form :form="form" @submit="handleSubmit" :layout="formLayout">
             <div style="overflow: hidden;">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
@@ -108,7 +108,7 @@
                     <a-radio value="4">未测量</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item class="no-border" label="具体描述" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla23">
+                <a-form-item class="no-border" label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla23">
                   <a-input style="width: 240px;" v-decorator="['a24', {...inputRequired, initialValue: initValue('a24')}]"></a-input>
                 </a-form-item>
                 <a-form-item label="ANCA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -119,7 +119,7 @@
                     <a-radio value="4">未测量</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item class="no-border" label="具体描述" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla25">
+                <a-form-item class="no-border" label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla25">
                   <a-input style="width: 240px;" v-decorator="['a26', {...inputRequired, initialValue: initValue('a26')}]"></a-input>
                 </a-form-item>
                 <a-form-item label="其他检查（记录阳性结果）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -209,7 +209,7 @@
                     <a-radio value="3">未测</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item class="no-border" label="具体描述" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla52">
+                <a-form-item class="no-border" label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla52">
                   <a-input style="width: 240px;" v-decorator="['a53', {...inputRequired, initialValue: initValue('a53')}]"></a-input>
                 </a-form-item>
               </div>
@@ -272,11 +272,14 @@
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="基因检测:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['a75', {...selectRequired, initialValue: initValue('a75')}]">
+                  <a-radio-group v-decorator="['a75', {...selectRequired, initialValue: initValue('a75')}]" @change="changeRadio($event, 'controla75')">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
                     <a-radio value="3">未测量</a-radio>
                   </a-radio-group>
+                </a-form-item>
+                <a-form-item label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla75">
+                  <a-input style="width: 240px;" v-decorator="['a76', {...inputRequired, initialValue: initValue('a76')}]"></a-input>
                 </a-form-item>
               </div>
               <a-form-item label="(8) 其他:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -306,7 +309,7 @@
                   <a-checkbox value="20" @change="changeSelect($event, 'controla920')">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item label="具体描述" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controla920">
+              <a-form-item label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controla920">
                 <a-input style="width: 240px;" v-decorator="['a91', {...inputRequired, initialValue: initValue('a91')}]"></a-input>
               </a-form-item>
             </div>
@@ -330,8 +333,9 @@ export default {
   },
   data() {
     return {
+      formLayout: 'horizontal',
       markName: 'byxxgjc',
-      title: '',
+      title: '基线',
       openKeys: [],
       defaultSelectedKeys: [7],
       orgTree: [],
@@ -405,7 +409,8 @@ export default {
       controla7: false,
       controla52: false,
       controla9: false,
-      controla920: false
+      controla920: false,
+      controla75: false
     }
   },
   created() {
@@ -419,23 +424,8 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        if (that.patientBasis.type === 1) {
-          that.title = '基线'
-        } else if (that.patientBasis.type === 2) {
-          that.title = '半年随访'
-        } else if (that.patientBasis.type === 3) {
-          that.title = '年访视'
-        }
       })
-    params.append('basisMarkId', this.maskId)
-    getBasisForm(params)
-      .then(res => {
-        if (res.data && res.data.byxxgjc)
-          that.byxxgjc = that.dealAnswers(res.data.byxxgjc)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.getFormData()
   },
   activated() {
     this.defaultSelectedKeys = [7]
@@ -453,7 +443,7 @@ export default {
         } else {
           this[t] = false
         }
-      } else if (t === 'controla52') {
+      } else if (t === 'controla52' || t === 'controla75') {
         if (e.target.value === '3') {
           this[t] = true
         } else {
@@ -532,8 +522,28 @@ export default {
         if (splitArr.indexOf('20') > -1) {
           this.controla920 = true
         }
+        if (answer.a52 === 3) {
+          this.controla52 = true
+        }
+        if (answer.a75 === 3) {
+          this.controla75 = true
+        }
       }
       return answer
+    },
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.byxxgjc)
+            that.byxxgjc = that.dealAnswers(res.data.byxxgjc)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     save() {
       var re = this.form.getFieldsValue()
@@ -555,9 +565,8 @@ export default {
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg, function() {
-            location.href = location.href
-          })
+          this.getFormData()
+          that.$message.success(res.msg)
         })
         .catch(error => {
           console.log(error)
