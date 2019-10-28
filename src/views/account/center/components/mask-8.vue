@@ -210,7 +210,7 @@
                   <a-radio value="-1">通气功能减退</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="通气功能减退类型:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controle1">
+              <a-form-item label="通气功能减退类型:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controle1">
                 <a-radio-group v-decorator="['e12', {...require1, initialValue: initValue('e12')}]">
                   <a-radio value="1">阻塞性</a-radio>
                   <a-radio value="2">限制性</a-radio>
