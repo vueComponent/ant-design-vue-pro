@@ -79,6 +79,7 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-spin :spinning="spinning"></a-spin>
   </div>
 </template>
 <script>
@@ -155,7 +156,8 @@ export default {
       controla9: false,
       tgjc: undefined,
       height: undefined,
-      weight: undefined
+      weight: undefined,
+      spinning: false
     }
   },
   created() {
@@ -196,7 +198,6 @@ export default {
     },
     handleClick(e) {
       this.maskId = e.key
-      // this.getElementsAnswer()
       this.$router.push('/list/basis/' + this.patientBasisId + '/' + this.maskId)
     },
     getFormData() {
@@ -216,17 +217,35 @@ export default {
     handleSubmit(e) {
       e.preventDefault()
       const { form: { validateFields } } = this
-      this.confirmLoading = true
       validateFields((errors, values) => {
         if (!errors) {
-          console.log('values', values)
-          setTimeout(() => {
-            this.visible = false
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
+          var re = this.form.getFieldsValue()
+          var that = this
+          console.log(re)
+          this.patientBasis.status = 1
+          var params = new URLSearchParams()
+          if (this.tgjc && this.tgjc.tgjcId) {
+            re.tgjcId = this.tgjc.tgjcId
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('patientBasis', JSON.stringify(this.patientBasis))
+          params.append('basisMarkId', this.maskId)
+          params.append('markName', this.markName)
+          that.spinning = true
+          saveBasis(params)
+            .then(res => {
+              console.log(res)
+              that.spinning = false
+              that.getFormData()
+              that.$message.success(res.msg)
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
+          return false
         } else {
-          this.confirmLoading = false
+          this.spinning = false
         }
       })
     },
@@ -268,13 +287,16 @@ export default {
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
+      that.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
+          that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
         })
         .catch(error => {
+          that.spinning = false
           console.log(error)
         })
       return false
@@ -323,6 +345,21 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+/deep/ .ant-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+
+  & .ant-spin-dot {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+  }
+}
+
 /deep/ #baselineHeader {
   .ant-card-body {
     padding: 10px
