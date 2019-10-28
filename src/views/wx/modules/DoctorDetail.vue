@@ -148,7 +148,7 @@
           return e;
         } const isJPG = e.file.type === 'image/jpeg';
         const isPNG = e.file.type === 'image/png';
-        if (!isJPG || !isPNG) {
+        if (!(isJPG || isPNG)) {
           this.$message.error('请上传正确的图片格式');
         } else {
           if (e.file.status == 'done') {

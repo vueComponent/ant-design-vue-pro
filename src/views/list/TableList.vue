@@ -242,7 +242,7 @@ export default {
     },
    tableSearch(type){
       const keyWord={
-        "type":type
+        "queryType": type
       }
        this.$refs.table.search(keyWord);
        this.advanced=false;

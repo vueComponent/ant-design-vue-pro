@@ -35,7 +35,7 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="档案号">
-                        <a-input v-model="queryParam.code" style="width: 100%" />
+                        <a-input v-model="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="姓名">
                         <a-input v-model="queryParam.name" style="width: 100%" />
@@ -111,7 +111,6 @@ export default {
           title: '档案号',
           width: "110px",
           dataIndex: 'fileCode'
-
         },
         {
           title: '患者姓名',
@@ -140,6 +139,11 @@ export default {
           dataIndex: 'createDate2',
           width: "90px",
           customRender: createDate => moment(createDate).format('YYYY-MM-DD')
+        },
+        {
+          title: '任务状态',
+          dataIndex: 'executeStatusName',
+          width: "90px",
         },
         {
           title: '操作',
