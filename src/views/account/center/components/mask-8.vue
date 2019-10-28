@@ -37,7 +37,7 @@
                   <a-radio value="-1">否</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="不做原因:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla1n" class="border-dotted">
+              <a-form-item label="不做原因:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla1n" class="border-dotted">
                 <a-input style="width: 240px;" v-decorator="['a11', {...inputRequired, initialValue: initValue('a11')}]"></a-input>
               </a-form-item>
               <div v-if="controla1p">
@@ -167,7 +167,7 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controlc1">
-                <a-form-item label="Total Lung Capacity:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-form-item label="Total Lung Capacity:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted">
                   <a-radio-group v-decorator="['c11', {...require2, initialValue: initValue('c11')}]" @change="changeRadio($event, 'controlc11')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
@@ -176,7 +176,7 @@
                 <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlc11">
                   <a-input addonAfter="L" style="width: 240px;" v-decorator="['c12', {...inputRequired, initialValue: initValue('c12')}]"></a-input>
                 </a-form-item>
-                <a-form-item label="Diffusing capacity（DLCO）:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-form-item label="Diffusing capacity（DLCO）:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted">
                   <a-radio-group v-decorator="['c21', {...require2, initialValue: initValue('c21')}]" @change="changeRadio($event, 'controlc21')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
@@ -185,7 +185,7 @@
                 <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlc21">
                   <a-input addonAfter="L" style="width: 240px;" v-decorator="['c22', {...inputRequired, initialValue: initValue('c22')}]"></a-input>
                 </a-form-item>
-                <a-form-item label="Residual Volume:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-form-item label="Residual Volume:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted">
                   <a-radio-group v-decorator="['c31', {...require2, initialValue: initValue('c31')}]" @change="changeRadio($event, 'controlc31')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
@@ -194,7 +194,7 @@
                 <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlc31">
                   <a-input addonAfter="L" style="width: 240px;" v-decorator="['c32', {...inputRequired, initialValue: initValue('c32')}]"></a-input>
                 </a-form-item>
-                <a-form-item label="Inspiratory capacity（DLCO）:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-form-item label="Inspiratory capacity（DLCO）:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted">
                   <a-radio-group v-decorator="['c41', {...require2, initialValue: initValue('c41')}]" @change="changeRadio($event, 'controlc41')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>

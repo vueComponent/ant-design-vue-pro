@@ -32,7 +32,7 @@
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.CT基本信息</div>
               <a-form-item label="(1) CT检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item label="(2) 图像类型:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a2', {...require1, initialValue: initValue('a2')}]">
@@ -430,6 +430,10 @@ export default {
     },
     handleChange({ fileList }) {
       this.fileList = fileList;
+    },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current > moment().endOf('day');
     }
   }
 }

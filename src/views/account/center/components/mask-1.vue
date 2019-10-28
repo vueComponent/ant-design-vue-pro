@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19">
-          <a-form :form="form" @submit="handleSubmit">
+          <a-form :form="form" @submit="handleSubmit" :layout="formLayout">
             <div style="overflow: hidden;margin-top: 10px;">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
@@ -31,22 +31,22 @@
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.基本病史</div>
-              <a-form-item label="(1) 留全血:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(1) 留全血" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a1', {...require1, initialValue: initValue('a1')}]">
                   <a-radio value="1">是</a-radio>
                   <a-radio value="-1">否</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(2) 留血清:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(2) 留血清" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a2', {...require1, initialValue: initValue('a2')}]">
                   <a-radio value="1">是</a-radio>
                   <a-radio value="-1">否</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(3) 患者支扩确诊时间:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]" style="width: 240px;"></a-date-picker>
+              <a-form-item label="(3) 患者支扩确诊时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-date-picker placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
               </a-form-item>
-              <a-form-item label="(4) 主要临床症状（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(4) 主要临床症状（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4', 'array')}]">
                   <a-checkbox value="1">咳嗽</a-checkbox>
                   <a-checkbox value="2" :checked="controla41" @change="changeSelect($event, 'controla41')">咳痰</a-checkbox>
@@ -69,19 +69,19 @@
                 <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]"></a-input>
               </a-form-item>
               <div class="title">2.既往病史</div>
-              <a-form-item label="(1) 过去一年的急性加重次数:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(1) 过去一年的急性加重次数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input addonAfter="次" style="width: 240px;" v-decorator="['b1', {...inputRequired, initialValue: initValue('b1')}]"></a-input>
               </a-form-item>
-              <a-form-item label="(2) 过去一年的住院急性加重次数:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(2) 过去一年的住院急性加重次数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input addonAfter="次" style="width: 240px;" v-decorator="['b2', {...inputRequired, initialValue: initValue('b2')}]"></a-input>
               </a-form-item>
-              <a-form-item label="(3) 过去一年的门诊急性加重次数:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(3) 过去一年的门诊急性加重次数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input addonAfter="次" style="width: 240px;" v-decorator="['b3', {...inputRequired, initialValue: initValue('b3')}]"></a-input>
               </a-form-item>
-              <a-form-item label="(4) 最后一次急性加重的时间:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b4', {...dateRequire, initialValue: initValue('b4', 'time')}]"></a-date-picker>
+              <a-form-item label="(4) 最后一次急性加重的时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['b4', {...dateRequire, initialValue: initValue('b4', 'time')}]"></a-date-picker>
               </a-form-item>
-              <a-form-item label="(5) 有无以下疾病及事件（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(5) 有无以下疾病及事件（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['b5', {...selectRequired, initialValue: initValue('b5', 'array')}]">
                   <a-checkbox value="1">既往有无麻疹</a-checkbox>
                   <a-checkbox value="2">百日咳</a-checkbox>
@@ -91,7 +91,7 @@
                   <a-checkbox value="6">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item label="(6) 目前合并呼吸系统相关疾病:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(6) 目前合并呼吸系统相关疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['b6', {...selectRequired, initialValue: initValue('b6', 'array')}]">
                   <a-checkbox value="1" :checked="controlb61" @change="changeSelect($event, 'controlb61')">鼻炎</a-checkbox>
                   <a-checkbox value="2" :checked="controlb62" @change="changeSelect($event, 'controlb62')">鼻窦炎</a-checkbox>
@@ -101,19 +101,19 @@
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item class="no-border" label="鼻炎具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb61">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b61', {...dateRequire, initialValue: initValue('b61', 'time')}]"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b61', {...dateRequire, initialValue: initValue('b61', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item class="no-border" label="鼻窦炎具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb62">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b62', {...dateRequire, initialValue: initValue('b62', 'time')}]"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b62', {...dateRequire, initialValue: initValue('b62', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item class="no-border" label="鼻息肉具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb63">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b63', {...dateRequire, initialValue: initValue('b63', 'time')}]"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b63', {...dateRequire, initialValue: initValue('b63', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item class="no-border" label="哮喘具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb64">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b64', {...dateRequire, initialValue: initValue('b64', 'time')}]"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b64', {...dateRequire, initialValue: initValue('b64', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item class="no-border" label="慢阻肺具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb65">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b65', {...dateRequire, initialValue: initValue('b65', 'time')}]"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b65', {...dateRequire, initialValue: initValue('b65', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item label="(7) 心血管系统" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b7', {...require2, initialValue: initValue('b7')}]" @change="changeRadio($event, 'controlb7')">
@@ -152,8 +152,8 @@
                   <a-checkbox value="4">慢性肝病</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item class="no-border" label="炎性肠病" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb8 && controlb811">
-                <a-radio-group v-decorator="['b811', {require2, initialValue: initValue('b811')}]">
+              <a-form-item class="no-border" label="炎性肠病:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb8 && controlb811">
+                <a-radio-group v-decorator="['b811', {...require2, initialValue: initValue('b811')}]">
                   <a-radio value="1">溃疡性结肠炎</a-radio>
                   <a-radio value="2">克罗恩病</a-radio>
                 </a-radio-group>
@@ -175,7 +175,7 @@
                   <a-checkbox value="7">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item class="no-border" label="糖尿病" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb9 && controlb911">
+              <a-form-item class="no-border" label="糖尿病:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb9 && controlb911">
                 <a-radio-group v-decorator="['b911', {...require2, initialValue: initValue('b911')}]">
                   <a-radio value="1">I型</a-radio>
                   <a-radio value="2">II型</a-radio>
@@ -195,7 +195,7 @@
                   <a-checkbox value="4">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item class="no-border" label="缺铁性贫血" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb10 && controlb1011">
+              <a-form-item class="no-border" label="缺铁性贫血:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb10 && controlb1011">
                 <a-radio-group v-decorator="['b1011', {...require2, initialValue: initValue('b1011')}]">
                   <a-radio value="1">I型</a-radio>
                   <a-radio value="2">II型</a-radio>
@@ -214,7 +214,7 @@
                   <a-checkbox value="3">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item class="no-border" label="慢性肾病" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb11 && controlb1111">
+              <a-form-item class="no-border" label="慢性肾病:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb11 && controlb1111">
                 <a-radio-group v-decorator="['b1111', {...require2, initialValue: initValue('b1111')}]">
                   <a-radio value="1">有透析</a-radio>
                   <a-radio value="-1">无透析</a-radio>
@@ -339,7 +339,7 @@
               </a-form-item>
               <a-row v-if="controlb171">
                 <a-col :span="18" :push="6">
-                  <a-form-item label="他汀类" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
+                  <a-form-item label="他汀类:" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
                     <a-radio-group v-decorator="['b1711', {...require1, initialValue: initValue('b1711')}]">
                       <a-radio value="1">是</a-radio>
                       <a-radio value="-1">否</a-radio>
@@ -355,19 +355,19 @@
               </a-form-item>
               <a-row v-if="controlb172">
                 <a-col :span="18" :push="6">
-                  <a-form-item label="阿司匹林" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
+                  <a-form-item label="阿司匹林:" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
                     <a-radio-group v-decorator="['b1721', {...require1, initialValue: initValue('b1721')}]">
                       <a-radio value="1">是</a-radio>
                       <a-radio value="-1">否</a-radio>
                     </a-radio-group>
                   </a-form-item>
-                  <a-form-item label="非阿司匹林抑制剂（如：氯吡格雷）" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
+                  <a-form-item label="非阿司匹林抑制剂（如：氯吡格雷）:" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted label-overflow">
                     <a-radio-group v-decorator="['b1722', {...require1, initialValue: initValue('b1722')}]">
                       <a-radio value="1">是</a-radio>
                       <a-radio value="-1">否</a-radio>
                     </a-radio-group>
                   </a-form-item>
-                  <a-form-item label="华法林/口服抗凝药" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
+                  <a-form-item label="华法林/口服抗凝药:" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
                     <a-radio-group v-decorator="['b1723', {...require1, initialValue: initValue('b1723')}]">
                       <a-radio value="1">是</a-radio>
                       <a-radio value="-1">否</a-radio>
@@ -424,7 +424,7 @@
                   <a-checkbox value="6">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item label="肺叶切除术" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlb20 && controlb202">
+              <a-form-item label="肺叶切除术:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlb20 && controlb202">
                 <a-radio-group v-decorator="['b202', {...require2, initialValue: initValue('b202')}]">
                   <a-radio value="1">I型</a-radio>
                   <a-radio value="2">II型</a-radio>
@@ -438,7 +438,7 @@
               </a-form-item>
               <div v-if="controlb21">
                 <a-form-item label="若行支气管动脉栓塞术：时间" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b211', {...dateRequire, initialValue: initValue('b211', 'time')}]"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b211', {...dateRequire, initialValue: initValue('b211', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="支气管动脉栓塞术部位" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                   <a-input style="width: 240px;" v-decorator="['b212', {...inputRequired, initialValue: initValue('b212')}]"></a-input>
@@ -466,6 +466,7 @@ export default {
   },
   data() {
     return {
+      formLayout: 'vertical',
       markName: 'zkbszl',
       title: '基线',
       openKeys: [],
@@ -575,15 +576,7 @@ export default {
       .catch(error => {
         console.log(error)
       })
-    params.append('basisMarkId', this.maskId)
-    getBasisForm(params)
-      .then(res => {
-        if (res.data && res.data.zkbszl)
-          that.zkbszl = that.dealAnswers(res.data.zkbszl)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.getFormData()
   },
   activated() {
     this.defaultSelectedKeys = [1]
@@ -591,6 +584,20 @@ export default {
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.zkbszl)
+            that.zkbszl = that.dealAnswers(res.data.zkbszl)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     initValue(key, type = 'normal') {
       if (!this.zkbszl) return type === 'array' ? [] : type === 'time' ? undefined : ''
       if (!this.zkbszl[key]) return type === 'array' ? [] : type === 'time' ? undefined : ''
@@ -601,6 +608,10 @@ export default {
       } else {
         return this.zkbszl[key] + ''
       }
+    },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current > moment().endOf('day');
     },
     dealAnswers(answer) {
       var that = this
@@ -804,9 +815,8 @@ export default {
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg, function() {
-            location.href = location.href
-          })
+          this.getFormData()
+          that.$message.success(res.msg)
         })
         .catch(error => {
           console.log(error)
@@ -1062,6 +1072,8 @@ export default {
       }
     }
 
+
+
     /deep/ .ant-form-item-label {
       text-align: left;
       line-height: 56px;
@@ -1080,6 +1092,12 @@ export default {
         padding-left: 15px;
         border-top: 1px solid #eee;
       }
+    }
+
+    /deep/ .label-overflow .ant-form-item-label{
+      line-height: 20px;
+      position: relative;
+      top: 18px;
     }
 
     /deep/ .ant-form-item-control-wrapper .ant-form-item-control {

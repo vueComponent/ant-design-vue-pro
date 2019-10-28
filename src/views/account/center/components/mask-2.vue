@@ -301,11 +301,23 @@ export default {
     },
     changeHeight(e) {
       this.height = e.target.value
-      this.computeBMI()
+      if (!e.target.value) {
+        this.form.setFieldsValue({
+          a8: ''
+        })
+      } else {
+        this.computeBMI()
+      }
     },
     changeWeight(e) {
       this.weight = e.target.value
-      this.computeBMI()
+      if (!e.target.value) {
+        this.form.setFieldsValue({
+          a8: ''
+        })
+      } else {
+        this.computeBMI()
+      }
     }
   }
 }
