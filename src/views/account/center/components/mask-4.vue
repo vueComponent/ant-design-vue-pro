@@ -240,6 +240,7 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-spin :spinning="spinning"></a-spin>
   </div>
 </template>
 <script>
@@ -329,7 +330,8 @@ export default {
       controlb4111: false,
       controlb5: false,
       controlb6: false,
-      controlb7: false
+      controlb7: false,
+      spinning: false
     }
   },
   created() {
@@ -344,15 +346,7 @@ export default {
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
       })
-    params.append('basisMarkId', this.maskId)
-    getBasisForm(params)
-      .then(res => {
-        if (res.data && res.data.hxxt)
-          that.hxxt = that.dealAnswers(res.data.hxxt)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    that.getFormData()
   },
   activated() {
     this.defaultSelectedKeys = [4]
@@ -406,13 +400,33 @@ export default {
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
-          setTimeout(() => {
-            this.visible = false
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
+          var re = this.form.getFieldsValue()
+          var that = this
+          console.log(re)
+          this.patientBasis.status = 2
+          var params = new URLSearchParams()
+          if (this.hxxt && this.hxxt.hxxtId) {
+            re.hxxtId = this.hxxt.hxxtId
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('patientBasis', JSON.stringify(this.patientBasis))
+          params.append('basisMarkId', this.maskId)
+          params.append('markName', this.markName)
+          that.spinning = true
+          saveBasis(params)
+            .then(res => {
+              console.log(res)
+              that.spinning = false
+              that.getFormData()
+              that.$message.success(res.msg)
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
+          return false
         } else {
-          this.confirmLoading = false
+          this.spinning = false
         }
       })
     },
@@ -429,22 +443,22 @@ export default {
     },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
-        if(answer.b3 === 1){
+        if (answer.b3 === 1) {
           this.controlb3 = true
         }
-        if(answer.b4 === 1){
+        if (answer.b4 === 1) {
           this.controlb4 = true
         }
-        if(answer.b5 === 1){
+        if (answer.b5 === 1) {
           this.controlb5 = true
         }
-        if(answer.b6 === 1){
+        if (answer.b6 === 1) {
           this.controlb6 = true
         }
-        if(answer.b7 === 1){
+        if (answer.b7 === 1) {
           this.controlb7 = true
         }
-        
+
       }
       return answer
     },
@@ -461,22 +475,53 @@ export default {
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
+      that.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg, function() {
-            location.href = location.href
-          })
+          that.spinning = false
+          that.getFormData()
+          that.$message.success(res.msg)
+        })
+        .catch(error => {
+          that.spinning = false
+          console.log(error)
+        })
+      return false
+    },
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.hxxt)
+            that.hxxt = that.dealAnswers(res.data.hxxt)
         })
         .catch(error => {
           console.log(error)
         })
-      return false
     }
   }
 }
 </script>
 <style lang="less" scoped>
+/deep/ .ant-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+
+  & .ant-spin-dot {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+  }
+}
+
 /deep/ #baselineHeader {
   .ant-card-body {
     padding: 10px
