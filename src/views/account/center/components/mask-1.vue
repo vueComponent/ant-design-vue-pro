@@ -449,6 +449,7 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-spin :spinning="spinning"></a-spin>
   </div>
 </template>
 <script>
@@ -558,7 +559,8 @@ export default {
       controlb191: false,
       controlb20: false,
       controlb202: false,
-      controlb21: false
+      controlb21: false,
+      spinning: false
     }
   },
   created() {
@@ -750,8 +752,6 @@ export default {
     },
     handleClick(e) {
       this.maskId = e.key
-      // this.getElementsAnswer()
-      // location.href = '/list/basis/' + this.patientBasisId + '/' + this.maskId
       if (e.key >= 31 && e.key <= 36) {
         this.$router.push('/basis/question/' + this.patientBasisId + '/' + this.maskId)
       } else {
@@ -761,17 +761,60 @@ export default {
     handleSubmit(e) {
       e.preventDefault()
       const { form: { validateFields } } = this
-      this.confirmLoading = true
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
-          setTimeout(() => {
-            this.visible = false
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
+          var re = this.form.getFieldsValue()
+          var that = this
+          re = {
+            ...re,
+            'a3': typeof re['a3'] !== 'undefined' ? re['a3'].format('YYYY-MM-DD') : '',
+            'a4': typeof re['a4'] !== 'undefined' ? re['a4'].join(',') : '',
+            'b4': typeof re['b4'] !== 'undefined' ? re['b4'].format('YYYY-MM-DD') : '',
+            'b5': typeof re['b5'] !== 'undefined' ? re['b5'].join(',') : '',
+            'b6': typeof re['b6'] !== 'undefined' ? re['b6'].join(',') : '',
+            'b61': typeof re['b61'] !== 'undefined' ? re['b61'].format('YYYY-MM-DD') : '',
+            'b62': typeof re['b62'] !== 'undefined' ? re['b62'].format('YYYY-MM-DD') : '',
+            'b63': typeof re['b63'] !== 'undefined' ? re['b63'].format('YYYY-MM-DD') : '',
+            'b64': typeof re['b64'] !== 'undefined' ? re['b64'].format('YYYY-MM-DD') : '',
+            'b65': typeof re['b65'] !== 'undefined' ? re['b65'].format('YYYY-MM-DD') : '',
+            'b71': typeof re['b71'] !== 'undefined' ? re['b71'].join(',') : '',
+            'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : '',
+            'b91': typeof re['b91'] !== 'undefined' ? re['b91'].join(',') : '',
+            'b101': typeof re['b101'] !== 'undefined' ? re['b101'].join(',') : '',
+            'b111': typeof re['b111'] !== 'undefined' ? re['b111'].join(',') : '',
+            'b121': typeof re['b121'] !== 'undefined' ? re['b121'].join(',') : '',
+            'b143': typeof re['b143'] !== 'undefined' ? re['b143'].join(',') : '',
+            'b153': typeof re['b153'] !== 'undefined' ? re['b153'].join(',') : '',
+            'b161': typeof re['b161'] !== 'undefined' ? re['b161'].join(',') : '',
+            'b201': typeof re['b201'] !== 'undefined' ? re['b201'].join(',') : '',
+            'b211': typeof re['b211'] !== 'undefined' ? re['b211'].format('YYYY-MM-DD') : ''
+          }
+          console.log(re)
+          this.patientBasis.status = 2
+          var params = new URLSearchParams()
+          if (this.zkbszl && this.zkbszl.zkbszlId) {
+            re.zkbszlId = this.zkbszl.zkbszlId
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('patientBasis', JSON.stringify(this.patientBasis))
+          params.append('basisMarkId', this.maskId)
+          params.append('markName', this.markName)
+          this.spinning = true
+          saveBasis(params)
+            .then(res => {
+              console.log(res)
+              that.spinning = false
+              that.getFormData()
+              that.$message.success(res.msg)
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
+          return false
         } else {
-          this.confirmLoading = false
+          this.spinning = false
         }
       })
     },
@@ -812,13 +855,16 @@ export default {
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
+      this.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
-          this.getFormData()
+          that.spinning = false
+          that.getFormData()
           that.$message.success(res.msg)
         })
         .catch(error => {
+          that.spinning = false
           console.log(error)
         })
       return false
@@ -827,6 +873,21 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+/deep/ .ant-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+
+  & .ant-spin-dot {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+  }
+}
+
 /deep/ #baselineHeader {
   .ant-card-body {
     padding: 10px
@@ -1094,7 +1155,7 @@ export default {
       }
     }
 
-    /deep/ .label-overflow .ant-form-item-label{
+    /deep/ .label-overflow .ant-form-item-label {
       line-height: 20px;
       position: relative;
       top: 18px;
