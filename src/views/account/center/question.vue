@@ -54,7 +54,7 @@
                   <a-checkbox-group v-if="qu1.type === 2" v-model="qu1.inputType">
                     <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" :name="qu1.questionTitleId+''">{{item.name}}</a-checkbox>
                   </a-checkbox-group>
-                  <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue && moment(qu1.answers[0].questionOptionValue, 'YYYY-MM-DD')" />
+                  <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue && moment(qu1.answers[0].questionOptionValue, 'YYYY-MM-DD')" :disabledDate="disabledDate" />
                 </a-form-item>
               </div>
             </div>
@@ -153,6 +153,10 @@ export default {
       } else {
         this[t] = false
       }
+    },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current > moment().endOf('day');
     },
     handleClick(e) {
       // this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)

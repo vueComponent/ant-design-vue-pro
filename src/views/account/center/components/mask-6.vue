@@ -201,7 +201,7 @@
               </a-form-item>
               <div v-if="controlc5">
                 <a-form-item label="最近一次分离到铜绿假单胞菌是什么时候:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['c51', {...dateRequire, initialValue: initValue('c51', 'time')}]"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['c51', {...dateRequire, initialValue: initValue('c51', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="类型:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['c52', {...require1, initialValue: initValue('c52')}]">
