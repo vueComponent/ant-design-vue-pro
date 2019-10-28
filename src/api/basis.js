@@ -182,3 +182,11 @@ export function getQuestionDetail(params) {
     data: params
   })
 }
+
+export function validateCard(params) {
+  return axios({
+    url: '/patient/getPatientDetailByCard',
+    method: 'post',
+    data: params
+  })
+}
