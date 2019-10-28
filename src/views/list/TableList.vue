@@ -80,8 +80,6 @@
       <span slot="action" slot-scope="text, record" style="text-align: center;">
         <template>
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical" />
-          <a @click="handleSub(record)">添加访视</a>
         </template>
       </span>
     </s-table>
@@ -258,23 +256,6 @@ export default {
     },
     handleEdit(record) {
       this.$refs.createModal.edit(record);
-    },
-    handleSub(record) {
-      var that = this
-      var params = new URLSearchParams()
-      params.append('patientId', record.patientId)
-      addVasit(params)
-        .then(res => {
-          if(res.code === 0){
-            that.$message.success('添加成功')
-            location.href = location.href
-          }else{
-            that.$message.error(res.msg)
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
     },
     handleOk() {
       this.$refs.table.refresh();
