@@ -37,7 +37,7 @@
             <div class="baselineForm" :style="baselineFormStyle">
               <!-- 调查问卷 -->
               <div v-if="listArr.length && listArr[0].remark" class="question-des"><span style="color:#3398dc">说明：</span>{{listArr[0].remark}}</div>
-              <div v-for="item in listArr" :key="item.questionId">
+              <div v-for="item in listArr" :key="item.questionTitleId">
                 <div class="question-t">
                   <span class="question-icon"></span>
                   <span>{{item.name}}</span>
@@ -90,7 +90,7 @@ export default {
       baselineFormStyle: {
         height: '416px',
       },
-      title: '基线',
+      title: '',
       openKeys: [],
       defaultSelectedKeys: [],
       orgTree: [],
@@ -127,12 +127,17 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        // that.getElementsAnswer()
         that.defaultSelectedKeys = [that.questionId]
+        if(that.patientBasis.type === 1){
+          that.title = '基线'
+        }
+        if(that.patientBasis.type === 2){
+          that.title = '半年随访'
+        }
+        if(that.patientBasis.type === 3){
+          that.title = '年访视'
+        }
       })
-    this.getFormData()
-  },
-  activated() {
     this.getFormData()
   },
   methods: {
