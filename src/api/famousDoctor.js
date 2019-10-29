@@ -2,11 +2,11 @@ import {
   axios
 } from '@/utils/request'
 
-export function getFamousDoctorList(data) {
+export function getFamousDoctorList(parameter) {
   return axios({
     url: '/famousDoctor/getDataList',
     method: 'post',
-    data
+    params: parameter
   })
 }
 
