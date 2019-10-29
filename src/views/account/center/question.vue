@@ -137,6 +137,9 @@ export default {
         if (that.patientBasis.type === 3) {
           that.title = '年访视'
         }
+        if (that.patientBasis.type === 4) {
+          that.title = '急性加重期'
+        }
       })
     this.getFormData()
   },

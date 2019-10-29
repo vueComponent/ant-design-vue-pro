@@ -560,7 +560,7 @@ export default {
             this.controlb412 = true
           }
         }
-        if (answer.b5 === 1) {
+        if (answer.b5 === '1') {
           this.controlb5 = true
         }
         if (answer.b6 === 1) {
