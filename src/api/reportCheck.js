@@ -10,18 +10,18 @@ export function getReportDataList(parameter) {
   })
 }
 
-export function getReportInfo(parameter) {
+export function getReportInfo(data) {
   return axios({
     url: '/reportCheck/getReport',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function updateReport(parameter) {
+export function updateReport(data) {
   return axios({
     url: '/reportCheck/updateReport',
     method: 'post',
-    params: parameter
+    data
   })
 }

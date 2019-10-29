@@ -22,8 +22,9 @@
               <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
-                    <p @click="tableSearch(5)">待审阅报告</p>
-                    <p @click="tableSearch(0)">全部报告</p>
+                    <p @click="tableSearch(1)">待审阅报告</p>
+                    <p @click="tableSearch(2)">已审阅报告</p>
+                    <p @click="tableSearch(3)">全部报告</p>
                   </div>
                 </a-tab-pane>
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -157,14 +158,10 @@
         this.queryParam = {}
       },
       tableSearch(type) {
-        if (type == 0) {
-          const keyWord = {
-            executeStatus: type
-          }
-          this.$refs.table.search(keyWord)
-        } else {
-          this.$refs.table.refresh()
+        const keyWord = {
+          queryType: type
         }
+        this.$refs.table.search(keyWord)
         this.advanced = false
       },
       refreshTable() {

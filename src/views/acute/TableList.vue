@@ -26,9 +26,9 @@
               <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
-                    <p @click="tableSearch(1)">本月新增病例</p>
-                    <p @click="tableSearch(2)">本年新增病例</p>
-                    <p @click="tableSearch(3)">全部病例</p>
+                    <p @click="tableSearch(7)">本月新增病例</p>
+                    <p @click="tableSearch(8)">本年新增病例</p>
+                    <p @click="tableSearch(9)">全部病例</p>
                   </div>
                 </a-tab-pane>
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -201,7 +201,7 @@ export default {
     },
     tableSearch(type) {
       const keyWord = {
-        "type": type
+        queryType: type
       }
       this.$refs.table.search(keyWord);
       this.advanced = false;
