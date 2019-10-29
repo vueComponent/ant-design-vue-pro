@@ -128,13 +128,13 @@ export default {
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
         that.defaultSelectedKeys = [that.questionId]
-        if(that.patientBasis.type === 1){
+        if (that.patientBasis.type === 1) {
           that.title = '基线'
         }
-        if(that.patientBasis.type === 2){
+        if (that.patientBasis.type === 2) {
           that.title = '半年随访'
         }
-        if(that.patientBasis.type === 3){
+        if (that.patientBasis.type === 3) {
           that.title = '年访视'
         }
       })
@@ -164,8 +164,13 @@ export default {
       return current && current > moment().endOf('day');
     },
     handleClick(e) {
-      // this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
-      location.href = '/basis/question/' + this.patientBasisId + '/' + e.key
+      if (e.key >= 31 && e.key <= 42) {
+        this.$router.push('/basis/question/' + this.patientBasisId + '/' + e.key)
+      } else if (this.patientBasis.type === 1) {
+        this.$router.push('/list/basis/' + this.patientBasisId + '/' + e.key)
+      } else {
+        this.$router.push('/list/task/' + this.patientBasisId + '/' + e.key)
+      }
     },
     getFormData() {
       var that = this
