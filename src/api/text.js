@@ -25,11 +25,3 @@ export function addOrEdit(data) {
     data
   })
 }
-
-export function getUrl(parameter) {
-    return axios({
-      url: `/text/add`,
-      method: 'get',
-      params: parameter
-    })
-  }

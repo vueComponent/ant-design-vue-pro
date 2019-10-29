@@ -44,7 +44,7 @@
 </template>
 
 <script>
-  import { getWxArticleDetail, addOrEdit, getUrl } from '@/api/text'
+  import { getWxArticleDetail, addOrEdit } from '@/api/text'
   import QuillEditor from '@/components/Editor/QuillEditor'
   export default {
     components: {
@@ -75,17 +75,11 @@
         textId: '',
         previewVisible: false,
         previewImage: '',
-        action: '',
-        attachsPrefix: '',
+        action: process.env.VUE_APP_API_UPLOAD_URL,
+        attachsPrefix: process.env.VUE_APP_API_VIEW_PIC_URL,
         fileName: '',
         isFileLen: false
       }
-    },
-    mounted() {
-      getUrl().then(res => {
-        this.action = res.data.uploadPicURL
-        this.attachsPrefix = res.data.attachsPrefix
-      })
     },
     methods: {
       show({ textId, terminal }) {
@@ -158,7 +152,7 @@
             return;
           }
 
-          const params = new URLSearchParams()
+          const params = new FormData()
           const textWx = {
             ...fieldsValue,
             url: this.fileName

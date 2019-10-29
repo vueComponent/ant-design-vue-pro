@@ -176,24 +176,24 @@
             return;
           }
 
-          const params = {
-            doctorDetail: {
-              doctorName: fieldsValue['doctorName'],
-              job: fieldsValue['job'],
-              department: fieldsValue['department'],
-              centerId: fieldsValue['centerId'],
-              detail: fieldsValue['detail'],
-              disease: fieldsValue['disease'],
-              honor: fieldsValue['honor'],
-              isUser: Number(fieldsValue['isUser'])
-            },
-            fileName: this.fileName
+          const params = new FormData()
+          const doctorDetail = {
+            doctorName: fieldsValue['doctorName'],
+            job: fieldsValue['job'],
+            department: fieldsValue['department'],
+            centerId: fieldsValue['centerId'],
+            detail: fieldsValue['detail'],
+            disease: fieldsValue['disease'],
+            honor: fieldsValue['honor'],
+            isUser: Number(fieldsValue['isUser'])
           }
 
           if (this.doctorId) {
-            params.doctorDetail.doctorDetailId = this.doctorId
-            params.doctorDetail.creatorId = this.creatorId
+            doctorDetail.doctorDetailId = this.doctorId
+            doctorDetail.creatorId = this.creatorId
           }
+          params.append('doctorDetail', JSON.stringify(doctorDetail))
+          params.append('fileName', this.fileName)
 
           saveDoctor(params).then(res => {
             this.$message.success(res.msg);
