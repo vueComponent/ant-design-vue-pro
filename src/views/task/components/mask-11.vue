@@ -24,54 +24,37 @@
         </a-col>
         <a-col :span="19">
           <a-form :form="form" @submit="handleSubmit">
-            <div style="overflow: hidden;">
+            <div style="overflow: hidden;margin-top: 10px;">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <div class="title">1.体格检查</div>
-              <a-form-item label="(1) T:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a1', {initialValue: initValue('a1')}]" style="width: 240px;"></a-input>
-              </a-form-item>
-              <a-form-item label="(2) BP:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a2', {initialValue: initValue('a2')}]" style="width: 240px;"></a-input>
-              </a-form-item>
-              <a-form-item label="(3) R:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a3', {initialValue: initValue('a3')}]" style="width: 240px;"></a-input>
-              </a-form-item>
-              <a-form-item label="(4) HR:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a4', {initialValue: initValue('a4')}]" style="width: 240px;"></a-input>
-              </a-form-item>
-              <a-form-item label="(5) SpO2:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a5', {...inputRequired, initialValue: initValue('a5')}]" style="width: 240px;"></a-input>
-              </a-form-item>
-              <a-form-item label="(6) 身高:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a6', {...inputRequired, initialValue: initValue('a6')}]" style="width: 240px;" addonAfter="cm" @change="changeHeight($event)"></a-input>
-              </a-form-item>
-              <a-form-item label="(7) 体重:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="changeWeight($event)"></a-input>
-              </a-form-item>
-              <a-form-item label="(8) BMI(自动演算出):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a8', {initialValue: initValue('a8')}]" :readOnly="true" style="width: 240px;"></a-input>
-              </a-form-item>
-              <a-form-item label="(9) 肺部体征：双肺呼吸音:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-              </a-form-item>
-              <a-form-item label="啰音" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-radio-group v-decorator="['a9', {...require2, initialValue: initValue('a9')}]" @change="changeRadio($event, 'controla9')">
-                  <a-radio value="1">有</a-radio>
-                  <a-radio value="-1">无</a-radio>
+              <a-form-item label="过去半年有无急性加重期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a1', {...require1, initialValue: initValue('a1')}]" @change="changeRadio($event, 'controla1')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <div v-if="controla9">
-                <a-form-item label="啰音类型" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-radio-group v-decorator="['a91', {...selectRequired, initialValue: initValue('a91')}]">
-                    <a-radio value="1">湿罗音</a-radio>
-                    <a-radio value="2">干啰音</a-radio>
-                  </a-radio-group>
+              <div v-if="controla1">
+                <div class="title">1.急性加重期</div>
+                <a-form-item label="(1) 急性加重日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['date', {...dateRequire, initialValue: initValue('date', 'time')}]"></a-date-picker>
                 </a-form-item>
-                <a-form-item label="啰音部位" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-input style="width: 240px;" v-decorator="['a92', {...inputRequired, initialValue: initValue('a92')}]"></a-input>
+                <a-form-item label="(2) 急性加重的症状(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['a2', {...selectRequired, initialValue: initValue('a2', 'array')}]">
+                    <a-checkbox value="1">咳嗽加重</a-checkbox>
+                    <a-checkbox value="2">痰量增多</a-checkbox>
+                    <a-checkbox value="3">痰液黏度增加</a-checkbox>
+                    <a-checkbox value="4">痰脓性增加</a-checkbox>
+                    <a-checkbox value="5">喘息呼吸急促加重</a-checkbox>
+                    <a-checkbox value="6">咯血新增或增多</a-checkbox>
+                    <a-checkbox value="7">其他系统症状（如：乏力，发热等）</a-checkbox>
+                    <a-checkbox value="8" :checked="controla2" @change="changeSelect($event, 'controla2')">其他</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="其他症状:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla2">
+                  <a-input v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" style="width: 240px;"></a-input>
                 </a-form-item>
               </div>
             </div>
@@ -85,21 +68,22 @@
 <script>
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
+import _ from 'lodash'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm, computeScore } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 export default {
-  name: 'mask2',
+  name: 'task11',
   components: {
     STree,
     MyIcon
   },
   data() {
     return {
-      markName: 'tgjc',
-      title: '基线',
+      markName: 'sf_jxjzq',
+      title: '半年随访',
       openKeys: [],
-      defaultSelectedKeys: [2],
+      defaultSelectedKeys: [11],
       orgTree: [],
       patient: {},
       patientBasis: {},
@@ -107,7 +91,7 @@ export default {
         overflow: "auto",
         height: '486px',
         "padding-right": "0px",
-        "border-right": "1px solid #ddd"
+        boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
       },
       baselineFormStyle: {
         height: '444px',
@@ -135,34 +119,23 @@ export default {
         sm: { span: 24 },
         md: { span: 24 }
       },
-      dateRequire: {
-        rules: [{ type: 'object', required: true, message: '请选择时间！' }]
+      labelColOffset: {
+        md: { span: 6, offset: 6 }
       },
-      require1: {
-        rules: [{ required: true, message: '请选择是或否！' }]
-      },
-      require2: {
-        rules: [{ required: true, message: '请选择有或无！' }]
-      },
-      selectRequired: {
-        rules: [{ required: true, message: '请选择！' }]
-      },
-      inputRequired: {
-        rules: [{ required: true, message: '请填写！' }]
+      wrapperOffset: {
+        md: { span: 12 }
       },
       form: this.$form.createForm(this),
       maskId: this.$route.meta.maskId,
       patientBasisId: this.$route.params.id,
-      controla9: false,
-      tgjc: undefined,
-      height: undefined,
-      weight: undefined,
-      spinning: false
+      jxjzq: undefined,
+      spinning: false,
+      controla1: false,
+      controla2: false
     }
   },
   created() {
     var that = this
-    this.defaultSelectedKeys = [2]
     this.CloseSidebar()
     var params = new URLSearchParams()
     params.append('patientBasisId', this.patientBasisId)
@@ -172,14 +145,69 @@ export default {
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
       })
+      .catch(error => {
+        console.log(error)
+      })
     this.getFormData()
-  },
-  activated() {
-    this.defaultSelectedKeys = [2]
   },
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.jxjzq)
+            that.jxjzq = that.dealAnswers(res.data.jxjzq)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    require1() {
+      return {
+        rules: [{ required: true, message: '请选择是或否！' }]
+      }
+    },
+    require2() {
+      return {
+        rules: [{ required: true, message: '请选择有或无！' }]
+      }
+    },
+    dateRequire() {
+      return {
+        rules: [{ type: 'object', required: true, message: '请选择时间！' }]
+      }
+    },
+    selectRequired() {
+      return {
+        rules: [{ type: 'object', required: true, message: '请选择！' }]
+      }
+    },
+    inputRequired() {
+      return {
+        rules: [{ type: 'object', required: true, message: '请填写！' }]
+      }
+    },
+    initValue(key, type = 'normal') {
+      if (!this.jxjzq) return type === 'array' ? [] : type === 'time' ? undefined : ''
+      if (!this.jxjzq[key]) return type === 'array' ? [] : type === 'time' ? undefined : ''
+      if (type === 'time') {
+        return moment(this.jxjzq[key])
+      } else if (type === 'array') {
+        return this.jxjzq[key].split(',')
+      } else {
+        return this.jxjzq[key] + ''
+      }
+    },
+    dealAnswers(answer) {
+      var that = this
+      if (answer && !_.isEmpty(answer)) {}
+      return answer
+    },
     changeSelect(e, t) {
       this[t] = e.target.checked
     },
@@ -198,152 +226,41 @@ export default {
     },
     handleClick(e) {
       this.maskId = e.key
-      if (this.maskId >= 31 && this.maskId <= 36) {
-        this.$router.push('/basis/question/' + this.patientBasisId + '/' + this.maskId)
-      } else {
-        this.$router.push('/list/basis/' + this.patientBasisId + '/' + this.maskId)
-      }
+      // this.getElementsAnswer()
+      // location.href = '/list/basis/' + this.patientBasisId + '/' + this.maskId
+      this.$router.push('/list/task/' + this.patientBasisId + '/' + this.maskId)
     },
-    getFormData() {
-      var that = this
-      var params = new URLSearchParams()
-      params.append('patientBasisId', this.patientBasisId)
-      params.append('basisMarkId', this.maskId)
-      getBasisForm(params)
-        .then(res => {
-          if (res.data && res.data.tgjc)
-            that.tgjc = that.dealAnswers(res.data.tgjc)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    handleSubmit(e) {
-      e.preventDefault()
-      const { form: { validateFields } } = this
-      validateFields((errors, values) => {
-        if (!errors) {
-          var re = this.form.getFieldsValue()
-          var that = this
-          console.log(re)
-          this.patientBasis.status = 2
-          var params = new URLSearchParams()
-          if (this.tgjc && this.tgjc.tgjcId) {
-            re.tgjcId = this.tgjc.tgjcId
-          }
-          params.append('formData', JSON.stringify(re))
-          params.append('patientBasis', JSON.stringify(this.patientBasis))
-          params.append('basisMarkId', this.maskId)
-          params.append('markName', this.markName)
-          that.spinning = true
-          saveBasis(params)
-            .then(res => {
-              console.log(res)
-              that.spinning = false
-              that.getFormData()
-              that.$message.success(res.msg)
-            })
-            .catch(error => {
-              that.spinning = false
-              console.log(error)
-            })
-          return false
-        } else {
-          this.spinning = false
-        }
-      })
-    },
-    initValue(key, type = 'normal') {
-      if (!this.tgjc) return type === 'array' ? [] : type === 'time' ? undefined : ''
-      if (!this.tgjc[key]) return type === 'array' ? [] : type === 'time' ? undefined : ''
-      if (type === 'time') {
-        return moment(this.tgjc[key])
-      } else if (type === 'array') {
-        return this.tgjc[key].split(',')
-      } else {
-        return this.tgjc[key] + ''
-      }
-    },
-    dealAnswers(answer) {
-      if (answer && !_.isEmpty(answer)) {
-        if (answer.a9 === '1') {
-          this.controla9 = true
-        }
-        if (answer.a6) {
-          this.height = answer.a6
-        }
-        if (answer.a7) {
-          this.weight = answer.a7
-        }
-      }
-      return answer
+    handleSubmit() {
+
     },
     save() {
       var re = this.form.getFieldsValue()
       var that = this
+      re = {
+        ...re,
+        'a3': typeof re['a3'] !== 'undefined' ? re['a3'].format('YYYY-MM-DD') : '',
+        'a4': typeof re['a4'] !== 'undefined' ? re['a4'].join(',') : ''
+      }
       console.log(re)
       this.patientBasis.status = 1
       var params = new URLSearchParams()
-      if (this.tgjc && this.tgjc.tgjcId) {
-        re.tgjcId = this.tgjc.tgjcId
+      if (this.zkbszl && this.zkbszl.zkbszlId) {
+        re.zkbszlId = this.zkbszl.zkbszlId
       }
       params.append('formData', JSON.stringify(re))
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
-      that.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
         })
         .catch(error => {
-          that.spinning = false
           console.log(error)
         })
       return false
-    },
-    computeBMI() {
-      var that = this
-      var height = this.height
-      var weight = this.weight
-      if (height && weight) {
-        var params = new URLSearchParams()
-        params.append('scoreType', 'bmi')
-        params.append('tgjcStr', JSON.stringify({ a6: height, a7: weight }))
-        computeScore(params)
-          .then(res => {
-            console.log(res.data.a8)
-            that.form.setFieldsValue({
-              a8: res.data.a8
-            })
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      }
-    },
-    changeHeight(e) {
-      this.height = e.target.value
-      if (!e.target.value) {
-        this.form.setFieldsValue({
-          a8: ''
-        })
-      } else {
-        this.computeBMI()
-      }
-    },
-    changeWeight(e) {
-      this.weight = e.target.value
-      if (!e.target.value) {
-        this.form.setFieldsValue({
-          a8: ''
-        })
-      } else {
-        this.computeBMI()
-      }
     }
   }
 }
@@ -446,7 +363,7 @@ export default {
     padding-left: 70px;
     padding-top: 18px;
     padding-bottom: 10px;
-    background-image: url(../../../../assets/treeTop.png);
+    background-image: url(../../../assets/treeTop.png);
     background-repeat: no-repeat;
     border-bottom: 1px solid #eee;
     background-position: 8px 10px;

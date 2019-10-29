@@ -134,6 +134,14 @@ export const asyncRouterMap = [
         meta: { permission: [ 'center' ] }
       },
       {
+        path: '/list/task/:id(\\d+)/11',
+        name: 'task11',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/task/components/mask-11'),
+        meta: {maskId: 11, permission: [ 'center' ]}
+      },
+      {
         path: '/list/task/:id(\\d+)/14',
         name: 'task14',
         hidden: true,
