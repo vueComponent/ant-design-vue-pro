@@ -60,8 +60,10 @@
       </a-form>
     </div>
     <s-table ref="table" :scroll="scroll" size="small" rowKey="patientBasisId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-      <span slot="name" slot-scope="text,record" @click="showUser(record)">
-        <p class="userName">{{text}}</p>
+      <span slot="name" slot-scope="text,record">
+        <template>
+          <a @click="showUser(record)">{{text}}</a>
+        </template>
       </span>
       <span slot="executeStatus" slot-scope="text">
         <a-badge :status="text | executeStatusTypeFilter" :text="text | executeStatusFilter" />
@@ -69,8 +71,6 @@
       <span slot="operation" slot-scope="text, record">
         <template>
           <a @click="implement(record)">执行</a>
-          <a-divider type="vertical" />
-          <a @click="ignore(record)">忽略</a>
         </template>
       </span>
     </s-table>
@@ -121,12 +121,18 @@
         columns: [
           {
             title: '预警',
-            dataIndex: 'status',
-            width: "90px"
+            dataIndex: 'warnStatus',
+            width: "70px"
           },
           {
             title: '任务编号',
             dataIndex: 'code',
+            width: "100px"
+          },
+          {
+            title: '任务名称',
+            dataIndex: 'typeName',
+            customRender: typeName => typeName + '任务',
             width: "120px"
           },
           {
@@ -154,25 +160,23 @@
             title: '创建日期',
             dataIndex: 'createDate',
             customRender: createDate => moment(createDate).format('YYYY-MM-DD'),
-            width: '110px'
+            width: '120px'
           },
           {
             title: '到期时间',
             dataIndex: 'planDate',
             customRender: planDate => moment(planDate).format('YYYY-MM-DD'),
+            width: '120px',
+          },
+          {
+            title: '任务状态',
+            dataIndex: 'executeStatus',
+            scopedSlots: { customRender: 'executeStatus' },
             width: '110px',
           },
-        //   {
-        //     title: '任务状态',
-        //     dataIndex: 'executeStatus',
-        //     scopedSlots: { customRender: 'executeStatus' },
-        //     width: '110px',
-        //   },
           {
             title: '操作',
-            dataIndex: 'operation',
-            width: '120px',
-            className: 'operation',
+            width: '90px',
             scopedSlots: { customRender: 'operation' }
           }
         ],
@@ -243,22 +247,6 @@
         //执行
         this.$router.push('/list/task/' + record.patientBasisId)
       },
-      ignore(record) {
-        //忽略
-        const that = this;
-        this.$confirm({
-          title: '确认忽略该项任务',
-          onOk() {
-            const Params = new URLSearchParams();
-            Params.append('visitTaskId', record.patientBasisId);
-            ignoreTask(Params).then(res => {
-              that.$refs.table.refresh(true)
-            });
-          },
-          onCancel() { },
-        });
-
-      },
       onSelectChange(selectedRowKeys, selectedRows) {
         this.selectedRowKeys = selectedRowKeys;
         this.selectedRows = selectedRows;
@@ -267,65 +255,57 @@
   };
 </script>
 <style lang="less" scoped>
-  /deep/th.operation {
-    text-align: center !important;
-  }
+  //   /deep/.ant-table td {
+  //     white-space: nowrap;
+  //   }
 
-  /deep/.ant-table-tbody > tr > td.operation {
-    text-align: center !important;
-  }
+  //   .warningColor {
+  //     font-size: 20px;
+  //     color: #eb352d;
+  //   }
 
-  /deep/.ant-table td {
-    white-space: nowrap;
-  }
+  //   .approachColor {
+  //     font-size: 20px;
+  //     color: #f7b430;
+  //   }
+
+  //   .safeColor {
+  //     font-size: 20px;
+  //     color: #23ac3a;
+  //   }
+
+  //   .progressTag {
+  //     display: inline-block;
+  //     width: 140px;
+
+  //     /deep/ .progressTagContent {
+  //       display: inline-block;
+  //       width: 100px;
+  //       margin-right: 5px;
+  //     }
+
+  //     /deep/ .progressTagTitle {
+  //       padding-left: 40px;
+  //       margin-bottom: 2px;
+  //     }
+
+  //     /deep/ .progressTag .anticon {
+  //       color: #4bc5ac;
+  //       font-size: 18px;
+  //       vertical-align: bottom;
+  //     }
+
+  //     /deep/ .ant-progress-inner {
+  //       background-color: #e5f6ff;
+  //     }
+
+  //     /deep/ .progressTag .ant-progress-span {
+  //       color: rgb(0, 160, 233);
+  //     }
+  //   }
 
   /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
     margin-bottom: 10px;
-  }
-
-  .warningColor {
-    font-size: 20px;
-    color: #eb352d;
-  }
-
-  .approachColor {
-    font-size: 20px;
-    color: #f7b430;
-  }
-
-  .safeColor {
-    font-size: 20px;
-    color: #23ac3a;
-  }
-
-  .progressTag {
-    display: inline-block;
-    width: 140px;
-
-    /deep/ .progressTagContent {
-      display: inline-block;
-      width: 100px;
-      margin-right: 5px;
-    }
-
-    /deep/ .progressTagTitle {
-      padding-left: 40px;
-      margin-bottom: 2px;
-    }
-
-    /deep/ .progressTag .anticon {
-      color: #4bc5ac;
-      font-size: 18px;
-      vertical-align: bottom;
-    }
-
-    /deep/ .ant-progress-inner {
-      background-color: #e5f6ff;
-    }
-
-    /deep/ .progressTag .ant-progress-span {
-      color: rgb(0, 160, 233);
-    }
   }
 
   .tableSearch {
@@ -336,7 +316,7 @@
     z-index: 100;
 
     /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
-      width: 70px !important;
+      width: 100px !important;
     }
 
     .commonRetrieval {
@@ -348,19 +328,6 @@
           text-decoration: underline;
         }
       }
-    }
-  }
-
-  .userName {
-    color: #1fb2fa;
-    margin: 0;
-
-    &:active,
-    &:hover {
-      text-decoration: underline;
-      text-underline-position: under;
-      text-decoration-color: #1fb2fa;
-      cursor: pointer;
     }
   }
 </style>

@@ -114,6 +114,8 @@
     methods: {
       handleReview(recode) {
         const data = {
+          targetCenterId: recode.targetCenterId,
+          distractId: recode.distractId,
           distractCode: recode.distractCode,
           fileCode: recode.fileCode,
           patientName: recode.patientName,

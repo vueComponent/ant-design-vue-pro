@@ -282,7 +282,7 @@ export const asyncRouterMap = [
         path: '/wx/userAudit',
         name: 'wxUserAudit',
         component: () => import('@/views/wx/userAudit'),
-        meta: { title: '微信用户审核', keepAlive: true, icon: wxyhsh,isBack:false, permission: [ 'center' ]}
+        meta: { title: '微信用户绑定', keepAlive: true, icon: wxyhsh,isBack:false, permission: [ 'center' ]}
       },
       {
         path: '/wx/questionReview',

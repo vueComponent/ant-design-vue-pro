@@ -52,6 +52,8 @@
         visible: false,
         confirmLoading: false,
         form: this.$form.createForm(this),
+        targetCenterId: '',
+        distractId: '',
         labelCol: {
           xs: { span: 24 },
           sm: { span: 6 }
@@ -68,6 +70,8 @@
       show(recode) {
         this.visible = true;
         this.confirmLoading = false;
+        this.targetCenterId = recode.targetCenterId
+        this.distractId = recode.distractId
         this.$nextTick(() => {
           this.form.setFieldsValue(recode);
         })
@@ -86,10 +90,11 @@
           const params = {
             distract: {
               ...this.form.getFieldsValue(),
+              targetCenterId: this.targetCenterId,
+              distractId: this.distractId,
               createDate: fieldsValue['createDate'].format('YYYY-MM-DD')
             }
           }
-          //   console.log(params, 'params')
           verifyDistract(params)
             .then(res => {
               that.$message.success(res.msg);
