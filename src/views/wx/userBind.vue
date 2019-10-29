@@ -58,8 +58,8 @@
       </span>
       <span slot="operation" slot-scope="text, record">
         <template>
-          <span v-if="record.bindStatus == 2">审核</span>
-          <a v-else @click="handleReview(record)">审核</a>
+          <a v-if="record.bindStatus == 2">绑定</a>
+          <a v-else @click="handleReview(record)">绑定</a>
         </template>
       </span>
     </s-table>
