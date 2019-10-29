@@ -18,6 +18,9 @@
             </li>
           </ul>
         </a-form-item>
+        <a-form-item label="反馈意见">
+          <a-textarea rows="3" v-decorator="['feedback', requiredRule]" />
+        </a-form-item>
       </a-form>
     </a-spin>
   </a-modal>
@@ -40,6 +43,7 @@
         confirmLoading: false,
         checkId: '',
         form: this.$form.createForm(this),
+        requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
         attachsPrefix: '',
         imgList: []
       }
@@ -62,14 +66,16 @@
           this.form.setFieldsValue({
             reportTitle: res.data.reportCheck.reportTitle,
             reprotDescription: res.data.reportCheck.reprotDescription,
-            executeDate: moment(res.data.reportCheck.executeDate, 'x')
+            executeDate: moment(res.data.reportCheck.executeDate, 'x'),
+            feedback: res.data.reportCheck.feedback
           });
         })
       },
       handleSubmit() {
         this.confirmLoading = true
         const params = {
-          checkId: this.checkId
+          checkId: this.checkId,
+          feedback: this.form.getFieldValue('feedback')
         }
         updateReport(params).then(res => {
           this.$message.success(res.msg);
