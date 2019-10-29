@@ -34,6 +34,6 @@ export function getPatientDetailByCard (parameter) {
   return axios({
     url: '/patient/getPatientDetailByCard',
     method: 'post',
-    params: parameter
+    data: parameter
   })
 }

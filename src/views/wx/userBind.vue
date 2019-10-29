@@ -69,7 +69,7 @@
 
 <script>
   import moment from 'moment'
-  import { getWxAuditDataList } from '@/api/distract'
+  import { getWxBingDataList } from '@/api/distract'
   import { STable } from '@/components'
   import UserDetail from './modules/UserDetail'
   export default {
@@ -89,7 +89,7 @@
         queryParam: {},
         scroll: false,
         loadData: parameter => {
-          return getWxAuditDataList(Object.assign(parameter, this.queryParam)).then(res => {
+          return getWxBingDataList(Object.assign(parameter, this.queryParam)).then(res => {
             return res
           })
         },

@@ -7,83 +7,83 @@ const api = {
 export default api
 
 
-export function getZyDataList (parameter) {
+export function getZyDataList (data) {
   return axios({
     url: '/distract/getZyDataList',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function addDistract (parameter) {
+export function addDistract (data) {
   return axios({
     url: '/distract/addDistract',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function getSqDataList (parameter) {
+export function getSqDataList (data) {
     return axios({
       url: '/distract/getSqDataList',
       method: 'post',
-      params: parameter
+      data
     })
   }
 
-export function verifyDistract (parameter) {
+export function verifyDistract (data) {
   return axios({
     url: '/distract/verifyDistract',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function getWxAuditDataList (parameter) {
+export function getWxBingDataList (data) {
   return axios({
     url: '/wxBusiness/getDataList',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function wxPatientReview (parameter) {
+export function wxPatientReview (data) {
   return axios({
     url: '/wxBusiness/wxPatientReview',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function wxBind (parameter) {
+export function wxBind (data) {
   return axios({
     url: '/wxBusiness/bind',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function getWxQuestionList (parameter) {
+export function getWxQuestionList (data) {
   return axios({
     url: '/question/getWxQuestionList',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function getWxQuestionDetail (parameter) {
+export function getWxQuestionDetail (data) {
   return axios({
     url: '/question/detail',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function questionReview (parameter) {
+export function questionReview (data) {
   return axios({
     url: '/question/questionReview',
     method: 'post',
-    params: parameter
+    data
   })
 }
 

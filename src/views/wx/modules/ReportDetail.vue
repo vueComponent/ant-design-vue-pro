@@ -9,7 +9,7 @@
           <a-textarea rows="3" v-decorator="['reprotDescription']" readOnly />
         </a-form-item>
         <a-form-item label="上报时间">
-          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['executeDate']" disabled />
+          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['uploadDate']" disabled />
         </a-form-item>
         <a-form-item label="报告附件">
           <ul>
@@ -66,7 +66,7 @@
           this.form.setFieldsValue({
             reportTitle: res.data.reportCheck.reportTitle,
             reprotDescription: res.data.reportCheck.reprotDescription,
-            executeDate: moment(res.data.reportCheck.executeDate, 'x'),
+            uploadDate: moment(res.data.reportCheck.uploadDate, 'x'),
             feedback: res.data.reportCheck.feedback
           });
         })

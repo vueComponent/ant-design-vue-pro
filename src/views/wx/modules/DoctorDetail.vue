@@ -94,7 +94,6 @@
       this.getCenterList()
     },
     methods: {
-      onEditorReady(editor) { },
       show(id) {
         this.visible = true
 
@@ -104,9 +103,8 @@
           this.title = '编辑'
           this.confirmLoading = true
 
-          const params = {
-            doctorDetailId: id
-          }
+          const params = new FormData()
+          params.append('doctorDetailId', id)
           getDoctorDetail(params).then(res => {
             this.confirmLoading = false
 
@@ -146,7 +144,8 @@
       normFile(e) {
         if (Array.isArray(e)) {
           return e;
-        } const isJPG = e.file.type === 'image/jpeg';
+        }
+        const isJPG = e.file.type === 'image/jpeg';
         const isPNG = e.file.type === 'image/png';
         if (!(isJPG || isPNG)) {
           this.$message.error('请上传正确的图片格式');

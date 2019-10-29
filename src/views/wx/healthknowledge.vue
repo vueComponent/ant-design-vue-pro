@@ -20,7 +20,7 @@
       </a-form>
     </div>
 
-    <s-table ref="table" :scroll="scroll" size="small" rowKey="textId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" :scroll="scroll" size="small" :rowKey="id" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="operation" slot-scope="text, record">
         <template>
           <a @click="handleReview(record)">编辑</a>
@@ -110,7 +110,11 @@
         this.$refs.table.refresh()
       },
       handleReview(recode) {
-        this.$refs.articleDetail.show(recode.textId)
+        const params = {
+          textId: recode.textId,
+          terminal: recode.terminal
+        }
+        this.$refs.articleDetail.show(params)
       },
       handleOk() {
         this.$refs.table.refresh()

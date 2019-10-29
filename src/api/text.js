@@ -12,16 +12,17 @@ export function getWxArticleList(parameter) {
 
 export function getWxArticleDetail(parameter) {
   return axios({
-    url: `/text/${parameter}/view`,
+    url: `/text/viewAll`,
     method: 'get',
+    params: parameter
   })
 }
 
-export function addOrEdit(parameter) {
+export function addOrEdit(data) {
   return axios({
     url: `/text/addOrEdit`,
     method: 'post',
-    params: parameter
+    data
   })
 }
 

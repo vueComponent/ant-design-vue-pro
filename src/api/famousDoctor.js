@@ -2,34 +2,34 @@ import {
   axios
 } from '@/utils/request'
 
-export function getFamousDoctorList(parameter) {
+export function getFamousDoctorList(data) {
   return axios({
     url: '/famousDoctor/getDataList',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function getDoctorDetail(parameter) {
+export function getDoctorDetail(data) {
   return axios({
     url: '/famousDoctor/getDoctorDetail',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function saveDoctor(parameter) {
+export function saveDoctor(data) {
   return axios({
     url: '/famousDoctor/saveDoctorDetail',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function getCenter(parameter) {
+export function getCenter(data) {
   return axios({
     url: '/famousDoctor/getCenter',
     method: 'post',
-    params: parameter
+    data
   })
 }

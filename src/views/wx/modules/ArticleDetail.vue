@@ -88,33 +88,34 @@
       })
     },
     methods: {
-      show(id) {
+      show({ textId, terminal }) {
         this.visible = true;
-        this.textId = id
+        this.textId = textId
 
-        if (id) {
+        if (textId) {
           this.confirmLoading = true
           this.title = '编辑'
-          getWxArticleDetail(id).then(res => {
+          const params = { textId, terminal }
+          getWxArticleDetail(params).then(res => {
             this.confirmLoading = false
             this.form.setFieldsValue({
-              title: res.data.textWx.title,
-              type: String(res.data.textWx.type),
-              publisher: res.data.textWx.publisher,
-              text: res.data.textWx.text,
-              terminal: res.data.textWx.terminal,
+              title: res.data.title,
+              type: String(res.data.type),
+              publisher: res.data.publisher,
+              text: res.data.text,
+              terminal: String(res.data.terminal),
             });
-            if (res.data.textWx.url) {
+            if (res.data.url) {
               this.form.setFieldsValue({
                 url: [{
                   uid: '1',
-                  name: res.data.textWx.url,
+                  name: res.data.url,
                   status: 'done',
-                  url: res.data.attachsPrefix + res.data.textWx.url
+                  url: this.attachsPrefix + res.data.url
                 }],
               })
             }
-            this.fileName = res.data.textWx.url
+            this.fileName = res.data.url
             this.isFileLen = true
           })
         } else {

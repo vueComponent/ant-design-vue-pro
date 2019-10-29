@@ -2,18 +2,18 @@ import {
   axios
 } from '@/utils/request'
 
-export function getTicketDataList(parameter) {
+export function getTicketDataList(data) {
   return axios({
     url: '/ticket/getDataList',
     method: 'post',
-    params: parameter
+    data
   })
 }
 
-export function logoutTicket(parameter) {
+export function logoutTicket(data) {
   return axios({
     url: '/ticket/logoutTicket',
     method: 'post',
-    params: parameter
+    data
   })
 }

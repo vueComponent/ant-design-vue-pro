@@ -128,8 +128,8 @@
           },
           {
             title: '上报时间',
-            dataIndex: 'expectExecuteTime',
-            customRender: expectExecuteTime => moment(expectExecuteTime).format('YYYY-MM-DD'),
+            dataIndex: 'uploadDate',
+            customRender: uploadDate => moment(uploadDate).format('YYYY-MM-DD'),
             width: '120px'
           },
           {
