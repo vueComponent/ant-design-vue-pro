@@ -34,8 +34,8 @@
         </a-form-item>
         <a-form-item label="发布终端" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['terminal', requiredRule]">
-            <a-radio value="1">微信端</a-radio>
-            <a-radio value="2">官网</a-radio>
+            <a-radio value=1>微信端</a-radio>
+            <a-radio value=2>官网</a-radio>
           </a-radio-group>
         </a-form-item>
       </a-form>
@@ -102,7 +102,7 @@
               type: String(res.data.textWx.type),
               publisher: res.data.textWx.publisher,
               text: res.data.textWx.text,
-              terminal: ''
+              terminal: res.data.textWx.terminal,
             });
             if (res.data.textWx.url) {
               this.form.setFieldsValue({
@@ -160,13 +160,12 @@
           const params = new URLSearchParams()
           const textWx = {
             ...fieldsValue,
-            url: this.fileName,
+            url: this.fileName
           }
           if (this.textId) {
             textWx.textId = this.textId
           }
           params.append('entity', JSON.stringify(textWx))
-          params.append('terminal', fieldsValue['terminal'])
 
           addOrEdit(params).then(res => {
             this.$message.success(res.msg);

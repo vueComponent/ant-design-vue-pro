@@ -22,10 +22,12 @@
               <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
-                    <p @click="tableSearch(0)">待执行随访</p>
-                    <p @click="tableSearch(1)">待执行访视</p>
-                    <p @click="tableSearch(2)">已执行任务</p>
-                    <p @click="tableSearch(3)">全部任务</p>
+                    <p @click="tableSearch(1)">未执行任务</p>
+                    <p @click="tableSearch(2)">未执行随访</p>
+                    <p @click="tableSearch(3)">未执行访视</p>
+                    <p @click="tableSearch(4)">已执行随访</p>
+                    <p @click="tableSearch(5)">已执行访视</p>
+                    <p @click="tableSearch(6)">全部任务</p>
                   </div>
                 </a-tab-pane>
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -34,14 +36,17 @@
                       <a-form-item label="档案号">
                         <a-input v-model="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
-                      <a-form-item label="姓名">
-                        <a-input v-model="queryParam.name" style="width: 100%" />
+                      <a-form-item label="患者姓名">
+                        <a-input v-model="queryParam.patientName" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="身份证号">
                         <a-input v-model="queryParam.card" style="width: 100%" />
                       </a-form-item>
-                      <a-form-item label="任务类型">
-                        <a-input v-model="queryParam.card" style="width: 100%" />
+                      <a-form-item label="任务名称">
+                        <a-select v-model="queryParam.type">
+                          <a-select-option value="2">半年随访任务</a-select-option>
+                          <a-select-option value="3">年访视任务</a-select-option>
+                        </a-select>
                       </a-form-item>
                       <a-form-item label="计划执行日期" style="margin-bottom:0;">
                         <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
@@ -60,27 +65,27 @@
       </a-form>
     </div>
     <s-table ref="table" :scroll="scroll" size="small" rowKey="patientBasisId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-      <span slot="name" slot-scope="text,record">
-        <template>
-          <a @click="showUser(record)">{{text}}</a>
-        </template>
-      </span>
-      <span slot="executeStatus" slot-scope="text">
+      <template slot="warnStatus" slot-scope="text">
+        <img width="25px" v-if="text == 1" src="../../assets/warn-1.png" :alt="text">
+        <img width="25px" v-else-if="text == 2" src="../../assets/warn-2.png" :alt="text">
+        <img width="25px" v-else-if="text > 2" src="../../assets/warn-3.png" :alt="text">
+      </template>
+      <template slot="patientName" slot-scope="text,record">
+        <a @click="showUser(record)">{{text}}</a>
+      </template>
+      <template slot="executeStatus" slot-scope="text">
         <a-badge :status="text | executeStatusTypeFilter" :text="text | executeStatusFilter" />
-      </span>
-      <span slot="operation" slot-scope="text, record">
-        <template>
-          <a @click="implement(record)">执行</a>
-        </template>
-      </span>
+      </template>
+      <template slot="operation" slot-scope="text, record">
+        <a @click="implement(record)">执行</a>
+      </template>
     </s-table>
     <user-detail ref="detailModal" />
   </a-card>
 </template>
 <script>
   import moment from 'moment';
-  import { getVisitTask, ignoreTask } from '@/api/task';
-  import { MyIcon } from '@/components/_util/util';
+  import { getVisitTask } from '@/api/task';
   import { STable } from '@/components';
   import UserDetail from '../list/modules/UserDetail'
   const executeStatusMap = {
@@ -104,7 +109,6 @@
   export default {
     name: 'Task',
     components: {
-      MyIcon,
       STable,
       UserDetail
     },
@@ -122,6 +126,7 @@
           {
             title: '预警',
             dataIndex: 'warnStatus',
+            scopedSlots: { customRender: 'warnStatus' },
             width: "70px"
           },
           {
@@ -138,18 +143,19 @@
           {
             title: '档案号',
             dataIndex: 'fileCode',
-            width: "120px"
+            width: "110px"
           },
           {
             title: '患者姓名',
             dataIndex: 'patientName',
-            scopedSlots: { customRender: 'name' },
-            width: '100px',
+            scopedSlots: { customRender: 'patientName' },
+            align: 'center',
+            width: '100px'
           },
           {
             title: '身份证号',
             dataIndex: 'card',
-            width: '130px',
+            width: '160px',
           },
           {
             title: '联系电话',
@@ -176,7 +182,7 @@
           },
           {
             title: '操作',
-            width: '90px',
+            width: '100px',
             scopedSlots: { customRender: 'operation' }
           }
         ],
@@ -235,7 +241,7 @@
       },
       tableSearch(type) {
         const keyWord = {
-          "type": type
+          "queryType": type
         }
         this.$refs.table.search(keyWord);
         this.advanced = false;
@@ -255,55 +261,6 @@
   };
 </script>
 <style lang="less" scoped>
-  //   /deep/.ant-table td {
-  //     white-space: nowrap;
-  //   }
-
-  //   .warningColor {
-  //     font-size: 20px;
-  //     color: #eb352d;
-  //   }
-
-  //   .approachColor {
-  //     font-size: 20px;
-  //     color: #f7b430;
-  //   }
-
-  //   .safeColor {
-  //     font-size: 20px;
-  //     color: #23ac3a;
-  //   }
-
-  //   .progressTag {
-  //     display: inline-block;
-  //     width: 140px;
-
-  //     /deep/ .progressTagContent {
-  //       display: inline-block;
-  //       width: 100px;
-  //       margin-right: 5px;
-  //     }
-
-  //     /deep/ .progressTagTitle {
-  //       padding-left: 40px;
-  //       margin-bottom: 2px;
-  //     }
-
-  //     /deep/ .progressTag .anticon {
-  //       color: #4bc5ac;
-  //       font-size: 18px;
-  //       vertical-align: bottom;
-  //     }
-
-  //     /deep/ .ant-progress-inner {
-  //       background-color: #e5f6ff;
-  //     }
-
-  //     /deep/ .progressTag .ant-progress-span {
-  //       color: rgb(0, 160, 233);
-  //     }
-  //   }
-
   /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
     margin-bottom: 10px;
   }

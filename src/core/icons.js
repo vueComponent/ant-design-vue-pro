@@ -16,7 +16,7 @@ import home from '@/assets/icons/home.svg?inline' // path to your '*.svg?inline'
 import jixing from '@/assets/icons/jixing.svg?inline' // path to your '*.svg?inline' file.
 import blzysq from '@/assets/icons/blzysq.svg?inline' // path to your '*.svg?inline' file.
 import blzysh from '@/assets/icons/blzysh.svg?inline' // path to your '*.svg?inline' file.
-import wxyhsh from '@/assets/icons/wxyhsh.svg?inline' // path to your '*.svg?inline' file.
+import wxyhbd from '@/assets/icons/wxyhbd.svg?inline' // path to your '*.svg?inline' file.
 import wenjuan from '@/assets/icons/wenjuan.svg?inline' // path to your '*.svg?inline' file
 import hzbgsy from '@/assets/icons/hzbgsy.svg?inline' // path to your '*.svg?inline' file.
 import huodongquan from '@/assets/icons/huodongquan.svg?inline' // path to your '*.svg?inline' file.
@@ -24,5 +24,5 @@ import jkzs from '@/assets/icons/jkzs.svg?inline' // path to your '*.svg?inline'
 import myzj from '@/assets/icons/myzj.svg?inline' // path to your '*.svg?inline' file.
 
 export { 
-  bxAnaalyse,baogao,bingli,fangshi,ruzhu,zhanghao,home,jixing,blzysq,blzysh,wxyhsh,wenjuan,hzbgsy,huodongquan,jkzs,myzj
+  bxAnaalyse,baogao,bingli,fangshi,ruzhu,zhanghao,home,jixing,blzysq,blzysh,wxyhbd,wenjuan,hzbgsy,huodongquan,jkzs,myzj
 }

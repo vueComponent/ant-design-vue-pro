@@ -165,11 +165,6 @@ export default {
     edit(value) {
       console.log('value', value);
       this.options.title = '编辑患者';
-      if (value.card.length == 15) {
-        value.birthDate = new Date(value.card.substr(6,6).replace(/(.{4})(.{2})/,"$1-$2-")).getTime()
-      } else if (value.card.length == 18) {
-        value.birthDate = new Date(value.card.substr(6,8).replace(/(.{4})(.{2})/,"$1-$2-")).getTime()
-      }
       value.registerDate = moment(value.registerDate, 'x')
       value.residence = [value.addressP, value.addressC]
       this.patientId = value.patientId
@@ -305,13 +300,21 @@ export default {
           const params = new URLSearchParams();
           params.append('card', num);
           validateCard(params).then(res=>{
-            if(!res.data) {
-              callback(res.msg)
-            }else {
-              let birthDate = new Date(num.substr(6,6).replace(/(.{4})(.{2})/,"$1-$2-")).getTime()
+            if (res.data) {
+              this.options.title = '编辑患者';
+              this.patientId = res.data.patientId
               this.form.setFieldsValue({
+                ...res.data,
+                registerDate: moment(res.data.registerDate, 'x'),
+                birthDate: moment(res.data.birthDate, 'x'),
                 sex: String(res.data.sex),
-                birthDate: moment(birthDate, 'x'),
+                residence: [res.data.addressP, res.data.addressC]
+              })
+            } else {
+              let sex = parseInt(num.charAt(14)/2)*2 != num.charAt(14) ? '1' : '0';
+              this.form.setFieldsValue({
+                  birthDate: moment(birthDate, 'x'),
+                  sex
               })
             }
           })
@@ -347,13 +350,22 @@ export default {
             const params = new URLSearchParams();
             params.append('card', num);
             validateCard(params).then(res=>{
-              if(!res.data) {
-                callback(res.msg)
-              }else {
-                let birthDate = new Date(num.substr(6,8).replace(/(.{4})(.{2})/,"$1-$2-")).getTime()
+              if (res.data) {
+                this.options.title = '编辑患者';
+                this.patientId = res.data.patientId
                 this.form.setFieldsValue({
-                    sex: String(res.data.sex),
-                    birthDate: moment(birthDate, 'x')
+                  ...res.data,
+                  registerDate: moment(res.data.registerDate, 'x'),
+                  birthDate: moment(res.data.birthDate, 'x'),
+                  sex: String(res.data.sex),
+                  residence: [res.data.addressP, res.data.addressC]
+                })
+              } else {
+                let birthDate = new Date(num.substr(6,8).replace(/(.{4})(.{2})/,"$1-$2-")).getTime();
+                let sex = parseInt(num.charAt(16)/2)*2 != num.charAt(16) ? '1' : '0';
+                this.form.setFieldsValue({
+                  birthDate: moment(birthDate, 'x'),
+                  sex
                 })
               }
             })

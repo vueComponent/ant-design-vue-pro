@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import { UserLayout, BasicLayout, RouteView, BlankLayout, PageView } from '@/layouts'
-import { bxAnaalyse,baogao,bingli,fangshi,ruzhu,zhanghao,home,jixing,blzysq,blzysh,wxyhsh,wenjuan,hzbgsy,huodongquan,jkzs,myzj } from '@/core/icons'
+import { bxAnaalyse,baogao,bingli,fangshi,ruzhu,zhanghao,home,jixing,blzysq,blzysh,wxyhbd,wenjuan,hzbgsy,huodongquan,jkzs,myzj } from '@/core/icons'
 export const asyncRouterMap = [
 
   {
@@ -287,10 +287,10 @@ export const asyncRouterMap = [
         meta: { title: '病例转移审核', keepAlive: true, icon: blzysh,isBack:false, permission: [ 'center' ]}
       },
       {
-        path: '/wx/userAudit',
-        name: 'wxUserAudit',
-        component: () => import('@/views/wx/userAudit'),
-        meta: { title: '微信用户绑定', keepAlive: true, icon: wxyhsh,isBack:false, permission: [ 'center' ]}
+        path: '/wx/userBind',
+        name: 'wxUserBind',
+        component: () => import('@/views/wx/userBind'),
+        meta: { title: '微信用户绑定', keepAlive: true, icon: wxyhbd,isBack:false, permission: [ 'center' ]}
       },
       {
         path: '/wx/questionReview',
