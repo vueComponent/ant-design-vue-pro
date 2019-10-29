@@ -43,7 +43,7 @@
                         <a-input v-model="queryParam.card" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="任务名称">
-                        <a-select v-model="queryParam.type" style="width: 100%">
+                        <a-select v-model="queryParam.type">
                           <a-select-option value="2">半年随访任务</a-select-option>
                           <a-select-option value="3">年访视任务</a-select-option>
                         </a-select>
@@ -85,7 +85,7 @@
 </template>
 <script>
   import moment from 'moment';
-  import { getVisitTask, ignoreTask } from '@/api/task';
+  import { getVisitTask } from '@/api/task';
   import { STable } from '@/components';
   import UserDetail from '../list/modules/UserDetail'
   const executeStatusMap = {
@@ -261,55 +261,6 @@
   };
 </script>
 <style lang="less" scoped>
-  //   /deep/.ant-table td {
-  //     white-space: nowrap;
-  //   }
-
-  //   .warningColor {
-  //     font-size: 20px;
-  //     color: #eb352d;
-  //   }
-
-  //   .approachColor {
-  //     font-size: 20px;
-  //     color: #f7b430;
-  //   }
-
-  //   .safeColor {
-  //     font-size: 20px;
-  //     color: #23ac3a;
-  //   }
-
-  //   .progressTag {
-  //     display: inline-block;
-  //     width: 140px;
-
-  //     /deep/ .progressTagContent {
-  //       display: inline-block;
-  //       width: 100px;
-  //       margin-right: 5px;
-  //     }
-
-  //     /deep/ .progressTagTitle {
-  //       padding-left: 40px;
-  //       margin-bottom: 2px;
-  //     }
-
-  //     /deep/ .progressTag .anticon {
-  //       color: #4bc5ac;
-  //       font-size: 18px;
-  //       vertical-align: bottom;
-  //     }
-
-  //     /deep/ .ant-progress-inner {
-  //       background-color: #e5f6ff;
-  //     }
-
-  //     /deep/ .progressTag .ant-progress-span {
-  //       color: rgb(0, 160, 233);
-  //     }
-  //   }
-
   /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
     margin-bottom: 10px;
   }
