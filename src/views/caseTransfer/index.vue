@@ -25,9 +25,9 @@
               <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
-                    <p @click="tableSearch(1)">本月新增报告</p>
-                    <p @click="tableSearch(2)">本年新增报告</p>
-                    <p @click="tableSearch(3)">全部报告</p>
+                    <p @click="tableSearch(1)">本月新增申请</p>
+                    <p @click="tableSearch(2)">本年新增申请</p>
+                    <p @click="tableSearch(3)">全部申请</p>
                   </div>
                 </a-tab-pane>
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -188,14 +188,6 @@ export default {
       optionAlertShow: false
     }
   },
-  filters: {
-    // statusFilter (type) {
-    //   return statusMap[type].text
-    // },
-    // statusTypeFilter (type) {
-    //   return statusMap[type].status
-    // }
-  },
   created() {
     this.scroll = {
       y: window.screen.height - 368 + 'px'
@@ -208,7 +200,7 @@ export default {
     },
     tableSearch(type) {
       const keyWord = {
-        type: type
+        queryType: type
       }
       this.$refs.table.search(keyWord)
       this.advanced = false
