@@ -302,7 +302,7 @@ export default {
           validateCard(params).then(res=>{
             if (res.code == 2) {
                 callback(res.msg);
-            } else if (res.code == 4){
+            } else if (res.code == 4) {
               this.options.title = '编辑患者';
               this.patientId = res.data.patientId
               this.form.setFieldsValue({
@@ -312,7 +312,7 @@ export default {
                 sex: String(res.data.sex),
                 residence: [res.data.addressP, res.data.addressC]
               })
-            } else if(res.code == 3 ) {
+            } else if (res.code == 3) {
               let sex = parseInt(num.charAt(14)/2)*2 != num.charAt(14) ? '1' : '0';
               this.form.setFieldsValue({
                   birthDate: moment(birthDate, 'x'),
@@ -354,7 +354,7 @@ export default {
             validateCard(params).then(res=>{
               if (res.code == 2) {
                 callback(res.msg);
-              } else if (res.code == 4){
+              } else if (res.code == 4) {
                 this.options.title = '编辑患者';
                 this.patientId = res.data.patientId
                 this.form.setFieldsValue({
@@ -364,7 +364,7 @@ export default {
                   sex: String(res.data.sex),
                   residence: [res.data.addressP, res.data.addressC]
                 })
-              } else if(res.code == 3 ) {
+              } else if (res.code == 3) {
                 let birthDate = new Date(num.substr(6,8).replace(/(.{4})(.{2})/,"$1-$2-")).getTime();
                 let sex = parseInt(num.charAt(16)/2)*2 != num.charAt(16) ? '1' : '0';
                 this.form.setFieldsValue({
