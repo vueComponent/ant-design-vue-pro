@@ -197,11 +197,10 @@ export default {
       }
     },
     handleClick(e) {
-      this.maskId = e.key
-      if (this.maskId >= 31 && this.maskId <= 36) {
-        this.$router.push('/basis/question/' + this.patientBasisId + '/' + this.maskId)
+      if (e.key >= 31 && e.key <= 36) {
+        this.$router.push('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else {
-        this.$router.push('/list/basis/' + this.patientBasisId + '/' + this.maskId)
+        this.$router.push('/list/basis/' + this.patientBasisId + '/' + e.key)
       }
     },
     getFormData() {

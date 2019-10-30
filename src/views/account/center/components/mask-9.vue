@@ -196,9 +196,11 @@ export default {
     },
     changeRadio(e, t) {},
     handleClick(e) {
-      this.maskId = e.key
-      // this.getElementsAnswer()
-      this.$router.push('/list/basis/' + this.patientBasisId + '/' + this.maskId)
+      if (e.key >= 31 && e.key <= 36) {
+        this.$router.push('/basis/question/' + this.patientBasisId + '/' + e.key)
+      } else {
+        this.$router.push('/list/basis/' + this.patientBasisId + '/' + e.key)
+      }
     },
     handleSubmit(e) {
       e.preventDefault()

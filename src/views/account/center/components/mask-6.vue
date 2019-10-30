@@ -216,6 +216,7 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-spin :spinning="spinning"></a-spin>
   </div>
 </template>
 <script>
@@ -325,12 +326,12 @@ export default {
       controlb425: false,
       controlb426: false,
       controlb427: false,
-      controlc426: false
+      controlc426: false,
+      spinning: false
     }
   },
   created() {
     var that = this
-    this.defaultSelectedKeys = [6]
     this.CloseSidebar()
     var params = new URLSearchParams()
     params.append('patientBasisId', this.patientBasisId)
@@ -340,22 +341,25 @@ export default {
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
       })
-    params.append('basisMarkId', this.maskId)
-    getBasisForm(params)
-      .then(res => {
-        if (res.data && res.data.bywsw)
-          that.bywsw = that.dealAnswers(res.data)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  },
-  activated() {
-    this.defaultSelectedKeys = [6]
+    this.getFormData()
   },
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.bywsw)
+            that.bywsw = that.dealAnswers(res.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     changeSelect(e, t) {
       this[t] = e.target.checked
     },
@@ -373,24 +377,77 @@ export default {
       }
     },
     handleClick(e) {
-      this.maskId = e.key
-      // this.getElementsAnswer()
-      this.$router.push('/list/basis/' + this.patientBasisId + '/' + this.maskId)
+      if (e.key >= 31 && e.key <= 36) {
+        this.$router.push('/basis/question/' + this.patientBasisId + '/' + e.key)
+      } else {
+        this.$router.push('/list/basis/' + this.patientBasisId + '/' + e.key)
+      }
     },
     handleSubmit(e) {
       e.preventDefault()
       const { form: { validateFields } } = this
-      this.confirmLoading = true
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
-          setTimeout(() => {
-            this.visible = false
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
+          const allergy = []
+          for (var key in this.optionDataSource) {
+            _.each(this.optionDataSource[key], function(item) {
+              allergy.push({
+                markId: 1,
+                microbeName: item.microbeName,
+                antibiotic: item.antibiotic,
+                antibioticResult: item.antibioticResult,
+                allergyValue: item.allergyValue
+              })
+            })
+          }
+          for (var key in this.optionDataSource2) {
+            _.each(this.optionDataSource2[key], function(item) {
+              allergy.push({
+                markId: 2,
+                microbeName: item.microbeName,
+                antibiotic: item.antibiotic,
+                antibioticResult: item.antibioticResult,
+                allergyValue: item.allergyValue
+              })
+            })
+          }
+          var re = this.form.getFieldsValue()
+          var that = this
+          re = {
+            ...re,
+            'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
+            'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
+            'c1': typeof re['c1'] !== 'undefined' ? re['c1'].format('YYYY-MM-DD') : '',
+            'a42': typeof re['a42'] !== 'undefined' ? re['a42'].join(',') : '',
+            'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : '',
+            'c42': typeof re['c42'] !== 'undefined' ? re['c42'].join(',') : ''
+          }
+          console.log(re)
+          this.patientBasis.status = 2
+          var params = new URLSearchParams()
+          if (this.bywsw && this.bywsw.bywswId) {
+            re.bywswId = this.bywsw.bywswId
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('patientBasis', JSON.stringify(this.patientBasis))
+          params.append('basisMarkId', this.maskId)
+          params.append('markName', this.markName)
+          params.append('allergy', JSON.stringify(allergy))
+          this.spinning = true
+          saveBasis(params)
+            .then(res => {
+              console.log(res)
+              that.spinning = false
+              that.getFormData()
+              that.$message.success(res.msg)
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
         } else {
-          this.confirmLoading = false
+          that.spinning = false
         }
       })
     },
@@ -440,14 +497,16 @@ export default {
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
       params.append('allergy', JSON.stringify(allergy))
+      this.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg, function() {
-            location.href = location.href
-          })
+          that.spinning = false
+          that.getFormData()
+          that.$message.success(res.msg)
         })
         .catch(error => {
+          that.spinning = false
           console.log(error)
         })
       return false
@@ -458,7 +517,6 @@ export default {
       if (type === 'time') {
         return moment(this.bywsw[key])
       } else if (type === 'array') {
-        debugger
         return this.bywsw[key].split(',')
       } else {
         return this.bywsw[key] + ''
@@ -612,6 +670,21 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+/deep/ .ant-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+
+  & .ant-spin-dot {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+  }
+}
+
 /deep/ #baselineHeader {
   .ant-card-body {
     padding: 10px

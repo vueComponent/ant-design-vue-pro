@@ -182,7 +182,6 @@ export default {
       params.append('patientBasisId', this.patientBasisId)
       getQuestionDetail(params)
         .then(res => {
-          debugger
           that.listArr = that.initQuestionAnswers(res.data.topTitles)
           that.question = res.data.question
           if (res.data.isFinish === '0') {

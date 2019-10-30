@@ -180,6 +180,7 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-spin :spinning="spinning"></a-spin>
   </div>
 </template>
 <script>
@@ -196,6 +197,7 @@ export default {
   },
   data() {
     return {
+      spinning: false,
       previewVisible: false,
       previewImage: '',
       uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
@@ -289,24 +291,58 @@ export default {
       }
     },
     handleClick(e) {
-      this.maskId = e.key
-      // this.getElementsAnswer()
-      this.$router.push('/list/basis/' + this.patientBasisId + '/' + this.maskId)
+      if (e.key >= 31 && e.key <= 36) {
+        this.$router.push('/basis/question/' + this.patientBasisId + '/' + e.key)
+      } else {
+        this.$router.push('/list/basis/' + this.patientBasisId + '/' + e.key)
+      }
     },
     handleSubmit(e) {
       e.preventDefault()
       const { form: { validateFields } } = this
-      this.confirmLoading = true
+      var that = this
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
-          setTimeout(() => {
-            this.visible = false
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
+          var re = this.form.getFieldsValue()
+          re = {
+            ...re,
+            'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : ''
+          }
+          console.log(re)
+          this.patientBasis.status = 2
+          var params = new URLSearchParams()
+          if (this.xbyxx && this.xbyxx.xbyxxId) {
+            re.xbyxxId = this.xbyxx.xbyxxId
+          }
+          //附件
+          if (this.fileList && this.fileList.length) {
+            var a = []
+            _.each(this.fileList, function(v) {
+              if (v.response) a.push(v.response.fileName)
+              else a.push(v.name)
+            })
+            // var fileName = _.map(this.fileList, function(v) { return v.response ? v.response.fileName : v.name })
+            params.append('fileName', JSON.stringify(a))
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('patientBasis', JSON.stringify(this.patientBasis))
+          params.append('basisMarkId', this.maskId)
+          params.append('markName', this.markName)
+          that.spinning = true
+          saveBasis(params)
+            .then(res => {
+              console.log(res)
+              that.spinning = false
+              that.getFormData()
+              that.$message.success(res.msg)
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
         } else {
-          this.confirmLoading = false
+          that.spinning = false
         }
       })
     },
@@ -360,13 +396,16 @@ export default {
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
+      that.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
+          that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
         })
         .catch(error => {
+          that.spinning = false
           console.log(error)
         })
       return false
@@ -439,6 +478,21 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+/deep/ .ant-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+
+  & .ant-spin-dot {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+  }
+}
+
 /deep/ #baselineHeader {
   .ant-card-body {
     padding: 10px
