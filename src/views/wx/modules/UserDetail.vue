@@ -72,9 +72,8 @@
         this.visible = true;
         this.confirmLoading = false
         this.info = recode
-        const params = {
-          card: recode.card
-        }
+        const params = new FormData()
+        params.append('card', recode.card)
         wxPatientReview(params).then(res => {
           this.details = res.data
         })
