@@ -1,7 +1,8 @@
 <template>
   <div class="userDetail" :option="option">
     <div class="userDetailTop">
-      <img src="../../../assets/userHeardImg.png" alt="" />
+      <img src="../../../assets/woman.png" alt="" v-if="option.sex == 0" />
+      <img src="../../../assets/man.png" alt="" v-else />
       <div class="userDetailInfo">
         <h4>
           {{ option.name }}
@@ -38,7 +39,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 export default {
   data() {
     return {};
