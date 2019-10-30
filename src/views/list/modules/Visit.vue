@@ -1,77 +1,30 @@
 <template>
-  <a-popover trigger="click" v-model="visible">
+  <a-popover trigger="click" v-model="visible" v-if="show">
     <div class="visitInfo" slot="content">
       <a-timeline>
-        <a-timeline-item>
-          <div slot="dot">
-            <div class="visitContent">
-              <span class="visitYear">
-                <a-icon type="file-text" /></span>
-              <span class="visitYearText">第1年</span>
+        <div v-for="(item, index) in list">
+          <a-timeline-item v-for="(v, i) in item">
+            <div slot="dot" v-if="i==0">
+              <div class="visitContent">
+                <span class="visitYear">
+                  <a-icon type="file-text" /></span>
+                <span class="visitYearText">{{v.gyYear}}年</span>
+              </div>
             </div>
-          </div>
-          <div class="visiItem">
-            <p class="visiItemTitle">
-              <span class="visiItemName">半年随访</span>
-              <span class="visiItemTime">
-                <a-icon type="clock-circle" />
-                2019-08-01
-              </span>
-            </p>
-            <div class="visiItemPro">
-              <a-progress :percent="30" showInfo="false" />
+            <div class="visiItem" @click="jump(v)">
+              <p class="visiItemTitle">
+                <span class="visiItemName">{{v.typeName}}</span>
+                <span class="visiItemTime">
+                  <a-icon type="clock-circle" />
+                  {{v.createDate | moment('YYYY-MM-DD')}}
+                </span>
+              </p>
+              <div class="visiItemPro">
+                <a-progress :percent="parseInt(v.progress)" :showInfo="false" />
+              </div>
             </div>
-          </div>
-        </a-timeline-item>
-        <a-timeline-item>
-          <div class="visiItem">
-            <p class="visiItemTitle">
-              <span class="visiItemName">半年随访</span>
-              <span class="visiItemTime">
-                <a-icon type="clock-circle" />
-                2019-08-01
-              </span>
-            </p>
-            <div class="visiItemPro">
-              <a-progress :percent="30" showInfo="false" />
-            </div>
-          </div>
-        </a-timeline-item>
-        <a-timeline-item color="red">
-          <div class="visiItem">
-            <p class="visiItemTitle">
-              <span class="visiItemName">半年随访</span>
-              <span class="visiItemTime">
-                <a-icon type="clock-circle" />
-                2019-08-01
-              </span>
-            </p>
-            <div class="visiItemPro">
-              <a-progress :percent="30" showInfo="false" />
-            </div>
-          </div>
-        </a-timeline-item>
-        <a-timeline-item>
-          <div slot="dot">
-            <div class="visitContent">
-              <span class="visitYear">
-                <a-icon type="file-text" /></span>
-              <span class="visitYearText">第1年</span>
-            </div>
-          </div>
-          <div class="visiItem">
-            <p class="visiItemTitle">
-              <span class="visiItemName">半年随访</span>
-              <span class="visiItemTime">
-                <a-icon type="clock-circle" />
-                2019-08-01
-              </span>
-            </p>
-            <div class="visiItemPro">
-              <a-progress :percent="30" showInfo="false" />
-            </div>
-          </div>
-        </a-timeline-item>
+          </a-timeline-item>
+        </div>
       </a-timeline>
     </div>
     <span class="more">更多</span>
@@ -79,19 +32,53 @@
 </template>
 <script>
 import { getSFDataList } from '@/api/patient'
+import moment from 'moment'
+import _ from 'lodash'
 
 export default {
   data() {
     return {
-      visible: false
+      visible: false,
+      list: []
+    }
+  },
+  computed: {
+    show() {
+      return !_.isEmpty(this.list)
+    }
+  },
+  props: {
+    patientId: {
+      type: Number
     }
   },
   created() {
-
+    var that = this
+    var param = new URLSearchParams()
+    param.append('patientId', this.patientId)
+    getSFDataList(param)
+      .then(res => {
+        if (!_.isEmpty(res.data)) {
+          that.list = res.data
+        } else {
+          that.visible = false
+        }
+      })
   },
   methods: {
+    moment,
     hide() {
       this.visible = false
+    },
+    jump(v) {
+      console.log(v)
+      if (v.type === 3) {
+        this.$router.push('/list/task/' + v.patientBasisId)
+      } else if (v.type === 4) {
+        this.$router.push('/jxjzq/' + v.patientBasisId)
+      } else if (v.type === 2) {
+        this.$router.push('/list/task/' + v.patientBasisId + '/11')
+      }
     }
   }
 };
@@ -116,6 +103,8 @@ export default {
     width: 25px;
     text-align: center;
     line-height: 25px;
+    position: relative;
+    left: 5px;
   }
 
   .visitYearText {
@@ -132,10 +121,15 @@ export default {
   margin-left: 10px;
   position: relative;
   top: -15px;
+  cursor: pointer;
 
   .visiItemTitle {
     margin: 0;
     overflow: hidden;
+
+    .visiItemName {
+      font-size: 12px;
+    }
 
     .visiItemTime {
       font-size: 12px;

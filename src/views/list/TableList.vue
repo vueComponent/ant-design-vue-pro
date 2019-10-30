@@ -78,7 +78,7 @@
               <a-icon style="color:#00A0E9" v-if="basisList[0].progress == 0" type="clock-circle" theme="filled" />
             </div>
           </router-link>
-          <Visit></Visit>
+          <Visit :patientId="basisList[0].patientId"></Visit>
         </div>
       </span>
       <span slot="description" slot-scope="text">
