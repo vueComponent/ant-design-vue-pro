@@ -37,3 +37,11 @@ export function getPatientDetailByCard (parameter) {
     data: parameter
   })
 }
+
+export function getSFDataList (parameter) {
+  return axios({
+    url: '/patient/getSFDataList',
+    method: 'post',
+    data: parameter
+  })
+}

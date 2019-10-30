@@ -342,7 +342,7 @@ export default {
               console.log(error)
             })
         } else {
-          that.spinning = false
+          this.spinning = false
         }
       })
     },

@@ -78,11 +78,16 @@
   </a-popover>
 </template>
 <script>
+import { getSFDataList } from '@/api/patient'
+
 export default {
   data() {
     return {
       visible: false
-    };
+    }
+  },
+  created() {
+
   },
   methods: {
     hide() {

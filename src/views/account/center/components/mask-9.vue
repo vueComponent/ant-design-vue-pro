@@ -74,6 +74,7 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-spin :spinning="spinning"></a-spin>
   </div>
 </template>
 <script>
@@ -91,7 +92,7 @@ export default {
   data() {
     return {
       markName: 'xzcc',
-      title: '',
+      title: '基线',
       openKeys: [],
       defaultSelectedKeys: [9],
       orgTree: [],
@@ -153,12 +154,12 @@ export default {
       form: this.$form.createForm(this),
       maskId: this.$route.meta.maskId,
       patientBasisId: this.$route.params.id,
-      xzcc: undefined
+      xzcc: undefined,
+      spinning: false
     }
   },
   created() {
     var that = this
-    this.defaultSelectedKeys = [9]
     this.CloseSidebar()
     var params = new URLSearchParams()
     params.append('patientBasisId', this.patientBasisId)
@@ -167,26 +168,8 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        if (that.patientBasis.type === 1) {
-          that.title = '基线'
-        } else if (that.patientBasis.type === 2) {
-          that.title = '半年随访'
-        } else if (that.patientBasis.type === 3) {
-          that.title = '年访视'
-        }
       })
-    params.append('basisMarkId', this.maskId)
-    getBasisForm(params)
-      .then(res => {
-        if (res.data && res.data.xzcc)
-          that.xzcc = that.dealAnswers(res.data.xzcc)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  },
-  activated() {
-    this.defaultSelectedKeys = [9]
+    this.getFormData()
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -209,13 +192,32 @@ export default {
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
-          setTimeout(() => {
-            this.visible = false
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
+          var re = this.form.getFieldsValue()
+          var that = this
+          console.log(re)
+          this.patientBasis.status = 1
+          var params = new URLSearchParams()
+          if (this.xzcc && this.xzcc.xzccId) {
+            re.xzccId = this.xzcc.xzccId
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('patientBasis', JSON.stringify(this.patientBasis))
+          params.append('basisMarkId', this.maskId)
+          params.append('markName', this.markName)
+          this.spinning = true
+          saveBasis(params)
+            .then(res => {
+              console.log(res)
+              that.spinning = false
+              that.getFormData()
+              that.$message.success(res.msg)
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
         } else {
-          this.confirmLoading = false
+          this.spinning = false
         }
       })
     },
@@ -236,6 +238,20 @@ export default {
       }
       return answer
     },
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.xzcc)
+            that.xzcc = that.dealAnswers(res.data.xzcc)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     save() {
       var re = this.form.getFieldsValue()
       var that = this
@@ -249,14 +265,16 @@ export default {
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
+      this.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg, function() {
-            location.href = location.href
-          })
+          that.spinning = false
+          that.getFormData()
+          that.$message.success(res.msg)
         })
         .catch(error => {
+          that.spinning = false
           console.log(error)
         })
       return false
@@ -265,6 +283,21 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+/deep/ .ant-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+
+  & .ant-spin-dot {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+  }
+}
+
 /deep/ #baselineHeader {
   .ant-card-body {
     padding: 10px

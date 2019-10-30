@@ -143,6 +143,14 @@ export default {
       })
     this.getFormData()
   },
+  watch: {
+    $route(to, from) {
+      if (to.name === 'BasisQuestion') {
+        this.questionId = to.params.qid
+        this.getFormData()
+      }
+    }
+  },
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
@@ -168,7 +176,7 @@ export default {
     },
     handleClick(e) {
       if (e.key >= 31 && e.key <= 42 || (e.key >= 57 && e.key <= 62)) {
-        this.$router.push('/basis/question/' + this.patientBasisId + '/' + e.key)
+        this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 1) {
         this.$router.push('/list/basis/' + this.patientBasisId + '/' + e.key)
       } else {
