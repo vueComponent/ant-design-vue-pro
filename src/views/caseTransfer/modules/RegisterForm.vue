@@ -3,19 +3,28 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item>
-          <a-input-search placeholder="搜索患者身份证号" @search="onSearch" v-decorator="['card', { rules: [{ required: true, validator: validateCard }] }]" enterButton />
+          <a-input-search placeholder="搜索患者身份证号" @search="onSearch" v-decorator="['card', requiredRule]" enterButton />
         </a-form-item>
       </a-form>
+      <div class="title">患者信息</div>
+      <div v-if="JSON.stringify(patient) != '{}'">
+        <user-detail :patient="patient"></user-detail>
+      </div>
+      <div v-else class="tip">{{ tipMsg }}</div>
     </a-spin>
   </a-modal>
 </template>
 
 <script>
   import { getPatientDetailByCard } from '@/api/patient'
+  import { addDistract } from '@/api/distract'
+  import UserDetail from './UserDetailTop';
   export default {
+    components: {
+      UserDetail
+    },
     data() {
       return {
-        // userData: {},
         bodyStyle: {
           height: '500px',
           overflow: 'auto'
@@ -26,11 +35,14 @@
         visible: false,
         confirmLoading: false,
         form: this.$form.createForm(this),
+        requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
+        patient: {},
+        tipMsg: ''
       }
     },
     methods: {
       show() {
-        // this.userData = {};
+        this.patient = {};
         this.visible = true;
       },
       onSearch(value) {
@@ -41,35 +53,41 @@
             this.confirmLoading = false;
             return
           }
+          const params = new FormData()
+          params.append('type', 1)
+          params.append('card', value);
+          getPatientDetailByCard(params).then(res => {
+            this.confirmLoading = false;
+            if (res.code == 1) {
+              this.patient = res.data
+            } else {
+              this.tipMsg = res.msg
+            }
+          })
         })
       },
       handleSubmit() {
-        // const {
-        //   form: { validateFields }
-        // } = this
-        // this.confirmLoading = false
-        // validateFields((errors, fieldsValue) => {
-        //   const that = this
-        //   if (errors) {
-        //     this.confirmLoading = false
-        //     return
-        //   }
-        //   const values = {
-        //     ...fieldsValue,
-        //     patientId: this.userData.patientId,
-        //     reason: this.textValue,
-        //     centerId: this.userData.centerId,
-        //   }
-        //   const params = new URLSearchParams()
+        this.confirmLoading = false
+        this.form.validateFields((errors, fieldsValue) => {
+          if (errors) {
+            this.confirmLoading = false
+            return
+          }
+          const distract = {
+            ...fieldsValue,
+            patientId: this.patient.patientId,
+            centerId: this.patient.centerId,
+          }
 
-        //   params.append('distract', JSON.stringify(values))
-        //   addDistract(params).then(res => {
-        //     that.$message.success(res.msg);
-        //     that.visible = false
-        //     that.confirmLoading = false
-        //     that.$emit('ok')
-        //   })
-        // })
+          const params = new FormData()
+          params.append('distract', JSON.stringify(distract))
+          addDistract(params).then(res => {
+            this.$message.success(res.msg);
+            this.visible = false
+            this.confirmLoading = false
+            this.$emit('ok')
+          })
+        })
       },
       handleCancel() {
         this.visible = false
@@ -200,3 +218,19 @@
     }
   }
 </script>
+<style lang="less" scoped>
+  .title {
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    padding-left: 10px;
+    margin-bottom: 15px;
+    background-color: #fafafa;
+  }
+  .tip {
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.45);
+  }
+</style>

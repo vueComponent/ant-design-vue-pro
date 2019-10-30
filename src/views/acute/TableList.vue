@@ -38,7 +38,7 @@
                         <a-input v-model="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="姓名">
-                        <a-input v-model="queryParam.name" style="width: 100%" />
+                        <a-input v-model="queryParam.patientName" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="身份证号">
                         <a-input v-model="queryParam.card" style="width: 100%" />
@@ -60,9 +60,9 @@
       </a-form>
     </div>
     <s-table ref="table" size="small" :scroll="scroll" rowKey="patientBasisId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-      <span slot="patientName" slot-scope="text, record" @click="showUser(record)">
-        <p class="userName">{{ text }}</p>
-      </span>
+      <template slot="patientName" slot-scope="text, record">
+        <a @click="showUser(record)">{{ text }}</a>
+      </template>
       <span slot="serial" slot-scope="text, record, index">{{ index + 1 }}</span>
       <span slot="description" slot-scope="text">
         <ellipsis :length="8" tooltip>{{ text }}</ellipsis>
