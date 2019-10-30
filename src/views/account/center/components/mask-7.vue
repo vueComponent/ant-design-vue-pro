@@ -317,6 +317,7 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-spin :spinning="spinning"></a-spin>
   </div>
 </template>
 <script>
@@ -410,7 +411,8 @@ export default {
       controla52: false,
       controla9: false,
       controla920: false,
-      controla75: false
+      controla75: false,
+      spinning: false
     }
   },
   created() {
@@ -426,9 +428,6 @@ export default {
         that.orgTree = res.data.list
       })
     this.getFormData()
-  },
-  activated() {
-    this.defaultSelectedKeys = [7]
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -469,13 +468,36 @@ export default {
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
-          setTimeout(() => {
-            this.visible = false
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
+          var re = this.form.getFieldsValue()
+          var that = this
+          re = {
+            ...re,
+            'a9': typeof re['a9'] !== 'undefined' ? re['a9'].join(',') : ''
+          }
+          console.log(re)
+          this.patientBasis.status = 2
+          var params = new URLSearchParams()
+          if (this.byxxgjc && this.byxxgjc.byxxgjcId) {
+            re.byxxgjcId = this.byxxgjc.byxxgjcId
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('patientBasis', JSON.stringify(this.patientBasis))
+          params.append('basisMarkId', this.maskId)
+          params.append('markName', this.markName)
+          this.spinning = true
+          saveBasis(params)
+            .then(res => {
+              console.log(res)
+              that.spinning = false
+              that.getFormData()
+              that.$message.success(res.msg)
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
         } else {
-          this.confirmLoading = false
+          that.spinning = false
         }
       })
     },
@@ -564,13 +586,16 @@ export default {
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
+      this.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
-          this.getFormData()
+          that.spinning = false
+          that.getFormData()
           that.$message.success(res.msg)
         })
         .catch(error => {
+          that.spinning = false
           console.log(error)
         })
       return false
