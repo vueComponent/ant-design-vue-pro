@@ -1,5 +1,5 @@
 <template>
-  <a-modal :title="title" okText="保存" :width="1000" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
+  <a-modal :title="title" okText="保存" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="医生姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -39,7 +39,7 @@
           <quill-editor v-decorator="['honor', requiredRule]"></quill-editor>
           <!-- <a-textarea rows="8" v-decorator="['honor', requiredRule]" placeholder="请输入获得荣誉" /> -->
         </a-form-item>
-        <a-form-item label="是否启用" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="是否启用" :labelCol="labelCol" :wrapperCol="wrapperCol" style="margin-bottom:0">
           <a-radio-group v-decorator="['isUser', requiredRule]">
             <a-radio value="1">启用</a-radio>
             <a-radio value="0">停用</a-radio>
@@ -72,11 +72,11 @@
         form: this.$form.createForm(this),
         labelCol: {
           xs: { span: 24 },
-          sm: { span: 6 }
+          sm: { span: 5 }
         },
         wrapperCol: {
           xs: { span: 24 },
-          sm: { span: 14 }
+          sm: { span: 17 }
         },
         requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
         doctorId: '',
@@ -100,7 +100,7 @@
         this.doctorId = id
 
         if (id) {
-          this.title = '编辑'
+          this.title = '修改医生信息'
           this.confirmLoading = true
 
           const params = new FormData()
@@ -133,7 +133,7 @@
             this.isFileLen = true
           })
         } else {
-          this.title = '新增'
+          this.title = '新增医生信息'
         }
       },
       getCenterList() {

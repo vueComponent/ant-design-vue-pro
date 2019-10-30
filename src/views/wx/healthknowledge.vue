@@ -20,7 +20,7 @@
       </a-form>
     </div>
 
-    <s-table ref="table" :scroll="scroll" size="small" :rowKey="id" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" :scroll="scroll" size="small" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="operation" slot-scope="text, record">
         <template>
           <a @click="handleReview(record)">编辑</a>
