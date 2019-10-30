@@ -1,5 +1,5 @@
 <template>
-  <a-modal :title="title" okText="发布" :width="1000" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
+  <a-modal :title="title" okText="发布" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="文章标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -15,10 +15,16 @@
             <img alt="example" style="width: 100%" :src="previewImage" />
           </a-modal>
         </a-form-item>
+        <a-form-item label="发布终端" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-radio-group :disabled="Boolean(textId)" v-decorator="['terminal', requiredRule]">
+            <a-radio value="1">微信端</a-radio>
+            <a-radio value="2">官网</a-radio>
+          </a-radio-group>
+        </a-form-item>
         <a-form-item label="模块类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select style="width: 100%" v-decorator="['type', requiredRule]" placeholder="请选择模块类型">
-            <a-select-option value="1">新闻动态</a-select-option>
-            <a-select-option value="2">通知公告</a-select-option>
+            <a-select-option value="1" :disabled="form.getFieldValue('terminal') == 1">新闻动态</a-select-option>
+            <a-select-option value="2" :disabled="form.getFieldValue('terminal') == 1">通知公告</a-select-option>
             <a-select-option value="3">科普知识</a-select-option>
             <a-select-option value="4">日常护理</a-select-option>
             <a-select-option value="5">饮食健康</a-select-option>
@@ -28,15 +34,9 @@
         <a-form-item label="文章发布人" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['publisher', requiredRule]" />
         </a-form-item>
-        <a-form-item class="textarea" label="文章内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item class="textarea" label="文章内容" :labelCol="labelCol" :wrapperCol="wrapperCol" style="margin-bottom:0">
           <quill-editor v-decorator="['text', requiredRule]"></quill-editor>
           <!-- <a-textarea rows="7" v-decorator="['text', requiredRule]" /> -->
-        </a-form-item>
-        <a-form-item label="发布终端" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-radio-group v-decorator="['terminal', requiredRule]">
-            <a-radio value=1>微信端</a-radio>
-            <a-radio value=2>官网</a-radio>
-          </a-radio-group>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -69,7 +69,7 @@
         },
         wrapperCol: {
           xs: { span: 24 },
-          sm: { span: 16 }
+          sm: { span: 17 }
         },
         requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
         textId: '',
@@ -84,11 +84,11 @@
     methods: {
       show({ textId, terminal }) {
         this.visible = true;
-        this.textId = textId
+        this.textId = textId;
 
         if (textId) {
           this.confirmLoading = true
-          this.title = '编辑'
+          this.title = '修改文章'
           const params = { textId, terminal }
           getWxArticleDetail(params).then(res => {
             this.confirmLoading = false
@@ -113,7 +113,7 @@
             this.isFileLen = true
           })
         } else {
-          this.title = '新增'
+          this.title = '新增文章'
           this.isFileLen = false
         }
       },

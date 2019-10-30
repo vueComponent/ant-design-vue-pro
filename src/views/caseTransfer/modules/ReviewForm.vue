@@ -1,5 +1,5 @@
 <template>
-  <a-modal title="审核" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
+  <a-modal title="病例转移审核" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="申请单号" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -87,21 +87,20 @@
             this.confirmLoading = false;
             return;
           }
-          const params = {
-            distract: {
-              ...this.form.getFieldsValue(),
-              targetCenterId: this.targetCenterId,
-              distractId: this.distractId,
-              createDate: fieldsValue['createDate'].format('YYYY-MM-DD')
-            }
+          const params = new FormData();
+          const distract = {
+            ...this.form.getFieldsValue(),
+            targetCenterId: this.targetCenterId,
+            distractId: this.distractId,
+            createDate: fieldsValue['createDate'].format('YYYY-MM-DD')
           }
-          verifyDistract(params)
-            .then(res => {
-              that.$message.success(res.msg);
-              that.visible = false;
-              that.confirmLoading = false;
-              that.$emit('ok')
-            })
+          params.append('distract', JSON.stringify(distract))
+          verifyDistract(params).then(res => {
+            that.$message.success(res.msg);
+            that.visible = false;
+            that.confirmLoading = false;
+            that.$emit('ok')
+          })
         })
       },
       handleCancel() {
@@ -112,4 +111,7 @@
 </script>
 
 <style lang="less" scoped>
+  /deep/ .ant-form-item:last-child {
+    margin-bottom: 0;
+  }
 </style>

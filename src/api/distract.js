@@ -7,11 +7,11 @@ const api = {
 export default api
 
 
-export function getZyDataList (data) {
+export function getZyDataList (parameter) {
   return axios({
     url: '/distract/getZyDataList',
     method: 'post',
-    data
+    params: parameter
   })
 }
 
@@ -23,11 +23,11 @@ export function addDistract (data) {
   })
 }
 
-export function getSqDataList (data) {
+export function getSqDataList (parameter) {
     return axios({
       url: '/distract/getSqDataList',
       method: 'post',
-      data
+      params: parameter
     })
   }
 
@@ -39,11 +39,11 @@ export function verifyDistract (data) {
   })
 }
 
-export function getWxBingDataList (data) {
+export function getWxBingDataList (parameter) {
   return axios({
     url: '/wxBusiness/getDataList',
     method: 'post',
-    data
+    params: parameter
   })
 }
 
@@ -63,11 +63,11 @@ export function wxBind (data) {
   })
 }
 
-export function getWxQuestionList (data) {
+export function getWxQuestionList (parameter) {
   return axios({
     url: '/question/getWxQuestionList',
     method: 'post',
-    data
+    params: parameter
   })
 }
 
