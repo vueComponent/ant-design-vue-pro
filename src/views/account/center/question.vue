@@ -62,6 +62,7 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-spin :spinning="spinning"></a-spin>
   </div>
 </template>
 <script>
@@ -113,8 +114,9 @@ export default {
         md: { span: 24 }
       },
       disBlock: {
-        display: 'block',
-      }
+        display: 'block'
+      },
+      spinning: false
     }
   },
   created() {
@@ -209,13 +211,29 @@ export default {
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
-          setTimeout(() => {
-            this.visible = false
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
+          var re = this.form.getFieldsValue()
+          const that = this
+          var result = this.generateQuestionAnswers()
+          console.log(result)
+          var params = new URLSearchParams()
+          params.append('answers', JSON.stringify(result))
+          params.append('patientBasisId', this.patientBasisId)
+          params.append('questionId', this.questionId)
+          params.append('patientId', this.patient.patientId)
+          this.spinning = true
+          saveQuestion(params)
+            .then(res => {
+              console.log(res)
+              that.spinning = false
+              that.getFormData()
+              that.$message.success(res.msg)
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
         } else {
-          this.confirmLoading = false
+          this.spinning = false
         }
       })
     },
@@ -275,24 +293,18 @@ export default {
       params.append('patientBasisId', this.patientBasisId)
       params.append('questionId', this.questionId)
       params.append('patientId', this.patient.patientId)
+      this.spinning = true
       saveQuestion(params)
         .then(res => {
           console.log(res)
+          that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
         })
         .catch(error => {
+          that.spinning = false
           console.log(error)
         })
-    },
-    submit() {
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          // eslint-disable-next-line no-console
-          console.log('Received values of form: ', values)
-        }
-      })
-      return false
     },
     initQuestionAnswers(list) {
       _.each(list, function(a) {
@@ -317,6 +329,21 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+/deep/ .ant-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+
+  & .ant-spin-dot {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+  }
+}
+
 .head-bar {
   height: 60px;
   display: flex;
