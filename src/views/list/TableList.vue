@@ -194,6 +194,9 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
+        if (!parameter.queryType) {
+          parameter.queryType = 1
+        }
         return getPatientList(Object.assign(parameter, this.queryParam)).then(res => {
           return res;
         });

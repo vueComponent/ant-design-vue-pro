@@ -188,7 +188,10 @@
         ],
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
-          return getVisitTask(Object.assign(parameter, this.queryParam, { queryType: 1 })).then(res => {
+          if (!parameter.queryType) {
+            parameter.queryType = 1
+          }
+          return getVisitTask(Object.assign(parameter, this.queryParam)).then(res => {
             return res;
           });
         },

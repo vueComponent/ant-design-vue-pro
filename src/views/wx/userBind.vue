@@ -90,6 +90,9 @@
         queryParam: {},
         scroll: false,
         loadData: parameter => {
+          if (!parameter.queryType) {
+            parameter.queryType = 1
+          }
           return getWxBingDataList(Object.assign(parameter, this.queryParam)).then(res => {
             return res
           })

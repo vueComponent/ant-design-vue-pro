@@ -109,52 +109,55 @@ export default {
       // 表头
       columns: [{
           title: '档案号',
-          width: "110px",
+          width: "100px",
           dataIndex: 'fileCode'
         },
         {
           title: '患者姓名',
           dataIndex: 'patientName',
-          width: "80px",
+          width: "100px",
           scopedSlots: { customRender: 'patientName' }
         },
         {
           title: '身份证号',
-          width: "160px",
+          width: "150px",
           dataIndex: 'card'
         },
         {
           title: '急性加重日期',
           dataIndex: 'createDate',
-          width: "90px",
+          width: "120px",
           customRender: createDate => moment(createDate).format('YYYY-MM-DD')
         },
         {
           title: '创建人',
           dataIndex: 'creatorName',
-          width: "90px"
+          width: "100px"
         },
         {
           title: '创建日期',
           dataIndex: 'createDate2',
-          width: "90px",
+          width: "120px",
           customRender: createDate => moment(createDate).format('YYYY-MM-DD')
         },
         {
           title: '状态',
           dataIndex: 'executeStatusName',
-          width: "90px",
+          width: "100px",
         },
         {
           title: '操作',
           dataIndex: 'action',
-          width: '60px',
+          width: '100px',
           className: 'operation',
           scopedSlots: { customRender: 'action' }
         }
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
+        if (!parameter.queryType) {
+          parameter.queryType = 1
+        }
         return getSFJxDataList(Object.assign(parameter, this.queryParam)).then(res => {
           return res;
         });
