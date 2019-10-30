@@ -167,7 +167,7 @@ export default {
       return current && current > moment().endOf('day');
     },
     handleClick(e) {
-      if (e.key >= 31 && e.key <= 42) {
+      if (e.key >= 31 && e.key <= 42 || (e.key >= 57 && e.key <= 62)) {
         this.$router.push('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 1) {
         this.$router.push('/list/basis/' + this.patientBasisId + '/' + e.key)
@@ -182,6 +182,7 @@ export default {
       params.append('patientBasisId', this.patientBasisId)
       getQuestionDetail(params)
         .then(res => {
+          debugger
           that.listArr = that.initQuestionAnswers(res.data.topTitles)
           that.question = res.data.question
           if (res.data.isFinish === '0') {
