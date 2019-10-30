@@ -5,7 +5,8 @@
         <a-timeline-item>
           <div slot="dot">
             <div class="visitContent">
-              <span class="visitYear"><a-icon type="file-text" /></span>
+              <span class="visitYear">
+                <a-icon type="file-text" /></span>
               <span class="visitYearText">第1年</span>
             </div>
           </div>
@@ -17,7 +18,9 @@
                 2019-08-01
               </span>
             </p>
-            <div class="visiItemPro"><a-progress :percent="30" showInfo="false" /></div>
+            <div class="visiItemPro">
+              <a-progress :percent="30" showInfo="false" />
+            </div>
           </div>
         </a-timeline-item>
         <a-timeline-item>
@@ -29,7 +32,9 @@
                 2019-08-01
               </span>
             </p>
-            <div class="visiItemPro"><a-progress :percent="30" showInfo="false" /></div>
+            <div class="visiItemPro">
+              <a-progress :percent="30" showInfo="false" />
+            </div>
           </div>
         </a-timeline-item>
         <a-timeline-item color="red">
@@ -41,13 +46,16 @@
                 2019-08-01
               </span>
             </p>
-            <div class="visiItemPro"><a-progress :percent="30" showInfo="false" /></div>
+            <div class="visiItemPro">
+              <a-progress :percent="30" showInfo="false" />
+            </div>
           </div>
         </a-timeline-item>
         <a-timeline-item>
           <div slot="dot">
             <div class="visitContent">
-              <span class="visitYear"><a-icon type="file-text" /></span>
+              <span class="visitYear">
+                <a-icon type="file-text" /></span>
               <span class="visitYearText">第1年</span>
             </div>
           </div>
@@ -59,40 +67,39 @@
                 2019-08-01
               </span>
             </p>
-            <div class="visiItemPro"><a-progress :percent="30" showInfo="false" /></div>
+            <div class="visiItemPro">
+              <a-progress :percent="30" showInfo="false" />
+            </div>
           </div>
         </a-timeline-item>
       </a-timeline>
     </div>
-    <span>更多</span>
+    <span class="more">更多</span>
   </a-popover>
 </template>
-
 <script>
-import _ from 'lodash';
 export default {
   data() {
     return {
       visible: false
     };
   },
-  filters: {},
   methods: {
     hide() {
-      console.log(111);
-      this.visible = false;
+      this.visible = false
     }
   }
 };
 </script>
 <style lang="less" scoped>
-  .visitInfo{
-    padding:20px;
-    padding-bottom: 0px;
-    padding-top: 40px;
-    height: 200px;
-    overflow: auto;
-  }
+.visitInfo {
+  padding: 20px;
+  padding-bottom: 0px;
+  padding-top: 40px;
+  height: 200px;
+  overflow: auto;
+}
+
 .visitContent {
   .visitYear {
     display: block;
@@ -105,11 +112,13 @@ export default {
     text-align: center;
     line-height: 25px;
   }
+
   .visitYearText {
     display: block;
     font-size: 12px;
   }
 }
+
 .visiItem {
   height: 50px;
   width: 194px;
@@ -117,15 +126,26 @@ export default {
   border: 1px solid #dddddd;
   margin-left: 10px;
   position: relative;
-  top:-15px;
+  top: -15px;
+
   .visiItemTitle {
     margin: 0;
     overflow: hidden;
+
     .visiItemTime {
       font-size: 12px;
       float: right;
       color: #9dadb3;
     }
+  }
+}
+
+.more {
+  color: #1890ff;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
   }
 }
 </style>
