@@ -1,15 +1,16 @@
 <template>
   <div class="userDetail" :option="option">
     <div class="userDetailTop">
-      <img src="../../../assets/userHeardImg.png" alt="" />
+      <img src="../../../assets/woman.png" alt="" v-if="option.sex == 0" />
+      <img src="../../../assets/man.png" alt="" v-else />
       <div class="userDetailInfo">
         <h4>
           {{ option.name }}
           <span class="userDetailCard">{{ option.card }}</span>
         </h4>
         <p>
-          <span class="userDetailAge">
-            <a-icon type="man" />
+          <span class="userDetailAge" :class="option.sex == 0 ? 'womenBg' : ''">
+            <a-icon :type="option.sex == 1 ? 'man':'woman'" />
             {{getAge}}岁
           </span>
           <span class="userDetailNation">{{option.nationName}}</span>
@@ -25,13 +26,17 @@
         <span class="userDetailItemTitle">联系电话</span>
         <span class="userDetailItemInfo">{{option.telephone1}}</span>
       </p>
-      <p class="userDetailItem">
+      <!-- <p class="userDetailItem">
         <span class="userDetailItemTitle">所在医院</span>
           <span class="userDetailItemInfo">{{option.centerName}}</span>
       </p>
       <p class="userDetailItem">
         <span class="userDetailItemTitle">病种</span>
          <span class="userDetailItemInfo"></span>
+      </p> -->
+      <p class="userDetailItem">
+        <span class="userDetailItemTitle">出生日期</span>
+        <span class="userDetailItemInfo">{{birthDay}}</span>
       </p>
       <p class="userDetailItem">
         <span class="userDetailItemTitle">居住地</span>
@@ -56,6 +61,16 @@ export default {
   methods: {
   },
   computed:{
+    birthDay() {
+      let card = this.option.card;
+      let birthDay = ''
+      if (card.length == 15) {
+        birthDay = card.substr(6,6).replace(/(.{4})(.{2})/,"$1-$2-")
+      } else if (card.length == 18) {
+        birthDay = card.substr(6,8).replace(/(.{4})(.{2})/,"$1-$2-")
+      }
+      return birthDay
+    },
     getAge() {
       var identityCard=this.option.card;
       var len = (identityCard + '').length;
@@ -116,6 +131,9 @@ export default {
         }
       }
       p {
+        .womenBg {
+          background-color: #fd94dc!important;
+        }
         .userDetailAge {
           display: inline-block;
           background-color: #96dcfd;
