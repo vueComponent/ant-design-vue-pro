@@ -142,16 +142,14 @@
                     <a-input style="width: 240px;" v-decorator="['b42', {...inputRequired, initialValue: initValue('b42')}]"></a-input>
                   </a-form-item>
                   <a-form-item label="祛痰类药物:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-form-item label="祛痰类药物:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                      <a-checkbox-group v-decorator="['b43', {...selectRequired, initialValue: initValue('b43', 'array')}]">
-                        <a-checkbox value="1">N乙酰半胱氨酸</a-checkbox>
-                        <a-checkbox value="2">氨溴索</a-checkbox>
-                        <a-checkbox value="3">桉柠蒎</a-checkbox>
-                        <a-checkbox value="4">羧甲司坦</a-checkbox>
-                        <a-checkbox value="5">厄多司坦</a-checkbox>
-                        <a-checkbox value="6">其他</a-checkbox>
-                      </a-checkbox-group>
-                    </a-form-item>
+                    <a-checkbox-group v-decorator="['b43', {...selectRequired, initialValue: initValue('b43', 'array')}]">
+                      <a-checkbox value="1">N乙酰半胱氨酸</a-checkbox>
+                      <a-checkbox value="2">氨溴索</a-checkbox>
+                      <a-checkbox value="3">桉柠蒎</a-checkbox>
+                      <a-checkbox value="4">羧甲司坦</a-checkbox>
+                      <a-checkbox value="5">厄多司坦</a-checkbox>
+                      <a-checkbox value="6">其他</a-checkbox>
+                    </a-checkbox-group>
                   </a-form-item>
                   <a-form-item label="吸入激素:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
                     <a-checkbox-group v-decorator="['b44', {...selectRequired, initialValue: initValue('b44', 'array')}]">
@@ -175,7 +173,7 @@
                       <a-checkbox value="1">噻托嗅按</a-checkbox>
                     </a-checkbox-group>
                   </a-form-item>
-                  <a-form-item label="长效β受体激动剂/长效抗胆碱能药物名称:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
+                  <a-form-item label="长效β受体激动剂/长效抗胆碱能药物名称:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="label-overflow">
                     <a-input style="width: 240px;" v-decorator="['b47', {...inputRequired, initialValue: initValue('b47')}]"></a-input>
                   </a-form-item>
                   <a-form-item label="长效β受体激动剂:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
@@ -261,7 +259,7 @@
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controlb6">
-                  <a-form-item label="静脉注射免疫球蛋白药物名称:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-form-item label="静脉注射免疫球蛋白药物名称::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="single-line">
                     <a-input style="width: 240px;" v-decorator="['b61', {...inputRequired, initialValue: initValue('b61')}]"></a-input>
                   </a-form-item>
                 </div>
@@ -272,19 +270,19 @@
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controlb7">
-                  <a-form-item label="肺炎链球菌多糖疫苗（如：PSV23）:" :labelCol="labelColOffset2" :wrapperCol="wrapperOffset2">
+                  <a-form-item label="肺炎链球菌多糖疫苗（如：PSV23）:" :labelCol="labelColOffset2" :wrapperCol="wrapperOffset2" class="single-line">
                     <a-radio-group v-decorator="['b71', {...require1, initialValue: initValue('b71')}]">
                       <a-radio value="1">是</a-radio>
                       <a-radio value="-1">否</a-radio>
                     </a-radio-group>
                   </a-form-item>
-                  <a-form-item label="肺炎链球菌辅助疫苗（如：PCV13）:" :labelCol="labelColOffset2" :wrapperCol="wrapperOffset2">
+                  <a-form-item label="肺炎链球菌辅助疫苗（如：PCV13）:" :labelCol="labelColOffset2" :wrapperCol="wrapperOffset2" class="single-line">
                     <a-radio-group v-decorator="['b72', {...require1, initialValue: initValue('b72')}]">
                       <a-radio value="1">是</a-radio>
                       <a-radio value="-1">否</a-radio>
                     </a-radio-group>
                   </a-form-item>
-                  <a-form-item label="过去1年内患者是否接受过流感疫苗:" :labelCol="labelColOffset2" :wrapperCol="wrapperOffset2">
+                  <a-form-item label="过去1年内患者是否接受过流感疫苗:" :labelCol="labelColOffset2" :wrapperCol="wrapperOffset2" class="single-line">
                     <a-radio-group v-decorator="['b73', {...require1, initialValue: initValue('b73')}]">
                       <a-radio value="1">是</a-radio>
                       <a-radio value="-1">否</a-radio>
@@ -298,44 +296,38 @@
                     <a-radio value="-1">否</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-row v-if="controlc1">
-                  <a-col :span="18" :push="6">
-                    <a-form-item label="他汀类" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                      <a-radio-group v-decorator="['c11', {...require1, initialValue: initValue('c11')}]">
-                        <a-radio value="1">是</a-radio>
-                        <a-radio value="-1">否</a-radio>
-                      </a-radio-group>
-                    </a-form-item>
-                  </a-col>
-                </a-row>
+                <a-form-item label="他汀类" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlc1">
+                  <a-radio-group v-decorator="['c11', {...require1, initialValue: initValue('c11')}]">
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="-1">否</a-radio>
+                  </a-radio-group>
+                </a-form-item>
                 <a-form-item label="抗凝" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                   <a-radio-group v-decorator="['c2', {...require1, initialValue: initValue('c2')}]" @change="changeRadio($event, 'controlc2')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-row v-if="controlc2">
-                  <a-col :span="18" :push="6">
-                    <a-form-item label="阿司匹林" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
-                      <a-radio-group v-decorator="['c21', {...require1, initialValue: initValue('c21')}]">
-                        <a-radio value="1">是</a-radio>
-                        <a-radio value="-1">否</a-radio>
-                      </a-radio-group>
-                    </a-form-item>
-                    <a-form-item label="非阿司匹林抑制剂（如：氯吡格雷）" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
-                      <a-radio-group v-decorator="['c22', {...require1, initialValue: initValue('c22')}]">
-                        <a-radio value="1">是</a-radio>
-                        <a-radio value="-1">否</a-radio>
-                      </a-radio-group>
-                    </a-form-item>
-                    <a-form-item label="华法林/口服抗凝药" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
-                      <a-radio-group v-decorator="['c23', {...require1, initialValue: initValue('c23')}]">
-                        <a-radio value="1">是</a-radio>
-                        <a-radio value="-1">否</a-radio>
-                      </a-radio-group>
-                    </a-form-item>
-                  </a-col>
-                </a-row>
+                <div v-if="controlc2">
+                  <a-form-item label="阿司匹林" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted">
+                    <a-radio-group v-decorator="['c21', {...require1, initialValue: initValue('c21')}]">
+                      <a-radio value="1">是</a-radio>
+                      <a-radio value="-1">否</a-radio>
+                    </a-radio-group>
+                  </a-form-item>
+                  <a-form-item label="非阿司匹林抑制剂（如：氯吡格雷）" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted label-overflow">
+                    <a-radio-group v-decorator="['c22', {...require1, initialValue: initValue('c22')}]">
+                      <a-radio value="1">是</a-radio>
+                      <a-radio value="-1">否</a-radio>
+                    </a-radio-group>
+                  </a-form-item>
+                  <a-form-item label="华法林/口服抗凝药" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted">
+                    <a-radio-group v-decorator="['c23', {...require1, initialValue: initValue('c23')}]">
+                      <a-radio value="1">是</a-radio>
+                      <a-radio value="-1">否</a-radio>
+                    </a-radio-group>
+                  </a-form-item>
+                </div>
               </div>
             </div>
           </a-form>
@@ -445,7 +437,8 @@ export default {
       controlc1: false,
       controlc2: false,
       maskId: undefined,
-      spinning: false
+      spinning: false,
+      controlb44: false
     }
   },
   created() {
@@ -604,6 +597,12 @@ export default {
         if (answer.c2 === 1) {
           this.controlc2 = true
         }
+        if (answer.b44) {
+          splitArr = answer.b44.split(',')
+          if (splitArr.indexOf('3') > -1) {
+            this.controlb44 = true
+          }
+        }
       }
       return answer
     },
@@ -657,6 +656,11 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.single-line {
+  height: 56px;
+  overflow: hidden;
+}
+
 /deep/ .ant-spin {
   position: absolute;
   top: 0;
@@ -935,6 +939,12 @@ export default {
         padding-left: 15px;
         border-top: 1px solid #eee;
       }
+    }
+
+    /deep/ .label-overflow .ant-form-item-label {
+      line-height: 20px;
+      position: relative;
+      top: 12px;
     }
 
     /deep/ .ant-form-item-control-wrapper .ant-form-item-control {
