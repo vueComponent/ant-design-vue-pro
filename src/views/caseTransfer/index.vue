@@ -82,30 +82,15 @@
 
 <script>
 import moment from 'moment'
-import { STable, Ellipsis } from '@/components'
+import { STable } from '@/components'
 import { getZyDataList } from '@/api/distract'
 import RegisterForm from './modules/RegisterForm'
 import UserDetail from './modules/UserDetail'
-// const statusMap = {
-//   0: {
-//     status: 'default',
-//     text: '未执行'
-//   },
-//   1: {
-//     status: 'processing',
-//     text: '执行中'
-//   },
-//   2: {
-//     status: 'success',
-//     text: '已完成'
-//   }
-// }
 
 export default {
   name: 'Gallery',
   components: {
     STable,
-    Ellipsis,
     RegisterForm,
     UserDetail
   },
@@ -116,7 +101,6 @@ export default {
         padding: '10px',
         paddingBottom: '0px'
       },
-      mdl: {},
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
@@ -136,7 +120,6 @@ export default {
         {
           title: '患者姓名',
           dataIndex: 'patientName',
-          //  scopedSlots: { customRender: 'name' },
           width: '120px'
         },
         {
@@ -164,7 +147,6 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        console.log('loadData.parameter', parameter)
         return getZyDataList(Object.assign(parameter, this.queryParam)).then(res => {
           return res
         })
@@ -194,6 +176,10 @@ export default {
     }
   },
   methods: {
+    onSelectChange(selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys;
+      this.selectedRows = selectedRows;
+    },
     clearForm() {
       this.queryParam = {}
       this.dateArr = []

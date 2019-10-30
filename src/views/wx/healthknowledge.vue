@@ -57,6 +57,7 @@
           })
         },
         selectedRowKeys: [],
+        selectedRows: [],
         options: {
           alert: {
             show: false,
@@ -106,6 +107,10 @@
       }
     },
     methods: {
+      onSelectChange(selectedRowKeys, selectedRows) {
+        this.selectedRowKeys = selectedRowKeys;
+        this.selectedRows = selectedRows;
+      },
       refreshTable() {
         this.$refs.table.refresh()
       },

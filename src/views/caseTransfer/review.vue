@@ -53,6 +53,7 @@
           })
         },
         selectedRowKeys: [],
+        selectedRows: [],
         options: {
           alert: {
             show: false,
@@ -112,6 +113,10 @@
       }
     },
     methods: {
+      onSelectChange(selectedRowKeys, selectedRows) {
+        this.selectedRowKeys = selectedRowKeys;
+        this.selectedRows = selectedRows;
+      },
       handleReview(recode) {
         const data = {
           targetCenterId: recode.targetCenterId,
@@ -129,7 +134,7 @@
       handleOk() {
         this.$refs.table.refresh()
       }
-    },
+    }
   }
 </script>
 
