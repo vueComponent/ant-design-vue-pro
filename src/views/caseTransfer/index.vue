@@ -11,14 +11,14 @@
           <a-col :md="6" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="refreshTable">查询</a-button>
-              <a @click="toggleAdvanced" style="margin-left: 8px">
+              <a @click="advanced = !advanced" style="margin-left: 8px">
                 更多筛选
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
             </a-form-item>
           </a-col>
           <a-col :md="13" style="text-align:right" :sm="24">
-            <a-button type="primary" @click="$refs.registerModal.add()">新建</a-button>
+            <a-button type="primary" @click="$refs.registerModal.show()">新建</a-button>
           </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
             <div>
@@ -69,13 +69,13 @@
       :rowSelection="options.rowSelection"
       showPagination="auto"
     >
-      <span slot="action" slot-scope="text, record">
+      <!-- <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">执行</a>
         </template>
-      </span>
+      </span> -->
     </s-table>
-    <user-detail ref="detailModal" />
+    <!-- <user-detail ref="detailModal" /> -->
     <register-form ref="registerModal" @ok="handleOk"></register-form>
   </a-card>
 </template>
@@ -85,22 +85,22 @@ import moment from 'moment'
 import { STable } from '@/components'
 import { getZyDataList } from '@/api/distract'
 import RegisterForm from './modules/RegisterForm'
-import UserDetail from './modules/UserDetail'
+// import UserDetail from './modules/UserDetail'
 
 export default {
   name: 'Gallery',
   components: {
     STable,
     RegisterForm,
-    UserDetail
+    // UserDetail
   },
   data() {
     return {
-      dateArr: [],
       bodyStyle: {
         padding: '10px',
         paddingBottom: '0px'
       },
+      dateArr: [],
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
@@ -142,7 +142,7 @@ export default {
           title: '审核状态',
           dataIndex: 'executeName',
           scopedSlots: { customRender: 'executeName' },
-          width: '180px'
+          width: '150px'
         }
       ],
       // 加载数据方法 必须为 Promise 对象
@@ -195,18 +195,15 @@ export default {
       this.advanced = false
       this.$refs.table.refresh()
     },
-    showUser(record) {
-      this.$refs.detailModal.show(record)
-    },
-    toggleAdvanced() {
-      this.advanced = !this.advanced
-    },
     handleOk() {
       this.$refs.table.refresh()
     },
-    handleEdit(record) {
-      this.$router.push('/gallery/detail/' + record.reportCollectBaseId)
-    },
+    // showUser(record) {
+    //   this.$refs.detailModal.show(record)
+    // },
+    // handleEdit(record) {
+    //   this.$router.push('/gallery/detail/' + record.reportCollectBaseId)
+    // },
     changeTime(time) {
       this.dateArr = time
       this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD')

@@ -188,11 +188,10 @@
         ],
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
-          return getVisitTask(Object.assign(parameter, this.queryParam)).then(res => {
+          return getVisitTask(Object.assign(parameter, this.queryParam, { queryType: 1 })).then(res => {
             return res;
           });
         },
-
         selectedRowKeys: [],
         selectedRows: [],
         scroll: false,
@@ -241,7 +240,7 @@
       },
       tableSearch(type) {
         const keyWord = {
-          "queryType": type
+          queryType: type
         }
         this.$refs.table.search(keyWord);
         this.advanced = false;

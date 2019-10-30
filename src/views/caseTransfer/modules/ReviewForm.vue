@@ -62,8 +62,7 @@
           xs: { span: 24 },
           sm: { span: 14 }
         },
-        requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
-
+        requiredRule: { rules: [{ required: true, message: '该选项必填' }] }
       }
     },
     methods: {
