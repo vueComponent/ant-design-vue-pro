@@ -5,6 +5,7 @@
         <a-form-item>
           <a-input-search placeholder="搜索患者身份证号" @search="onSearch" v-decorator="['card', requiredRule]" enterButton />
         </a-form-item>
+
         <div v-if="JSON.stringify(patient) != '{}'">
           <a-divider orientation="left">患者信息</a-divider>
           <user-detail :patient="patient"></user-detail>
@@ -13,6 +14,7 @@
             <a-textarea rows="3" v-decorator="['reason', { rules: [{ required: JSON.stringify(patient) != '{}', message: '该选项必填' }] }]" placeholder="请输入申请理由" style="margin-bottom: 0" />
           </a-form-item>
         </div>
+
         <div v-else>
           <div class="zwhz" v-if="tipCode == 3"></div>
           <div class="bkzy" v-else-if="tipMsg == 0 || tipMsg == 5"></div>

@@ -66,6 +66,7 @@
       show(recode) {
         this.visible = true;
         this.confirmLoading = true
+        this.patient = {}
         this.userInfo = recode
 
         const params = new FormData()
