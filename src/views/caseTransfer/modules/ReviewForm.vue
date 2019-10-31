@@ -54,6 +54,7 @@
         form: this.$form.createForm(this),
         targetCenterId: '',
         distractId: '',
+        patientId: '',
         labelCol: {
           xs: { span: 24 },
           sm: { span: 6 }
@@ -71,6 +72,7 @@
         this.confirmLoading = false;
         this.targetCenterId = recode.targetCenterId
         this.distractId = recode.distractId
+        this.patientId = recode.patientId
         this.$nextTick(() => {
           this.form.setFieldsValue(recode);
         })
@@ -88,9 +90,10 @@
           }
           const params = new FormData();
           const distract = {
-            ...this.form.getFieldsValue(),
+            ...fieldsValue,
             targetCenterId: this.targetCenterId,
             distractId: this.distractId,
+            patientId: this.patientId,
             createDate: fieldsValue['createDate'].format('YYYY-MM-DD')
           }
           params.append('distract', JSON.stringify(distract))

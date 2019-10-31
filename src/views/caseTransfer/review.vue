@@ -123,6 +123,7 @@
           distractId: recode.distractId,
           distractCode: recode.distractCode,
           fileCode: recode.fileCode,
+          patientId: recode.patientId,
           patientName: recode.patientName,
           card: recode.card,
           centerName: recode.centerName,
