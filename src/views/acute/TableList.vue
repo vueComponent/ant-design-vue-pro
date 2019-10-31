@@ -156,7 +156,7 @@ export default {
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
         if (!parameter.queryType) {
-          parameter.queryType = 1
+          parameter.queryType = 7
         }
         return getSFJxDataList(Object.assign(parameter, this.queryParam)).then(res => {
           return res;

@@ -162,7 +162,9 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        console.log('loadData.parameter', parameter)
+          if (!parameter.queryType) {
+            parameter.queryType = 1
+          }
         return getReportList(Object.assign(parameter, this.queryParam)).then(res => {
           return res
         })
@@ -206,7 +208,7 @@ export default {
     },
     tableSearch(type) {
       const keyWord = {
-        "type": type
+        queryType: type
       }
       this.$refs.table.search(keyWord)
       this.advanced = false

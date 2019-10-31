@@ -37,7 +37,7 @@
         form: this.$form.createForm(this),
         requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
         patient: {},
-        tipMsg: ''
+        tipMsg: '暂无数据'
       }
     },
     methods: {
@@ -166,17 +166,6 @@
               nTemp += num.substr(i, 1) * arrInt[i];
             }
             num += arrCh[nTemp % 11];
-
-            const params = new URLSearchParams();
-            params.append('card', num);
-            params.append('type', 1);
-            getPatientDetailByCard(params).then(res => {
-              if (res.code == 1) {
-                // this.patientDetail = res.data
-              } else {
-                callback(res.msg);
-              }
-            })
           }
         }
         if (len == 18) {
@@ -200,20 +189,10 @@
             valnum = arrCh[nTemp % 11];
             if (valnum != num.substr(17, 1)) {
               callback('18位身份证号的校验码不正确！');
-            } else {
-              const params = new URLSearchParams();
-              params.append('card', num);
-              params.append('type', 1);
-              getPatientDetailByCard(params).then(res => {
-                if (res.code == 1) {
-                  // this.patientDetail = res.data
-                } else {
-                  callback(res.msg);
-                }
-              })
             }
           }
         }
+        callback()
       }
     }
   }
@@ -230,6 +209,7 @@
   .tip {
     height: 100px;
     line-height: 100px;
+    font-size: 16px;
     text-align: center;
     color: rgba(0, 0, 0, 0.45);
   }
