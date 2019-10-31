@@ -100,9 +100,8 @@
       this.info.card = this.$route.params.card
       this.info.createTime = this.$route.params.createTime
 
-      const params = {
-        questionTaskId: this.$route.params.id
-      }
+      const params = new FormData()
+      params.append('questionTaskId', this.$route.params.id)
       getWxQuestionDetail(params).then(res => {
         this.isLoading = false
         this.listArr = this.initQuestionAnswers(res.data.topTitles)
@@ -114,10 +113,9 @@
       moment,
 
       save(id) {
-        const params = {
-          questionTaskId: this.$route.params.id,
-          status: id
-        }
+        const params = new FormData()
+        params.append('questionTaskId', this.$route.params.id)
+        params.append('status', id)
         questionReview(params).then(res => {
           this.$message.success(res.msg);
           this.$router.back(-1)
