@@ -5,12 +5,20 @@
         <a-form-item>
           <a-input-search placeholder="搜索患者身份证号" @search="onSearch" v-decorator="['card', requiredRule]" enterButton />
         </a-form-item>
+        <div v-if="JSON.stringify(patient) != '{}'">
+          <a-divider orientation="left">患者信息</a-divider>
+          <user-detail :patient="patient"></user-detail>
+          <a-divider orientation="left">申请理由</a-divider>
+          <a-form-item>
+            <a-textarea rows="3" v-decorator="['reason', { rules: [{ required: JSON.stringify(patient) != '{}', message: '该选项必填' }] }]" placeholder="请输入申请理由" />
+          </a-form-item>
+        </div>
+        <div v-else>
+          <div class="zwhz" v-if="tipCode == 3"></div>
+          <div class="bkzy" v-else-if="tipMsg == 0 || tipMsg == 5"></div>
+          <div class="zwsj">{{ tipMsg }}</div>
+        </div>
       </a-form>
-      <div class="title">患者信息</div>
-      <div v-if="JSON.stringify(patient) != '{}'">
-        <user-detail :patient="patient"></user-detail>
-      </div>
-      <div v-else class="tip">{{ tipMsg }}</div>
     </a-spin>
   </a-modal>
 </template>
@@ -37,18 +45,22 @@
         form: this.$form.createForm(this),
         requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
         patient: {},
-        tipMsg: '暂无数据'
+        tipMsg: '暂无数据',
+        tipCode: -200
       }
     },
     methods: {
       show() {
         this.patient = {};
+        this.tipMsg = '暂无数据'
+        this.tipCode = -200
         this.visible = true;
       },
       onSearch(value) {
         this.confirmLoading = true;
+        this.patient = {};
         const { form: { validateFields } } = this
-        validateFields((errors, values) => {
+        validateFields(['card'], (errors, values) => {
           if (errors) {
             this.confirmLoading = false;
             return
@@ -62,6 +74,7 @@
               this.patient = res.data
             } else {
               this.tipMsg = res.msg
+              this.tipCode = res.code
             }
           })
         })
@@ -73,12 +86,13 @@
             this.confirmLoading = false
             return
           }
+          if (JSON.stringify(this.patient) == '{}') return
+
           const distract = {
             ...fieldsValue,
             patientId: this.patient.patientId,
             centerId: this.patient.centerId,
           }
-
           const params = new FormData()
           params.append('distract', JSON.stringify(distract))
           addDistract(params).then(res => {
@@ -198,19 +212,29 @@
   }
 </script>
 <style lang="less" scoped>
-  .title {
-    height: 40px;
-    line-height: 40px;
-    font-size: 18px;
-    padding-left: 10px;
-    margin-bottom: 15px;
-    background-color: #fafafa;
+  /deep/ .ant-divider-horizontal.ant-divider-with-text-left {
+    color: #1890ff;
   }
-  .tip {
-    height: 100px;
-    line-height: 100px;
+
+  .zwhz {
+    width: 220px;
+    height: 220px;
+    margin: auto;
+    margin-bottom: 20px;
+    background: url('../../../assets/zwhz.png') 80% 80% no-repeat;
+  }
+  .bkzy {
+    width: 220px;
+    height: 220px;
+    margin: auto;
+    margin-bottom: 20px;
+    background: url('../../../assets/bkzy.png') 80% 80% no-repeat;
+  }
+  .zwsj {
+    height: 50px;
+    line-height: 50px;
     font-size: 16px;
     text-align: center;
-    color: rgba(0, 0, 0, 0.45);
+    color: #1890ff;
   }
 </style>

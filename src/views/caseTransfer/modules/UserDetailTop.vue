@@ -1,8 +1,8 @@
 <template>
   <div class="patient">
     <div class="patient-box">
-      <img src="../../../assets/woman.png" height="100%" v-if="patient.sex == 0" />
-      <img src="../../../assets/man.png" height="100%" v-else />
+      <img src="../../../assets/woman.png" height="60px" v-if="patient.sex == 0" />
+      <img src="../../../assets/man.png" height="60px" v-else />
       <div class="patient-info">
         <span class="patient-name">{{ patient.name }}</span>
         <span class="patient-age" :class="patient.sex == 0 ? 'womenBg' : ''">
@@ -72,11 +72,12 @@
 </script>
 <style lang="less" scoped>
   .patient {
-    border-top: 4px solid #168ffd;
+    border: 1px solid rgba(22, 143, 253, 0.15);
+    background: #f5f9fd;
     padding: 15px 25px;
-    background-color: #fff;
     .patient-box {
-      height: 60px;
+      border-bottom: 1px dashed rgba(22, 143, 253, 0.15);;
+      padding-bottom: 20px;
       margin-bottom: 20px;
       display: flex;
       .patient-info {

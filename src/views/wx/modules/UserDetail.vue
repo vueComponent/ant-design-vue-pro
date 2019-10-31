@@ -2,7 +2,7 @@
   <a-modal title="微信用户绑定" okText="绑定" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <div class="patientDetail-box">
-        <div class="title">微信用户信息</div>
+        <a-divider orientation="left">微信用户信息</a-divider>
         <div class="patient">
           <a-row>
             <a-col :span="8">
@@ -28,7 +28,7 @@
           </a-row>
         </div>
 
-        <div class="title">患者病例信息</div>
+        <a-divider orientation="left">患者病例信息</a-divider>
         <div v-if="JSON.stringify(patient) != '{}'">
           <case-info :patient="patient"></case-info>
         </div>
@@ -99,6 +99,10 @@
 </script>
 
 <style lang="less" scoped>
+  /deep/ .ant-divider-horizontal.ant-divider-with-text-left {
+    color: #1890ff;
+  }
+
   .patientDetail-box {
     font-size: 18px;
     .title {
@@ -110,9 +114,9 @@
       background-color: #fafafa;
     }
     .patient {
-      border-top: 4px solid #168ffd;
+      border: 1px solid rgba(22, 143, 253, 0.15);
+      background: #f5f9fd;
       padding: 15px 25px;
-      background-color: #fff;
     }
     .tip {
       height: 100px;
