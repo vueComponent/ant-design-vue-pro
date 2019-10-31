@@ -49,6 +49,7 @@
       return {
         bodyStyle: {
           height: '500px',
+          paddingTop: '0',
           overflow: 'auto'
         },
         maskClosable: false,
