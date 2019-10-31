@@ -21,11 +21,13 @@
     </div>
 
     <s-table ref="table" :scroll="scroll" size="small" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-      <span slot="operation" slot-scope="text, record">
-        <template>
-          <a @click="handleReview(record)">编辑</a>
-        </template>
-      </span>
+      <template slot="terminal" slot-scope="text">
+        <span v-if="text == 1">微信端</span>
+        <span v-if="text == 2">官网</span>
+      </template>
+      <template slot="operation" slot-scope="text, record">
+        <a @click="handleReview(record)">编辑</a>
+      </template>
     </s-table>
 
     <article-detail ref="articleDetail" @ok="handleOk"></article-detail>
@@ -80,6 +82,12 @@
             title: '文章发布人',
             dataIndex: 'publisher',
             width: '120px'
+          },
+          {
+            title: '发布终端',
+            dataIndex: 'terminal',
+            scopedSlots: { customRender: 'terminal' },
+            width: '100px'
           },
           {
             title: '发布时间',
