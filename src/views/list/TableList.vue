@@ -19,7 +19,7 @@
           </a-col>
           <a-col :md="13" style="text-align:right" :sm="24">
             <a-button type="primary" @click="$refs.createModal.add()">新建</a-button>
-            <a-button type="primary" style="margin-left: 10px;">导出</a-button>
+            <a-button type="primary" style="margin-left: 10px;" @click="exportData">导出</a-button>
           </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
             <div>
@@ -99,7 +99,7 @@ import moment from 'moment';
 import { STable, Ellipsis } from '@/components';
 import StepByStepModal from './modules/StepByStepModal';
 import CreateForm from './modules/CreateForm';
-import { getPatientList } from '@/api/patient';
+import { getPatientList, exportPatient } from '@/api/patient';
 import UserDetail from './modules/UserDetail';
 import Visit from './modules/Visit';
 import { addVasit } from '@/api/basis'
@@ -141,6 +141,7 @@ export default {
     return {
       dateArr: [],
       mdl: {},
+      baseUrl: process.env.VUE_APP_API_BASE_URL,
       bodyStyle: {
         padding: "10px",
         paddingBottom: "0px"
@@ -279,6 +280,9 @@ export default {
       this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD');
       this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
     },
+    exportData() {
+      window.open(this.baseUrl + 'patient/export')
+    }
   }
 };
 </script>

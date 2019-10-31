@@ -45,3 +45,10 @@ export function getSFDataList (parameter) {
     data: parameter
   })
 }
+
+export function exportPatient () {
+  return axios({
+    url: '/patient/export',
+    method: 'get'
+  })
+}
