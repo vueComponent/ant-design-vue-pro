@@ -29,15 +29,13 @@
           </a-select>
         </a-form-item>
         <a-form-item class="textarea" label="医生简介" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <quill-editor v-decorator="['detail', requiredRule]"></quill-editor>
-          <!-- <a-textarea rows="5" v-decorator="['detail', requiredRule]" placeholder="请输入医生简介" /> -->
+          <a-textarea rows="5" v-decorator="['detail', requiredRule]" placeholder="请输入医生简介" />
         </a-form-item>
         <a-form-item label="擅长领域" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['disease', requiredRule]" placeholder="请输入擅长领域" />
         </a-form-item>
         <a-form-item class="textarea" label="获得荣誉" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <quill-editor v-decorator="['honor', requiredRule]"></quill-editor>
-          <!-- <a-textarea rows="8" v-decorator="['honor', requiredRule]" placeholder="请输入获得荣誉" /> -->
+          <a-textarea rows="5" v-decorator="['honor', requiredRule]" placeholder="请输入获得荣誉" />
         </a-form-item>
         <a-form-item label="是否启用" :labelCol="labelCol" :wrapperCol="wrapperCol" style="margin-bottom:0">
           <a-radio-group v-decorator="['isUser', requiredRule]">
@@ -52,11 +50,7 @@
 
 <script>
   import { getDoctorDetail, saveDoctor, getCenter } from '@/api/famousDoctor'
-  import QuillEditor from '@/components/Editor/QuillEditor'
   export default {
-    components: {
-      QuillEditor
-    },
     data() {
       return {
         title: '',
