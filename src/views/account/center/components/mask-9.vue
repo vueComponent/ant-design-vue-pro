@@ -32,35 +32,35 @@
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.M型主要测值</div>
               <a-form-item label="(1) 主动脉根部内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="cm"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="cm" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(2) 左房收缩末期内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b2', { initialValue: initValue('b2')}]" addonAfter="cm"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b2', { initialValue: initValue('b2')}]" addonAfter="cm" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(3) 左室舒张末期内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b3', { initialValue: initValue('b3')}]" addonAfter="cm"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b3', { initialValue: initValue('b3')}]" addonAfter="cm" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(4) 左室收缩末期内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b4', { initialValue: initValue('b4')}]" addonAfter="cm"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b4', { initialValue: initValue('b4')}]" addonAfter="cm" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(5) 室间隔厚度:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b5', { initialValue: initValue('b5')}]" addonAfter="cm"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b5', { initialValue: initValue('b5')}]" addonAfter="cm" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(6) 左室后壁厚度:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b6', { initialValue: initValue('b6')}]" addonAfter="cm"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b6', { initialValue: initValue('b6')}]" addonAfter="cm" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(7) 主肺动脉内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b7', { initialValue: initValue('b7')}]" addonAfter="cm"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b7', { initialValue: initValue('b7')}]" addonAfter="cm" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(8) 肺动脉收缩压:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b8', {...inputRequired, initialValue: initValue('b8')}]" addonAfter="mmHg"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b8', {...inputRequired, initialValue: initValue('b8')}]" addonAfter="mmHg" autocomplete="off"></a-input>
               </a-form-item>
               <div class="title">2.左室收缩功能测定</div>
               <a-form-item label="(1) 左室射血分数:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['c1', {...inputRequired, initialValue: initValue('c1')}]" addonAfter="%"></a-input>
+                <a-input style="width: 240px;" v-decorator="['c1', {...inputRequired, initialValue: initValue('c1')}]" addonAfter="%" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(2) 左室短轴缩短率:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['c2', {...inputRequired, initialValue: initValue('c2')}]" addonAfter="%"></a-input>
+                <a-input style="width: 240px;" v-decorator="['c2', {...inputRequired, initialValue: initValue('c2')}]" addonAfter="%" autocomplete="off"></a-input>
               </a-form-item>
               <div class="title">3.小结</div>
               <a-form-item label="小结:" :labelCol="labelColHor" :wrapperCol="wrapperHor">

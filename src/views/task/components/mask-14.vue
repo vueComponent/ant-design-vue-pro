@@ -63,20 +63,20 @@
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item label="痰量" v-if="controla41" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]"></a-input>
+                <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="咯血量(最多)" v-if="controla42" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]"></a-input>
+                <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]" autocomplete="off"></a-input>
               </a-form-item>
               <div class="title">2.既往病史</div>
               <a-form-item label="(1) 过去一年的急性加重次数:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input addonAfter="次" style="width: 240px;" v-decorator="['b1', {...inputRequired, initialValue: initValue('b1')}]"></a-input>
+                <a-input addonAfter="次" style="width: 240px;" v-decorator="['b1', {...inputRequired, initialValue: initValue('b1')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(2) 过去一年的住院急性加重次数:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input addonAfter="次" style="width: 240px;" v-decorator="['b2', {...inputRequired, initialValue: initValue('b2')}]"></a-input>
+                <a-input addonAfter="次" style="width: 240px;" v-decorator="['b2', {...inputRequired, initialValue: initValue('b2')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(3) 过去一年的门诊急性加重次数:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input addonAfter="次" style="width: 240px;" v-decorator="['b3', {...inputRequired, initialValue: initValue('b3')}]"></a-input>
+                <a-input addonAfter="次" style="width: 240px;" v-decorator="['b3', {...inputRequired, initialValue: initValue('b3')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(4) 最后一次急性加重的时间:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b4', {...dateRequire, initialValue: initValue('b4', 'time')}]"></a-date-picker>
@@ -143,7 +143,7 @@
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item class="no-border" label="疾病名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb7 && controlb72">
-                  <a-input style="width: 240px;" v-decorator="['b72', {...inputRequired, initialValue: initValue('b72')}]"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b72', {...inputRequired, initialValue: initValue('b72')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(8) 消化系统疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['b8', {...require2, initialValue: initValue('b8')}]" @change="changeRadio($event, 'controlb8')">
@@ -298,10 +298,10 @@
                 </a-form-item>
                 <div v-if="controlb15">
                   <a-form-item class="border-dotted" label="B细胞缺陷类疾病名称" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px;" v-decorator="['b151', {...inputRequired, initialValue: initValue('b151')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['b151', {...inputRequired, initialValue: initValue('b151')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item class="border-dotted" label="T细胞及联合免疫缺陷病名称" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px;" v-decorator="['b152', {...inputRequired, initialValue: initValue('b152')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['b152', {...inputRequired, initialValue: initValue('b152')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item class="border-dotted" label="继发性免疫缺陷(多选)" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-checkbox-group v-decorator="['b153', {...selectRequired, initialValue: initValue('b153', 'array')}]">
@@ -316,10 +316,10 @@
                     </a-checkbox-group>
                   </a-form-item>
                   <a-form-item class="border-dotted" label="巨噬细胞缺陷疾病名称" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px;" v-decorator="['b154', {...inputRequired, initialValue: initValue('b154')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['b154', {...inputRequired, initialValue: initValue('b154')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item class="border-dotted" label="补体缺陷疾病名称" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px;" v-decorator="['b155', {...inputRequired, initialValue: initValue('b155')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['b155', {...inputRequired, initialValue: initValue('b155')}]" autocomplete="off"></a-input>
                   </a-form-item>
                 </div>
                 <a-form-item label="(16) 其他疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -391,7 +391,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="吸烟指数" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb191">
-                <a-input addonAfter="包/年" style="width: 240px;" v-decorator="['b191', {...inputRequired, initialValue: initValue('b191')}]"></a-input>
+                <a-input addonAfter="包/年" style="width: 240px;" v-decorator="['b191', {...inputRequired, initialValue: initValue('b191')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(19) 胸部手术病史" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b20', {...require2, initialValue: initValue('b20')}]" @change="changeRadio($event, 'controlb20')">
@@ -426,7 +426,7 @@
                   <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b211', {...dateRequire, initialValue: initValue('b211', 'time')}]"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="支气管动脉栓塞术部位" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-input style="width: 240px;" v-decorator="['b212', {...inputRequired, initialValue: initValue('b212')}]"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b212', {...inputRequired, initialValue: initValue('b212')}]" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
             </div>

@@ -41,7 +41,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla2">
-                <a-input style="width: 240px;" v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]"></a-input>
+                <a-input style="width: 240px;" v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(3) 标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a3', {...require1, initialValue: initValue('a3')}]">
@@ -80,7 +80,7 @@
                   <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controla426', true)">金黄色葡萄球菌</a-checkbox>
                   <add-table :dataSource="optionDataSource[6]" v-if="controla426"></add-table>
                   <a-checkbox value="7" @change="showList($event, '其他', 'controla427', true)">其他</a-checkbox>
-                  <a-input style="width: 240px;margin-right: 10px;" v-if="controla427" @change="otherChange($event, 7, true)"></a-input>
+                  <a-input style="width: 240px;margin-right: 10px;" v-if="controla427" @change="otherChange($event, 7, true)" autocomplete="off"></a-input>
                   <add-table :dataSource="optionDataSource[7]" v-if="controla427"></add-table>
                 </a-checkbox-group>
               </a-form-item>
@@ -102,7 +102,7 @@
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb2">
-                  <a-input style="width: 240px;" v-decorator="['b21', {...inputRequired, initialValue: initValue('b21')}]"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b21', {...inputRequired, initialValue: initValue('b21')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['b3', {...require1, initialValue: initValue('b3')}]">
@@ -141,7 +141,7 @@
                     <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controlb426')">金黄色葡萄球菌</a-checkbox>
                     <add-table :dataSource="optionDataSource2[6]" v-if="controla426"></add-table>
                     <a-checkbox value="7" @change="showList($event, '其他', 'controlb427')">其他</a-checkbox>
-                    <a-input style="width: 240px;margin-right: 10px;" v-if="controlb427" @change="otherChange($event, 7)"></a-input>
+                    <a-input style="width: 240px;margin-right: 10px;" v-if="controlb427" @change="otherChange($event, 7)" autocomplete="off"></a-input>
                     <add-table :dataSource="optionDataSource2[7]" v-if="controlb427"></add-table>
                   </a-checkbox-group>
                 </a-form-item>
@@ -157,7 +157,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlc2">
-                <a-input style="width: 240px;" v-decorator="['c21', {...inputRequired, initialValue: initValue('c21')}]"></a-input>
+                <a-input style="width: 240px;" v-decorator="['c21', {...inputRequired, initialValue: initValue('c21')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(3) 标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['c3', {...require1, initialValue: initValue('c3')}]">
@@ -189,7 +189,7 @@
                     <a-checkbox value="4">脓肿分支杆菌</a-checkbox>
                     <a-checkbox value="5">鸟分枝杆菌复合群(MAC)</a-checkbox>
                     <a-checkbox value="6" @change="changeSelect($event, 'controlc426')">其他</a-checkbox>
-                    <a-input style="width: 240px;margin-right: 10px;" v-if="controlc426"></a-input>
+                    <a-input style="width: 240px;margin-right: 10px;" v-if="controlc426" autocomplete="off"></a-input>
                   </a-checkbox-group>
                 </a-form-item>
               </div>

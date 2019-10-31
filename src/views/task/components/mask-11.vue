@@ -54,7 +54,7 @@
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="其他症状:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla2">
-                  <a-input v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" style="width: 240px;"></a-input>
+                  <a-input v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" style="width: 240px;" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
               <a-form-item label="目前有无新发症状:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -81,10 +81,10 @@
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="痰量" v-if="controla32" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]"></a-input>
+                  <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="咯血量(最多)" v-if="controla33" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a33', {...inputRequired, initialValue: initValue('a33')}]"></a-input>
+                  <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a33', {...inputRequired, initialValue: initValue('a33')}]" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
               <a-form-item label="有无新增稳定期治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -149,10 +149,10 @@
                     </a-checkbox-group>
                   </a-form-item>
                   <a-form-item label="其他:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb41">
-                    <a-input style="width: 240px;" v-decorator="['b414', {...inputRequired, initialValue: initValue('b414')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['b414', {...inputRequired, initialValue: initValue('b414')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item label="吸入/雾化抗生素药物:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-input style="width: 240px;" v-decorator="['b42', {...inputRequired, initialValue: initValue('b42')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['b42', {...inputRequired, initialValue: initValue('b42')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item label="祛痰类药物:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
                     <a-checkbox-group v-decorator="['b43', {...selectRequired, initialValue: initValue('b43', 'array')}]">
@@ -172,7 +172,7 @@
                     </a-checkbox-group>
                   </a-form-item>
                   <a-form-item label="其他激素::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb44">
-                    <a-input style="width: 240px;" v-decorator="['b441', {...inputRequired, initialValue: initValue('b441')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['b441', {...inputRequired, initialValue: initValue('b441')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item label="吸入激素/长效β受体激动剂:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
                     <a-checkbox-group v-decorator="['b45', {...selectRequired, initialValue: initValue('b45', 'array')}]">
@@ -187,7 +187,7 @@
                     </a-checkbox-group>
                   </a-form-item>
                   <a-form-item label="长效β受体激动剂/长效抗胆碱能药物名称:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="label-overflow">
-                    <a-input style="width: 240px;" v-decorator="['b47', {...inputRequired, initialValue: initValue('b47')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['b47', {...inputRequired, initialValue: initValue('b47')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item label="长效β受体激动剂:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
                     <a-checkbox-group v-decorator="['b48', {...selectRequired, initialValue: initValue('b48', 'array')}]">
@@ -224,7 +224,7 @@
                       </a-checkbox-group>
                     </a-form-item>
                     <a-form-item label="其他:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb4111">
-                      <a-input style="width: 240px;" v-decorator="['b4112', {...inputRequired, initialValue: initValue('b4112')}]"></a-input>
+                      <a-input style="width: 240px;" v-decorator="['b4112', {...inputRequired, initialValue: initValue('b4112')}]" autocomplete="off"></a-input>
                     </a-form-item>
                   </div>
                   <a-form-item label="ICS:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
@@ -234,7 +234,7 @@
                     </a-checkbox-group>
                   </a-form-item>
                   <a-form-item label="其他:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb412">
-                    <a-input style="width: 240px;" v-decorator="['b4121', {...inputRequired, initialValue: initValue('b4121')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['b4121', {...inputRequired, initialValue: initValue('b4121')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item label="支气管扩张剂:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
                     <a-checkbox-group v-decorator="['b413', {...selectRequired, initialValue: initValue('b413', 'array')}]">
@@ -273,7 +273,7 @@
                 </a-form-item>
                 <div v-if="controlb6">
                   <a-form-item label="静脉注射免疫球蛋白药物名称:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-input style="width: 240px;" v-decorator="['b61', {...inputRequired, initialValue: initValue('b61')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['b61', {...inputRequired, initialValue: initValue('b61')}]" autocomplete="off"></a-input>
                   </a-form-item>
                 </div>
                 <a-form-item label="(7) 患者是否曾接收疫苗治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">

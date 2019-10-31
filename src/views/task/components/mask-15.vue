@@ -32,28 +32,28 @@
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.体格检查</div>
               <a-form-item label="(1) T:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a1', {initialValue: initValue('a1')}]" style="width: 240px;"></a-input>
+                <a-input v-decorator="['a1', {initialValue: initValue('a1')}]" style="width: 240px;" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(2) BP:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a2', {initialValue: initValue('a2')}]" style="width: 240px;"></a-input>
+                <a-input v-decorator="['a2', {initialValue: initValue('a2')}]" style="width: 240px;" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(3) R:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a3', {initialValue: initValue('a3')}]" style="width: 240px;"></a-input>
+                <a-input v-decorator="['a3', {initialValue: initValue('a3')}]" style="width: 240px;" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(4) HR:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a4', {initialValue: initValue('a4')}]" style="width: 240px;"></a-input>
+                <a-input v-decorator="['a4', {initialValue: initValue('a4')}]" style="width: 240px;" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(5) SpO2:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a5', {...inputRequired, initialValue: initValue('a5')}]" style="width: 240px;"></a-input>
+                <a-input v-decorator="['a5', {...inputRequired, initialValue: initValue('a5')}]" style="width: 240px;" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(6) 身高:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a6', {...inputRequired, initialValue: initValue('a6')}]" style="width: 240px;" addonAfter="cm" @change="computeBMI"></a-input>
+                <a-input v-decorator="['a6', {...inputRequired, initialValue: initValue('a6')}]" style="width: 240px;" addonAfter="cm" @change="computeBMI" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(7) 体重:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="computeBMI"></a-input>
+                <a-input v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="computeBMI" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(8) BMI(自动演算出):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a8', {...inputRequired, initialValue: initValue('a8')}]" :readOnly="true" style="width: 240px;"></a-input>
+                <a-input v-decorator="['a8', {...inputRequired, initialValue: initValue('a8')}]" :readOnly="true" style="width: 240px;" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(9) 肺部体征：双肺呼吸音:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
               </a-form-item>
@@ -71,7 +71,7 @@
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="啰音部位" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-input style="width: 240px;" v-decorator="['a92', {...inputRequired, initialValue: initValue('a92')}]"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['a92', {...inputRequired, initialValue: initValue('a92')}]" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
             </div>

@@ -52,7 +52,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla21" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a22', {...inputRequired, initialValue: initValue('a22')}]" addonAfter="L"></a-input>
+                <a-input style="width: 240px;" v-decorator="['a22', {...inputRequired, initialValue: initValue('a22')}]" addonAfter="L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="FEV1%pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
                 <a-radio-group v-decorator="['a31', {...require2, initialValue: initValue('a31')}]" @change="changeRadio($event, 'controla31')">
@@ -61,7 +61,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla31" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]" addonAfter="%"></a-input>
+                <a-input style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]" addonAfter="%" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="FVC:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
                 <a-radio-group v-decorator="['a41', {...require2, initialValue: initValue('a41')}]" @change="changeRadio($event, 'controla41')">
@@ -70,7 +70,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla41" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]" addonAfter="L"></a-input>
+                <a-input style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]" addonAfter="L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="FVC%pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
                 <a-radio-group v-decorator="['a51', {...require2, initialValue: initValue('a51')}]" @change="changeRadio($event, 'controla51')">
@@ -79,7 +79,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla51" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a52', {...inputRequired, initialValue: initValue('a52')}]" addonAfter="%"></a-input>
+                <a-input style="width: 240px;" v-decorator="['a52', {...inputRequired, initialValue: initValue('a52')}]" addonAfter="%" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="FEV1/FVC%pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
                 <a-radio-group v-decorator="['a61', {...require2, initialValue: initValue('a61')}]" @change="changeRadio($event, 'controla61')">
@@ -88,7 +88,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="具体数值:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla61" class="border-dotted">
-                <a-input style="width: 240px;" v-decorator="['a62', {...inputRequired, initialValue: initValue('a62')}]" addonAfter="%"></a-input>
+                <a-input style="width: 240px;" v-decorator="['a62', {...inputRequired, initialValue: initValue('a62')}]" addonAfter="%" autocomplete="off"></a-input>
               </a-form-item>
             </div>
           </a-form>

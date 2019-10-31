@@ -46,7 +46,7 @@
                 </a-form-item>
                 <div v-if="controla1">
                   <a-form-item label="血嗜酸里细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input addonAfter="*10^9/L" style="width: 240px; margin-right: 20px;" v-decorator="['a11', {...inputRequired, initialValue: initValue('a11')}]"></a-input>
+                    <a-input addonAfter="*10^9/L" style="width: 240px; margin-right: 20px;" v-decorator="['a11', {...inputRequired, initialValue: initValue('a11')}]" autocomplete="off"></a-input>
                     <a-radio-group v-decorator="['a12', {...selectRequired, initialValue: initValue('a12')}]">
                       <a-radio value="1">升高</a-radio>
                       <a-radio value="2">正常</a-radio>
@@ -54,7 +54,7 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="血总IgE:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input addonAfter="IU/mL" style="width: 240px; margin-right: 20px;" v-decorator="['a13', {...inputRequired, initialValue: initValue('a13')}]"></a-input>
+                    <a-input addonAfter="IU/mL" style="width: 240px; margin-right: 20px;" v-decorator="['a13', {...inputRequired, initialValue: initValue('a13')}]" autocomplete="off"></a-input>
                     <a-radio-group v-decorator="['a14', {...selectRequired, initialValue: initValue('a14')}]">
                       <a-radio value="1">升高</a-radio>
                       <a-radio value="2">正常</a-radio>
@@ -62,7 +62,7 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="曲霉特异IgE:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input addonAfter="IU/mL" style="width: 240px; margin-right: 20px;" v-decorator="['a15', {...inputRequired, initialValue: initValue('a15')}]"></a-input>
+                    <a-input addonAfter="IU/mL" style="width: 240px; margin-right: 20px;" v-decorator="['a15', {...inputRequired, initialValue: initValue('a15')}]" autocomplete="off"></a-input>
                     <a-radio-group v-decorator="['a16', {...selectRequired, initialValue: initValue('a16')}]">
                       <a-radio value="1">升高</a-radio>
                       <a-radio value="2">正常</a-radio>
@@ -116,7 +116,7 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item class="no-border" label="具体描述" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla23">
-                    <a-input style="width: 240px;" v-decorator="['a24', {...inputRequired, initialValue: initValue('a24')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['a24', {...inputRequired, initialValue: initValue('a24')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item label="ANCA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-radio-group v-decorator="['a25', {...selectRequired, initialValue: initValue('a25')}]" @change="changeRadio($event, 'controla25')">
@@ -127,10 +127,10 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item class="no-border" label="具体描述" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla25">
-                    <a-input style="width: 240px;" v-decorator="['a26', {...inputRequired, initialValue: initValue('a26')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['a26', {...inputRequired, initialValue: initValue('a26')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item label="其他检查（记录阳性结果）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px;" v-decorator="['a27', {...inputRequired, initialValue: initValue('a27')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['a27', {...inputRequired, initialValue: initValue('a27')}]" autocomplete="off"></a-input>
                   </a-form-item>
                 </div>
                 <a-form-item label="(3) 球蛋白缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -141,7 +141,7 @@
                 </a-form-item>
                 <div v-if="controla3">
                   <a-form-item label="IgM:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a31', {...inputRequired, initialValue: initValue('a31')}]"></a-input>
+                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a31', {...inputRequired, initialValue: initValue('a31')}]" autocomplete="off"></a-input>
                     <a-radio-group v-decorator="['a32', {...selectRequired, initialValue: initValue('a32')}]">
                       <a-radio value="1">正常</a-radio>
                       <a-radio value="2">降低</a-radio>
@@ -150,7 +150,7 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="IgG:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a33', {...inputRequired, initialValue: initValue('a33')}]"></a-input>
+                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a33', {...inputRequired, initialValue: initValue('a33')}]" autocomplete="off"></a-input>
                     <a-radio-group v-decorator="['a34', {...selectRequired, initialValue: initValue('a34')}]">
                       <a-radio value="1">正常</a-radio>
                       <a-radio value="2">降低</a-radio>
@@ -159,7 +159,7 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="IgA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a35', {...inputRequired, initialValue: initValue('a35')}]"></a-input>
+                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a35', {...inputRequired, initialValue: initValue('a35')}]" autocomplete="off"></a-input>
                     <a-radio-group v-decorator="['a36', {...selectRequired, initialValue: initValue('a36')}]">
                       <a-radio value="1">正常</a-radio>
                       <a-radio value="2">降低</a-radio>
@@ -176,7 +176,7 @@
                 </a-form-item>
                 <div v-if="controla4">
                   <a-form-item label="C3:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]"></a-input>
+                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" autocomplete="off"></a-input>
                     <a-radio-group v-decorator="['a42', {...selectRequired, initialValue: initValue('a42')}]">
                       <a-radio value="1">正常</a-radio>
                       <a-radio value="2">降低</a-radio>
@@ -185,7 +185,7 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="C4:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a43', {...inputRequired, initialValue: initValue('a43')}]"></a-input>
+                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a43', {...inputRequired, initialValue: initValue('a43')}]" autocomplete="off"></a-input>
                     <a-radio-group v-decorator="['a44', {...selectRequired, initialValue: initValue('a44')}]">
                       <a-radio value="1">正常</a-radio>
                       <a-radio value="2">降低</a-radio>
@@ -217,7 +217,7 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item class="no-border" label="具体描述" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla52">
-                    <a-input style="width: 240px;" v-decorator="['a53', {...inputRequired, initialValue: initValue('a53')}]"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['a53', {...inputRequired, initialValue: initValue('a53')}]" autocomplete="off"></a-input>
                   </a-form-item>
                 </div>
                 <a-form-item label="(6) 囊性纤维化:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -287,7 +287,7 @@
                   </a-form-item>
                 </div>
                 <a-form-item label="(8) 其他:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['a8', {...inputRequired, initialValue: initValue('a8')}]"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['a8', {...inputRequired, initialValue: initValue('a8')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(9) 小结：根据实验室检查及既往病史判断:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['a9', {...selectRequired, initialValue: initValue('a9', 'array')}]">
@@ -314,7 +314,7 @@
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="具体描述" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla920">
-                  <a-input style="width: 240px;" v-decorator="['a91', {...inputRequired, initialValue: initValue('a91')}]"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['a91', {...inputRequired, initialValue: initValue('a91')}]" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
             </div>

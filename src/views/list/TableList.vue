@@ -181,7 +181,7 @@ export default {
         {
           title: '访视进度',
           dataIndex: 'basisList',
-          width: "406px",
+          width: "280px",
           scopedSlots: { customRender: 'basisList' }
         },
         {
