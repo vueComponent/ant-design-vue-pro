@@ -19,7 +19,7 @@
           </a-col>
           <a-col :md="13" style="text-align:right" :sm="24">
             <a-button type="primary" @click="$refs.registerModal.add()">添加采集</a-button>
-            <a-button type="primary" style="margin-left: 10px;">导出</a-button>
+            <!-- <a-button type="primary" style="margin-left: 10px;">导出</a-button> -->
           </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
             <div>
