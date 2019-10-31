@@ -218,7 +218,7 @@ export default {
     getReportTypeMark(params)
       .then(res => {
         that.orgTree = res.data
-        that.reportCollectDetailId = _.find(res.data, function(v) { return v.reportTypeId === 53 }).reportCollectDetailId
+        that.reportCollectDetailId = _.find(res.data, function(v) { return v.reportTypeId === 52 }).reportCollectDetailId
         that.getFormData()
       })
       .catch(error => {
@@ -243,7 +243,7 @@ export default {
       params.append('businessType', this.businessType)
       getReportFormData(params)
         .then(res => {
-          that.formData = that.dealAnswers(res.data.bgFgnq)
+          that.formData = that.dealAnswers(res.data.bgXsh)
           that.fileList = _.map(res.data.annexList, function(v) {
             return {
               uid: v.annexId,

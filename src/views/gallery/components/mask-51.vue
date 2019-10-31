@@ -186,7 +186,7 @@ export default {
       params.append('businessType', this.businessType)
       getReportFormData(params)
         .then(res => {
-          that.formData = that.dealAnswers(res.data.bgFgnq)
+          that.formData = that.dealAnswers(res.data.bgXcg)
           that.fileList = _.map(res.data.annexList, function(v) {
             return {
               uid: v.annexId,
