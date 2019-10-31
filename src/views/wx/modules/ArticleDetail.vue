@@ -16,13 +16,13 @@
           </a-modal>
         </a-form-item>
         <a-form-item label="发布终端" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-radio-group :disabled="Boolean(textId)" v-decorator="['terminal', requiredRule]">
+          <a-radio-group :disabled="Boolean(textId)" v-decorator="['terminal', requiredRule]" @change="handleChange">
             <a-radio value="1">微信端</a-radio>
             <a-radio value="2">官网</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item label="模块类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select style="width: 100%" v-decorator="['type', requiredRule]" placeholder="请选择模块类型">
+          <a-select style="width: 100%" v-decorator="['type', requiredRule]">
             <a-select-option value="1" :disabled="form.getFieldValue('terminal') == 1">新闻动态</a-select-option>
             <a-select-option value="2" :disabled="form.getFieldValue('terminal') == 1">通知公告</a-select-option>
             <a-select-option value="3">科普知识</a-select-option>
@@ -115,6 +115,11 @@
         } else {
           this.title = '新增文章'
           this.isFileLen = false
+        }
+      },
+      handleChange(e) {
+        if (e.target.value) {
+          this.form.setFieldsValue({ type: '' })
         }
       },
       normFile(e) {
