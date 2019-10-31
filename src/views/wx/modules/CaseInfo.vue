@@ -85,11 +85,11 @@
   .patient {
     border: 1px solid rgba(22, 143, 253, 0.15);
     background: #f5f9fd;
-    padding: 15px 25px;
+    padding: 15px 20px;
     .patient-box {
-      border-bottom: 1px dashed rgba(22, 143, 253, 0.15);;
-      padding-bottom: 20px;
-      margin-bottom: 20px;
+      border-bottom: 1px dashed rgba(22, 143, 253, 0.15);
+      padding-bottom: 15px;
+      margin-bottom: 15px;
       display: flex;
       .patient-info {
         flex: 1;

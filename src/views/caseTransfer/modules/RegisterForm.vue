@@ -10,7 +10,7 @@
           <user-detail :patient="patient"></user-detail>
           <a-divider orientation="left">申请理由</a-divider>
           <a-form-item>
-            <a-textarea rows="3" v-decorator="['reason', { rules: [{ required: JSON.stringify(patient) != '{}', message: '该选项必填' }] }]" placeholder="请输入申请理由" />
+            <a-textarea rows="3" v-decorator="['reason', { rules: [{ required: JSON.stringify(patient) != '{}', message: '该选项必填' }] }]" placeholder="请输入申请理由" style="margin-bottom: 0" />
           </a-form-item>
         </div>
         <div v-else>
