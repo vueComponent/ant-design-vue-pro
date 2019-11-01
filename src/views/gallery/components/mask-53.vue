@@ -40,6 +40,7 @@
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
+                  <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import">OCR识别</a-button>
                   <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
                     <img alt="example" style="width: 100%" :src="previewImage" />
                   </a-modal>
@@ -324,6 +325,21 @@ export default {
     },
     handleChange({ fileList }) {
       this.fileList = fileList
+    },
+    _import() {
+      var answer = {
+        a21: 1,
+        a31: 1,
+        a41: 1,
+        a51: 1,
+        a61: 1,
+        a22: '3.19',
+        a32: '96.6',
+        a42: '4.05',
+        a52: '98.4',
+        a62: '98.4',
+      }
+      _.extend(this.formData, this.dealAnswers(answer))
     }
   }
 }

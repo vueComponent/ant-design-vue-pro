@@ -278,7 +278,7 @@ export default {
           var re = this.form.getFieldsValue()
           var that = this
           console.log(re)
-          this.patientBasis.status = 1
+          this.patientBasis.status = 2
           var params = new URLSearchParams()
           if (this.qtsyjc && this.qtsyjc.qtsyjcId) {
             re.qtsyjcId = this.qtsyjc.qtsyjcId
