@@ -2,11 +2,11 @@ import {
   axios
 } from '@/utils/request'
 
-export function getTicketDataList(data) {
+export function getTicketDataList(parameter) {
   return axios({
     url: '/ticket/getDataList',
     method: 'post',
-    data
+    params: parameter
   })
 }
 

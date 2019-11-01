@@ -228,12 +228,12 @@ export const asyncRouterMap = [
         component: () => import('@/views/task/index'),
         meta: { title: '访视任务', keepAlive: true, icon: fangshi, permission: [ 'center', 'group' ]}
       },
-      {
-        path: '/activeVolume/index',
-        name: 'ActiveVolume',
-        component: () => import('@/views/activeVolume/index'),
-        meta: { title: '活动卷登记', keepAlive: true, icon: fangshi}
-      },
+    //   {
+    //     path: '/activeVolume/index',
+    //     name: 'ActiveVolume',
+    //     component: () => import('@/views/activeVolume/index'),
+    //     meta: { title: '活动卷登记', keepAlive: true, icon: fangshi}
+    //   },
       {
         path: '/gallery/index',
         name: 'Gallery',

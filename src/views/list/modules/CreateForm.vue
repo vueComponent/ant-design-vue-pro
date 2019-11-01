@@ -38,16 +38,16 @@
         <a-form-item label="民族" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select v-decorator="['nation', requiredRule]" :options="nationList"></a-select>
         </a-form-item>
-        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="职业">
+        <a-form-item label="职业" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group :options="professionList" v-decorator="['work', requiredRule]" />
         </a-form-item>
-        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="文化程度">
+        <a-form-item label="文化程度" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group :options="censusList" v-decorator="['census', requiredRule]" />
         </a-form-item>
         <a-form-item label="家庭年收入" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['income', requiredRule]" addonAfter="万元" />
         </a-form-item>
-        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="医疗费用支付情况">
+        <a-form-item label="医疗费用支付情况" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group :options="payTypeList" v-decorator="['payType', requiredRule]" />
         </a-form-item>
         <a-form-item label="联系电话1" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -59,10 +59,10 @@
         <a-form-item label="联系电话3" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['telephone3']" />
         </a-form-item>
-        <a-form-item :wrapperCol="agrWrapperCol" style="margin-bottom:0">
-          <a-checkbox v-decorator="['agreement', { valuePropName: 'checked' }]">
+        <a-form-item :wrapperCol="agrWrapperCol">
+          <a-checkbox v-decorator="['agreeMent', {...requiredRule, valuePropName: 'checked'}]" :disabled="options.title == '编辑患者'">
             患者是否已签署
-            <a href="">知情同意书</a>
+            <a href="#">知情同意书</a>
             （点开左侧查看详情）
           </a-checkbox>
         </a-form-item>
@@ -179,19 +179,32 @@
     methods: {
       add() {
         this.options.title = '新建患者';
+        this.patientId = undefined
         this.visible = true;
       },
       edit(value) {
         console.log('value', value);
         this.options.title = '编辑患者';
-        value.registerDate = moment(value.registerDate, 'x')
-        value.residence = [value.addressP, value.addressC]
         this.patientId = value.patientId
+        value.residence = [value.addressP, value.addressC]
         setTimeout(() => {
           this.form.setFieldsValue({
-            ...value,
+            card: value.card,
+            registerDate: moment(value.registerDate, 'x'),
+            name: value.name,
             sex: String(value.sex),
-            birthDate: moment(value.birthDate, 'x')
+            birthDate: moment(value.birthDate, 'x'),
+            residence: value.residence,
+            address: value.address,
+            nation: value.nation,
+            work: value.work,
+            census: value.census,
+            income: value.income,
+            payType: value.payType,
+            telephone1: value.telephone1,
+            telephone2: value.telephone2,
+            telephone3: value.telephone3,
+            agreeMent: true
           })
         }, 0);
         this.visible = true
@@ -308,36 +321,38 @@
           callback('身份证号不正确或不符合规定！');
           return
         }
+        console.log(this.patientId)
         // 回显性别、生日
-        if (!this.form.getFieldValue('sex')) {
+        if (!this.patientId) {
+          this.form.resetFields(['birthDate', 'sex'])
+          this.confirmLoading = true
           const params = new FormData();
           params.append('card', num);
           validateCard(params).then(res => {
-            if (res.code == 2) {
-              callback(res.msg);
-            } else if (res.code == 4) {
-              this.options.title = '编辑患者';
-              this.patientId = res.data.patientId
-              this.form.setFieldsValue({
-                ...res.data,
-                registerDate: moment(res.data.registerDate, 'x'),
-                birthDate: moment(res.data.birthDate, 'x'),
-                sex: String(res.data.sex),
-                residence: [res.data.addressP, res.data.addressC]
-              })
-              callback();
-            } else if (res.code == 3) {
-              let birthDate = new Date(num.substr(6, 8).replace(/(.{4})(.{2})/, "$1-$2-")).getTime();
-              let sex = parseInt(num.charAt(16) / 2) * 2 != num.charAt(16) ? '1' : '0';
-              this.form.setFieldsValue({
-                birthDate: moment(birthDate, 'x'),
-                sex
-              })
-              callback();
+            this.confirmLoading = false
+            switch (res.code) {
+              case 2:
+                callback(res.msg);
+                break
+              case 3:
+                let birthDate = new Date(num.substr(6, 8).replace(/(.{4})(.{2})/, "$1-$2-")).getTime();
+                let sex = parseInt(num.charAt(16) / 2) * 2 != num.charAt(16) ? '1' : '0';
+                this.form.setFieldsValue({
+                  birthDate: moment(birthDate, 'x'),
+                  sex
+                })
+                callback();
+                break
+              case 4:
+                callback('该患者已存在，请在列表内搜索！');
+                break
+              default:
+                callback();
             }
           })
+        } else {
+          callback();
         }
-        callback();
       },
       disabledDate(current) {
         // Can not select days before today and today
@@ -346,14 +361,17 @@
     }
   };
 </script>
-<style>
-  .ant-modal-header {
-    padding: 12px 24px !important;
+<style lang="less" scoped>
+  /deep/ .ant-form-item:last-child {
+    margin-bottom: 0;
   }
+  //   .ant-modal-header {
+  //     padding: 12px 24px !important;
+  //   }
 
-  .ant-modal-close-x {
-    width: 50px !important;
-    height: 50px !important;
-    line-height: 50px !important;
-  }
+  //   .ant-modal-close-x {
+  //     width: 50px !important;
+  //     height: 50px !important;
+  //     line-height: 50px !important;
+  //   }
 </style>

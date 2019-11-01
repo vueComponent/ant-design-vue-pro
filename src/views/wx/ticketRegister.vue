@@ -177,7 +177,8 @@
         this.$confirm({
           title: '确定要注销该活动券吗？',
           onOk() {
-            const params = { ticketId: record.ticketId }
+            const params = new FormData();
+            params.append('ticketId', record.ticketId)
             logoutTicket(params).then(res => {
               that.$refs.table.refresh()
             })
