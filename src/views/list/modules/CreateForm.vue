@@ -2,8 +2,8 @@
   <a-modal :title="options.title" :width=" 600" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :destroyOnClose="destroyOnClose" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item label="病例识别号" :labelCol="labelCol" :wrapperCol="wrapperCol" >
-          <a-input placeholder="请输入身份证号" v-decorator="['card', { rules: [{ required: true, validator: isIdCardNo }] }]" />
+        <a-form-item label="病例识别号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input placeholder="请输入身份证号" v-decorator="['card', { rules: [ { required: true, validator: isIdCardNo }] }]" />
         </a-form-item>
         <!-- <a-form-item label="病例档案号" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['card', { rules: [{ required: true }] }]" /></a-form-item> -->
         <a-form-item label="患者同意注册日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -24,10 +24,14 @@
         <a-form-item label="常居住地" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-row :gutter="8">
             <a-col :span="12">
-              <a-cascader v-decorator="['residence', requiredRule]" :options="residences" :fieldNames="{ label: 'city', value: 'cityId', children: 'children' }" placeholder="选择省/市" />
+              <a-form-item>
+                <a-cascader v-decorator="['residence', requiredRule]" :options="residences" :fieldNames="{ label: 'city', value: 'cityId', children: 'children' }" placeholder="选择省/市" />
+              </a-form-item>
             </a-col>
             <a-col :span="12">
-              <a-input placeholder="请输入详细地址" v-decorator="['address', requiredRule]" />
+              <a-form-item>
+                <a-input v-decorator="['address', requiredRule]" placeholder="请输入详细地址" />
+              </a-form-item>
             </a-col>
           </a-row>
         </a-form-item>
@@ -55,349 +59,301 @@
         <a-form-item label="联系电话3" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['telephone3']" />
         </a-form-item>
+        <a-form-item :wrapperCol="agrWrapperCol" style="margin-bottom:0">
+          <a-checkbox v-decorator="['agreement', { valuePropName: 'checked' }]">
+            患者是否已签署
+            <a href="">知情同意书</a>
+            （点开左侧查看详情）
+          </a-checkbox>
+        </a-form-item>
       </a-form>
     </a-spin>
   </a-modal>
 </template>
 <script>
-import { getProvinceAndCity, getNation, getDictionaryAttributeByDictionaryId, addOrUpdate, validateCard } from '@/api/basis';
-import moment from 'moment';
-import _ from 'lodash';
-export default {
-  data() {
-    return {
-      options: {},
-      residences: [],
-      nationList: [],
-      professionList: [],
-      censusList: [],
-      maskClosable: false,
-      payTypeList: [],
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 }
-      },
-      visible: false,
-      confirmLoading: false,
-      centered: true,
-      destroyOnClose: true,
-      bodyStyle: {
-        height: '500px',
-        overflow: 'auto'
-      },
-      form: this.$form.createForm(this),
-      requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
-      patientId: undefined
-    };
-  },
-  created() {
-    const that = this;
-    getProvinceAndCity().then(res => {
-      const keyMap = { province: 'city', provinceId: 'cityId' };
-      _.each(res.data, function(item, index) {
-        that.residences[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap[key] || key;
-          newData[newKey] = item[key];
-          return newData;
-        }, {});
+  import { getProvinceAndCity, getNation, getDictionaryAttributeByDictionaryId, addOrUpdate, validateCard } from '@/api/basis';
+  import moment from 'moment';
+  import _ from 'lodash';
+  export default {
+    data() {
+      return {
+        options: {},
+        residences: [],
+        nationList: [],
+        professionList: [],
+        censusList: [],
+        maskClosable: false,
+        payTypeList: [],
+        labelCol: {
+          xs: { span: 24 },
+          sm: { span: 7 }
+        },
+        wrapperCol: {
+          xs: { span: 24 },
+          sm: { span: 15 }
+        },
+        agrWrapperCol: {
+          xs: {
+            span: 24, offset: 0
+          },
+          sm: {
+            span: 18, offset: 6
+          }
+        },
+        visible: false,
+        confirmLoading: false,
+        centered: true,
+        destroyOnClose: true,
+        bodyStyle: {
+          height: '500px',
+          overflow: 'auto'
+        },
+        form: this.$form.createForm(this),
+        requiredRule: { rules: [{ required: true, message: '该选项必填！' }] },
+        patientId: undefined
+      };
+    },
+    created() {
+      const that = this;
+      getProvinceAndCity().then(res => {
+        const keyMap = { province: 'city', provinceId: 'cityId' };
+        _.each(res.data, function (item, index) {
+          that.residences[index] = Object.keys(item).reduce((newData, key) => {
+            let newKey = keyMap[key] || key;
+            newData[newKey] = item[key];
+            return newData;
+          }, {});
+        });
       });
-    });
-    getNation().then(res => {
-      const keyMap = { name: 'title', nationId: 'value' };
-      _.each(res.data, function(item, index) {
-        that.nationList[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap[key] || key;
-          newData[newKey] = item[key];
-          return newData;
-        }, {});
+      getNation().then(res => {
+        const keyMap = { name: 'title', nationId: 'value' };
+        _.each(res.data, function (item, index) {
+          that.nationList[index] = Object.keys(item).reduce((newData, key) => {
+            let newKey = keyMap[key] || key;
+            newData[newKey] = item[key];
+            return newData;
+          }, {});
+        });
       });
-    });
-    const dictionary1 = new URLSearchParams();
-    dictionary1.append('dictionaryId', 1);
-    dictionary1.append('status', 1);
-    getDictionaryAttributeByDictionaryId(dictionary1).then(res => {
-      const keyMap = { name: 'label', dictionaryAttributeId: 'value' };
-      _.each(res.data, function(item, index) {
-        that.professionList[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap[key] || key;
-          newData[newKey] = item[key];
-          return newData;
-        }, {});
+      const dictionary1 = new URLSearchParams();
+      dictionary1.append('dictionaryId', 1);
+      dictionary1.append('status', 1);
+      getDictionaryAttributeByDictionaryId(dictionary1).then(res => {
+        const keyMap = { name: 'label', dictionaryAttributeId: 'value' };
+        _.each(res.data, function (item, index) {
+          that.professionList[index] = Object.keys(item).reduce((newData, key) => {
+            let newKey = keyMap[key] || key;
+            newData[newKey] = item[key];
+            return newData;
+          }, {});
+        });
       });
-    });
-    const dictionary2 = new URLSearchParams();
-    dictionary2.append('dictionaryId', 2);
-    dictionary2.append('status', 1);
-    getDictionaryAttributeByDictionaryId(dictionary2).then(res => {
-      const keyMap = { name: 'label', dictionaryAttributeId: 'value' };
-      _.each(res.data, function(item, index) {
-        that.censusList[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap[key] || key;
-          newData[newKey] = item[key];
-          return newData;
-        }, {});
+      const dictionary2 = new URLSearchParams();
+      dictionary2.append('dictionaryId', 2);
+      dictionary2.append('status', 1);
+      getDictionaryAttributeByDictionaryId(dictionary2).then(res => {
+        const keyMap = { name: 'label', dictionaryAttributeId: 'value' };
+        _.each(res.data, function (item, index) {
+          that.censusList[index] = Object.keys(item).reduce((newData, key) => {
+            let newKey = keyMap[key] || key;
+            newData[newKey] = item[key];
+            return newData;
+          }, {});
+        });
       });
-    });
 
-    const dictionary3 = new URLSearchParams();
-    dictionary3.append('dictionaryId', 3);
-    dictionary3.append('status', 1);
-    getDictionaryAttributeByDictionaryId(dictionary3).then(res => {
-      const keyMap = { name: 'label', dictionaryAttributeId: 'value' };
-      _.each(res.data, function(item, index) {
-        that.payTypeList[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap[key] || key;
-          newData[newKey] = item[key];
-          return newData;
-        }, {});
-      });
-    });
-  },
-  methods: {
-    add() {
-      this.options.title = '新建患者';
-      this.visible = true;
-    },
-    edit(value) {
-      console.log('value', value);
-      this.options.title = '编辑患者';
-      value.registerDate = moment(value.registerDate, 'x')
-      value.residence = [value.addressP, value.addressC]
-      this.patientId = value.patientId
-      setTimeout(() => {
-        this.form.setFieldsValue({
-          ...value,
-          sex: String(value.sex),
-          birthDate: moment(value.birthDate, 'x')
-        })
-      }, 0);
-      this.visible = true
-    },
-    handleSubmit() {
-      const {
-        form: { validateFields }
-      } = this;
-      this.confirmLoading = false;
-      validateFields((errors, fieldsValue) => {
-        const that = this;
-        if (errors) {
-          this.confirmLoading = false;
-          return;
-        }
-        const birthDate = fieldsValue['birthDate'];
-        const registerDate = fieldsValue['registerDate'];
-        const residence = fieldsValue['residence'];
-        const values = {
-          ...fieldsValue,
-          birthDate: fieldsValue['birthDate'].format('YYYY-MM-DD'),
-          registerDate: fieldsValue['registerDate'].format('YYYY-MM-DD'),
-          addressP: residence[0],
-          addressC: residence[1],
-          patientId: this.patientId
-        };
-        const params = new URLSearchParams();
-        params.append('patientStr', JSON.stringify(values));
-        params.append('changeCenter', '');
-        params.append('centerId', '');
-        addOrUpdate(params).then(res => {
-          console.log(res);
-          that.visible = false;
-          that.confirmLoading = false;
-          that.$message.success(res.msg)
-          that.$emit('ok', values);
+      const dictionary3 = new URLSearchParams();
+      dictionary3.append('dictionaryId', 3);
+      dictionary3.append('status', 1);
+      getDictionaryAttributeByDictionaryId(dictionary3).then(res => {
+        const keyMap = { name: 'label', dictionaryAttributeId: 'value' };
+        _.each(res.data, function (item, index) {
+          that.payTypeList[index] = Object.keys(item).reduce((newData, key) => {
+            let newKey = keyMap[key] || key;
+            newData[newKey] = item[key];
+            return newData;
+          }, {});
         });
       });
     },
-    handleCancel() {
-      this.visible = false;
-    },
-    isIdCardNo(rule, value, callback) {
-      console.log('value', value);
-      if (!value || value == '') {
-        callback('该选项必填');
-        return;
-      }
-      var num = value.toUpperCase(); //身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。
-      if (!/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(num)) {
-        //alert('输入的身份证号长度不对，或者号码不符合规定！\n15位号码应全为数字，18位号码末位可以为数字或X。');
-        //alert('身份证号长度不正确或不符合规定！');
-        callback('身份证号长度不正确或不符合规定！');
-        return false;
-      }
-      //验证前2位，城市符合
-      var aCity = {
-        11: '北京',
-        12: '天津',
-        13: '河北',
-        14: '山西',
-        15: '内蒙古',
-        21: '辽宁',
-        22: '吉林',
-        23: '黑龙江 ',
-        31: '上海',
-        32: '江苏',
-        33: '浙江',
-        34: '安徽',
-        35: '福建',
-        36: '江西',
-        37: '山东',
-        41: '河南',
-        42: '湖北',
-        43: '湖南',
-        44: '广东',
-        45: '广西',
-        46: '海南',
-        50: '重庆',
-        51: '四川',
-        52: '贵州',
-        53: '云南',
-        54: '西藏',
-        61: '陕西',
-        62: '甘肃',
-        63: '青海',
-        64: '宁夏',
-        65: '新疆',
-        71: '台湾',
-        81: '香港',
-        82: '澳门',
-        91: '国外'
-      };
-      if (aCity[parseInt(num.substr(0, 2))] == null) {
-        //alert('身份证号不正确或不符合规定！');
-        callback('身份证号不正确或不符合规定！');
-        return;
-      }
-      //alert('城市:'+aCity[parseInt(num.substr(0,2))]);
-
-      //下面分别分析出生日期和校验位
-      var len, re;
-      len = num.length;
-      if (len == 15) {
-        re = new RegExp(/^(\d{6})(\d{2})(\d{2})(\d{2})(\d{3})$/);
-        var arrSplit = num.match(re); //检查生日日期是否正确
-        var dtmBirth = new Date('19' + arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]);
-        var bGoodDay;
-        bGoodDay = dtmBirth.getYear() == Number(arrSplit[2]) && dtmBirth.getMonth() + 1 == Number(arrSplit[3]) && dtmBirth.getDate() == Number(arrSplit[4]);
-        if (!bGoodDay) {
-          //alert('身份证号的出生日期不对！');
-          callback('身份证号的出生日期不对！');
-        } else {
-          //将15位身份证转成18位 //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。
-          var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
-          var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
-          var nTemp = 0,
-            i;
-          num = num.substr(0, 6) + '19' + num.substr(6, num.length - 6);
-          for (i = 0; i < 17; i++) {
-            nTemp += num.substr(i, 1) * arrInt[i];
+    methods: {
+      add() {
+        this.options.title = '新建患者';
+        this.visible = true;
+      },
+      edit(value) {
+        console.log('value', value);
+        this.options.title = '编辑患者';
+        value.registerDate = moment(value.registerDate, 'x')
+        value.residence = [value.addressP, value.addressC]
+        this.patientId = value.patientId
+        setTimeout(() => {
+          this.form.setFieldsValue({
+            ...value,
+            sex: String(value.sex),
+            birthDate: moment(value.birthDate, 'x')
+          })
+        }, 0);
+        this.visible = true
+      },
+      handleSubmit() {
+        this.confirmLoading = true;
+        this.form.validateFields((errors, fieldsValue) => {
+          const that = this;
+          if (errors) {
+            this.confirmLoading = false;
+            return;
           }
-          num += arrCh[nTemp % 11];
-
-        //   const params = new URLSearchParams();
-        //   params.append('card', num);
-        //   validateCard(params).then(res=>{
-        //     if (res.code == 2) {
-        //         callback(res.msg);
-        //         return
-        //     } else if (res.code == 4) {
-        //       this.options.title = '编辑患者';
-        //       this.patientId = res.data.patientId
-        //       this.form.setFieldsValue({
-        //         ...res.data,
-        //         registerDate: moment(res.data.registerDate, 'x'),
-        //         birthDate: moment(res.data.birthDate, 'x'),
-        //         sex: String(res.data.sex),
-        //         residence: [res.data.addressP, res.data.addressC]
-        //       })
-        //     } else if (res.code == 3) {
-        //       let sex = parseInt(num.charAt(14)/2)*2 != num.charAt(14) ? '1' : '0';
-        //       this.form.setFieldsValue({
-        //         birthDate: moment(birthDate, 'x'),
-        //         sex
-        //       })
-        //     }
-            callback();
-        //   })
+          const birthDate = fieldsValue['birthDate'];
+          const registerDate = fieldsValue['registerDate'];
+          const residence = fieldsValue['residence'];
+          const values = {
+            ...fieldsValue,
+            birthDate: fieldsValue['birthDate'].format('YYYY-MM-DD'),
+            registerDate: fieldsValue['registerDate'].format('YYYY-MM-DD'),
+            addressP: residence[0],
+            addressC: residence[1],
+            patientId: this.patientId
+          };
+          const params = new URLSearchParams();
+          params.append('patientStr', JSON.stringify(values));
+          params.append('changeCenter', '');
+          params.append('centerId', '');
+          addOrUpdate(params).then(res => {
+            console.log(res);
+            that.visible = false;
+            that.confirmLoading = false;
+            that.$message.success(res.msg)
+            that.$emit('ok', values);
+          });
+        });
+      },
+      handleCancel() {
+        this.visible = false;
+      },
+      isIdCardNo(rule, value, callback) {
+        if (!value) {
+          callback('该选项必填！')
+          return
         }
-      }
-      if (len == 18) {
-        re = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/);
-        var arrSplit = num.match(re); //检查生日日期是否正确
-        var dtmBirth = new Date(arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]);
-        var bGoodDay;
+        let num = value.toUpperCase();
+        // 验证长度
+        if (!/(^\d{17}([0-9]|X)$)/.test(num)) {
+          callback('身份证号不正确或不符合规定！');
+          return;
+        }
+        //验证城市
+        let aCity = {
+          11: '北京',
+          12: '天津',
+          13: '河北',
+          14: '山西',
+          15: '内蒙古',
+          21: '辽宁',
+          22: '吉林',
+          23: '黑龙江 ',
+          31: '上海',
+          32: '江苏',
+          33: '浙江',
+          34: '安徽',
+          35: '福建',
+          36: '江西',
+          37: '山东',
+          41: '河南',
+          42: '湖北',
+          43: '湖南',
+          44: '广东',
+          45: '广西',
+          46: '海南',
+          50: '重庆',
+          51: '四川',
+          52: '贵州',
+          53: '云南',
+          54: '西藏',
+          61: '陕西',
+          62: '甘肃',
+          63: '青海',
+          64: '宁夏',
+          65: '新疆',
+          71: '台湾',
+          81: '香港',
+          82: '澳门',
+          91: '国外'
+        };
+        if (aCity[parseInt(num.substr(0, 2))] == null) {
+          callback('身份证号不正确或不符合规定！');
+          return;
+        }
+        // 验证生日
+        let reg = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/);
+        let arrSplit = num.match(reg);
+        let dtmBirth = new Date(arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]);
+        let bGoodDay;
         bGoodDay = dtmBirth.getFullYear() == Number(arrSplit[2]) && dtmBirth.getMonth() + 1 == Number(arrSplit[3]) && dtmBirth.getDate() == Number(arrSplit[4]);
         if (!bGoodDay) {
-          //alert(dtmBirth.getYear());
-          //alert(arrSplit[2]);
-          //alert('身份证号的出生日期不对！');
-          callback('身份证号的出生日期不对！');
-        } else {
-          //检验18位身份证的校验码是否正确。 //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。
-          var valnum;
-          var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
-          var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
-          var nTemp = 0,
-            i;
-          for (i = 0; i < 17; i++) {
-            nTemp += num.substr(i, 1) * arrInt[i];
-          }
-          valnum = arrCh[nTemp % 11];
-          if (valnum != num.substr(17, 1)) {
-            //alert('18位身份证的校验码不正确！应该为：' + valnum);
-            //alert('18位身份证号的校验码不正确！');
-            callback('18位身份证号的校验码不正确！');
-          }
-        //    else {
-        //     const params = new URLSearchParams();
-        //     params.append('card', num);
-        //     validateCard(params).then(res=>{
-        //       if (res.code == 2) {
-        //         callback(res.msg);
-        //         return
-        //       } else if (res.code == 4) {
-        //         this.options.title = '编辑患者';
-        //         this.patientId = res.data.patientId
-        //         this.form.setFieldsValue({
-        //           ...res.data,
-        //           registerDate: moment(res.data.registerDate, 'x'),
-        //           birthDate: moment(res.data.birthDate, 'x'),
-        //           sex: String(res.data.sex),
-        //           residence: [res.data.addressP, res.data.addressC]
-        //         })
-        //       } else if (res.code == 3) {
-        //         let birthDate = new Date(num.substr(6,8).replace(/(.{4})(.{2})/,"$1-$2-")).getTime();
-        //         let sex = parseInt(num.charAt(16)/2)*2 != num.charAt(16) ? '1' : '0';
-        //         this.form.setFieldsValue({
-        //           birthDate: moment(birthDate, 'x'),
-        //           sex
-        //         })
-        //       }
-            //   callback();
-        //     })
-        //   }
+          callback('身份证号不正确或不符合规定！');
+          return
         }
+        // 验证格式
+        var valnum;
+        var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+        var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+        var nTemp = 0,
+          i;
+        for (i = 0; i < 17; i++) {
+          nTemp += num.substr(i, 1) * arrInt[i];
+        }
+        valnum = arrCh[nTemp % 11];
+        if (valnum != num.substr(17, 1)) {
+          callback('身份证号不正确或不符合规定！');
+          return
+        }
+        // 回显性别、生日
+        if (!this.form.getFieldValue('sex')) {
+          const params = new FormData();
+          params.append('card', num);
+          validateCard(params).then(res => {
+            if (res.code == 2) {
+              callback(res.msg);
+            } else if (res.code == 4) {
+              this.options.title = '编辑患者';
+              this.patientId = res.data.patientId
+              this.form.setFieldsValue({
+                ...res.data,
+                registerDate: moment(res.data.registerDate, 'x'),
+                birthDate: moment(res.data.birthDate, 'x'),
+                sex: String(res.data.sex),
+                residence: [res.data.addressP, res.data.addressC]
+              })
               callback();
+            } else if (res.code == 3) {
+              let birthDate = new Date(num.substr(6, 8).replace(/(.{4})(.{2})/, "$1-$2-")).getTime();
+              let sex = parseInt(num.charAt(16) / 2) * 2 != num.charAt(16) ? '1' : '0';
+              this.form.setFieldsValue({
+                birthDate: moment(birthDate, 'x'),
+                sex
+              })
+              callback();
+            }
+          })
+        }
+        callback();
+      },
+      disabledDate(current) {
+        // Can not select days before today and today
+        return current && current > moment().endOf('day');
       }
-    },
-    disabledDate(current) {
-      // Can not select days before today and today
-      return current && current > moment().endOf('day');
     }
-  }
-};
+  };
 </script>
 <style>
-.ant-modal-header {
-  padding: 12px 24px !important;
-}
+  .ant-modal-header {
+    padding: 12px 24px !important;
+  }
 
-.ant-modal-close-x {
-  width: 50px !important;
-  height: 50px !important;
-  line-height: 50px !important;
-}
+  .ant-modal-close-x {
+    width: 50px !important;
+    height: 50px !important;
+    line-height: 50px !important;
+  }
 </style>

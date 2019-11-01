@@ -141,7 +141,7 @@ export default {
           customRender: createDate => moment(createDate).format('YYYY-MM-DD')
         },
         {
-          title: '状态',
+          title: '任务状态',
           dataIndex: 'executeStatusName',
           width: "100px",
         },
