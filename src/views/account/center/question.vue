@@ -220,6 +220,7 @@ export default {
           params.append('patientBasisId', this.patientBasisId)
           params.append('questionId', this.questionId)
           params.append('patientId', this.patient.patientId)
+          params.append('type', 2)
           this.spinning = true
           saveQuestion(params)
             .then(res => {
@@ -293,6 +294,7 @@ export default {
       params.append('patientBasisId', this.patientBasisId)
       params.append('questionId', this.questionId)
       params.append('patientId', this.patient.patientId)
+      params.append('type', 1)
       this.spinning = true
       saveQuestion(params)
         .then(res => {
