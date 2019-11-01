@@ -1,65 +1,66 @@
 <template>
-  <a-modal
-    :title="options.title"
-    :width=" 600"
-    :bodyStyle="bodyStyle"
-    :maskClosable="maskClosable"
-    :destroyOnClose="destroyOnClose"
-    :centered="centered"
-    :visible="visible"
-    :confirmLoading="confirmLoading"
-    @ok="handleSubmit"
-    @cancel="handleCancel"
-  >
+  <a-modal :title="options.title" :width=" 600" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :destroyOnClose="destroyOnClose" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item label="病例识别号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="病例识别号" :labelCol="labelCol" :wrapperCol="wrapperCol" >
           <a-input placeholder="请输入身份证号" v-decorator="['card', { rules: [{ required: true, validator: isIdCardNo }] }]" />
         </a-form-item>
         <!-- <a-form-item label="病例档案号" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['card', { rules: [{ required: true }] }]" /></a-form-item> -->
         <a-form-item label="患者同意注册日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker style="width: 100%"  format="YYYY-MM-DD" v-decorator="['registerDate', requiredRule]" />
+          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['registerDate', requiredRule]" :disabledDate="disabledDate" />
         </a-form-item>
-        <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['name', requiredRule]" /></a-form-item>
+        <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['name', requiredRule]" />
+        </a-form-item>
         <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-radio-group v-decorator="['sex', requiredRule]" style="width: 100%">
-            <a-radio :value="1">男</a-radio>
-            <a-radio :value="0">女</a-radio>
+          <a-radio-group v-decorator="['sex', requiredRule]">
+            <a-radio value="1">男</a-radio>
+            <a-radio value="0">女</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item label="出生日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker style="width: 100%"  format="YYYY-MM-DD" v-decorator="['birthDate', requiredRule]" />
+          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['birthDate', requiredRule]" />
         </a-form-item>
         <a-form-item label="常居住地" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-row :gutter="8">
             <a-col :span="12">
-              <a-cascader
-                v-decorator="['residence', requiredRule]"
-                :options="residences"
-                :fieldNames="{ label: 'city', value: 'cityId', children: 'children' }"
-                placeholder="选择省/市"
-              />
+              <a-cascader v-decorator="['residence', requiredRule]" :options="residences" :fieldNames="{ label: 'city', value: 'cityId', children: 'children' }" placeholder="选择省/市" />
             </a-col>
-            <a-col :span="12"><a-input placeholder="请输入详细地址" v-decorator="['address', requiredRule]" /></a-col>
+            <a-col :span="12">
+              <a-input placeholder="请输入详细地址" v-decorator="['address', requiredRule]" />
+            </a-col>
           </a-row>
         </a-form-item>
-        <a-form-item label="民族" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-select v-decorator="['nation', requiredRule]" :options="nationList"></a-select></a-form-item>
-        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="职业"><a-radio-group :options="professionList" v-decorator="['work', requiredRule]" /></a-form-item>
-        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="文化程度"><a-radio-group :options="censusList" v-decorator="['census', requiredRule]" /></a-form-item>
-        <a-form-item label="家庭年收入" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['income', requiredRule]" addonAfter="万元" /></a-form-item>
+        <a-form-item label="民族" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-select v-decorator="['nation', requiredRule]" :options="nationList"></a-select>
+        </a-form-item>
+        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="职业">
+          <a-radio-group :options="professionList" v-decorator="['work', requiredRule]" />
+        </a-form-item>
+        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="文化程度">
+          <a-radio-group :options="censusList" v-decorator="['census', requiredRule]" />
+        </a-form-item>
+        <a-form-item label="家庭年收入" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['income', requiredRule]" addonAfter="万元" />
+        </a-form-item>
         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="医疗费用支付情况">
           <a-radio-group :options="payTypeList" v-decorator="['payType', requiredRule]" />
         </a-form-item>
-        <a-form-item label="联系电话1" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone1', requiredRule]" /></a-form-item>
-        <a-form-item label="联系电话2" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone2']" /></a-form-item>
-        <a-form-item label="联系电话3" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['telephone3']" /></a-form-item>
+        <a-form-item label="联系电话1" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['telephone1', requiredRule]" />
+        </a-form-item>
+        <a-form-item label="联系电话2" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['telephone2']" />
+        </a-form-item>
+        <a-form-item label="联系电话3" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['telephone3']" />
+        </a-form-item>
       </a-form>
     </a-spin>
   </a-modal>
 </template>
-
 <script>
-import { getProvinceAndCity, getNation, getDictionaryAttributeByDictionaryId, addOrUpdate } from '@/api/basis';
+import { getProvinceAndCity, getNation, getDictionaryAttributeByDictionaryId, addOrUpdate, validateCard } from '@/api/basis';
 import moment from 'moment';
 import _ from 'lodash';
 export default {
@@ -70,7 +71,7 @@ export default {
       nationList: [],
       professionList: [],
       censusList: [],
-      maskClosable:false,
+      maskClosable: false,
       payTypeList: [],
       labelCol: {
         xs: { span: 24 },
@@ -89,7 +90,8 @@ export default {
         overflow: 'auto'
       },
       form: this.$form.createForm(this),
-      requiredRule: { rules: [{ required: true, message: '该选项必填' }] }
+      requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
+      patientId: undefined
     };
   },
   created() {
@@ -163,19 +165,17 @@ export default {
     edit(value) {
       console.log('value', value);
       this.options.title = '编辑患者';
-      // this.$nextTick(() => {
-      //   this.form.setFieldsValue({
-      //     "name":'123'
-      //   });
-      // });
-      value.birthDate = moment(value.birthDate, 'x');
-      value.registerDate = moment(value.registerDate, 'x');
-      value.residence = [value.addressP, value.addressC];
-      // value.birthDate=moment(value.birthDate, 'YYYY-MM-DD');
+      value.registerDate = moment(value.registerDate, 'x')
+      value.residence = [value.addressP, value.addressC]
+      this.patientId = value.patientId
       setTimeout(() => {
-        this.form.setFieldsValue(value);
+        this.form.setFieldsValue({
+          ...value,
+          sex: String(value.sex),
+          birthDate: moment(value.birthDate, 'x')
+        })
       }, 0);
-      this.visible = true;
+      this.visible = true
     },
     handleSubmit() {
       const {
@@ -196,7 +196,8 @@ export default {
           birthDate: fieldsValue['birthDate'].format('YYYY-MM-DD'),
           registerDate: fieldsValue['registerDate'].format('YYYY-MM-DD'),
           addressP: residence[0],
-          addressC: residence[1]
+          addressC: residence[1],
+          patientId: this.patientId
         };
         const params = new URLSearchParams();
         params.append('patientStr', JSON.stringify(values));
@@ -206,6 +207,7 @@ export default {
           console.log(res);
           that.visible = false;
           that.confirmLoading = false;
+          that.$message.success(res.msg)
           that.$emit('ok', values);
         });
       });
@@ -217,14 +219,14 @@ export default {
       console.log('value', value);
       if (!value || value == '') {
         callback('该选项必填');
-        return false;
+        return;
       }
-      console.log(1234);
-      const num = value.toUpperCase(); //身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。
+      var num = value.toUpperCase(); //身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。
       if (!/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(num)) {
         //alert('输入的身份证号长度不对，或者号码不符合规定！\n15位号码应全为数字，18位号码末位可以为数字或X。');
         //alert('身份证号长度不正确或不符合规定！');
         callback('身份证号长度不正确或不符合规定！');
+        return false;
       }
       //验证前2位，城市符合
       var aCity = {
@@ -267,6 +269,7 @@ export default {
       if (aCity[parseInt(num.substr(0, 2))] == null) {
         //alert('身份证号不正确或不符合规定！');
         callback('身份证号不正确或不符合规定！');
+        return;
       }
       //alert('城市:'+aCity[parseInt(num.substr(0,2))]);
 
@@ -293,7 +296,32 @@ export default {
             nTemp += num.substr(i, 1) * arrInt[i];
           }
           num += arrCh[nTemp % 11];
-          callback();
+
+        //   const params = new URLSearchParams();
+        //   params.append('card', num);
+        //   validateCard(params).then(res=>{
+        //     if (res.code == 2) {
+        //         callback(res.msg);
+        //         return
+        //     } else if (res.code == 4) {
+        //       this.options.title = '编辑患者';
+        //       this.patientId = res.data.patientId
+        //       this.form.setFieldsValue({
+        //         ...res.data,
+        //         registerDate: moment(res.data.registerDate, 'x'),
+        //         birthDate: moment(res.data.birthDate, 'x'),
+        //         sex: String(res.data.sex),
+        //         residence: [res.data.addressP, res.data.addressC]
+        //       })
+        //     } else if (res.code == 3) {
+        //       let sex = parseInt(num.charAt(14)/2)*2 != num.charAt(14) ? '1' : '0';
+        //       this.form.setFieldsValue({
+        //         birthDate: moment(birthDate, 'x'),
+        //         sex
+        //       })
+        //     }
+            callback();
+        //   })
         }
       }
       if (len == 18) {
@@ -323,21 +351,53 @@ export default {
             //alert('18位身份证号的校验码不正确！');
             callback('18位身份证号的校验码不正确！');
           }
-          callback();
+        //    else {
+        //     const params = new URLSearchParams();
+        //     params.append('card', num);
+        //     validateCard(params).then(res=>{
+        //       if (res.code == 2) {
+        //         callback(res.msg);
+        //         return
+        //       } else if (res.code == 4) {
+        //         this.options.title = '编辑患者';
+        //         this.patientId = res.data.patientId
+        //         this.form.setFieldsValue({
+        //           ...res.data,
+        //           registerDate: moment(res.data.registerDate, 'x'),
+        //           birthDate: moment(res.data.birthDate, 'x'),
+        //           sex: String(res.data.sex),
+        //           residence: [res.data.addressP, res.data.addressC]
+        //         })
+        //       } else if (res.code == 3) {
+        //         let birthDate = new Date(num.substr(6,8).replace(/(.{4})(.{2})/,"$1-$2-")).getTime();
+        //         let sex = parseInt(num.charAt(16)/2)*2 != num.charAt(16) ? '1' : '0';
+        //         this.form.setFieldsValue({
+        //           birthDate: moment(birthDate, 'x'),
+        //           sex
+        //         })
+        //       }
+            //   callback();
+        //     })
+        //   }
         }
+              callback();
       }
-      callback('身份证号不正确！');
+    },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current > moment().endOf('day');
     }
   }
 };
 </script>
 <style>
- .ant-modal-header {
-    padding: 12px 24px!important;
+.ant-modal-header {
+  padding: 12px 24px !important;
 }
-  .ant-modal-close-x {
-    width: 50px!important;
-    height: 50px!important;
-    line-height: 50px!important;
+
+.ant-modal-close-x {
+  width: 50px !important;
+  height: 50px !important;
+  line-height: 50px !important;
 }
 </style>

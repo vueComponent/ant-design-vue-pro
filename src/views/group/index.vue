@@ -4,7 +4,9 @@
       <a-form layout="inline">
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
-             <a-form-item ><a-input v-model="queryParam.keyword"  placeholder="搜索患者姓名、身份证号" /></a-form-item>
+            <a-form-item>
+              <a-input v-model="queryParam.keyword" placeholder="搜索患者姓名、身份证号" />
+            </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
             <a-form-item>
@@ -18,46 +20,53 @@
           <a-col :md="13" style="text-align:right" :sm="24">
             <a-button type="primary" @click="checkProject()" style="margin-right: 10px;">选择项目</a-button>
             <a-button type="primary" @click="addCaces()">添加病例</a-button>
-            <a-button type="primary" style="margin-left: 10px;">导出</a-button></a-col>
+            <!-- <a-button type="primary" style="margin-left: 10px;">导出</a-button> -->
+          </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
-              <div>
-                <a-tabs defaultActiveKey="1">
-                  <a-tab-pane tab="常用检索" key="1">
-                    <div class="commonRetrieval">
-                      <p @click="tableSearch(1)">本月新增病例</p>
-                      <p @click="tableSearch(2)">本年新增病例</p>
-                      <p @click="tableSearch(3)">全部病例</p>
-                    </div>
-                  </a-tab-pane>
-                  <a-tab-pane tab="自定义检索" key="2" forceRender>
-                    <a-card :bordered="false">
-                      <a-form>
-                        <a-form-item  label="档案号"><a-input v-model="queryParam.code" style="width: 100%" /></a-form-item>
-                        <a-form-item  label="姓名"><a-input v-model="queryParam.name" style="width: 100%" /></a-form-item>
-                        <a-form-item  label="身份证号"><a-input v-model="queryParam.card" style="width: 100%" /></a-form-item>
-                        <a-form-item label="创建日期" style="margin-bottom:0;">
-                             <a-range-picker @change="changeTime" style="width: 100%"  :value="dateArr"/>
-                        </a-form-item>
-                         <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
-                            <a-button type="primary"  @click="clearForm()">清空</a-button>
-                           <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
-                        </a-form-item>
-                        
-                      </a-form>
-                    </a-card>
-                  </a-tab-pane>
-                </a-tabs>
-              </div>
+            <div>
+              <a-tabs defaultActiveKey="1">
+                <a-tab-pane tab="常用检索" key="1">
+                  <div class="commonRetrieval">
+                    <p @click="tableSearch(1)">本月新增病例</p>
+                    <p @click="tableSearch(2)">本年新增病例</p>
+                    <p @click="tableSearch(3)">全部病例</p>
+                  </div>
+                </a-tab-pane>
+                <a-tab-pane tab="自定义检索" key="2" forceRender>
+                  <a-card :bordered="false">
+                    <a-form>
+                      <a-form-item label="档案号">
+                        <a-input v-model="queryParam.code" style="width: 100%" />
+                      </a-form-item>
+                      <a-form-item label="姓名">
+                        <a-input v-model="queryParam.name" style="width: 100%" />
+                      </a-form-item>
+                      <a-form-item label="身份证号">
+                        <a-input v-model="queryParam.card" style="width: 100%" />
+                      </a-form-item>
+                      <a-form-item label="创建日期" style="margin-bottom:0;">
+                        <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
+                      </a-form-item>
+                      <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
+                        <a-button type="primary" @click="clearForm()">清空</a-button>
+                        <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
+                      </a-form-item>
+                    </a-form>
+                  </a-card>
+                </a-tab-pane>
+              </a-tabs>
+            </div>
           </a-col>
         </a-row>
       </a-form>
     </div>
     <s-table ref="table" size="small" :scroll="scroll" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-      <span slot="name"  slot-scope="text,record" @click="showUser(record)">
+      <span slot="name" slot-scope="text,record" @click="showUser(record)">
         <p class="userName">{{text}}</p>
       </span>
       <span slot="serial" slot-scope="text, record, index">{{ index + 1 }}</span>
-      <span slot="visit" slot-scope="text"><a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
+      <span slot="visit" slot-scope="text">
+        <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <span slot="basisList" slot-scope="basisList">
         <div v-for="pro in basisList" class="progressTag">
           <div class="progressTagContent">
@@ -72,7 +81,6 @@
       <span slot="description" slot-scope="text">
         <ellipsis :length="8" tooltip>{{ text }}</ellipsis>
       </span>
-
       <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">
@@ -81,15 +89,14 @@
         </template>
       </span>
     </s-table>
-    <user-detail ref="detailModal"/>
+    <user-detail ref="detailModal" />
     <drawer ref="drawerModal" @checkedP="checkedP"></drawer>
   </a-card>
 </template>
-
 <script>
 import moment from 'moment';
 import { STable, Ellipsis } from '@/components';
-import { getDatalList,getPatientList,deleteCase } from '@/api/group';
+import { getDatalList, getPatientList, deleteCase } from '@/api/group';
 import UserDetail from '../list/modules/UserDetail'
 import Drawer from './modules/Drawer'
 
@@ -122,20 +129,18 @@ export default {
   },
   data() {
     return {
-      dateArr:[],
+      dateArr: [],
       mdl: {},
-      bodyStyle:{
-                     padding:"10px",
-        paddingBottom:"0px"
+      bodyStyle: {
+        padding: "10px",
+        paddingBottom: "0px"
       },
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
-      queryParam: {
-      },
+      queryParam: {},
       // 表头
-      columns: [
-        {
+      columns: [{
           title: '档案号',
           dataIndex: 'fileCode',
           width: '200px',
@@ -144,24 +149,24 @@ export default {
           title: '患者姓名',
           dataIndex: 'name',
           scopedSlots: { customRender: 'name' },
-          width:"200px"
+          width: "200px"
         },
         {
           title: '身份证号',
           dataIndex: 'card',
-          width:"250px"
+          width: "250px"
         },
         {
           title: '入组日期',
           dataIndex: 'joinDate',
           customRender: joinDate => moment(joinDate).format('YYYY-MM-DD'),
-          width:"200px"
+          width: "200px"
         },
         {
           title: '访视状态',
           dataIndex: 'visit',
           scopedSlots: { customRender: 'visit' },
-          width:"200px"
+          width: "200px"
         },
         {
           title: '操作',
@@ -172,7 +177,7 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        this.queryParam.projectId=this.project.projectId;
+        this.queryParam.projectId = this.project.projectId;
         return getPatientList(Object.assign(parameter, this.queryParam)).then(res => {
           return res;
         });
@@ -193,7 +198,7 @@ export default {
           onChange: this.onSelectChange
         }
       },
-      scroll:false,
+      scroll: false,
       optionAlertShow: false
     };
   },
@@ -212,30 +217,30 @@ export default {
     }
   },
   created() {
-    this.scroll={
-      y: (window.screen.height-368)+"px"
+    this.scroll = {
+      y: (window.screen.height - 368) + "px"
     }
   },
   methods: {
-     clearForm(){
-      this.queryParam={}
+    clearForm() {
+      this.queryParam = {}
     },
-       tableSearch(type){
-       const keyWord={
-         "type":type
-       }
-        this.$refs.table.search(keyWord);
-        this.advanced=false;
-     },
-     refreshTable(){
-         this.advanced=false;
-         this.$refs.table.refresh();
-     },
-    showUser(record){
+    tableSearch(type) {
+      const keyWord = {
+        "type": type
+      }
+      this.$refs.table.search(keyWord);
+      this.advanced = false;
+    },
+    refreshTable() {
+      this.advanced = false;
+      this.$refs.table.refresh();
+    },
+    showUser(record) {
       this.$refs.detailModal.show(record);
     },
     handleEdit(record) {
-           var that = this;
+      var that = this;
       this.$confirm({
         title: '提示',
         content: '确认将该患者移除项目?',
@@ -245,7 +250,7 @@ export default {
           params.append('projectId', that.project.projectId);
           that.confirmLoading = true;
           deleteCase(params).then(res => {
-            if(res.code==0){
+            if (res.code == 0) {
               that.$message.success(res.msg);
               that.$refs.table.refresh();
             }
@@ -277,51 +282,57 @@ export default {
         date: moment(new Date())
       };
     },
-    addCaces(){
-        this.$router.push({path:'/group/addProject'})
+    addCaces() {
+      this.$router.push({ path: '/group/addProject' })
     },
-    checkProject(){
-        this.$refs.drawerModal.showDrawer();
+    checkProject() {
+      this.$refs.drawerModal.showDrawer();
     },
-    checkedP(data){
-      this.project.projectId=data.projectId;
-      console.log("this.project.projectId",this.project.projectId)
-        const key={
-          projectId:data.projectId
-        };
-        this.$refs.table.search(key)
+    checkedP(data) {
+      this.project.projectId = data.projectId;
+      console.log("this.project.projectId", this.project.projectId)
+      const key = {
+        projectId: data.projectId
+      };
+      this.$refs.table.search(key)
     },
     changeTime(time) {
-          this.dateArr=time;
-     this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD');
-     this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
+      this.dateArr = time;
+      this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD');
+      this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
     }
   }
 };
 </script>
 <style lang="less" scoped>
-   /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item{
-    margin-bottom: 10px
+/deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
+  margin-bottom: 10px
+}
+
+.tableSearch {
+  background: #ffffff;
+  position: absolute;
+  top: 52px;
+  top: 52px;
+  box-shadow: 4px 4px 10px #ddd;
+  z-index: 100;
+
+  /deep/ .ant-card-body .ant-form-horizontal .ant-form-item>.ant-form-item-label {
+    width: 70px !important;
   }
-  .tableSearch {
-    background: #ffffff;
-    position: absolute;
-    top: 52px;
-    top: 52px;box-shadow: 4px 4px 10px #ddd;
-    z-index: 100;
-    /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
-      width: 70px !important;
-    }
-    .commonRetrieval {
-      padding: 10px;
-      p {
-        &:hover {
-          cursor: pointer;
-          text-decoration: underline;
-        }
+
+  .commonRetrieval {
+    padding: 10px;
+
+    p {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
       }
     }
   }
+}
+
 .progressTag {
   display: inline-block;
   width: 140px;
@@ -331,18 +342,22 @@ export default {
     width: 100px;
     margin-right: 5px;
   }
+
   /deep/ .progressTagTitle {
     padding-left: 40px;
     margin-bottom: 2px;
   }
+
   /deep/ .progressTag .anticon {
     color: #4bc5ac;
     font-size: 18px;
     vertical-align: bottom;
   }
+
   /deep/ .ant-progress-inner {
     background-color: #e5f6ff;
   }
+
   /deep/ .progressTag .ant-progress-span {
     color: rgb(0, 160, 233);
   }
@@ -354,14 +369,17 @@ export default {
   top: 52px;
   z-index: 100;
 }
-.userName{
+
+.userName {
   color: #1FB2FA;
   margin: 0;
 }
-.userName:active,.userName:hover{
-    text-decoration: underline;
-    text-underline-position: under;
-    text-decoration-color: #1FB2FA;
-    cursor: pointer;
+
+.userName:active,
+.userName:hover {
+  text-decoration: underline;
+  text-underline-position: under;
+  text-decoration-color: #1FB2FA;
+  cursor: pointer;
 }
 </style>

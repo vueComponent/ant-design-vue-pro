@@ -356,7 +356,8 @@ body {
   box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
   position: relative;
   z-index: 10;
-  min-height: 100vh;
+  // min-height: 100vh;
+  height: 625px;
 
   .ant-layout-sider-children {
     overflow-y: hidden;
@@ -389,8 +390,8 @@ body {
 
     img,
     svg {
-      height: 32px;
-      width: 32px;
+      height: 40px;
+      width: 46px;
     }
 
     h1 {
@@ -511,4 +512,22 @@ body {
     border-radius: 10px;  
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
     background-color: #AAA;  
+}
+
+/* 定义全局模态框样式 */
+.ant-modal-header {
+    background-color: #1890ff!important;
+}
+
+.ant-modal-title {
+    font-size: 20px!important;
+    color: #fff!important;
+}
+
+.ant-modal-close {
+    color: #fff!important;
+}
+
+.ant-modal-close-x {
+    font-size: 20px!important;
 }

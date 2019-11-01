@@ -15,24 +15,10 @@ export function getReportList (parameter) {
   })
 }
 
-export function getReportCollect () {
-  return axios({
-    url: '/reportCollectBase/getReportCollect',
-    method: 'post'
-  })
-}
-//提交患者信息
-export function addOrUpdate(parameter) {
-  return axios({
-    url: '/reportCollectBase/addOrUpdate',
-    method: 'post',
-    params: parameter
-  })
-}
 //添加报告
-export function addReportCollect(parameter) {
+export function createReport(parameter) {
   return axios({
-    url: '/reportCollectBase/addReportCollect',
+    url: '/reportCollectBase/createReport',
     method: 'post',
     params: parameter
   })
@@ -55,4 +41,33 @@ export function ocrResult(parameter) {
   })
 }
 
+export function getReportType(parameter) {
+  return axios({
+    url: '/reportCollectBase/getReportType',
+    method: 'post'
+  })
+}
 
+export function getReportTypeMark(parameter) {
+  return axios({
+    url: '/reportCollectBase/getReportTypeMark',
+    method: 'post',
+    params: parameter
+  })
+}
+
+export function saveReport(parameter) {
+  return axios({
+    url: '/reportCollectBase/saveReport',
+    method: 'post',
+    params: parameter
+  })
+}
+
+export function getReportFormData(parameter) {
+  return axios({
+    url: '/reportCollectBase/getReportFormData',
+    method: 'post',
+    params: parameter
+  })
+}

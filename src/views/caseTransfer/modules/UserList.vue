@@ -94,15 +94,12 @@ export default {
     },
     getPatientDetailByCard(card) {
       const Card = card ? card : ''
-      const Params = new URLSearchParams()
-      Params.append('card', card)
+      const params = new URLSearchParams()
+      params.append('card', card)
+      params.append('type', 1)
         this.confirmLoading = false
-      getPatientDetailByCard(Params).then(res => {
-        if (res.code == 0) {
-          this.patientDetail = res.data        
-        }else{
-          this.$message.error(res.msg);
-        }
+      getPatientDetailByCard(params).then(res => {
+        this.patientDetail = res.data
         // this.confirmLoading = false
       })
     }

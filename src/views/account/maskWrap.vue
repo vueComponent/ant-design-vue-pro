@@ -1,5 +1,11 @@
 <template>
 <div>
+<a-form :form="form" @submit="handleSubmit">
+     <div style="overflow: hidden;">
+       <a-button class="btn fr" v-if="patientBasis.type === 3" @click="_import">导入</a-button>
+       <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
+       <a-button class="btn fr" @click="save">保存</a-button>
+     </div>
   <div class="baselineForm" :style="baselineFormStyle" v-if="maskId === 1">
     <div class="title">1.基本病史</div>
     <a-form-item label="(1) 留全血:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -459,6 +465,10 @@
 	    </a-form-item>
     </div>
  </div>
+ <div class="baselineForm" :style="baselineFormStyle" v-if="maskId === 3">
+ 	
+ </div>
+ </a-form>
 </div>
 </template>
 <script>
@@ -480,6 +490,7 @@ export default{
 			baselineFormStyle:{
 	        	height:(window.screen.height-350)+'px',
 	      	},
+	      	form: this.$form.createForm(this),
 	      	controlList: {
 	      		/** 支扩病史资料 */
 	      		1: {
@@ -573,6 +584,9 @@ export default{
 	      }else{
 	        this.controlList[this.maskId][t] = false
 	      }
+	    },
+	    handleSubmit() {
+	    	
 	    }
   	}
 }
@@ -648,7 +662,4 @@ export default{
       background-color: #e6f7ff;
     }
   }
-
-
-
 </style>									

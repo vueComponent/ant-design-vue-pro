@@ -30,8 +30,8 @@ function hasPermission (permission, route) {
  */
 // eslint-disable-next-line
 function hasRole(roles, route) {
-  if (route.meta && route.meta.roles) {
-    return route.meta.roles.includes(roles.id)
+  if (route.meta && route.meta.permission) {
+    return route.meta.permission.includes(roles)
   } else {
     return true
   }
@@ -39,7 +39,7 @@ function hasRole(roles, route) {
 
 function filterAsyncRouter (routerMap, roles) {
   const accessedRouters = routerMap.filter(route => {
-    if (hasPermission(roles.permissionList, route)) {
+    if (hasPermission(roles, route)) {
       if (route.children && route.children.length) {
         route.children = filterAsyncRouter(route.children, roles)
       }
@@ -64,8 +64,7 @@ const permission = {
   actions: {
     GenerateRoutes ({ commit }, data) {
       return new Promise(resolve => {
-        const { roles } = data
-        const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+        const accessedRouters = filterAsyncRouter(asyncRouterMap, data)
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })

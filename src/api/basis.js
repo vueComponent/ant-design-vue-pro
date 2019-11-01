@@ -1,7 +1,7 @@
 import api from './index'
 import { axios } from '@/utils/request'
 
-export function submit(params) {
+export function saveBasis(params) {
   return axios({
     url: '/basis/saveBasis',
     method: 'post',
@@ -146,6 +146,46 @@ export function importVtData(params) {
 export function saveVisitTask(params) {
   return axios({
     url: '/visitTask/save',
+    method: 'post',
+    data: params
+  })
+}
+
+export function getBasisForm(params) {
+  return axios({
+    url: '/basis/getFormData',
+    method: 'post',
+    data: params
+  })
+}
+
+export function getSFJxDataList(params) {
+  return axios({
+    url: '/basis/getSFJxDataList',
+    method: 'post',
+    params: params
+  })
+}
+
+export function createSFJx(params) {
+  return axios({
+    url: '/basis/createSFJx',
+    method: 'post',
+    data: params
+  })
+}
+
+export function getQuestionDetail(params) {
+  return axios({
+    url: '/question/detail',
+    method: 'post',
+    data: params
+  })
+}
+
+export function validateCard(params) {
+  return axios({
+    url: '/patient/getPatientDetailByCard',
     method: 'post',
     data: params
   })

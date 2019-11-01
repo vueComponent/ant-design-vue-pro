@@ -29,6 +29,9 @@ export default {
   created () {
     
   },
+  activated() {
+    this.selectedKeys = this.defaultSelectedKeys
+  },
   data () {
     return {
       localOpenKeys: [],
@@ -71,19 +74,18 @@ export default {
     renderIcon (icon) {
       return icon && (<Icon type={icon} />) || null
     },
-    renderTreeIcon(percentage){
-      if(parseInt(percentage)==0||!percentage||percentage=='') return (<i class="placeholderI"></i>)
-      if(parseInt(percentage)<100) return (<Icon type="clock-circle" theme="filled" />)
-      if(parseInt(percentage)==100) return (<Icon type="check-circle" theme="filled" />)
+    renderTreeIcon(executeStatus){
+      if(!executeStatus) return (<i class="placeholderI"></i>)
+      if(executeStatus === 1) return (<Icon type="clock-circle" theme="filled" />)
+      if(executeStatus === 2) return (<Icon type="check-circle" theme="filled" />)
     },
     renderMenuItem (item) {
       return (
         <Item key={item.basisMarkId}>
           <div style="padding-left:20px;">
-          {this.renderTreeIcon(item.progress)}
+          {this.renderTreeIcon(item.executeStatus)}
           { this.renderIcon(item.icon) }
           <span class="treeSubTitle">{ item.basisMarkName }</span>
-          <span class="treeSubPercentage">{parseInt(item.progress)>0?parseInt(item.progress)+"%":item.progress}</span>
           </div>
         </Item>
       )
@@ -120,10 +122,10 @@ export default {
 
       const title = (
         <span slot="title" style="padding-left:20px;">
-          {this.renderTreeIcon(item.percentage)}
+          {/*<Icon type="clock-circle" theme="filled" />*/}
+          {this.renderTreeIcon(item.executeStatus)}
           { this.renderIcon(item.icon) }
           <span class="treeSubTitle">{ item.basisMarkName }</span>
-          <span class="treeSubPercentage">{parseInt(item.percentage)==0?'':item.percentage}</span>
         </span>
       )
 

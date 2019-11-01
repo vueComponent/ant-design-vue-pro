@@ -11,7 +11,7 @@
     @cancel="handleCancel"
   >
     <a-spin :spinning="confirmLoading">
-      <a-table :columns="columns" :rowSelection="rowSelection" :dataSource="data" :pagination="pagination" :loading="loading" @change="handleTableChange">
+      <a-table :columns="columns" rowKey="patientId" :rowSelection="rowSelection" :dataSource="data" :pagination="pagination" :loading="loading" @change="handleTableChange">
         <template slot="name" slot-scope="name">
           {{ name.first }} {{ name.last }}
         </template>
@@ -66,7 +66,7 @@ export default {
       destroyOnClose: true,
       centered: true,
       bodyStyle: {
-        height: '500px',
+        height: '480px',
         overflow: 'auto'
       }
     };

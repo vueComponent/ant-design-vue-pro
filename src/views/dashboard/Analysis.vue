@@ -163,11 +163,11 @@ export default {
     MiniProgress,
     RankList,
     Bar,
-    Trend,
     NumberInfo,
     MiniSmoothArea,
     Pie,
-    MyIcon
+    MyIcon,
+    Trend
   },
   data() {
     return {
