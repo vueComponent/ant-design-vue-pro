@@ -72,7 +72,7 @@ export default {
       const {
         form: { validateFields }
       } = this;
-      this.confirmLoading = false;
+      this.confirmLoading = true;
       validateFields((errors, fieldsValue) => {
         const that = this;
         if (errors) {
