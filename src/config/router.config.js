@@ -50,6 +50,12 @@ export const asyncRouterMap = [
         meta: { title: '访视任务', keepAlive: true, icon: fangshi}
       },
       {
+        path: '/activeVolume/index',
+        name: 'ActiveVolume',
+        component: () => import('@/views/activeVolume/index'),
+        meta: { title: '活动卷登记', keepAlive: true, icon: fangshi}
+      },
+      {
         path: '/gallery/index',
         name: 'Gallery',
         component: () => import('@/views/gallery/index'),
@@ -59,7 +65,7 @@ export const asyncRouterMap = [
         path: '/caseTransfer/index',
         name: 'CaseTransfer',
         component: () => import('@/views/caseTransfer/index'),
-        meta: { title: '病例转移申请', keepAlive: true, icon: baogao,isBack:false}
+        meta: { title: '病例转移申请', keepAlive: true, icon: bxAnaalyse,isBack:false}
       },
       {
         path: '/gallery/detail/:id(\\d*)',

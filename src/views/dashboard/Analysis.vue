@@ -111,7 +111,7 @@
     <a-row :gutter="10">
       <a-col :sm="48" :md="24" :lg="14" :style="{ marginBottom: '10px' }">
         <a-card :loading="loading" :bordered="false" :body-style="{ padding: '0' }">
-          <div class="salesCard">
+          <div class="salesCard tooltip-y">
             <a-tabs default-active-key="1" size="large" :tab-bar-style="{ marginBottom: '10px', paddingLeft: '16px' }">
               <a-tab-pane loading="true" tab="新增病例数" key="1">
                 <a-row>
@@ -198,7 +198,9 @@ export default {
       const keyMap = { monthDate: 'x', monthPatients: 'y' };
        const keyMap1={monthDate: 'x', monthBasis: 'y' }
       _.each(res.data.eachMonthPatients, function(item, index) {
+         console.log(item)
         item.monthDate=item.monthDate+"月";
+        // item.monthPatients=item.monthPatients;
         that.eachMonthPatients[index] = Object.keys(item).reduce((newData, key) => {
           let newKey = keyMap[key] || key;
           newData[newKey] = item[key];
@@ -206,8 +208,8 @@ export default {
         }, {});
       });
        _.each(res.data.eachMonthBasiss, function(item, index) {
-         console.log(item)
-           item.monthDate=item.monthDate+"月";
+        //  console.log(item)
+        item.monthDate=item.monthDate+"月";
         that.eachMonthBasiss[index] = Object.keys(item).reduce((newData, key) => {
           let newKey = keyMap1[key] || key;
           newData[newKey] = item[key];
@@ -307,4 +309,19 @@ export default {
     }
   }
 }
+/deep/.tooltip-y{
+  /deep/.g2-tooltip-list li{
+    font-size: 0px;
+    position: relative;
+    /deep/.g2-tooltip-marker{
+      display: none !important;
+    }
+    /deep/.g2-tooltip-value{
+      position: absolute;
+      font-size: 12px;
+      left: -30px;
+    }
+  }
+}
+
 </style>

@@ -98,7 +98,11 @@ export default {
       Params.append('card', card)
         this.confirmLoading = false
       getPatientDetailByCard(Params).then(res => {
-        this.patientDetail = res.data
+        if (res.code == 0) {
+          this.patientDetail = res.data        
+        }else{
+          this.$message.error(res.msg);
+        }
         // this.confirmLoading = false
       })
     }

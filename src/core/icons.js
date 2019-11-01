@@ -16,5 +16,5 @@ import zhanghao from '@/assets/icons/zhanghao.svg?inline' // path to your '*.svg
 import home from '@/assets/icons/home.svg?inline' // path to your '*.svg?inline' file.
 
 export { 
-  bxAnaalyse,baogao,bingli,fangshi,ruzhu,wenjuan,zhanghao,home
+  bxAnaalyse,baogao,bingli,fangshi,ruzhu,wenjuan,zhanghao,home,
 }
