@@ -26,9 +26,9 @@
               <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
+                    <p @click="tableSearch(9)">全部急性加重期</p>
                     <p @click="tableSearch(7)">本月新增急性加重期</p>
                     <p @click="tableSearch(8)">本年新增急性加重期</p>
-                    <p @click="tableSearch(9)">全部急性加重期</p>
                   </div>
                 </a-tab-pane>
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -155,9 +155,6 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        if (!parameter.queryType) {
-          parameter.queryType = 7
-        }
         return getSFJxDataList(Object.assign(parameter, this.queryParam)).then(res => {
           return res;
         });

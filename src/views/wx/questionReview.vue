@@ -22,9 +22,9 @@
               <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
+                    <p @click="tableSearch(3)">全部问卷</p>
                     <p @click="tableSearch(1)">待审阅问卷</p>
                     <p @click="tableSearch(2)">已审阅问卷</p>
-                    <p @click="tableSearch(3)">全部问卷</p>
                   </div>
                 </a-tab-pane>
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -88,9 +88,6 @@
         queryParam: {},
         scroll: false,
         loadData: parameter => {
-          if (!parameter.queryType) {
-            parameter.queryType = 1
-          }
           return getWxQuestionList(Object.assign(parameter, this.queryParam)).then(res => {
             return res
           })

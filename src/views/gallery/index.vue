@@ -26,9 +26,9 @@
               <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
+                    <p @click="tableSearch(3)">全部报告</p>
                     <p @click="tableSearch(1)">本月新增报告</p>
                     <p @click="tableSearch(2)">本年新增报告</p>
-                    <p @click="tableSearch(3)">全部报告</p>
                   </div>
                 </a-tab-pane>
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -162,9 +162,6 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-          if (!parameter.queryType) {
-            parameter.queryType = 1
-          }
         return getReportList(Object.assign(parameter, this.queryParam)).then(res => {
           return res
         })
