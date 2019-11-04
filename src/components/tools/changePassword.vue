@@ -1,15 +1,15 @@
 <template>
   <div>
-    <a-modal title="修改密码"     :maskClosable="maskClosable" :visible="visible" @ok="handleOk" :confirmLoading="confirmLoading" @cancel="handleCancel">
+    <a-modal title="修改密码" :maskClosable="maskClosable" :visible="visible" @ok="handleOk" :confirmLoading="confirmLoading" @cancel="handleCancel">
       <a-form :form="form" >
-        <a-form-item label="原密码"  :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
-          <a-input  type="password"  v-decorator="['password', { rules: [{ required: true, message: '请输入原密码!' }] }]" />
+        <a-form-item label="原密码" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
+          <a-input  type="password" v-decorator="['password', { rules: [{ required: true, validator: confirmPassword }] }]" />
         </a-form-item>
-         <a-form-item label="新密码" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
-            <a-input  type="password" v-decorator="['newPassword', { rules: [{ required: true, message: '请输入新密码!' }] }]" />
+        <a-form-item label="新密码" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
+          <a-input type="password" v-decorator="['newPassword', { rules: [{ required: true, message: '请输入新密码!' }] }]" />
         </a-form-item>
         <a-form-item label="确认新密码" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
-            <a-input  type="password" v-decorator="['confirmPassword', { rules: [{ required: true, validator: confirm }] }]" />
+            <a-input type="password" v-decorator="['confirmPassword', { rules: [{ required: true, validator: confirm }] }]" />
         </a-form-item>
         <!-- <a-form-item :wrapper-col="{ span: 12, offset: 5 }"><a-button type="primary" html-type="submit">Submit</a-button></a-form-item> -->
       </a-form>
@@ -17,6 +17,10 @@
   </div>
 </template>
 <script>
+import { getDetailById, updatePwd, } from '@/api/login';
+import { mapGetters } from 'vuex'
+import { log } from 'util';
+
 export default {
   data() {
     return {
@@ -25,12 +29,36 @@ export default {
       maskClosable: false,
       confirmLoading:false,
       destroyOnClose: false,
-      form: this.$form.createForm(this)
+      form: this.$form.createForm(this),
+      ModalText: {},
     };
   },
+  created() {
+    this.getUDetailById(this.token.doctorId);
+  },
+  computed: {
+    ...mapGetters(['token'])
+  },
   methods: {
+    getUDetailById(id) {
+      const Params = new URLSearchParams();
+      Params.append('doctorId', id);
+      getDetailById(Params).then(res => {
+        this.ModalText = res.data.doctor
+      });
+    },
     showModal() {
       this.visible = true;
+    },
+    confirmPassword(rule, value, callback){
+      if (!value || value == '') {
+        callback('请输入确认新密码');
+        return false;
+      }
+      if(this.form.getFieldValue('password') != this.ModalText.password){
+          callback('与原密码不相符,请重新确认');
+        return false;
+      }
     },
     confirm(rule, value, callback){
       if (!value || value == '') {
@@ -43,27 +71,22 @@ export default {
       }
     },
     handleOk(e) {
-        // const {
-        //   form: { validateFields }
-        // } = this;
-        // this.confirmLoading = false;
-        // validateFields((errors, fieldsValue) => {
-        //   const that = this;
-        //   if (errors) {
-        //     this.confirmLoading = false;
-        //     return;
-        //   }
-        //   const values = {
-        //     ...fieldsValue,
-        //   };
-        //   const params = new URLSearchParams();
-        //   params.append('patientStr', JSON.stringify(values));
-        //   addOrUpdate(params).then(res => {
-        //     console.log(res);
-        //     that.visible = false;
-        //     that.confirmLoading = false;
-        //   });
-        // });
+      e.preventDefault();
+      this.form.validateFieldsAndScroll((err, values) => {
+        return false;
+      });
+      const Params = new URLSearchParams();
+      this.ModalText.password = this.form.getFieldValue('newPassword')
+      Params.append('doctor',JSON.stringify(this.ModalText));
+      
+      updatePwd(Params).then(res => {
+        if(res.code == 0){
+          this.$message.success(res.msg);
+          this.visible = false;
+        }else{
+          this.$message.error(res.msg);
+        }
+      });
     },
     handleCancel(e) {
       this.visible = false;

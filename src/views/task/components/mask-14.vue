@@ -44,7 +44,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(3) 患者支扩确诊时间:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]"></a-date-picker style="width: 240px;">
+                <a-date-picker :disabledDate="disabledDate" style="width: 240px;" placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]"></a-date-picker >
               </a-form-item>
               <a-form-item label="(4) 主要临床症状（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4', 'array')}]">
@@ -559,6 +559,13 @@ export default {
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
+    disabledDate(endValue) {
+      const startValue = new Date();
+      // if (!startValue || !endValue) {
+      //   return false;
+      // }
+      return startValue.valueOf() <= endValue.valueOf();
+    },
     require1() {
       return {
         rules: [{ required: true, message: '请选择是或否！' }]
