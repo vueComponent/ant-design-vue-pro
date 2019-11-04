@@ -90,6 +90,8 @@ export default {
     add() {
       this.options.title = '新建急性加重期';
       this.visible = true;
+      this.data = [];
+      this.patientId = null;
     },
     onSearch(value) {
       this.getPatientList(1, this.pagination.pageSize, value);

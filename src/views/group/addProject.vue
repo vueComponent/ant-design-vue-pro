@@ -237,12 +237,17 @@ export default {
         title: '提示',
         content: '确认添加患者至该项目',
         onOk() {
+          if (!that.project.projectId) {
+            that.$message.error("请选择项目！")
+            that.$router.push({path:'/group/index'})
+            return;
+          }
           const params = new URLSearchParams();
           params.append('patientArray', that.selectedRowKeys);
           params.append('projectId', that.project.projectId);
           that.confirmLoading = true;
+          
           joinProject(params).then(res => {
-            console.log(res);
             if(res.code==0){
                 that.$router.push({path:'/group/index'})
             }
@@ -252,7 +257,7 @@ export default {
         onCancel() {}
       });
 
-      console.log(this.selectedRowKeys);
+      // console.log(this.selectedRowKeys);
     },
     selectAll() {
       this.$refs.table.selectAll();

@@ -29,7 +29,7 @@
                 <span class="head-icon"></span>
                 <div v-if="listArr.length && listArr[0].questionName" class="question-title">{{listArr[0].questionName}}</div>
               </a-row>
-              <a-row>
+              <a-row v-if="executeStatus !== 2">
                 <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
                 <a-button class="btn fr" @click="save">保存</a-button>
               </a-row>
@@ -116,7 +116,8 @@ export default {
       disBlock: {
         display: 'block'
       },
-      spinning: false
+      spinning: false,
+      executeStatus: false
     }
   },
   created() {
@@ -142,6 +143,7 @@ export default {
         if (that.patientBasis.type === 4) {
           that.title = '急性加重期'
         }
+        that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
       })
     this.getFormData()
   },
@@ -228,6 +230,13 @@ export default {
               that.spinning = false
               that.getFormData()
               that.$message.success(res.msg)
+              params = new URLSearchParams()
+              params.append('patientBasisId', this.patientBasisId)
+              getPatientBasis(params)
+                .then(res => {
+                  that.orgTree = res.data.list
+                  that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+                })
             })
             .catch(error => {
               that.spinning = false

@@ -24,7 +24,7 @@
         </a-col>
         <a-col :span="19">
           <a-form :form="form" @submit="handleSubmit" :layout="formLayout">
-            <div style="overflow: hidden;margin-top: 10px;">
+            <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
@@ -153,10 +153,10 @@
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item class="no-border" label="炎性肠病::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb8 && controlb811">
-                <a-radio-group v-decorator="['b811', {...require2, initialValue: initValue('b811')}]">
-                  <a-radio value="1">溃疡性结肠炎</a-radio>
-                  <a-radio value="2">克罗恩病</a-radio>
-                </a-radio-group>
+                <a-checkbox-group v-decorator="['b811', {...selectRequired, initialValue: initValue('b811', 'array')}]">
+                  <a-checkbox value="1">溃疡性结肠炎</a-checkbox>
+                  <a-checkbox value="2">克罗恩病</a-checkbox>
+                </a-checkbox-group>
               </a-form-item>
               <a-form-item label="(9) 内分泌系统" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b9', {...require2, initialValue: initValue('b9')}]" @change="changeRadio($event, 'controlb9')">
@@ -560,7 +560,8 @@ export default {
       controlb20: false,
       controlb202: false,
       controlb21: false,
-      spinning: false
+      spinning: false,
+      executeStatus: false
     }
   },
   created() {
@@ -574,6 +575,7 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
+        that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
       })
       .catch(error => {
         console.log(error)
@@ -779,6 +781,7 @@ export default {
             'b65': typeof re['b65'] !== 'undefined' ? re['b65'].format('YYYY-MM-DD') : '',
             'b71': typeof re['b71'] !== 'undefined' ? re['b71'].join(',') : '',
             'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : '',
+            'b811': typeof re['b811'] !== 'undefined' ? re['b811'].join(',') : '',
             'b91': typeof re['b91'] !== 'undefined' ? re['b91'].join(',') : '',
             'b101': typeof re['b101'] !== 'undefined' ? re['b101'].join(',') : '',
             'b111': typeof re['b111'] !== 'undefined' ? re['b111'].join(',') : '',
@@ -806,6 +809,16 @@ export default {
               that.spinning = false
               that.getFormData()
               that.$message.success(res.msg)
+              params = new URLSearchParams()
+              params.append('patientBasisId', that.patientBasisId)
+              getPatientBasis(params)
+                .then(res => {
+                  that.orgTree = res.data.list
+                  that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                })
+                .catch(error => {
+                  console.log(error)
+                })
             })
             .catch(error => {
               that.spinning = false
@@ -834,6 +847,7 @@ export default {
         'b65': typeof re['b65'] !== 'undefined' ? re['b65'].format('YYYY-MM-DD') : '',
         'b71': typeof re['b71'] !== 'undefined' ? re['b71'].join(',') : '',
         'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : '',
+        'b811': typeof re['b811'] !== 'undefined' ? re['b811'].join(',') : '',
         'b91': typeof re['b91'] !== 'undefined' ? re['b91'].join(',') : '',
         'b101': typeof re['b101'] !== 'undefined' ? re['b101'].join(',') : '',
         'b111': typeof re['b111'] !== 'undefined' ? re['b111'].join(',') : '',
