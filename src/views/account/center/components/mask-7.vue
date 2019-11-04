@@ -24,7 +24,7 @@
         </a-col>
         <a-col :span="19">
           <a-form :form="form" @submit="handleSubmit" :layout="formLayout">
-            <div style="overflow: hidden;" v-if="executeStatus !== 2">
+            <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
