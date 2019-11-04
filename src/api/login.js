@@ -64,3 +64,11 @@ export function getDetailById (parameter) {
     params: parameter
   })
 }
+
+export function updatePwd (parameter) {
+  return axios({
+    url: '/login/updatePwd',
+    method: 'post',
+    params: parameter
+  })
+}

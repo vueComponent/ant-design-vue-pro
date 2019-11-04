@@ -198,7 +198,7 @@ export default {
       const keyMap = { monthDate: 'x', monthPatients: 'y' };
        const keyMap1={monthDate: 'x', monthBasis: 'y' }
       _.each(res.data.eachMonthPatients, function(item, index) {
-         console.log(item)
+        //  console.log(item)
         item.monthDate=item.monthDate+"月";
         // item.monthPatients=item.monthPatients;
         that.eachMonthPatients[index] = Object.keys(item).reduce((newData, key) => {
