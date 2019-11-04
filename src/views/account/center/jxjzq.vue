@@ -24,8 +24,7 @@
         </a-col>
         <a-col :span="19">
           <a-form :form="form" @submit="handleSubmit">
-            <div style="overflow: hidden;">
-              <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
+            <div style="overflow: hidden;" v-if="executeStatus !== 2">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
@@ -438,7 +437,8 @@ export default {
       controlc2: false,
       maskId: undefined,
       spinning: false,
-      controlb44: false
+      controlb44: false,
+      executeStatus: false
     }
   },
   created() {
@@ -454,9 +454,9 @@ export default {
         that.orgTree = res.data.list
         that.maskId = res.data.list[0].basisMarkId
         that.defaultSelectedKeys = [that.maskId]
+        that.executeStatus = res.data.list[0].executeStatus
         that.getFormData()
       })
-
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -502,13 +502,60 @@ export default {
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
-          setTimeout(() => {
-            this.visible = false
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
+          var re = this.form.getFieldsValue()
+          re = {
+            ...re,
+            'a2': typeof re['a2'] !== 'undefined' ? re['a2'].join(',') : '',
+            'a31': typeof re['a31'] !== 'undefined' ? re['a31'].join(',') : '',
+            'b31': typeof re['b31'] !== 'undefined' ? re['b31'].join(',') : '',
+            'b41': typeof re['b41'] !== 'undefined' ? re['b41'].join(',') : '',
+            'b43': typeof re['b43'] !== 'undefined' ? re['b43'].join(',') : '',
+            'b44': typeof re['b44'] !== 'undefined' ? re['b44'].join(',') : '',
+            'b45': typeof re['b45'] !== 'undefined' ? re['b45'].join(',') : '',
+            'b46': typeof re['b46'] !== 'undefined' ? re['b46'].join(',') : '',
+            'b48': typeof re['b48'] !== 'undefined' ? re['b48'].join(',') : '',
+            'b49': typeof re['b49'] !== 'undefined' ? re['b49'].join(',') : '',
+            'b410': typeof re['b410'] !== 'undefined' ? re['b410'].join(',') : '',
+            'b4111': typeof re['b4111'] !== 'undefined' ? re['b4111'].join(',') : '',
+            'b412': typeof re['b412'] !== 'undefined' ? re['b412'].join(',') : '',
+            'b413': typeof re['b413'] !== 'undefined' ? re['b413'].join(',') : '',
+            'b51': typeof re['b51'] !== 'undefined' ? re['b51'].join(',') : '',
+            'b52': typeof re['b52'] !== 'undefined' ? re['b52'].join(',') : ''
+          }
+          var that = this
+          console.log(re)
+          this.patientBasis.status = 2
+          var params = new URLSearchParams()
+          if (this.jxjzq && this.jxjzq.jxjzqId) {
+            re.jxjzqId = this.jxjzq.jxjzqId
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('patientBasis', JSON.stringify(this.patientBasis))
+          params.append('basisMarkId', this.maskId)
+          params.append('markName', this.markName)
+          this.spinning = true
+          saveBasis(params)
+            .then(res => {
+              console.log(res)
+              that.spinning = false
+              that.getFormData()
+              that.$message.success(res.msg)
+              params = new URLSearchParams()
+              params.append('patientBasisId', this.patientBasisId)
+              getPatientBasis(params)
+                .then(res => {
+                  that.orgTree = res.data.list
+                  that.maskId = res.data.list[0].basisMarkId
+                  that.defaultSelectedKeys = [that.maskId]
+                  that.executeStatus = res.data.list[0].executeStatus
+                })
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
         } else {
-          this.confirmLoading = false
+          this.spinning = false
         }
       })
     },

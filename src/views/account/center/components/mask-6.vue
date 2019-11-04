@@ -24,7 +24,7 @@
         </a-col>
         <a-col :span="19">
           <a-form :form="form" @submit="handleSubmit">
-            <div style="overflow: hidden;">
+            <div style="overflow: hidden;" v-if="executeStatus !== 2">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
@@ -327,7 +327,8 @@ export default {
       controlb426: false,
       controlb427: false,
       controlc426: false,
-      spinning: false
+      spinning: false,
+      executeStatus: false
     }
   },
   created() {
@@ -340,6 +341,7 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
+        that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
       })
     this.getFormData()
   },
@@ -441,6 +443,13 @@ export default {
               that.spinning = false
               that.getFormData()
               that.$message.success(res.msg)
+              params = new URLSearchParams()
+              params.append('patientBasisId', this.patientBasisId)
+              getPatientBasis(params)
+                .then(res => {
+                  that.orgTree = res.data.list
+                  that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                })
             })
             .catch(error => {
               that.spinning = false
