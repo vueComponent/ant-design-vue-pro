@@ -71,17 +71,18 @@ export default {
       }
     };
   },
-  mounted() {
-    this.userData = {};
-    // this.getPatientList(1,this.pagination.pageSize,1)
-  },
   methods: {
     add(value) {
       this.visible = true;
       this.confirmLoading = true;
+      this.userData = {};
       this.getPatientList(1, this.pagination.pageSize, value);
     },
     checkuUser() {
+      if (JSON.stringify(this.userData) == '{}') {
+        this.$message.error('您还未选择患者！')
+        return
+      }
       this.$emit('listen', this.userData);
       this.visible = false;
     },
@@ -110,7 +111,7 @@ export default {
       return {
         type: 'radio',
         onChange: (selectedRowKeys, selectedRows) => {
-          this.userData = selectedRows;
+          this.userData = selectedRows[0];
         },
         getCheckboxProps: record => ({
           props: {
