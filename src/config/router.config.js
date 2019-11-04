@@ -337,6 +337,12 @@ export const asyncRouterMap = [
         meta: { title: '名医专家', keepAlive: true, icon: myzj,isBack:false, permission: ['group']}
       },
       {
+        path: '/pageConfigure/index',
+        name: 'pageConfigure',
+        component: () => import('@/views/pageConfigure/index'),
+        meta: { title: '页面配置', keepAlive: true, icon: myzj,isBack:false, permission: ['group']}
+      },
+      {
         path: '/gallery/detail/:id(\\d*)',
         name: 'collectDetail',
         hidden: true,
