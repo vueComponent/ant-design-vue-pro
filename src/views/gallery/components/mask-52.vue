@@ -25,7 +25,7 @@
         <a-col :span="19">
           <!-- 血生化 -->
           <a-form :form="form" @submit="handleSubmit">
-            <div style="overflow: hidden;margin-top: 10px;">
+            <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 1">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
@@ -120,6 +120,7 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-spin :spinning="spinning"></a-spin>
   </div>
 </template>
 <script>
@@ -207,7 +208,9 @@ export default {
       formData: undefined,
       businessType: 7,
       reportTypeId: 52,
-      reportCollectDetailId: undefined
+      reportCollectDetailId: undefined,
+      spinning: false,
+      executeStatus: false
     }
   },
   created() {
@@ -219,6 +222,7 @@ export default {
       .then(res => {
         that.orgTree = res.data
         that.reportCollectDetailId = _.find(res.data, function(v) { return v.reportTypeId === 52 }).reportCollectDetailId
+        that.executeStatus = _.find(res.data, function(v) { return v.reportTypeId === 52 }).collectDetailStatus
         that.getFormData()
       })
       .catch(error => {
@@ -270,7 +274,7 @@ export default {
     },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
-        
+
       }
       return answer
     },
@@ -300,29 +304,68 @@ export default {
         else a.push(v.name)
       })
       params.append('fileName', JSON.stringify(a))
+      this.spinning = true
       saveReport(params)
         .then(res => {
+          that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
         })
         .catch(error => {
+          that.spinning = false
           console.log(error)
         })
     },
     handleSubmit(e) {
       e.preventDefault()
       const { form: { validateFields } } = this
-      this.confirmLoading = true
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
-          setTimeout(() => {
-            this.visible = false
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
+          if (!this.fileList.length) {
+            this.$message.warning('请上传检查报告')
+            return false
+          }
+          var re = this.form.getFieldsValue()
+          var that = this
+          var params = new URLSearchParams()
+          if (this.formData && this.formData.xshId) {
+            re.xshId = this.formData.xshId
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('reportCollectBase', JSON.stringify({ reportCollectBaseId: this.reportCollectBaseId, status: 2 }))
+          params.append('reportCollectDetail', JSON.stringify({ reportCollectDetailId: this.reportCollectDetailId, reportTypeId: this.reportTypeId }))
+          params.append('businessType', this.businessType)
+          var a = []
+          _.each(this.fileList, function(v) {
+            if (v.response) a.push(v.response.fileName)
+            else a.push(v.name)
+          })
+          params.append('fileName', JSON.stringify(a))
+          this.spinning = true
+          saveReport(params)
+            .then(res => {
+              that.spinning = false
+              that.getFormData()
+              that.$message.success(res.msg)
+              params = new URLSearchParams()
+              params.append('reportCollectBaseId', this.reportCollectBaseId)
+              getReportTypeMark(params)
+                .then(res => {
+                  that.orgTree = res.data
+                  that.reportCollectDetailId = _.find(res.data, function(v) { return v.reportTypeId === 52 }).reportCollectDetailId
+                  that.executeStatus = _.find(res.data, function(v) { return v.reportTypeId === 52 }).collectDetailStatus
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
         } else {
-          this.confirmLoading = false
+          this.spinning = false
         }
       })
     },
@@ -340,6 +383,21 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+/deep/ .ant-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+
+  & .ant-spin-dot {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+  }
+}
+
 /deep/ #baselineHeader {
   .ant-card-body {
     padding: 10px
