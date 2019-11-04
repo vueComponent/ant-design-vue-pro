@@ -51,13 +51,13 @@
               </a-form-item>
               <div v-if="controlb3">
                 <a-form-item label="治疗方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b31', {...selectRequired, initialValue: initValue('b31')}]">
-                    <a-radio value="1">手动拍击背部排痰</a-radio>
-                    <a-radio value="2">体位引流</a-radio>
-                    <a-radio value="3">规律锻炼身体</a-radio>
-                    <a-radio value="4">借助排痰仪器</a-radio>
-                    <a-radio value="5">无</a-radio>
-                  </a-radio-group>
+                  <a-checkbox-group v-decorator="['b31', {...selectRequired, initialValue: initValue('b31', 'array')}]">
+                    <a-checkbox value="1">手动拍击背部排痰</a-checkbox>
+                    <a-checkbox value="2">体位引流</a-checkbox>
+                    <a-checkbox value="3">规律锻炼身体</a-checkbox>
+                    <a-checkbox value="4">借助排痰仪器</a-checkbox>
+                    <a-checkbox value="5">无</a-checkbox>
+                  </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="患者是否参加肺康复治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['b32', {...selectRequired, initialValue: initValue('b32')}]">
@@ -77,12 +77,12 @@
               </a-form-item>
               <div v-if="controlb4">
                 <a-form-item label="周期性抗生素治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41')}]" @change="changeRadio($event, 'controlb41')">
-                    <a-radio value="1">阿奇霉素</a-radio>
-                    <a-radio value="2">克拉霉素</a-radio>
-                    <a-radio value="3">红霉素</a-radio>
-                    <a-radio value="4">其他</a-radio>
-                  </a-radio-group>
+                  <a-checkbox-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41', 'array')}]">
+                    <a-checkbox value="1">阿奇霉素</a-checkbox>
+                    <a-checkbox value="2">克拉霉素</a-checkbox>
+                    <a-checkbox value="3">红霉素</a-checkbox>
+                    <a-checkbox value="4" @change="changeSelect($event, 'controlb41')">其他</a-checkbox>
+                  </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="其他:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb41">
                   <a-input style="width: 240px;" v-decorator="['b414', {...inputRequired, initialValue: initValue('b414')}]" autocomplete="off"></a-input>
@@ -405,6 +405,10 @@ export default {
         if (!errors) {
           console.log('values', values)
           var re = this.form.getFieldsValue()
+          re = {
+            ...re,
+            'b31': typeof re['b31'] !== 'undefined' ? re['b31'].join(',') : ''
+          }
           var that = this
           console.log(re)
           this.patientBasis.status = 2
@@ -454,6 +458,7 @@ export default {
     },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
+        var splitArr = []
         if (answer.b3 === 1) {
           this.controlb3 = true
         }
@@ -469,12 +474,21 @@ export default {
         if (answer.b7 === 1) {
           this.controlb7 = true
         }
-
+        if (answer.b41) {
+          splitArr = answer.b41.split(',')
+          if (splitArr.indexOf('4') > -1) {
+            this.controlb41 = true
+          }
+        }
       }
       return answer
     },
     save() {
       var re = this.form.getFieldsValue()
+      re = {
+        ...re,
+        'b31': typeof re['b31'] !== 'undefined' ? re['b31'].join(',') : ''
+      }
       var that = this
       console.log(re)
       this.patientBasis.status = 1
