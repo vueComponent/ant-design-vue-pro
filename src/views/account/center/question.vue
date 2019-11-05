@@ -143,7 +143,7 @@ export default {
         if (that.patientBasis.type === 4) {
           that.title = '急性加重期'
         }
-        that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+        that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
       })
     this.getFormData()
   },
@@ -235,7 +235,7 @@ export default {
               getPatientBasis(params)
                 .then(res => {
                   that.orgTree = res.data.list
-                  that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+                  that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
                 })
             })
             .catch(error => {

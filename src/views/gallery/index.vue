@@ -59,7 +59,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" :scroll="scroll" size="small" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" :scroll="scroll" size="small" rowKey="reportCode" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="collectStatus" slot-scope="text">
         <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" /></span>
       <span slot="name" slot-scope="text,record" @click="showUser(record)">
