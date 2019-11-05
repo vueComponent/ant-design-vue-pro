@@ -60,7 +60,7 @@
           <a-input v-decorator="['telephone3']" />
         </a-form-item>
         <a-form-item :wrapperCol="agrWrapperCol">
-          <a-checkbox v-decorator="['agreeMent', {...requiredRule, valuePropName: 'checked'}]" :disabled="options.title == '编辑患者'">
+          <a-checkbox v-decorator="['agreeMent', { rules: [ { required: true, validator: agrValidator }] }]" :disabled="options.title == '编辑患者'">
             患者是否已签署
             <a href="#">知情同意书</a>
             （点开左侧查看详情）
@@ -204,7 +204,7 @@
             telephone1: value.telephone1,
             telephone2: value.telephone2,
             telephone3: value.telephone3,
-            agreeMent: true
+            agreeMent: JSON.parse(value.agreeMent)
           })
         }, 0);
         this.visible = true
@@ -217,8 +217,6 @@
             this.confirmLoading = false;
             return;
           }
-          const birthDate = fieldsValue['birthDate'];
-          const registerDate = fieldsValue['registerDate'];
           const residence = fieldsValue['residence'];
           const values = {
             ...fieldsValue,
@@ -233,7 +231,6 @@
           params.append('changeCenter', '');
           params.append('centerId', '');
           addOrUpdate(params).then(res => {
-            console.log(res);
             that.visible = false;
             that.confirmLoading = false;
             that.$message.success(res.msg)
@@ -243,6 +240,17 @@
       },
       handleCancel() {
         this.visible = false;
+      },
+      agrValidator(rule, value, callback) {
+        if (this.options.title == '编辑患者') {
+          callback()
+          return
+        }
+        if (!value) {
+          callback('该选项必填！')
+          return
+        }
+        callback()
       },
       isIdCardNo(rule, value, callback) {
         if (!value) {
@@ -321,7 +329,6 @@
           callback('身份证号不正确或不符合规定！');
           return
         }
-        console.log(this.patientId)
         // 回显性别、生日
         if (!this.patientId) {
           this.form.resetFields(['birthDate', 'sex'])
