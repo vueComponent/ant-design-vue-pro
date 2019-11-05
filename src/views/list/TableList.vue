@@ -96,13 +96,14 @@
 </template>
 <script>
 import moment from 'moment';
-import { STable, Ellipsis } from '@/components';
-import StepByStepModal from './modules/StepByStepModal';
-import CreateForm from './modules/CreateForm';
-import { getPatientList, exportPatient } from '@/api/patient';
-import UserDetail from './modules/UserDetail';
-import Visit from './modules/Visit';
+import { STable, Ellipsis } from '@/components'
+import StepByStepModal from './modules/StepByStepModal'
+import CreateForm from './modules/CreateForm'
+import { getPatientList, exportPatient } from '@/api/patient'
+import UserDetail from './modules/UserDetail'
+import Visit from './modules/Visit'
 import { addVasit } from '@/api/basis'
+import { mapGetters } from 'vuex'
 
 const visitMap = {
   0: {
@@ -225,6 +226,9 @@ export default {
       y: (window.screen.height - 368) + "px"
     }
   },
+  computed: {
+    ...mapGetters(['token'])
+  },
   filters: {
     statusFilter(type) {
       return statusMap[type].text;
@@ -278,7 +282,7 @@ export default {
       this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
     },
     exportData() {
-      window.open(this.baseUrl + 'patient/export')
+      window.open(this.baseUrl + 'patient/export?doctorId=' + this.token.doctorId)
     }
   }
 };

@@ -60,10 +60,10 @@ export default {
 
       this.$confirm({
         title: '提示',
-        content: '真的要注销登录吗 ?',
+        content: '真的要退出登录吗 ?',
         onOk() {
           that.Logout().then(res => {
-            that.$message.success('注销成功')
+            that.$message.success('退出成功')
             that.$router.push({ name: 'login' })
           })
         },
