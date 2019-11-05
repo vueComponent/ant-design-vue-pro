@@ -23,6 +23,10 @@ export default {
       type: Function,
       required: true
     },
+    pageSizeOptions: {
+        type: Array,
+        default: () => ['10', '15', '20', '30']
+    },
     pageNum: {
       type: Number,
       default: 1
@@ -30,6 +34,10 @@ export default {
     pageSize: {
       type: Number,
       default: 20
+    },
+    showQuickJumper: {
+      type: Boolean,
+      default: true
     },
     showSizeChanger: {
       type: Boolean,
@@ -99,11 +107,6 @@ export default {
       Object.assign(this.localPagination, {
         pageSize: val
       })
-    },
-    showSizeChanger(val) {
-      Object.assign(this.localPagination, {
-        showSizeChanger: val
-      })
     }
   },
   created() {
@@ -114,6 +117,8 @@ export default {
     this.localPagination = ['auto', true].includes(this.showPagination) && Object.assign({}, this.localPagination, {
       current: localPageNum,
       pageSize: this.pageSize,
+      pageSizeOptions: this.pageSizeOptions,
+      showQuickJumper : this.showQuickJumper,
       showSizeChanger: this.showSizeChanger
     }) || false
     console.log('this.localPagination', this.localPagination)
@@ -176,7 +181,7 @@ export default {
           this.localPagination = this.showPagination && Object.assign({}, this.localPagination, {
             current: r.current, // 返回结果中的当前分页数
             total: r.total, // 返回结果中的总记录数
-            showSizeChanger: this.showSizeChanger,
+            showTotal: total => `总计 ${total} 条`,
             pageSize: (pagination && pagination.pageSize) ||
               this.localPagination.pageSize
           }) || false
