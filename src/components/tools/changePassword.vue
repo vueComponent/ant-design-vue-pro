@@ -6,10 +6,10 @@
           <a-input  type="password" v-decorator="['password', { rules: [{ required: true, validator: confirmPassword }] }]" />
         </a-form-item>
         <a-form-item label="新密码" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
-          <a-input type="password" v-decorator="['newPassword', { rules: [{ required: true, message: '请输入新密码!' }] }]" />
+          <a-input type="password" v-decorator="['newPassword', { rules: [{ required: true,validator: confirmNewPassword }] }]" />
         </a-form-item>
         <a-form-item label="确认新密码" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
-            <a-input type="password" v-decorator="['confirmPassword', { rules: [{ required: true, validator: confirm }] }]" />
+            <a-input autocomplete="off" onfocus="this.type='password'" type="text" v-decorator="['confirmPassword', { rules: [{ required: true, validator: confirm }] }]" />
         </a-form-item>
         <!-- <a-form-item :wrapper-col="{ span: 12, offset: 5 }"><a-button type="primary" html-type="submit">Submit</a-button></a-form-item> -->
       </a-form>
@@ -52,11 +52,21 @@ export default {
     },
     confirmPassword(rule, value, callback){
       if (!value || value == '') {
-        callback('请输入确认新密码');
+        callback('请输入原密码');
         return false;
       }
       if(this.form.getFieldValue('password') != this.ModalText.password){
           callback('与原密码不相符,请重新确认');
+        return false;
+      }
+    },
+    confirmNewPassword(rule, value, callback){
+      if (!value || value == '') {
+        callback('请输入新密码');
+        return false;
+      }
+      if(this.form.getFieldValue('newPassword') === this.ModalText.password){
+          callback('与原密码相符,请重新确认');
         return false;
       }
     },
@@ -70,23 +80,49 @@ export default {
         return false;
       }
     },
+    checkPassword(){
+      if(!this.form.getFieldValue('password') || this.form.getFieldValue('password') == ''){
+        return false;
+      }
+      if(this.form.getFieldValue('password') != this.ModalText.password){
+        return false;
+      }
+      if (!this.form.getFieldValue('newPassword') || this.form.getFieldValue('newPassword') == '') {
+        return false;
+      }
+      if(this.form.getFieldValue('newPassword') === this.ModalText.password){
+        return false;
+      }
+      if (!this.form.getFieldValue('confirmPassword') || this.form.getFieldValue('confirmPassword') == '') {
+        return false;
+      }
+      if(this.form.getFieldValue('confirmPassword') != this.form.getFieldValue('newPassword')){
+        return false;
+      }
+      return;
+    },
     handleOk(e) {
       e.preventDefault();
       this.form.validateFieldsAndScroll((err, values) => {
         return false;
       });
-      const Params = new URLSearchParams();
-      this.ModalText.password = this.form.getFieldValue('newPassword')
-      Params.append('doctor',JSON.stringify(this.ModalText));
-      
-      updatePwd(Params).then(res => {
-        if(res.code == 0){
-          this.$message.success(res.msg);
-          this.visible = false;
-        }else{
-          this.$message.error(res.msg);
-        }
-      });
+      this.checkPassword();
+      if (this.checkPassword() == false) {
+
+      }else{
+        // console.log("成功")
+        const Params = new URLSearchParams();
+        this.ModalText.password = this.form.getFieldValue('newPassword')
+        Params.append('doctor',JSON.stringify(this.ModalText));
+        updatePwd(Params).then(res => {
+          if(res.code == 0){
+            this.$message.success(res.msg);
+            this.visible = false;
+          }else{
+            this.$message.error(res.msg);
+          }
+        });
+      }
     },
     handleCancel(e) {
       this.visible = false;
