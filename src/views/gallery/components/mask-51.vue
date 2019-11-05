@@ -510,6 +510,13 @@ export default {
   }
 
   /deep/ .ant-menu-submenu {
+    .anticon-check-circle {
+      color: #8ac51b;
+    }
+
+    .anticon-clock-circle {
+      color: #06a0e2;
+    }
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;
