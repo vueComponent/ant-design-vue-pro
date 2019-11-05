@@ -512,7 +512,7 @@ export default {
         if (answer.a1 === 1) {
           this.controla1 = true
         }
-        if (answer.a3) {
+        if (answer.a3 === 1) {
           this.controla3 = true
         }
         var splitArr = []
