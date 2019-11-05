@@ -24,8 +24,7 @@
         </a-col>
         <a-col :span="19">
           <a-form :form="form" @submit="handleSubmit">
-            <div style="overflow: hidden;margin-top: 10px;">
-              <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
+            <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
@@ -432,7 +431,8 @@ export default {
       controlb6: false,
       controlb7: false,
       controlc1: false,
-      controlc2: false
+      controlc2: false,
+      executeStatus: false
     }
   },
   created() {
@@ -445,6 +445,7 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
+        that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
       })
       .catch(error => {
         console.log(error)
@@ -511,7 +512,7 @@ export default {
         if (answer.a1 === 1) {
           this.controla1 = true
         }
-        if (answer.a3) {
+        if (answer.a3 === 1) {
           this.controla3 = true
         }
         var splitArr = []
@@ -591,8 +592,7 @@ export default {
     },
     handleClick(e) {
       this.maskId = e.key
-      this.$router.push('/list/task/' + this.patientBasisId + '/' + this.maskId)
-      if (e.key >= 37 && e.key <= 42) {
+      if ((e.key >= 37 && e.key <= 42) || (e.key >= 45 && e.key <= 50)) {
         this.$router.push('/basis/question/' + this.patientBasisId + '/' + this.maskId)
       } else {
         this.$router.push('/list/task/' + this.patientBasisId + '/' + this.maskId)
@@ -645,6 +645,16 @@ export default {
               that.spinning = false
               that.getFormData()
               that.$message.success(res.msg)
+              params = new URLSearchParams()
+              params.append('patientBasisId', that.patientBasisId)
+              getPatientBasis(params)
+                .then(res => {
+                  that.orgTree = res.data.list
+                  that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                })
+                .catch(error => {
+                  console.log(error)
+                })
             })
             .catch(error => {
               that.spinning = false
@@ -895,6 +905,14 @@ export default {
   }
 
   /deep/ .ant-menu-submenu {
+    .anticon-check-circle {
+      color: #8ac51b;
+    }
+
+    .anticon-clock-circle {
+      color: #06a0e2;
+    }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;
@@ -910,14 +928,6 @@ export default {
 
       .action {
         font-size: 18px;
-
-        &.anticon-check-circle {
-          color: #8ac51b;
-        }
-
-        &.anticon-clock-circle {
-          color: #06a0e2;
-        }
       }
 
       .placeholderI {

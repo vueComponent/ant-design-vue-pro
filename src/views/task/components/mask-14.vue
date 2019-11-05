@@ -24,7 +24,7 @@
         </a-col>
         <a-col :span="19">
           <a-form :form="form" @submit="handleSubmit">
-            <div style="overflow: hidden;margin-top: 10px;">
+            <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
@@ -44,7 +44,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(3) 患者支扩确诊时间:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker :disabledDate="disabledDate" style="width: 240px;" placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]"></a-date-picker >
+                <a-date-picker :disabledDate="disabledDate" style="width: 240px;" placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]"></a-date-picker>
               </a-form-item>
               <a-form-item label="(4) 主要临床症状（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4', 'array')}]">
@@ -83,9 +83,9 @@
               </a-form-item>
               <a-form-item label="有无新增呼吸系统相关疾病:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['c', {...require2, initialValue: initValue('c')}]" @change="changeRadio($event, 'controlc')">
-                    <a-radio value="1">有</a-radio>
-                    <a-radio value="-1">无</a-radio>
-                  </a-radio-group>
+                  <a-radio value="1">有</a-radio>
+                  <a-radio value="-1">无</a-radio>
+                </a-radio-group>
               </a-form-item>
               <div v-if="controlc">
                 <a-form-item label="(5) 有无以下疾病及事件（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -434,6 +434,7 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-spin :spinning="spinning"></a-spin>
   </div>
 </template>
 <script>
@@ -452,7 +453,7 @@ export default {
   data() {
     return {
       markName: 'zkbszl',
-      title: '',
+      title: '年访视',
       openKeys: [],
       defaultSelectedKeys: [14],
       orgTree: [],
@@ -528,7 +529,9 @@ export default {
       controlb20: false,
       controlb202: false,
       controlb21: false,
-      controlc: false
+      controlc: false,
+      spinning: false,
+      executeStatus: false
     }
   },
   created() {
@@ -541,20 +544,12 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        that.title = '年访视'
+        that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
       })
       .catch(error => {
         console.log(error)
       })
-    params.append('basisMarkId', this.maskId)
-    getBasisForm(params)
-      .then(res => {
-        if (res.data && res.data.zkbszl)
-          that.zkbszl = that.dealAnswers(res.data.zkbszl)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.getFormData()
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -739,12 +734,94 @@ export default {
     },
     handleClick(e) {
       this.maskId = e.key
-      // this.getElementsAnswer()
-      // location.href = '/list/basis/' + this.patientBasisId + '/' + this.maskId
-      this.$router.push('/list/task/' + this.patientBasisId + '/' + this.maskId)
+      if ((e.key >= 37 && e.key <= 42) || (e.key >= 45 && e.key <= 50)) {
+        this.$router.push('/basis/question/' + this.patientBasisId + '/' + this.maskId)
+      } else {
+        this.$router.push('/list/task/' + this.patientBasisId + '/' + this.maskId)
+      }
     },
-    handleSubmit() {
-
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.zkbszl)
+            that.zkbszl = that.dealAnswers(res.data.zkbszl)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    handleSubmit(e) {
+      e.preventDefault()
+      const { form: { validateFields } } = this
+      validateFields((errors, values) => {
+        if (!errors) {
+          console.log('values', values)
+          var re = this.form.getFieldsValue()
+          var that = this
+          re = {
+            ...re,
+            'a3': typeof re['a3'] !== 'undefined' ? re['a3'].format('YYYY-MM-DD') : '',
+            'a4': typeof re['a4'] !== 'undefined' ? re['a4'].join(',') : '',
+            'b4': typeof re['b4'] !== 'undefined' ? re['b4'].format('YYYY-MM-DD') : '',
+            'b5': typeof re['b5'] !== 'undefined' ? re['b5'].join(',') : '',
+            'b6': typeof re['b6'] !== 'undefined' ? re['b6'].join(',') : '',
+            'b61': typeof re['b61'] !== 'undefined' ? re['b61'].format('YYYY-MM-DD') : '',
+            'b62': typeof re['b62'] !== 'undefined' ? re['b62'].format('YYYY-MM-DD') : '',
+            'b63': typeof re['b63'] !== 'undefined' ? re['b63'].format('YYYY-MM-DD') : '',
+            'b64': typeof re['b64'] !== 'undefined' ? re['b64'].format('YYYY-MM-DD') : '',
+            'b65': typeof re['b65'] !== 'undefined' ? re['b65'].format('YYYY-MM-DD') : '',
+            'b71': typeof re['b71'] !== 'undefined' ? re['b71'].join(',') : '',
+            'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : '',
+            'b91': typeof re['b91'] !== 'undefined' ? re['b91'].join(',') : '',
+            'b101': typeof re['b101'] !== 'undefined' ? re['b101'].join(',') : '',
+            'b111': typeof re['b111'] !== 'undefined' ? re['b111'].join(',') : '',
+            'b121': typeof re['b121'] !== 'undefined' ? re['b121'].join(',') : '',
+            'b143': typeof re['b143'] !== 'undefined' ? re['b143'].join(',') : '',
+            'b153': typeof re['b153'] !== 'undefined' ? re['b153'].join(',') : '',
+            'b161': typeof re['b161'] !== 'undefined' ? re['b161'].join(',') : '',
+            'b201': typeof re['b201'] !== 'undefined' ? re['b201'].join(',') : '',
+            'b211': typeof re['b211'] !== 'undefined' ? re['b211'].format('YYYY-MM-DD') : ''
+          }
+          console.log(re)
+          this.patientBasis.status = 2
+          var params = new URLSearchParams()
+          if (this.zkbszl && this.zkbszl.zkbszlId) {
+            re.zkbszlId = this.zkbszl.zkbszlId
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('patientBasis', JSON.stringify(this.patientBasis))
+          params.append('basisMarkId', this.maskId)
+          params.append('markName', this.markName)
+          this.spinning = true
+          saveBasis(params)
+            .then(res => {
+              console.log(res)
+              that.$message.success(res.msg)
+              that.spinning = false
+              that.getFormData()
+              params = new URLSearchParams()
+              params.append('patientBasisId', that.patientBasisId)
+              getPatientBasis(params)
+                .then(res => {
+                  that.orgTree = res.data.list
+                  that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
+        } else {
+          this.spinning = false
+        }
+      })
     },
     save() {
       var re = this.form.getFieldsValue()
@@ -783,14 +860,16 @@ export default {
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
+      this.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg, function() {
-            location.href = location.href
-          })
+          that.$message.success(res.msg)
+          that.spinning = false
+          that.getFormData()
         })
         .catch(error => {
+          that.spinning = false
           console.log(error)
         })
       return false
@@ -799,6 +878,21 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+/deep/ .ant-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+
+  & .ant-spin-dot {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+  }
+}
+
 /deep/ #baselineHeader {
   .ant-card-body {
     padding: 10px
@@ -967,6 +1061,14 @@ export default {
   }
 
   /deep/ .ant-menu-submenu {
+    .anticon-check-circle {
+      color: #8ac51b;
+    }
+
+    .anticon-clock-circle {
+      color: #06a0e2;
+    }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;
