@@ -5,7 +5,7 @@
         <a-form-item>
           <a-input-search placeholder="搜索患者姓名,身份证号" @search="onSearch" v-decorator="['card', { rules: [{ required: true , message: '该选项必填'}] }]" enterButton autocomplete="off" />
         </a-form-item>
-        <a-table :columns="columns" :rowSelection="rowSelection" :dataSource="data" :pagination="pagination" :loading="loading" rowKey="patientId">
+        <a-table v-if="data.length > 0" :columns="columns" :rowSelection="rowSelection" :dataSource="data" :pagination="pagination" rowKey="patientId">
         </a-table>
       </a-form>
     </a-spin>
@@ -53,7 +53,7 @@ export default {
       centered: true,
       destroyOnClose: true,
       bodyStyle: {
-        height: '460px',
+        height: '500px',
         overflow: 'auto'
       },
       form: this.$form.createForm(this),
@@ -64,11 +64,9 @@ export default {
         hideOnSinglePage: true,
         total: 0
       },
-      loading: false,
       columns
     };
   },
-  created() {},
   computed: {
     rowSelection() {
       const { selectedRowKeys } = this;
@@ -97,20 +95,19 @@ export default {
       this.getPatientList(1, this.pagination.pageSize, value);
     },
     handleSubmit() {
-      var that = this
       if (!this.patientId) {
         this.$message.error('请选择患者')
-      } else {
-        const p = new URLSearchParams();
-        p.append('patientId', this.patientId)
-        createSFJx(p)
-          .then(res => {
-            that.$message.success(res.msg, function() {
-              location.href = location.href
-            })
-          })
+        return
       }
-      return false;
+      this.confirmLoading = true
+      const p = new URLSearchParams();
+      p.append('patientId', this.patientId)
+      createSFJx(p).then(res => {
+        this.$emit('ok')
+        this.visible = false
+        this.$message.success(res.msg);
+        this.confirmLoading = false
+      })
     },
     handleCancel() {
       this.visible = false;
