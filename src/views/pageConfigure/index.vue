@@ -10,7 +10,7 @@
           <a-col class="banner-item" v-for="(item, index) in bannerData" :key="index">
             <a-row class="banner-item-top" type="flex" justify="space-between" align="middle">
               <span class="title">banner{{index+1}}</span>
-              <a-upload v-if="item.src" name="file" action="https://www.mocky.io/v2/5cc8019d300000980a055e76" @change="handleChange">
+              <a-upload v-if="item.src" :beforeUpload="beforeUpload" :showUploadList="false" :action="action" @change="handleChange">
                 <a-button>
                   <a-icon type="upload" />替换
                 </a-button>
@@ -18,7 +18,7 @@
             </a-row>
             <div class="banner-item-img">
               <img v-if="item.src" :src="item.src">
-              <a-upload-dragger v-else name="file" action="https://www.mocky.io/v2/5cc8019d300000980a055e76" @change="handleChange">
+              <a-upload-dragger v-else :beforeUpload="beforeUpload" :showUploadList="false" :action="action" @change="handleChange">
                 <p class="ant-upload-drag-icon">
                   <a-icon type="upload" />
                 </p>
@@ -42,7 +42,7 @@
           <a-col class="lunbo-item" v-for="(item, index) in lunboData" :key="index">
             <a-row class="lunbo-item-top" type="flex" justify="space-between" align="middle">
               <span class="title">轮播图{{index+1}}</span>
-              <a-upload v-if="item.src" name="file" action="https://www.mocky.io/v2/5cc8019d300000980a055e76" @change="handleChange">
+              <a-upload v-if="item.src" :beforeUpload="beforeUpload" :showUploadList="false" :action="action" @change="handleChange">
                 <a-button>
                   <a-icon type="upload" />替换
                 </a-button>
@@ -50,7 +50,7 @@
             </a-row>
             <div class="lunbo-item-img">
               <img v-if="item.src" :src="item.src">
-              <a-upload-dragger v-else name="file" action="https://www.mocky.io/v2/5cc8019d300000980a055e76" @change="handleChange">
+              <a-upload-dragger v-else :beforeUpload="beforeUpload" :showUploadList="false" :action="action" @change="handleChange">
                 <p class="ant-upload-drag-icon">
                   <a-icon type="upload" />
                 </p>
@@ -69,7 +69,7 @@
           <a-col class="blog-item" v-for="(item, index) in blogData" :key="index">
             <a-row class="blog-item-top" type="flex" justify="space-between" align="middle">
               <span class="title">友情链接{{index+1}}</span>
-              <a-upload v-if="item.src" name="file" action="https://www.mocky.io/v2/5cc8019d300000980a055e76" @change="handleChange">
+              <a-upload v-if="item.src" :beforeUpload="beforeUpload" :showUploadList="false" :action="action" @change="handleChange">
                 <a-button>
                   <a-icon type="upload" />替换
                 </a-button>
@@ -77,7 +77,7 @@
             </a-row>
             <div class="blog-item-img">
               <img v-if="item.src" :src="item.src">
-              <a-upload-dragger v-else name="file" action="https://www.mocky.io/v2/5cc8019d300000980a055e76" @change="handleChange">
+              <a-upload-dragger v-else :beforeUpload="beforeUpload" :showUploadList="false" :action="action" @change="handleChange">
                 <p class="ant-upload-drag-icon">
                   <a-icon type="upload" />
                 </p>
@@ -125,6 +125,8 @@
           { src: '' },
           { src: '' }
         ],
+        action: process.env.VUE_APP_API_UPLOAD_URL,
+        attachsPrefix: process.env.VUE_APP_API_VIEW_PIC_URL,
       }
     },
     mounted() {
@@ -137,8 +139,22 @@
           this.isLoading = false
         })
       },
-      handleChange(e) {
-
+      beforeUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isPNG = file.type === 'image/png';
+        if (!(isJPG || isPNG)) {
+          this.$message.error('只能上传jpg或png格式的图片！');
+        }
+        const isLt1M = file.size / 1024 / 1024 < 1;
+        if (!isLt1M) {
+          this.$message.error('图片大小不能超过1MB！');
+        }
+        return (isJPG || isPNG) && isLt1M;
+      },
+      handleChange(info) {
+        console.log(info)
+        if (info.file.status === 'done') {
+        }
       }
     },
   }
