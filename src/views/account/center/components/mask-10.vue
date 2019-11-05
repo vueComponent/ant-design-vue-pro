@@ -253,7 +253,7 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+        that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
       })
     this.getFormData()
   },
@@ -318,7 +318,7 @@ export default {
               getPatientBasis(params)
                 .then(res => {
                   that.orgTree = res.data.list
-                  that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                  that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
                 .catch(error => {
                   console.log(error)

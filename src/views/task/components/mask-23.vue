@@ -24,8 +24,7 @@
         </a-col>
         <a-col :span="19">
           <a-form :form="form" @submit="handleSubmit">
-            <div style="overflow: hidden;margin-top: 10px;">
-              <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
+            <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
@@ -82,6 +81,7 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-spin :spinning="spinning"></a-spin>
   </div>
 </template>
 <script>
@@ -162,7 +162,9 @@ export default {
       maskId: this.$route.meta.maskId,
       patientBasisId: this.$route.params.id,
       xzcc: undefined,
-      controla1: false
+      controla1: false,
+      spinning: false,
+      executeStatus: false
     }
   },
   created() {
@@ -176,20 +178,27 @@ export default {
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
         that.title = '年访视'
+        that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
       })
-    params.append('basisMarkId', this.maskId)
-    getBasisForm(params)
-      .then(res => {
-        if (res.data && res.data.xzcc)
-          that.xzcc = that.dealAnswers(res.data.xzcc)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.getFormData()
   },
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.xzcc)
+            that.xzcc = that.dealAnswers(res.data.xzcc)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     changeSelect(e, t) {
       this[t] = e.target.checked
     },
@@ -202,23 +211,54 @@ export default {
     },
     handleClick(e) {
       this.maskId = e.key
-      // this.getElementsAnswer()
-      this.$router.push('/list/task/' + this.patientBasisId + '/' + this.maskId)
+      if ((e.key >= 37 && e.key <= 42) || (e.key >= 45 && e.key <= 50)) {
+        this.$router.push('/basis/question/' + this.patientBasisId + '/' + this.maskId)
+      } else {
+        this.$router.push('/list/task/' + this.patientBasisId + '/' + this.maskId)
+      }
     },
     handleSubmit(e) {
       e.preventDefault()
       const { form: { validateFields } } = this
-      this.confirmLoading = true
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
-          setTimeout(() => {
-            this.visible = false
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
+          var re = this.form.getFieldsValue()
+          var that = this
+          console.log(re)
+          this.patientBasis.status = 2
+          var params = new URLSearchParams()
+          if (this.xzcc && this.xzcc.xzccId) {
+            re.xzccId = this.xzcc.xzccId
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('patientBasis', JSON.stringify(this.patientBasis))
+          params.append('basisMarkId', this.maskId)
+          params.append('markName', this.markName)
+          this.spinning = true
+          saveBasis(params)
+            .then(res => {
+              console.log(res)
+              that.$message.success(res.msg)
+              that.spinning = false
+              that.getFormData()
+              params = new URLSearchParams()
+              params.append('patientBasisId', that.patientBasisId)
+              getPatientBasis(params)
+                .then(res => {
+                  that.orgTree = res.data.list
+                  that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
         } else {
-          this.confirmLoading = false
+          this.spinning = false
         }
       })
     },
@@ -254,14 +294,16 @@ export default {
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
+      this.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg, function() {
-            location.href = location.href
-          })
+          that.$message.success(res.msg)
+          that.spinning = false
+          that.getFormData()
         })
         .catch(error => {
+          that.spinning = false
           console.log(error)
         })
       return false
@@ -270,6 +312,21 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+/deep/ .ant-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+
+  & .ant-spin-dot {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+  }
+}
+
 /deep/ #baselineHeader {
   .ant-card-body {
     padding: 10px
@@ -445,6 +502,7 @@ export default {
     .anticon-clock-circle {
       color: #06a0e2;
     }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;

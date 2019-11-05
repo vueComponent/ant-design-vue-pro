@@ -24,8 +24,7 @@
         </a-col>
         <a-col :span="19">
           <a-form :form="form" @submit="handleSubmit">
-            <div style="overflow: hidden;margin-top: 10px;">
-              <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
+            <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
@@ -315,6 +314,7 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-spin :spinning="spinning"></a-spin>
   </div>
 </template>
 <script>
@@ -426,7 +426,9 @@ export default {
       controld10: false,
       controld11: false,
       controld111: false,
-      controld112: false
+      controld112: false,
+      spinning: false,
+      executeStatus: false
     }
   },
   created() {
@@ -440,17 +442,9 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        params.append('basisMarkId', that.maskId)
-        getBasisForm(params)
-          .then(res => {
-            if (res.data && res.data.fs_jxjzq)
-              that.jxjzq = that.dealAnswers(res.data.fs_jxjzq)
-          })
-          .catch(error => {
-            console.log(error)
-          })
+        that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+        that.getFormData()
       })
-
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -477,25 +471,102 @@ export default {
         this[t] = false
       }
     },
+    getFormData() {
+      var that = this
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', that.maskId)
+      getBasisForm(params)
+        .then(res => {
+          if (res.data && res.data.fs_jxjzq)
+            that.jxjzq = that.dealAnswers(res.data.fs_jxjzq)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     handleClick(e) {
       this.maskId = e.key
-      // this.getElementsAnswer()
-      this.$router.push('/list/task/' + this.patientBasisId + '/' + this.maskId)
+      if ((e.key >= 37 && e.key <= 42) || (e.key >= 45 && e.key <= 50)) {
+        this.$router.push('/basis/question/' + this.patientBasisId + '/' + this.maskId)
+      } else {
+        this.$router.push('/list/task/' + this.patientBasisId + '/' + this.maskId)
+      }
     },
     handleSubmit(e) {
       e.preventDefault()
       const { form: { validateFields } } = this
-      this.confirmLoading = true
       validateFields((errors, values) => {
         if (!errors) {
           console.log('values', values)
-          setTimeout(() => {
-            this.visible = false
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
+          const allergy = []
+          for (var key in this.optionDataSource) {
+            _.each(this.optionDataSource[key], function(item) {
+              allergy.push({
+                markId: 1,
+                microbeName: item.microbeName,
+                antibiotic: item.antibiotic,
+                antibioticResult: item.antibioticResult,
+                allergyValue: item.allergyValue
+              })
+            })
+          }
+          var re = this.form.getFieldsValue()
+          re = {
+            ...re,
+            'b4': typeof re['b4'] !== 'undefined' ? re['b4'].join(',') : '',
+            'b12': typeof re['b12'] !== 'undefined' ? re['b12'].format('YYYY-MM-DD') : '',
+            'c1': typeof re['c1'] !== 'undefined' ? re['c1'].format('YYYY-MM-DD') : '',
+            'c42': typeof re['c42'] !== 'undefined' ? re['c42'].join(',') : '',
+            'd2': typeof re['d2'] !== 'undefined' ? re['d2'].join(',') : '',
+            'd3': typeof re['d3'] !== 'undefined' ? re['d3'].join(',') : '',
+            'd4': typeof re['d4'] !== 'undefined' ? re['d4'].join(',') : '',
+            'd5': typeof re['d5'] !== 'undefined' ? re['d5'].join(',') : '',
+            'd6': typeof re['d6'] !== 'undefined' ? re['d6'].join(',') : '',
+            'd7': typeof re['d7'] !== 'undefined' ? re['d7'].join(',') : '',
+            'd8': typeof re['d8'] !== 'undefined' ? re['d8'].join(',') : '',
+            'd9': typeof re['d9'] !== 'undefined' ? re['d9'].join(',') : '',
+            'd101': typeof re['d101'] !== 'undefined' ? re['d101'].join(',') : '',
+            'd111': typeof re['d111'] !== 'undefined' ? re['d111'].join(',') : '',
+            'd112': typeof re['d112'] !== 'undefined' ? re['d112'].join(',') : '',
+            'd113': typeof re['d113'] !== 'undefined' ? re['d113'].join(',') : ''
+          }
+          var that = this
+          console.log(re)
+          this.patientBasis.status = 2
+          var params = new URLSearchParams()
+          if (this.jxjzq && this.jxjzq.jxjzqId) {
+            re.jxjzqId = this.jxjzq.jxjzqId
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('patientBasis', JSON.stringify(this.patientBasis))
+          params.append('basisMarkId', this.maskId)
+          params.append('markName', this.markName)
+          params.append('allergy', JSON.stringify(allergy))
+          this.spinning = true
+          saveBasis(params)
+            .then(res => {
+              console.log(res)
+              that.$message.success(res.msg)
+              that.spinning = false
+              that.getFormData()
+              params = new URLSearchParams()
+              params.append('patientBasisId', that.patientBasisId)
+              getPatientBasis(params)
+                .then(res => {
+                  that.orgTree = res.data.list
+                  that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
         } else {
-          this.confirmLoading = false
+          this.spinning = false
         }
       })
     },
@@ -579,14 +650,16 @@ export default {
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
       params.append('allergy', JSON.stringify(allergy))
+      this.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg, function() {
-            location.href = location.href
-          })
+          that.$message.success(res.msg)
+          that.spinning = false
+          that.getFormData()
         })
         .catch(error => {
+          that.spinning = false
           console.log(error)
         })
       return false
@@ -595,6 +668,21 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+/deep/ .ant-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+
+  & .ant-spin-dot {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+  }
+}
+
 /deep/ #baselineHeader {
   .ant-card-body {
     padding: 10px
@@ -770,6 +858,7 @@ export default {
     .anticon-clock-circle {
       color: #06a0e2;
     }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;
