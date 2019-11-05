@@ -16,7 +16,7 @@
         <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
     </a-card>
-    <a-card :bordered="false" style="margin-top: 10px;padding-left: 0">
+    <a-card :bordered="false" class="card-box">
       <a-row :gutter="8">
         <a-col :span="5" :style="baselineInfoStyle">
           <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
@@ -247,12 +247,12 @@ export default {
       patientBasis: {},
       baselineInfoStyle: {
         overflow: "auto",
-        height: '486px',
+        // height: '486px',
         "padding-right": "0px",
         "border-right": "1px solid #ddd"
       },
       baselineFormStyle: {
-        height: '444px',
+        // height: '444px',
       },
       labelColHor: {
         xs: { span: 24 },
@@ -679,6 +679,15 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+#baselineInfo{
+  height:100%;
+}
+/deep/ .card-box{
+  margin-top: 10px;
+  padding-left: 0;
+  // height: calc(100% - 64px);
+}
+
 /deep/ .ant-spin {
   position: absolute;
   top: 0;
