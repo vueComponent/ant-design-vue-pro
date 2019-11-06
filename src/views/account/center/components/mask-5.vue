@@ -22,8 +22,8 @@
           <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
           </s-tree>
         </a-col>
-        <a-col :span="19">
-          <a-form :form="form" @submit="handleSubmit">
+        <a-col :span="19" style="height:100%;">
+          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:scroll;">
             <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
@@ -214,7 +214,7 @@ export default {
       patientBasis: {},
       baselineInfoStyle: {
         overflow: "auto",
-        // height: '486px',
+        height: '100%',
         "padding-right": "0px",
         "border-right": "1px solid #ddd"
       },
@@ -490,14 +490,14 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo {
-  height: 100%;
+#baselineInfo{
+  height:calc(100% - 10px);
 }
 
 /deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
-  // height: calc(100% - 64px);
+  height: calc(100% - 54px);
 }
 
 /deep/ .ant-spin {
@@ -584,11 +584,13 @@ export default {
 
 /deep/ .ant-row {
   clear: both;
+  height: 100%;
 }
 
 .page-header-index-wide {
   /deep/ .ant-card-wider-padding .ant-card-body {
     padding: 0;
+    height: 100%;
   }
 
   /deep/ .tree-title {

@@ -22,8 +22,8 @@
           <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
           </s-tree>
         </a-col>
-        <a-col :span="19">
-          <a-form :form="form" @submit="handleSubmit" :layout="formLayout">
+        <a-col :span="19" style="height:100%;">
+          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:scroll;" :layout="formLayout">
             <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
@@ -477,12 +477,15 @@ export default {
       patientBasis: {},
       baselineInfoStyle: {
         overflow: "auto",
-        // height: '486px',
+        height: "100%",
         "padding-right": "0px",
         boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
       },
+      clientHeight: '',
+      contentHeight: '',
       baselineFormStyle: {
-        // height: '444px',
+        // "height": "700px",
+        // "padding-left": "20px",
       },
       labelColHor: {
         xs: { span: 24 },
@@ -565,6 +568,14 @@ export default {
     }
   },
   created() {
+    this.clientHeight =   `${document.documentElement.clientHeight}`
+    window.onresize = function temp() {
+      this.clientHeight = `${document.documentElement.clientHeight}`;
+    };
+    this.contentHeight = (this.clientHeight - 187);
+    console.log(this.contentHeight);
+    
+
     var that = this
     this.defaultSelectedKeys = [1]
     this.CloseSidebar()
@@ -584,6 +595,9 @@ export default {
   },
   activated() {
     this.defaultSelectedKeys = [1]
+  },
+  mounted(){
+   
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -887,11 +901,12 @@ export default {
 </script>
 <style lang="less" scoped>
 #baselineInfo{
-  height:100%;
+  height:calc(100% - 10px);
 }
 /deep/ .card-box{
   margin-top: 10px;
   padding-left: 0;
+  height: calc(100% - 54px);
 }
 
 /deep/ .ant-spin {
@@ -911,7 +926,7 @@ export default {
 
 /deep/ #baselineHeader {
   .ant-card-body {
-    padding: 10px
+    padding: 10px;
   }
 }
 
@@ -978,11 +993,13 @@ export default {
 
 /deep/ .ant-row {
   clear: both;
+  height: 100%;
 }
 
 .page-header-index-wide {
   /deep/ .ant-card-wider-padding .ant-card-body {
     padding: 0;
+    height: 100%;
   }
 
   /deep/ .tree-title {
@@ -1125,9 +1142,7 @@ export default {
   }
 
   .baselineForm {
-
     overflow: auto;
-
     .title {
       background-color: #f7f8f8;
       font-weight: bold;
