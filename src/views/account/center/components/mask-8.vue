@@ -44,7 +44,7 @@
                 <a-form-item label="报告上传 :" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
                   <div class="clearfix" style="margin-top: 10px;">
                     <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
-                      <div v-if="fileList1.length < 4">
+                      <div v-if="fileList1.length < 1">
                         <a-icon type="plus" />
                         <div class="ant-upload-text">Upload</div>
                       </div>
@@ -103,7 +103,7 @@
                 <a-form-item label="报告上传 :" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="margin-top: 40px;">
                   <div class="clearfix">
                     <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
-                      <div v-if="fileList2.length < 4">
+                      <div v-if="fileList2.length < 1">
                         <a-icon type="plus" />
                         <div class="ant-upload-text">Upload</div>
                       </div>
