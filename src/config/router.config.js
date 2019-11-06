@@ -340,7 +340,7 @@ export const asyncRouterMap = [
         path: '/pageConfigure/index',
         name: 'pageConfigure',
         component: () => import('@/views/pageConfigure/index'),
-        meta: { title: '页面配置', keepAlive: true, icon: myzj,isBack:false, permission: ['group']}
+        meta: { title: '官网首页配置', keepAlive: true, icon: myzj,isBack:false, permission: ['group']}
       },
       {
         path: '/gallery/detail/:id(\\d*)',
