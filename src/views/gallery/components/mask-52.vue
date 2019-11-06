@@ -7,11 +7,13 @@
         </a-col>
         <a-col :md="4" :sm="20" class="UserNameCard">
           <my-icon type="iconshoufangzhehuaban" />
-          受访者:{{ patient.name }}
+          受访者:{{ $route.params.name }}
+          <!-- 受访者:{{ patient.name }} -->
         </a-col>
         <a-col :md="7" :sm="24" class="UserNameCard">
           <my-icon type="iconshenfenzhenghuaban" />
-          身份证:{{ patient.card }}
+          身份证:{{ $route.params.card }}
+          <!-- 身份证:{{ patient.card }} -->
         </a-col>
         <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patient.createDate | moment }}</a-col>
       </a-row>

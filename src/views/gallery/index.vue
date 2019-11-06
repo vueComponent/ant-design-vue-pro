@@ -224,7 +224,15 @@ export default {
       this.$refs.table.refresh()
     },
     handleEdit(record) {
-      this.$router.push('/gallery/execute/' + record.reportCollectBaseId)
+        this.$router.push({
+            name: 'Exec51',
+            params: {
+                id: record.reportCollectBaseId,
+                name: record.patientName,
+                card: record.patientCard
+            }
+        })
+    //   this.$router.push('/gallery/execute/' + record.reportCollectBaseId)
     },
     changeTime(time) {
       this.dateArr = time;

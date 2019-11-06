@@ -249,7 +249,7 @@
   /deep/ .quill-editor {
     display: flex;
     flex-direction: column;
-    height: 300px;
+    height: 350px;
   }
   /deep/ .ant-spin-nested-loading > div > .ant-spin {
     max-height: inherit;
@@ -298,7 +298,7 @@
       height: 36px;
     }
     &-img {
-      height: 180px;
+      height: 170px;
       margin: 15px 0;
     }
   }
@@ -308,7 +308,7 @@
       height: 36px;
     }
     &-img {
-      height: 200px;
+      height: 250px;
       margin: 15px 0;
     }
   }
@@ -318,7 +318,7 @@
       height: 36px;
     }
     &-img {
-      height: 120px;
+      height: 130px;
       margin: 15px 0;
     }
   }
