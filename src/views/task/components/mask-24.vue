@@ -9,11 +9,11 @@
           <my-icon type="iconshoufangzhehuaban" />
           受访者:{{ patient.name }}
         </a-col>
-        <a-col :md="6" :sm="24" class="UserNameCard">
+        <a-col :md="7" :sm="24" class="UserNameCard">
           <my-icon type="iconshenfenzhenghuaban" />
-          {{ patient.card }}
+          身份证:{{ patient.card }}
         </a-col>
-        <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
+        <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
     </a-card>
     <a-card :bordered="false" style="margin-top: 10px;padding-left: 0">
@@ -37,6 +37,19 @@
               </a-form-item>
               <div v-if="controla1">
                 <div class="title">1.血常规</div>
+                <a-form-item label="血常规报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
+                  <div class="clearfix">
+                    <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
+                      <div v-if="fileList1.length < 1">
+                        <a-icon type="plus" />
+                        <div class="ant-upload-text">Upload</div>
+                      </div>
+                    </a-upload>
+                    <a-modal :visible="previewVisible1" :footer="null" @cancel="handleCancel1">
+                      <img alt="example" style="width: 100%" :src="previewImage1" />
+                    </a-modal>
+                  </div>
+                </a-form-item>
                 <a-form-item label="(1) 血红蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="g/L" autocomplete="off"></a-input>
                 </a-form-item>
@@ -56,6 +69,19 @@
                   <a-input style="width: 240px;" v-decorator="['b6', { initialValue: initValue('b6')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <div class="title">2.血生化</div>
+                <a-form-item label="血生化报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
+                  <div class="clearfix">
+                    <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
+                      <div v-if="fileList2.length < 1">
+                        <a-icon type="plus" />
+                        <div class="ant-upload-text">Upload</div>
+                      </div>
+                    </a-upload>
+                    <a-modal :visible="previewVisible2" :footer="null" @cancel="handleCancel2">
+                      <img alt="example" style="width: 100%" :src="previewImage2" />
+                    </a-modal>
+                  </div>
+                </a-form-item>
                 <a-form-item label="(1) 血糖:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['c1', { initialValue: initValue('c1')}]" addonAfter="mmol/L" autocomplete="off"></a-input>
                 </a-form-item>
@@ -215,7 +241,15 @@ export default {
       qtsyjc: undefined,
       controla1: false,
       spinning: false,
-      executeStatus: false
+      executeStatus: false,
+      previewVisible1: false,
+      previewImage1: '',
+      previewVisible2: false,
+      previewImage2: '',
+      uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
+      viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
+      fileList1: [],
+      fileList2: []
     }
   },
   created() {
@@ -243,8 +277,29 @@ export default {
       params.append('basisMarkId', this.maskId)
       getBasisForm(params)
         .then(res => {
-          if (res.data && res.data.qtsyjc)
+          if (res.data && res.data.qtsyjc) {
             that.qtsyjc = that.dealAnswers(res.data.qtsyjc)
+          }
+          if (res.data.annexListXcg && res.data.annexListXcg.length) {
+            that.fileList1 = _.map(res.data.annexListXcg, function(v) {
+              return {
+                uid: v.annexId,
+                url: that.viewPicUrl + v.annexAddress,
+                name: v.annexAddress,
+                status: 'done'
+              }
+            })
+          }
+          if (res.data.annexListXsh && res.data.annexListXsh.length) {
+            that.fileList2 = _.map(res.data.annexListXsh, function(v) {
+              return {
+                uid: v.annexId,
+                url: that.viewPicUrl + v.annexAddress,
+                name: v.annexAddress,
+                status: 'done'
+              }
+            })
+          }
         })
         .catch(error => {
           console.log(error)
@@ -281,6 +336,24 @@ export default {
           var params = new URLSearchParams()
           if (this.qtsyjc && this.qtsyjc.qtsyjcId) {
             re.qtsyjcId = this.qtsyjc.qtsyjcId
+          }
+          //附件
+          if (this.fileList1 && this.fileList1.length) {
+            var a = []
+            _.each(this.fileList1, function(v) {
+              if (v.response) a.push(v.response.fileName)
+              else a.push(v.name)
+            })
+            params.append('fileName', JSON.stringify(a))
+          }
+          //附件
+          if (this.fileList2 && this.fileList2.length) {
+            var a = []
+            _.each(this.fileList2, function(v) {
+              if (v.response) a.push(v.response.fileName)
+              else a.push(v.name)
+            })
+            params.append('fileNameOther', JSON.stringify(a))
           }
           params.append('formData', JSON.stringify(re))
           params.append('patientBasis', JSON.stringify(this.patientBasis))
@@ -339,6 +412,24 @@ export default {
       if (this.qtsyjc && this.qtsyjc.qtsyjcId) {
         re.qtsyjcId = this.qtsyjc.qtsyjcId
       }
+      //附件
+      if (this.fileList1 && this.fileList1.length) {
+        var a = []
+        _.each(this.fileList1, function(v) {
+          if (v.response) a.push(v.response.fileName)
+          else a.push(v.name)
+        })
+        params.append('fileName', JSON.stringify(a))
+      }
+      //附件
+      if (this.fileList2 && this.fileList2.length) {
+        var a = []
+        _.each(this.fileList2, function(v) {
+          if (v.response) a.push(v.response.fileName)
+          else a.push(v.name)
+        })
+        params.append('fileNameOther', JSON.stringify(a))
+      }
       params.append('formData', JSON.stringify(re))
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
@@ -356,6 +447,26 @@ export default {
           console.log(error)
         })
       return false
+    },
+    handleCancel1() {
+      this.previewVisible1 = false;
+    },
+    handlePreview1(file) {
+      this.previewImage1 = file.url || file.thumbUrl;
+      this.previewVisible1 = true;
+    },
+    handleChange1({ fileList }) {
+      this.fileList1 = fileList;
+    },
+    handleCancel2() {
+      this.previewVisible2 = false;
+    },
+    handlePreview2(file) {
+      this.previewImage2 = file.url || file.thumbUrl;
+      this.previewVisible2 = true;
+    },
+    handleChange2({ fileList }) {
+      this.fileList2 = fileList;
     }
   }
 }

@@ -9,11 +9,11 @@
           <my-icon type="iconshoufangzhehuaban" />
           受访者:{{ patient.name }}
         </a-col>
-        <a-col :md="6" :sm="24" class="UserNameCard">
+        <a-col :md="7" :sm="24" class="UserNameCard">
           <my-icon type="iconshenfenzhenghuaban" />
-          {{ patient.card }}
+          身份证:{{ patient.card }}
         </a-col>
-        <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
+        <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
     </a-card>
     <a-card :bordered="false" class="card-box">
@@ -133,17 +133,21 @@ export default {
         that.defaultSelectedKeys = [that.questionId]
         if (that.patientBasis.type === 1) {
           that.title = '基线'
+          that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
         if (that.patientBasis.type === 2) {
           that.title = '半年随访'
+          that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
         if (that.patientBasis.type === 3) {
           that.title = '年访视'
+          that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
         if (that.patientBasis.type === 4) {
           that.title = '急性加重期'
+          that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
-        that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+
       })
     this.getFormData()
   },
@@ -183,6 +187,8 @@ export default {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 1) {
         this.$router.push('/list/basis/' + this.patientBasisId + '/' + e.key)
+      } else if (this.patientBasis.type === 4) {
+        this.$router.push('/jxjzq/' + this.patientBasisId)
       } else {
         this.$router.push('/list/task/' + this.patientBasisId + '/' + e.key)
       }
@@ -235,7 +241,13 @@ export default {
               getPatientBasis(params)
                 .then(res => {
                   that.orgTree = res.data.list
-                  that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+                  if (that.patientBasis.type === 1) {
+                    that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+                  } else if (that.patientBasis.type === 2 || that.patientBasis.type === 4) {
+                    that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+                  } else if (that.patientBasis.type === 3) {
+                    that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+                  }
                 })
             })
             .catch(error => {
@@ -340,10 +352,11 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:100%;
+#baselineInfo {
+  height: 100%;
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   // height: calc(100% - 64px);
@@ -571,6 +584,7 @@ export default {
     .anticon-clock-circle {
       color: #06a0e2;
     }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;
