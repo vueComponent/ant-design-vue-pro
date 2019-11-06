@@ -9,3 +9,11 @@ export function getDataList(parameter) {
     params: parameter
   })
 }
+
+export function saveData(data) {
+  return axios({
+    url: '/textGwLb/save',
+    method: 'post',
+    data
+  })
+}

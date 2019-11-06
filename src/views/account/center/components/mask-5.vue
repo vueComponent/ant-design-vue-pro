@@ -9,11 +9,11 @@
           <my-icon type="iconshoufangzhehuaban" />
           受访者:{{ patient.name }}
         </a-col>
-        <a-col :md="6" :sm="24" class="UserNameCard">
+        <a-col :md="7" :sm="24" class="UserNameCard">
           <my-icon type="iconshenfenzhenghuaban" />
-          {{ patient.card }}
+          身份证:{{ patient.card }}
         </a-col>
-        <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
+        <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
     </a-card>
     <a-card :bordered="false" class="card-box">
@@ -40,17 +40,19 @@
                   <a-radio value="2">CT</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <div class="clearfix" style="margin-top: 10px;">
-                <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
-                  <div v-if="fileList.length < 4">
-                    <a-icon type="plus" />
-                    <div class="ant-upload-text">Upload</div>
-                  </div>
-                </a-upload>
-                <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-                  <img alt="example" style="width: 100%" :src="previewImage" />
-                </a-modal>
-              </div>
+              <a-form-item label="(3) 上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <div class="clearfix" style="margin-top: 10px;">
+                  <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
+                    <div v-if="fileList.length < 1">
+                      <a-icon type="plus" />
+                      <div class="ant-upload-text">Upload</div>
+                    </div>
+                  </a-upload>
+                  <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                    <img alt="example" style="width: 100%" :src="previewImage" />
+                  </a-modal>
+                </div>
+              </a-form-item>
               <div class="title">2.支扩位于CT图像上</div>
               <a-form-item label="(1) 右上叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a3', {...require1, initialValue: initValue('a3')}]" @change="computeReiff">
@@ -324,7 +326,6 @@ export default {
               if (v.response) a.push(v.response.fileName)
               else a.push(v.name)
             })
-            // var fileName = _.map(this.fileList, function(v) { return v.response ? v.response.fileName : v.name })
             params.append('fileName', JSON.stringify(a))
           }
           params.append('formData', JSON.stringify(re))
@@ -364,6 +365,8 @@ export default {
         .then(res => {
           if (res.data && res.data.xbyxx) {
             that.xbyxx = that.dealAnswers(res.data.xbyxx)
+          }
+          if (res.data && res.data.annexListXbyxx) {
             that.fileList = _.map(res.data.annexListXbyxx, function(v) {
               return {
                 uid: v.annexId,
@@ -487,10 +490,16 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+<<<<<<< HEAD
 #baselineInfo{
   height:calc(100% - 10px);
+=======
+#baselineInfo {
+  height: 100%;
+>>>>>>> e8a6cec67907e19c57149b1be3b6a19ae38a8785
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   height: calc(100% - 54px);
@@ -688,6 +697,7 @@ export default {
     .anticon-clock-circle {
       color: #06a0e2;
     }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;

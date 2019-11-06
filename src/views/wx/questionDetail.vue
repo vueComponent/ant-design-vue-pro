@@ -1,24 +1,25 @@
 <template>
-  <div id="baselineInfo" class="page-header-index-wide page-header-wrapper-grid-content-main">
-    <a-spin :spinning="isLoading">
-      <a-card :bordered="false" id="baselineHeader" style="background-color: #0399EC;color:#FFFFFF;">
-        <a-row :gutter="30" style="line-height: 34px;">
-          <a-col :md="1" :sm="4">
-            <a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" />
-          </a-col>
-          <a-col :md="5" :sm="20" class="UserNameCard">
-            <my-icon type="iconshoufangzhe_huaban" />
-            受访者:{{ info.name }}
-          </a-col>
-          <a-col :md="6" :sm="24" class="UserNameCard">
-            <my-icon type="iconshenfenzheng_huaban" />
-            {{ info.card }}
-          </a-col>
-          <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{info.createTime | moment}}</a-col>
-        </a-row>
-      </a-card>
-      <a-card :bordered="false" style="margin-top: 10px;padding-left: 0">
-        <a-row type="flex" style="overflow: auto;flex-direction: column;">
+  <div id="baselineInfo" class="page-header-index-wide page-header-wrapper-grid-content-main" style="height:100%;">
+    <a-spin :spinning="isLoading" style="height:100%">
+      <div style="flex: 1;display: flex;flex-direction: column;">
+        <a-card :bordered="false" id="baselineHeader" style="background-color: #0399EC;color:#FFFFFF;">
+          <a-row :gutter="30" style="line-height: 34px;">
+            <a-col :md="1" :sm="4">
+              <a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" />
+            </a-col>
+            <a-col :md="5" :sm="20" class="UserNameCard">
+              <my-icon type="iconshoufangzhe_huaban" />
+              受访者:{{ info.name }}
+            </a-col>
+            <a-col :md="6" :sm="24" class="UserNameCard">
+              <my-icon type="iconshenfenzheng_huaban" />
+              {{ info.card }}
+            </a-col>
+            <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{info.createTime | moment}}</a-col>
+          </a-row>
+        </a-card>
+        <!-- <a-card :bordered="false" style="margin-top: 10px"> -->
+        <a-row type="flex" style="flex:1;padding: 10px 15px;flex-direction: column;margin-top: 10px;overflow: hidden;">
           <div class="head-bar">
             <a-row type="flex">
               <span class="head-icon"></span>
@@ -29,7 +30,7 @@
               <a-button class="btn fr" @click="save(3)">不通过</a-button>
             </a-row>
           </div>
-          <div class="baselineForm" :style="baselineFormStyle">
+          <div class="baselineForm">
             <!-- 调查问卷 -->
             <div v-if="question.remark" class="question-des"><span style="color:#3398dc">说明：</span>{{question.remark}}</div>
             <a-form :form="form">
@@ -56,7 +57,8 @@
             </a-form>
           </div>
         </a-row>
-      </a-card>
+      </div>
+      <!-- </a-card> -->
     </a-spin>
   </div>
 </template>
@@ -73,9 +75,6 @@
       return {
         isLoading: true,
         info: {},
-        baselineFormStyle: {
-          height: (window.screen.height - 350) + 'px',
-        },
         form: this.$form.createForm(this),
         question: {},
         listArr: [],
@@ -155,6 +154,10 @@
         left: -5px;
       }
     }
+    /deep/ .ant-spin-container {
+      height: 100%;
+      display: flex;
+    }
     .head-bar {
       height: 80px;
       display: flex;
@@ -163,8 +166,8 @@
       background-color: #f7ffff;
       border: 2px solid #079ce9;
       box-shadow: 4px 4px 0px #b9b4ac;
-      margin: 0 20px;
       padding: 0 15px;
+      margin-bottom: 15px;
       /deep/ .ant-btn {
         height: 40px;
         padding: 0 20px;
@@ -201,6 +204,8 @@
     }
 
     .baselineForm {
+      flex: 1;
+      overflow: auto;
       padding: 20px;
 
       /deep/ .ant-radio-disabled + span {

@@ -9,11 +9,11 @@
           <my-icon type="iconshoufangzhehuaban" />
           受访者:{{ patient.name }}
         </a-col>
-        <a-col :md="6" :sm="24" class="UserNameCard">
+        <a-col :md="7" :sm="24" class="UserNameCard">
           <my-icon type="iconshenfenzhenghuaban" />
-          {{ patient.card }}
+          身份证:{{ patient.card }}
         </a-col>
-        <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
+        <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
     </a-card>
     <a-card :bordered="false" class="card-box">
@@ -33,7 +33,7 @@
               <a-form-item label="血常规报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
                 <div class="clearfix">
                   <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
-                    <div v-if="fileList1.length < 4">
+                    <div v-if="fileList1.length < 1">
                       <a-icon type="plus" />
                       <div class="ant-upload-text">Upload</div>
                     </div>
@@ -65,7 +65,7 @@
               <a-form-item label="血生化报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
                 <div class="clearfix">
                   <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
-                    <div v-if="fileList2.length < 4">
+                    <div v-if="fileList2.length < 1">
                       <a-icon type="plus" />
                       <div class="ant-upload-text">Upload</div>
                     </div>
@@ -265,9 +265,11 @@ export default {
     },
     changeRadio(e, t) {},
     handleClick(e) {
-      this.maskId = e.key
-      // this.getElementsAnswer()
-      this.$router.push('/list/basis/' + this.patientBasisId + '/' + this.maskId)
+      if (e.key >= 31 && e.key <= 36) {
+        this.$router.push('/basis/question/' + this.patientBasisId + '/' + e.key)
+      } else {
+        this.$router.push('/list/basis/' + this.patientBasisId + '/' + e.key)
+      }
     },
     handleSubmit(e) {
       e.preventDefault()
