@@ -39,7 +39,7 @@ export default {
   methods: {
     handleChange (e) {
       const value = e.target.value
-      let len = getStrFullLength(value)
+      const len = getStrFullLength(value)
       if (len <= this.limit) {
         this.currentLimit = len
         this.$emit('change', value)
