@@ -42,17 +42,17 @@
                   <span class="question-icon"></span>
                   <span>{{item.name}}</span>
                 </div>
-                <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
+                <a-form-item class="ques-box" v-for="(qu1, index) in item.childrens" :key="index" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
                   <p v-if="qu1.type == 5" class="question-tip">
                     <span class="tip-icon"></span>
                     <span>{{qu1.name}}</span>
                   </p>
                   <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue" />
                   <a-radio-group v-if="qu1.type === 1" :name="qu1.questionTitleId+''" v-model="qu1.inputType">
-                    <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
+                    <a-radio @click="handleChangeRadio()" :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
                   </a-radio-group>
                   <a-checkbox-group v-if="qu1.type === 2" v-model="qu1.inputType">
-                    <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" :name="qu1.questionTitleId+''">{{item.name}}</a-checkbox>
+                    <a-checkbox @click="handleChangeRadio()" :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" :name="qu1.questionTitleId+''">{{item.name}}</a-checkbox>
                   </a-checkbox-group>
                   <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue && moment(qu1.answers[0].questionOptionValue, 'YYYY-MM-DD')" :disabledDate="disabledDate" />
                 </a-form-item>
@@ -174,6 +174,29 @@ export default {
         this[t] = false
       }
     },
+    
+    handleChangeRadio: function () {
+      var that = this;
+      var radios = $('input[type="radio"]');
+      var chackVal = null;
+      var aa = null;
+      for(var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+          chackVal = radios[i].value;
+          aa = radios[i].name;
+          if(chackVal == 148){
+              $('.ques-box').eq(21).show();
+              $('.ques-box').eq(22).show();
+              $('.ques-box').eq(23).show();
+          }else if(chackVal == 149){
+              $('.ques-box').eq(21).hide();
+              $('.ques-box').eq(22).hide();
+              $('.ques-box').eq(23).hide();
+          }
+        }else{
+        }
+      }
+    },
     disabledDate(current) {
       // Can not select days before today and today
       return current && current > moment().endOf('day');
@@ -278,10 +301,14 @@ export default {
                 options: []
               }
               $('input[name="' + sub.questionTitleId + '"]:checked').each(function() {
+                console.log("checked......");
+                
                 subOp.options.push({
                   questionTitleId: sub.questionTitleId,
                   questionOptionId: $(this).val()
                 })
+                console.log($(this).val());
+                
               })
               childrenObject.push(subOp)
             }
