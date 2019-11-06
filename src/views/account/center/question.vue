@@ -6,14 +6,14 @@
           <a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" />
         </a-col>
         <a-col :md="5" :sm="20" class="UserNameCard">
-          <my-icon type="iconshoufangzhe_huaban" />
+          <my-icon type="iconshoufangzhehuaban" />
           受访者:{{ patient.name }}
         </a-col>
-        <a-col :md="6" :sm="24" class="UserNameCard">
-          <my-icon type="iconshenfenzheng_huaban" />
-          {{ patient.card }}
+        <a-col :md="7" :sm="24" class="UserNameCard">
+          <my-icon type="iconshenfenzhenghuaban" />
+          身份证:{{ patient.card }}
         </a-col>
-        <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
+        <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
     </a-card>
     <a-card :bordered="false" class="card-box">
@@ -42,17 +42,17 @@
                   <span class="question-icon"></span>
                   <span>{{item.name}}</span>
                 </div>
-                <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
+                <a-form-item class="ques-box" v-for="(qu1, index) in item.childrens" :key="index" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
                   <p v-if="qu1.type == 5" class="question-tip">
                     <span class="tip-icon"></span>
                     <span>{{qu1.name}}</span>
                   </p>
                   <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue" />
                   <a-radio-group v-if="qu1.type === 1" :name="qu1.questionTitleId+''" v-model="qu1.inputType">
-                    <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
+                    <a-radio @click="handleChangeRadio()" :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
                   </a-radio-group>
                   <a-checkbox-group v-if="qu1.type === 2" v-model="qu1.inputType">
-                    <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" :name="qu1.questionTitleId+''">{{item.name}}</a-checkbox>
+                    <a-checkbox @click="handleChangeRadio()" :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" :name="qu1.questionTitleId+''">{{item.name}}</a-checkbox>
                   </a-checkbox-group>
                   <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue && moment(qu1.answers[0].questionOptionValue, 'YYYY-MM-DD')" :disabledDate="disabledDate" />
                 </a-form-item>
@@ -133,17 +133,21 @@ export default {
         that.defaultSelectedKeys = [that.questionId]
         if (that.patientBasis.type === 1) {
           that.title = '基线'
+          that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
         if (that.patientBasis.type === 2) {
           that.title = '半年随访'
+          that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
         if (that.patientBasis.type === 3) {
           that.title = '年访视'
+          that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
         if (that.patientBasis.type === 4) {
           that.title = '急性加重期'
+          that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
-        that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+
       })
     this.getFormData()
   },
@@ -174,6 +178,29 @@ export default {
         this[t] = false
       }
     },
+    
+    handleChangeRadio: function () {
+      var that = this;
+      var radios = $('input[type="radio"]');
+      var chackVal = null;
+      var aa = null;
+      for(var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+          chackVal = radios[i].value;
+          aa = radios[i].name;
+          if(chackVal == 148){
+              $('.ques-box').eq(21).show();
+              $('.ques-box').eq(22).show();
+              $('.ques-box').eq(23).show();
+          }else if(chackVal == 149){
+              $('.ques-box').eq(21).hide();
+              $('.ques-box').eq(22).hide();
+              $('.ques-box').eq(23).hide();
+          }
+        }else{
+        }
+      }
+    },
     disabledDate(current) {
       // Can not select days before today and today
       return current && current > moment().endOf('day');
@@ -183,6 +210,8 @@ export default {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 1) {
         this.$router.push('/list/basis/' + this.patientBasisId + '/' + e.key)
+      } else if (this.patientBasis.type === 4) {
+        this.$router.push('/jxjzq/' + this.patientBasisId)
       } else {
         this.$router.push('/list/task/' + this.patientBasisId + '/' + e.key)
       }
@@ -235,7 +264,13 @@ export default {
               getPatientBasis(params)
                 .then(res => {
                   that.orgTree = res.data.list
-                  that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+                  if (that.patientBasis.type === 1) {
+                    that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+                  } else if (that.patientBasis.type === 2 || that.patientBasis.type === 4) {
+                    that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+                  } else if (that.patientBasis.type === 3) {
+                    that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+                  }
                 })
             })
             .catch(error => {
@@ -278,10 +313,14 @@ export default {
                 options: []
               }
               $('input[name="' + sub.questionTitleId + '"]:checked').each(function() {
+                console.log("checked......");
+                
                 subOp.options.push({
                   questionTitleId: sub.questionTitleId,
                   questionOptionId: $(this).val()
                 })
+                console.log($(this).val());
+                
               })
               childrenObject.push(subOp)
             }
@@ -340,10 +379,11 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:100%;
+#baselineInfo {
+  height: 100%;
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   // height: calc(100% - 64px);
@@ -571,6 +611,7 @@ export default {
     .anticon-clock-circle {
       color: #06a0e2;
     }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;

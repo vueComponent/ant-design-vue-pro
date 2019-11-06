@@ -9,11 +9,11 @@
           <my-icon type="iconshoufangzhehuaban" />
           受访者:{{ patient.name }}
         </a-col>
-        <a-col :md="6" :sm="24" class="UserNameCard">
+        <a-col :md="7" :sm="24" class="UserNameCard">
           <my-icon type="iconshenfenzhenghuaban" />
-          {{ patient.card }}
+          身份证:{{ patient.card }}
         </a-col>
-        <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
+        <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
     </a-card>
     <a-card :bordered="false" style="margin-top: 10px;padding-left: 0">
@@ -41,6 +41,19 @@
               </a-form-item>
               <div v-if="controla1p">
                 <div style="margin-top: 10px;">吸入支气管舒张剂前:</div>
+                <a-form-item label="报告上传 :" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
+                  <div class="clearfix" style="margin-top: 10px;">
+                    <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
+                      <div v-if="fileList1.length < 4">
+                        <a-icon type="plus" />
+                        <div class="ant-upload-text">Upload</div>
+                      </div>
+                    </a-upload>
+                    <a-modal :visible="previewVisible1" :footer="null" @cancel="handleCancel1">
+                      <img alt="example" style="width: 100%" :src="previewImage1" />
+                    </a-modal>
+                  </div>
+                </a-form-item>
                 <a-form-item label="FEV1:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
                   <a-radio-group v-decorator="['a21', {...require2, initialValue: initValue('a21')}]" @change="changeRadio($event, 'controla21')">
                     <a-radio value="1">有</a-radio>
@@ -87,6 +100,19 @@
                   <a-input style="width: 240px;" v-decorator="['a62', {...inputRequired, initialValue: initValue('a62')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
                 <div style="margin-top: 10px;">吸入支气管舒张剂后:</div>
+                <a-form-item label="报告上传 :" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
+                  <div class="clearfix">
+                    <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
+                      <div v-if="fileList2.length < 4">
+                        <a-icon type="plus" />
+                        <div class="ant-upload-text">Upload</div>
+                      </div>
+                    </a-upload>
+                    <a-modal :visible="previewVisible2" :footer="null" @cancel="handleCancel2">
+                      <img alt="example" style="width: 100%" :src="previewImage2" />
+                    </a-modal>
+                  </div>
+                </a-form-item>
                 <a-form-item label="FEV1:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
                   <a-radio-group v-decorator="['b23', {...require2, initialValue: initValue('b23')}]" @change="changeRadio($event, 'controlb23')">
                     <a-radio value="1">有</a-radio>
@@ -338,7 +364,15 @@ export default {
       controlc41: false,
       controle1: false,
       spinning: false,
-      executeStatus: false
+      executeStatus: false,
+      previewVisible1: false,
+      previewImage1: '',
+      previewVisible2: false,
+      previewImage2: '',
+      uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
+      viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
+      fileList1: [],
+      fileList2: []
     }
   },
   created() {
@@ -366,8 +400,29 @@ export default {
       params.append('basisMarkId', this.maskId)
       getBasisForm(params)
         .then(res => {
-          if (res.data && res.data.fgnxgjc)
+          if (res.data && res.data.fgnxgjc) {
             that.fgnxgjc = that.dealAnswers(res.data.fgnxgjc)
+          }
+          if (res.data.annexListQ && res.data.annexListQ.length) {
+            that.fileList1 = _.map(res.data.annexListQ, function(v) {
+              return {
+                uid: v.annexId,
+                url: that.viewPicUrl + v.annexAddress,
+                name: v.annexAddress,
+                status: 'done'
+              }
+            })
+          }
+          if (res.data.annexListH && res.data.annexListH.length) {
+            that.fileList2 = _.map(res.data.annexListH, function(v) {
+              return {
+                uid: v.annexId,
+                url: that.viewPicUrl + v.annexAddress,
+                name: v.annexAddress,
+                status: 'done'
+              }
+            })
+          }
         })
         .catch(error => {
           console.log(error)
@@ -418,6 +473,24 @@ export default {
           var params = new URLSearchParams()
           if (this.fgnxgjc && this.fgnxgjc.fgnxgjcId) {
             re.fgnxgjcId = this.fgnxgjc.fgnxgjcId
+          }
+          //附件
+          if (this.fileList1 && this.fileList1.length) {
+            var a = []
+            _.each(this.fileList1, function(v) {
+              if (v.response) a.push(v.response.fileName)
+              else a.push(v.name)
+            })
+            params.append('fileName', JSON.stringify(a))
+          }
+          //附件
+          if (this.fileList2 && this.fileList2.length) {
+            var a = []
+            _.each(this.fileList2, function(v) {
+              if (v.response) a.push(v.response.fileName)
+              else a.push(v.name)
+            })
+            params.append('fileNameOther', JSON.stringify(a))
           }
           params.append('formData', JSON.stringify(re))
           params.append('patientBasis', JSON.stringify(this.patientBasis))
@@ -530,6 +603,24 @@ export default {
       if (this.fgnxgjc && this.fgnxgjc.fgnxgjcId) {
         re.fgnxgjcId = this.fgnxgjc.fgnxgjcId
       }
+      //附件
+      if (this.fileList1 && this.fileList1.length) {
+        var a = []
+        _.each(this.fileList1, function(v) {
+          if (v.response) a.push(v.response.fileName)
+          else a.push(v.name)
+        })
+        params.append('fileName', JSON.stringify(a))
+      }
+      //附件
+      if (this.fileList2 && this.fileList2.length) {
+        var a = []
+        _.each(this.fileList2, function(v) {
+          if (v.response) a.push(v.response.fileName)
+          else a.push(v.name)
+        })
+        params.append('fileNameOther', JSON.stringify(a))
+      }
       params.append('formData', JSON.stringify(re))
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
@@ -547,6 +638,26 @@ export default {
           console.log(error)
         })
       return false
+    },
+    handleCancel1() {
+      this.previewVisible1 = false;
+    },
+    handlePreview1(file) {
+      this.previewImage1 = file.url || file.thumbUrl;
+      this.previewVisible1 = true;
+    },
+    handleChange1({ fileList }) {
+      this.fileList1 = fileList;
+    },
+    handleCancel2() {
+      this.previewVisible2 = false;
+    },
+    handlePreview2(file) {
+      this.previewImage2 = file.url || file.thumbUrl;
+      this.previewVisible2 = true;
+    },
+    handleChange2({ fileList }) {
+      this.fileList2 = fileList;
     }
   }
 }

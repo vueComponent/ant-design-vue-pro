@@ -71,3 +71,11 @@ export function getReportFormData(parameter) {
     params: parameter
   })
 }
+
+export function getImportDataList(parameter) {
+  return axios({
+    url: '/reportCollectBase/getImportDataList',
+    method: 'post',
+    params: parameter
+  })
+}

@@ -6,14 +6,14 @@
           <a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" />
         </a-col>
         <a-col :md="4" :sm="20" class="UserNameCard">
-          <my-icon type="iconshoufangzhe_huaban" />
+          <my-icon type="iconshoufangzhehuaban" />
           受访者:{{ patient.name }}
         </a-col>
-        <a-col :md="6" :sm="24" class="UserNameCard">
-          <my-icon type="iconshenfenzheng_huaban" />
-          {{ patient.card }}
+        <a-col :md="7" :sm="24" class="UserNameCard">
+          <my-icon type="iconshenfenzhenghuaban" />
+          身份证:{{ patient.card }}
         </a-col>
-        <a-col :md="13" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
+        <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
     </a-card>
     <a-card :bordered="false" style="margin-top: 10px;padding-left: 0">
