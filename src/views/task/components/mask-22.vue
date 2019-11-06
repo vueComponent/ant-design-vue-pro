@@ -40,7 +40,8 @@
                 <a-input style="width: 240px;" v-decorator="['a11', {...inputRequired, initialValue: initValue('a11')}]" autocomplete="off"></a-input>
               </a-form-item>
               <div v-if="controla1p">
-                <div style="margin-top: 10px;">吸入支气管舒张剂前:</div>
+                <div style="margin-top: 10px;">吸入支气管舒张剂前:<a-button class="btn" style="margin-left: 150px;float: right;" @click="_importQ">导入</a-button>
+                </div>
                 <a-form-item label="报告上传 :" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
                   <div class="clearfix" style="margin-top: 10px;">
                     <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
@@ -99,7 +100,8 @@
                 <a-form-item label="具体数值:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla61" class="border-dotted">
                   <a-input style="width: 240px;" v-decorator="['a62', {...inputRequired, initialValue: initValue('a62')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
-                <div style="margin-top: 10px;">吸入支气管舒张剂后:</div>
+                <div style="margin-top: 10px;">吸入支气管舒张剂后:<a-button class="btn" style="margin-left: 150px;float: right;" @click="_importH">导入</a-button>
+                </div>
                 <a-form-item label="报告上传 :" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
                   <div class="clearfix">
                     <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
@@ -265,19 +267,22 @@
       </a-row>
     </a-card>
     <a-spin :spinning="spinning"></a-spin>
+    <select-report ref="selectModule" @listen="confirmSelect" />
   </div>
 </template>
 <script>
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, getFsImportDate } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
+import SelectReport from '@/views/task/SelectReport'
 export default {
   name: 'task22',
   components: {
     STree,
-    MyIcon
+    MyIcon,
+    SelectReport
   },
   data() {
     return {
@@ -658,6 +663,23 @@ export default {
     },
     handleChange2({ fileList }) {
       this.fileList2 = fileList;
+    },
+    _importQ() {
+      this.$refs.selectModule.add(this.patient.patientId, 53)
+    },
+    _importH() {
+      this.$refs.selectModule.add(this.patient.patientId, 54)
+    },
+    confirmSelect(data) {
+      var that = this
+      console.log(data)
+      var params = new URLSearchParams()
+      params.append('reportCollectDetailId', data.reportCollectDetailId)
+      getFsImportDate(params)
+        .then(res => {
+          console.log(res.data)
+          that.fgnxgjc = _.extend(that.fgnxgjc || {}, that.dealAnswers(res.data.fgnxgjc))
+        })
     }
   }
 }

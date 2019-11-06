@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import { getPatientList } from '@/api/patient';
-import moment from 'moment';
-import _ from 'lodash';
+import { getPatientList } from '@/api/patient'
+import moment from 'moment'
+import _ from 'lodash'
 const columns = [
   {
     title: '档案号',

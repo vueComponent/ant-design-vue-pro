@@ -190,3 +190,11 @@ export function validateCard(params) {
     data: params
   })
 }
+
+export function getFsImportDate(params) {
+  return axios({
+    url: '/basis/getFsImportDate',
+    method: 'post',
+    data: params
+  })
+}
