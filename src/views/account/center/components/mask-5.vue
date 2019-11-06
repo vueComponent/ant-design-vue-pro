@@ -490,13 +490,8 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-<<<<<<< HEAD
 #baselineInfo{
   height:calc(100% - 10px);
-=======
-#baselineInfo {
-  height: 100%;
->>>>>>> e8a6cec67907e19c57149b1be3b6a19ae38a8785
 }
 
 /deep/ .card-box {
