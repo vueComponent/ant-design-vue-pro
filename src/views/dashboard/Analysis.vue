@@ -59,43 +59,49 @@
         <a-card :loading="loading" :bodyStyle="bodyStyle" title="我的工作" total="￥126,560">
           <a-row :gutter="10">
             <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 12px' }">
-              <div class="card-wait-data">
-                <span class="myIcon"><my-icon type="iconziyuan1" /></span>
-                <div>
-                  <p>待办访视</p>
-                  <h1>{{ myWork.nodoVisitsNum }}</h1>
+              <router-link :to="{name:'Task'}">
+                <div class="card-wait-data">
+                  <span class="myIcon"><my-icon type="iconziyuan1" /></span>
+                  <div>
+                    <p>待办访视</p>
+                    <h1>{{ myWork.nodoVisitsNum }}</h1>
+                  </div>
                 </div>
-              </div>
+              </router-link>
+              
             </a-col>
             <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 12px' }">
-              <div class="card-wait-data">
-                <span class="myIcon"><my-icon type="iconziyuan1" /></span>
-                <div>
-                                  <p>待审转移病例</p>
-                  <h1>{{ myWork.noDoPatientTransferNum }}</h1>
+              <router-link :to="{name:'caseTransferReview'}">
+                <div class="card-wait-data">
+                  <span class="myIcon"><my-icon type="iconziyuan1" /></span>
+                  <div>
+                    <p>待审转移病例</p>
+                    <h1>{{ myWork.noDoPatientTransferNum }}</h1>
+                  </div>
                 </div>
-
-              </div>
+              </router-link>
             </a-col>
             <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 12px' }">
-              <div class="card-wait-data">
-                <span class="myIcon"><my-icon type="iconziyuan" /></span>
-                <div>
-                                  <p>待审问卷</p>
-                  <h1>{{ myWork.noDoQuestionNum }}</h1>
+              <router-link :to="{name:'wxQuestionReview'}">
+                <div class="card-wait-data">
+                  <span class="myIcon"><my-icon type="iconziyuan" /></span>
+                  <div>
+                    <p>待审问卷</p>
+                    <h1>{{ myWork.noDoQuestionNum }}</h1>
+                  </div>
                 </div>
-
-              </div>
+              </router-link>
             </a-col>
             <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 12px' }">
-              <div class="card-wait-data">
-                <span class="myIcon"><my-icon type="iconziyuan" /></span>
-                <div>
-                                  <p>其他待办</p>
-                  <h1>{{ myWork.otherNum }}</h1>
+              <router-link :to="{name:'wxPatientReportReview'}">
+                <div class="card-wait-data">
+                  <span class="myIcon"><my-icon type="iconziyuan" /></span>
+                  <div>
+                    <p>待审阅报告</p>
+                    <h1>{{ myWork.otherNum }}</h1>
+                  </div>
                 </div>
-
-              </div>
+              </router-link>
             </a-col>
           </a-row>
         </a-card>

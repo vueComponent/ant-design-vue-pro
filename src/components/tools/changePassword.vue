@@ -18,8 +18,9 @@
 </template>
 <script>
 import { getDetailById, updatePwd, } from '@/api/login';
-import { mapGetters } from 'vuex'
+import { mapGetters,mapActions } from 'vuex'
 import { log } from 'util';
+import { timeout } from 'q';
 
 export default {
   data() {
@@ -40,6 +41,7 @@ export default {
     ...mapGetters(['token'])
   },
   methods: {
+    ...mapActions(['Logout']),
     getUDetailById(id) {
       const Params = new URLSearchParams();
       Params.append('doctorId', id);
@@ -107,19 +109,24 @@ export default {
         return false;
       });
       this.checkPassword();
-      if (this.checkPassword() == false) {
+      const that = this;
+     
+      if (that.checkPassword() == false) {
 
       }else{
         // console.log("成功")
         const Params = new URLSearchParams();
-        this.ModalText.password = this.form.getFieldValue('newPassword')
-        Params.append('doctor',JSON.stringify(this.ModalText));
+        that.ModalText.password = that.form.getFieldValue('newPassword')
+        Params.append('doctor',JSON.stringify(that.ModalText));
         updatePwd(Params).then(res => {
           if(res.code == 0){
-            this.$message.success(res.msg);
-            this.visible = false;
+            that.$message.success(res.msg);
+            that.visible = false;
+            that.Logout().then(res => {
+              that.$router.push({ name: 'login' })
+            })
           }else{
-            this.$message.error(res.msg);
+            that.$message.error(res.msg);
           }
         });
       }

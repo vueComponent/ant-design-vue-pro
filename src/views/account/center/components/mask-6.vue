@@ -372,6 +372,26 @@ export default {
         } else {
           this[t] = false
         }
+      } else if (t === 'controla4' && e.target.value === '-1') {
+        this.controla4 = false
+        this.controla420 = false
+        this.controla421 = false
+        this.controla422 = false
+        this.controla423 = false
+        this.controla424 = false
+        this.controla425 = false
+        this.controla426 = false
+        this.controla427 = false
+      } else if (t === 'controlb4' && e.target.value === '-1') {
+        this.controlb4 = false
+        this.controlb420 = false
+        this.controlb421 = false
+        this.controlb422 = false
+        this.controlb423 = false
+        this.controlb424 = false
+        this.controlb425 = false
+        this.controlb426 = false
+        this.controlb427 = false
       } else if (e.target.value === '1') {
         this[t] = true
       } else {
@@ -679,10 +699,11 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:calc(100% - 10px);
+#baselineInfo {
+  height: calc(100% - 10px);
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   height: calc(100% - 54px);
@@ -880,6 +901,7 @@ export default {
     .anticon-clock-circle {
       color: #06a0e2;
     }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;

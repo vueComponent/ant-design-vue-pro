@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19" style="height:100%;">
-          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:scroll;">
+          <a-form :form="form" @submit="handleSubmit">
             <div class="head-bar">
               <a-row type="flex">
                 <span class="head-icon"></span>
@@ -84,12 +84,12 @@ export default {
     return {
       baselineInfoStyle: {
         overflow: "auto",
-        height: '100%',
+        height: '486px',
         "padding-right": "0px",
         "border-right": "1px solid #ddd"
       },
       baselineFormStyle: {
-        // height: '416px',
+        height: '400px',
       },
       title: '',
       openKeys: [],
@@ -416,9 +416,10 @@ export default {
   padding: 0 15px;
 
   /deep/ .ant-btn {
-    height: 40px;
-    padding: 0 20px;
-    font-size: 16px;
+    // height: 40px;
+    // padding: 0 20px;
+    // font-size: 16px;
+    margin-top: 12px;
   }
 
   .question-title {
