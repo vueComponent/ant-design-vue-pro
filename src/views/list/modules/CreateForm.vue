@@ -60,7 +60,7 @@
           <a-input v-decorator="['telephone3']" />
         </a-form-item>
         <a-form-item :wrapperCol="agrWrapperCol">
-          <a-checkbox v-decorator="['agreeMent', { rules: [ { required: true, validator: agrValidator }] }]" :disabled="options.title == '编辑患者'">
+          <a-checkbox v-decorator="['agreeMent', { rules: [ { required: true, validator: agrValidator }], valuePropName: 'checked' }]" :disabled="options.title == '编辑患者'">
             患者是否已签署
             <a href="#">知情同意书</a>
             （点开左侧查看详情）
