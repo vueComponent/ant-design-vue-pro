@@ -76,19 +76,21 @@ export default {
       const validateFieldsKey = customActiveKey === 'tab1' ? ['account', 'password'] : ['mobile', 'captcha'];
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
+        // debugger
         if (!err) {
-          console.log('login form', values);
+          // console.log('login form', values);
           const loginParams = { ...values };
-          console.log("loginParams", loginParams)
+          // console.log("loginParams", loginParams)
           Login(loginParams)
             .then(function(res) {
               console.log(res)
               that.loginSuccess(res)
             })
-            .catch(error => {
+            .catch(response => {
+              console.log(response);
               that.$notification['error']({
-                message: '错误',
-                description: error,
+                message: response.msg,
+                // description: response.msg,
                 duration: 4
               })
             })
