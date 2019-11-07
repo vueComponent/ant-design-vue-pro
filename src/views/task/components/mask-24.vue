@@ -36,7 +36,8 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla1">
-                <div class="title">1.血常规</div>
+                <div class="title">1.血常规<a-button class="btn" style="margin-left: 150px;float: right;position: relative;top: 3px;" @click="_importXcg">导入</a-button>
+                </div>
                 <a-form-item label="血常规报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
                   <div class="clearfix">
                     <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
@@ -68,7 +69,8 @@
                 <a-form-item label="(6) 嗜酸细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['b6', { initialValue: initValue('b6')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
-                <div class="title">2.血生化</div>
+                <div class="title">2.血生化<a-button class="btn" style="margin-left: 150px;float: right;position: relative;top: 3px;" @click="_importXsh">导入</a-button>
+                </div>
                 <a-form-item label="血生化报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
                   <div class="clearfix">
                     <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
@@ -159,19 +161,22 @@
       </a-row>
     </a-card>
     <a-spin :spinning="spinning"></a-spin>
+    <select-report ref="selectModule" @listen="confirmSelect" />
   </div>
 </template>
 <script>
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, getFsImportDate } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
+import SelectReport from '@/views/task/SelectReport'
 export default {
   name: 'task24',
   components: {
     STree,
-    MyIcon
+    MyIcon,
+    SelectReport
   },
   data() {
     return {
@@ -467,6 +472,23 @@ export default {
     },
     handleChange2({ fileList }) {
       this.fileList2 = fileList;
+    },
+    _importXcg() {
+      this.$refs.selectModule.add(this.patient.patientId, 51)
+    },
+    _importXsh() {
+      this.$refs.selectModule.add(this.patient.patientId, 52)
+    },
+    confirmSelect(data) {
+      var that = this
+      console.log(data)
+      var params = new URLSearchParams()
+      params.append('reportCollectDetailId', data.reportCollectDetailId)
+      getFsImportDate(params)
+        .then(res => {
+          console.log(res.data)
+          that.qtsyjc = _.extend(that.qtsyjc || {}, that.dealAnswers(res.data.qtsyjc))
+        })
     }
   }
 }
