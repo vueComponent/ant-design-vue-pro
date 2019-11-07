@@ -82,10 +82,9 @@
       },
       handleSubmit() {
         this.confirmLoading = true
-        const params = {
-          patientId: this.patient.patientId,
-          wxPatient: this.userInfo
-        }
+        const params = new FormData()
+        params.append('patientId', this.patient.patientId)
+        params.append('wxPatient', JSON.stringify(this.userInfo))
         wxBind(params).then(res => {
           this.$message.success(res.msg);
           this.visible = false

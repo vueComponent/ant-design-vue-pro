@@ -27,7 +27,7 @@
             </div>
             <a-row type="flex" align="middle">
               <span class="tip-icon"></span>
-              <span>文件尺寸1100*400px，小于1MB</span>
+              <span>建议图片尺寸1100*400px，小于1MB</span>
             </a-row>
           </a-col>
         </a-row>
@@ -59,7 +59,7 @@
             </div>
             <a-row type="flex" align="middle">
               <span class="tip-icon"></span>
-              <span>文件尺寸320*240px，小于500KB</span>
+              <span>建议图片尺寸320*240px，小于500KB</span>
             </a-row>
             <a-row style="margin-top:10px">
               <a-input v-model="item.remake" placeholder="填写图片说明" />
@@ -89,7 +89,7 @@
             </div>
             <a-row type="flex" align="middle">
               <span class="tip-icon"></span>
-              <span>文件尺寸320*240px，小于500KB</span>
+              <span>建议图片尺寸320*240px，小于500KB</span>
             </a-row>
             <a-row style="margin-top:10px">
               <a-input v-model="item.link" placeholder="链接地址" />
