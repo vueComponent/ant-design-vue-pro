@@ -35,19 +35,27 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-      console.log('login enter')
+      // console.log('login enter')
       return new Promise((resolve, reject) => {
-        console.log('login promise')
+        // console.log('login promise')
         login(userInfo).then(response => {
-          console.log('login return')
-          const result = response.data
-          Vue.ls.set(ACCESS_TOKEN, result, 7 * 24 * 60 * 60 * 1000)
-          commit('SET_TOKEN', result)
-          // Vue.ls.set(ROLE, typeof result.centerId !== 'undefined' ? 'center' : 'group', 7 * 24 * 60 * 60 * 1000)
-          resolve()
-        }).catch(error => {
-          console.log('login reject')
-          reject(error)
+          console.log(response)
+          if(!response.data){
+            // const result = response;
+            // Vue.ls.set(ACCESS_TOKEN, result, 7 * 24 * 60 * 60 * 1000)
+            // commit('SET_TOKEN', result)
+            reject(response)
+          }else{
+            const result = response.data
+            Vue.ls.set(ACCESS_TOKEN, result, 7 * 24 * 60 * 60 * 1000)
+            commit('SET_TOKEN', result)
+            // Vue.ls.set(ROLE, typeof result.centerId !== 'undefined' ? 'center' : 'group', 7 * 24 * 60 * 60 * 1000)
+            resolve()
+          }         
+        }).catch(res => {
+          // return response
+          console.log(res);
+          reject(res)
         })
       })
     },
