@@ -89,7 +89,7 @@
             </div>
             <a-row type="flex" align="middle">
               <span class="tip-icon"></span>
-              <span>建议图片尺寸320*240px，小于500KB</span>
+              <span>建议图片尺寸240*100px，小于500KB</span>
             </a-row>
             <a-row style="margin-top:10px">
               <a-input v-model="item.link" placeholder="链接地址" />
