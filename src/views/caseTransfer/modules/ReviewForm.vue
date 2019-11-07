@@ -26,7 +26,7 @@
         <a-form-item label="审核" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['executeStatus', requiredRule]">
             <a-radio value="1">通过</a-radio>
-            <a-radio value="0">驳回</a-radio>
+            <a-radio value="2">驳回</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item v-if="form.getFieldValue('executeStatus') == 0" label="驳回理由" :labelCol="labelCol" :wrapperCol="wrapperCol">
