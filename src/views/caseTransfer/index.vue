@@ -69,6 +69,12 @@
       :rowSelection="options.rowSelection"
       showPagination="auto"
     >
+    <template slot="reason" slot-scope="text">
+      <a-tooltip placement="topLeft">
+        <template slot="title">{{ text }}</template>
+        <span class="reason">{{ text }}</span>
+      </a-tooltip>
+    </template>
       <!-- <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">执行</a>
@@ -110,39 +116,45 @@ export default {
         {
           title: '申请单号',
           dataIndex: 'distractCode',
-          width: '100px'
+          width: 120
         },
         {
           title: '档案号',
           dataIndex: 'fileCode',
-          width: '120px'
+          width: 150
         },
         {
           title: '患者姓名',
           dataIndex: 'patientName',
-          width: '120px'
+          width: 120
         },
         {
           title: '身份证号',
           dataIndex: 'card',
-          width: '200px'
+          width: 200
         },
         {
           title: '原中心',
           dataIndex: 'centerName',
-          width: '150px'
+          width: 200
         },
         {
           title: '申请时间',
           dataIndex: 'createDate',
           customRender: createDate => moment(createDate).format('YYYY-MM-DD'),
-          width: '180px'
+          width: 180
         },
         {
           title: '审核状态',
           dataIndex: 'executeName',
           scopedSlots: { customRender: 'executeName' },
-          width: '150px'
+          width: 150
+        },
+        {
+          title: '驳回理由',
+          dataIndex: 'reason',
+          scopedSlots: { customRender: 'reason' },
+          width: 180
         }
       ],
       // 加载数据方法 必须为 Promise 对象
@@ -237,6 +249,13 @@ td.operation {
       }
     }
   }
+}
+.reason {
+    display: inline-block;
+    width: 11em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .userName {
   color: #1fb2fa;
