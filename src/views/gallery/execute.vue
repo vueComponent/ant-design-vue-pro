@@ -80,7 +80,8 @@ export default {
     params.append('reportCollectBaseId', this.reportCollectBaseId)
     getReportTypeMark(params)
       .then(res => {
-        that.orgTree = res.data
+        that.orgTree = res.data.rcdList
+        that.patient = res.data.patient
         var a = that.orgTree[0].reportTypeId
         that.defaultSelectedKeys = [a]
         that.$router.replace('/gallery/execute/' + that.reportCollectBaseId + '/' + a)
