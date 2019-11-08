@@ -7,12 +7,12 @@
         </a-col>
         <a-col :md="4" :sm="20" class="UserNameCard">
           <my-icon type="iconshoufangzhehuaban" />
-          受访者:{{ $route.params.name }}
+          受访者:{{ patient.name }}
           <!-- 受访者:{{ patient.name }} -->
         </a-col>
         <a-col :md="7" :sm="24" class="UserNameCard">
           <my-icon type="iconshenfenzhenghuaban" />
-          身份证:{{ $route.params.card }}
+          身份证:{{ patient.card }}
           <!-- 身份证:{{ patient.card }} -->
         </a-col>
         <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patient.createDate | moment }}</a-col>
@@ -33,7 +33,7 @@
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <div class="title">吸入支气管舒张剂前</div>
+              <div class="title">吸入支气管舒张剂后</div>
               <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">

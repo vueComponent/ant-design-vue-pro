@@ -263,7 +263,9 @@ export default {
               params.append('patientBasisId', this.patientBasisId)
               getPatientBasis(params)
                 .then(res => {
+                  debugger
                   that.orgTree = res.data.list
+                  that.defaultSelectedKeys = [that.questionId]
                   if (that.patientBasis.type === 1) {
                     that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
                   } else if (that.patientBasis.type === 2 || that.patientBasis.type === 4) {
