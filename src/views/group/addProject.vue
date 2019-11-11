@@ -33,6 +33,7 @@
             </a-col>
           </a-row>
           <s-table
+            style="text:left;"
             ref="table"
             size="small"
             rowKey="patientId"
@@ -117,26 +118,31 @@ export default {
       columns: [
         {
           title: '档案号',
-          dataIndex: 'code'
+          dataIndex: 'code',
+          width: '120px',
         },
         {
           title: '患者姓名',
           dataIndex: 'name',
-          scopedSlots: { customRender: 'name' }
+          scopedSlots: { customRender: 'name' },
+          width: '140px',
         },
         {
           title: '身份证号',
-          dataIndex: 'card'
+          dataIndex: 'card',
+          width: '220px',
         },
         {
           title: '创建日期',
           dataIndex: 'createDate',
-          customRender: createDate => moment(createDate).format('YYYY-MM-DD HH:mm:ss')
+          customRender: createDate => moment(createDate).format('YYYY-MM-DD HH:mm:ss'),
+          width: '200px',
         },
         {
           title: '访视状态',
           dataIndex: 'visit',
-          scopedSlots: { customRender: 'visit' }
+          scopedSlots: { customRender: 'visit' },
+          width: '150px',
         }
       ],
       // 加载数据方法 必须为 Promise 对象
@@ -218,7 +224,7 @@ export default {
     },
     selectfilter() {
       const key = {
-        filterCondition: this.filterCondition.join(',')
+        // filterCondition: this.filterCondition.join(',')
       };
       console.log('key', key);
       this.$refs.table.search(key);

@@ -37,7 +37,7 @@ export default {
       n:0,
       checkedP:{},
       visible: false,
-      maskClosable: false,
+      maskClosable: true,
       pStyle: {
         fontSize: '16px',
         color: 'rgba(0,0,0,0.85)',

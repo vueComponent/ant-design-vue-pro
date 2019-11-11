@@ -17,9 +17,10 @@
               </a>
             </a-form-item>
           </a-col>
-          <a-col :md="13" style="text-align:right" :sm="24">
-            <a-button type="primary" @click="checkProject()" style="margin-right: 10px;">选择项目</a-button>
+          <a-col :md="13" class="button-group" :sm="24">
+            <span><img v-if="this.projectName" src="../../assets/duigou.png" alt="" /> {{this.projectName}}</span>
             <a-button type="primary" @click="addCaces()">添加病例</a-button>
+            <a-button type="primary" @click="checkProject()" style="background: #ff8736;border: none;">选择项目</a-button>
             <!-- <a-button type="primary" style="margin-left: 10px;">导出</a-button> -->
           </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
@@ -90,7 +91,7 @@
       </span>
     </s-table>
     <user-detail ref="detailModal" />
-    <drawer ref="drawerModal" @checkedP="checkedP"></drawer>
+    <drawer :maskClosable="true" ref="drawerModal" @checkedP="checkedP"></drawer>
   </a-card>
 </template>
 <script>
@@ -162,12 +163,12 @@ export default {
           customRender: joinDate => moment(joinDate).format('YYYY-MM-DD'),
           width: "200px"
         },
-        {
-          title: '访视状态',
-          dataIndex: 'visit',
-          scopedSlots: { customRender: 'visit' },
-          width: "200px"
-        },
+        // {
+        //   title: '访视状态',
+        //   dataIndex: 'visit',
+        //   scopedSlots: { customRender: 'visit' },
+        //   width: "200px"
+        // },
         {
           title: '操作',
           dataIndex: 'action',
@@ -184,7 +185,7 @@ export default {
       },
       selectedRowKeys: [],
       selectedRows: [],
-
+      projectName: '',
       // custom table alert & rowSelection
       options: {
         alert: {
@@ -220,6 +221,9 @@ export default {
     this.scroll = {
       y: (window.screen.height - 368) + "px"
     }
+  },
+  mounted(){
+    this.checkProject();
   },
   methods: {
     clearForm() {
@@ -290,6 +294,7 @@ export default {
     },
     checkedP(data) {
       this.project.projectId = data.projectId;
+      this.projectName = data.projectName;
       console.log("this.project.projectId", this.project.projectId)
       const key = {
         projectId: data.projectId
@@ -381,5 +386,25 @@ export default {
   text-underline-position: under;
   text-decoration-color: #1FB2FA;
   cursor: pointer;
+}
+.button-group{
+  overflow: hidden;
+  span{
+    float: left;
+    color: #1890ff;
+    font-size: 18px;
+    height: 32px;
+    line-height: 32px;
+    img{
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin-bottom: 3px;
+    }
+  }
+  button{
+    float: right;
+    margin-right: 10px;
+  }
 }
 </style>

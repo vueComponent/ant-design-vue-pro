@@ -241,6 +241,12 @@ export const asyncRouterMap = [
         meta: { title: '报告采集', keepAlive: true, icon: baogao,isBack:false, permission: [ 'center', 'group']}
       },
       {
+        path: '/group/index',
+        name: 'Group',
+        component: () => import('@/views/group/index'),
+        meta: { title: '入组管理', keepAlive: true, icon: ruzhu,isBack:false, permission: [ 'center', 'group' ]}
+      },
+      {
         path: '/gallery/execute/:id(\\d+)/53',
         name: 'Exec53',
         hidden: true,
@@ -349,12 +355,6 @@ export const asyncRouterMap = [
         hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
         component: () => import('@/views/account/center/collect'),
         meta: {permission: [ 'center', 'group' ]}
-      },
-      {
-        path: '/group/index',
-        name: 'Group',
-        component: () => import('@/views/group/index'),
-        meta: { title: '入组管理', keepAlive: true, icon: ruzhu,isBack:false, permission: [ 'center', 'group' ]}
       },
       {
         path: '/group/addProject',
