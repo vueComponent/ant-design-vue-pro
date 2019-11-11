@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19" style="height:100%;">
-          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:scroll;">
+          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow-y:scroll;">
             <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
