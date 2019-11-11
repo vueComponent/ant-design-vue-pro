@@ -115,13 +115,29 @@
                     <p>访视时间: {{item.wirteDate|formDate}}</p>
                   </div>
                   <div class="followupInfoItemPro">
-                    <span>访视进度:</span>
+                      <p>
+                        访视进度:
+                        <span>{{item.progress == 100 ? '已完成' : '未完成'}}</span>
+                      </p>
+                    <!-- <span>访视进度:</span>
                     <p>
                       <a-progress  :percent="item.progress" status="active" />
-                    </p>
+                    </p> -->
                   </div>
-                   <router-link :to="{path:'/list/basis/' + item.patientBasisId}"> 
-                  <a-button type="primary" size="small"     style="float:right;margin-top:5px ;">
+                  <router-link v-if="item.type == 1" :to="{path:'/list/basis/' + item.patientBasisId}"> 
+                  <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
+                    <my-icon type="iconxiangqing_huaban" />
+                    详情
+                  </a-button>
+                  </router-link>
+                  <router-link v-else-if="item.type == 2||item.type == 3" :to="{path:'/list/task/' + item.patientBasisId}">
+                   <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
+                    <my-icon type="iconxiangqing_huaban" />
+                    详情
+                  </a-button>
+                  </router-link>
+                  <router-link v-else-if="item.type == 4" :to="{path:'/jxjzq/' + item.patientBasisId}">
+                   <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
                     <my-icon type="iconxiangqing_huaban" />
                     详情
                   </a-button>
