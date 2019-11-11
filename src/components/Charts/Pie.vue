@@ -3,7 +3,7 @@
     <v-coord type="theta" :innerRadius="0.8" :radius="0.95"></v-coord>
     <v-axis :show="true" />
     <v-tooltip :showTitle="showTitle"></v-tooltip>
-    <v-legend :useHtml="true" position="right" :reactive="true"  :containerTpl="containerTplLegend" :itemTpl="itemTpl" :offset="offset"></v-legend>
+    <v-legend :useHtml="true" position="right" :reactive="true" :width="250" :containerTpl="containerTplLegend" :itemTpl="itemTpl" :offset="offset"></v-legend>
     <v-pie position="percent" color="item" :vStyle="pieStyle" />
     <v-stack-interval position="percent" :color="color" ></v-stack-interval>
   </v-chart>
@@ -50,7 +50,8 @@ const setStyle = () => {
         top: 45%!important;
         }
         .g2-legend{
-            position:absolute;
+            max-width: 220px!important;
+            left: 500px!important;
         }
         .g2-legend-list{
             list-style:none;
@@ -154,7 +155,7 @@ export default {
       '" data-color=' +
       color +
       ' >' +
-      '<td style="width:120px;"><i class="g2-legend-marker" style="width:10px;height:10px;display:inline-block;margin-right:10px;background-color:' +
+      '<td style="width:180px;"><i class="g2-legend-marker" style="width:10px;height:10px;display:inline-block;margin-right:10px;background-color:' +
       color +
       ';"></i>' +
       '<span class="g2-legend-text" style="color: #666">' +
