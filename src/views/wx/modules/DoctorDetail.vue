@@ -22,7 +22,7 @@
           <a-input v-decorator="['department', requiredRule]" placeholder="请输入科室" />
         </a-form-item>
         <a-form-item label="所属中心" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select v-decorator="['centerId',  requiredRule]" placeholder="请选择模块类型">
+          <a-select v-decorator="['centerId',  requiredRule]" placeholder="请选择所属中心">
             <template v-for="item in centerList">
               <a-select-option :value="item.centerId" :key="item.centerId">{{item.name}}</a-select-option>
             </template>
