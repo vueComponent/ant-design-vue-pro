@@ -46,12 +46,12 @@ export default {
     return {
       baselineInfoStyle: {
         overflow: "auto",
-        height: '486px',
+        height: "100%",
         "padding-right": "0px",
-        "border-right": "1px solid #ddd"
+        boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
       },
       baselineFormStyle: {
-        height: '444px',
+        // height: '444px',
       },
       title: '基线',
       openKeys: [],

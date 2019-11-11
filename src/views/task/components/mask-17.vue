@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19">
-          <a-form :form="form" @submit="handleSubmit">
+          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;">
             <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
@@ -349,12 +349,12 @@ export default {
       defaultSelectedKeys: [17],
       baselineInfoStyle: {
         overflow: "auto",
-        height: '486px',
+        height: "100%",
         "padding-right": "0px",
         boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
       },
       baselineFormStyle: {
-        height: '444px',
+        // height: '444px',
       },
       labelColHor: {
         xs: { span: 24 },

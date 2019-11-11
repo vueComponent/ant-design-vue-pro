@@ -26,7 +26,7 @@
         </a-col>
         <a-col :span="19">
           <!-- 血生化 -->
-          <a-form :form="form" @submit="handleSubmit">
+          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;">
             <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 1">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
@@ -148,14 +148,14 @@ export default {
       viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
       fileList: [],
       baselineInfoStyle: {
-        overflow: 'auto',
-        height: '486px',
-        'padding-right': '0px',
-        'border-right': '1px solid #ddd'
+        overflow: "auto",
+        height: "100%",
+        "padding-right": "0px",
+        boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
       },
       title: '报告采集',
       baselineFormStyle: {
-        height: '444px',
+        // height: '444px',
       },
       labelColHor: {
         xs: { span: 24 },
