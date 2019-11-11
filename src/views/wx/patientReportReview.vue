@@ -59,7 +59,8 @@
       </span>
       <span slot="operation" slot-scope="text, record">
         <template>
-          <a @click="handleReview(record)">审阅</a>
+          <a v-if="record.executeStatus == 0" @click="handleReview(record)">审阅</a>
+          <span v-else>审阅</span>
         </template>
       </span>
     </s-table>

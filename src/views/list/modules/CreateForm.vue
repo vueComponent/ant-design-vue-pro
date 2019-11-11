@@ -1,5 +1,5 @@
 <template>
-  <a-modal :title="options.title" :width=" 600" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :destroyOnClose="destroyOnClose" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
+  <a-modal :title="options.title" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :destroyOnClose="destroyOnClose" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="病例识别号" :labelCol="labelCol" :wrapperCol="wrapperCol">

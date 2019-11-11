@@ -29,11 +29,13 @@
         </div>
 
         <a-divider orientation="left">患者病例信息</a-divider>
-        <div v-if="JSON.stringify(patient) != '{}'">
+        <div v-if="code == 0">
           <case-info :patient="patient"></case-info>
         </div>
-        <div v-else class="tip">{{ tipMsg }}</div>
+        <div v-else-if="code == -1" class="tip">未查询到该患者病例，是否<span class="add" @click="$refs.createModal.add()">新增患者病例</span>?</div>
+        <div v-else-if="code == 1" class="tip">该患者病例不在本分支中心，请进行病例转移申请</div>
       </div>
+      <create-form ref="createModal" @ok="handleOk" />
     </a-spin>
   </a-modal>
 </template>
@@ -41,9 +43,11 @@
 <script>
   import { wxPatientReview, wxBind } from '@/api/distract'
   import CaseInfo from './CaseInfo'
+  import CreateForm from '../../list/modules/CreateForm';
   export default {
     components: {
-      CaseInfo
+      CaseInfo,
+      CreateForm
     },
     data() {
       return {
@@ -59,10 +63,13 @@
         confirmLoading: false,
         userInfo: {},
         patient: {},
-        tipMsg: ''
+        code: 0
       }
     },
     methods: {
+      handleOk() {
+        this.show(this.userInfo)
+      },
       show(recode) {
         this.visible = true;
         this.confirmLoading = true
@@ -73,10 +80,9 @@
         params.append('card', recode.card)
         wxPatientReview(params).then(res => {
           this.confirmLoading = false
+          this.code = res.code
           if (res.code == 0) {
             this.patient = res.data
-          } else {
-            this.tipMsg = res.msg
           }
         })
       },
@@ -122,6 +128,12 @@
       border: 1px solid rgba(22, 143, 253, 0.15);
       background: #f5f9fd;
       padding: 15px 25px;
+      p {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 14px;
+      }
     }
     .tip {
       height: 100px;
@@ -129,9 +141,11 @@
       font-size: 16px;
       text-align: center;
       color: rgba(0, 0, 0, 0.45);
-    }
-    p {
-      font-size: 14px;
+      .add {
+        cursor: pointer;
+        color: rgba(24, 144, 255, 0.8);
+        font-size: inherit;
+      }
     }
   }
 </style>
