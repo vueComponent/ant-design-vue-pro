@@ -115,10 +115,13 @@
                     <p>访视时间: {{item.wirteDate|formDate}}</p>
                   </div>
                   <div class="followupInfoItemPro">
-                    <span>访视进度:</span>
-                    <p>
+                      <p>
+                        访视进度:
+                        <span>{{item.progress == 100 ? '已完成' : '未完成'}}</span>
+                      </p>
+                    <!-- <p>
                       <a-progress  :percent="item.progress" status="active" />
-                    </p>
+                    </p> -->
                   </div>
                    <router-link :to="{path:'/list/basis/' + item.patientBasisId}"> 
                   <a-button type="primary" size="small"     style="float:right;margin-top:5px ;">
@@ -290,13 +293,13 @@ export default {
          color: #000;
        }
        p{
-         width: 100px;
+        //  width: 100px;
          display: inline-block;
          margin: 0;
          margin-left: 10px;
-         /deep/ .ant-progress-inner{
-           background-color:#C4C4C4;
-         }
+        //  /deep/ .ant-progress-inner{
+        //    background-color:#C4C4C4;
+        //  }
        }
      }
   }

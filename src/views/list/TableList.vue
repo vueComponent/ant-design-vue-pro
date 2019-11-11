@@ -71,11 +71,11 @@
             <p class="progressTagTitle">{{ basisList[0].typeName }}</p>
             <div style="margin-right: 15px;display: inline-block;width: 130px;">
               <div class="progressTagContent">
-                <a-progress class="progressline" :strokeColor="basisList[0].progress == 100 ? '#4BC5AC' : '#00A0E9'" :strokeWidth="10" :showInfo="false" :percent="parseInt(basisList[0].progress)" size="small" />
+                <a-progress class="progressline" :strokeColor="basisList[0].progressNum == 100 ? '#4BC5AC' : '#00A0E9'" :showInfo="false" :percent="basisList[0].progressNum" size="small" />
               </div>
-              <a-icon v-if="basisList[0].progress == 100" type="check-circle" theme="filled" />
-              <span class="ant-progress-span" v-if="basisList[0].progress < 100 && basisList[0].progress > 0">{{basisList[0].progress}}%</span>
-              <a-icon style="color:#00A0E9" v-if="basisList[0].progress == 0" type="clock-circle" theme="filled" />
+              <a-icon v-if="basisList[0].executeStatus != 3" type="clock-circle" theme="filled" style="color:#00A0E9"/>
+              <!-- <span class="ant-progress-span" v-if="basisList[0].executeStatus == 2">{{basisList[0].progressNum}}%</span> -->
+              <a-icon v-else-if="basisList[0].executeStatus == 3" type="check-circle" theme="filled" style="color:#4BC5AC"/>
             </div>
           </router-link>
           <Visit :patientId="basisList[0].patientId"></Visit>
@@ -197,6 +197,11 @@ export default {
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
         return getPatientList(Object.assign(parameter, this.queryParam)).then(res => {
+            res.data.forEach(item=>{
+                if(item.basisList.length > 0) {
+                    item.basisList[0].progressNum = item.basisList[0].executeStatus == 1?0:item.basisList[0].executeStatus == 3?100:Math.floor((Math.random()*99)+1)
+                }
+            })
           return res;
         });
       },
