@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19" style="height:100%;">
-          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;">
+          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden;">
             <div class="head-bar">
               <a-row type="flex">
                 <span class="head-icon"></span>
@@ -90,6 +90,9 @@ export default {
       },
       baselineFormStyle: {
         // height: '400px',
+        overflow: 'auto',
+        padding: '20px 20px 80px',
+        height: '100%'
       },
       title: '',
       openKeys: [],
