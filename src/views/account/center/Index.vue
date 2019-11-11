@@ -121,6 +121,11 @@ export default {
   margin-left: 0;
 }
 
+/deep/ .ant-row {
+  clear: both;
+  height: 100%;
+}
+
 /deep/.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: #1890FF;
   color: #FFF;
