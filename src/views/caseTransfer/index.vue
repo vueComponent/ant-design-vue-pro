@@ -152,8 +152,8 @@ export default {
         },
         {
           title: '驳回理由',
-          dataIndex: 'reason',
-          scopedSlots: { customRender: 'reason' },
+          dataIndex: 'rejectionReason',
+          scopedSlots: { customRender: 'rejectionReason' },
           width: 180
         }
       ],

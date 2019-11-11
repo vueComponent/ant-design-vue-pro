@@ -81,14 +81,18 @@
         })
       },
       handleSubmit() {
+        if (JSON.stringify(this.patient) == '{}') {
+          this.$message.error('患者病例信息为空无法绑定！');
+          return
+        }
         this.confirmLoading = true
         const params = new FormData()
         params.append('patientId', this.patient.patientId)
         params.append('wxPatient', JSON.stringify(this.userInfo))
         wxBind(params).then(res => {
-          this.$message.success(res.msg);
           this.visible = false
           this.confirmLoading = false
+          this.$message.success(res.msg);
           this.$emit('ok')
         })
       },

@@ -117,7 +117,7 @@
                   <div class="followupInfoItemPro">
                       <p>
                         访视进度:
-                        <span>{{item.progress == 100 ? '已完成' : '未完成'}}</span>
+                        <span>{{item.executeStatus == 3 ? '已完成' : '未完成'}}</span>
                       </p>
                     <!-- <p>
                       <a-progress  :percent="item.progress" status="active" />
