@@ -138,6 +138,7 @@ export default {
 
 /deep/ .ant-row {
   clear: both;
+  height: 100%;
 }
 
 .page-header-index-wide {
