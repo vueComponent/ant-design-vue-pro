@@ -226,7 +226,7 @@ export default {
     },
     handleClick(e) {
       if (e.key !== this.reportCollectBaseId) {
-        this.$router.push('/gallery/execute/' + this.reportCollectBaseId + '/' + e.key)
+        this.$router.replace('/gallery/execute/' + this.reportCollectBaseId + '/' + e.key)
       }
     },
     save() {

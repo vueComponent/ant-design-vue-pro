@@ -212,11 +212,11 @@ export default {
       if (e.key >= 31 && e.key <= 42 || (e.key >= 57 && e.key <= 62)) {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 1) {
-        this.$router.push('/list/basis/' + this.patientBasisId + '/' + e.key)
+        this.$router.replace('/list/basis/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 4) {
-        this.$router.push('/jxjzq/' + this.patientBasisId)
+        this.$router.replace('/jxjzq/' + this.patientBasisId)
       } else {
-        this.$router.push('/list/task/' + this.patientBasisId + '/' + e.key)
+        this.$router.replace('/list/task/' + this.patientBasisId + '/' + e.key)
       }
     },
     getFormData() {

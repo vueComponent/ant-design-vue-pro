@@ -491,7 +491,7 @@ export default {
     },
     handleClick(e) {
       if (e.key >= 57 && e.key <= 62) {
-        this.$router.push('/basis/question/' + this.patientBasisId + '/' + e.key)
+        this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       }
       return false
     },
