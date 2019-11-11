@@ -150,14 +150,13 @@ export default {
           that.title = '急性加重期'
           that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
-
       })
     this.getFormData()
   },
   watch: {
     $route(to, from) {
       if (to.name === 'BasisQuestion') {
-        this.questionId = to.params.qid
+        this.questionId = parseInt(to.params.qid)
         this.getFormData()
       }
     }
@@ -181,27 +180,26 @@ export default {
         this[t] = false
       }
     },
-    
-    handleChangeRadio: function () {
+
+    handleChangeRadio: function() {
       var that = this;
       var radios = $('input[type="radio"]');
       var chackVal = null;
       var aa = null;
-      for(var i = 0; i < radios.length; i++) {
+      for (var i = 0; i < radios.length; i++) {
         if (radios[i].checked) {
           chackVal = radios[i].value;
           aa = radios[i].name;
-          if(chackVal == 148){
-              $('.ques-box').eq(21).show();
-              $('.ques-box').eq(22).show();
-              $('.ques-box').eq(23).show();
-          }else if(chackVal == 149){
-              $('.ques-box').eq(21).hide();
-              $('.ques-box').eq(22).hide();
-              $('.ques-box').eq(23).hide();
+          if (chackVal == 148) {
+            $('.ques-box').eq(21).show();
+            $('.ques-box').eq(22).show();
+            $('.ques-box').eq(23).show();
+          } else if (chackVal == 149) {
+            $('.ques-box').eq(21).hide();
+            $('.ques-box').eq(22).hide();
+            $('.ques-box').eq(23).hide();
           }
-        }else{
-        }
+        } else {}
       }
     },
     disabledDate(current) {
@@ -209,14 +207,36 @@ export default {
       return current && current > moment().endOf('day');
     },
     handleClick(e) {
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      var that = this
+      getPatientBasis(params)
+        .then(res => {
+          that.patientBasis = res.data.patientBasis
+          if (that.patientBasis.type === 1) {
+            that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+          }
+          if (that.patientBasis.type === 2) {
+            that.title = '半年随访'
+            that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+          }
+          if (that.patientBasis.type === 3) {
+            that.title = '年访视'
+            that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+          }
+          if (that.patientBasis.type === 4) {
+            that.title = '急性加重期'
+            that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+          }
+        })
       if (e.key >= 31 && e.key <= 42 || (e.key >= 57 && e.key <= 62)) {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 1) {
-        this.$router.push('/list/basis/' + this.patientBasisId + '/' + e.key)
+        this.$router.replace('/list/basis/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 4) {
-        this.$router.push('/jxjzq/' + this.patientBasisId)
+        this.$router.replace('/jxjzq/' + this.patientBasisId)
       } else {
-        this.$router.push('/list/task/' + this.patientBasisId + '/' + e.key)
+        this.$router.replace('/list/task/' + this.patientBasisId + '/' + e.key)
       }
     },
     getFormData() {
@@ -266,7 +286,6 @@ export default {
               params.append('patientBasisId', this.patientBasisId)
               getPatientBasis(params)
                 .then(res => {
-                  debugger
                   that.orgTree = res.data.list
                   that.defaultSelectedKeys = [that.questionId]
                   if (that.patientBasis.type === 1) {
@@ -319,13 +338,13 @@ export default {
               }
               $('input[name="' + sub.questionTitleId + '"]:checked').each(function() {
                 console.log("checked......");
-                
+
                 subOp.options.push({
                   questionTitleId: sub.questionTitleId,
                   questionOptionId: $(this).val()
                 })
                 console.log($(this).val());
-                
+
               })
               childrenObject.push(subOp)
             }
@@ -384,8 +403,8 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:calc(100% - 10px);
+#baselineInfo {
+  height: calc(100% - 10px);
 }
 
 /deep/ .card-box {

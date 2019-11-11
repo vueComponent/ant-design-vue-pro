@@ -494,9 +494,9 @@ export default {
     handleClick(e) {
       this.maskId = e.key
       if ((e.key >= 37 && e.key <= 42) || (e.key >= 45 && e.key <= 50)) {
-        this.$router.push('/basis/question/' + this.patientBasisId + '/' + this.maskId)
+        this.$router.replace('/basis/question/' + this.patientBasisId + '/' + this.maskId)
       } else {
-        this.$router.push('/list/task/' + this.patientBasisId + '/' + this.maskId)
+        this.$router.replace('/list/task/' + this.patientBasisId + '/' + this.maskId)
       }
     },
     handleSubmit(e) {

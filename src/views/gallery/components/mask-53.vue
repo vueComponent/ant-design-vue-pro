@@ -273,7 +273,7 @@ export default {
     },
     handleClick(e) {
       if (e.key !== this.reportCollectBaseId) {
-        this.$router.push('/gallery/execute/' + this.reportCollectBaseId + '/' + e.key)
+        this.$router.replace('/gallery/execute/' + this.reportCollectBaseId + '/' + e.key)
       }
     },
     save() {
@@ -385,7 +385,7 @@ export default {
         a52: '98.4',
         a62: '98.4',
       }
-      _.extend(this.formData, this.dealAnswers(answer))
+      this.formData = _.extend(this.formData || {}, this.dealAnswers(answer))
     }
   }
 }

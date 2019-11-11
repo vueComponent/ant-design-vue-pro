@@ -226,7 +226,7 @@ export default {
     },
     handleClick(e) {
       if (e.key !== this.reportCollectBaseId) {
-        this.$router.push('/gallery/execute/' + this.reportCollectBaseId + '/' + e.key)
+        this.$router.replace('/gallery/execute/' + this.reportCollectBaseId + '/' + e.key)
       }
     },
     save() {
@@ -241,8 +241,8 @@ export default {
         re.xcgId = this.formData.xcgId
       }
       params.append('formData', JSON.stringify(re))
-      params.append('reportCollectBase', JSON.stringify({ reportCollectBaseId: this.reportCollectBaseId, status: 1 }))
-      params.append('reportCollectDetail', JSON.stringify({ reportCollectDetailId: this.reportCollectDetailId, reportTypeId: this.reportTypeId }))
+      params.append('reportCollectBase', JSON.stringify({ reportCollectBaseId: this.reportCollectBaseId }))
+      params.append('reportCollectDetail', JSON.stringify({ reportCollectDetailId: this.reportCollectDetailId, reportTypeId: this.reportTypeId, status: 1 }))
       params.append('businessType', this.businessType)
       var a = []
       _.each(this.fileList, function(v) {
@@ -280,8 +280,8 @@ export default {
             re.xcgId = this.formData.xcgId
           }
           params.append('formData', JSON.stringify(re))
-          params.append('reportCollectBase', JSON.stringify({ reportCollectBaseId: this.reportCollectBaseId, status: 2 }))
-          params.append('reportCollectDetail', JSON.stringify({ reportCollectDetailId: this.reportCollectDetailId, reportTypeId: this.reportTypeId }))
+          params.append('reportCollectBase', JSON.stringify({ reportCollectBaseId: this.reportCollectBaseId }))
+          params.append('reportCollectDetail', JSON.stringify({ reportCollectDetailId: this.reportCollectDetailId, reportTypeId: this.reportTypeId, status: 2 }))
           params.append('businessType', this.businessType)
           var a = []
           _.each(this.fileList, function(v) {
