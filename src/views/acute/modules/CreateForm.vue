@@ -117,7 +117,7 @@ export default {
       const Params = new URLSearchParams();
       Params.append('pageNumber', pageNumber);
       Params.append('pageSize', pageSize);
-      Params.append('keyword', keyWord);
+      Params.append('keyWord', keyWord);
       getPatientList(Params).then(res => {
         this.data = res.data;
         this.pagination.total = res.total;
