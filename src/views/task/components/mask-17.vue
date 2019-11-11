@@ -72,6 +72,12 @@
                   <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['b6', {...inputRequired, initialValue: initValue('b6')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(7) 痰液粘稠Murry评分（单选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                  <a-popover>
+                    <template slot="content">
+                      <img src="../../../assets/murry.png" style="height: 260px;" />
+                    </template>
+                    <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
+                  </a-popover>
                   <a-radio-group v-decorator="['b7', {...selectRequired, initialValue: initValue('b7')}]">
                     <a-radio value="1">粘液性</a-radio>
                     <a-radio value="2">黏脓性</a-radio>
@@ -139,22 +145,22 @@
                 </a-form-item>
                 <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlc4">
                   <a-checkbox-group v-decorator="['c42', {...selectRequired, initialValue: initValue('c42', 'array')}]">
-                    <a-checkbox value="0" @change="showList($event, '铜绿假单胞菌', 'controlc420', true)">铜绿假单胞菌</a-checkbox>
+                    <a-checkbox value="0" @change="showList($event, '铜绿假单胞菌', 'controlc420')">铜绿假单胞菌</a-checkbox>
                     <add-table :dataSource="optionDataSource[0]" v-if="controlc420"></add-table>
-                    <a-checkbox value="1" @change="showList($event, '阴沟肠杆菌', 'controlc421', true)">阴沟肠杆菌</a-checkbox>
+                    <a-checkbox value="1" @change="showList($event, '阴沟肠杆菌', 'controlc421')">阴沟肠杆菌</a-checkbox>
                     <add-table :dataSource="optionDataSource[1]" v-if="controlc421"></add-table>
-                    <a-checkbox value="2" @change="showList($event, '肺炎克雷伯菌', 'controlc422', true)">肺炎克雷伯菌</a-checkbox>
+                    <a-checkbox value="2" @change="showList($event, '肺炎克雷伯菌', 'controlc422')">肺炎克雷伯菌</a-checkbox>
                     <add-table :dataSource="optionDataSource[2]" v-if="controlc422"></add-table>
-                    <a-checkbox value="3" @change="showList($event, '肺炎链球菌', 'controlc423', true)">肺炎链球菌</a-checkbox>
+                    <a-checkbox value="3" @change="showList($event, '肺炎链球菌', 'controlc423')">肺炎链球菌</a-checkbox>
                     <add-table :dataSource="optionDataSource[3]" v-if="controlc423"></add-table>
-                    <a-checkbox value="4" @change="showList($event, '副流感嗜血杆菌', 'controlc424', true)">副流感嗜血杆菌</a-checkbox>
+                    <a-checkbox value="4" @change="showList($event, '副流感嗜血杆菌', 'controlc424')">副流感嗜血杆菌</a-checkbox>
                     <add-table :dataSource="optionDataSource[4]" v-if="controlc424"></add-table>
-                    <a-checkbox value="5" @change="showList($event, '鲍曼不动杆菌', 'controlc425', true)">鲍曼不动杆菌</a-checkbox>
+                    <a-checkbox value="5" @change="showList($event, '鲍曼不动杆菌', 'controlc425')">鲍曼不动杆菌</a-checkbox>
                     <add-table :dataSource="optionDataSource[5]" v-if="controlc425"></add-table>
-                    <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controlc426', true)">金黄色葡萄球菌</a-checkbox>
+                    <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controlc426')">金黄色葡萄球菌</a-checkbox>
                     <add-table :dataSource="optionDataSource[6]" v-if="controlc426"></add-table>
-                    <a-checkbox value="7" @change="showList($event, '其他', 'controlc427', true)">其他</a-checkbox>
-                    <a-input style="width: 240px;margin-right: 10px;" v-if="controlc427" @change="otherChange($event, 7, true)" autocomplete="off"></a-input>
+                    <a-checkbox value="7" @change="showList($event, '其他', 'controlc427')">其他</a-checkbox>
+                    <a-input style="width: 240px;margin-right: 10px;" v-if="controlc427" @change="otherChange($event, 7)" autocomplete="off"></a-input>
                     <add-table :dataSource="optionDataSource[7]" v-if="controlc427"></add-table>
                   </a-checkbox-group>
                 </a-form-item>
@@ -479,7 +485,7 @@ export default {
       getBasisForm(params)
         .then(res => {
           if (res.data && res.data.fs_jxjzq)
-            that.jxjzq = that.dealAnswers(res.data.fs_jxjzq)
+            that.jxjzq = that.dealAnswers(res.data)
         })
         .catch(error => {
           console.log(error)
@@ -503,7 +509,7 @@ export default {
           for (var key in this.optionDataSource) {
             _.each(this.optionDataSource[key], function(item) {
               allergy.push({
-                markId: 1,
+                markId: 2,
                 microbeName: item.microbeName,
                 antibiotic: item.antibiotic,
                 antibioticResult: item.antibioticResult,
@@ -581,9 +587,15 @@ export default {
         return this.jxjzq[key] + ''
       }
     },
-    dealAnswers(answer) {
+    dealAnswers(data) {
+      var that = this
+      var alList = ['铜绿假单胞菌', '阴沟肠杆菌', '肺炎克雷伯菌', '肺炎链球菌', '副流感嗜血杆菌', '鲍曼不动杆菌', '金黄色葡萄球菌']
+      var answer = data.fs_jxjzq
       if (answer && !_.isEmpty(answer)) {
         var splitArr = []
+        if (answer.a1 === 1) {
+          this.controla1 = true
+        }
         if (answer.b4) {
           splitArr = answer.b4.split(',')
           if (splitArr.indexOf('8') > -1) {
@@ -595,6 +607,40 @@ export default {
         }
         if (answer.c4 === 1) {
           this.controlc4 = true
+        }
+        if (answer.c42) {
+          splitArr = answer.c42.split(',')
+          if (splitArr.indexOf('0') > -1) {
+            this.controlc420 = true
+          }
+          if (splitArr.indexOf('1') > -1) {
+            this.controlc421 = true
+          }
+          if (splitArr.indexOf('2') > -1) {
+            this.controlc422 = true
+          }
+          if (splitArr.indexOf('3') > -1) {
+            this.controlc423 = true
+          }
+          if (splitArr.indexOf('4') > -1) {
+            this.controlc424 = true
+          }
+          if (splitArr.indexOf('5') > -1) {
+            this.controlc425 = true
+          }
+          if (splitArr.indexOf('6') > -1) {
+            this.controlc426 = true
+          }
+          if (splitArr.indexOf('7') > -1) {
+            this.controlc427 = true
+          }
+        }
+        if (data[2]) {
+          _.each(alList, function(v, i) {
+            if (data[2][v]) {
+              that.optionDataSource[i] = data[2][v]
+            }
+          })
         }
         if (answer.d2) {
           splitArr = answer.d2.split(',')
@@ -610,7 +656,7 @@ export default {
       for (var key in this.optionDataSource) {
         _.each(this.optionDataSource[key], function(item) {
           allergy.push({
-            markId: 1,
+            markId: 2,
             microbeName: item.microbeName,
             antibiotic: item.antibiotic,
             antibioticResult: item.antibioticResult,
@@ -663,6 +709,36 @@ export default {
           console.log(error)
         })
       return false
+    },
+    showList(e, name, controlNode) {
+      if (e.target.checked) {
+        this[controlNode] = true
+        if (name == "其他") return
+        this.getMedicineAllergyList(name, e.target.value)
+      } else {
+        this[controlNode] = false
+        this.$set(this.optionDataSource, e.target.value, [])
+      }
+    },
+    getMedicineAllergyList(value, index) {
+      const that = this
+      const params = new URLSearchParams()
+      params.append('microbeName', value)
+      getMedicineAllergyList(params).then(res => {
+        const optionDataSource = _.map(res.data, function(v, i) {
+          return {
+            keyW: i,
+            microbeName: v.microbeName,
+            antibiotic: v.antibiotic,
+            antibioticResult: v.antibioticResult,
+            allergyValue: v.allergyValue
+          };
+        })
+        that.$set(that.optionDataSource, index, optionDataSource)
+      })
+    },
+    otherChange(e, index) {
+      this.getMedicineAllergyList(e.target.value, index)
     }
   }
 }

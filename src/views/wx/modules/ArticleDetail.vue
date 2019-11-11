@@ -7,7 +7,7 @@
         </a-form-item>
         <a-form-item label="标题配图" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-upload v-decorator="[ 'url', { ...requiredRule, valuePropName: 'fileList', getValueFromEvent: normFile }]" :action="action" list-type="picture" @preview="handlePreview" :remove="handleRemove">
-            <a-button v-if="!isFileLen">
+            <a-button v-if="!fileName">
               <a-icon type="upload" />点击上传
             </a-button>
           </a-upload>
@@ -77,8 +77,7 @@
         previewImage: '',
         action: process.env.VUE_APP_API_UPLOAD_URL,
         attachsPrefix: process.env.VUE_APP_API_VIEW_PIC_URL,
-        fileName: '',
-        isFileLen: false
+        fileName: ''
       }
     },
     methods: {
@@ -110,11 +109,10 @@
               })
             }
             this.fileName = res.data.url
-            this.isFileLen = true
           })
         } else {
           this.title = '新增文章'
-          this.isFileLen = false
+          this.fileName = ''
         }
       },
       handleChange(e) {
@@ -130,17 +128,21 @@
         const isPNG = e.file.type === 'image/png';
         if (!(isJPG || isPNG)) {
           this.$message.error('请上传正确的图片格式');
-        } else {
-          if (e.file.status == 'done') {
-            this.fileName = e.file.response.fileName
-            this.isFileLen = true
-          }
+        }
+        const isLt1M = e.file.size / 1024 / 1024 < 1;
+        if (!isLt1M) {
+          this.$message.error('图片大小不能超过1MB！');
+        }
+        if (e.file.status == 'done') {
+          this.fileName = e.file.response.fileName
+        }
+        if ((isJPG || isPNG) && isLt1M) {
           return e && e.fileList;
         }
+        return []
       },
       handleRemove(file) {
         this.fileName = ''
-        this.isFileLen = false
       },
       handlePreview(file) {
         this.previewImage = file.url || file.thumbUrl;

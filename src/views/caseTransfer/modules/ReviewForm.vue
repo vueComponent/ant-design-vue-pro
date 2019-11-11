@@ -29,7 +29,7 @@
             <a-radio value="2">驳回</a-radio>
           </a-radio-group>
         </a-form-item>
-        <a-form-item v-if="form.getFieldValue('executeStatus') == 0" label="驳回理由" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item v-if="form.getFieldValue('executeStatus') == 2" label="驳回理由" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea rows="3" v-decorator="['rejectionReason', requiredRule]" placeholder="请输入驳回理由" />
         </a-form-item>
       </a-form>
