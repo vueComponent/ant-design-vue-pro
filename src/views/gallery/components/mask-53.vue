@@ -385,7 +385,7 @@ export default {
         a52: '98.4',
         a62: '98.4',
       }
-      _.extend(this.formData, this.dealAnswers(answer))
+      this.formData = _.extend(this.formData || {}, this.dealAnswers(answer))
     }
   }
 }

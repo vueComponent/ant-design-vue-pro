@@ -287,8 +287,8 @@ export default {
         re.fgnhId = this.formData.fgnhId
       }
       params.append('formData', JSON.stringify(re))
-      params.append('reportCollectBase', JSON.stringify({ reportCollectBaseId: this.reportCollectBaseId, status: 1 }))
-      params.append('reportCollectDetail', JSON.stringify({ reportCollectDetailId: this.reportCollectDetailId, reportTypeId: this.reportTypeId }))
+      params.append('reportCollectBase', JSON.stringify({ reportCollectBaseId: this.reportCollectBaseId }))
+      params.append('reportCollectDetail', JSON.stringify({ reportCollectDetailId: this.reportCollectDetailId, reportTypeId: this.reportTypeId, status: 1 }))
       params.append('businessType', this.businessType)
       var a = []
       _.each(this.fileList, function(v) {
@@ -325,8 +325,8 @@ export default {
             re.fgnhId = this.formData.fgnhId
           }
           params.append('formData', JSON.stringify(re))
-          params.append('reportCollectBase', JSON.stringify({ reportCollectBaseId: this.reportCollectBaseId, status: 2 }))
-          params.append('reportCollectDetail', JSON.stringify({ reportCollectDetailId: this.reportCollectDetailId, reportTypeId: this.reportTypeId }))
+          params.append('reportCollectBase', JSON.stringify({ reportCollectBaseId: this.reportCollectBaseId }))
+          params.append('reportCollectDetail', JSON.stringify({ reportCollectDetailId: this.reportCollectDetailId, reportTypeId: this.reportTypeId, status: 2 }))
           params.append('businessType', this.businessType)
           var a = []
           _.each(this.fileList, function(v) {
