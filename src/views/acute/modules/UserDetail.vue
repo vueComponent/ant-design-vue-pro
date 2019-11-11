@@ -76,17 +76,17 @@
         </a-tab-pane>
         <a-tab-pane tab="待访视任务" key="2" forceRender>
           <div class="userCard" v-if="visitTasks.length>0">
-            <div class="followupItem" v-for="item in visitTasks">
+            <div class="followupItem" v-for="item in visitTasks" :key="item.id">
               <my-icon class="my-icon-huaban" type="iconshijian_huaban" />
               <p>
                 <span>计划时间：</span>
-                {{item.planDate}}
+                {{item.planDate|formDate}}
               </p>
               <p>
                 <span>随访摘要：</span>
-                 {{item.taskName}}
+                 {{item.typeName}}
               </p>
-                <router-link :to="{path:'/list/task/' + item.visitTaskId}"> 
+                <router-link :to="{path:'/list/task/' + item.patientBasisId}"> 
               <a-button type="primary" size="small" style="float:right;">
                 <my-icon type="iconxiangqing_huaban" />
                 执行
@@ -104,7 +104,7 @@
         <a-tab-pane tab="访视情况" key="3">
           <div class="userCard" v-if="patientBasisList.length>0">
             <a-timeline>
-              <a-timeline-item v-for="item in patientBasisList">
+              <a-timeline-item v-for="item in patientBasisList" :key="item.id">
                 <span class="followupDate">{{item.createDate|formDate}}</span>
                 <div class="followupInfoItem">
                   <div class="followupInfoItemType">
@@ -184,7 +184,7 @@ export default {
       return visitMap[value];
     },
     patientBasisType(type){
-      const patientBasisTypeMap=['','基线','半年随访','年访视']
+      const patientBasisTypeMap=['','基线','半年随访','年访视','急性加重期随访']
       return patientBasisTypeMap[type];
     }
   },
