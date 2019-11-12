@@ -37,8 +37,8 @@
     </div>
   </div>
 </template>
-
 <script>
+import _ from 'lodash'
 export default {
   data() {
     return {};
@@ -50,21 +50,26 @@ export default {
     }
   },
   mounted() {},
-  methods: {
-  },
-  computed:{
+  methods: {},
+  computed: {
     birthDay() {
+      if (_.isEmpty(this.option)) {
+        return ''
+      }
       let card = this.option.card;
       let birthDay = ''
       if (card.length == 15) {
-        birthDay = card.substr(6,6).replace(/(.{4})(.{2})/,"$1-$2-")
+        birthDay = card.substr(6, 6).replace(/(.{4})(.{2})/, "$1-$2-")
       } else if (card.length == 18) {
-        birthDay = card.substr(6,8).replace(/(.{4})(.{2})/,"$1-$2-")
+        birthDay = card.substr(6, 8).replace(/(.{4})(.{2})/, "$1-$2-")
       }
       return birthDay
     },
     getAge() {
-      var identityCard=this.option.card;
+      if(_.isEmpty(this.option)){
+        return ''
+      }
+      var identityCard = this.option.card;
       var len = (identityCard + '').length;
       if (len == 0) {
         return 0;
@@ -101,6 +106,7 @@ export default {
   border-top: 4px solid #168ffd;
   padding: 15px 25px;
   background-color: #ffffff;
+
   .userDetailTop {
     img {
       display: inline-block;
@@ -108,13 +114,16 @@ export default {
       width: 60px;
       height: 60px;
     }
+
     .userDetailInfo {
       display: inline-block;
       padding-top: 5px;
       padding-left: 15px;
+
       h4 {
         font-size: 18px;
         margin-bottom: 0px;
+
         span {
           font-weight: normal;
           font-size: 17px;
@@ -122,20 +131,24 @@ export default {
           display: inline-block;
         }
       }
+
       p {
         .womenBg {
-          background-color: #fd94dc!important;
+          background-color: #fd94dc !important;
         }
+
         .userDetailAge {
           display: inline-block;
           background-color: #96dcfd;
           color: #ffffff;
           padding: 0px 10px;
           border-radius: 3px;
+
           .anticon {
             margin-right: 5px;
           }
         }
+
         .userDetailNation {
           display: inline-block;
           background-color: #e8e8e8;
@@ -146,14 +159,17 @@ export default {
       }
     }
   }
+
   .userDetailContent {
     margin-top: 20px;
     overflow: hidden;
+
     .userDetailItem {
       display: inline-block;
       width: 20%;
       color: #000000;
       vertical-align: top;
+
       .userDetailItemTitle {
         display: block;
         color: #a9a9a9;

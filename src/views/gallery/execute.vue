@@ -16,7 +16,7 @@
         <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
     </a-card>
-    <a-card :bordered="false" style="margin-top: 10px;padding-left: 0">
+    <a-card :bordered="false" class="card-box">
       <a-row :gutter="8">
         <a-col :span="5" :style="baselineInfoStyle">
           <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
@@ -113,6 +113,14 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+#baselineInfo{
+  height:calc(100% - 10px);
+}
+/deep/ .card-box{
+  margin-top: 10px;
+  padding-left: 0;
+  height: calc(100% - 54px);
+}
 /deep/ #baselineHeader {
   .ant-card-body {
     padding: 10px
@@ -188,6 +196,7 @@ export default {
 .page-header-index-wide {
   /deep/ .ant-card-wider-padding .ant-card-body {
     padding: 0;
+    height: 100%;
   }
 
   /deep/ .tree-title {

@@ -158,11 +158,13 @@
 </template>
 
 <script>
-import { getPatientDetail } from '@/api/patient';
-import UserDetail from './UserDetailTop';
-import { MyIcon } from '@/components/_util/util';
-import moment from 'moment';
-import _ from 'lodash';
+import { getPatientDetail } from '@/api/patient'
+import UserDetail from './UserDetailTop'
+import { MyIcon } from '@/components/_util/util'
+import moment from 'moment'
+import _ from 'lodash'
+import 'url-search-params-polyfill'
+
 export default {
   components: {
     UserDetail,
