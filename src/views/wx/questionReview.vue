@@ -145,6 +145,11 @@
             width: '120px'
           },
           {
+            title: '类型',
+            dataIndex: 'visitType',
+            width: '120px'
+          },
+          {
             title: '审阅状态',
             dataIndex: 'status',
             scopedSlots: { customRender: 'status' },
