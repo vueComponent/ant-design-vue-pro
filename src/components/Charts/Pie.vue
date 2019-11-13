@@ -51,7 +51,6 @@ const setStyle = () => {
         }
         .g2-legend{
             max-width: 220px!important;
-            left: 500px!important;
         }
         .g2-legend-list{
             list-style:none;
