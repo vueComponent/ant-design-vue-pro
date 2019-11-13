@@ -229,7 +229,7 @@ export default {
             that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
           }
         })
-      if (e.key >= 31 && e.key <= 42 || (e.key >= 57 && e.key <= 62)) {
+      if (e.key >= 31 && e.key <= 42 || (e.key >= 57 && e.key <= 62) || (e.key >= 45 && e.key <= 50)) {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 1) {
         this.$router.replace('/list/basis/' + this.patientBasisId + '/' + e.key)
