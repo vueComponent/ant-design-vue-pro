@@ -287,7 +287,7 @@ export default {
       this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
     },
     exportData() {
-      window.open(this.baseUrl + 'patient/export?doctorId=' + this.token.doctorId)
+      window.open(this.baseUrl + '/patient/export?doctorId=' + this.token.doctorId)
     }
   }
 };
