@@ -22,7 +22,7 @@
           <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
           </s-tree>
         </a-col>
-        <a-col :span="19">
+        <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;">
             <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->

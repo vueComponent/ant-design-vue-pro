@@ -22,7 +22,7 @@
           <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
           </s-tree>
         </a-col>
-        <a-col :span="19">
+        <a-col :span="19" style="height:100%;">
           <!-- 支扩病史资料 -->
         </a-col>
       </a-row>
