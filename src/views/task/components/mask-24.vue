@@ -488,20 +488,43 @@ export default {
         .then(res => {
           console.log(res.data)
           that.qtsyjc = _.extend(that.qtsyjc || {}, that.dealAnswers(res.data.qtsyjc))
+          if (res.data.annexList && res.data.annexList.length) {
+            if (res.data.annexList[0].businessType === 6) {
+              that.fileList1 = _.map(res.data.annexList, function(v) {
+                return {
+                  uid: v.annexId,
+                  url: that.viewPicUrl + v.annexAddress,
+                  name: v.annexAddress,
+                  status: 'done'
+                }
+              })
+            } else {
+              that.fileList2 = _.map(res.data.annexList, function(v) {
+                return {
+                  uid: v.annexId,
+                  url: that.viewPicUrl + v.annexAddress,
+                  name: v.annexAddress,
+                  status: 'done'
+                }
+              })
+            }
+          }
         })
     }
   }
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:calc(100% - 10px);
+#baselineInfo {
+  height: calc(100% - 10px);
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   height: calc(100% - 54px);
 }
+
 /deep/ .ant-spin {
   position: absolute;
   top: 0;
