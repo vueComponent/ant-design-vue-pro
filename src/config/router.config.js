@@ -229,23 +229,17 @@ export const asyncRouterMap = [
         meta: { title: '访视任务', keepAlive: true, icon: fangshi, permission: [ 'center', 'group' ]}
       },
     //   {
-    //     path: '/activeVolume/index',
-    //     name: 'ActiveVolume',
-    //     component: () => import('@/views/activeVolume/index'),
-    //     meta: { title: '活动卷登记', keepAlive: true, icon: fangshi}
+    //     path: '/gallery/index',
+    //     name: 'Gallery',
+    //     component: () => import('@/views/gallery/index'),
+    //     meta: { title: '报告采集', keepAlive: true, icon: baogao,isBack:false, permission: [ 'center', 'group']}
     //   },
-      {
-        path: '/gallery/index',
-        name: 'Gallery',
-        component: () => import('@/views/gallery/index'),
-        meta: { title: '报告采集', keepAlive: true, icon: baogao,isBack:false, permission: [ 'center', 'group']}
-      },
-      {
-        path: '/group/index',
-        name: 'Group',
-        component: () => import('@/views/group/index'),
-        meta: { title: '入组管理', keepAlive: true, icon: ruzhu,isBack:false, permission: [ 'center', 'group' ]}
-      },
+    //   {
+    //     path: '/group/index',
+    //     name: 'Group',
+    //     component: () => import('@/views/group/index'),
+    //     meta: { title: '入组管理', keepAlive: true, icon: ruzhu,isBack:false, permission: [ 'center', 'group' ]}
+    //   },
       {
         path: '/gallery/execute/:id(\\d+)/53',
         name: 'Exec53',

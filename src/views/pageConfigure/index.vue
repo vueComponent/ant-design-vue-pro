@@ -129,10 +129,10 @@
           { src: '', remake: '' }
         ],
         blogData: [
-          { src: '', link: '' },
-          { src: '', link: '' },
-          { src: '', link: '' },
-          { src: '', link: '' }
+          { url: '', link: '' },
+          { url: '', link: '' },
+          { url: '', link: '' },
+          { url: '', link: '' }
         ],
         activeIndex: 0,
         action: process.env.VUE_APP_API_UPLOAD_URL,
