@@ -35,8 +35,7 @@
           <a-input v-decorator="['publisher', requiredRule]" />
         </a-form-item>
         <a-form-item class="textarea" label="文章内容" :labelCol="labelCol" :wrapperCol="wrapperCol" style="margin-bottom:0">
-          <quill-editor v-decorator="['text', requiredRule]"></quill-editor>
-          <!-- <a-textarea rows="7" v-decorator="['text', requiredRule]" /> -->
+          <quill-editor v-decorator="['text', { ...requiredRule, valuePropName: 'value', getValueFromEvent: normEditor }]" :options="editorOption"></quill-editor>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -45,13 +44,16 @@
 
 <script>
   import { getWxArticleDetail, addOrEdit } from '@/api/text'
-  import QuillEditor from '@/components/Editor/QuillEditor'
+  import { quillEditor } from 'vue-quill-editor'
+  import 'quill/dist/quill.snow.css'
+  import quillConfig from '@/utils/quillConfig'
   export default {
     components: {
-      QuillEditor
+      quillEditor
     },
     data() {
       return {
+        editorOption: quillConfig,
         title: '',
         bodyStyle: {
           height: '500px',
@@ -119,6 +121,9 @@
         if (e.target.value) {
           this.form.setFieldsValue({ type: '' })
         }
+      },
+      normEditor(e) {
+        return e && e.html
       },
       normFile(e) {
         if (Array.isArray(e)) {
@@ -189,5 +194,8 @@
     /deep/.ant-form-item-control {
       line-height: 1;
     }
+  }
+  /deep/ .ql-editor {
+    height: 350px;
   }
 </style>

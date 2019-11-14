@@ -105,25 +105,7 @@
   import { getDataList, saveData } from '@/api/textGwLb'
   import { quillEditor } from 'vue-quill-editor'
   import 'quill/dist/quill.snow.css'
-  const toolbarOptions = [
-    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-    ['blockquote', 'code-block'],
-
-    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-    [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-    [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-    [{ 'direction': 'rtl' }],                         // text direction
-
-    [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-    [{ 'font': [] }],
-    [{ 'align': [] }],
-    ['clean'],                                        // remove formatting button
-    ['link', 'image']
-  ]
+  import quillConfig from '@/utils/quillConfig'
   export default {
     components: {
       quillEditor
@@ -140,13 +122,7 @@
           { src: '' }
         ],
         text: '',
-        editorOption: {
-          modules: {
-            toolbar: {
-              container: toolbarOptions,  // 工具栏
-            }
-          }
-        },
+        editorOption: quillConfig,
         lunboData: [
           { src: '', remake: '' },
           { src: '', remake: '' },
@@ -246,9 +222,7 @@
 </script>
 
 <style lang="less" scoped>
-  /deep/ .quill-editor {
-    display: flex;
-    flex-direction: column;
+  /deep/ .ql-editor {
     height: 350px;
   }
   /deep/ .ant-spin-nested-loading > div > .ant-spin {

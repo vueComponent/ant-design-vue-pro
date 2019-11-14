@@ -1,14 +1,11 @@
 <template>
-  <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption" @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)" @change="onEditorChange($event)">
-  </quill-editor>
-
+  <quill-editor ref="myQuillEditor" v-model="content" :options="editorOption"></quill-editor>
 </template>
 
 <script>
-  import 'quill/dist/quill.core.css'
-  import 'quill/dist/quill.snow.css'
-  import 'quill/dist/quill.bubble.css'
   import { quillEditor } from 'vue-quill-editor'
+  import 'quill/dist/quill.snow.css'
+  import quillConfig from '@/utils/quillConfig'
   export default {
     name: 'QuillEditor',
     components: {
@@ -22,10 +19,7 @@
     data() {
       return {
         content: null,
-        editorOption: {
-          // some quill options
-          placeholder: '请输入内容',
-        }
+        editorOption: quillConfig
       }
     },
     watch: {
@@ -57,9 +51,7 @@
 </script>
 
 <style lang="less" scoped>
-  .quill-editor {
-    display: flex;
-    flex-direction: column;
-    height: 300px;
+  .ql-editor {
+    height: 350px;
   }
 </style>
