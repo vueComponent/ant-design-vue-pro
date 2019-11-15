@@ -65,7 +65,16 @@ export default {
     },
     // CheckAll Button
     renderCheckAll () {
-      return !this.hideCheckAll && (<Option key={'total'} checked={this.localCheckAll} onChange={this.onCheckAll}>All</Option>) || null
+      const listeners = {
+        change: (checked) => {
+          this.onCheckAll(checked)
+          checked.value = 'total'
+          this.$emit('change', checked)
+        }
+      }
+      const checkAllElement = <Option key={'total'} checked={this.localCheckAll}>All</Option>
+      checkAllElement.componentOptions.listeners = listeners
+      return !this.hideCheckAll && checkAllElement || null
     },
     // expandable
     renderExpandable () {
