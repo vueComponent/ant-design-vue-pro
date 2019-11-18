@@ -31,31 +31,31 @@
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.体格检查</div>
-              <a-form-item label="(1) T:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a1', {initialValue: initValue('a1')}]" style="width: 240px;" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(2) BP:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a2', {initialValue: initValue('a2')}]" style="width: 240px;" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(3) R:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a3', {initialValue: initValue('a3')}]" style="width: 240px;" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(4) HR:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a4', {initialValue: initValue('a4')}]" style="width: 240px;" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(5) SpO2:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(1) SpO2:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input v-decorator="['a5', {...inputRequired, initialValue: initValue('a5')}]" style="width: 240px;" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(6) 身高:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(2) 身高:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input v-decorator="['a6', {...inputRequired, initialValue: initValue('a6')}]" style="width: 240px;" addonAfter="cm" @change="changeHeight($event)" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(7) 体重:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(3) 体重:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="changeWeight($event)" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(8) BMI(自动演算出):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(4) BMI(自动演算出):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input v-decorator="['a8', {initialValue: initValue('a8')}]" :readOnly="true" style="width: 240px;" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(9) 肺部体征：双肺呼吸音:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <a-form-item label="(5) 肺部体征：双肺呼吸音:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              </a-form-item>
+              <a-form-item label="桶状胸" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-radio-group v-decorator="['b1', {...require2, initialValue: initValue('b1')}]">
+                  <a-radio value="1">有</a-radio>
+                  <a-radio value="-1">无</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="杵状指" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-radio-group v-decorator="['b2', {...require2, initialValue: initValue('b2')}]">
+                  <a-radio value="1">有</a-radio>
+                  <a-radio value="-1">无</a-radio>
+                </a-radio-group>
               </a-form-item>
               <a-form-item label="啰音" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-radio-group v-decorator="['a9', {...require2, initialValue: initValue('a9')}]" @change="changeRadio($event, 'controla9')">

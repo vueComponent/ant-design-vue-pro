@@ -10300,6 +10300,11 @@ throat@^4.0.0:
   resolved "https://registry.yarnpkg.com/throat/-/throat-4.1.0.tgz#89037cbc92c56ab18926e6ba4cbb200e15672a6a"
   integrity sha1-iQN8vJLFarGJJua6TLsgDhVnKmo=
 
+throttle-debounce@^2.0.1:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-2.1.0.tgz#257e648f0a56bd9e54fe0f132c4ab8611df4e1d5"
+  integrity sha512-AOvyNahXQuU7NN+VVvOOX+uW6FPaWdAOdRP5HfwYxAfCzXTFKRMoIMk+n+po318+ktcChx+F1Dd91G3YHeMKyg==
+
 through2@^2.0.0:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.5.tgz#01c1e39eb31d07cb7d03a96a70823260b23132cd"
@@ -10709,6 +10714,14 @@ uuid@^3.0.1, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.3.tgz#4568f0216e78760ee1dbf3a4d2cf53e224112866"
   integrity sha512-pW0No1RGHgzlpHJO1nsVrHKpOEIxkGg1xB+v0ZmdNH5OAeAwzAVrCnI2/6Mtx+Uys6iaylxa+D3g4j63IKKjSQ==
 
+v-viewer@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/v-viewer/-/v-viewer-1.4.2.tgz#23c31a037091445b6cba8aaa287e7e00a73f0971"
+  integrity sha512-WEslW+dKPHg10f9jl1v0ilH0uk4ZFOz4vUp4wJjomwl+VQEnsWLjSzHCeFoayxjE9KyZspVu9lYLNxk+o3xzkw==
+  dependencies:
+    throttle-debounce "^2.0.1"
+    viewerjs "^1.3.2"
+
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.4.tgz#fc91f6b9c7ba15c857f4cb2c5defeec39d4f410a"
@@ -10744,6 +10757,11 @@ verror@1.10.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
+
+viewerjs@^1.3.2:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/viewerjs/-/viewerjs-1.4.0.tgz#f63aa06aa471a36152a316f81f3c7083f2c876c9"
+  integrity sha512-HTtR44rzdX76VrDfZGaYNciUL3EEexGX4HkvdJHP0VFSR+d2I/ZXFqdx6Q4Cc+X5VwhEf0Fx1Hi3wQy7msmKOA==
 
 viser-vue@^2.3.3:
   version "2.4.6"

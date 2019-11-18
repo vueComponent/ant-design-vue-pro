@@ -26,6 +26,7 @@
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
     "url-search-params-polyfill": "^7.0.0",
+    "v-viewer": "^1.4.2",
     "viser-vue": "^2.3.3",
     "vue": "^2.5.22",
     "vue-clipboard2": "^0.2.1",
