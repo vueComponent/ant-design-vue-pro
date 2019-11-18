@@ -31,31 +31,31 @@
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.体格检查</div>
-              <a-form-item label="(1) T:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a1', {initialValue: initValue('a1')}]" style="width: 240px;" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(2) BP:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a2', {initialValue: initValue('a2')}]" style="width: 240px;" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(3) R:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a3', {initialValue: initValue('a3')}]" style="width: 240px;" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(4) HR:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a4', {initialValue: initValue('a4')}]" style="width: 240px;" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(5) SpO2:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(1) SpO2:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input v-decorator="['a5', {...inputRequired, initialValue: initValue('a5')}]" style="width: 240px;" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(6) 身高:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a6', {...inputRequired, initialValue: initValue('a6')}]" style="width: 240px;" addonAfter="cm" @change="computeBMI" autocomplete="off"></a-input>
+              <a-form-item label="(2) 身高:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input v-decorator="['a6', {...inputRequired, initialValue: initValue('a6')}]" style="width: 240px;" addonAfter="cm" @change="changeHeight($event)" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(7) 体重:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="computeBMI" autocomplete="off"></a-input>
+              <a-form-item label="(3) 体重:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="changeWeight($event)" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(8) BMI(自动演算出):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a8', {...inputRequired, initialValue: initValue('a8')}]" :readOnly="true" style="width: 240px;" autocomplete="off"></a-input>
+              <a-form-item label="(4) BMI(自动演算出):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input v-decorator="['a8', {initialValue: initValue('a8')}]" :readOnly="true" style="width: 240px;" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(9) 肺部体征：双肺呼吸音:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <a-form-item label="(5) 肺部体征：双肺呼吸音:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              </a-form-item>
+              <a-form-item label="桶状胸" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-radio-group v-decorator="['b1', {...require2, initialValue: initValue('b1')}]">
+                  <a-radio value="1">有</a-radio>
+                  <a-radio value="-1">无</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="杵状指" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-radio-group v-decorator="['b2', {...require2, initialValue: initValue('b2')}]">
+                  <a-radio value="1">有</a-radio>
+                  <a-radio value="-1">无</a-radio>
+                </a-radio-group>
               </a-form-item>
               <a-form-item label="啰音" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-radio-group v-decorator="['a9', {...require2, initialValue: initValue('a9')}]" @change="changeRadio($event, 'controla9')">
@@ -105,9 +105,9 @@ export default {
       patientBasis: {},
       baselineInfoStyle: {
         overflow: "auto",
-        height: "100%",
+        height: '100%',
         "padding-right": "0px",
-        boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
+        "border-right": "1px solid #ddd"
       },
       baselineFormStyle: {
         // height: '444px',
@@ -155,12 +155,15 @@ export default {
       patientBasisId: this.$route.params.id,
       controla9: false,
       tgjc: undefined,
+      height: undefined,
+      weight: undefined,
       spinning: false,
       executeStatus: false
     }
   },
   created() {
     var that = this
+    this.defaultSelectedKeys = [15]
     this.CloseSidebar()
     var params = new URLSearchParams()
     params.append('patientBasisId', this.patientBasisId)
@@ -199,6 +202,14 @@ export default {
         this[t] = false
       }
     },
+    handleClick(e) {
+      this.maskId = e.key
+      if ((e.key >= 37 && e.key <= 42) || (e.key >= 45 && e.key <= 50)) {
+        this.$router.replace('/basis/question/' + this.patientBasisId + '/' + this.maskId)
+      } else {
+        this.$router.replace('/list/task/' + this.patientBasisId + '/' + this.maskId)
+      }
+    },
     getFormData() {
       var that = this
       var params = new URLSearchParams()
@@ -213,20 +224,11 @@ export default {
           console.log(error)
         })
     },
-    handleClick(e) {
-      this.maskId = e.key
-      if ((e.key >= 37 && e.key <= 42) || (e.key >= 45 && e.key <= 50)) {
-        this.$router.replace('/basis/question/' + this.patientBasisId + '/' + this.maskId)
-      } else {
-        this.$router.replace('/list/task/' + this.patientBasisId + '/' + this.maskId)
-      }
-    },
     handleSubmit(e) {
       e.preventDefault()
       const { form: { validateFields } } = this
       validateFields((errors, values) => {
         if (!errors) {
-          console.log('values', values)
           var re = this.form.getFieldsValue()
           var that = this
           console.log(re)
@@ -239,7 +241,7 @@ export default {
           params.append('patientBasis', JSON.stringify(this.patientBasis))
           params.append('basisMarkId', this.maskId)
           params.append('markName', this.markName)
-          this.spinning = true
+          that.spinning = true
           saveBasis(params)
             .then(res => {
               console.log(res)
@@ -261,6 +263,7 @@ export default {
               that.spinning = false
               console.log(error)
             })
+          return false
         } else {
           this.spinning = false
         }
@@ -282,6 +285,12 @@ export default {
         if (answer.a9 === '1') {
           this.controla9 = true
         }
+        if (answer.a6) {
+          this.height = answer.a6
+        }
+        if (answer.a7) {
+          this.weight = answer.a7
+        }
       }
       return answer
     },
@@ -298,7 +307,7 @@ export default {
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
-      this.spinning = true
+      that.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
@@ -314,8 +323,8 @@ export default {
     },
     computeBMI() {
       var that = this
-      var height = this.form.getFieldValue('a6')
-      var weight = this.form.getFieldValue('a7')
+      var height = this.height
+      var weight = this.weight
       if (height && weight) {
         var params = new URLSearchParams()
         params.append('scoreType', 'bmi')
@@ -331,19 +340,42 @@ export default {
             console.log(error)
           })
       }
+    },
+    changeHeight(e) {
+      this.height = e.target.value
+      if (!e.target.value) {
+        this.form.setFieldsValue({
+          a8: ''
+        })
+      } else {
+        this.computeBMI()
+      }
+    },
+    changeWeight(e) {
+      this.weight = e.target.value
+      if (!e.target.value) {
+        this.form.setFieldsValue({
+          a8: ''
+        })
+      } else {
+        this.computeBMI()
+      }
     }
   }
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:calc(100% - 10px);
+#baselineInfo {
+  height: calc(100% - 10px);
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   height: calc(100% - 54px);
 }
+
+
 /deep/ .ant-spin {
   position: absolute;
   top: 0;

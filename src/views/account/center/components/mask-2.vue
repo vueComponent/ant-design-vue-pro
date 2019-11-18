@@ -158,7 +158,7 @@ export default {
       height: undefined,
       weight: undefined,
       spinning: false,
-      executeStatus: undefined
+      executeStatus: false
     }
   },
   created() {
@@ -360,10 +360,11 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:calc(100% - 10px);
+#baselineInfo {
+  height: calc(100% - 10px);
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   height: calc(100% - 54px);
@@ -562,6 +563,7 @@ export default {
     .anticon-clock-circle {
       color: #06a0e2;
     }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;
