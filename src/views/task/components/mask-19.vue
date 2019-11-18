@@ -25,13 +25,14 @@
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;">
             <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
+              <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.CT基本信息</div>
               <a-form-item label="(1) CT检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item label="(2) 图像类型:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a2', {...require1, initialValue: initValue('a2')}]">
@@ -39,142 +40,163 @@
                   <a-radio value="2">CT</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(3) 上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
-                    <div v-if="fileList.length < 4">
+                    <div v-if="fileList.length < 1">
                       <a-icon type="plus" />
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
+                  <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1">OCR识别</a-button>
                   <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
                     <img alt="example" style="width: 100%" :src="previewImage" />
                   </a-modal>
                 </div>
               </a-form-item>
+              <a-form-item label="放射学表现:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-textarea style="top: 2px;" v-decorator="['a21', {initialValue: initValue('a19')}]" autocomplete="off"></a-textarea>
+              </a-form-item>
+              <a-form-item label="放射学诊断:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-textarea style="top: 2px;" v-decorator="['a22', {initialValue: initValue('a19')}]" autocomplete="off"></a-textarea>
+              </a-form-item>
               <div class="title">2.支扩位于CT图像上</div>
-              <a-form-item label="(1) 右上叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="支扩位于CT图像上：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-checkbox-group v-decorator="['b', {...selectRequired, initialValue: initValue('b', 'array')}]">
+                  <a-checkbox value="1" @change="changeSelect($event, 'controla3')">右上叶</a-checkbox>
+                  <a-checkbox value="2" @change="changeSelect($event, 'controla4')">左上叶</a-checkbox>
+                  <a-checkbox value="3" @change="changeSelect($event, 'controla5')">右中叶</a-checkbox>
+                  <a-checkbox value="4" @change="changeSelect($event, 'controla6')">左舌叶</a-checkbox>
+                  <a-checkbox value="5" @change="changeSelect($event, 'controla7')">右下叶</a-checkbox>
+                  <a-checkbox value="6" @change="changeSelect($event, 'controla8')">左下叶</a-checkbox>
+                </a-checkbox-group>
+              </a-form-item>
+              <a-form-item label="右上叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla3">
                 <a-radio-group v-decorator="['a3', {...require1, initialValue: initValue('a3')}]" @change="computeReiff">
-                  <a-radio value="1">无支扩</a-radio>
-                  <a-radio value="2">柱状</a-radio>
-                  <a-radio value="3">静脉曲张型</a-radio>
-                  <a-radio value="4">囊状</a-radio>
-                  <a-radio value="5">严重度不明</a-radio>
+                  <a-radio value="1">柱状</a-radio>
+                  <a-radio value="2">静脉曲张型(混合型)</a-radio>
+                  <a-radio value="3">囊状</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(2) 左上叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="左上叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla4">
                 <a-radio-group v-decorator="['a4', {...require1, initialValue: initValue('a4')}]" @change="computeReiff">
-                  <a-radio value="1">无支扩</a-radio>
-                  <a-radio value="2">柱状</a-radio>
-                  <a-radio value="3">静脉曲张型</a-radio>
-                  <a-radio value="4">囊状</a-radio>
-                  <a-radio value="5">严重度不明</a-radio>
+                  <a-radio value="1">柱状</a-radio>
+                  <a-radio value="2">静脉曲张型(混合型)</a-radio>
+                  <a-radio value="3">囊状</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(3) 右中叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="右中叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla5">
                 <a-radio-group v-decorator="['a5', {...require1, initialValue: initValue('a5')}]" @change="computeReiff">
-                  <a-radio value="1">无支扩</a-radio>
-                  <a-radio value="2">柱状</a-radio>
-                  <a-radio value="3">静脉曲张型</a-radio>
-                  <a-radio value="4">囊状</a-radio>
-                  <a-radio value="5">严重度不明</a-radio>
+                  <a-radio value="1">柱状</a-radio>
+                  <a-radio value="2">静脉曲张型(混合型)</a-radio>
+                  <a-radio value="3">囊状</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(4) 左舌叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="左舌叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla6">
                 <a-radio-group v-decorator="['a6', {...require1, initialValue: initValue('a6')}]" @change="computeReiff">
-                  <a-radio value="1">无支扩</a-radio>
-                  <a-radio value="2">柱状</a-radio>
-                  <a-radio value="3">静脉曲张型</a-radio>
-                  <a-radio value="4">囊状</a-radio>
-                  <a-radio value="5">严重度不明</a-radio>
+                  <a-radio value="1">柱状</a-radio>
+                  <a-radio value="2">静脉曲张型(混合型)</a-radio>
+                  <a-radio value="3">囊状</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(5) 右下叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="右下叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla7">
                 <a-radio-group v-decorator="['a7', {...require1, initialValue: initValue('a7')}]" @change="computeReiff">
-                  <a-radio value="1">无支扩</a-radio>
-                  <a-radio value="2">柱状</a-radio>
-                  <a-radio value="3">静脉曲张型</a-radio>
-                  <a-radio value="4">囊状</a-radio>
-                  <a-radio value="5">严重度不明</a-radio>
+                  <a-radio value="1">柱状</a-radio>
+                  <a-radio value="2">静脉曲张型(混合型)</a-radio>
+                  <a-radio value="3">囊状</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(6) 左下叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="左下叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla8">
                 <a-radio-group v-decorator="['a8', {...require1, initialValue: initValue('a8')}]" @change="computeReiff">
-                  <a-radio value="1">无支扩</a-radio>
-                  <a-radio value="2">柱状</a-radio>
-                  <a-radio value="3">静脉曲张型</a-radio>
-                  <a-radio value="4">囊状</a-radio>
-                  <a-radio value="5">严重度不明</a-radio>
+                  <a-radio value="1">柱状</a-radio>
+                  <a-radio value="2">静脉曲张型(混合型)</a-radio>
+                  <a-radio value="3">囊状</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(7) 影像Reiff评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="影像Reiff评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['a9', {initialValue: initValue('a9')}]" :readOnly="true" autocomplete="off"></a-input>
               </a-form-item>
-              <div class="title">3.Bhalla影像学评分</div>
+              <div class="title">3.Bhalla影像学评分（以下所有子选择，选项1得0分，选项2得1分，选项3得2分，选项4得3分）</div>
               <a-form-item label="(1) 支气管扩张程度：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a10', {initialValue: initValue('a10')}]" @change="computeBhalla">
-                  <a-radio value="1">无</a-radio>
-                  <a-radio value="2">轻度（管腔直径为临近血管直径的1-2倍）</a-radio>
-                  <a-radio value="3">中度（管腔直径为临近血管直径的2-3倍）</a-radio>
-                  <a-radio value="4">重度（管腔直径超过临近血管直径的3倍）</a-radio>
+                <a-radio-group v-decorator="['a10', {initialValue: initValue('a10')}]" @change="computeBhalla" style="line-height: 30px;">
+                  <a-radio value="0">无</a-radio>
+                  <a-radio value="1">轻度（管腔直径为临近血管直径的1-2倍）</a-radio>
+                  <a-radio value="2">中度（管腔直径为临近血管直径的2-3倍）</a-radio>
+                  <a-radio value="3">重度（管腔直径超过临近血管直径的3倍）</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(2) 支气管壁增厚情况" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a11', {initialValue: initValue('a11')}]" @change="computeBhalla">
-                  <a-radio value="1">无</a-radio>
-                  <a-radio value="2">轻度（支气管壁的厚度相当于临近血管壁厚度）</a-radio>
-                  <a-radio value="3">中度（支气管壁的厚度相当于临近血管壁厚度的1-2倍）</a-radio>
-                  <a-radio value="4">重度（支气管壁的厚度相当于临近血管壁厚度的2倍）</a-radio>
+                <a-radio-group v-decorator="['a11', {initialValue: initValue('a11')}]" @change="computeBhalla" style="line-height: 30px;">
+                  <a-radio value="0">无</a-radio>
+                  <a-radio value="1">轻度（支气管壁的厚度相当于临近血管壁厚度）</a-radio>
+                  <a-radio value="2">中度（支气管壁的厚度相当于临近血管壁厚度的1-2倍）</a-radio>
+                  <a-radio value="3">重度（支气管壁的厚度相当于临近血管壁厚度的2倍）</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(3) 支气管扩张的范围（肺段数）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['a12', { initialValue: initValue('a12')}]" @change="computeBhalla" autocomplete="off"></a-input>
+                <a-radio-group v-decorator="['a12', {initialValue: initValue('a12')}]" @change="computeBhalla">
+                  <a-radio value="0">无</a-radio>
+                  <a-radio value="1">1-5</a-radio>
+                  <a-radio value="2">6-9</a-radio>
+                  <a-radio value="3">&gt;9</a-radio>
+                </a-radio-group>
               </a-form-item>
-              <a-form-item label="(4) 支气管管腔黏液阻塞的范围（肺段数）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['a13', { initialValue: initValue('a13')}]" @change="computeBhalla" autocomplete="off"></a-input>
+              <a-form-item label="(4) 支气管管腔黏液阻塞范围(肺段数):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a13', {initialValue: initValue('a13')}]" @change="computeBhalla">
+                  <a-radio value="0">无</a-radio>
+                  <a-radio value="1">1-5</a-radio>
+                  <a-radio value="2">6-9</a-radio>
+                  <a-radio value="3">&gt;9</a-radio>
+                </a-radio-group>
               </a-form-item>
               <a-form-item label="(5) 存在脓肿的范围（肺段数）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['a14', { initialValue: initValue('a14')}]" @change="computeBhalla" autocomplete="off"></a-input>
+                <a-radio-group v-decorator="['a14', {initialValue: initValue('a14')}]" @change="computeBhalla">
+                  <a-radio value="0">无</a-radio>
+                  <a-radio value="1">1-5</a-radio>
+                  <a-radio value="2">6-9</a-radio>
+                  <a-radio value="3">&gt;9</a-radio>
+                </a-radio-group>
               </a-form-item>
               <a-form-item label="(6) 扩张支气管的分级数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a15', {initialValue: initValue('a15')}]" @change="computeBhalla">
-                  <a-radio value="1">无</a-radio>
-                  <a-radio value="2">超过4级</a-radio>
-                  <a-radio value="3">超过5级</a-radio>
-                  <a-radio value="4">超过6级</a-radio>
+                  <a-radio value="0">无</a-radio>
+                  <a-radio value="1">超过4级</a-radio>
+                  <a-radio value="2">超过5级</a-radio>
+                  <a-radio value="3">超过6级</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(7) 肺大疱数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a16', { initialValue: initValue('a16')}]" @change="computeBhalla">
-                  <a-radio value="1">无</a-radio>
-                  <a-radio value="2">单侧(&lt;4)</a-radio>
-                  <a-radio value="3">双侧(&lt;4)</a-radio>
-                  <a-radio value="4">&gt;4</a-radio>
+                  <a-radio value="0">无</a-radio>
+                  <a-radio value="1">单侧(&lt;4)</a-radio>
+                  <a-radio value="2">双侧(&lt;4)</a-radio>
+                  <a-radio value="3">&gt;4</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(8) 肺气肿的范围" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a17', { initialValue: initValue('a17')}]" @change="computeBhalla">
-                  <a-radio value="1">无</a-radio>
-                  <a-radio value="2">1-5</a-radio>
-                  <a-radio value="4">&gt;5</a-radio>
+                  <a-radio value="0">无</a-radio>
+                  <a-radio value="1">1-5</a-radio>
+                  <a-radio value="2">&gt;5</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(9) 肺不张/实变的" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a18', { initialValue: initValue('a18')}]" @change="computeBhalla">
-                  <a-radio value="1">无</a-radio>
-                  <a-radio value="2">肺亚段</a-radio>
-                  <a-radio value="3">肺段/肺叶</a-radio>
+                  <a-radio value="0">无</a-radio>
+                  <a-radio value="1">肺亚段</a-radio>
+                  <a-radio value="2">肺段/肺叶</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(10) 支扩类型" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(10) Bhalla影像学评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['a19', {initialValue: initValue('a19')}]" :readOnly="true" autocomplete="off"></a-input>
+              </a-form-item>
+              <div class="title">4.支扩类型</div>
+              <a-form-item label="支扩类型" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
                 <a-radio-group v-decorator="['a20', {initialValue: initValue('a20')}]" @change="computeBhalla">
                   <a-radio value="1">囊状</a-radio>
                   <a-radio value="2">柱状</a-radio>
-                  <a-radio value="3">静脉曲张型</a-radio>
+                  <a-radio value="3">静脉曲张型(混合型)</a-radio>
                 </a-radio-group>
-              </a-form-item>
-              <a-form-item label="(11) Bhalla影像学评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['a19', {initialValue: initValue('a19')}]" :readOnly="true" autocomplete="off"></a-input>
               </a-form-item>
             </div>
           </a-form>
@@ -198,8 +220,14 @@ export default {
   },
   data() {
     return {
+      spinning: false,
+      previewVisible: false,
+      previewImage: '',
+      uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
+      viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
+      fileList: [],
       markName: 'xbyxx',
-      title: '',
+      title: '年访视',
       openKeys: [],
       defaultSelectedKeys: [19],
       orgTree: [],
@@ -207,9 +235,9 @@ export default {
       patientBasis: {},
       baselineInfoStyle: {
         overflow: "auto",
-        height: "100%",
+        height: '100%',
         "padding-right": "0px",
-        boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
+        "border-right": "1px solid #ddd"
       },
       baselineFormStyle: {
         // height: '444px',
@@ -237,6 +265,15 @@ export default {
         sm: { span: 24 },
         md: { span: 24 }
       },
+      labelColOffset: {
+        md: { span: 6, offset: 6 }
+      },
+      labelColOffset2: {
+        md: { span: 3, offset: 6 }
+      },
+      wrapperOffset: {
+        md: { span: 12 }
+      },
       dateRequire: {
         rules: [{ type: 'object', required: true, message: '请选择时间！' }]
       },
@@ -256,13 +293,14 @@ export default {
       maskId: this.$route.meta.maskId,
       patientBasisId: this.$route.params.id,
       xbyxx: undefined,
-      spinning: false,
-      executeStatus: false,
-      previewVisible: false,
-      previewImage: '',
-      uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
-      viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
-      fileList: []
+      executeStatus: undefined,
+      controla3: false,
+      controla4: false,
+      controla5: false,
+      controla6: false,
+      controla7: false,
+      controla8: false,
+      controla9: false
     }
   },
   created() {
@@ -275,7 +313,6 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        that.title = '年访视'
         that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
       })
     this.getFormData()
@@ -283,6 +320,80 @@ export default {
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
+    changeSelect(e, t) {
+      this[t] = e.target.checked
+    },
+    changeRadio(e, t) {
+      if (e.target.value === '1') {
+        this[t] = true
+      } else {
+        this[t] = false
+      }
+    },
+    handleClick(e) {
+      this.maskId = e.key
+      if ((e.key >= 37 && e.key <= 42) || (e.key >= 45 && e.key <= 50)) {
+        this.$router.replace('/basis/question/' + this.patientBasisId + '/' + this.maskId)
+      } else {
+        this.$router.replace('/list/task/' + this.patientBasisId + '/' + this.maskId)
+      }
+    },
+    handleSubmit(e) {
+      e.preventDefault()
+      const { form: { validateFields } } = this
+      var that = this
+      validateFields((errors, values) => {
+        if (!errors) {
+          console.log('values', values)
+          var re = this.form.getFieldsValue()
+          re = {
+            ...re,
+            'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
+            'b': typeof re['b'] !== 'undefined' ? re['b'].join(',') : ''
+          }
+          console.log(re)
+          this.patientBasis.status = 2
+          var params = new URLSearchParams()
+          if (this.xbyxx && this.xbyxx.xbyxxId) {
+            re.xbyxxId = this.xbyxx.xbyxxId
+          }
+          //附件
+          if (this.fileList && this.fileList.length) {
+            var a = []
+            _.each(this.fileList, function(v) {
+              if (v.response) a.push(v.response.fileName)
+              else a.push(v.name)
+            })
+            params.append('fileName', JSON.stringify(a))
+          }
+          params.append('formData', JSON.stringify(re))
+          params.append('patientBasis', JSON.stringify(this.patientBasis))
+          params.append('basisMarkId', this.maskId)
+          params.append('markName', this.markName)
+          that.spinning = true
+          saveBasis(params)
+            .then(res => {
+              console.log(res)
+              that.spinning = false
+              that.getFormData()
+              that.$message.success(res.msg)
+              params = new URLSearchParams()
+              params.append('patientBasisId', this.patientBasisId)
+              getPatientBasis(params)
+                .then(res => {
+                  that.orgTree = res.data.list
+                  that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                })
+            })
+            .catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
+        } else {
+          this.spinning = false
+        }
+      })
+    },
     getFormData() {
       var that = this
       var params = new URLSearchParams()
@@ -308,88 +419,13 @@ export default {
           console.log(error)
         })
     },
-    changeSelect(e, t) {
-      this[t] = e.target.checked
-    },
-    changeRadio(e, t) {
-      if (e.target.value === '1') {
-        this[t] = true
-      } else {
-        this[t] = false
-      }
-    },
-    handleClick(e) {
-      this.maskId = e.key
-      if ((e.key >= 37 && e.key <= 42) || (e.key >= 45 && e.key <= 50)) {
-        this.$router.replace('/basis/question/' + this.patientBasisId + '/' + this.maskId)
-      } else {
-        this.$router.replace('/list/task/' + this.patientBasisId + '/' + this.maskId)
-      }
-    },
-    handleSubmit(e) {
-      e.preventDefault()
-      const { form: { validateFields } } = this
-      validateFields((errors, values) => {
-        if (!errors) {
-          console.log('values', values)
-          var re = this.form.getFieldsValue()
-          var that = this
-          re = {
-            ...re,
-            'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : ''
-          }
-          console.log(re)
-          this.patientBasis.status = 2
-          var params = new URLSearchParams()
-          if (this.xbyxx && this.xbyxx.xbyxxId) {
-            re.xbyxxId = this.xbyxx.xbyxxId
-          }
-          //附件
-          if (this.fileList && this.fileList.length) {
-            var a = []
-            _.each(this.fileList, function(v) {
-              if (v.response) a.push(v.response.fileName)
-              else a.push(v.name)
-            })
-            params.append('fileName', JSON.stringify(a))
-          }
-          params.append('formData', JSON.stringify(re))
-          params.append('patientBasis', JSON.stringify(this.patientBasis))
-          params.append('basisMarkId', this.maskId)
-          params.append('markName', this.markName)
-          this.spinning = true
-          saveBasis(params)
-            .then(res => {
-              console.log(res)
-              that.$message.success(res.msg)
-              that.spinning = false
-              that.getFormData()
-              params = new URLSearchParams()
-              params.append('patientBasisId', that.patientBasisId)
-              getPatientBasis(params)
-                .then(res => {
-                  that.orgTree = res.data.list
-                  that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
-                })
-                .catch(error => {
-                  console.log(error)
-                })
-            })
-            .catch(error => {
-              that.spinning = false
-              console.log(error)
-            })
-        } else {
-          this.spinning = false
-        }
-      })
-    },
     save() {
       var re = this.form.getFieldsValue()
       var that = this
       re = {
         ...re,
-        'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : ''
+        'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
+        'b': typeof re['b'] !== 'undefined' ? re['b'].join(',') : ''
       }
       console.log(re)
       this.patientBasis.status = 1
@@ -411,13 +447,13 @@ export default {
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
-      this.spinning = true
+      that.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg)
           that.spinning = false
           that.getFormData()
+          that.$message.success(res.msg)
         })
         .catch(error => {
           that.spinning = false
@@ -437,6 +473,30 @@ export default {
       }
     },
     dealAnswers(answer) {
+      if (answer && !_.isEmpty(answer)) {
+        var splitArr = []
+        if (answer.b) {
+          splitArr = answer.b.split(',')
+          if (splitArr.indexOf('1') > -1) {
+            this.controla3 = true
+          }
+          if (splitArr.indexOf('2') > -1) {
+            this.controla4 = true
+          }
+          if (splitArr.indexOf('3') > -1) {
+            this.controla5 = true
+          }
+          if (splitArr.indexOf('4') > -1) {
+            this.controla6 = true
+          }
+          if (splitArr.indexOf('5') > -1) {
+            this.controla7 = true
+          }
+          if (splitArr.indexOf('6') > -1) {
+            this.controla8 = true
+          }
+        }
+      }
       return answer
     },
     computeReiff() {
@@ -476,27 +536,36 @@ export default {
       })
     },
     handleCancel() {
-      this.previewVisible = false
+      this.previewVisible = false;
     },
     handlePreview(file) {
-      this.previewImage = file.url || file.thumbUrl
-      this.previewVisible = true
+      this.previewImage = file.url || file.thumbUrl;
+      this.previewVisible = true;
     },
     handleChange({ fileList }) {
-      this.fileList = fileList
+      this.fileList = fileList;
+    },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current > moment().endOf('day');
+    },
+    _import() {
+
     }
   }
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:calc(100% - 10px);
+#baselineInfo {
+  height: calc(100% - 10px);
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   height: calc(100% - 54px);
 }
+
 /deep/ .ant-spin {
   position: absolute;
   top: 0;
