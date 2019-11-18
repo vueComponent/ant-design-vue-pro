@@ -9,13 +9,13 @@
             </a-col>
             <a-col :md="5" :sm="20" class="UserNameCard">
               <my-icon type="iconshoufangzhe_huaban" />
-              受访者:{{ info.name }}
+              受访者：{{ info.name }}
             </a-col>
             <a-col :md="6" :sm="24" class="UserNameCard">
               <my-icon type="iconshenfenzheng_huaban" />
-              {{ info.card }}
+              身份证号：{{ info.card }}
             </a-col>
-            <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{info.createTime | moment}}</a-col>
+            <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{info.createTime | moment('YYYY-MM-DD')}}</a-col>
           </a-row>
         </a-card>
         <!-- <a-card :bordered="false" style="margin-top: 10px"> -->
@@ -40,10 +40,10 @@
                   <span>{{item.name}}</span>
                 </div>
                 <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
-                  <p v-if="qu1.type == 5" class="question-tip">
+                  <div v-if="qu1.type == 5" class="question-tip">
                     <span class="tip-icon"></span>
                     <span>{{qu1.name}}</span>
-                  </p>
+                  </div>
                   <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue" readOnly />
                   <a-radio-group v-if="qu1.type === 1" :name="qu1.questionTitleId+''" v-model="qu1.inputType">
                     <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" disabled>{{item.name}}</a-radio>
@@ -232,17 +232,17 @@
           margin-right: 10px;
         }
       }
+
       .question-tip {
-        line-height: 40px;
+        height: 50px;
         display: flex;
-        margin-top: 12px;
+        align-items: center;
         .tip-icon {
-          width: 30px;
-          height: 40px;
+          width: 20px;
+          height: 20px;
           background-image: url('../../assets/tip-icon.png');
-          background-size: 60% 50%;
-          background-position: center;
-          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          margin-right: 5px;
         }
       }
 
@@ -251,26 +251,23 @@
         border-bottom: 1px solid #eee;
       }
 
-      .ant-form-item label {
-        margin: 5px 0;
-      }
-
       /deep/ .ant-form-item-label {
         text-align: left;
-
-        &.ant-col-md-24 label {
-          display: block;
-          background-color: #f7f8f8;
-          font-weight: bold;
-          font-size: 16px;
-          color: #231815;
-          padding-left: 15px;
-          border-top: 1px solid #eee;
-        }
+        display: block;
+        background-color: #f7f8f8;
+        color: #231815;
+        font-size: 16px;
+        font-weight: bold;
+        padding-left: 15px;
+        border-top: 1px solid #eee;
       }
 
       /deep/ .ant-form-item-control-wrapper {
         padding: 5px 0;
+        padding-left: 20px;
+        label {
+          margin: 5px 0;
+        }
       }
     }
   }
