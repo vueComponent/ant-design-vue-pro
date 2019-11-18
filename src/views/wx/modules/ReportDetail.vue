@@ -12,11 +12,9 @@
           <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['uploadDate']" disabled />
         </a-form-item>
         <a-form-item label="报告附件" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <ul>
-            <li v-for="item in imgList" :key="item.id">
-              <img :src="`${attachsPrefix}${item.annexAddress}`">
-            </li>
-          </ul>
+          <viewer class="img-list" :images="imgList">
+            <img v-for="item in imgList" :src="`${attachsPrefix}${item.annexAddress}`" :key="item.annexAddress" width="25%" height="150px">
+          </viewer>
         </a-form-item>
         <a-form-item label="反馈意见" :labelCol="labelCol" :wrapperCol="wrapperCol" style="margin-bottom:0">
           <a-textarea rows="3" v-decorator="['feedback', requiredRule]" />
@@ -105,20 +103,8 @@
 </script>
 
 <style lang="less" scoped>
-  ul {
-    margin: 0;
-    padding: 0;
+  .img-list {
     display: flex;
     flex-wrap: wrap;
-  }
-  li {
-    list-style: none;
-    width: 25%;
-    height: 150px;
-  }
-  img {
-    display: block;
-    width: 100%;
-    height: 100%;
   }
 </style>

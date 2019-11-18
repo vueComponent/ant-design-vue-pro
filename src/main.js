@@ -7,6 +7,17 @@ import router from './router'
 import store from './store/'
 import { VueAxios } from './utils/request'
 
+//在main.js中引入
+import Viewer from 'v-viewer'
+import 'viewerjs/dist/viewer.css'
+
+//Vue.use(Viewer) 默认配置写法
+Vue.use(Viewer, {
+    defaultOptions: {
+        zIndex: 9999,
+        toolbar: true
+}})
+
 // mock
 import './mock'
 
