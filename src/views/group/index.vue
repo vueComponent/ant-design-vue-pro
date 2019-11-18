@@ -37,7 +37,7 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="档案号">
-                        <a-input v-model="queryParam.code" style="width: 100%" />
+                        <a-input v-model="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="姓名">
                         <a-input v-model="queryParam.name" style="width: 100%" />
@@ -228,6 +228,7 @@ export default {
   methods: {
     clearForm() {
       this.queryParam = {}
+      this.dateArr = []
     },
     tableSearch(type) {
       const keyWord = {
