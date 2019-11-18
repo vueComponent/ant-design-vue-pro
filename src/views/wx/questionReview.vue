@@ -178,10 +178,8 @@
         this.queryParam = {}
       },
       tableSearch(type) {
-        const keyWord = {
-          queryType: type
-        }
-        this.$refs.table.search(keyWord)
+        this.queryParam.queryType = type
+        this.$refs.table.refresh();
         this.advanced = false
       },
       refreshTable() {

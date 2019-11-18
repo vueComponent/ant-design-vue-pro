@@ -242,11 +242,9 @@
         this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD');
       },
       tableSearch(type) {
-        const keyWord = {
-          queryType: type
-        }
-        this.$refs.table.search(keyWord);
-        this.advanced = false;
+      this.queryParam.queryType = type
+      this.$refs.table.refresh();
+      this.advanced = false;
       },
       showUser(record) {
         this.$refs.detailModal.show(record);

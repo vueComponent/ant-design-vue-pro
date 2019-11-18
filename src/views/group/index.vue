@@ -231,10 +231,8 @@ export default {
       this.dateArr = []
     },
     tableSearch(type) {
-      const keyWord = {
-        "type": type
-      }
-      this.$refs.table.search(keyWord);
+      this.queryParam.type = type
+      this.$refs.table.refresh();
       this.advanced = false;
     },
     refreshTable() {

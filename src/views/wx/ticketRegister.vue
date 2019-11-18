@@ -162,14 +162,8 @@
         this.queryParam = {}
       },
       tableSearch(type) {
-        if (type == 0) {
-          const keyWord = {
-            executeStatus: type
-          }
-          this.$refs.table.search(keyWord)
-        } else {
-          this.$refs.table.refresh()
-        }
+        this.queryParam.executeStatus = type
+        this.$refs.table.refresh()
         this.advanced = false
       },
       handleLogout(record) {

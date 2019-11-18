@@ -159,14 +159,8 @@
         this.queryParam = {}
       },
       tableSearch(type) {
-        if (type == 0 || type == 1) {
-          const keyWord = {
-            isUser: type
-          }
-          this.$refs.table.search(keyWord)
-        } else {
-          this.$refs.table.refresh()
-        }
+        this.queryParam.isUser = type
+        this.$refs.table.refresh()
         this.advanced = false
       },
       refreshTable() {
