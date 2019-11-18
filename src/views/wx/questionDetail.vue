@@ -212,6 +212,10 @@
         color: inherit;
       }
 
+      /deep/.ant-checkbox-disabled + span {
+        color: inherit;
+      }
+
       .question-des {
         font-size: 16px;
         margin-bottom: 30px;
