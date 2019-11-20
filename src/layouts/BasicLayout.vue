@@ -69,8 +69,8 @@ import RouteView from './RouteView'
 import MultiTab from '@/components/MultiTab'
 import SideMenu from '@/components/Menu/SideMenu'
 import GlobalHeader from '@/components/GlobalHeader'
-import GlobalFooter from '@/components/GlobalFooter'
-import SettingDrawer from '@/components/SettingDrawer'
+// import GlobalFooter from '@/components/GlobalFooter'
+// import SettingDrawer from '@/components/SettingDrawer'
 import { asyncRouterMap } from '@/config/router.config.js'
 
 export default {
@@ -81,12 +81,12 @@ export default {
     MultiTab,
     SideMenu,
     GlobalHeader,
-    GlobalFooter,
-    SettingDrawer
+    // GlobalFooter,
+    // SettingDrawer
   },
   data () {
     return {
-      production: config.production,
+    //   production: config.production,
       collapsed: false,
       menus: [],
       height:(window.screen.height-368)+"px"

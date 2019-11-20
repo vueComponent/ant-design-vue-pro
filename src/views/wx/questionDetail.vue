@@ -8,57 +8,66 @@
               <a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" />
             </a-col>
             <a-col :md="5" :sm="20" class="UserNameCard">
-              <my-icon type="iconshoufangzhe_huaban" />
+              <my-icon type="iconshoufangzhehuaban" />
               受访者：{{ info.name }}
             </a-col>
             <a-col :md="6" :sm="24" class="UserNameCard">
-              <my-icon type="iconshenfenzheng_huaban" />
+              <my-icon type="iconshenfenzhenghuaban" />
               身份证号：{{ info.card }}
             </a-col>
-            <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{info.createTime | moment('YYYY-MM-DD')}}</a-col>
+            <a-col :md="12" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ info.createDate }}</a-col>
           </a-row>
         </a-card>
         <!-- <a-card :bordered="false" style="margin-top: 10px"> -->
-        <a-row type="flex" style="flex:1;padding: 10px 15px;flex-direction: column;margin-top: 10px;overflow: hidden;">
-          <div class="head-bar">
-            <a-row type="flex">
-              <span class="head-icon"></span>
-              <div v-if="question.name" class="question-title">{{question.name}}</div>
-            </a-row>
-            <a-row>
-              <a-button class="btn fr" type="primary" @click="save(4)">通过</a-button>
-              <a-button class="btn fr" @click="save(3)">不通过</a-button>
-            </a-row>
-          </div>
-          <div class="baselineForm">
-            <!-- 调查问卷 -->
-            <div v-if="question.remark" class="question-des"><span style="color:#3398dc">说明：</span>{{question.remark}}</div>
-            <a-form :form="form">
-              <div v-for="item in listArr" :key="item.id">
-                <div class="question-t">
-                  <span class="question-icon"></span>
-                  <span>{{item.name}}</span>
-                </div>
-                <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
-                  <div v-if="qu1.type == 5" class="question-tip">
-                    <span class="tip-icon"></span>
-                    <span>{{qu1.name}}</span>
+        <a-row style="flex: 1;background: #fff;margin-top: 15px;overflow: hidden;">
+          <a-col :span="5" :style="baselineInfoStyle">
+            <ul class="menu">
+              <template v-for="item in orgTree">
+                <li class="menu-item" :class="{'active':item.questionTaskId == questionTaskId}" :key="item.questionTaskId" @click="handleClick(item.questionTaskId)">{{item.questionName}}</li>
+              </template>
+            </ul>
+          </a-col>
+          <a-col :span="19" style="height: 100%; display: flex; flex-direction: column;">
+            <div class="head-bar">
+              <a-row type="flex">
+                <span class="head-icon"></span>
+                <div v-if="question.name" class="question-title">{{question.name}}</div>
+              </a-row>
+              <a-row>
+                <a-button class="btn fr" type="primary" @click="save(4)">通过</a-button>
+                <a-button class="btn fr" @click="save(3)">不通过</a-button>
+              </a-row>
+            </div>
+            <div class="baselineForm">
+              <!-- 调查问卷 -->
+              <div v-if="question.remark" class="question-des"><span style="color:#3398dc">说明：</span>{{question.remark}}</div>
+              <a-form :form="form">
+                <div v-for="item in listArr" :key="item.id">
+                  <div class="question-t">
+                    <span class="question-icon"></span>
+                    <span>{{item.name}}</span>
                   </div>
-                  <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue" readOnly />
-                  <a-radio-group v-if="qu1.type === 1" :name="qu1.questionTitleId+''" v-model="qu1.inputType">
-                    <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" disabled>{{item.name}}</a-radio>
-                  </a-radio-group>
-                  <a-checkbox-group v-if="qu1.type === 2" v-model="qu1.inputType">
-                    <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" :name="qu1.questionTitleId+''" disabled>{{item.name}}</a-checkbox>
-                  </a-checkbox-group>
-                  <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue && moment(qu1.answers[0].questionOptionValue, 'YYYY-MM-DD')" disabled />
-                </a-form-item>
-              </div>
-            </a-form>
-          </div>
+                  <a-form-item v-for="(qu1, index) in item.childrens" :key="index" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''">
+                    <div v-if="qu1.type == 5" class="question-tip">
+                      <span class="tip-icon"></span>
+                      <span>{{qu1.name}}</span>
+                    </div>
+                    <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue" readOnly />
+                    <a-radio-group v-if="qu1.type === 1" :name="qu1.questionTitleId+''" v-model="qu1.inputType">
+                      <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" disabled>{{item.name}}</a-radio>
+                    </a-radio-group>
+                    <a-checkbox-group v-if="qu1.type === 2" v-model="qu1.inputType">
+                      <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" :name="qu1.questionTitleId+''" disabled>{{item.name}}</a-checkbox>
+                    </a-checkbox-group>
+                    <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue && moment(qu1.answers[0].questionOptionValue, 'YYYY-MM-DD')" disabled />
+                  </a-form-item>
+                </div>
+              </a-form>
+            </div>
+          </a-col>
         </a-row>
+        <!-- </a-card> -->
       </div>
-      <!-- </a-card> -->
     </a-spin>
   </div>
 </template>
@@ -73,36 +82,34 @@
     },
     data() {
       return {
-        isLoading: true,
+        baselineInfoStyle: {
+          overflow: "auto",
+          height: "100%",
+          boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
+        },
         info: {},
+        isLoading: true,
         form: this.$form.createForm(this),
         question: {},
+        orgTree: [],
         listArr: [],
-        labelColVer: {
-          xs: { span: 24 },
-          sm: { span: 24 },
-          md: { span: 24 }
-        },
-        wrapperVer: {
-          xs: { span: 24 },
-          sm: { span: 24 },
-          md: { span: 24 }
-        },
         disBlock: {
           display: 'block',
         },
+        questionTaskId: ''
       }
     },
     created() {
       this.CloseSidebar()
-      this.info.name = this.$route.params.name
-      this.info.card = this.$route.params.card
-      this.info.createTime = this.$route.params.createTime
+      this.info = JSON.parse(localStorage.getItem('questionInfo'))
+      this.questionTaskId = this.$route.params.id
 
       const params = new FormData()
-      params.append('questionTaskId', this.$route.params.id)
+      params.append('questionTaskId', this.questionTaskId)
+      params.append('createDate', this.info.createDate)
       getWxQuestionDetail(params).then(res => {
         this.isLoading = false
+        this.orgTree = res.data.questionList
         this.listArr = this.initQuestionAnswers(res.data.topTitles)
         this.question = res.data.question
       })
@@ -111,13 +118,23 @@
       ...mapActions(['CloseSidebar']),
       moment,
 
+      handleClick(id) {
+        this.questionTaskId = id
+        this.isLoading = true
+        const params = new FormData()
+        params.append('questionTaskId', id)
+        getWxQuestionDetail(params).then(res => {
+          this.isLoading = false
+          this.listArr = this.initQuestionAnswers(res.data.topTitles)
+          this.question = res.data.question
+        })
+      },
       save(id) {
         const params = new FormData()
-        params.append('questionTaskId', this.$route.params.id)
+        params.append('questionTaskId', this.questionTaskId)
         params.append('status', id)
         questionReview(params).then(res => {
           this.$message.success(res.msg);
-          this.$router.back(-1)
         })
       },
 
@@ -158,20 +175,42 @@
       height: 100%;
       display: flex;
     }
+    .menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      background: rgba(245, 251, 255);
+      &-item {
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+        padding-left: 50px;
+        padding-right: 20px;
+        cursor: pointer;
+        transition: 0.5s;
+        &:hover {
+          background-color: #e6f7ff;
+          color: #1890ff;
+        }
+      }
+    }
+    .active {
+      background-color: #1890ff !important;
+      color: #fff !important;
+    }
     .head-bar {
-      height: 80px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       background-color: #f7ffff;
       border: 2px solid #079ce9;
       box-shadow: 4px 4px 0px #b9b4ac;
+      margin: 10px 20px;
       padding: 0 15px;
-      margin-bottom: 15px;
       /deep/ .ant-btn {
-        height: 40px;
-        padding: 0 20px;
-        font-size: 16px;
+        height: 35px;
+        line-height: 35px;
       }
       .question-title {
         font-size: 30px;
@@ -218,7 +257,7 @@
 
       .question-des {
         font-size: 16px;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
       }
 
       .question-t {

@@ -59,11 +59,9 @@
         <span v-if="record.status == 4">已审阅</span>
         <span v-if="record.status == 5">未审阅</span>
       </span>
-      <span slot="operation" slot-scope="text, record">
-        <template>
-          <router-link :to="{name:'wxQuestionDetail' ,params: {'id': record.questionTaskId, 'name' : record.name, 'card' : record.card, 'createTime' : record.createTime}}">审阅</router-link>
-        </template>
-      </span>
+      <template slot="operation" slot-scope="text, record">
+        <router-link :to="{name:'wxQuestionDetail', params: {'id': record.questionTaskId}}" @click.native="handleClick(record)">审阅</router-link>
+      </template>
     </s-table>
   </a-card>
 </template>
@@ -140,8 +138,7 @@
           },
           {
             title: '推送日期',
-            dataIndex: 'createTime',
-            customRender: createTime => moment(createTime).format('YYYY-MM-DD'),
+            dataIndex: 'createDate',
             width: '120px'
           },
           {
@@ -181,6 +178,14 @@
         this.queryParam.queryType = type
         this.$refs.table.refresh();
         this.advanced = false
+      },
+      handleClick(record) {
+        const params = {
+          name: record.name,
+          card: record.card,
+          createDate: record.createDate
+        }
+        localStorage.setItem('questionInfo', JSON.stringify(params))
       },
       refreshTable() {
         this.advanced = false

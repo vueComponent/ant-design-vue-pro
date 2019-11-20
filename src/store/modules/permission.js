@@ -62,6 +62,13 @@ const permission = {
     }
   },
   actions: {
+      RenderRoutes({ commit }, data) {
+        return new Promise(resolve => {
+            const accessedRouters = filterRoute(asyncRouterMap, data)
+            commit('SET_ROUTERS', accessedRouters)
+            resolve()
+          })
+      },
     GenerateRoutes ({ commit }, data) {
       return new Promise(resolve => {
         const accessedRouters = filterAsyncRouter(asyncRouterMap, data)
@@ -71,5 +78,28 @@ const permission = {
     }
   }
 }
+function hasMetaTitle(route, arr) {
+    if (route.meta && route.meta.title) {
+        if(arr.includes(route.meta.title)) {
+            return true
+        }
+        return false
+    }
+    return true
+}
+
+function filterRoute(routeMap, arr){
+    let accessedRouters = routeMap.filter(route => {
+        if (hasMetaTitle(route, arr)) {
+            if(route.children && route.children.length) {
+                route.children = filterRoute(route.children, arr)
+            }
+            return true
+        }
+        return false
+    })
+    return accessedRouters
+}
+
 
 export default permission

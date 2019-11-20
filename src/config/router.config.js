@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import { UserLayout, BasicLayout, RouteView, BlankLayout, PageView } from '@/layouts'
+import { UserLayout, BasicLayout, RouteView, /*BlankLayout,*/ PageView } from '@/layouts'
 import { bxAnaalyse,baogao,bingli,fangshi,ruzhu,zhanghao,home,jixing,blzysq,blzysh,wxyhbd,wenjuan,hzbgsy,huodongquan,jkzs,myzj,webconfig } from '@/core/icons'
 export const asyncRouterMap = [
   {
@@ -20,7 +20,7 @@ export const asyncRouterMap = [
         path: '/list/index',
         name: 'list',
         component: () => import('@/views/list/TableList'),
-        meta: { title: '病例管理', keepAlive: true, icon: bingli, permission: [ 'center', 'group' ]}
+        meta: { title: '病历管理', keepAlive: true, icon: bingli, permission: [ 'center', 'group' ]}
       },
       {
         path: '/acute/index',
@@ -227,18 +227,18 @@ export const asyncRouterMap = [
         component: () => import('@/views/task/index'),
         meta: { title: '访视任务', keepAlive: true, icon: fangshi, permission: [ 'center', 'group' ]}
       },
-    //   {
-    //     path: '/gallery/index',
-    //     name: 'Gallery',
-    //     component: () => import('@/views/gallery/index'),
-    //     meta: { title: '报告采集', keepAlive: true, icon: baogao,isBack:false, permission: [ 'center', 'group']}
-    //   },
-    //   {
-    //     path: '/group/index',
-    //     name: 'Group',
-    //     component: () => import('@/views/group/index'),
-    //     meta: { title: '入组管理', keepAlive: true, icon: ruzhu,isBack:false, permission: [ 'center', 'group' ]}
-    //   },
+      {
+        path: '/gallery/index',
+        name: 'Gallery',
+        component: () => import('@/views/gallery/index'),
+        meta: { title: '报告采集', keepAlive: true, icon: baogao,isBack:false, permission: [ 'center', 'group']}
+      },
+      {
+        path: '/group/index',
+        name: 'Group',
+        component: () => import('@/views/group/index'),
+        meta: { title: '入组管理', keepAlive: true, icon: ruzhu,isBack:false, permission: [ 'center', 'group' ]}
+      },
       {
         path: '/gallery/execute/:id(\\d+)/53',
         name: 'Exec53',
@@ -377,7 +377,7 @@ export const constantRouterMap = [
       {
         path: 'login',
         name: 'login',
-        meta: { title: '登陆'},
+        meta: { title: '登录'},
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login')
       },
       {
@@ -393,7 +393,7 @@ export const constantRouterMap = [
     ]
   },
 
-  {
+  /*{
     path: '/test',
     component: BlankLayout,
     redirect: '/test/home',
@@ -404,7 +404,7 @@ export const constantRouterMap = [
         component: () => import('@/views/Home')
       }
     ]
-  },
+  },*/
 
   {
     path: '/404',

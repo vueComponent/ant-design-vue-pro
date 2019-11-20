@@ -15,7 +15,7 @@
         <a-checkbox v-decorator="['rememberMe']">记住密码</a-checkbox>
       </a-form-item>
       <a-form-item style="margin-top:24px">
-        <a-button size="large" type="primary" htmlType="submit" class="login-button" :loading="state.loginBtn" :disabled="state.loginBtn">登陆</a-button>
+        <a-button size="large" type="primary" htmlType="submit" class="login-button" :loading="state.loginBtn" :disabled="state.loginBtn">登录</a-button>
       </a-form-item>
     </a-form>
   </div>
@@ -76,18 +76,13 @@ export default {
       const validateFieldsKey = customActiveKey === 'tab1' ? ['account', 'password'] : ['mobile', 'captcha'];
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
-        // debugger
         if (!err) {
-          // console.log('login form', values);
           const loginParams = { ...values };
-          // console.log("loginParams", loginParams)
           Login(loginParams)
             .then(function(res) {
-              console.log(res)
               that.loginSuccess(res)
             })
             .catch(response => {
-              console.log(response);
               that.$notification['error']({
                 message: response.msg,
                 // description: response.msg,
@@ -105,7 +100,6 @@ export default {
       });
     },
     loginSuccess(res) {
-      console.log(res);
       this.$router.push({ name: 'Analysis' });
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {

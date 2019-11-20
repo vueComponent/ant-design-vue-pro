@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { login, getInfo, logout } from '@/api/login'
-import { ACCESS_TOKEN, ROLE } from '@/store/mutation-types'
+import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { welcome } from '@/utils/util'
 
 const user = {
@@ -39,23 +39,16 @@ const user = {
       return new Promise((resolve, reject) => {
         // console.log('login promise')
         login(userInfo).then(response => {
-          console.log(response)
           if(!response.data){
-            // const result = response;
-            // Vue.ls.set(ACCESS_TOKEN, result, 7 * 24 * 60 * 60 * 1000)
-            // commit('SET_TOKEN', result)
             reject(response)
           }else{
             const result = response.data
             Vue.ls.set(ACCESS_TOKEN, result, 7 * 24 * 60 * 60 * 1000)
             commit('SET_TOKEN', result)
-            // Vue.ls.set(ROLE, typeof result.centerId !== 'undefined' ? 'center' : 'group', 7 * 24 * 60 * 60 * 1000)
             resolve()
           }         
-        }).catch(res => {
-          // return response
-          console.log(res);
-          reject(res)
+        }).catch(err => {
+          reject(err)
         })
       })
     },
@@ -69,12 +62,11 @@ const user = {
     },
 
     // 登出
-    Logout({ commit, state }) {
+    Logout({ commit }) {
       return new Promise((resolve) => {
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
         Vue.ls.remove(ACCESS_TOKEN)
-        Vue.ls.remove(ROLE)
 
         logout().then(() => {
           resolve()
