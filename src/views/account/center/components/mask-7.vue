@@ -189,23 +189,24 @@
               <a-form-item label="(5) α-1 抗蛋白酶缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a5', {...require1, initialValue: initValue('a5')}]" @change="changeRadio($event, 'controla5')">
                   <a-radio value="1">是</a-radio>
-                  <a-radio value="-1">否</a-radio>
+                  <a-radio value="2">否</a-radio>
+                  <a-radio value="3">未做</a-radio>
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla5">
-                <a-form-item label="水平:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <!-- <a-form-item label="水平:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a51', {...selectRequired, initialValue: initValue('a51')}]">
                     <a-radio value="1">正常</a-radio>
                     <a-radio value="2">降低</a-radio>
                     <a-radio value="3">升高</a-radio>
                     <a-radio value="4">未测量</a-radio>
                   </a-radio-group>
-                </a-form-item>
+                </a-form-item> -->
                 <a-form-item label="基因:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['a52', {...selectRequired, initialValue: initValue('a52')}]" @change="changeRadio($event, 'controla52')">
+                  <a-radio-group v-decorator="['a52', { initialValue: initValue('a52')}]" @change="changeRadio($event, 'controla52')">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
-                    <a-radio value="3">未测</a-radio>
+                    <!-- <a-radio value="3">未测</a-radio> -->
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item class="no-border" label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla52">
@@ -215,66 +216,68 @@
               <a-form-item label="(6) 囊性纤维化:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a6', {...require1, initialValue: initValue('a6')}]" @change="changeRadio($event, 'controla6')">
                   <a-radio value="1">是</a-radio>
-                  <a-radio value="-1">否</a-radio>
+                  <a-radio value="2">否</a-radio>
+                  <a-radio value="3">未做</a-radio>
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla6">
                 <a-form-item label="汗液实验:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['a61', {...selectRequired, initialValue: initValue('a61')}]">
+                  <a-radio-group v-decorator="['a61', { initialValue: initValue('a61')}]">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
                     <a-radio value="3">未测</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="基因检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['a62', {...selectRequired, initialValue: initValue('a62')}]">
+                  <a-radio-group v-decorator="['a62', { initialValue: initValue('a62')}]">
                     <a-radio value="1">纯合</a-radio>
                     <a-radio value="2">杂合</a-radio>
                     <a-radio value="3">无突变</a-radio>
-                    <a-radio value="4">未测</a-radio>
+                    <!-- <a-radio value="4">未测</a-radio> -->
                   </a-radio-group>
                 </a-form-item>
               </div>
               <a-form-item label="(7) 纤毛功能检测:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a7', {...require1, initialValue: initValue('a7')}]" @change="changeRadio($event, 'controla7')">
                   <a-radio value="1">是</a-radio>
-                  <a-radio value="-1">否</a-radio>
+                  <a-radio value="2">否</a-radio>
+                  <a-radio value="3">未做</a-radio>
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla7">
                 <a-form-item label="FeNOppd:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['a71', {...selectRequired, initialValue: initValue('a71')}]">
+                  <a-radio-group v-decorator="['a71', { initialValue: initValue('a71')}]">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
                     <a-radio value="3">未测量</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="糖精试验:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['a72', {...selectRequired, initialValue: initValue('a72')}]">
+                  <a-radio-group v-decorator="['a72', { initialValue: initValue('a72')}]">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
                     <a-radio value="3">未测量</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="电镜检测的活检:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['a73', {...selectRequired, initialValue: initValue('a73')}]">
+                  <a-radio-group v-decorator="['a73', { initialValue: initValue('a73')}]">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
                     <a-radio value="3">未测量</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="分析纤毛摆动频率的活检:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['a74', {...selectRequired, initialValue: initValue('a74')}]">
+                  <a-radio-group v-decorator="['a74', { initialValue: initValue('a74')}]">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
                     <a-radio value="3">未测量</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="基因检测:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['a75', {...selectRequired, initialValue: initValue('a75')}]" @change="changeRadio($event, 'controla75')">
+                  <a-radio-group v-decorator="['a75', { initialValue: initValue('a75')}]" @change="changeRadio($event, 'controla75')">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
-                    <a-radio value="3">未测量</a-radio>
+                    <!-- <a-radio value="3">未测量</a-radio> -->
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla75">
@@ -282,14 +285,14 @@
                 </a-form-item>
               </div>
               <a-form-item label="(8) 其他:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['a8', {...inputRequired, initialValue: initValue('a8')}]" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['a8', {initialValue: initValue('a8')}]" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(9) 小结：根据实验室检查及既往病史判断(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item class="font-w" label="(9) 小结：根据实验室检查及既往病史判断(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a9', {...selectRequired, initialValue: initValue('a9', 'array')}]">
                   <a-checkbox value="1">特发性</a-checkbox>
                   <a-checkbox value="2">感染后性</a-checkbox>
                   <a-checkbox value="3">结核后性</a-checkbox>
-                  <a-checkbox value="4">原发性纤毛不动</a-checkbox>
+                  <a-checkbox value="4">原发性纤毛不动症</a-checkbox>
                   <a-checkbox value="5">弥漫性泛细支气管炎</a-checkbox>
                   <a-checkbox value="6">ABPA</a-checkbox>
                   <a-checkbox value="7">炎症性肠病</a-checkbox>
@@ -639,6 +642,10 @@ export default {
   .ant-card-body {
     padding: 10px
   }
+}
+
+/deep/ .font-w .ant-form-item-required{
+  font-weight: bold;
 }
 
 .ant-row.ant-form-item:hover {

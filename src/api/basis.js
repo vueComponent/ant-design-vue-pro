@@ -198,3 +198,11 @@ export function getFsImportDate(params) {
     data: params
   })
 }
+
+export function getOcrResult(params) {
+  return axios({
+    url: '/reportCollectBase/ocrResult',
+    method: 'post',
+    data: params
+  })
+}

@@ -38,28 +38,29 @@
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
+                  <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList1,1)" v-if="fileList1.length === 1">OCR识别</a-button>
                   <a-modal :visible="previewVisible1" :footer="null" @cancel="handleCancel1">
                     <img alt="example" style="width: 100%" :src="previewImage1" />
                   </a-modal>
                 </div>
               </a-form-item>
               <a-form-item label="(1) 血红蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="g/L" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b1', {...selectRequired, initialValue: initValue('b1')}]" addonAfter="g/L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(2) 白细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b2', { initialValue: initValue('b2')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b2', {...selectRequired, initialValue: initValue('b2')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(3) 红细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b3', { initialValue: initValue('b3')}]" addonAfter="10^12/L" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b3', {...selectRequired, initialValue: initValue('b3')}]" addonAfter="10^12/L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(4) 血小板:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b4', { initialValue: initValue('b4')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b4', {...selectRequired, initialValue: initValue('b4')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(5) 中性粒细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b5', { initialValue: initValue('b5')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b5', {...selectRequired, initialValue: initValue('b5')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(6) 嗜酸细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b6', { initialValue: initValue('b6')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b6', {...selectRequired, initialValue: initValue('b6')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
               </a-form-item>
               <div class="title">2.血生化</div>
               <a-form-item label="血生化报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
@@ -70,13 +71,14 @@
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
+                  <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList2,2)" v-if="fileList2.length === 1">OCR识别</a-button>
                   <a-modal :visible="previewVisible2" :footer="null" @cancel="handleCancel2">
                     <img alt="example" style="width: 100%" :src="previewImage2" />
                   </a-modal>
                 </div>
               </a-form-item>
               <a-form-item label="(1) 血糖:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['c1', { initialValue: initValue('c1')}]" addonAfter="mmol/L" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['c1', {...selectRequired, initialValue: initValue('c1')}]" addonAfter="mmol/L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(2) 谷丙转氨酶:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['c2', { initialValue: initValue('c2')}]" addonAfter="IU/L" autocomplete="off"></a-input>
@@ -85,7 +87,7 @@
                 <a-input style="width: 240px;" v-decorator="['c3', { initialValue: initValue('c3')}]" addonAfter="IU/L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(4) 白蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['c4', { initialValue: initValue('c4')}]" addonAfter="g/L" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['c4', {...selectRequired, initialValue: initValue('c4')}]" addonAfter="g/L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(5) 前白蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['c5', { initialValue: initValue('c5')}]" addonAfter="g/L" autocomplete="off"></a-input>
@@ -157,7 +159,7 @@
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, getOcrResult } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 export default {
   name: 'mask10',
@@ -451,6 +453,22 @@ export default {
     },
     handleChange2({ fileList }) {
       this.fileList2 = fileList;
+    },
+    _import(fileList,type) {
+      // console.log(fileList[0].response.data.src);
+      var that = this
+      var params = new URLSearchParams()
+      params.append('url', fileList[0].response.data.src)
+      params.append('type', type)
+      getOcrResult(params)
+        .then(res => {
+          that.$message.success(res.msg)
+          // console.log(res.data);
+        })
+        .catch(error => {
+          // console.log(error)
+          that.$message.error(res.msg)
+        })
     }
   }
 }
