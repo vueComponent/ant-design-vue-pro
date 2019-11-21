@@ -52,20 +52,21 @@
                 <a-input style="width: 240px;" v-decorator="['b7', { initialValue: initValue('b7')}]" addonAfter="cm" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(8) 肺动脉收缩压:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b8', {...inputRequired, initialValue: initValue('b8')}]" addonAfter="mmHg" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b8', { initialValue: initValue('b8')}]" addonAfter="mmHg" autocomplete="off"></a-input>
               </a-form-item>
               <div class="title">2.左室收缩功能测定</div>
               <a-form-item label="(1) 左室射血分数:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['c1', {...inputRequired, initialValue: initValue('c1')}]" addonAfter="%" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['c1', {initialValue: initValue('c1')}]" addonAfter="%" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(2) 左室短轴缩短率:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['c2', {...inputRequired, initialValue: initValue('c2')}]" addonAfter="%" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['c2', {initialValue: initValue('c2')}]" addonAfter="%" autocomplete="off"></a-input>
               </a-form-item>
               <div class="title">3.小结</div>
               <a-form-item label="小结:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['d1', {...require2, initialValue: initValue('d1')}]">
-                  <a-radio value="1">有无肺动脉高压</a-radio>
+                  <a-radio value="1">肺动脉高压</a-radio>
                   <a-radio value="2">肺源性心脏病</a-radio>
+                  <a-radio value="3">无</a-radio>
                 </a-radio-group>
               </a-form-item>
             </div>
@@ -294,14 +295,16 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:calc(100% - 10px);
+#baselineInfo {
+  height: calc(100% - 10px);
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   height: calc(100% - 54px);
 }
+
 /deep/ .ant-spin {
   position: absolute;
   top: 0;
@@ -494,6 +497,7 @@ export default {
     .anticon-clock-circle {
       color: #06a0e2;
     }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;

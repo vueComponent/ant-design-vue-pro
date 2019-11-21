@@ -41,7 +41,7 @@
               </a-form-item>
               <div v-if="controla1p">
                 <div style="margin-top: 10px;">吸入支气管舒张剂前:</div>
-                <a-form-item label="报告上传 :" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
+                <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <div class="clearfix" style="margin-top: 10px;">
                     <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
                       <div v-if="fileList1.length < 1">
@@ -49,12 +49,13 @@
                         <div class="ant-upload-text">Upload</div>
                       </div>
                     </a-upload>
+                    <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_importQ" v-if="fileList1.length === 1">OCR识别</a-button>
                     <a-modal :visible="previewVisible1" :footer="null" @cancel="handleCancel1">
                       <img alt="example" style="width: 100%" :src="previewImage1" />
                     </a-modal>
                   </div>
                 </a-form-item>
-                <a-form-item label="FEV1:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" style="border: none;">
+                <a-form-item label="FEV1:" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="border: none;">
                   <a-radio-group v-decorator="['a21', {...require2, initialValue: initValue('a21')}]" @change="changeRadio($event, 'controla21')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
@@ -222,26 +223,6 @@
               <a-form-item label="(5) 6分钟步行试验总距离:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-input addonAfter="m" style="width: 240px;" v-decorator="['g2', {...inputRequired, initialValue: initValue('g2')}]" autocomplete="off"></a-input>
               </a-form-item>
-              <div style="margin-top: 10px;">开始时:</div>
-              <a-form-item label="血压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input addonAfter="mmhg" style="width: 240px;" v-decorator="['g21', {initialValue: initValue('g21')}]" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="HR:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input addonAfter="次/分" style="width: 240px;" v-decorator="['g22', {initialValue: initValue('g22')}]" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="氧饱和度:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input addonAfter="%" style="width: 240px;" v-decorator="['g23', {initialValue: initValue('g23')}]" autocomplete="off"></a-input>
-              </a-form-item>
-              <div style="margin-top: 10px;">结束时:</div>
-              <a-form-item label="血压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input addonAfter="mmhg" style="width: 240px;" v-decorator="['g31', {initialValue: initValue('g31')}]" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="HR:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input addonAfter="次/分" style="width: 240px;" v-decorator="['g32', {initialValue: initValue('g32')}]" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="氧饱和度:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input addonAfter="%" style="width: 240px;" v-decorator="['g33', {initialValue: initValue('g33')}]" autocomplete="off"></a-input>
-              </a-form-item>
               <a-form-item label="(6) 血气分析:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
               </a-form-item>
               <a-form-item label="PH:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
@@ -273,6 +254,7 @@ import moment from 'moment'
 import { mapActions } from 'vuex'
 import { getPatientBasis, saveBasis, getBasisForm } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
+import { getOcrResult } from '@/api/basis'
 export default {
   name: 'mask8',
   components: {
@@ -657,19 +639,50 @@ export default {
     },
     handleChange2({ fileList }) {
       this.fileList2 = fileList;
+    },
+    _importQ() {
+      this.spinning = true
+      var params = new URLSearchParams()
+      params.append('type', 4)
+      params.append('url', this.fileList1[0].response.data.src)
+      var that = this
+      getOcrResult(params)
+        .then(res => {
+          console.log(res.data)
+          this.spinning = false
+          // if (res.data.microbeName !== this.vitamin) {
+          //   this.$message.warn('请上传' + this.vitamin + '的图片')
+          // } else {
+          //   this.$message.success(res.msg)
+          //   this.data.splice(0, this.data.length)
+          //   _.each(res.data.maList, function(v, k) {
+          //     that.data.push({ keyW: k, ...v })
+          //   })
+          //   that.cacheData = res.data.maList.map(item => ({ ...item }))
+          //   // this.$emit('changeSource1')
+          //   // if (this.isFirst) {
+          //   //   this.$emit('changeSource1', this.data)
+          //   // }
+          // }
+        })
+        .catch(error => {
+          this.confirmLoading = false
+        })
     }
   }
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:calc(100% - 10px);
+#baselineInfo {
+  height: calc(100% - 10px);
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   height: calc(100% - 54px);
 }
+
 /deep/ .ant-spin {
   position: absolute;
   top: 0;
@@ -862,6 +875,7 @@ export default {
     .anticon-clock-circle {
       color: #06a0e2;
     }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;

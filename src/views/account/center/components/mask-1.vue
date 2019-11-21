@@ -42,7 +42,7 @@
                 <a-date-picker placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
               </a-form-item>
               <a-form-item label="(3) 主要临床症状（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-checkbox-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4', 'array')}]">
+                <a-checkbox-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4', 'array')}]" class="control-m-line">
                   <a-checkbox value="1">咳嗽</a-checkbox>
                   <a-checkbox value="2" :checked="controla41" @change="changeSelect($event, 'controla41')">咳痰</a-checkbox>
                   <a-checkbox value="3">痰血</a-checkbox>
@@ -60,6 +60,19 @@
               <a-form-item label="痰量" v-if="controla41" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" autocomplete="off"></a-input>
               </a-form-item>
+              <a-form-item label="痰液粘稠Murry评分（单选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla41">
+                <a-popover>
+                  <template slot="content">
+                    <img src="../../../../assets/murry.png" style="height: 260px;" />
+                  </template>
+                  <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
+                </a-popover>
+                <a-radio-group v-decorator="['a43', {...selectRequired, initialValue: initValue('a43')}]">
+                  <a-radio value="1">粘液性</a-radio>
+                  <a-radio value="2">黏脓性</a-radio>
+                  <a-radio value="3">脓性</a-radio>
+                </a-radio-group>
+              </a-form-item>
               <a-form-item label="咯血量(最多)" v-if="controla42" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]" autocomplete="off"></a-input>
               </a-form-item>
@@ -76,7 +89,7 @@
               <a-form-item label="(4) 最后一次急性加重的时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['b4', {...dateRequire, initialValue: initValue('b4', 'time')}]"></a-date-picker>
               </a-form-item>
-              <a-form-item label="(5) 有无以下疾病及事件（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(5) 有无以下疾病及事件（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-checkbox-group v-decorator="['b5', {...selectRequired, initialValue: initValue('b5', 'array')}]">
                   <a-checkbox value="1">既往有无麻疹</a-checkbox>
                   <a-checkbox value="2">百日咳</a-checkbox>
@@ -86,7 +99,7 @@
                   <a-checkbox value="6" :checked="controlb51" @change="changeSelect($event, 'controlb51')">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item class="no-border" label="疾病名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb51">
+              <a-form-item label="疾病名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb51">
                 <a-input style="width: 240px;" v-decorator="['b51', {...inputRequired, initialValue: initValue('b51')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(6) 目前合并呼吸系统相关疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -335,7 +348,7 @@
                   </a-checkbox-group>
                 </a-form-item>
               </div>
-              <a-form-item label="(8) 其他系统相关治疗（非呼吸系统治疗）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <a-form-item label="(8) 其他系统相关治疗（非呼吸系统治疗）" :labelCol="wrapper18" class="border-dotted">
               </a-form-item>
               <a-form-item label="调脂" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-radio-group v-decorator="['b171', {...require1, initialValue: initValue('b171')}]">
@@ -1275,5 +1288,10 @@ export default {
 
 /deep/.ant-menu-inline .ant-menu-submenu-title {
   padding-right: 0px;
+}
+
+.control-m-line.ant-checkbox-group {
+  top: 10px;
+  position: relative;
 }
 </style>

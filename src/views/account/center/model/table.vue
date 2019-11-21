@@ -1,50 +1,67 @@
 <template>
   <span class="editMcroorganism">
-    <p  @click="showMicroorganism" >
-      <a-icon type="edit"class="mcroorganism"/><span>编辑</span>
+    <p @click="showMicroorganism">
+      <a-icon type="edit" class="mcroorganism" /><span>编辑</span>
     </p>
-    <a-modal title="药敏检查" width="800px" :visible="visible" :footer="null" :centered="centered"  @cancel="handleCancel" :bodyStyle="bodyStyle">
-      <p ><a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button></p>
-      <a-table rowKey="keyW" size="middle" :pagination="pagination" :columns="columns" :dataSource="data">
-        <template v-for="col in [ 'antibiotic', 'allergyValue']" :slot="col" slot-scope="text, record, index">
-          <div :key="col" 
-            <a-input v-if="record.editable" style="margin: -5px 0;" :value="text" @change="e => handleChange(e.target.value, record.keyW, col)" />
-            <template v-else>
-              {{ text }}
-            </template>
-          </div>
-        </template>
-        <template slot="antibioticResult" slot-scope="text, record, index">
-          <div>
-            <a-select defaultValue="耐药" v-if="record.editable" style="margin: -5px 0;width: 100%" :value="text" @change="value => handleSelectChange(value, record.keyW)">
-              <a-select-option value="耐药">耐药</a-select-option>
-              <a-select-option value="敏感">敏感</a-select-option>
-              <a-select-option value="未做">未做</a-select-option>
-            </a-select>
-            <template v-else>
-              {{ text }}
-            </template>
-          </div>
-        </template>
-        <template slot="operation" slot-scope="text, record, index">
-          <div class="editable-row-operations">
-            <span v-if="record.editable">
-              <a @click="() => save(record.keyW)">保存</a>
-              <a-popconfirm title="确定取消?" @confirm="() => cancel(record.keyW)"><a>取消</a></a-popconfirm>
-            </span>
-            <span v-else>
-              <a @click="() => edit(record.keyW)">编辑</a>
-              <a-popconfirm v-if="data.length" title="确定删除?" @confirm="() => onDelete(record.keyW)"><a href="javascript:;">删除</a></a-popconfirm>
-            </span>
-          </div>
-        </template>
-      </a-table>
+    <a-modal title="药敏检查" width="800px" :visible="visible" :footer="null" :centered="centered" @cancel="handleCancel" :bodyStyle="bodyStyle">
+      <a-spin :spinning="confirmLoading">
+        <a-form :form="form" layout="inline">
+          <a-form-item label="类型" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="typeof type1 !== 'undefined' || typeof type2 !== 'undefined'">
+            <a-radio-group v-model="t1" @change="changeType1($event)" v-if="typeof type1 !== 'undefined'">
+              <a-radio value="1">粘液型</a-radio>
+              <a-radio value="2">非粘液型</a-radio>
+            </a-radio-group>
+            <a-radio-group v-model="t2" @change="changeType2($event)" v-if="typeof type2 !== 'undefined'">
+              <a-radio value=" 1">粘液型</a-radio>
+              <a-radio value="2">非粘液型</a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item label="上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+            <div class="clearfix" style="margin-top: 10px;">
+              <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @change="picChange">
+                <div v-if="fileList.length < 1">
+                  <a-icon type="plus" />
+                  <div class="ant-upload-text">Upload</div>
+                </div>
+              </a-upload>
+              <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1">OCR识别</a-button>
+            </div>
+          </a-form-item>
+        </a-form>
+        <p>
+          <a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button>
+        </p>
+        <a-table rowKey="keyW" size="middle" :pagination="pagination" :columns="columns" :dataSource="data">
+          <template v-for="col in [ 'antibiotic', , 'antibioticResult' ,'allergyValue']" :slot="col" slot-scope="text, record, index">
+            <div :key="col">
+              <a-input v-if="record.editable" style="margin: -5px 0;" :value="text" @change="e => handleChange(e.target.value, record.keyW, col)" />
+              <template v-else>
+                {{ text }}
+              </template>
+            </div>
+          </template>
+          <template slot="operation" slot-scope="text, record, index">
+            <div class="editable-row-operations">
+              <span v-if="record.editable">
+                <a @click="() => save(record.keyW)">保存</a>
+                <a-popconfirm title="确定取消?" @confirm="() => cancel(record.keyW)"><a>取消</a></a-popconfirm>
+              </span>
+              <span v-else>
+                <a @click="() => edit(record.keyW)">编辑</a>
+                <a-popconfirm v-if="data.length" title="确定删除?" @confirm="() => onDelete(record.keyW)"><a href="javascript:;">删除</a></a-popconfirm>
+              </span>
+            </div>
+          </template>
+        </a-table>
+      </a-spin>
     </a-modal>
   </span>
 </template>
 <script>
-const columns = [
-  {
+import { getOcrResult } from '@/api/basis'
+import _ from 'lodash'
+
+const columns = [{
     title: '微生物名称',
     dataIndex: 'microbeName',
     width: '20%',
@@ -57,13 +74,13 @@ const columns = [
     scopedSlots: { customRender: 'antibiotic' }
   },
   {
-    title: '抗生素检测结果',
+    title: '药敏结果',
     dataIndex: 'antibioticResult',
     width: '20%',
     scopedSlots: { customRender: 'antibioticResult' }
   },
   {
-    title: '药敏结果',
+    title: 'MIC值',
     dataIndex: 'allergyValue',
     width: '20%',
     scopedSlots: { customRender: 'allergyValue' }
@@ -76,17 +93,21 @@ const columns = [
   }
 ];
 export default {
-  model: {
-    prop: 'transfer', //v-model绑定的数据，相当于别名，可以和父组件中的变量名称不一样。
-    event: 'mySign' // 自定义组件发送的信号名称。
-  },
   props: {
-    transfer: '',
     dataSource: {
       type: Array,
       default: () => {
         return [];
       }
+    },
+    type1: {
+      type: String
+    },
+    type2: {
+      type: String
+    },
+    isFirst: {
+      type: Boolean
     }
   },
   data() {
@@ -102,50 +123,65 @@ export default {
         height: '500px',
         overflow: 'auto'
       },
-      centered: true
+      centered: true,
+      t1: '',
+      t2: '',
+      form: this.$form.createForm(this),
+      labelColHor: {
+        xs: { span: 24 },
+        sm: { span: 9 },
+        md: { span: 9 }
+      },
+      wrapperHor: {
+        xs: { span: 24 },
+        sm: { span: 15 },
+        md: { span: 15 }
+      },
+      uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
+      viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
+      fileList: [],
+      confirmLoading: false
     };
   },
   methods: {
-    showMicroorganism(){
-       this.visible = true
+    showMicroorganism() {
+      this.visible = true
     },
-    handleCancel(){
-      this.visible=false
+    handleCancel() {
+      this.visible = false
     },
     handleChange(value, key, column) {
-      const newData = [...this.data];
-      const target = newData.filter(item => key === item.keyW)[0];
+      const newData = [...this.data]
+      const target = newData.filter(item => key === item.keyW)[0]
       if (target) {
-        target[column] = value;
-        this.data = newData;
+        target[column] = value
+        this.data = newData
       }
     },
     handleSelectChange(value, key, column) {
-      const newData = [...this.data];
-      const target = newData.filter(item => key === item.keyW)[0];
+      const newData = [...this.data]
+      const target = newData.filter(item => key === item.keyW)[0]
       if (target) {
-        target['antibioticResult'] = value;
-        this.data = newData;
+        target['antibioticResult'] = value
+        this.data = newData
       }
     },
     edit(key) {
       const newData = [...this.data];
-      const target = newData.filter(item => key === item.keyW)[0];
+      const target = newData.filter(item => key === item.keyW)[0]
       if (target) {
-        target.editable = true;
-        this.data = newData;
+        target.editable = true
+        this.data = newData
       }
     },
     save(key) {
-      const newData = [...this.data];
-      const target = newData.filter(item => key === item.keyW)[0];
+      const newData = [...this.data]
+      const target = newData.filter(item => key === item.keyW)[0]
       if (target) {
-        delete target.editable;
-        this.data = newData;
-        this.cacheData = newData.map(item => ({ ...item }));
+        delete target.editable
+        this.data = newData
+        this.cacheData = newData.map(item => ({ ...item }))
       }
-
-      this.$emit('mySign', this.data);
     },
     cancel(key) {
       const newData = [...this.data];
@@ -157,16 +193,16 @@ export default {
       }
     },
     onDelete(key) {
-      console.log("key",key)
-      const newData = [...this.data];
-      this.data = newData.filter(item => item.keyW !== key);
-      console.log("this.data",this.data)
-      console.log("newData",newData)
+      console.log("key", key)
+      const newData = [...this.data]
+      this.data = newData.filter(item => item.keyW !== key)
+      console.log("this.data", this.data)
+      console.log("newData", newData)
 
-      this.$emit('mySign', this.data);
+      // this.$emit('mySign', this.data);
     },
     handleAdd() {
-      const { count, data } = this;
+      const { count, data } = this
       const newData = {
         keyW: count + 1,
         antibiotic: '',
@@ -174,21 +210,71 @@ export default {
         antibioticResult: '',
         allergyValue: ''
       };
-      this.data = [newData,...data];
-      this.count = count + 1;
+      this.data = [newData, ...data]
+      this.count = count + 1
 
-      this.$emit('mySign', this.data);
+      // this.$emit('mySign', this.data);
+    },
+    changeType1(e) {
+      this.$emit('listen', e.target.value)
+    },
+    changeType2(e) {
+      this.$emit('listen', e.target.value)
+    },
+    picChange({ fileList }) {
+      this.fileList = fileList
+    },
+    _import() {
+      this.confirmLoading = true
+      var params = new URLSearchParams()
+      params.append('type', 7)
+      params.append('url', this.fileList[0].response.data.src)
+      var that = this
+      getOcrResult(params)
+        .then(res => {
+          console.log(res.data)
+          this.confirmLoading = false
+          if (res.data.microbeName !== this.vitamin) {
+            this.$message.warn('请上传' + this.vitamin + '的图片')
+          } else {
+            this.$message.success(res.msg)
+            this.data.splice(0, this.data.length)
+            _.each(res.data.maList, function(v, k) {
+              that.data.push({ keyW: k, ...v })
+            })
+            that.cacheData = res.data.maList.map(item => ({ ...item }))
+            // this.$emit('changeSource1')
+            // if (this.isFirst) {
+            //   this.$emit('changeSource1', this.data)
+            // }
+          }
+        })
+        .catch(error => {
+          this.confirmLoading = false
+        })
     }
   },
   watch: {
     dataSource: {
       immediate: true,
       handler(val) {
-        this.data = val;
-        console.log('val', val);
-        this.vitamin = val[0] ? val[0].microbeName : '';
-        this.count = val.length > 0 ? val[val.length - 1].keyW : 0;
-        this.$emit('mySign', this.data);
+        this.data = val
+        console.log('val', val)
+        this.vitamin = val[0] ? val[0].microbeName : ''
+        this.count = val.length > 0 ? val[val.length - 1].keyW : 0
+        // this.$emit('mySign', this.data)
+      }
+    },
+    type1: {
+      immediate: true,
+      handler(val) {
+        this.t1 = val
+      }
+    },
+    type2: {
+      immediate: true,
+      handler(val) {
+        this.t2 = val
       }
     }
   }
@@ -198,24 +284,28 @@ export default {
 .editable-row-operations a {
   margin-right: 8px;
 }
-.editMcroorganism{
+
+.editMcroorganism {
   display: inline-block;
-  margin:0;
+  margin: 0;
   margin-right: 20px;
-  .mcroorganism{
+
+  .mcroorganism {
     font-size: 14px;
     color: #0399EC;
   }
-  span{
+
+  span {
     color: #0399EC;
-    
+
   }
-   &:hover{
+
+  &:hover {
     cursor: pointer;
-    span{
+
+    span {
       text-decoration: underline;
     }
-  }  
+  }
 }
-
 </style>

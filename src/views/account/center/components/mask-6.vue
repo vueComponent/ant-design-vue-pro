@@ -30,123 +30,133 @@
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <div class="title">1.稳定期</div>
-              <a-form-item label="(1) 取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
-              </a-form-item>
-              <a-form-item label="(2) 是否本院:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-radio-group v-decorator="['a2', {...require1, initialValue: initValue('a2')}]" @change="changeRadio($event, 'controla2')">
-                  <a-radio value="1">是</a-radio>
-                  <a-radio value="-1">否</a-radio>
-                </a-radio-group>
-              </a-form-item>
-              <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla2">
-                <a-input style="width: 240px;" v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(3) 标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a3', {...require1, initialValue: initValue('a3')}]">
-                  <a-radio value="1">痰液</a-radio>
-                  <a-radio value="2">诱导痰</a-radio>
-                  <a-radio value="3">支气管肺泡灌洗液</a-radio>
-                  <a-radio value="4">咽拭子</a-radio>
-                </a-radio-group>
-              </a-form-item>
-              <a-form-item label="(2) 是否分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a4', {...require1, initialValue: initValue('a4')}]" @change="changeRadio($event, 'controla4')">
-                  <a-radio value="1">是</a-radio>
-                  <a-radio value="-1">否</a-radio>
-                </a-radio-group>
-              </a-form-item>
-              <a-form-item label="分离方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla4">
-                <a-radio-group v-decorator="['a41', {...selectRequired, initialValue: initValue('a41')}]">
-                  <a-radio value="1">纸片法</a-radio>
-                  <a-radio value="2">肉汤稀释法</a-radio>
-                </a-radio-group>
-              </a-form-item>
-              <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla4">
-                <a-checkbox-group v-decorator="['a42', {...selectRequired, initialValue: initValue('a42', 'array')}]">
-                  <a-checkbox value="0" @change="showList($event, '铜绿假单胞菌', 'controla420', true)">铜绿假单胞菌</a-checkbox>
-                  <add-table :dataSource="optionDataSource[0]" v-if="controla420"></add-table>
-                  <a-checkbox value="1" @change="showList($event, '阴沟肠杆菌', 'controla421', true)">阴沟肠杆菌</a-checkbox>
-                  <add-table :dataSource="optionDataSource[1]" v-if="controla421"></add-table>
-                  <a-checkbox value="2" @change="showList($event, '肺炎克雷伯菌', 'controla422', true)">肺炎克雷伯菌</a-checkbox>
-                  <add-table :dataSource="optionDataSource[2]" v-if="controla422"></add-table>
-                  <a-checkbox value="3" @change="showList($event, '肺炎链球菌', 'controla423', true)">肺炎链球菌</a-checkbox>
-                  <add-table :dataSource="optionDataSource[3]" v-if="controla423"></add-table>
-                  <a-checkbox value="4" @change="showList($event, '副流感嗜血杆菌', 'controla424', true)">副流感嗜血杆菌</a-checkbox>
-                  <add-table :dataSource="optionDataSource[4]" v-if="controla424"></add-table>
-                  <a-checkbox value="5" @change="showList($event, '鲍曼不动杆菌', 'controla425', true)">鲍曼不动杆菌</a-checkbox>
-                  <add-table :dataSource="optionDataSource[5]" v-if="controla425"></add-table>
-                  <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controla426', true)">金黄色葡萄球菌</a-checkbox>
-                  <add-table :dataSource="optionDataSource[6]" v-if="controla426"></add-table>
-                  <a-checkbox value="7" @change="showList($event, '其他', 'controla427', true)">其他</a-checkbox>
-                  <a-input style="width: 240px;margin-right: 10px;" v-if="controla427" @change="otherChange($event, 7, true)" autocomplete="off"></a-input>
-                  <add-table :dataSource="optionDataSource[7]" v-if="controla427"></add-table>
+              <a-form-item label="采样性质（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-checkbox-group v-decorator="['a', {...selectRequired, initialValue: initValue('a', 'array')}]">
+                  <a-checkbox value="1" @change="changeSelect($event, 'control1')">稳定期</a-checkbox>
+                  <a-checkbox value="2" @change="changeSelect($event, 'control2')">急性加重期期</a-checkbox>
+                  <a-checkbox value="3" @change="changeSelect($event, 'control3')">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <div class="title">2.急性加重期</div>
-              <a-form-item label="(2) 急性加重期:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-radio-group v-decorator="['b', {...require1, initialValue: initValue('b')}]" @change="changeRadio($event, 'controlb')">
-                  <a-radio value="1">是</a-radio>
-                  <a-radio value="-1">否</a-radio>
-                </a-radio-group>
-              </a-form-item>
-              <div v-if="controlb">
-                <a-form-item label="取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b1', {...dateRequire, initialValue: initValue('b1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+              <div v-if="control1">
+                <div class="title">1.稳定期</div>
+                <a-form-item label="(1) 取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
-                <a-form-item label="是否本院:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-radio-group v-decorator="['b2', {...require1, initialValue: initValue('b2')}]" @change="changeRadio($event, 'controlb2')">
+                <a-form-item label="(2) 是否本院:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                  <a-radio-group v-decorator="['a2', {...require1, initialValue: initValue('a2')}]" @change="changeRadio($event, 'controla2')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb2">
-                  <a-input style="width: 240px;" v-decorator="['b21', {...inputRequired, initialValue: initValue('b21')}]" autocomplete="off"></a-input>
+                <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla2">
+                  <a-input style="width: 240px;" v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" autocomplete="off"></a-input>
                 </a-form-item>
-                <a-form-item label="标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b3', {...require1, initialValue: initValue('b3')}]">
+                <a-form-item label="(3) 标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['a3', {...require1, initialValue: initValue('a3')}]">
                     <a-radio value="1">痰液</a-radio>
                     <a-radio value="2">诱导痰</a-radio>
                     <a-radio value="3">支气管肺泡灌洗液</a-radio>
-                    <a-radio value="4">咽拭子</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="是否分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b4', {...require1, initialValue: initValue('b4')}]" @change="changeRadio($event, 'controlb4')">
+                <a-form-item label="(4) 是否分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['a4', {...require1, initialValue: initValue('a4')}]" @change="changeRadio($event, 'controla4')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="分离方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb4">
-                  <a-radio-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41')}]">
-                    <a-radio value="1">纸片法</a-radio>
-                    <a-radio value="2">肉汤稀释法</a-radio>
+                <a-form-item label="药敏方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla4">
+                  <a-radio-group v-decorator="['a41', {...selectRequired, initialValue: initValue('a41')}]">
+                    <a-radio value="1">MIC</a-radio>
+                    <a-radio value="2">纸片法</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb4">
-                  <a-checkbox-group v-decorator="['b42', {...selectRequired, initialValue: initValue('b42', 'array')}]">
-                    <a-checkbox value="0" @change="showList($event, '铜绿假单胞菌', 'controlb420')">铜绿假单胞菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource2[0]" v-if="controlb420"></add-table>
-                    <a-checkbox value="1" @change="showList($event, '阴沟肠杆菌', 'controlb421')">阴沟肠杆菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource2[1]" v-if="controlb421"></add-table>
-                    <a-checkbox value="2" @change="showList($event, '肺炎克雷伯菌', 'controlb422')">肺炎克雷伯菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource2[2]" v-if="controlb422"></add-table>
-                    <a-checkbox value="3" @change="showList($event, '肺炎链球菌', 'controlb423')">肺炎链球菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource2[3]" v-if="controlb423"></add-table>
-                    <a-checkbox value="4" @change="showList($event, '副流感嗜血杆菌', 'controlb424')">副流感嗜血杆菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource2[4]" v-if="controlb424"></add-table>
-                    <a-checkbox value="5" @change="showList($event, '鲍曼不动杆菌', 'controlb425')">鲍曼不动杆菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource2[5]" v-if="controlb425"></add-table>
-                    <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controlb426')">金黄色葡萄球菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource2[6]" v-if="controlb426"></add-table>
-                    <a-checkbox value="7" @change="showList($event, '其他', 'controlb427')">其他</a-checkbox>
-                    <a-input style="width: 240px;margin-right: 10px;" v-if="controlb427" @change="otherChange($event, 7)" autocomplete="off"></a-input>
-                    <add-table :dataSource="optionDataSource2[7]" v-if="controlb427"></add-table>
+                <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla4">
+                  <a-checkbox-group v-decorator="['a42', {...selectRequired, initialValue: initValue('a42', 'array')}]" class="control-m-line">
+                    <a-checkbox value="0" @change="showList($event, '铜绿假单胞菌', 'controla420', true)">铜绿假单胞菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[0]" v-if="controla420" :type1="type1" @listen="changeType1" :isFirst="true"></add-table>
+                    <a-checkbox value="1" @change="showList($event, '阴沟肠杆菌', 'controla421', true)">阴沟肠杆菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[1]" v-if="controla421" :isFirst="true"></add-table>
+                    <a-checkbox value="2" @change="showList($event, '肺炎克雷伯菌', 'controla422', true)">肺炎克雷伯菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[2]" v-if="controla422" :isFirst="true"></add-table>
+                    <a-checkbox value="3" @change="showList($event, '肺炎链球菌', 'controla423', true)">肺炎链球菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[3]" v-if="controla423" :isFirst="true"></add-table>
+                    <a-checkbox value="4" @change="showList($event, '副流感嗜血杆菌', 'controla424', true)">副流感嗜血杆菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[4]" v-if="controla424" :isFirst="true"></add-table>
+                    <a-checkbox value="5" @change="showList($event, '鲍曼不动杆菌', 'controla425', true)">鲍曼不动杆菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[5]" v-if="controla425" :isFirst="true"></add-table>
+                    <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controla426', true)">金黄色葡萄球菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[6]" v-if="controla426" :isFirst="true"></add-table>
+                    <a-checkbox value="7" @change="showList($event, '其他', 'controla427', true)">其他</a-checkbox>
+                    <a-input style="width: 240px;margin-right: 10px;" v-if="controla427" @change="otherChange($event, 7, true)" autocomplete="off"></a-input>
+                    <add-table :dataSource="optionDataSource[7]" v-if="controla427" :isFirst="true"></add-table>
                   </a-checkbox-group>
                 </a-form-item>
               </div>
-              <div class="title">3.分支杆菌标本</div>
+              <div v-if="control2">
+                <div class="title">2.急性加重期</div>
+                <a-form-item label="(2) 急性加重期:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                  <a-radio-group v-decorator="['b', {...require1, initialValue: initValue('b')}]" @change="changeRadio($event, 'controlb')">
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="-1">否</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <div v-if="controlb">
+                  <a-form-item label="取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                    <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b1', {...dateRequire, initialValue: initValue('b1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  </a-form-item>
+                  <a-form-item label="是否本院:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                    <a-radio-group v-decorator="['b2', {...require1, initialValue: initValue('b2')}]" @change="changeRadio($event, 'controlb2')">
+                      <a-radio value="1">是</a-radio>
+                      <a-radio value="-1">否</a-radio>
+                    </a-radio-group>
+                  </a-form-item>
+                  <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb2">
+                    <a-input style="width: 240px;" v-decorator="['b21', {...inputRequired, initialValue: initValue('b21')}]" autocomplete="off"></a-input>
+                  </a-form-item>
+                  <a-form-item label="标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                    <a-radio-group v-decorator="['b3', {...require1, initialValue: initValue('b3')}]">
+                      <a-radio value="1">痰液</a-radio>
+                      <a-radio value="2">诱导痰</a-radio>
+                      <a-radio value="3">支气管肺泡灌洗液</a-radio>
+                      <a-radio value="4">咽拭子</a-radio>
+                    </a-radio-group>
+                  </a-form-item>
+                  <a-form-item label="是否分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                    <a-radio-group v-decorator="['b4', {...require1, initialValue: initValue('b4')}]" @change="changeRadio($event, 'controlb4')">
+                      <a-radio value="1">是</a-radio>
+                      <a-radio value="-1">否</a-radio>
+                    </a-radio-group>
+                  </a-form-item>
+                  <a-form-item label="分离方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb4">
+                    <a-radio-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41')}]">
+                      <a-radio value="1">纸片法</a-radio>
+                      <a-radio value="2">肉汤稀释法</a-radio>
+                    </a-radio-group>
+                  </a-form-item>
+                  <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb4">
+                    <a-checkbox-group v-decorator="['b42', {...selectRequired, initialValue: initValue('b42', 'array')}]" class="control-m-line">
+                      <a-checkbox value="0" @change="showList($event, '铜绿假单胞菌', 'controlb420')">铜绿假单胞菌</a-checkbox>
+                      <add-table :dataSource="optionDataSource2[0]" v-if="controlb420" :type2="type2" @listen="changeType2" :isFirst="false"></add-table>
+                      <a-checkbox value="1" @change="showList($event, '阴沟肠杆菌', 'controlb421')">阴沟肠杆菌</a-checkbox>
+                      <add-table :dataSource="optionDataSource2[1]" v-if="controlb421" :isFirst="false"></add-table>
+                      <a-checkbox value="2" @change="showList($event, '肺炎克雷伯菌', 'controlb422')">肺炎克雷伯菌</a-checkbox>
+                      <add-table :dataSource="optionDataSource2[2]" v-if="controlb422" :isFirst="false"></add-table>
+                      <a-checkbox value="3" @change="showList($event, '肺炎链球菌', 'controlb423')">肺炎链球菌</a-checkbox>
+                      <add-table :dataSource="optionDataSource2[3]" v-if="controlb423" :isFirst="false"></add-table>
+                      <a-checkbox value="4" @change="showList($event, '副流感嗜血杆菌', 'controlb424')">副流感嗜血杆菌</a-checkbox>
+                      <add-table :dataSource="optionDataSource2[4]" v-if="controlb424" :isFirst="false"></add-table>
+                      <a-checkbox value="5" @change="showList($event, '鲍曼不动杆菌', 'controlb425')">鲍曼不动杆菌</a-checkbox>
+                      <add-table :dataSource="optionDataSource2[5]" v-if="controlb425" :isFirst="false"></add-table>
+                      <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controlb426')">金黄色葡萄球菌</a-checkbox>
+                      <add-table :dataSource="optionDataSource2[6]" v-if="controlb426" :isFirst="false"></add-table>
+                      <a-checkbox value="7" @change="showList($event, '其他', 'controlb427')">其他</a-checkbox>
+                      <a-input style="width: 240px;margin-right: 10px;" v-if="controlb427" @change="otherChange($event, 7)" autocomplete="off"></a-input>
+                      <add-table :dataSource="optionDataSource2[7]" v-if="controlb427" :isFirst="false"></add-table>
+                    </a-checkbox-group>
+                  </a-form-item>
+                </div>
+              </div>
+              <div class="title">3.分枝杆菌标本</div>
               <a-form-item label="(1) 取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['c1', {...dateRequire, initialValue: initValue('c1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
@@ -167,48 +177,24 @@
                   <a-radio value="4">咽拭子</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(4) 是否分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['c4', {...require1, initialValue: initValue('c4')}]" @change="changeRadio($event, 'controlc4')">
-                  <a-radio value="1">是</a-radio>
-                  <a-radio value="-1">否</a-radio>
-                </a-radio-group>
+              <a-form-item label="(4) 分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-checkbox-group v-decorator="['c4', {...selectRequired, initialValue: initValue('c4', 'array')}]">
+                  <a-checkbox value="0">结核分枝杆菌</a-checkbox>
+                  <a-checkbox value="1" @change="changeSelect($event, 'controlc4')">非结核分枝杆菌</a-checkbox>
+                </a-checkbox-group>
               </a-form-item>
               <div v-if="controlc4">
-                <a-form-item label="分离方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-radio-group v-decorator="['c41', {...selectRequired, initialValue: initValue('c41')}]">
-                    <a-radio value="1">纸片法</a-radio>
-                    <a-radio value="2">肉汤稀释法</a-radio>
-                  </a-radio-group>
-                </a-form-item>
-                <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-checkbox-group v-decorator="['c42', {...selectRequired, initialValue: initValue('c42', 'array')}]">
-                    <a-checkbox value="0">结核分枝杆菌</a-checkbox>
-                    <a-checkbox value="1">非结核分支杆菌</a-checkbox>
-                    <a-checkbox value="2">堪萨斯分枝杆菌</a-checkbox>
-                    <a-checkbox value="3">龟分枝杆菌</a-checkbox>
-                    <a-checkbox value="4">脓肿分支杆菌</a-checkbox>
-                    <a-checkbox value="5">鸟分枝杆菌复合群(MAC)</a-checkbox>
-                    <a-checkbox value="6" @change="changeSelect($event, 'controlc426')">其他</a-checkbox>
-                    <a-input style="width: 240px;margin-right: 10px;" v-if="controlc426" autocomplete="off"></a-input>
+                <a-form-item label="非结核分枝杆菌:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['c41', {...selectRequired, initialValue: initValue('c41', 'array')}]">
+                    <a-checkbox value="1">堪萨斯分枝杆菌</a-checkbox>
+                    <a-checkbox value="2">龟分枝杆菌</a-checkbox>
+                    <a-checkbox value="3">脓肿分枝杆菌</a-checkbox>
+                    <a-checkbox value="4">鸟分枝杆菌复合群(MAC)</a-checkbox>
+                    <a-checkbox value="5" @change="changeSelect($event, 'controlc415')">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
-              </div>
-              <a-form-item label="(5) 患者是否曾分离培养到铜绿假单细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['c5', {...require1, initialValue: initValue('c5')}]" @change="changeRadio($event, 'controlc5')">
-                  <a-radio value="1">是</a-radio>
-                  <a-radio value="-1">否</a-radio>
-                </a-radio-group>
-              </a-form-item>
-              <div v-if="controlc5">
-                <a-form-item label="最近一次分离到铜绿假单胞菌是什么时候:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['c51', {...dateRequire, initialValue: initValue('c51', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
-                </a-form-item>
-                <a-form-item label="类型:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['c52', {...require1, initialValue: initValue('c52')}]">
-                    <a-radio value="1">黏液型</a-radio>
-                    <a-radio value="2">非黏液型</a-radio>
-                    <a-radio value="3">不详</a-radio>
-                  </a-radio-group>
+                <a-form-item label="其他微生物名称:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlc415">
+                  <a-input style="width: 240px;margin-right: 10px;" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
             </div>
@@ -309,7 +295,6 @@ export default {
       controlb4: false,
       controlc2: false,
       controlc4: false,
-      controlc5: false,
       controla420: false,
       controla421: false,
       controla422: false,
@@ -326,9 +311,14 @@ export default {
       controlb425: false,
       controlb426: false,
       controlb427: false,
-      controlc426: false,
+      controlc415: false,
       spinning: false,
-      executeStatus: false
+      executeStatus: false,
+      control1: false,
+      control2: false,
+      control3: false,
+      type1: '',
+      type2: ''
     }
   },
   created() {
@@ -438,12 +428,14 @@ export default {
           var that = this
           re = {
             ...re,
+            'a': typeof re['a'] !== 'undefined' ? re['a'].join(',') : '',
             'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
             'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
             'c1': typeof re['c1'] !== 'undefined' ? re['c1'].format('YYYY-MM-DD') : '',
             'a42': typeof re['a42'] !== 'undefined' ? re['a42'].join(',') : '',
             'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : '',
-            'c42': typeof re['c42'] !== 'undefined' ? re['c42'].join(',') : ''
+            'c4': typeof re['c4'] !== 'undefined' ? re['c4'].join(',') : '',
+            'c41': typeof re['c41'] !== 'undefined' ? re['c41'].join(',') : ''
           }
           console.log(re)
           this.patientBasis.status = 2
@@ -508,12 +500,14 @@ export default {
       var that = this
       re = {
         ...re,
+        'a': typeof re['a'] !== 'undefined' ? re['a'].join(',') : '',
         'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
         'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
         'c1': typeof re['c1'] !== 'undefined' ? re['c1'].format('YYYY-MM-DD') : '',
         'a42': typeof re['a42'] !== 'undefined' ? re['a42'].join(',') : '',
         'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : '',
-        'c42': typeof re['c42'] !== 'undefined' ? re['c42'].join(',') : ''
+        'c4': typeof re['c4'] !== 'undefined' ? re['c4'].join(',') : '',
+        'c41': typeof re['c41'] !== 'undefined' ? re['c41'].join(',') : ''
       }
       console.log(re)
       this.patientBasis.status = 1
@@ -557,6 +551,12 @@ export default {
       var alList = ['铜绿假单胞菌', '阴沟肠杆菌', '肺炎克雷伯菌', '肺炎链球菌', '副流感嗜血杆菌', '鲍曼不动杆菌', '金黄色葡萄球菌']
       if (answer && !_.isEmpty(answer)) {
         var splitArr = []
+        if (answer.a) {
+          splitArr = answer.a.split(',')
+          if (splitArr.indexOf('1') > -1) {
+            this.control1 = true
+          }
+        }
         if (answer.a2 && answer.a2 === -1) {
           this.controla2 = true
         }
@@ -572,8 +572,11 @@ export default {
         if (answer.c2 && answer.c2 === -1) {
           this.controlc2 = true
         }
-        if (answer.c4 && answer.c4 === 1) {
-          this.controlc4 = true
+        if (answer.c4) {
+          splitArr = answer.c4.split(',')
+          if (splitArr.indexOf('1') > -1) {
+            this.controlc4 = true
+          }
         }
         if (answer.a42) {
           splitArr = answer.a42.split(',')
@@ -643,10 +646,10 @@ export default {
             }
           })
         }
-        if (answer.c42) {
-          splitArr = answer.c42.split(',')
-          if (splitArr.indexOf('6') > -1) {
-            this.controlc426 = true
+        if (answer.c41) {
+          splitArr = answer.c41.split(',')
+          if (splitArr.indexOf('5') > -1) {
+            this.controlc415 = true
           }
         }
       }
@@ -694,6 +697,9 @@ export default {
     },
     otherChange(e, index, isSimple) {
       this.getMedicineAllergyList(e.target.value, index, isSimple)
+    },
+    changeType1(v) {
+      this.type1 = v
     }
   }
 }
@@ -1046,5 +1052,10 @@ export default {
 
 /deep/.ant-menu-inline .ant-menu-submenu-title {
   padding-right: 0px;
+}
+
+.control-m-line.ant-checkbox-group {
+  top: 10px;
+  position: relative;
 }
 </style>
