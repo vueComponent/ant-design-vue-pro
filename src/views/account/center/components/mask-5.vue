@@ -55,10 +55,10 @@
                 </div>
               </a-form-item>
               <a-form-item label="放射学表现:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-textarea style="top: 2px;" v-decorator="['a21', {initialValue: initValue('a19')}]" autocomplete="off"></a-textarea>
+                <a-textarea style="top: 2px;" v-decorator="['a21', {initialValue: initValue('a21')}]" autocomplete="off"></a-textarea>
               </a-form-item>
               <a-form-item label="放射学诊断:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-textarea style="top: 2px;" v-decorator="['a22', {initialValue: initValue('a19')}]" autocomplete="off"></a-textarea>
+                <a-textarea style="top: 2px;" v-decorator="['a22', {initialValue: initValue('a22')}]" autocomplete="off"></a-textarea>
               </a-form-item>
               <div class="title">2.支扩位于CT图像上</div>
               <a-form-item label="支扩位于CT图像上：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -212,6 +212,7 @@ import moment from 'moment'
 import { mapActions } from 'vuex'
 import { getPatientBasis, saveBasis, getBasisForm, computeScore } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
+import { getOcrResult } from '@/api/basis'
 export default {
   name: 'mask5',
   components: {
@@ -550,7 +551,21 @@ export default {
       return current && current > moment().endOf('day');
     },
     _import() {
-
+      this.spinning = true
+      var params = new URLSearchParams()
+      params.append('type', 6)
+      params.append('url', this.fileList[0].response.data.src)
+      var that = this
+      getOcrResult(params)
+        .then(res => {
+          console.log(res.data)
+          this.spinning = false
+          this.$message.success(res.msg)
+          this.xbyxx = _.extend(this.xbyxx || {}, this.dealAnswers(res.data))
+        })
+        .catch(error => {
+          this.confirmLoading = false
+        })
     }
   }
 }

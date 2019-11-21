@@ -650,20 +650,6 @@ export default {
         .then(res => {
           console.log(res.data)
           this.spinning = false
-          // if (res.data.microbeName !== this.vitamin) {
-          //   this.$message.warn('请上传' + this.vitamin + '的图片')
-          // } else {
-          //   this.$message.success(res.msg)
-          //   this.data.splice(0, this.data.length)
-          //   _.each(res.data.maList, function(v, k) {
-          //     that.data.push({ keyW: k, ...v })
-          //   })
-          //   that.cacheData = res.data.maList.map(item => ({ ...item }))
-          //   // this.$emit('changeSource1')
-          //   // if (this.isFirst) {
-          //   //   this.$emit('changeSource1', this.data)
-          //   // }
-          // }
         })
         .catch(error => {
           this.confirmLoading = false

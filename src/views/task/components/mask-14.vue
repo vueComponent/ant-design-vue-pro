@@ -35,7 +35,7 @@
                 <a-checkbox-group v-decorator="['a1', {...selectRequired, initialValue: initValue('a1', 'array')}]">
                   <a-checkbox value="1">全血</a-checkbox>
                   <a-checkbox value="2">血清</a-checkbox>
-                  <a-checkbox value="3">未测</a-checkbox>
+                  <a-checkbox value="3">未采</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item label="(2) 患者支扩确诊时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -348,7 +348,7 @@
                   </a-checkbox-group>
                 </a-form-item>
               </div>
-              <a-form-item label="(8) 其他系统相关治疗（非呼吸系统治疗）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <a-form-item label="(8) 其他系统相关治疗（非呼吸系统治疗）" :labelCol="wrapper18" class="border-dotted">
               </a-form-item>
               <a-form-item label="调脂" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-radio-group v-decorator="['b171', {...require1, initialValue: initValue('b171')}]">

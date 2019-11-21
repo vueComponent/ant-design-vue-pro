@@ -35,7 +35,7 @@
                 <a-checkbox-group v-decorator="['a1', {...selectRequired, initialValue: initValue('a1', 'array')}]">
                   <a-checkbox value="1">全血</a-checkbox>
                   <a-checkbox value="2">血清</a-checkbox>
-                  <a-checkbox value="3">未测</a-checkbox>
+                  <a-checkbox value="3">未采</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item label="(2) 患者支扩确诊时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
