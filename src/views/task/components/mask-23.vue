@@ -36,6 +36,17 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla1">
+                <a-form-item label="上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <div class="clearfix" style="margin-top: 10px;">
+                    <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @change="handleChange">
+                      <div v-if="fileList.length < 1">
+                        <a-icon type="plus" />
+                        <div class="ant-upload-text">Upload</div>
+                      </div>
+                    </a-upload>
+                    <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1">OCR识别</a-button>
+                  </div>
+                </a-form-item>
                 <div class="title">1.M型主要测值</div>
                 <a-form-item label="(1) 主动脉根部内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="cm" autocomplete="off"></a-input>
@@ -71,8 +82,9 @@
                 <div class="title">3.小结</div>
                 <a-form-item label="小结:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['d1', {...require2, initialValue: initValue('d1')}]">
-                    <a-radio value="1">有无肺动脉高压</a-radio>
+                    <a-radio value="1">肺动脉高压</a-radio>
                     <a-radio value="2">肺源性心脏病</a-radio>
+                    <a-radio value="3">无</a-radio>
                   </a-radio-group>
                 </a-form-item>
               </div>
@@ -90,6 +102,7 @@ import moment from 'moment'
 import { mapActions } from 'vuex'
 import { getPatientBasis, saveBasis, getBasisForm } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
+import { getOcrResult } from '@/api/basis'
 export default {
   name: 'task23',
   components: {
@@ -164,7 +177,10 @@ export default {
       xzcc: undefined,
       controla1: false,
       spinning: false,
-      executeStatus: false
+      executeStatus: false,
+      uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
+      viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
+      fileList: []
     }
   },
   created() {
@@ -307,19 +323,41 @@ export default {
           console.log(error)
         })
       return false
+    },
+    _import() {
+      this.spinning = true
+      var params = new URLSearchParams()
+      params.append('type', 5)
+      params.append('url', this.fileList[0].response.data.src)
+      var that = this
+      getOcrResult(params)
+        .then(res => {
+          console.log(res.data)
+          this.spinning = false
+          this.$message.success(res.msg)
+          this.xzcc = _.extend(this.xzcc || {}, this.dealAnswers(res.data))
+        })
+        .catch(error => {
+          this.confirmLoading = false
+        })
+    },
+    handleChange({ fileList }) {
+      this.fileList = fileList
     }
   }
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:calc(100% - 10px);
+#baselineInfo {
+  height: calc(100% - 10px);
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   height: calc(100% - 54px);
 }
+
 /deep/ .ant-spin {
   position: absolute;
   top: 0;
