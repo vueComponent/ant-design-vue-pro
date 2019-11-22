@@ -97,7 +97,7 @@ export default {
     dataSource: {
       type: Array,
       default: () => {
-        return [];
+        return []
       }
     },
     type1: {
@@ -108,6 +108,9 @@ export default {
     },
     isFirst: {
       type: Boolean
+    },
+    picSource: {
+      type: String
     }
   },
   data() {
@@ -140,7 +143,8 @@ export default {
       uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
       viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
       fileList: [],
-      confirmLoading: false
+      confirmLoading: false,
+      picData: this.picSource
     };
   },
   methods: {
@@ -223,6 +227,15 @@ export default {
     },
     picChange({ fileList }) {
       this.fileList = fileList
+      if (fileList && fileList[0] && fileList[0].response) {
+        debugger
+        this.picData = fileList[0].response.fileName
+        if (this.isFirst) {
+          this.$emit('changePic1', this.picData)
+        } else {
+          this.$emit('changePic2', this.picData)
+        }
+      }
     },
     _import() {
       this.confirmLoading = true
@@ -263,6 +276,12 @@ export default {
         this.vitamin = val[0] ? val[0].microbeName : ''
         this.count = val.length > 0 ? val[val.length - 1].keyW : 0
         // this.$emit('mySign', this.data)
+      }
+    },
+    picSource: {
+      immediate: true,
+      handler(val) {
+        this.picData = val
       }
     },
     type1: {
