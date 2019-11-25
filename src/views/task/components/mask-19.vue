@@ -322,6 +322,10 @@ export default {
     ...mapActions(['CloseSidebar']),
     moment,
     changeSelect(e, t) {
+      var arr = ['controla3', 'controla4', 'controla5', 'controla6', 'controla7', 'controla8']
+      if (arr.indexOf(t) > -1 && !e.target.checked) {
+        this.computeReiff()
+      }
       this[t] = e.target.checked
     },
     changeRadio(e, t) {

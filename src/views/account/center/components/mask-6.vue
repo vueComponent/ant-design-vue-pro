@@ -33,7 +33,7 @@
               <a-form-item label="采样性质（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a', {...selectRequired, initialValue: initValue('a', 'array')}]">
                   <a-checkbox value="1" @change="changeSelect($event, 'control1')">稳定期</a-checkbox>
-                  <a-checkbox value="2" @change="changeSelect($event, 'control2')">急性加重期期</a-checkbox>
+                  <a-checkbox value="2" @change="changeSelect($event, 'control2')">急性加重期</a-checkbox>
                   <a-checkbox value="3" @change="changeSelect($event, 'control3')">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
