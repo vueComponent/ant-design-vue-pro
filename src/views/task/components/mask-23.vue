@@ -291,7 +291,7 @@ export default {
     },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
-        if (answer.a1 === 1) {
+        if (answer.a1 === '1') {
           this.controla1 = true
         }
       }

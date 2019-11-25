@@ -127,10 +127,10 @@
                       <a-radio value="-1">否</a-radio>
                     </a-radio-group>
                   </a-form-item>
-                  <a-form-item label="分离方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb4">
+                  <a-form-item label="药敏方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb4">
                     <a-radio-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41')}]">
-                      <a-radio value="1">纸片法</a-radio>
-                      <a-radio value="2">肉汤稀释法</a-radio>
+                      <a-radio value="1">MIC</a-radio>
+                      <a-radio value="2">纸片法</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb4">
