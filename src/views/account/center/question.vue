@@ -254,9 +254,6 @@ export default {
             that.questionFinished = true
           }
         })
-        .catch(error => {
-          console.log(error)
-        })
     },
     handleSubmit(e) {
       e.preventDefault()
@@ -264,8 +261,7 @@ export default {
       this.confirmLoading = true
       validateFields((errors, values) => {
         if (!errors) {
-          console.log('values', values)
-          var re = this.form.getFieldsValue()
+        //   var re = this.form.getFieldsValue()
           const that = this
           var result = this.generateQuestionAnswers()
           console.log(result)
@@ -357,7 +353,7 @@ export default {
     },
     save() {
       // 问卷调查
-      var re = this.form.getFieldsValue()
+    //   var re = this.form.getFieldsValue()
       const that = this
       var result = this.generateQuestionAnswers()
       console.log(result)
@@ -370,14 +366,12 @@ export default {
       this.spinning = true
       saveQuestion(params)
         .then(res => {
-          console.log(res)
           that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
         })
         .catch(error => {
           that.spinning = false
-          console.log(error)
         })
     },
     initQuestionAnswers(list) {
@@ -683,79 +677,79 @@ export default {
 
     overflow: auto;
 
-    .title {
-      background-color: #f7f8f8;
-      font-weight: bold;
-      font-size: 16px;
-      color: #231815;
-      padding-left: 15px;
-      border-top: 1px solid #eee;
-      border-bottom: 1px solid #eee;
-      height: 40px;
-      line-height: 40px;
-    }
+    // .title {
+    //   background-color: #f7f8f8;
+    //   font-weight: bold;
+    //   font-size: 16px;
+    //   color: #231815;
+    //   padding-left: 15px;
+    //   border-top: 1px solid #eee;
+    //   border-bottom: 1px solid #eee;
+    //   height: 40px;
+    //   line-height: 40px;
+    // }
 
     padding: 20px;
 
-    .ant-form-item {
-      // padding-bottom: 10px;
-      // padding-top: 10px;
-      margin-bottom: 0px;
-      border-bottom: 1px solid #eee;
+    // .ant-form-item {
+    //   // padding-bottom: 10px;
+    //   // padding-top: 10px;
+    //   margin-bottom: 0px;
+    //   border-bottom: 1px solid #eee;
 
-      &.no-border {
-        border-bottom: none;
-        padding-top: 0;
-        padding-bottom: 0;
-      }
+    //   &.no-border {
+    //     border-bottom: none;
+    //     padding-top: 0;
+    //     padding-bottom: 0;
+    //   }
 
-      &:hover {}
+    //   &:hover {}
 
-      &.border-dotted {
-        border-bottom: 1px dotted #eee;
-      }
-    }
+    //   &.border-dotted {
+    //     border-bottom: 1px dotted #eee;
+    //   }
+    // }
 
-    /deep/ .ant-form-item-label {
-      text-align: left;
-      line-height: 56px;
-      white-space: inherit;
+    // /deep/ .ant-form-item-label {
+    //   text-align: left;
+    //   line-height: 56px;
+    //   white-space: inherit;
 
-      label:after {
-        content: '';
-      }
+    //   label:after {
+    //     content: '';
+    //   }
 
-      &.ant-col-md-24 label {
-        display: block;
-        background-color: #f7f8f8;
-        font-weight: bold;
-        font-size: 16px;
-        color: #231815;
-        padding-left: 15px;
-        border-top: 1px solid #eee;
-        height: 36px;
-        line-height: 36px;
-      }
-    }
+    //   &.ant-col-md-24 label {
+    //     display: block;
+    //     background-color: #f7f8f8;
+    //     font-weight: bold;
+    //     font-size: 16px;
+    //     color: #231815;
+    //     padding-left: 15px;
+    //     border-top: 1px solid #eee;
+    //     height: 36px;
+    //     line-height: 36px;
+    //   }
+    // }
 
-    /deep/ .ant-form-item-control-wrapper .ant-form-item-control {
-      line-height: 56px;
-    }
+    // /deep/ .ant-form-item-control-wrapper .ant-form-item-control {
+    //   line-height: 56px;
+    // }
 
-    .formSubtitle {
-      height: 50px;
-      line-height: 50px;
-      font-weight: bold;
-      font-size: 16px;
-      padding-left: 10px;
-      margin-bottom: 0px;
-      background: #fafcfd;
-      border-bottom: 1px solid #f3f3f3;
-    }
+    // .formSubtitle {
+    //   height: 50px;
+    //   line-height: 50px;
+    //   font-weight: bold;
+    //   font-size: 16px;
+    //   padding-left: 10px;
+    //   margin-bottom: 0px;
+    //   background: #fafcfd;
+    //   border-bottom: 1px solid #f3f3f3;
+    // }
 
-    .itemRow:hover {
-      background-color: #e6f7ff;
-    }
+    // .itemRow:hover {
+    //   background-color: #e6f7ff;
+    // }
   }
 }
 
@@ -809,4 +803,70 @@ export default {
 /deep/.ant-menu-inline .ant-menu-submenu-title {
   padding-right: 0px;
 }
+
+/deep/ .ant-radio-disabled + span {
+        color: inherit;
+      }
+
+      /deep/.ant-checkbox-disabled + span {
+        color: inherit;
+      }
+
+      .question-des {
+        font-size: 16px;
+        margin-bottom: 25px;
+      }
+
+      .question-t {
+        display: flex;
+        line-height: 40px;
+        font-size: 18px;
+        font-weight: 700;
+        border-bottom: 2px solid #3398dc;
+        padding-bottom: 5px;
+        .question-icon {
+          width: 40px;
+          height: 40px;
+          background-image: url('../../../assets/question-icon.png');
+          background-size: 100% 100%;
+          margin-right: 10px;
+        }
+      }
+
+      .question-tip {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        .tip-icon {
+          width: 20px;
+          height: 20px;
+          background-image: url('../../../assets/tip-icon.png');
+          background-size: 100% 100%;
+          margin-right: 5px;
+        }
+      }
+
+      .ant-form-item {
+        margin-bottom: 0px;
+        border-bottom: 1px solid #eee;
+      }
+
+      /deep/ .ant-form-item-label {
+        text-align: left;
+        display: block;
+        background-color: #f7f8f8;
+        color: #231815;
+        font-size: 16px;
+        font-weight: bold;
+        padding-left: 15px;
+        border-top: 1px solid #eee;
+      }
+
+      /deep/ .ant-form-item-control-wrapper {
+        padding: 5px 0;
+        padding-left: 20px;
+        label {
+          margin: 5px 0;
+        }
+      }
 </style>
