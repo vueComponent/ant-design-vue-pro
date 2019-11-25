@@ -220,7 +220,7 @@
                     </a-modal>
                   </div>
                 </a-form-item>
-                <a-form-item label="VC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
+                <a-form-item label="VC MAX::" :labelCol="labelXs" :wrapperCol="wrapperMx">
                   <a-form-item label="前次" :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: 'calc(50% - 12px)',border: 'none' }">
                     <a-input style="width: 240px;" v-decorator="['c11', { initialValue: initValue('c11')}]" addonAfter="L" autocomplete="off"></a-input>
                   </a-form-item>

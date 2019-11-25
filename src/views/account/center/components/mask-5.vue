@@ -568,7 +568,7 @@ export default {
           this.xbyxx = _.extend(this.xbyxx || {}, this.dealAnswers(res.data))
         })
         .catch(error => {
-          this.confirmLoading = false
+          this.spinning = false
         })
     }
   }

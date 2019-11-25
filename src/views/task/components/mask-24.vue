@@ -36,56 +36,50 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla1">
-                <div class="title">1.血常规<a-button class="btn" style="margin-left: 150px;float: right;position: relative;top: 3px;" @click="_importXcg">导入</a-button>
-                </div>
+                <div class="title">1.血常规</div>
                 <a-form-item label="血常规报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
                   <div class="clearfix">
-                    <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
+                    <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList1" @change="handleChange1">
                       <div v-if="fileList1.length < 1">
                         <a-icon type="plus" />
                         <div class="ant-upload-text">Upload</div>
                       </div>
                     </a-upload>
-                    <a-modal :visible="previewVisible1" :footer="null" @cancel="handleCancel1">
-                      <img alt="example" style="width: 100%" :src="previewImage1" />
-                    </a-modal>
+                    <a-button style="position: absolute;top: 74px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList1,1)" v-if="fileList1.length === 1">OCR识别</a-button>
                   </div>
                 </a-form-item>
                 <a-form-item label="(1) 血红蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="g/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b1', {...selectRequired, initialValue: initValue('b1')}]" addonAfter="g/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(2) 白细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b2', { initialValue: initValue('b2')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b2', {...selectRequired, initialValue: initValue('b2')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(3) 红细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b3', { initialValue: initValue('b3')}]" addonAfter="10^12/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b3', {...selectRequired, initialValue: initValue('b3')}]" addonAfter="10^12/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(4) 血小板:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b4', { initialValue: initValue('b4')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b4', {...selectRequired, initialValue: initValue('b4')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(5) 中性粒细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b5', { initialValue: initValue('b5')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b5', {...selectRequired, initialValue: initValue('b5')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(6) 嗜酸细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b6', { initialValue: initValue('b6')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b6', {...selectRequired, initialValue: initValue('b6')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
-                <div class="title">2.血生化<a-button class="btn" style="margin-left: 150px;float: right;position: relative;top: 3px;" @click="_importXsh">导入</a-button>
-                </div>
+                <div class="title">2.血生化</div>
                 <a-form-item label="血生化报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
                   <div class="clearfix">
-                    <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
+                    <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList2" @change="handleChange2">
                       <div v-if="fileList2.length < 1">
                         <a-icon type="plus" />
                         <div class="ant-upload-text">Upload</div>
                       </div>
                     </a-upload>
-                    <a-modal :visible="previewVisible2" :footer="null" @cancel="handleCancel2">
-                      <img alt="example" style="width: 100%" :src="previewImage2" />
-                    </a-modal>
+                    <a-button style="position: absolute;top: 74px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList2,2)" v-if="fileList2.length === 1">OCR识别</a-button>
                   </div>
                 </a-form-item>
                 <a-form-item label="(1) 血糖:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['c1', { initialValue: initValue('c1')}]" addonAfter="mmol/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['c1', {...selectRequired, initialValue: initValue('c1')}]" addonAfter="mmol/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(2) 谷丙转氨酶:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['c2', { initialValue: initValue('c2')}]" addonAfter="IU/L" autocomplete="off"></a-input>
@@ -94,7 +88,7 @@
                   <a-input style="width: 240px;" v-decorator="['c3', { initialValue: initValue('c3')}]" addonAfter="IU/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(4) 白蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['c4', { initialValue: initValue('c4')}]" addonAfter="g/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['c4', {...selectRequired, initialValue: initValue('c4')}]" addonAfter="g/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(5) 前白蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['c5', { initialValue: initValue('c5')}]" addonAfter="g/L" autocomplete="off"></a-input>
@@ -161,22 +155,19 @@
       </a-row>
     </a-card>
     <a-spin :spinning="spinning"></a-spin>
-    <select-report ref="selectModule" @listen="confirmSelect" />
   </div>
 </template>
 <script>
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm, getFsImportDate } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, getOcrResult } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
-import SelectReport from '@/views/task/SelectReport'
 export default {
   name: 'task24',
   components: {
     STree,
-    MyIcon,
-    SelectReport
+    MyIcon
   },
   data() {
     return {
@@ -456,59 +447,32 @@ export default {
     handleCancel1() {
       this.previewVisible1 = false;
     },
-    handlePreview1(file) {
-      this.previewImage1 = file.url || file.thumbUrl;
-      this.previewVisible1 = true;
-    },
     handleChange1({ fileList }) {
       this.fileList1 = fileList;
     },
     handleCancel2() {
       this.previewVisible2 = false;
     },
-    handlePreview2(file) {
-      this.previewImage2 = file.url || file.thumbUrl;
-      this.previewVisible2 = true;
-    },
     handleChange2({ fileList }) {
       this.fileList2 = fileList;
     },
-    _importXcg() {
-      this.$refs.selectModule.add(this.patient.patientId, 51)
-    },
-    _importXsh() {
-      this.$refs.selectModule.add(this.patient.patientId, 52)
-    },
-    confirmSelect(data) {
+    _import(fileList, type) {
       var that = this
-      console.log(data)
+      this.spinning = true
       var params = new URLSearchParams()
-      params.append('reportCollectDetailId', data.reportCollectDetailId)
-      getFsImportDate(params)
+      params.append('url', fileList[0].response.data.src)
+      params.append('type', type)
+      getOcrResult(params)
         .then(res => {
-          console.log(res.data)
-          that.qtsyjc = _.extend(that.qtsyjc || {}, that.dealAnswers(res.data.qtsyjc))
-          if (res.data.annexList && res.data.annexList.length) {
-            if (res.data.annexList[0].businessType === 6) {
-              that.fileList1 = _.map(res.data.annexList, function(v) {
-                return {
-                  uid: v.annexId,
-                  url: that.viewPicUrl + v.annexAddress,
-                  name: v.annexAddress,
-                  status: 'done'
-                }
-              })
-            } else {
-              that.fileList2 = _.map(res.data.annexList, function(v) {
-                return {
-                  uid: v.annexId,
-                  url: that.viewPicUrl + v.annexAddress,
-                  name: v.annexAddress,
-                  status: 'done'
-                }
-              })
-            }
-          }
+          that.spinning = false
+          that.$message.success(res.msg)
+          // console.log(res.data);
+          that.qtsyjc = _.extend(that.qtsyjc || {}, that.dealAnswers(res.data))
+        })
+        .catch(error => {
+          // console.log(error)
+          that.spinning = false
+          that.$message.error(res.msg)
         })
     }
   }
