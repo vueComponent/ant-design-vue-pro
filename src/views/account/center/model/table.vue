@@ -32,12 +32,23 @@
           <a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button>
         </p>
         <a-table rowKey="keyW" size="middle" :pagination="pagination" :columns="columns" :dataSource="data">
-          <template v-for="col in [ 'antibiotic', , 'antibioticResult' ,'allergyValue']" :slot="col" slot-scope="text, record, index">
+          <template v-for="col in [ 'antibiotic', , 'antibioticResult']" :slot="col" slot-scope="text, record, index">
             <div :key="col">
               <a-input v-if="record.editable" style="margin: -5px 0;" :value="text" @change="e => handleChange(e.target.value, record.keyW, col)" />
               <template v-else>
                 {{ text }}
               </template>
+            </div>
+          </template>
+          <template slot="allergyValue" slot-scope="text, record, index">
+            <div>
+              <a-select defaultValue="S" v-if="record.editable" style="margin: -5px 0;width: 100%" :value="text" @change="value => handleSelectChange(value, record.keyW)">
+                <a-select-option value="S">S</a-select-option>
+                <a-select-option value="R">R</a-select-option>
+                <a-select-option value="I">I</a-select-option>
+                <a-select-option value="*">*</a-select-option>
+              </a-select>
+              <template v-else>{{text}}</template>
             </div>
           </template>
           <template slot="operation" slot-scope="text, record, index">
@@ -75,15 +86,15 @@ const columns = [{
   },
   {
     title: '药敏结果',
-    dataIndex: 'antibioticResult',
-    width: '20%',
-    scopedSlots: { customRender: 'antibioticResult' }
-  },
-  {
-    title: 'MIC值',
     dataIndex: 'allergyValue',
     width: '20%',
     scopedSlots: { customRender: 'allergyValue' }
+  },
+  {
+    title: 'MIC值',
+    dataIndex: 'antibioticResult',
+    width: '20%',
+    scopedSlots: { customRender: 'antibioticResult' }
   },
   {
     title: '操作',
@@ -166,7 +177,7 @@ export default {
       const newData = [...this.data]
       const target = newData.filter(item => key === item.keyW)[0]
       if (target) {
-        target['antibioticResult'] = value
+        target['allergyValue'] = value
         this.data = newData
       }
     },
@@ -228,7 +239,6 @@ export default {
     picChange({ fileList }) {
       this.fileList = fileList
       if (fileList && fileList[0] && fileList[0].response) {
-        debugger
         this.picData = fileList[0].response.fileName
         if (this.isFirst) {
           this.$emit('changePic1', this.picData)
