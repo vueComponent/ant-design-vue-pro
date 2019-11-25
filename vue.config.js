@@ -6,15 +6,16 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
-/**
- * check production or preview(pro.loacg.com only)
- * @returns {boolean}
- */
-function isProd () {
-  return process.env.NODE_ENV === 'production'
-}
+const isProd = process.env.NODE_ENV === 'production'
 
 const assetsCDN = {
+  // webpack build externals
+  externals: {
+    vue: 'Vue',
+    'vue-router': 'VueRouter',
+    vuex: 'Vuex',
+    axios: 'axios'
+  },
   css: [],
   // https://unpkg.com/browse/vue@2.6.10/
   js: [
@@ -25,14 +26,6 @@ const assetsCDN = {
   ]
 }
 
-// webpack build externals
-const prodExternals = {
-  vue: 'Vue',
-  'vue-router': 'VueRouter',
-  vuex: 'Vuex',
-  axios: 'axios'
-}
-
 // vue.config.js
 const vueConfig = {
   configureWebpack: {
@@ -41,8 +34,8 @@ const vueConfig = {
       // Ignore all locale files of moment.js
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ],
-    // if prod is on, add externals
-    externals: isProd() ? prodExternals : {}
+    // if prod, add externals
+    externals: isProd ? assetsCDN.externals : {}
   },
 
   chainWebpack: (config) => {
@@ -67,7 +60,7 @@ const vueConfig = {
 
     // if prod is on
     // assets require on cdn
-    if (isProd()) {
+    if (isProd) {
       config.plugin('html').tap(args => {
         args[0].cdn = assetsCDN
         return args
@@ -85,7 +78,7 @@ const vueConfig = {
           // 'link-color': '#F5222D',
           // 'border-radius-base': '4px'
         },
-        // do not remove this line
+        // DO NOT REMOVE THIS LINE
         javascriptEnabled: true
       }
     }
