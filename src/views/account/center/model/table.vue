@@ -118,7 +118,10 @@ export default {
       type: String
     },
     isFirst: {
-      type: Boolean
+      type: Boolean,
+      default: () => {
+        return true
+      }
     },
     picSource: {
       type: String
