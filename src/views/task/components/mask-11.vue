@@ -92,254 +92,205 @@
                   <a-radio value="-1">无</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <div v-if="controla4">
-                <div class="title">2.呼吸系统相关治疗</div>
-                <a-form-item label="(1) 长期氧疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b1', {...require1, initialValue: initValue('b1')}]">
+
+              <div v-if="controla4"> 
+                 <div class="title">1.呼吸系统相关治疗</div>
+              <a-form-item label="(1) 长期氧疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b1', {...require1, initialValue: initValue('b1')}]">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(2) 无创辅助通气:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b2', {...require1, initialValue: initValue('b2')}]">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(3) 患者是否行有规律的物理治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b3', {...require1, initialValue: initValue('b3')}]" @change="changeRadio($event, 'controlb3')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <div v-if="controlb3">
+                <a-form-item label="治疗方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b31', {...selectRequired, initialValue: initValue('b31', 'array')}]">
+                    <a-checkbox value="1">手动拍击背部排痰</a-checkbox>
+                    <a-checkbox value="2">体位引流</a-checkbox>
+                    <a-checkbox value="3">规律锻炼身体</a-checkbox>
+                    <a-checkbox value="4">借助排痰仪器</a-checkbox>
+                    <a-checkbox value="5">无</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="患者是否参加肺康复治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['b32', {...selectRequired, initialValue: initValue('b32')}]">
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="2">未听说过有这种治疗</a-radio>
+                    <a-radio value="3">因共病不适合</a-radio>
+                    <a-radio value="4">患者拒绝参加</a-radio>
+                    <a-radio value="5">想参加但未能参加</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+              </div>
+              <a-form-item label="(4) 有规律的呼吸疾病药物治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b4', {...require1, initialValue: initValue('b4')}]" @change="changeRadio($event, 'controlb4')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <div v-if="controlb4">
+                <a-form-item label="长期性抗生素治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41', 'array')}]">
+                    <a-checkbox value="1">阿奇霉素</a-checkbox>
+                    <a-checkbox value="2">克拉霉素</a-checkbox>
+                    <a-checkbox value="3">红霉素</a-checkbox>
+                    <a-checkbox value="4" @change="changeSelect($event, 'controlb41')">其他</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="其他抗生素:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb41">
+                  <a-input style="width: 240px;" v-decorator="['b414', {...inputRequired, initialValue: initValue('b414')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="吸入/雾化抗生素药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['b42', {...inputRequired, initialValue: initValue('b42')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="祛痰类药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b43', {...selectRequired, initialValue: initValue('b43', 'array')}]">
+                    <a-checkbox value="1">N乙酰半胱氨酸</a-checkbox>
+                    <a-checkbox value="2">氨溴索</a-checkbox>
+                    <a-checkbox value="3">桉柠蒎</a-checkbox>
+                    <a-checkbox value="4">羧甲司坦</a-checkbox>
+                    <a-checkbox value="5">厄多司坦</a-checkbox>
+                    <a-checkbox value="6">福多司坦</a-checkbox>
+                    <a-checkbox value="7" @change="changeSelect($event, 'controlb43')">其他</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="其他祛痰类药物::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb43">
+                  <a-input style="width: 240px;" v-decorator="['b431', {...inputRequired, initialValue: initValue('b431')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="吸入治疗(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b', {...selectRequired, initialValue: initValue('b', 'array')}]" class="control-m-line">
+                    <a-checkbox value="1" @change="changeSelect($event, 'controlb01')">吸入激素</a-checkbox>
+                    <a-checkbox value="2" @change="changeSelect($event, 'controlb02')">吸入激素/长效β受体激动剂</a-checkbox>
+                    <a-checkbox value="3" @change="changeSelect($event, 'controlb03')">长效抗胆碱能药物</a-checkbox>
+                    <a-checkbox value="4" @change="changeSelect($event, 'controlb04')">长效β受体激动剂</a-checkbox>
+                    <a-checkbox value="5" @change="changeSelect($event, 'controlb05')">白三烯受体拮抗剂</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="吸入激素:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb01">
+                  <a-checkbox-group v-decorator="['b44', {...selectRequired, initialValue: initValue('b44', 'array')}]">
+                    <a-checkbox value="1">布地奈德</a-checkbox>
+                    <a-checkbox value="2">氟替卡松</a-checkbox>
+                    <a-checkbox value="3" @change="changeSelect($event, 'controlb44')">其他</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="其他激素::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb44">
+                  <a-input style="width: 240px;" v-decorator="['b441', {...inputRequired, initialValue: initValue('b441')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="吸入激素/长效β受体激动剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb02">
+                  <a-checkbox-group v-decorator="['b45', {...selectRequired, initialValue: initValue('b45', 'array')}]">
+                    <a-checkbox value="1">布地奈德/福莫特罗</a-checkbox>
+                    <a-checkbox value="2">沙美特罗/氟替卡松</a-checkbox>
+                    <a-checkbox value="3" @change="changeSelect($event, 'controlb45')">其他</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="其他激素::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb45">
+                  <a-input style="width: 240px;" v-decorator="['b451', {...inputRequired, initialValue: initValue('b451')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="长效抗胆碱能药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb03">
+                  <a-checkbox-group v-decorator="['b46', {...selectRequired, initialValue: initValue('b46', 'array')}]">
+                    <a-checkbox value="1">噻托嗅按</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="长效β受体激动剂/长效抗胆碱能药物名称:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['b47', {...inputRequired, initialValue: initValue('b47')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="长效β受体激动剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb04">
+                  <a-checkbox-group v-decorator="['b48', {...selectRequired, initialValue: initValue('b48', 'array')}]">
+                    <a-checkbox value="1">福莫特罗</a-checkbox>
+                    <a-checkbox value="2">茚达特罗</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="白三烯受体拮抗剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb05">
+                  <a-checkbox-group v-decorator="['b49', {...selectRequired, initialValue: initValue('b49', 'array')}]">
+                    <a-checkbox value="1">孟鲁司特</a-checkbox>
+                    <a-checkbox value="2">其他</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="止血药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b410', {...selectRequired, initialValue: initValue('b410', 'array')}]">
+                    <a-checkbox value="1">安络血</a-checkbox>
+                    <a-checkbox value="2">云南白药</a-checkbox>
+                    <a-checkbox value="3">垂体</a-checkbox>
+                    <a-checkbox value="4">止血敏</a-checkbox>
+                    <a-checkbox value="5">止血芳酸</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="雾化治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['b411', {...require1, initialValue: initValue('b411')}]" @change="changeRadio($event, 'controlb411')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="(2) 无创辅助通气:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b2', {...require1, initialValue: initValue('b2')}]">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                  </a-radio-group>
-                </a-form-item>
-                <a-form-item label="(3) 患者是否行有规律的物理治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b3', {...require1, initialValue: initValue('b3')}]" @change="changeRadio($event, 'controlb3')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                  </a-radio-group>
-                </a-form-item>
-                <div v-if="controlb3">
-                  <a-form-item label="治疗方式:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b31', {...selectRequired, initialValue: initValue('b31', 'array')}]">
-                      <a-checkbox value="1">手动拍击背部排痰</a-checkbox>
-                      <a-checkbox value="2">体位引流</a-checkbox>
-                      <a-checkbox value="3">规律锻炼身体</a-checkbox>
-                      <a-checkbox value="4">借助排痰仪器</a-checkbox>
-                      <a-checkbox value="5">无</a-checkbox>
+                <div v-if="controlb411">
+                  <a-form-item label="雾化药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                    <a-checkbox-group v-decorator="['b4111', {...selectRequired, initialValue: initValue('b4111', 'array')}]">
+                      <a-checkbox value="1">乙酰半胱氨酸</a-checkbox>
+                      <a-checkbox value="2" @change="changeSelect($event, 'controlb4111')">其他</a-checkbox>
                     </a-checkbox-group>
                   </a-form-item>
-                  <a-form-item label="患者是否参加肺康复治疗:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-radio-group v-decorator="['b32', {...selectRequired, initialValue: initValue('b32')}]">
-                      <a-radio value="1">是</a-radio>
-                      <a-radio value="2">未听说过有这种治疗</a-radio>
-                      <a-radio value="3">因共病不适合</a-radio>
-                      <a-radio value="4">患者拒绝参加</a-radio>
-                      <a-radio value="5">想参加但未能参加</a-radio>
-                    </a-radio-group>
+                  <a-form-item label="其他雾化药物:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb4111">
+                    <a-input style="width: 240px;" v-decorator="['b4112', {...inputRequired, initialValue: initValue('b4112')}]" autocomplete="off"></a-input>
                   </a-form-item>
                 </div>
-                <a-form-item label="(4) 有规律的呼吸疾病药物治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b4', {...require1, initialValue: initValue('b4')}]" @change="changeRadio($event, 'controlb4')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                  </a-radio-group>
+                <a-form-item label="ICS:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b412', {...selectRequired, initialValue: initValue('b412', 'array')}]">
+                    <a-checkbox value="1">布地奈德</a-checkbox>
+                    <a-checkbox value="2" @change="changeSelect($event, 'controlb412')">其他</a-checkbox>
+                  </a-checkbox-group>
                 </a-form-item>
-                <div v-if="controlb4">
-                  <a-form-item label="周期性抗生素治疗:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41', 'array')}]">
-                      <a-checkbox value="1">阿奇霉素</a-checkbox>
-                      <a-checkbox value="2">克拉霉素</a-checkbox>
-                      <a-checkbox value="3">红霉素</a-checkbox>
-                      <a-checkbox value="4" @change="changeSelect($event, 'controlb41')">其他</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                  <a-form-item label="其他:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb41">
-                    <a-input style="width: 240px;" v-decorator="['b414', {...inputRequired, initialValue: initValue('b414')}]" autocomplete="off"></a-input>
-                  </a-form-item>
-                  <a-form-item label="吸入/雾化抗生素药物:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-input style="width: 240px;" v-decorator="['b42', {...inputRequired, initialValue: initValue('b42')}]" autocomplete="off"></a-input>
-                  </a-form-item>
-                  <a-form-item label="祛痰类药物:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b43', {...selectRequired, initialValue: initValue('b43', 'array')}]">
-                      <a-checkbox value="1">N乙酰半胱氨酸</a-checkbox>
-                      <a-checkbox value="2">氨溴索</a-checkbox>
-                      <a-checkbox value="3">桉柠蒎</a-checkbox>
-                      <a-checkbox value="4">羧甲司坦</a-checkbox>
-                      <a-checkbox value="5">厄多司坦</a-checkbox>
-                      <a-checkbox value="6">其他</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                  <a-form-item label="吸入激素:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b44', {...selectRequired, initialValue: initValue('b44', 'array')}]">
-                      <a-checkbox value="1">布地奈德</a-checkbox>
-                      <a-checkbox value="2">氟替卡松</a-checkbox>
-                      <a-checkbox value="3" @change="changeSelect($event, 'controlb44')">其他</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                  <a-form-item label="其他激素::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb44">
-                    <a-input style="width: 240px;" v-decorator="['b441', {...inputRequired, initialValue: initValue('b441')}]" autocomplete="off"></a-input>
-                  </a-form-item>
-                  <a-form-item label="吸入激素/长效β受体激动剂:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b45', {...selectRequired, initialValue: initValue('b45', 'array')}]">
-                      <a-checkbox value="1">布地奈德/福莫特罗</a-checkbox>
-                      <a-checkbox value="2">沙美特罗/氟替卡松</a-checkbox>
-                      <a-checkbox value="3">其他</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                  <a-form-item label="长效抗胆碱能药物:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b46', {...selectRequired, initialValue: initValue('b46', 'array')}]">
-                      <a-checkbox value="1">噻托嗅按</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                  <a-form-item label="长效β受体激动剂/长效抗胆碱能药物名称:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="label-overflow">
-                    <a-input style="width: 240px;" v-decorator="['b47', {...inputRequired, initialValue: initValue('b47')}]" autocomplete="off"></a-input>
-                  </a-form-item>
-                  <a-form-item label="长效β受体激动剂:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b48', {...selectRequired, initialValue: initValue('b48', 'array')}]">
-                      <a-checkbox value="1">福莫特罗</a-checkbox>
-                      <a-checkbox value="2">茚达特罗</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                  <a-form-item label="白三烯受体拮抗剂:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b49', {...selectRequired, initialValue: initValue('b49', 'array')}]">
-                      <a-checkbox value="1">孟鲁司特</a-checkbox>
-                      <a-checkbox value="2">其他</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                  <a-form-item label="止血药物:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b410', {...selectRequired, initialValue: initValue('b410', 'array')}]">
-                      <a-checkbox value="1">安络血</a-checkbox>
-                      <a-checkbox value="2">云南白药</a-checkbox>
-                      <a-checkbox value="3">垂体</a-checkbox>
-                      <a-checkbox value="4">止血敏</a-checkbox>
-                      <a-checkbox value="5">止血芳酸</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                  <a-form-item label="雾化治疗:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-radio-group v-decorator="['b411', {...require1, initialValue: initValue('b411')}]" @change="changeRadio($event, 'controlb411')">
-                      <a-radio value="1">是</a-radio>
-                      <a-radio value="-1">否</a-radio>
-                    </a-radio-group>
-                  </a-form-item>
-                  <div v-if="controlb411">
-                    <a-form-item label="雾化药物:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                      <a-checkbox-group v-decorator="['b4111', {...selectRequired, initialValue: initValue('b4111', 'array')}]">
-                        <a-checkbox value="1">乙酰半胱氨酸</a-checkbox>
-                        <a-checkbox value="2" @change="changeSelect($event, 'controlb4111')">其他</a-checkbox>
-                      </a-checkbox-group>
-                    </a-form-item>
-                    <a-form-item label="其他:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb4111">
-                      <a-input style="width: 240px;" v-decorator="['b4112', {...inputRequired, initialValue: initValue('b4112')}]" autocomplete="off"></a-input>
-                    </a-form-item>
-                  </div>
-                  <a-form-item label="ICS:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b412', {...selectRequired, initialValue: initValue('b412', 'array')}]">
-                      <a-checkbox value="1">布地奈德</a-checkbox>
-                      <a-checkbox value="2" @change="changeSelect($event, 'controlb412')">其他</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                  <a-form-item label="其他:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb412">
-                    <a-input style="width: 240px;" v-decorator="['b4121', {...inputRequired, initialValue: initValue('b4121')}]" autocomplete="off"></a-input>
-                  </a-form-item>
-                  <a-form-item label="支气管扩张剂:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b413', {...selectRequired, initialValue: initValue('b413', 'array')}]">
-                      <a-checkbox value="1">异丙托溴胺</a-checkbox>
-                      <a-checkbox value="2">沙丁胺醇</a-checkbox>
-                      <a-checkbox value="3">特布他林</a-checkbox>
-                      <a-checkbox value="4">复方异丙托溴铵（异丙托溴胺+沙丁胺醇）</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                </div>
-                <a-form-item label="(5) ABPA相关治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b5', {...require1, initialValue: initValue('b5')}]" @change="changeRadio($event, 'controlb5')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                  </a-radio-group>
+                <a-form-item label="其他ICS:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb412">
+                  <a-input style="width: 240px;" v-decorator="['b4121', {...inputRequired, initialValue: initValue('b4121')}]" autocomplete="off"></a-input>
                 </a-form-item>
-                <div v-if="controlb5">
-                  <a-form-item label="口服激素:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b51', {...selectRequired, initialValue: initValue('b51', 'array')}]">
-                      <a-checkbox value="1">强的松</a-checkbox>
-                      <a-checkbox value="2">甲强龙</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                  <a-form-item label="抗真菌药物:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-checkbox-group v-decorator="['b52', {...selectRequired, initialValue: initValue('b52', 'array')}]">
-                      <a-checkbox value="1">伊曲康唑</a-checkbox>
-                      <a-checkbox value="2">伏立康唑</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                </div>
-                <a-form-item label="(6) 免疫球蛋白缺乏相关治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b6', {...require1, initialValue: initValue('b6')}]" @change="changeRadio($event, 'controlb6')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                  </a-radio-group>
+                <a-form-item label="支气管扩张剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b413', {...selectRequired, initialValue: initValue('b413', 'array')}]">
+                    <a-checkbox value="1">异丙托溴胺</a-checkbox>
+                    <a-checkbox value="2">沙丁胺醇</a-checkbox>
+                    <a-checkbox value="3">特布他林</a-checkbox>
+                    <a-checkbox value="4">复方异丙托溴铵（异丙托溴胺+沙丁胺醇）</a-checkbox>
+                  </a-checkbox-group>
                 </a-form-item>
-                <div v-if="controlb6">
-                  <a-form-item label="静脉注射免疫球蛋白药物名称:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset">
-                    <a-input style="width: 240px;" v-decorator="['b61', {...inputRequired, initialValue: initValue('b61')}]" autocomplete="off"></a-input>
-                  </a-form-item>
-                </div>
-                <a-form-item label="(7) 患者是否曾接收疫苗治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b7', {...require1, initialValue: initValue('b7')}]" @change="changeRadio($event, 'controlb7')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                  </a-radio-group>
+              </div>
+              <a-form-item label="(5) ABPA相关治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b5', {...require1, initialValue: initValue('b5')}]" @change="changeRadio($event, 'controlb5')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="抗真菌药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb5">
+                <a-checkbox-group v-decorator="['b52', {...selectRequired, initialValue: initValue('b52', 'array')}]">
+                  <a-checkbox value="1">伊曲康唑</a-checkbox>
+                  <a-checkbox value="2">伏立康唑</a-checkbox>
+                </a-checkbox-group>
+              </a-form-item>
+              <a-form-item label="(6) 免疫球蛋白缺乏相关治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b6', {...require1, initialValue: initValue('b6')}]" @change="changeRadio($event, 'controlb6')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <div v-if="controlb6">
+                <a-form-item label="静脉注射免疫球蛋白药物名称:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['b61', {...inputRequired, initialValue: initValue('b61')}]" autocomplete="off"></a-input>
                 </a-form-item>
-                <div v-if="controlb7">
-                  <a-form-item label="肺炎链球菌多糖疫苗（如：PSV23）:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="label-overflow">
-                    <a-radio-group v-decorator="['b71', {...require1, initialValue: initValue('b71')}]">
-                      <a-radio value="1">是</a-radio>
-                      <a-radio value="-1">否</a-radio>
-                    </a-radio-group>
-                  </a-form-item>
-                  <a-form-item label="肺炎链球菌辅助疫苗（如：PCV13）:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="label-overflow">
-                    <a-radio-group v-decorator="['b72', {...require1, initialValue: initValue('b72')}]">
-                      <a-radio value="1">是</a-radio>
-                      <a-radio value="-1">否</a-radio>
-                    </a-radio-group>
-                  </a-form-item>
-                  <a-form-item label="过去1年内患者是否接受过流感疫苗:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="label-overflow">
-                    <a-radio-group v-decorator="['b73', {...require1, initialValue: initValue('b73')}]">
-                      <a-radio value="1">是</a-radio>
-                      <a-radio value="-1">否</a-radio>
-                    </a-radio-group>
-                  </a-form-item>
-                </div>
-                <div class="title">3.非呼吸系统相关治疗</div>
-                <a-form-item label="调脂" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-radio-group v-decorator="['c1', {...require1, initialValue: initValue('c1')}]" @change="changeRadio($event, 'controlc1')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                  </a-radio-group>
-                </a-form-item>
-                <a-form-item label="他汀类" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlc1">
-                  <a-radio-group v-decorator="['c11', {...require1, initialValue: initValue('c11')}]">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                  </a-radio-group>
-                </a-form-item>
-                <a-form-item label="抗凝" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-radio-group v-decorator="['c2', {...require1, initialValue: initValue('c2')}]" @change="changeRadio($event, 'controlc2')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                  </a-radio-group>
-                </a-form-item>
-                <div v-if="controlc2">
-                  <a-form-item label="阿司匹林" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted">
-                    <a-radio-group v-decorator="['c21', {...require1, initialValue: initValue('c21')}]">
-                      <a-radio value="1">是</a-radio>
-                      <a-radio value="-1">否</a-radio>
-                    </a-radio-group>
-                  </a-form-item>
-                  <a-form-item label="非阿司匹林抑制剂（如：氯吡格雷）" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted label-overflow">
-                    <a-radio-group v-decorator="['c22', {...require1, initialValue: initValue('c22')}]">
-                      <a-radio value="1">是</a-radio>
-                      <a-radio value="-1">否</a-radio>
-                    </a-radio-group>
-                  </a-form-item>
-                  <a-form-item label="华法林/口服抗凝药" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted">
-                    <a-radio-group v-decorator="['c23', {...require1, initialValue: initValue('c23')}]">
-                      <a-radio value="1">是</a-radio>
-                      <a-radio value="-1">否</a-radio>
-                    </a-radio-group>
-                  </a-form-item>
-                </div>
+              </div>
+              <a-form-item label="(7) 患者是否曾接收疫苗治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-checkbox-group v-decorator="['b7', {...selectRequired, initialValue: initValue('b7', 'array')}]" class="control-m-line">
+                  <a-checkbox value="1">肺炎链球菌多糖疫苗（如：PSV23）</a-checkbox>
+                  <a-checkbox value="2">肺炎链球菌辅助疫苗（如：PCV13）</a-checkbox>
+                  <a-checkbox value="3">过去1年内患者接受过流感疫苗</a-checkbox>
+                </a-checkbox-group>
+              </a-form-item>
               </div>
             </div>
           </a-form>
