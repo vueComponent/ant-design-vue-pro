@@ -348,9 +348,6 @@ export default {
       })
     that.getFormData()
   },
-  activated() {
-    this.defaultSelectedKeys = [4]
-  },
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,

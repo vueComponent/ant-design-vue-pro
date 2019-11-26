@@ -1262,26 +1262,6 @@ export default {
   }
 }
 
-.question-title {
-  text-align: center;
-  font-size: 22px;
-  color: #3398DC;
-}
-
-.question-des {
-  font-size: 16px;
-  // border: 1px solid #91D5FF ;
-  // border-radius: 3px;
-  // background: lightblue;
-  padding: 0 10px;
-}
-
-.question-t {
-  font-size: 18px;
-  line-height: 40px;
-  font-weight: 700;
-}
-
 /deep/.page-header-index-wide[data-v-30448598] .ant-menu-submenu.ant-menu-submenu-inline .treeSubTitle {
   width: 120px;
 }
