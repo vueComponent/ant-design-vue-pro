@@ -85,16 +85,16 @@ const columns = [{
     scopedSlots: { customRender: 'antibiotic' }
   },
   {
-    title: '药敏结果',
-    dataIndex: 'allergyValue',
-    width: '20%',
-    scopedSlots: { customRender: 'allergyValue' }
-  },
-  {
     title: 'MIC值',
     dataIndex: 'antibioticResult',
     width: '20%',
     scopedSlots: { customRender: 'antibioticResult' }
+  },
+  {
+    title: '药敏结果',
+    dataIndex: 'allergyValue',
+    width: '20%',
+    scopedSlots: { customRender: 'allergyValue' }
   },
   {
     title: '操作',
