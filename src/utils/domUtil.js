@@ -16,4 +16,4 @@ export const setDocumentTitle = function (title) {
   }
 }
 
-export const domTitle = '支扩在线'
+export const domTitle = '支扩中国'

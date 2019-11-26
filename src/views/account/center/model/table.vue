@@ -32,12 +32,23 @@
           <a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button>
         </p>
         <a-table rowKey="keyW" size="middle" :pagination="pagination" :columns="columns" :dataSource="data">
-          <template v-for="col in [ 'antibiotic', , 'antibioticResult' ,'allergyValue']" :slot="col" slot-scope="text, record, index">
+          <template v-for="col in [ 'antibiotic', , 'antibioticResult']" :slot="col" slot-scope="text, record, index">
             <div :key="col">
               <a-input v-if="record.editable" style="margin: -5px 0;" :value="text" @change="e => handleChange(e.target.value, record.keyW, col)" />
               <template v-else>
                 {{ text }}
               </template>
+            </div>
+          </template>
+          <template slot="allergyValue" slot-scope="text, record, index">
+            <div>
+              <a-select defaultValue="S" v-if="record.editable" style="margin: -5px 0;width: 100%" :value="text" @change="value => handleSelectChange(value, record.keyW)">
+                <a-select-option value="S">S</a-select-option>
+                <a-select-option value="R">R</a-select-option>
+                <a-select-option value="I">I</a-select-option>
+                <a-select-option value="*">*</a-select-option>
+              </a-select>
+              <template v-else>{{text}}</template>
             </div>
           </template>
           <template slot="operation" slot-scope="text, record, index">
@@ -74,13 +85,13 @@ const columns = [{
     scopedSlots: { customRender: 'antibiotic' }
   },
   {
-    title: '药敏结果',
+    title: 'MIC值',
     dataIndex: 'antibioticResult',
     width: '20%',
     scopedSlots: { customRender: 'antibioticResult' }
   },
   {
-    title: 'MIC值',
+    title: '药敏结果',
     dataIndex: 'allergyValue',
     width: '20%',
     scopedSlots: { customRender: 'allergyValue' }
@@ -97,7 +108,7 @@ export default {
     dataSource: {
       type: Array,
       default: () => {
-        return [];
+        return []
       }
     },
     type1: {
@@ -108,6 +119,9 @@ export default {
     },
     isFirst: {
       type: Boolean
+    },
+    picSource: {
+      type: String
     }
   },
   data() {
@@ -140,7 +154,8 @@ export default {
       uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
       viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
       fileList: [],
-      confirmLoading: false
+      confirmLoading: false,
+      picData: this.picSource
     };
   },
   methods: {
@@ -162,7 +177,7 @@ export default {
       const newData = [...this.data]
       const target = newData.filter(item => key === item.keyW)[0]
       if (target) {
-        target['antibioticResult'] = value
+        target['allergyValue'] = value
         this.data = newData
       }
     },
@@ -223,6 +238,14 @@ export default {
     },
     picChange({ fileList }) {
       this.fileList = fileList
+      if (fileList && fileList[0] && fileList[0].response) {
+        this.picData = fileList[0].response.fileName
+        if (this.isFirst) {
+          this.$emit('changePic1', this.picData)
+        } else {
+          this.$emit('changePic2', this.picData)
+        }
+      }
     },
     _import() {
       this.confirmLoading = true
@@ -263,6 +286,12 @@ export default {
         this.vitamin = val[0] ? val[0].microbeName : ''
         this.count = val.length > 0 ? val[val.length - 1].keyW : 0
         // this.$emit('mySign', this.data)
+      }
+    },
+    picSource: {
+      immediate: true,
+      handler(val) {
+        this.picData = val
       }
     },
     type1: {

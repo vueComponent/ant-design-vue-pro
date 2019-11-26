@@ -38,7 +38,7 @@
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
-                  <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList1,1)" v-if="fileList1.length === 1">OCR识别</a-button>
+                  <a-button style="position: absolute;top: 74px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList1,1)" v-if="fileList1.length === 1">OCR识别</a-button>
                   <a-modal :visible="previewVisible1" :footer="null" @cancel="handleCancel1">
                     <img alt="example" style="width: 100%" :src="previewImage1" />
                   </a-modal>
@@ -71,7 +71,7 @@
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
-                  <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList2,2)" v-if="fileList2.length === 1">OCR识别</a-button>
+                  <a-button style="position: absolute;top: 74px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList2,2)" v-if="fileList2.length === 1">OCR识别</a-button>
                   <a-modal :visible="previewVisible2" :footer="null" @cancel="handleCancel2">
                     <img alt="example" style="width: 100%" :src="previewImage2" />
                   </a-modal>
@@ -455,22 +455,23 @@ export default {
     handleChange2({ fileList }) {
       this.fileList2 = fileList;
     },
-    _import(fileList,type) {
-      var url = '';
-      url = fileList[0].response ? fileList[0].response.data.src : fileList[0].url;
+    _import(fileList, type) {
+      // console.log(fileList[0].response.data.src);
       var that = this
-      that.spinning = true;
+      this.spinning = true
       var params = new URLSearchParams()
-      params.append('url', url)
+      params.append('url', fileList[0].response ? fileList[0].response.data.src : fileList[0].url)
       params.append('type', type)
       getOcrResult(params)
         .then(res => {
-          that.spinning = false;
-          that.$message.success(res.msg);
+          that.spinning = false
+          that.$message.success(res.msg)
+          // console.log(res.data);
           that.qtsyjc = _.extend(that.qtsyjc || {}, that.dealAnswers(res.data))
         })
         .catch(error => {
-          that.spinning = false;
+          // console.log(error)
+          that.spinning = false
           that.$message.error(res.msg)
         })
     }
@@ -478,14 +479,16 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:calc(100% - 10px);
+#baselineInfo {
+  height: calc(100% - 10px);
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   height: calc(100% - 54px);
 }
+
 /deep/ .ant-spin {
   position: absolute;
   top: 0;
@@ -678,6 +681,7 @@ export default {
     .anticon-clock-circle {
       color: #06a0e2;
     }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;

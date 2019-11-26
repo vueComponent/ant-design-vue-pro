@@ -140,7 +140,7 @@
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item class="no-border" label="心血管系统疾病类型(多选)" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb7">
-                  <a-checkbox-group v-decorator="['b71', {...selectRequired, initialValue: initValue('b71', 'array')}]">
+                  <a-checkbox-group v-decorator="['b71', {...selectRequired, initialValue: initValue('b71', 'array')}]" class="control-m-line">
                     <a-checkbox value="1">心梗</a-checkbox>
                     <a-checkbox value="2">心绞痛</a-checkbox>
                     <a-checkbox value="3">冠心病</a-checkbox>
@@ -245,7 +245,7 @@
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item class="no-border" label="风湿系统疾病类型(多选)" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb12">
-                  <a-checkbox-group v-decorator="['b121', {...selectRequired, initialValue: initValue('b121', 'array')}]">
+                  <a-checkbox-group v-decorator="['b121', {...selectRequired, initialValue: initValue('b121', 'array')}]" class="control-m-line">
                     <a-checkbox value="1">系统性红斑狼疮</a-checkbox>
                     <a-checkbox value="2">干燥综合征</a-checkbox>
                     <a-checkbox value="3">系统性硬化</a-checkbox>
@@ -280,7 +280,7 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item class="border-dotted" label="肿瘤部位(多选)" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-checkbox-group v-decorator="['b143', {...selectRequired, initialValue: initValue('b143', 'array')}]">
+                    <a-checkbox-group v-decorator="['b143', {...selectRequired, initialValue: initValue('b143', 'array')}]" class="control-m-line">
                       <a-checkbox value="1">头颈部</a-checkbox>
                       <a-checkbox value="2">肺</a-checkbox>
                       <a-checkbox value="3">乳腺</a-checkbox>
@@ -315,7 +315,7 @@
                     <a-input style="width: 240px;" v-decorator="['b152', {...inputRequired, initialValue: initValue('b152')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item class="border-dotted" label="继发性免疫缺陷(多选)" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-checkbox-group v-decorator="['b153', {...selectRequired, initialValue: initValue('b153', 'array')}]">
+                    <a-checkbox-group v-decorator="['b153', {...selectRequired, initialValue: initValue('b153', 'array')}]" class="control-m-line">
                       <a-checkbox value="1">慢性淋巴性白血病</a-checkbox>
                       <a-checkbox value="2">多发性骨髓瘤</a-checkbox>
                       <a-checkbox value="3">血液肿瘤相关免疫缺陷</a-checkbox>

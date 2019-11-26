@@ -19,7 +19,7 @@
     <a-card :bordered="false" class="card-box">
       <a-row :gutter="8">
         <a-col :span="5" :style="baselineInfoStyle">
-          <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleClick">
+          <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleChange">
           </s-tree>
         </a-col>
         <a-col :span="19" style="height:100%;">
@@ -27,7 +27,7 @@
             <div class="head-bar">
               <a-row type="flex">
                 <span class="head-icon"></span>
-                <div v-if="listArr.length && listArr[0].questionName" class="question-title">{{listArr[0].questionName}}</div>
+                <div v-if="question.name && question.name" class="question-title">{{question.name}}</div>
               </a-row>
               <a-row v-if="executeStatus !== 2">
                 <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
@@ -36,25 +36,25 @@
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <!-- 调查问卷 -->
-              <div v-if="listArr.length && listArr[0].remark" class="question-des"><span style="color:#3398dc">说明：</span>{{listArr[0].remark}}</div>
+              <div v-if="question.remark && question.remark" class="question-des"><span style="color:#3398dc">说明：</span>{{question.remark}}</div>
               <div v-for="item in listArr" :key="item.questionTitleId">
                 <div class="question-t">
                   <span class="question-icon"></span>
                   <span>{{item.name}}</span>
                 </div>
-                <a-form-item class="ques-box" v-for="(qu1, index) in item.childrens" :key="index" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''" :labelCol="labelColVer" :wrapperCol="wrapperVer">
+                <a-form-item class="ques-box" v-for="(qu1, index) in item.childrens" :key="index" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''">
                   <p v-if="qu1.type == 5" class="question-tip">
                     <span class="tip-icon"></span>
                     <span>{{qu1.name}}</span>
                   </p>
-                  <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue" autocomplete="off" />
-                  <a-radio-group v-if="qu1.type === 1" :name="qu1.questionTitleId+''" v-model="qu1.inputType">
-                    <a-radio @click="handleChangeRadio()" :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
+                  <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers.length ? qu1.answers[0].questionOptionValue : null , rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]" />
+                  <a-radio-group v-if="qu1.type === 1" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers.length ? qu1.answers[0].questionOptionId : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
+                    <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
                   </a-radio-group>
-                  <a-checkbox-group v-if="qu1.type === 2" v-model="qu1.inputType">
-                    <a-checkbox @click="handleChangeRadio()" :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId" :name="qu1.questionTitleId+''">{{item.name}}</a-checkbox>
+                  <a-checkbox-group v-if="qu1.type === 2" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers.length ? qu1.answers[0].questionOptionId : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
+                    <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-checkbox>
                   </a-checkbox-group>
-                  <a-date-picker v-if="qu1.type === 6" :name="qu1.questionTitleId+''" :defaultValue="qu1.answers && qu1.answers.length && qu1.answers[0].questionOptionValue && moment(qu1.answers[0].questionOptionValue, 'YYYY-MM-DD')" :disabledDate="disabledDate" />
+                  <a-date-picker v-if="qu1.type === 6" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers.length ? moment(qu1.answers[0].questionOptionValue, 'YYYY/MM/DD') : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]" format="YYYY-MM-DD" :disabledDate="disabledDate" />
                 </a-form-item>
               </div>
             </div>
@@ -85,11 +85,10 @@ export default {
       baselineInfoStyle: {
         overflow: "auto",
         height: "100%",
-        "padding-right": "0px",
+        paddingRight: "0px",
         boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
       },
       baselineFormStyle: {
-        // height: '400px',
         overflow: 'auto',
         padding: '20px 20px 80px',
         height: '100%'
@@ -106,16 +105,6 @@ export default {
       form: this.$form.createForm(this),
       listArr: [],
       questionFinished: false,
-      labelColVer: {
-        xs: { span: 24 },
-        sm: { span: 24 },
-        md: { span: 24 }
-      },
-      wrapperVer: {
-        xs: { span: 24 },
-        sm: { span: 24 },
-        md: { span: 24 }
-      },
       disBlock: {
         display: 'block'
       },
@@ -164,49 +153,49 @@ export default {
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
-    changeSelect(e, t) {
-      this[t] = e.target.checked
-    },
-    changeRadio(e, t) {
-      if (t === 'control_b_19_1') {
-        if (e.target.value === '1' || e.target.value === '2') {
-          this[t] = true
-        } else {
-          this[t] = false
-        }
-      } else if (e.target.value === '1') {
-        this[t] = true
-      } else {
-        this[t] = false
-      }
-    },
+    // changeSelect(e, t) {
+    //   this[t] = e.target.checked
+    // },
+    // changeRadio(e, t) {
+    //   if (t === 'control_b_19_1') {
+    //     if (e.target.value === '1' || e.target.value === '2') {
+    //       this[t] = true
+    //     } else {
+    //       this[t] = false
+    //     }
+    //   } else if (e.target.value === '1') {
+    //     this[t] = true
+    //   } else {
+    //     this[t] = false
+    //   }
+    // },
 
-    handleChangeRadio: function() {
-      var that = this;
-      var radios = $('input[type="radio"]');
-      var chackVal = null;
-      var aa = null;
-      for (var i = 0; i < radios.length; i++) {
-        if (radios[i].checked) {
-          chackVal = radios[i].value;
-          aa = radios[i].name;
-          if (chackVal == 148) {
-            $('.ques-box').eq(21).show();
-            $('.ques-box').eq(22).show();
-            $('.ques-box').eq(23).show();
-          } else if (chackVal == 149) {
-            $('.ques-box').eq(21).hide();
-            $('.ques-box').eq(22).hide();
-            $('.ques-box').eq(23).hide();
-          }
-        } else {}
-      }
-    },
+    // handleChangeRadio: function() {
+    //   var that = this;
+    //   var radios = $('input[type="radio"]');
+    //   var chackVal = null;
+    //   var aa = null;
+    //   for (var i = 0; i < radios.length; i++) {
+    //     if (radios[i].checked) {
+    //       chackVal = radios[i].value;
+    //       aa = radios[i].name;
+    //       if (chackVal == 148) {
+    //         $('.ques-box').eq(21).show();
+    //         $('.ques-box').eq(22).show();
+    //         $('.ques-box').eq(23).show();
+    //       } else if (chackVal == 149) {
+    //         $('.ques-box').eq(21).hide();
+    //         $('.ques-box').eq(22).hide();
+    //         $('.ques-box').eq(23).hide();
+    //       }
+    //     } else {}
+    //   }
+    // },
     disabledDate(current) {
       // Can not select days before today and today
       return current && current > moment().endOf('day');
     },
-    handleClick(e) {
+    handleChange(e) {
       var params = new URLSearchParams()
       params.append('patientBasisId', this.patientBasisId)
       var that = this
@@ -240,13 +229,16 @@ export default {
       }
     },
     getFormData() {
+      this.spinning = true
       var that = this
       var params = new URLSearchParams()
       params.append('questionId', this.questionId)
       params.append('patientBasisId', this.patientBasisId)
       getQuestionDetail(params)
         .then(res => {
-          that.listArr = that.initQuestionAnswers(res.data.topTitles)
+          that.spinning = false
+        //   this.listArr = this.initQuestionAnswers(res.data.topTitles)
+          that.listArr = res.data.topTitles
           that.question = res.data.question
           if (res.data.isFinish === '0') {
             that.questionFinished = false
@@ -254,34 +246,26 @@ export default {
             that.questionFinished = true
           }
         })
-        .catch(error => {
-          console.log(error)
-        })
     },
     handleSubmit(e) {
       e.preventDefault()
+      this.spinning = true
       const { form: { validateFields } } = this
-      this.confirmLoading = true
       validateFields((errors, values) => {
         if (!errors) {
-          console.log('values', values)
-          var re = this.form.getFieldsValue()
           const that = this
           var result = this.generateQuestionAnswers()
-          console.log(result)
           var params = new URLSearchParams()
           params.append('answers', JSON.stringify(result))
           params.append('patientBasisId', this.patientBasisId)
           params.append('questionId', this.questionId)
           params.append('patientId', this.patient.patientId)
           params.append('type', 2)
-          this.spinning = true
           saveQuestion(params)
             .then(res => {
-              console.log(res)
               that.spinning = false
-              that.getFormData()
               that.$message.success(res.msg)
+              //   that.getFormData()
               params = new URLSearchParams()
               params.append('patientBasisId', this.patientBasisId)
               getPatientBasis(params)
@@ -296,10 +280,6 @@ export default {
                     that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
                   }
                 })
-            })
-            .catch(error => {
-              that.spinning = false
-              console.log(error)
             })
         } else {
           this.spinning = false
@@ -356,8 +336,6 @@ export default {
       return result
     },
     save() {
-      // 问卷调查
-      var re = this.form.getFieldsValue()
       const that = this
       var result = this.generateQuestionAnswers()
       console.log(result)
@@ -370,14 +348,12 @@ export default {
       this.spinning = true
       saveQuestion(params)
         .then(res => {
-          console.log(res)
           that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
         })
         .catch(error => {
           that.spinning = false
-          console.log(error)
         })
     },
     initQuestionAnswers(list) {
@@ -683,79 +659,79 @@ export default {
 
     overflow: auto;
 
-    .title {
-      background-color: #f7f8f8;
-      font-weight: bold;
-      font-size: 16px;
-      color: #231815;
-      padding-left: 15px;
-      border-top: 1px solid #eee;
-      border-bottom: 1px solid #eee;
-      height: 40px;
-      line-height: 40px;
-    }
+    // .title {
+    //   background-color: #f7f8f8;
+    //   font-weight: bold;
+    //   font-size: 16px;
+    //   color: #231815;
+    //   padding-left: 15px;
+    //   border-top: 1px solid #eee;
+    //   border-bottom: 1px solid #eee;
+    //   height: 40px;
+    //   line-height: 40px;
+    // }
 
     padding: 20px;
 
-    .ant-form-item {
-      // padding-bottom: 10px;
-      // padding-top: 10px;
-      margin-bottom: 0px;
-      border-bottom: 1px solid #eee;
+    // .ant-form-item {
+    //   // padding-bottom: 10px;
+    //   // padding-top: 10px;
+    //   margin-bottom: 0px;
+    //   border-bottom: 1px solid #eee;
 
-      &.no-border {
-        border-bottom: none;
-        padding-top: 0;
-        padding-bottom: 0;
-      }
+    //   &.no-border {
+    //     border-bottom: none;
+    //     padding-top: 0;
+    //     padding-bottom: 0;
+    //   }
 
-      &:hover {}
+    //   &:hover {}
 
-      &.border-dotted {
-        border-bottom: 1px dotted #eee;
-      }
-    }
+    //   &.border-dotted {
+    //     border-bottom: 1px dotted #eee;
+    //   }
+    // }
 
-    /deep/ .ant-form-item-label {
-      text-align: left;
-      line-height: 56px;
-      white-space: inherit;
+    // /deep/ .ant-form-item-label {
+    //   text-align: left;
+    //   line-height: 56px;
+    //   white-space: inherit;
 
-      label:after {
-        content: '';
-      }
+    //   label:after {
+    //     content: '';
+    //   }
 
-      &.ant-col-md-24 label {
-        display: block;
-        background-color: #f7f8f8;
-        font-weight: bold;
-        font-size: 16px;
-        color: #231815;
-        padding-left: 15px;
-        border-top: 1px solid #eee;
-        height: 36px;
-        line-height: 36px;
-      }
-    }
+    //   &.ant-col-md-24 label {
+    //     display: block;
+    //     background-color: #f7f8f8;
+    //     font-weight: bold;
+    //     font-size: 16px;
+    //     color: #231815;
+    //     padding-left: 15px;
+    //     border-top: 1px solid #eee;
+    //     height: 36px;
+    //     line-height: 36px;
+    //   }
+    // }
 
-    /deep/ .ant-form-item-control-wrapper .ant-form-item-control {
-      line-height: 56px;
-    }
+    // /deep/ .ant-form-item-control-wrapper .ant-form-item-control {
+    //   line-height: 56px;
+    // }
 
-    .formSubtitle {
-      height: 50px;
-      line-height: 50px;
-      font-weight: bold;
-      font-size: 16px;
-      padding-left: 10px;
-      margin-bottom: 0px;
-      background: #fafcfd;
-      border-bottom: 1px solid #f3f3f3;
-    }
+    // .formSubtitle {
+    //   height: 50px;
+    //   line-height: 50px;
+    //   font-weight: bold;
+    //   font-size: 16px;
+    //   padding-left: 10px;
+    //   margin-bottom: 0px;
+    //   background: #fafcfd;
+    //   border-bottom: 1px solid #f3f3f3;
+    // }
 
-    .itemRow:hover {
-      background-color: #e6f7ff;
-    }
+    // .itemRow:hover {
+    //   background-color: #e6f7ff;
+    // }
   }
 }
 
@@ -809,4 +785,70 @@ export default {
 /deep/.ant-menu-inline .ant-menu-submenu-title {
   padding-right: 0px;
 }
+
+/deep/ .ant-radio-disabled + span {
+        color: inherit;
+      }
+
+      /deep/.ant-checkbox-disabled + span {
+        color: inherit;
+      }
+
+      .question-des {
+        font-size: 16px;
+        margin-bottom: 25px;
+      }
+
+      .question-t {
+        display: flex;
+        line-height: 40px;
+        font-size: 18px;
+        font-weight: 700;
+        border-bottom: 2px solid #3398dc;
+        padding-bottom: 5px;
+        .question-icon {
+          width: 40px;
+          height: 40px;
+          background-image: url('../../../assets/question-icon.png');
+          background-size: 100% 100%;
+          margin-right: 10px;
+        }
+      }
+
+      .question-tip {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        .tip-icon {
+          width: 20px;
+          height: 20px;
+          background-image: url('../../../assets/tip-icon.png');
+          background-size: 100% 100%;
+          margin-right: 5px;
+        }
+      }
+
+      .ant-form-item {
+        margin-bottom: 0px;
+        border-bottom: 1px solid #eee;
+      }
+
+      /deep/ .ant-form-item-label {
+        text-align: left;
+        display: block;
+        background-color: #f7f8f8;
+        color: #231815;
+        font-size: 16px;
+        font-weight: bold;
+        padding-left: 15px;
+        border-top: 1px solid #eee;
+      }
+
+      /deep/ .ant-form-item-control-wrapper {
+        padding: 5px 0;
+        padding-left: 20px;
+        label {
+          margin: 5px 0;
+        }
+      }
 </style>

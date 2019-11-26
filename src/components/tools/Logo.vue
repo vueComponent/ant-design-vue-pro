@@ -21,7 +21,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: '支扩在线',
+      default: '支扩中国',
       required: false
     },
     showTitle: {

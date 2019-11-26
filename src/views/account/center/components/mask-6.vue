@@ -33,7 +33,7 @@
               <a-form-item label="采样性质（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a', {...selectRequired, initialValue: initValue('a', 'array')}]">
                   <a-checkbox value="1" @change="changeSelect($event, 'control1')">稳定期</a-checkbox>
-                  <a-checkbox value="2" @change="changeSelect($event, 'control2')">急性加重期期</a-checkbox>
+                  <a-checkbox value="2" @change="changeSelect($event, 'control2')">急性加重期</a-checkbox>
                   <a-checkbox value="3" @change="changeSelect($event, 'control3')">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
@@ -73,22 +73,22 @@
                 <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla4">
                   <a-checkbox-group v-decorator="['a42', {...selectRequired, initialValue: initValue('a42', 'array')}]" class="control-m-line">
                     <a-checkbox value="0" @change="showList($event, '铜绿假单胞菌', 'controla420', true)">铜绿假单胞菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource[0]" v-if="controla420" :type1="type1" @listen="changeType1" :isFirst="true"></add-table>
+                    <add-table :dataSource="optionDataSource[0]" v-if="controla420" :type1="type1" @listen="changeType1" :isFirst="true" :picSource="picList1[0]" @changePic1="changePic1($event, 0)"></add-table>
                     <a-checkbox value="1" @change="showList($event, '阴沟肠杆菌', 'controla421', true)">阴沟肠杆菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource[1]" v-if="controla421" :isFirst="true"></add-table>
+                    <add-table :dataSource="optionDataSource[1]" v-if="controla421" :isFirst="true" :picSource="picList1[1]" @changePic1="changePic1($event, 1)"></add-table>
                     <a-checkbox value="2" @change="showList($event, '肺炎克雷伯菌', 'controla422', true)">肺炎克雷伯菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource[2]" v-if="controla422" :isFirst="true"></add-table>
+                    <add-table :dataSource="optionDataSource[2]" v-if="controla422" :isFirst="true" :picSource="picList1[2]" @changePic1="changePic1($event, 2)"></add-table>
                     <a-checkbox value="3" @change="showList($event, '肺炎链球菌', 'controla423', true)">肺炎链球菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource[3]" v-if="controla423" :isFirst="true"></add-table>
+                    <add-table :dataSource="optionDataSource[3]" v-if="controla423" :isFirst="true" :picSource="picList1[3]" @changePic1="changePic1($event, 3)"></add-table>
                     <a-checkbox value="4" @change="showList($event, '副流感嗜血杆菌', 'controla424', true)">副流感嗜血杆菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource[4]" v-if="controla424" :isFirst="true"></add-table>
+                    <add-table :dataSource="optionDataSource[4]" v-if="controla424" :isFirst="true" :picSource="picList1[4]" @changePic1="changePic1($event, 4)"></add-table>
                     <a-checkbox value="5" @change="showList($event, '鲍曼不动杆菌', 'controla425', true)">鲍曼不动杆菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource[5]" v-if="controla425" :isFirst="true"></add-table>
+                    <add-table :dataSource="optionDataSource[5]" v-if="controla425" :isFirst="true" :picSource="picList1[5]" @changePic1="changePic1($event, 5)"></add-table>
                     <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controla426', true)">金黄色葡萄球菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource[6]" v-if="controla426" :isFirst="true"></add-table>
+                    <add-table :dataSource="optionDataSource[6]" v-if="controla426" :isFirst="true" :picSource="picList1[6]" @changePic1="changePic1($event, 6)"></add-table>
                     <a-checkbox value="7" @change="showList($event, '其他', 'controla427', true)">其他</a-checkbox>
-                    <a-input style="width: 240px;margin-right: 10px;" v-if="controla427" @change="otherChange($event, 7, true)" autocomplete="off"></a-input>
-                    <add-table :dataSource="optionDataSource[7]" v-if="controla427" :isFirst="true"></add-table>
+                    <a-input style="width: 240px;margin-right: 10px;" v-if="controla427" @change="otherChange($event, 7, true)" autocomplete="off" v-decorator="['otherName1', {...inputRequired, initialValue: otherName1}]"></a-input>
+                    <add-table :dataSource="optionDataSource[7]" v-if="controla427" :isFirst="true" :picSource="picList1[7]" @changePic1="changePic1($event, 7)"></add-table>
                   </a-checkbox-group>
                 </a-form-item>
               </div>
@@ -127,10 +127,10 @@
                       <a-radio value="-1">否</a-radio>
                     </a-radio-group>
                   </a-form-item>
-                  <a-form-item label="分离方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb4">
+                  <a-form-item label="药敏方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb4">
                     <a-radio-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41')}]">
-                      <a-radio value="1">纸片法</a-radio>
-                      <a-radio value="2">肉汤稀释法</a-radio>
+                      <a-radio value="1">MIC</a-radio>
+                      <a-radio value="2">纸片法</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb4">
@@ -150,7 +150,7 @@
                       <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controlb426')">金黄色葡萄球菌</a-checkbox>
                       <add-table :dataSource="optionDataSource2[6]" v-if="controlb426" :isFirst="false"></add-table>
                       <a-checkbox value="7" @change="showList($event, '其他', 'controlb427')">其他</a-checkbox>
-                      <a-input style="width: 240px;margin-right: 10px;" v-if="controlb427" @change="otherChange($event, 7)" autocomplete="off"></a-input>
+                      <a-input style="width: 240px;margin-right: 10px;" v-if="controlb427" @change="otherChange($event, 7)" autocomplete="off" v-decorator="['otherName2', {...inputRequired, initialValue: otherName2}]"></a-input>
                       <add-table :dataSource="optionDataSource2[7]" v-if="controlb427" :isFirst="false"></add-table>
                     </a-checkbox-group>
                   </a-form-item>
@@ -318,7 +318,11 @@ export default {
       control2: false,
       control3: false,
       type1: '',
-      type2: ''
+      type2: '',
+      otherName1: '',
+      otherName2: '',
+      picList1: [],
+      picList2: []
     }
   },
   created() {
@@ -424,6 +428,23 @@ export default {
               })
             })
           }
+          //处理附件
+          var alList1 = ['铜绿假单胞菌', '阴沟肠杆菌', '肺炎克雷伯菌', '肺炎链球菌', '副流感嗜血杆菌', '鲍曼不动杆菌', '金黄色葡萄球菌', this.form.getFieldValue('otherName1')]
+          var alList2 = ['铜绿假单胞菌', '阴沟肠杆菌', '肺炎克雷伯菌', '肺炎链球菌', '副流感嗜血杆菌', '鲍曼不动杆菌', '金黄色葡萄球菌', this.form.getFieldValue('otherName2')]
+
+          var pic1 = [],
+            pic2 = []
+          if (!_.isEmpty(this.picList1)) {
+            pic1 = _.map(this.picList1, function(v, i) {
+              return '1-' + alList1[i] + '-' + v
+            })
+          }
+          if (!_.isEmpty(this.picList2)) {
+            pic2 = _.map(this.picList2, function(v, i) {
+              return '2-' + alList2[i] + '-' + v
+            })
+          }
+          pic1 = pic1.concat(pic2)
           var re = this.form.getFieldsValue()
           var that = this
           re = {
@@ -448,6 +469,7 @@ export default {
           params.append('basisMarkId', this.maskId)
           params.append('markName', this.markName)
           params.append('allergy', JSON.stringify(allergy))
+          params.append('fileNameForMa', JSON.stringify(pic1))
           this.spinning = true
           saveBasis(params)
             .then(res => {
@@ -496,6 +518,23 @@ export default {
           })
         })
       }
+      //处理附件
+      var alList1 = ['铜绿假单胞菌', '阴沟肠杆菌', '肺炎克雷伯菌', '肺炎链球菌', '副流感嗜血杆菌', '鲍曼不动杆菌', '金黄色葡萄球菌', this.form.getFieldValue('otherName1')]
+      var alList2 = ['铜绿假单胞菌', '阴沟肠杆菌', '肺炎克雷伯菌', '肺炎链球菌', '副流感嗜血杆菌', '鲍曼不动杆菌', '金黄色葡萄球菌', this.form.getFieldValue('otherName2')]
+
+      var pic1 = [],
+        pic2 = []
+      if (!_.isEmpty(this.picList1)) {
+        pic1 = _.map(this.picList1, function(v, i) {
+          return '1-' + alList1[i] + '-' + v
+        })
+      }
+      if (!_.isEmpty(this.picList2)) {
+        pic2 = _.map(this.picList2, function(v, i) {
+          return '2-' + alList2[i] + '-' + v
+        })
+      }
+      pic1 = pic1.concat(pic2)
       var re = this.form.getFieldsValue()
       var that = this
       re = {
@@ -520,6 +559,8 @@ export default {
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
       params.append('allergy', JSON.stringify(allergy))
+      params.append('fileNameForMa', JSON.stringify(pic1))
+
       this.spinning = true
       saveBasis(params)
         .then(res => {
@@ -608,9 +649,30 @@ export default {
         if (data[1]) {
           _.each(alList, function(v, i) {
             if (data[1][v]) {
-              that.optionDataSource[i] = data[1][v]
+              that.optionDataSource[i] = _.map(data[1][v], function(v, i) {
+                return {
+                  keyW: i,
+                  microbeName: v.microbeName,
+                  antibiotic: v.antibiotic,
+                  antibioticResult: v.antibioticResult,
+                  allergyValue: v.allergyValue
+                };
+              })
             }
           })
+          var other = _.filter(data[1], function(v, k) { return alList.indexOf(k) === -1 })
+          if (other && other.length) {
+            that.optionDataSource[7] = _.map(other[0], function(v, i) {
+              return {
+                keyW: i,
+                microbeName: v.microbeName,
+                antibiotic: v.antibiotic,
+                antibioticResult: v.antibioticResult,
+                allergyValue: v.allergyValue
+              };
+            })
+            that.otherName1 = other[0][0].microbeName
+          }
         }
         if (answer.b42) {
           splitArr = answer.b42.split(',')
@@ -642,15 +704,46 @@ export default {
         if (data[2]) {
           _.each(alList, function(v, i) {
             if (data[2][v]) {
-              that.optionDataSource2[i] = data[2][v]
+              that.optionDataSource2[i] = _.map(data[2][v], function(v, i) {
+                return {
+                  keyW: i,
+                  microbeName: v.microbeName,
+                  antibiotic: v.antibiotic,
+                  antibioticResult: v.antibioticResult,
+                  allergyValue: v.allergyValue
+                };
+              })
             }
           })
+          var other = _.filter(data[2], function(v, k) { return alList.indexOf(k) === -1 })
+          if (other && other.length) {
+            that.optionDataSource2[7] = _.map(other[0], function(v, i) {
+              return {
+                keyW: i,
+                microbeName: v.microbeName,
+                antibiotic: v.antibiotic,
+                antibioticResult: v.antibioticResult,
+                allergyValue: v.allergyValue
+              };
+            })
+            that.otherName2 = other[0][0].microbeName
+          }
         }
         if (answer.c41) {
           splitArr = answer.c41.split(',')
           if (splitArr.indexOf('5') > -1) {
             this.controlc415 = true
           }
+        }
+        if (answer.a44 === 1) {
+          this.type1 = '1'
+        } else if (answer.a44 === 2) {
+          this.type1 = '2'
+        }
+        if (answer.b44 === 1) {
+          this.type2 = '1'
+        } else if (answer.b44 === 2) {
+          this.type2 = '2'
         }
       }
       return answer
@@ -700,6 +793,15 @@ export default {
     },
     changeType1(v) {
       this.type1 = v
+    },
+    changeType2(v) {
+      this.type2 = v
+    },
+    changePic1(e, index) {
+      this.picList1[index] = e
+    },
+    changePic2(e, index) {
+      this.picList2[index] = e
     }
   }
 }
