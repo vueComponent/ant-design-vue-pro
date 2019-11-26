@@ -225,7 +225,7 @@
                   <a-radio-group v-decorator="['a61', { initialValue: initValue('a61')}]">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
-                    <a-radio value="3">未测</a-radio>
+                    <!-- <a-radio value="3">未测</a-radio> -->
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="基因检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -249,28 +249,28 @@
                   <a-radio-group v-decorator="['a71', { initialValue: initValue('a71')}]">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
-                    <a-radio value="3">未测量</a-radio>
+                    <!-- <a-radio value="3">未测量</a-radio> -->
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="糖精试验:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a72', { initialValue: initValue('a72')}]">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
-                    <a-radio value="3">未测量</a-radio>
+                    <!-- <a-radio value="3">未测量</a-radio> -->
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="电镜检测的活检:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a73', { initialValue: initValue('a73')}]">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
-                    <a-radio value="3">未测量</a-radio>
+                    <!-- <a-radio value="3">未测量</a-radio> -->
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="分析纤毛摆动频率的活检:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a74', { initialValue: initValue('a74')}]">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
-                    <a-radio value="3">未测量</a-radio>
+                    <!-- <a-radio value="3">未测量</a-radio> -->
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="基因检测:" :labelCol="labelColHor" :wrapperCol="wrapperHor">

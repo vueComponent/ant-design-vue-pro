@@ -31,7 +31,7 @@
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.血常规</div>
               <a-form-item label="血常规报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
-                <div class="clearfix">
+                <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
                     <div v-if="fileList1.length < 1">
                       <a-icon type="plus" />
@@ -64,7 +64,7 @@
               </a-form-item>
               <div class="title">2.血生化</div>
               <a-form-item label="血生化报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
-                <div class="clearfix">
+                <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
                     <div v-if="fileList2.length < 1">
                       <a-icon type="plus" />
@@ -242,7 +242,8 @@ export default {
       patientBasisId: this.$route.params.id,
       qtsyjc: undefined,
       spinning: false,
-      executeStatus: false
+      executeStatus: false,
+      confirmLoading: false,
     }
   },
   created() {
@@ -455,18 +456,21 @@ export default {
       this.fileList2 = fileList;
     },
     _import(fileList,type) {
-      // console.log(fileList[0].response.data.src);
+      var url = '';
+      url = fileList[0].response ? fileList[0].response.data.src : fileList[0].url;
       var that = this
+      that.spinning = true;
       var params = new URLSearchParams()
-      params.append('url', fileList[0].response.data.src)
+      params.append('url', url)
       params.append('type', type)
       getOcrResult(params)
         .then(res => {
-          that.$message.success(res.msg)
-          // console.log(res.data);
+          that.spinning = false;
+          that.$message.success(res.msg);
+          that.qtsyjc = _.extend(that.qtsyjc || {}, that.dealAnswers(res.data))
         })
         .catch(error => {
-          // console.log(error)
+          that.spinning = false;
           that.$message.error(res.msg)
         })
     }
