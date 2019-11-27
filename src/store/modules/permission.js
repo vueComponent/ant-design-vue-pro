@@ -62,13 +62,13 @@ const permission = {
     }
   },
   actions: {
-      RenderRoutes({ commit }, data) {
-        return new Promise(resolve => {
-            const accessedRouters = filterRoute(asyncRouterMap, data)
-            commit('SET_ROUTERS', accessedRouters)
-            resolve()
-          })
-      },
+    RenderRoutes ({ commit }, data) {
+      return new Promise(resolve => {
+        const accessedRouters = filterRoute(asyncRouterMap, data)
+        commit('SET_ROUTERS', accessedRouters)
+        resolve()
+      })
+    },
     GenerateRoutes ({ commit }, data) {
       return new Promise(resolve => {
         const accessedRouters = filterAsyncRouter(asyncRouterMap, data)
@@ -78,27 +78,42 @@ const permission = {
     }
   }
 }
+
 function hasMetaTitle(route, arr) {
-    if (route.meta && route.meta.title) {
-        if(arr.includes(route.meta.title)) {
-            return true
-        }
-        return false
-    }
+  if (route.meta && route.meta.title) {
+    return arr.some(role => route.meta.title === role )
+    // if(arr.includes(route.meta.title)) {
+    //     return true
+    // }
+    // return false
+  } else {
     return true
+  }
 }
 
-function filterRoute(routeMap, arr){
-    let accessedRouters = routeMap.filter(route => {
-        if (hasMetaTitle(route, arr)) {
-            if(route.children && route.children.length) {
-                route.children = filterRoute(route.children, arr)
-            }
-            return true
-        }
-        return false
-    })
-    return accessedRouters
+function filterRoute(routeMap, arr) {
+  const res = []
+  routeMap.forEach(route => {
+    const tmp = { ...route }
+    if (hasMetaTitle(tmp, arr)) {
+      if (tmp.children) {
+        tmp.children = filterRoute(tmp.children, arr) // 闭包查找所有该roles下的路由
+      }
+      res.push(tmp)
+    }
+  })
+  return res
+
+  // let accessedRouters = routeMap.filter(route => {
+  //     if (hasMetaTitle(route, arr)) {
+  //         if(route.children) {
+  //             route.children = filterRoute(route.children, arr)
+  //         }
+  //         return true
+  //     }
+  //     return false
+  // })
+  // return accessedRouters
 }
 
 

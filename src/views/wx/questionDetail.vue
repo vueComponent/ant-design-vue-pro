@@ -23,7 +23,7 @@
           <a-col :span="5" :style="baselineInfoStyle">
             <ul class="menu">
               <template v-for="item in orgTree">
-                <li class="menu-item" :class="{'active':item.questionTaskId == questionTaskId}" :key="item.questionTaskId" @click="handleClick(item.questionTaskId)">{{item.questionName}}</li>
+                <li class="menu-item" :class="{'active':item.questionTaskId == questionTaskId}" :key="item.questionTaskId" @click="handleChange(item.questionTaskId)">{{item.questionName}}</li>
               </template>
             </ul>
           </a-col>
@@ -33,7 +33,9 @@
                 <span class="head-icon"></span>
                 <div v-if="question.name" class="question-title">{{question.name}}</div>
               </a-row>
-              <a-row>
+              <span v-if="showBtnState == 3">已驳回</span>
+              <span v-else-if="showBtnState == 4">已审批</span>
+              <a-row v-else>
                 <a-button class="btn fr" type="primary" @click="save(4)">通过</a-button>
                 <a-button class="btn fr" @click="save(3)">不通过</a-button>
               </a-row>
@@ -96,7 +98,8 @@
         disBlock: {
           display: 'block',
         },
-        questionTaskId: ''
+        questionTaskId: '',
+        showBtnState: ''
       }
     },
     created() {
@@ -111,6 +114,7 @@
         this.isLoading = false
         this.orgTree = res.data.questionList
         this.listArr = this.initQuestionAnswers(res.data.topTitles)
+        this.questionTask = res.data.questionTask
         this.question = res.data.question
       })
     },
@@ -118,7 +122,7 @@
       ...mapActions(['CloseSidebar']),
       moment,
 
-      handleClick(id) {
+      handleChange(id) {
         this.questionTaskId = id
         this.isLoading = true
         const params = new FormData()
@@ -127,6 +131,7 @@
           this.isLoading = false
           this.listArr = this.initQuestionAnswers(res.data.topTitles)
           this.question = res.data.question
+          this.showBtnState = res.data.questionTask && res.data.questionTask.status
         })
       },
       save(id) {
@@ -135,6 +140,7 @@
         params.append('status', id)
         questionReview(params).then(res => {
           this.$message.success(res.msg);
+          this.handleChange(this.questionTaskId)
         })
       },
 
