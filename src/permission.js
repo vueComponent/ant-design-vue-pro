@@ -22,34 +22,33 @@ router.beforeEach((to, from, next) => {
       NProgress.done()
     } else {
       if (store.getters.roles.length === 0) {
-        if (Vue.ls.get(ACCESS_TOKEN).permissionList) {
-          const arr = []
-          Vue.ls.get(ACCESS_TOKEN).permissionList.forEach(item => {
-            arr.push(item.name)
+        let permissionList = Vue.ls.get(ACCESS_TOKEN).permissionList;
+        const arr = []
+        permissionList.forEach(item => {
+          arr.push(item.name)
+        })
+        store.dispatch('GetInfo', arr).then(res => {
+          store.dispatch('RenderRoutes', arr).then(() => {
+            router.addRoutes(store.getters.addRouters)
+            const redirect = decodeURIComponent(from.query.redirect || to.path)
+            if (to.path === redirect) {
+              // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+              next({ ...to, replace: true })
+            } else {
+              // 跳转到目的路由
+              next({ path: redirect })
+            }
           })
-          store.dispatch('GetInfo', arr).then(res => {
-            store.dispatch('RenderRoutes', arr).then(() => {
-              router.addRoutes(store.getters.addRouters)
-              const redirect = decodeURIComponent(from.query.redirect || to.path)
-              if (to.path === redirect) {
-                // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
-                next({ ...to, replace: true })
-              } else {
-                // 跳转到目的路由
-                next({ path: redirect })
-              }
-            })
+        })
+        .catch(() => {
+          notification.error({
+            message: '错误',
+            description: '请求用户信息失败，请重试'
           })
-          .catch(() => {
-            notification.error({
-              message: '错误',
-              description: '请求用户信息失败，请重试'
-            })
-            store.dispatch('Logout').then(() => {
-              next({ path: '/user/login', query: { redirect: to.fullPath } })
-            })
+          store.dispatch('Logout').then(() => {
+            next({ path: '/user/login', query: { redirect: to.fullPath } })
           })
-        }
+        })
       } else {
         next()
       }

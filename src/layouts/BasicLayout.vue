@@ -71,7 +71,7 @@ import SideMenu from '@/components/Menu/SideMenu'
 import GlobalHeader from '@/components/GlobalHeader'
 // import GlobalFooter from '@/components/GlobalFooter'
 // import SettingDrawer from '@/components/SettingDrawer'
-import { asyncRouterMap } from '@/config/router.config.js'
+// import { asyncRouterMap } from '@/config/router.config.js'
 
 export default {
   name: 'BasicLayout',
