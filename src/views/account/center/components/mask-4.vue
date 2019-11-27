@@ -76,7 +76,7 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controlb4">
-                <a-form-item label="长期性抗生素治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="长期性抗生素治疗(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41', 'array')}]">
                     <a-checkbox value="1">阿奇霉素</a-checkbox>
                     <a-checkbox value="2">克拉霉素</a-checkbox>
@@ -120,7 +120,7 @@
                     <a-checkbox value="3" @change="changeSelect($event, 'controlb44')">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
-                <a-form-item label="其他激素::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb44">
+                <a-form-item label="其他激素::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb01 && controlb44">
                   <a-input style="width: 240px;" v-decorator="['b441', {...inputRequired, initialValue: initValue('b441')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="吸入激素/长效β受体激动剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb02">
@@ -130,16 +130,13 @@
                     <a-checkbox value="3" @change="changeSelect($event, 'controlb45')">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
-                <a-form-item label="其他激素::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb45">
+                <a-form-item label="其他激素::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb02 && controlb45">
                   <a-input style="width: 240px;" v-decorator="['b451', {...inputRequired, initialValue: initValue('b451')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="长效抗胆碱能药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb03">
                   <a-checkbox-group v-decorator="['b46', {...selectRequired, initialValue: initValue('b46', 'array')}]">
                     <a-checkbox value="1">噻托嗅按</a-checkbox>
                   </a-checkbox-group>
-                </a-form-item>
-                <a-form-item label="长效β受体激动剂/长效抗胆碱能药物名称:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b47', {...inputRequired, initialValue: initValue('b47')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="长效β受体激动剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb04">
                   <a-checkbox-group v-decorator="['b48', {...selectRequired, initialValue: initValue('b48', 'array')}]">
@@ -150,8 +147,11 @@
                 <a-form-item label="白三烯受体拮抗剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb05">
                   <a-checkbox-group v-decorator="['b49', {...selectRequired, initialValue: initValue('b49', 'array')}]">
                     <a-checkbox value="1">孟鲁司特</a-checkbox>
-                    <a-checkbox value="2">其他</a-checkbox>
+                    <a-checkbox value="2" @change="changeSelect($event, 'controlb49')">其他</a-checkbox>
                   </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="其他白三烯受体拮抗剂::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb05 && controlb49">
+                  <a-input style="width: 240px;" v-decorator="['b491', {...inputRequired, initialValue: initValue('b491')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="止血药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['b410', {...selectRequired, initialValue: initValue('b410', 'array')}]">
@@ -330,7 +330,8 @@ export default {
       controlb04: false,
       controlb05: false,
       controlb45: false,
-      controlb43: false
+      controlb43: false,
+      controlb49: false
     }
   },
   created() {
@@ -511,6 +512,12 @@ export default {
           splitArr = answer.b412.split(',')
           if (splitArr.indexOf('2') > -1) {
             this.controlb412 = true
+          }
+        }
+        if (answer.b49) {
+          splitArr = answer.b49.split(',')
+          if (splitArr.indexOf('2') > -1) {
+            this.controlb49 = true
           }
         }
       }
@@ -928,8 +935,10 @@ export default {
   padding-right: 0px;
 }
 
-.control-m-line.ant-checkbox-group {
-  top: 10px;
-  position: relative;
+@media screen and (max-width: 1366px) {
+  .control-m-line.ant-checkbox-group {
+    top: 10px;
+    position: relative;
+  }
 }
 </style>

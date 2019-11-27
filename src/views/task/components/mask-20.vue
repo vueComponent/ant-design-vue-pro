@@ -1155,8 +1155,10 @@ export default {
   padding-right: 0px;
 }
 
-.control-m-line.ant-checkbox-group {
-  top: 10px;
-  position: relative;
+@media screen and (max-width: 1366px) {
+  .control-m-line.ant-checkbox-group {
+    top: 10px;
+    position: relative;
+  }
 }
 </style>
