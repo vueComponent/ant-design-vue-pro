@@ -261,7 +261,7 @@ export default {
           console.log(res.data)
           this.confirmLoading = false
           if (res.data.microbeName !== this.vitamin) {
-            this.$message.warn('请上传' + this.vitamin + '的图片')
+            this.$message.warn('请上传' + this.vitamin || '其他菌种' + '的图片')
           } else {
             this.$message.success(res.msg)
             this.data.splice(0, this.data.length)

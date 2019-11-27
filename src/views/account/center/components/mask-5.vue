@@ -116,7 +116,7 @@
               <a-form-item label="影像Reiff评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['a9', {initialValue: initValue('a9')}]" :readOnly="true" autocomplete="off"></a-input>
               </a-form-item>
-              <div class="title">3.Bhalla影像学评分（以下所有子选择，选项1得0分，选项2得1分，选项3得2分，选项4得3分）</div>
+              <div class="title">3.Bhalla影像学评分</div>
               <a-form-item label="(1) 支气管扩张程度：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a10', {initialValue: initValue('a10')}]" @change="computeBhalla" style="line-height: 30px;">
                   <a-radio value="0">无</a-radio>
@@ -188,6 +188,12 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(10) Bhalla影像学评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-popover>
+                  <template slot="content">
+                    <img src="../../../../assets/bhalla.png" style="height: 400px;" />
+                  </template>
+                  <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
+                </a-popover>
                 <a-input style="width: 240px;" v-decorator="['a19', {initialValue: initValue('a19')}]" :readOnly="true" autocomplete="off"></a-input>
               </a-form-item>
               <div class="title">4.支扩类型</div>
@@ -566,6 +572,7 @@ export default {
           this.spinning = false
           this.$message.success(res.msg)
           this.xbyxx = _.extend(this.xbyxx || {}, this.dealAnswers(res.data))
+          that.form.setFieldsValue(that.xbyxx)
         })
         .catch(error => {
           this.spinning = false

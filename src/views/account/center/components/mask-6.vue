@@ -48,7 +48,7 @@
                     <a-radio value="-1">否</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla2">
+                <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla2">
                   <a-input style="width: 240px;" v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(3) 标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -94,13 +94,6 @@
               </div>
               <div v-if="control2">
                 <div class="title">2.急性加重期</div>
-                <a-form-item label="(2) 急性加重期:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-radio-group v-decorator="['b', {...require1, initialValue: initValue('b')}]" @change="changeRadio($event, 'controlb')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                  </a-radio-group>
-                </a-form-item>
-                <div v-if="controlb">
                   <a-form-item label="取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b1', {...dateRequire, initialValue: initValue('b1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                   </a-form-item>
@@ -154,7 +147,6 @@
                       <add-table :dataSource="optionDataSource2[7]" v-if="controlb427" :isFirst="false"></add-table>
                     </a-checkbox-group>
                   </a-form-item>
-                </div>
               </div>
               <div class="title">3.分枝杆菌标本</div>
               <a-form-item label="(1) 取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -166,7 +158,7 @@
                   <a-radio value="-1">否</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlc2">
+              <a-form-item class="border-dotted" label="医院名称" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlc2">
                 <a-input style="width: 240px;" v-decorator="['c21', {...inputRequired, initialValue: initValue('c21')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(3) 标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -264,10 +256,10 @@ export default {
         md: { span: 24 }
       },
       labelColOffset: {
-        md: { span: 6, offset: 6 }
+        md: { span: 3, offset: 7 }
       },
       wrapperOffset: {
-        md: { span: 12 }
+        md: { span: 14 }
       },
       dateRequire: {
         rules: [{ type: 'object', required: true, message: '请选择时间！' }]
@@ -290,7 +282,6 @@ export default {
       bywsw: undefined,
       controla2: false,
       controla4: false,
-      controlb: false,
       controlb2: false,
       controlb4: false,
       controlc2: false,
@@ -596,6 +587,9 @@ export default {
           splitArr = answer.a.split(',')
           if (splitArr.indexOf('1') > -1) {
             this.control1 = true
+          }
+          if (splitArr.indexOf('2') > -1) {
+            this.control2 = true
           }
         }
         if (answer.a2 && answer.a2 === -1) {
@@ -1156,8 +1150,10 @@ export default {
   padding-right: 0px;
 }
 
-.control-m-line.ant-checkbox-group {
-  top: 10px;
-  position: relative;
+@media screen and (max-width: 1366px) {
+  .control-m-line.ant-checkbox-group {
+    top: 10px;
+    position: relative;
+  }
 }
 </style>

@@ -465,7 +465,7 @@ export default {
         overflow: "auto",
         height: "100%",
         "padding-right": "0px",
-        boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
+        "border-right": "1px solid #ddd"
       },
       clientHeight: '',
       contentHeight: '',
@@ -559,13 +559,6 @@ export default {
     }
   },
   created() {
-    this.clientHeight = `${document.documentElement.clientHeight}`
-    window.onresize = function temp() {
-      this.clientHeight = `${document.documentElement.clientHeight}`;
-    };
-    this.contentHeight = (this.clientHeight - 187);
-    console.log(this.contentHeight);
-
 
     var that = this
     this.defaultSelectedKeys = [1]
@@ -586,6 +579,7 @@ export default {
   },
   activated() {
     this.defaultSelectedKeys = [1]
+    this.CloseSidebar()
   },
   mounted() {
 
@@ -944,6 +938,7 @@ export default {
   height: calc(100% - 54px);
 }
 
+
 /deep/ .ant-spin {
   position: absolute;
   top: 0;
@@ -961,7 +956,7 @@ export default {
 
 /deep/ #baselineHeader {
   .ant-card-body {
-    padding: 10px;
+    padding: 10px
   }
 }
 
@@ -1178,6 +1173,7 @@ export default {
   }
 
   .baselineForm {
+
     overflow: auto;
 
     .title {
@@ -1213,8 +1209,6 @@ export default {
       }
     }
 
-
-
     /deep/ .ant-form-item-label {
       text-align: left;
       line-height: 56px;
@@ -1233,12 +1227,6 @@ export default {
         padding-left: 15px;
         border-top: 1px solid #eee;
       }
-    }
-
-    /deep/ .label-overflow .ant-form-item-label {
-      line-height: 20px;
-      position: relative;
-      top: 18px;
     }
 
     /deep/ .ant-form-item-control-wrapper .ant-form-item-control {
@@ -1270,8 +1258,10 @@ export default {
   padding-right: 0px;
 }
 
-.control-m-line.ant-checkbox-group {
-  top: 10px;
-  position: relative;
+@media screen and (max-width: 1366px) {
+  .control-m-line.ant-checkbox-group {
+    top: 10px;
+    position: relative;
+  }
 }
 </style>

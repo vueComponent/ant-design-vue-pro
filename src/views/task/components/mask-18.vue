@@ -82,7 +82,7 @@
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controlb4">
-                  <a-form-item label="长期性抗生素治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-form-item label="长期性抗生素治疗(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-checkbox-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41', 'array')}]">
                       <a-checkbox value="1">阿奇霉素</a-checkbox>
                       <a-checkbox value="2">克拉霉素</a-checkbox>

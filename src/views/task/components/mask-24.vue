@@ -468,6 +468,7 @@ export default {
           that.$message.success(res.msg)
           // console.log(res.data);
           that.qtsyjc = _.extend(that.qtsyjc || {}, that.dealAnswers(res.data))
+          that.form.setFieldsValue(that.qtsyjc)
         })
         .catch(error => {
           // console.log(error)

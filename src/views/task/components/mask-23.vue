@@ -336,6 +336,7 @@ export default {
           this.spinning = false
           this.$message.success(res.msg)
           this.xzcc = _.extend(this.xzcc || {}, this.dealAnswers(res.data))
+          that.form.setFieldsValue(that.xzcc)
         })
         .catch(error => {
           this.confirmLoading = false
