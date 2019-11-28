@@ -183,7 +183,7 @@
                     <a-checkbox value="5" @change="changeSelect($event, 'controlc415')">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
-                <a-form-item label="其他微生物名称:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlc415">
+                <a-form-item label="其他非结核分枝杆菌名称:" :labelCol="labelColOffset2" :wrapperCol="wrapperOffset2" v-if="controlc415">
                   <a-input style="width: 240px;margin-right: 10px;" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
@@ -255,6 +255,12 @@ export default {
       },
       labelColOffset: {
         md: { span: 3, offset: 7 }
+      },
+      labelColOffset2: {
+        md: { span: 4, offset: 7 }
+      }, 
+      wrapperOffset2: {
+        md: { span: 13 }
       },
       wrapperOffset: {
         md: { span: 14 }

@@ -190,7 +190,7 @@
               <a-form-item label="(10) Bhalla影像学评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-popover>
                   <template slot="content">
-                    <img src="../../../../assets/bhalla.png" style="height: 400px;" />
+                    <img src="../../../../assets/bhalla.jpg" style="height: 400px;" />
                   </template>
                   <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
                 </a-popover>
