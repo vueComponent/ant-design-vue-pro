@@ -31,7 +31,7 @@
             <div class="baselineForm" :style="baselineFormStyle">
               <a-form-item label="上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <div class="clearfix" style="margin-top: 10px;">
-                  <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @change="handleChange">
+                  <a-upload :action="uploadUrl" class="images" v-viewer listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
                     <div v-if="fileList.length < 1">
                       <a-icon type="plus" />
                       <div class="ant-upload-text">Upload</div>
@@ -323,6 +323,10 @@ export default {
         .catch(error => {
           this.confirmLoading = false
         })
+    },
+    handlePreview () {
+        const viewer = this.$el.querySelector('.images').$viewer
+        viewer.show()
     },
     handleChange({ fileList }) {
       this.fileList = fileList

@@ -32,16 +32,16 @@
               <div class="title">1.血常规</div>
               <a-form-item label="血常规报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
                 <div class="clearfix" style="margin-top: 10px;">
-                  <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
+                  <a-upload :action="uploadUrl" class="images1" v-viewer listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
                     <div v-if="fileList1.length < 1">
                       <a-icon type="plus" />
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
                   <a-button style="position: absolute;top: 74px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList1,1)" v-if="fileList1.length === 1">OCR识别</a-button>
-                  <a-modal :visible="previewVisible1" :footer="null" @cancel="handleCancel1">
+                  <!-- <a-modal :visible="previewVisible1" :footer="null" @cancel="handleCancel1">
                     <img alt="example" style="width: 100%" :src="previewImage1" />
-                  </a-modal>
+                  </a-modal> -->
                 </div>
               </a-form-item>
               <a-form-item label="(1) 血红蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -65,16 +65,16 @@
               <div class="title">2.血生化</div>
               <a-form-item label="血生化报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
                 <div class="clearfix" style="margin-top: 10px;">
-                  <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
+                  <a-upload :action="uploadUrl" class="images2" v-viewer listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
                     <div v-if="fileList2.length < 1">
                       <a-icon type="plus" />
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
                   <a-button style="position: absolute;top: 74px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList2,2)" v-if="fileList2.length === 1">OCR识别</a-button>
-                  <a-modal :visible="previewVisible2" :footer="null" @cancel="handleCancel2">
+                  <!-- <a-modal :visible="previewVisible2" :footer="null" @cancel="handleCancel2">
                     <img alt="example" style="width: 100%" :src="previewImage2" />
-                  </a-modal>
+                  </a-modal> -->
                 </div>
               </a-form-item>
               <a-form-item label="(1) 血糖:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -169,10 +169,10 @@ export default {
   },
   data() {
     return {
-      previewVisible1: false,
-      previewImage1: '',
-      previewVisible2: false,
-      previewImage2: '',
+    //   previewVisible1: false,
+    //   previewImage1: '',
+    //   previewVisible2: false,
+    //   previewImage2: '',
       uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
       viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
       fileList1: [],
@@ -435,22 +435,26 @@ export default {
         })
       return false
     },
-    handleCancel1() {
-      this.previewVisible1 = false;
-    },
+    // handleCancel1() {
+    //   this.previewVisible1 = false;
+    // },
     handlePreview1(file) {
-      this.previewImage1 = file.url || file.thumbUrl;
-      this.previewVisible1 = true;
+        const viewer = this.$el.querySelector('.images1').$viewer
+        viewer.show()
+    //   this.previewImage1 = file.url || file.thumbUrl;
+    //   this.previewVisible1 = true;
     },
     handleChange1({ fileList }) {
       this.fileList1 = fileList;
     },
-    handleCancel2() {
-      this.previewVisible2 = false;
-    },
+    // handleCancel2() {
+    //   this.previewVisible2 = false;
+    // },
     handlePreview2(file) {
-      this.previewImage2 = file.url || file.thumbUrl;
-      this.previewVisible2 = true;
+        const viewer = this.$el.querySelector('.images2').$viewer
+        viewer.show()
+    //   this.previewImage2 = file.url || file.thumbUrl;
+    //   this.previewVisible2 = true;
     },
     handleChange2({ fileList }) {
       this.fileList2 = fileList;

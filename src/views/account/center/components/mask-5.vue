@@ -42,16 +42,16 @@
               </a-form-item>
               <a-form-item label="上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <div class="clearfix" style="margin-top: 10px;">
-                  <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
+                  <a-upload :action="uploadUrl" class="images" v-viewer listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
                     <div v-if="fileList.length < 1">
                       <a-icon type="plus" />
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
                   <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1">OCR识别</a-button>
-                  <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                  <!-- <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
                     <img alt="example" style="width: 100%" :src="previewImage" />
-                  </a-modal>
+                  </a-modal> -->
                 </div>
               </a-form-item>
               <a-form-item label="放射学表现:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -546,12 +546,14 @@ export default {
           })
       })
     },
-    handleCancel() {
-      this.previewVisible = false;
-    },
+    // handleCancel() {
+    //   this.previewVisible = false;
+    // },
     handlePreview(file) {
-      this.previewImage = file.url || file.thumbUrl;
-      this.previewVisible = true;
+        const viewer = this.$el.querySelector('.images').$viewer
+        viewer.show()
+    //   this.previewImage = file.url || file.thumbUrl;
+    //   this.previewVisible = true;
     },
     handleChange({ fileList }) {
       this.fileList = fileList;
