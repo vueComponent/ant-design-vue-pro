@@ -331,7 +331,7 @@ export default {
             ...re,
             'a1': typeof re['a1'] !== 'undefined' ? re['a1'].join(',') : '',
             'a6': typeof re['a6'] !== 'undefined' ? re['a6'].format('YYYY-MM-DD') : '',
-            'b2': typeof re['a6'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
+            'b2': typeof re['b2'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
             'b61': typeof re['b61'] !== 'undefined' ? re['b61'].join(',') : ''
           }
           var that = this
@@ -482,7 +482,7 @@ export default {
         ...re,
         'a1': typeof re['a1'] !== 'undefined' ? re['a1'].join(',') : '',
         'a6': typeof re['a6'] !== 'undefined' ? re['a6'].format('YYYY-MM-DD') : '',
-        'b2': typeof re['a6'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
+        'b2': typeof re['b2'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
         'b61': typeof re['b61'] !== 'undefined' ? re['b61'].join(',') : ''
       }
       var that = this
