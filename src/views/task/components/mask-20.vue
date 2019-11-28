@@ -7,11 +7,11 @@
         </a-col>
         <a-col :md="5" :sm="20" class="UserNameCard">
           <my-icon type="iconshoufangzhehuaban" />
-          受访者:{{ patient.name }}
+          受访者：{{ patient.name }}
         </a-col>
         <a-col :md="7" :sm="24" class="UserNameCard">
           <my-icon type="iconshenfenzhenghuaban" />
-          身份证:{{ patient.card }}
+          身份证：{{ patient.card }}
         </a-col>
         <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
@@ -117,7 +117,6 @@
                       <a-radio value="1">痰液</a-radio>
                       <a-radio value="2">诱导痰</a-radio>
                       <a-radio value="3">支气管肺泡灌洗液</a-radio>
-                      <a-radio value="4">咽拭子</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="是否分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -173,7 +172,6 @@
                   <a-radio value="1">痰液</a-radio>
                   <a-radio value="2">诱导痰</a-radio>
                   <a-radio value="3">支气管肺泡灌洗液</a-radio>
-                  <a-radio value="4">咽拭子</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(4) 分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
