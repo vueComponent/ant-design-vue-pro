@@ -44,6 +44,7 @@ export default {
 } */
 
 .logo h1 .logowords {
+  /* width: 100px!important; */
   width: 100% !important;
   height: 40px !important;
 }
