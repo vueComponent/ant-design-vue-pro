@@ -108,7 +108,7 @@
           {
             title: '医生姓名',
             dataIndex: 'doctorName',
-            width: '120px'
+            width: '150px'
           },
           {
             title: '职称',
