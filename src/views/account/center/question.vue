@@ -356,25 +356,25 @@ export default {
           that.spinning = false
         })
     },
-    initQuestionAnswers(list) {
-      _.each(list, function(a) {
-        if (a.childrens && a.childrens.length) {
-          _.each(a.childrens, function(b) {
-            if (b.type === 1 && b.answers && b.answers.length) {
-              b.inputType = b.answers[0].questionOptionId
-            }
-            if (b.type === 2) {
-              if (b.answers && b.answers.length) {
-                b.inputType = _.map(b.answers, function(v) { return v.questionOptionId })
-              } else {
-                b.inputType = []
-              }
-            }
-          })
-        }
-      })
-      return list
-    }
+    // initQuestionAnswers(list) {
+    //   _.each(list, function(a) {
+    //     if (a.childrens && a.childrens.length) {
+    //       _.each(a.childrens, function(b) {
+    //         if (b.type === 1 && b.answers && b.answers.length) {
+    //           b.inputType = b.answers[0].questionOptionId
+    //         }
+    //         if (b.type === 2) {
+    //           if (b.answers && b.answers.length) {
+    //             b.inputType = _.map(b.answers, function(v) { return v.questionOptionId })
+    //           } else {
+    //             b.inputType = []
+    //           }
+    //         }
+    //       })
+    //     }
+    //   })
+    //   return list
+    // }
   }
 }
 </script>

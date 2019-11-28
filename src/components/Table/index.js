@@ -340,16 +340,15 @@ export default {
           if (showAlert && this.rowSelection) {
             // 如果需要使用alert，则重新绑定 rowSelection 事件
             console.log('this.rowSelection', this.rowSelection)
-            // props[k] = {
-            //   ...this.rowSelection,
-            //   selectedRows: this.selectedRows,
-            //   selectedRowKeys: this.selectedRowKeys,
-            //   onChange: (selectedRowKeys, selectedRows) => {
-            //     this.updateSelect(selectedRowKeys, selectedRows)
-            //     typeof this[k].onChange !== 'undefined' && this[k].onChange(selectedRowKeys, selectedRows)
-            //   }
-            // }
-            props[k] = null
+            props[k] = {
+              ...this.rowSelection,
+              selectedRows: this.selectedRows,
+              selectedRowKeys: this.selectedRowKeys,
+              onChange: (selectedRowKeys, selectedRows) => {
+                this.updateSelect(selectedRowKeys, selectedRows)
+                typeof this[k].onChange !== 'undefined' && this[k].onChange(selectedRowKeys, selectedRows)
+              }
+            }
             return props[k]
           } else if (!this.rowSelection) {
             // 如果没打算开启 rowSelection 则清空默认的选择项
