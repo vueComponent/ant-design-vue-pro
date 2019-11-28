@@ -24,7 +24,7 @@
         </a-col>
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;">
-            <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
+            <div class="btn-array" v-if="executeStatus !== 2">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
@@ -824,9 +824,19 @@ export default {
   .btn {
     margin-right: 10px;
   }
+  .btn-array{
+    overflow: hidden;
+    position: absolute;
+    padding-top: 10px;
+    padding-right: 20px; 
+    width: calc(100% - 8px);
+    height: 42px;
+    background: #fff;
+    z-index: 1;
+  }
 
   .baselineForm {
-
+    margin-top: 42px;
     overflow: auto;
 
     .title {
