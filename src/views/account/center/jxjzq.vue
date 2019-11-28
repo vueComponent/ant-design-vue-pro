@@ -54,7 +54,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(3) 痰量:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a3', {...inputRequired, initialValue: initValue('a2')}]" style="width: 240px;" autocomplete="off" addonAfter="ml/日"></a-input>
+                <a-input v-decorator="['a3', {...inputRequired, initialValue: initValue('a3')}]" style="width: 240px;" autocomplete="off" addonAfter="ml/日"></a-input>
               </a-form-item>
               <a-form-item label="(4) 痰液粘稠Murry评分（单选）" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-popover>
