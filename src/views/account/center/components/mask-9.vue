@@ -7,11 +7,11 @@
         </a-col>
         <a-col :md="5" :sm="20" class="UserNameCard">
           <my-icon type="iconshoufangzhehuaban" />
-          受访者:{{ patient.name }}
+          受访者：{{ patient.name }}
         </a-col>
         <a-col :md="7" :sm="24" class="UserNameCard">
           <my-icon type="iconshenfenzhenghuaban" />
-          身份证:{{ patient.card }}
+          身份证：{{ patient.card }}
         </a-col>
         <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
@@ -31,7 +31,7 @@
             <div class="baselineForm" :style="baselineFormStyle">
               <a-form-item label="上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <div class="clearfix" style="margin-top: 10px;">
-                  <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @change="handleChange">
+                  <a-upload :action="uploadUrl" class="images" v-viewer listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
                     <div v-if="fileList.length < 1">
                       <a-icon type="plus" />
                       <div class="ant-upload-text">Upload</div>
@@ -323,6 +323,10 @@ export default {
         .catch(error => {
           this.confirmLoading = false
         })
+    },
+    handlePreview () {
+        const viewer = this.$el.querySelector('.images').$viewer
+        viewer.show()
     },
     handleChange({ fileList }) {
       this.fileList = fileList

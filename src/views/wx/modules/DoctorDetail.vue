@@ -32,7 +32,7 @@
           <a-textarea rows="5" v-decorator="['detail', requiredRule]" placeholder="请输入医生简介" />
         </a-form-item>
         <a-form-item label="擅长领域" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['disease', requiredRule]" placeholder="请输入擅长领域" />
+          <a-textarea rows="3" v-decorator="['disease', requiredRule]" placeholder="请输入擅长领域" />
         </a-form-item>
         <a-form-item class="textarea" label="获得荣誉" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea rows="5" v-decorator="['honor', requiredRule]" placeholder="请输入获得荣誉" />

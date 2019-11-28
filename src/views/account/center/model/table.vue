@@ -3,7 +3,7 @@
     <p @click="showMicroorganism">
       <a-icon type="edit" class="mcroorganism" /><span>编辑</span>
     </p>
-    <a-modal title="药敏检查" width="800px" :visible="visible" :footer="null" :centered="centered" @cancel="handleCancel" :bodyStyle="bodyStyle">
+    <a-modal ref="picUpload" title="药敏检查" width="800px" :visible="visible" :footer="null" :centered="centered" @cancel="handleCancel" :bodyStyle="bodyStyle">
       <a-spin :spinning="confirmLoading">
         <a-form :form="form" layout="inline">
           <a-form-item label="类型" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="typeof type1 !== 'undefined' || typeof type2 !== 'undefined'">
@@ -16,9 +16,9 @@
               <a-radio value="2">非粘液型</a-radio>
             </a-radio-group>
           </a-form-item>
-          <a-form-item label="上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+          <a-form-item label="上传图像" :labelCol="labelColHor" :wrapperCol="wrapperHor">
             <div class="clearfix" style="margin-top: 10px;">
-              <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @change="picChange">
+              <a-upload :action="uploadUrl" listType="picture-card" class="images" v-viewer @preview="handlePreview" :fileList="fileList" @change="picChange">
                 <div v-if="fileList.length < 1">
                   <a-icon type="plus" />
                   <div class="ant-upload-text">Upload</div>
@@ -32,7 +32,7 @@
           <a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button>
         </p>
         <a-table rowKey="keyW" size="middle" :pagination="pagination" :columns="columns" :dataSource="data">
-          <template v-for="col in [ 'antibiotic', , 'antibioticResult']" :slot="col" slot-scope="text, record, index">
+          <template v-for="col in [ 'antibiotic', , 'antibioticResult']" :slot="col" slot-scope="text, record">
             <div :key="col">
               <a-input v-if="record.editable" style="margin: -5px 0;" :value="text" @change="e => handleChange(e.target.value, record.keyW, col)" />
               <template v-else>
@@ -40,7 +40,7 @@
               </template>
             </div>
           </template>
-          <template slot="allergyValue" slot-scope="text, record, index">
+          <template slot="allergyValue" slot-scope="text, record">
             <div>
               <a-select defaultValue="S" v-if="record.editable" style="margin: -5px 0;width: 100%" :value="text" @change="value => handleSelectChange(value, record.keyW)">
                 <a-select-option value="S">S</a-select-option>
@@ -51,7 +51,7 @@
               <template v-else>{{text}}</template>
             </div>
           </template>
-          <template slot="operation" slot-scope="text, record, index">
+          <template slot="operation" slot-scope="text, record">
             <div class="editable-row-operations">
               <span v-if="record.editable">
                 <a @click="() => save(record.keyW)">保存</a>
@@ -175,6 +175,10 @@ export default {
         target[column] = value
         this.data = newData
       }
+    },
+    handlePreview() {
+        const viewer = document.querySelector('.images').$viewer;
+        viewer.show()
     },
     handleSelectChange(value, key, column) {
       const newData = [...this.data]

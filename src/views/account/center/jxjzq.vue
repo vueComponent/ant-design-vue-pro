@@ -7,11 +7,11 @@
         </a-col>
         <a-col :md="5" :sm="20" class="UserNameCard">
           <my-icon type="iconshoufangzhehuaban" />
-          受访者:{{ patient.name }}
+          受访者：{{ patient.name }}
         </a-col>
         <a-col :md="7" :sm="24" class="UserNameCard">
           <my-icon type="iconshenfenzhenghuaban" />
-          身份证:{{ patient.card }}
+          身份证：{{ patient.card }}
         </a-col>
         <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
@@ -331,7 +331,7 @@ export default {
             ...re,
             'a1': typeof re['a1'] !== 'undefined' ? re['a1'].join(',') : '',
             'a6': typeof re['a6'] !== 'undefined' ? re['a6'].format('YYYY-MM-DD') : '',
-            'b2': typeof re['a6'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
+            'b2': typeof re['b2'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
             'b61': typeof re['b61'] !== 'undefined' ? re['b61'].join(',') : ''
           }
           var that = this
@@ -482,7 +482,7 @@ export default {
         ...re,
         'a1': typeof re['a1'] !== 'undefined' ? re['a1'].join(',') : '',
         'a6': typeof re['a6'] !== 'undefined' ? re['a6'].format('YYYY-MM-DD') : '',
-        'b2': typeof re['a6'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
+        'b2': typeof re['b2'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
         'b61': typeof re['b61'] !== 'undefined' ? re['b61'].join(',') : ''
       }
       var that = this

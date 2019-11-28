@@ -7,11 +7,11 @@
         </a-col>
         <a-col :md="5" :sm="20" class="UserNameCard">
           <my-icon type="iconshoufangzhehuaban" />
-          受访者:{{ patient.name }}
+          受访者：{{ patient.name }}
         </a-col>
         <a-col :md="7" :sm="24" class="UserNameCard">
           <my-icon type="iconshenfenzhenghuaban" />
-          身份证:{{ patient.card }}
+          身份证：{{ patient.card }}
         </a-col>
         <a-col :md="11" :sm="24" style="fontSize:18px;textAlign: right;">创建时间：{{ patientBasis.createDate | moment }}</a-col>
       </a-row>
@@ -356,25 +356,25 @@ export default {
           that.spinning = false
         })
     },
-    initQuestionAnswers(list) {
-      _.each(list, function(a) {
-        if (a.childrens && a.childrens.length) {
-          _.each(a.childrens, function(b) {
-            if (b.type === 1 && b.answers && b.answers.length) {
-              b.inputType = b.answers[0].questionOptionId
-            }
-            if (b.type === 2) {
-              if (b.answers && b.answers.length) {
-                b.inputType = _.map(b.answers, function(v) { return v.questionOptionId })
-              } else {
-                b.inputType = []
-              }
-            }
-          })
-        }
-      })
-      return list
-    }
+    // initQuestionAnswers(list) {
+    //   _.each(list, function(a) {
+    //     if (a.childrens && a.childrens.length) {
+    //       _.each(a.childrens, function(b) {
+    //         if (b.type === 1 && b.answers && b.answers.length) {
+    //           b.inputType = b.answers[0].questionOptionId
+    //         }
+    //         if (b.type === 2) {
+    //           if (b.answers && b.answers.length) {
+    //             b.inputType = _.map(b.answers, function(v) { return v.questionOptionId })
+    //           } else {
+    //             b.inputType = []
+    //           }
+    //         }
+    //       })
+    //     }
+    //   })
+    //   return list
+    // }
   }
 }
 </script>
