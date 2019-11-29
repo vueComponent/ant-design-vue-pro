@@ -1079,7 +1079,7 @@ export default {
     width: calc(100% - 8px);
     height: 42px;
     background: #fff;
-    z-index: 1;
+    // z-index: 1;
   }
 
   .baselineForm {
