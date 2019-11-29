@@ -20,7 +20,7 @@
           <template v-if="advanced">
             <a-col :md="8" :sm="24">
               <a-form-item label="调用次数">
-                <a-input-number v-model="queryParam.callNo" style="width: 100%"/>
+                <a-input-number v-model.trim="queryParam.callNo" style="width: 100%"/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">

@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model="queryParam.keyWord" placeholder="搜索医生姓名" />
+              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索医生姓名" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
@@ -34,10 +34,10 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="医生姓名">
-                        <a-input v-model="queryParam.doctorName" />
+                        <a-input v-model.trim="queryParam.doctorName" />
                       </a-form-item>
                       <a-form-item label="所属中心">
-                        <a-input v-model="queryParam.centerName" />
+                        <a-input v-model.trim="queryParam.centerName" />
                       </a-form-item>
                       <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
                         <a-button type="primary" @click="clearForm()">清空</a-button>

@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" />
+              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
@@ -31,13 +31,13 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="档案号">
-                        <a-input v-model="queryParam.fileCode" />
+                        <a-input v-model.trim="queryParam.fileCode" />
                       </a-form-item>
                       <a-form-item label="姓名">
-                        <a-input v-model="queryParam.name" />
+                        <a-input v-model.trim="queryParam.name" />
                       </a-form-item>
                       <a-form-item label="身份证号">
-                        <a-input v-model="queryParam.card" />
+                        <a-input v-model.trim="queryParam.card" />
                       </a-form-item>
                       <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
                         <a-button type="primary" @click="clearForm()">清空</a-button>

@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model="queryParam.title" placeholder="搜索文章标题" />
+              <a-input v-model.trim="queryParam.title" placeholder="搜索文章标题" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
