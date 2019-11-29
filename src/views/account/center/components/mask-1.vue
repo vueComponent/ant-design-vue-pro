@@ -32,7 +32,7 @@
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.基本病史</div>
               <a-form-item label="(1) 采集标本类型" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-checkbox-group v-decorator="['a1', {...selectRequired, initialValue: initValue('a1', 'array')}]">
+                <a-checkbox-group v-decorator="['a1', {...selectRequired, initialValue: initValue('a1', 'array')}]" @change="handleChange">
                   <a-checkbox value="1">全血</a-checkbox>
                   <a-checkbox value="2">血清</a-checkbox>
                   <a-checkbox value="3">未采</a-checkbox>
@@ -615,6 +615,13 @@ export default {
     disabledDate(current) {
       // Can not select days before today and today
       return current && current > moment().endOf('day');
+    },
+    handleChange(valus) {
+        if (valus.indexOf('3') >= 0) {
+            this.$nextTick(() => {
+                this.form.setFieldsValue({'a1': ['3']})
+            })
+        }
     },
     dealAnswers(answer) {
       var that = this

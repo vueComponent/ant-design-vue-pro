@@ -32,7 +32,7 @@
               <a-col :sm="8">
                 <p class="userInfoItem">
                   <span>访视状态：</span>
-                  {{ patient.visit | visitStatus }}
+                  {{ patient.visitName }}
                 </p>
               </a-col>
               <a-col :sm="8">
@@ -191,15 +191,15 @@ export default {
     formDate(date) {
       return moment(date).format('YYYY-MM-DD');
     },
-    visitStatus(value) {
-      const visitMap = {
-        '1': '忽略',
-        '2': '未执行',
-        '3': '执行中',
-        '4': '已完成'
-      };
-      return visitMap[value];
-    },
+    // visitStatus(value) {
+    //   const visitMap = {
+    //     '1': '忽略',
+    //     '2': '未执行',
+    //     '3': '执行中',
+    //     '4': '已完成'
+    //   };
+    //   return visitMap[value];
+    // },
     patientBasisType(type){
       const patientBasisTypeMap=['','基线','半年随访','年访视','急性加重期随访']
       return patientBasisTypeMap[type];
