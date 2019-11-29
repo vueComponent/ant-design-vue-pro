@@ -54,11 +54,9 @@
     </div>
 
     <s-table ref="table" :scroll="scroll" size="small" rowKey="questionTaskId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-      <span slot="status" slot-scope="text, record">
-        <span v-if="record.status == 3">驳回</span>
-        <span v-if="record.status == 4">已审阅</span>
-        <span v-if="record.status == 5">未审阅</span>
-      </span>
+      <template slot="status" slot-scope="text">
+        <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" />
+      </template>
       <template slot="operation" slot-scope="text, record">
         <router-link :to="{name:'wxQuestionDetail', params: {'id': record.questionTaskId}}" @click.native="handleClick(record)">审阅</router-link>
       </template>
@@ -70,6 +68,20 @@
   import moment from 'moment'
   import { getWxQuestionList } from '@/api/distract'
   import { STable } from '@/components'
+  const visitMap = {
+    3: {
+      status: 'error',
+      text: '驳回'
+    },
+    4: {
+      status: 'success',
+      text: '已审阅'
+    },
+    5: {
+      status: 'default',
+      text: '未审阅'
+    },
+  };
   export default {
     components: {
       STable
@@ -164,6 +176,14 @@
     created() {
       this.scroll = {
         y: window.screen.height - 368 + 'px'
+      }
+    },
+    filters: {
+      visitFilter(type) {
+        return visitMap[type].text;
+      },
+      visitTypeFilter(type) {
+        return visitMap[type].status;
       }
     },
     methods: {

@@ -54,8 +54,8 @@
     </div>
 
     <s-table ref="table" :scroll="scroll" size="small" rowKey="wxPatientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-      <span slot="bindStatus" slot-scope="text, record">
-        {{ record.bindStatus == 1 ? '未绑定' : record.bindStatus == 2 ? '已绑定' : '忽略'}}
+      <span slot="bindStatus" slot-scope="text">
+        <a-badge :status="text == 1 ? 'default' : text == 2 ? 'success' : 'error'" :text="text == 1 ? '未绑定': text == 2 ? '已绑定' : '忽略'" />
       </span>
       <span slot="operation" slot-scope="text, record">
         <template>

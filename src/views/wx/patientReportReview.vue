@@ -54,9 +54,9 @@
     </div>
 
     <s-table ref="table" :scroll="scroll" size="small" rowKey="checkId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-      <span slot="executeStatus" slot-scope="text, record">
-        {{ record.executeStatus == 0 ? '待审阅' : '已审阅'}}
-      </span>
+      <template slot="executeStatus" slot-scope="text">
+        <a-badge :status="text == 0 ? 'default' : 'success'" :text="text == 0 ? '待审阅' : '已审阅'" />
+      </template>
       <span slot="operation" slot-scope="text, record">
         <template>
           <a v-if="record.executeStatus == 0" @click="handleReview(record)">审阅</a>

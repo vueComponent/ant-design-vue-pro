@@ -58,212 +58,190 @@
         </a-row>
       </a-form>
     </div>
-    <s-table
-      ref="table"
-      :scroll="scroll"
-      size="small"
-      rowKey="distractId"
-      :columns="columns"
-      :data="loadData"
-      :alert="options.alert"
-      :rowSelection="options.rowSelection"
-      showPagination="auto"
-    >
-    <template slot="reason" slot-scope="text">
-      <a-tooltip placement="topLeft">
-        <template slot="title">{{ text }}</template>
-        <span class="reason">{{ text }}</span>
-      </a-tooltip>
-    </template>
-      <!-- <span slot="action" slot-scope="text, record">
-        <template>
-          <a @click="handleEdit(record)">执行</a>
-        </template>
-      </span> -->
+    <s-table ref="table" :scroll="scroll" size="small" rowKey="distractId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+      <template slot="executeStatus" slot-scope="text">
+        <a-badge :status="text == 0 ? 'default' : text == 1 ? 'success' : 'error'" :text="text == 0 ? '未审核': text == 1 ? '审核通过' : '审核不通过'" />
+      </template>
+      <template slot="reason" slot-scope="text">
+        <a-tooltip placement="topLeft">
+          <template slot="title">{{ text }}</template>
+          <span class="reason">{{ text }}</span>
+        </a-tooltip>
+      </template>
     </s-table>
-    <!-- <user-detail ref="detailModal" /> -->
     <register-form ref="registerModal" @ok="handleOk"></register-form>
   </a-card>
 </template>
 
 <script>
-import moment from 'moment'
-import { STable } from '@/components'
-import { getZyDataList } from '@/api/distract'
-import RegisterForm from './modules/RegisterForm'
-// import UserDetail from './modules/UserDetail'
-
-export default {
-  name: 'Gallery',
-  components: {
-    STable,
-    RegisterForm,
-    // UserDetail
-  },
-  data() {
-    return {
-      bodyStyle: {
-        padding: '10px',
-        paddingBottom: '0px'
-      },
-      dateArr: [],
-      // 高级搜索 展开/关闭
-      advanced: false,
-      // 查询参数
-      queryParam: {},
-      // 表头
-      columns: [
-        {
-          title: '申请单号',
-          dataIndex: 'distractCode',
-          width: 120
+  import moment from 'moment'
+  import { STable } from '@/components'
+  import { getZyDataList } from '@/api/distract'
+  import RegisterForm from './modules/RegisterForm'
+  export default {
+    name: 'Gallery',
+    components: {
+      STable,
+      RegisterForm
+    },
+    data() {
+      return {
+        bodyStyle: {
+          padding: '10px',
+          paddingBottom: '0px'
         },
-        {
-          title: '档案号',
-          dataIndex: 'fileCode',
-          width: 150
+        dateArr: [],
+        // 高级搜索 展开/关闭
+        advanced: false,
+        // 查询参数
+        queryParam: {},
+        // 表头
+        columns: [
+          {
+            title: '申请单号',
+            dataIndex: 'distractCode',
+            width: 120
+          },
+          {
+            title: '档案号',
+            dataIndex: 'fileCode',
+            width: 150
+          },
+          {
+            title: '患者姓名',
+            dataIndex: 'patientName',
+            width: 120
+          },
+          {
+            title: '身份证号',
+            dataIndex: 'card',
+            width: 200
+          },
+          {
+            title: '原中心',
+            dataIndex: 'centerName',
+            width: 200
+          },
+          {
+            title: '申请时间',
+            dataIndex: 'createDate',
+            customRender: createDate => moment(createDate).format('YYYY-MM-DD'),
+            width: 180
+          },
+          {
+            title: '审核状态',
+            dataIndex: 'executeStatus',
+            scopedSlots: { customRender: 'executeStatus' },
+            width: 150
+          },
+          {
+            title: '驳回理由',
+            dataIndex: 'rejectionReason',
+            scopedSlots: { customRender: 'rejectionReason' },
+            width: 180
+          }
+        ],
+        // 加载数据方法 必须为 Promise 对象
+        loadData: parameter => {
+          return getZyDataList(Object.assign(parameter, this.queryParam)).then(res => {
+            return res
+          })
         },
-        {
-          title: '患者姓名',
-          dataIndex: 'patientName',
-          width: 120
-        },
-        {
-          title: '身份证号',
-          dataIndex: 'card',
-          width: 200
-        },
-        {
-          title: '原中心',
-          dataIndex: 'centerName',
-          width: 200
-        },
-        {
-          title: '申请时间',
-          dataIndex: 'createDate',
-          customRender: createDate => moment(createDate).format('YYYY-MM-DD'),
-          width: 180
-        },
-        {
-          title: '审核状态',
-          dataIndex: 'executeName',
-          scopedSlots: { customRender: 'executeName' },
-          width: 150
-        },
-        {
-          title: '驳回理由',
-          dataIndex: 'rejectionReason',
-          scopedSlots: { customRender: 'rejectionReason' },
-          width: 180
-        }
-      ],
-      // 加载数据方法 必须为 Promise 对象
-      loadData: parameter => {
-        return getZyDataList(Object.assign(parameter, this.queryParam)).then(res => {
-          return res
-        })
-      },
-      selectedRowKeys: [],
-      selectedRows: [],
-      scroll: false,
-      // custom table alert & rowSelection
-      options: {
-        alert: {
-          show: false,
-          clear: () => {
-            this.selectedRowKeys = []
+        selectedRowKeys: [],
+        selectedRows: [],
+        scroll: false,
+        // custom table alert & rowSelection
+        options: {
+          alert: {
+            show: false,
+            clear: () => {
+              this.selectedRowKeys = []
+            }
+          },
+          rowSelection: {
+            selectedRowKeys: this.selectedRowKeys,
+            onChange: this.onSelectChange
           }
         },
-        rowSelection: {
-          selectedRowKeys: this.selectedRowKeys,
-          onChange: this.onSelectChange
-        }
+        optionAlertShow: false
+      }
+    },
+    created() {
+      this.scroll = {
+        y: window.screen.height - 368 + 'px'
+      }
+    },
+    methods: {
+      onSelectChange(selectedRowKeys, selectedRows) {
+        this.selectedRowKeys = selectedRowKeys;
+        this.selectedRows = selectedRows;
       },
-      optionAlertShow: false
-    }
-  },
-  created() {
-    this.scroll = {
-      y: window.screen.height - 368 + 'px'
-    }
-  },
-  methods: {
-    onSelectChange(selectedRowKeys, selectedRows) {
-      this.selectedRowKeys = selectedRowKeys;
-      this.selectedRows = selectedRows;
-    },
-    clearForm() {
-      this.queryParam = {}
-      this.dateArr = []
-    },
-    tableSearch(type) {
-      this.queryParam.queryType = type
-      this.$refs.table.refresh();
-      this.advanced = false;
-    },
-    refreshTable() {
-      this.advanced = false
-      this.$refs.table.refresh()
-    },
-    handleOk() {
-      this.$refs.table.refresh()
-    },
-    // showUser(record) {
-    //   this.$refs.detailModal.show(record)
-    // },
-    // handleEdit(record) {
-    //   this.$router.push('/gallery/detail/' + record.reportCollectBaseId)
-    // },
-    changeTime(time) {
-      this.dateArr = time
-      this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD')
-      this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD')
-    }
-  }
-}
-</script>
-<style lang="less" scoped>
-td.operation {
-  text-align: center !important;
-}
-/deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
-  margin-bottom: 10px;
-}
-.tableSearch {
-  background: #ffffff;
-  position: absolute;
-  top: 52px;
-  box-shadow: 4px 4px 10px #ddd;
-  z-index: 100;
-  /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
-    width: 70px !important;
-  }
-  .commonRetrieval {
-    padding: 10px;
-    p {
-      &:hover {
-        cursor: pointer;
-        text-decoration: underline;
+      clearForm() {
+        this.queryParam = {}
+        this.dateArr = []
+      },
+      tableSearch(type) {
+        this.queryParam.queryType = type
+        this.$refs.table.refresh();
+        this.advanced = false;
+      },
+      refreshTable() {
+        this.advanced = false
+        this.$refs.table.refresh()
+      },
+      handleOk() {
+        this.$refs.table.refresh()
+      },
+      changeTime(time) {
+        this.dateArr = time
+        this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD')
+        this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD')
       }
     }
   }
-}
-.reason {
+</script>
+<style lang="less" scoped>
+  td.operation {
+    text-align: center !important;
+  }
+  /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
+    margin-bottom: 10px;
+  }
+  .tableSearch {
+    background: #ffffff;
+    position: absolute;
+    top: 52px;
+    box-shadow: 4px 4px 10px #ddd;
+    z-index: 100;
+    /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
+      width: 70px !important;
+    }
+    .commonRetrieval {
+      padding: 10px;
+      p {
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .reason {
     display: inline-block;
     width: 11em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-.userName {
-  color: #1fb2fa;
-  margin: 0;
-  &:active,
-  &:hover {
-    text-decoration: underline;
-    text-underline-position: under;
-    text-decoration-color: #1fb2fa;
-    cursor: pointer;
   }
-}
+  .userName {
+    color: #1fb2fa;
+    margin: 0;
+    &:active,
+    &:hover {
+      text-decoration: underline;
+      text-underline-position: under;
+      text-decoration-color: #1fb2fa;
+      cursor: pointer;
+    }
+  }
 </style>

@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" />
+              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
@@ -35,13 +35,13 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="档案号">
-                        <a-input v-model="queryParam.fileCode" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="姓名">
-                        <a-input v-model="queryParam.patientName" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="身份证号">
-                        <a-input v-model="queryParam.card" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.card" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="创建日期" style="margin-bottom:0;">
                         <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
@@ -62,6 +62,9 @@
     <s-table ref="table" size="small" :scroll="scroll" rowKey="patientBasisId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <template slot="patientName" slot-scope="text, record">
         <a @click="showUser(record)">{{ text }}</a>
+      </template>
+      <template slot="executeStatus" slot-scope="text">       
+        <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" />
       </template>
       <span slot="serial" slot-scope="text, record, index">{{ index + 1 }}</span>
       <span slot="description" slot-scope="text">
@@ -84,7 +87,24 @@ import StepByStepModal from './modules/StepByStepModal';
 import CreateForm from './modules/CreateForm';
 import { getSFJxDataList } from '@/api/basis';
 import UserDetail from './modules/UserDetail';
-
+const visitMap = {
+  0: {
+    status: 'warning',
+    text: '忽略'
+  },
+  1: {
+    status: 'default',
+    text: '未执行'
+  },
+  2: {
+    status: 'processing',
+    text: '执行中'
+  },
+  3: {
+    status: 'success',
+    text: '已完成'
+  },
+};
 export default {
   name: 'acute',
   components: {
@@ -142,8 +162,9 @@ export default {
         },
         {
           title: '任务状态',
-          dataIndex: 'executeStatusName',
-          width: "100px",
+          dataIndex: 'executeStatus',
+          scopedSlots: { customRender: 'executeStatus' },
+          width: "120px",
         },
         {
           title: '操作',
@@ -191,6 +212,12 @@ export default {
     },
     statusTypeFilter(type) {
       return statusMap[type].status;
+    },
+    visitFilter(type) {
+      return visitMap[type].text;
+    },
+    visitTypeFilter(type) {
+      return visitMap[type].status;
     }
   },
   methods: {
