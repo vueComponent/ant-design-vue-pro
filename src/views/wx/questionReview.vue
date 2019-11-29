@@ -34,7 +34,7 @@
                         <a-input v-model.trim="queryParam.fileCode" />
                       </a-form-item>
                       <a-form-item label="姓名">
-                        <a-input v-model.trim="queryParam.name" />
+                        <a-input v-model.trim="queryParam.patientName" />
                       </a-form-item>
                       <a-form-item label="身份证号">
                         <a-input v-model.trim="queryParam.card" />

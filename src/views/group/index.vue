@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" />
+              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
@@ -37,13 +37,13 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="档案号">
-                        <a-input v-model="queryParam.fileCode" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="姓名">
-                        <a-input v-model="queryParam.name" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="身份证号">
-                        <a-input v-model="queryParam.card" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.card" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="创建日期" style="margin-bottom:0;">
                         <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
@@ -302,8 +302,8 @@ export default {
     },
     changeTime(time) {
       this.dateArr = time;
-      this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD');
-      this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
+      this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD')
+      this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD')
     }
   }
 };

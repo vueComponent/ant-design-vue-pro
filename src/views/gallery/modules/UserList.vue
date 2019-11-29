@@ -27,7 +27,7 @@ import _ from 'lodash'
 const columns = [
   {
     title: '档案号',
-    dataIndex: 'code'
+    dataIndex: 'fileCode'
   },
   {
     title: '患者姓名',

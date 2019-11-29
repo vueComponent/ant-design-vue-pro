@@ -34,7 +34,7 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="档案号">
-                        <a-input v-model.trim="queryParam.reportCode" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="姓名">
                         <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
@@ -194,8 +194,8 @@
       },
       changeTime(time) {
         this.dateArr = time
-        this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD')
-        this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD')
+        this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD')
+        this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD')
       }
     }
   }

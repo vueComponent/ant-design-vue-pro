@@ -253,8 +253,8 @@ export default {
     },
     changeTime(time) {
       this.dateArr = time;
-      this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD');
-      this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
+        this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD')
+        this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD')
     },
   }
 };

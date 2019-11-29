@@ -20,7 +20,7 @@
     <div class="userDetailContent">
       <p class="userDetailItem">
         <span class="userDetailItemTitle">档案编号</span>
-        <span class="userDetailItemInfo"> {{option.code}}</span>
+        <span class="userDetailItemInfo"> {{option.fileCode}}</span>
       </p>
       <p class="userDetailItem">
         <span class="userDetailItemTitle">联系电话</span>

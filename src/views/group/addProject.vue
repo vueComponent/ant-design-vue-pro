@@ -122,7 +122,7 @@ export default {
       columns: [
         {
           title: '档案号',
-          dataIndex: 'code',
+          dataIndex: 'fileCode',
           width: '120px',
         },
         {

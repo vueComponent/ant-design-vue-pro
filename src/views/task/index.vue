@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" />
+              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="24">
@@ -34,16 +34,16 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="档案号">
-                        <a-input v-model="queryParam.fileCode" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="患者姓名">
-                        <a-input v-model="queryParam.patientName" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="身份证号">
-                        <a-input v-model="queryParam.card" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.card" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="任务名称">
-                        <a-select v-model="queryParam.type">
+                        <a-select v-model.trim="queryParam.type">
                           <a-select-option value="2">半年随访任务</a-select-option>
                           <a-select-option value="3">年访视任务</a-select-option>
                         </a-select>

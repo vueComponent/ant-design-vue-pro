@@ -38,7 +38,7 @@
                         <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="姓名">
-                        <a-input v-model.trim="queryParam.name" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="身份证号">
                         <a-input v-model.trim="queryParam.card" style="width: 100%" />
@@ -281,8 +281,8 @@ export default {
     },
     changeTime(time) {
       this.dateArr = time;
-      this.queryParam.date1 = moment(time[0]).format('YYYY-MM-DD');
-      this.queryParam.date2 = moment(time[1]).format('YYYY-MM-DD');
+      this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD')
+      this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD')
     },
     exportData() {
       window.open(this.baseUrl + '/patient/export?doctorId=' + this.token.doctorId)
