@@ -40,7 +40,7 @@
         </a-tabs>
       </a-spin>
     </template>
-    <span @click="fetchNotice" class="header-notice" ref="noticeRef">
+    <span @click="fetchNotice" class="header-notice" ref="noticeRef" style="padding: 0 18px">
       <a-badge count="12">
         <a-icon style="font-size: 16px; padding: 4px" type="bell" />
       </a-badge>
