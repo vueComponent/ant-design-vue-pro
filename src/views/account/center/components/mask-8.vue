@@ -30,7 +30,7 @@
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.肺功能相关检查</div>
-              <a-form-item label="(1) 在过去1年中是否做过肺功能测试:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <a-form-item label="(1) 是否做过肺功能测试:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-radio-group v-decorator="['a1', {...require1, initialValue: initValue('a1')}]" @change="changeRadio($event, 'controla1')">
                   <a-radio value="1">是</a-radio>
                   <a-radio value="-1">否</a-radio>

@@ -60,8 +60,8 @@
               <a-form-item label="放射学诊断:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-textarea style="top: 2px;" v-decorator="['a22', {initialValue: initValue('a22')}]" autocomplete="off"></a-textarea>
               </a-form-item>
-              <div class="title">2.支扩位于CT图像上</div>
-              <a-form-item label="支扩位于CT图像上：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <div class="title">2.支扩CT图像</div>
+              <a-form-item label="支扩CT图像：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['b', {...selectRequired, initialValue: initValue('b', 'array')}]">
                   <a-checkbox value="1" @change="changeSelect($event, 'controla3')">右上叶</a-checkbox>
                   <a-checkbox value="2" @change="changeSelect($event, 'controla4')">左上叶</a-checkbox>
