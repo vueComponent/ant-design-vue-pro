@@ -564,7 +564,7 @@ export default {
         .then(res => {
           console.log(res.data)
           this.spinning = false
-          this.$message.success(res.msg)
+          this.$message.success(res.data.info)
           this.xbyxx = _.extend(this.xbyxx || {}, this.dealAnswers(res.data))
           that.form.setFieldsValue(that.xbyxx)
         })

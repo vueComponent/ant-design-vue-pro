@@ -798,7 +798,7 @@ export default {
         .then(res => {
           console.log(res.data)
           that.spinning = false
-          that.$message.success(res.msg)
+          that.$message.success(res.data.info)
           // debugger
           that.fgnxgjc = _.extend(that.fgnxgjc || {}, that.dealAnswers(res.data))
           // that.form.setFieldsValue(that.fgnxgjc)
@@ -817,7 +817,7 @@ export default {
         .then(res => {
           console.log(res.data)
           that.spinning = false
-          that.$message.success(res.msg)
+          that.$message.success(res.data.info)
           that.fgnxgjc = _.extend(that.fgnxgjc || {}, that.dealAnswers(res.data))
           // that.form.setFieldsValue(that.fgnxgjc)
         })

@@ -550,10 +550,10 @@ export default {
     //   this.previewVisible = false;
     // },
     handlePreview(file) {
-        const viewer = this.$el.querySelector('.images').$viewer
-        viewer.show()
-    //   this.previewImage = file.url || file.thumbUrl;
-    //   this.previewVisible = true;
+      const viewer = this.$el.querySelector('.images').$viewer
+      viewer.show()
+      //   this.previewImage = file.url || file.thumbUrl;
+      //   this.previewVisible = true;
     },
     handleChange({ fileList }) {
       this.fileList = fileList;
@@ -572,7 +572,7 @@ export default {
         .then(res => {
           console.log(res.data)
           this.spinning = false
-          this.$message.success(res.msg)
+          this.$message.success(res.data.info)
           this.xbyxx = _.extend(this.xbyxx || {}, this.dealAnswers(res.data))
           that.form.setFieldsValue(that.xbyxx)
         })
@@ -826,11 +826,12 @@ export default {
   .btn {
     margin-right: 10px;
   }
-  .btn-array{
+
+  .btn-array {
     overflow: hidden;
     position: absolute;
     padding-top: 10px;
-    padding-right: 20px; 
+    padding-right: 20px;
     width: calc(100% - 8px);
     height: 42px;
     background: #fff;
