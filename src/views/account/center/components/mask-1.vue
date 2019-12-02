@@ -127,14 +127,14 @@
                 <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b65', {...dateRequire, initialValue: initValue('b65', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item label="(7) 有无其他疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['b70', {...require2, initialValue: initValue('b70')}]" @change="changeRadio($event, 'controlb70')">
+                <a-radio-group v-decorator="['b70', {...require2, initialValue: '-1'}]" @change="changeRadio($event, 'controlb70')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
                 </a-radio-group>
               </a-form-item>
               <div v-if="controlb70">
                 <a-form-item label="1.心血管系统" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b7', {...require2, initialValue: initValue('b7')}]" @change="changeRadio($event, 'controlb7')">
+                  <a-radio-group v-decorator="['b7', {...require2, initialValue: '-1'}]" @change="changeRadio($event, 'controlb7')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
                   </a-radio-group>
@@ -157,7 +157,7 @@
                   <a-input style="width: 240px;" v-decorator="['b72', {...inputRequired, initialValue: initValue('b72')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="2.消化系统疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b8', {...require2, initialValue: initValue('b8')}]" @change="changeRadio($event, 'controlb8')">
+                  <a-radio-group v-decorator="['b8', {...require2, initialValue:  '-1'}]" @change="changeRadio($event, 'controlb8')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
                   </a-radio-group>
@@ -177,7 +177,7 @@
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="3.内分泌系统" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b9', {...require2, initialValue: initValue('b9')}]" @change="changeRadio($event, 'controlb9')">
+                  <a-radio-group v-decorator="['b9', {...require2, initialValue:  '-1'}]" @change="changeRadio($event, 'controlb9')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
                   </a-radio-group>
@@ -190,7 +190,7 @@
                     <a-checkbox value="4">甲亢</a-checkbox>
                     <a-checkbox value="5">甲减</a-checkbox>
                     <a-checkbox value="6">高尿酸血症</a-checkbox>
-                    <a-checkbox value="7">其他</a-checkbox>
+                    <a-checkbox value="7" :checked="controlb917" @change="changeSelect($event, 'controlb917')">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item class="no-border" label="糖尿病::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb9 && controlb911">
@@ -199,8 +199,11 @@
                     <a-radio value="2">II型</a-radio>
                   </a-radio-group>
                 </a-form-item>
+                <a-form-item label="其他内分泌系统疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb917">
+                  <a-input style="width: 240px;" v-decorator="['b917', {...inputRequired, initialValue: initValue('b917')}]" autocomplete="off"></a-input>
+                </a-form-item>
                 <a-form-item label="4.血液系统疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b10', {...require2, initialValue: initValue('b10')}]" @change="changeRadio($event, 'controlb10')">
+                  <a-radio-group v-decorator="['b10', {...require2, initialValue:  '-1'}]" @change="changeRadio($event, 'controlb10')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
                   </a-radio-group>
@@ -210,7 +213,7 @@
                     <a-checkbox value="1" :checked="controlb1011" @change="changeSelect($event, 'controlb1011')">缺铁性贫血</a-checkbox>
                     <a-checkbox value="2">白血病</a-checkbox>
                     <a-checkbox value="3">淋巴瘤</a-checkbox>
-                    <a-checkbox value="4">其他</a-checkbox>
+                    <a-checkbox value="4" :checked="controlb1014" @change="changeSelect($event, 'controlb1014')">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item class="no-border" label="缺铁性贫血::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb10 && controlb1011">
@@ -219,8 +222,11 @@
                     <a-radio value="2">II型</a-radio>
                   </a-radio-group>
                 </a-form-item>
+                <a-form-item label="其他血液系统疾病类型" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb1014">
+                  <a-input style="width: 240px;" v-decorator="['b1014', {...inputRequired, initialValue: initValue('b1014')}]" autocomplete="off"></a-input>
+                </a-form-item>
                 <a-form-item label="5.泌尿系统疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b11', {...require2, initialValue: initValue('b11')}]" @change="changeRadio($event, 'controlb11')">
+                  <a-radio-group v-decorator="['b11', {...require2, initialValue:  '-1'}]" @change="changeRadio($event, 'controlb11')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
                   </a-radio-group>
@@ -229,7 +235,7 @@
                   <a-checkbox-group v-decorator="['b111', {...selectRequired, initialValue: initValue('b111', 'array')}]">
                     <a-checkbox value="1" :checked="controlb1111" @change="changeSelect($event, 'controlb1111')">慢性肾病</a-checkbox>
                     <a-checkbox value="2">慢性尿路感染</a-checkbox>
-                    <a-checkbox value="3">其他</a-checkbox>
+                    <a-checkbox value="3" :checked="controlb1113" @change="changeSelect($event, 'controlb1113')">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item class="no-border" label="慢性肾病::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb11 && controlb1111">
@@ -238,8 +244,14 @@
                     <a-radio value="-1">无透析</a-radio>
                   </a-radio-group>
                 </a-form-item>
+                <a-form-item class="no-border" label="其他泌尿系统疾病类型:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb11 && controlb1113">
+                  <a-radio-group v-decorator="['b1113', {...require2, initialValue: initValue('b1113')}]">
+                    <a-radio value="1">有透析</a-radio>
+                    <a-radio value="-1">无透析</a-radio>
+                  </a-radio-group>
+                </a-form-item>
                 <a-form-item label="6.风湿系统疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b12', {...require2, initialValue: initValue('b12')}]" @change="changeRadio($event, 'controlb12')">
+                  <a-radio-group v-decorator="['b12', {...require2, initialValue:  '-1'}]" @change="changeRadio($event, 'controlb12')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
                   </a-radio-group>
@@ -255,13 +267,13 @@
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="7.是否有HIV" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b13', {...require1, initialValue: initValue('b13')}]">
+                  <a-radio-group v-decorator="['b13', {...require1, initialValue:  '-1'}]">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="8.是否有恶性肿瘤" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b14', {...require1, initialValue: initValue('b14')}]" @change="changeRadio($event, 'controlb14')">
+                  <a-radio-group v-decorator="['b14', {...require1, initialValue: '-1'}]" @change="changeRadio($event, 'controlb14')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
                   </a-radio-group>
@@ -296,13 +308,16 @@
                       <a-checkbox value="13">骨</a-checkbox>
                       <a-checkbox value="14">皮肤</a-checkbox>
                       <a-checkbox value="15">脑</a-checkbox>
-                      <a-checkbox value="16">其他</a-checkbox>
+                      <a-checkbox value="16" :checked="controlb14316" @change="changeSelect($event, 'controlb14316')">其他</a-checkbox>
                       <a-checkbox value="17">未知</a-checkbox>
                     </a-checkbox-group>
                   </a-form-item>
                 </div>
+                <a-form-item class="no-border" label="其他肿瘤部位:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb14 && controlb14316">
+                  <a-input style="width: 240px;" v-decorator="['b14316', {...inputRequired, initialValue: initValue('b14316')}]" autocomplete="off"></a-input>
+                </a-form-item>
                 <a-form-item label="9.免疫缺陷" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b15', {...require2, initialValue: initValue('b15')}]" @change="changeRadio($event, 'controlb15')">
+                  <a-radio-group v-decorator="['b15', {...require2, initialValue:  '-1'}]" @change="changeRadio($event, 'controlb15')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
                   </a-radio-group>
@@ -323,8 +338,11 @@
                       <a-checkbox value="5">免疫抑制药物后免疫缺陷</a-checkbox>
                       <a-checkbox value="6">干细胞移植</a-checkbox>
                       <a-checkbox value="7">实体器官移植</a-checkbox>
-                      <a-checkbox value="8">其他</a-checkbox>
+                      <a-checkbox value="8" :checked="controlb1538" @change="changeSelect($event, 'controlb1538')">其他</a-checkbox>
                     </a-checkbox-group>
+                  </a-form-item>
+                  <a-form-item class="no-border" label="其他继发性免疫缺陷:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb15 && controlb1538">
+                    <a-input style="width: 240px;" v-decorator="['b1538', {...inputRequired, initialValue: initValue('b1538')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item class="border-dotted" label="巨噬细胞缺陷疾病名称" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-input style="width: 240px;" v-decorator="['b154', {...inputRequired, initialValue: initValue('b154')}]" autocomplete="off"></a-input>
@@ -334,7 +352,7 @@
                   </a-form-item>
                 </div>
                 <a-form-item label="10.其他疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b16', {...require2, initialValue: initValue('b16')}]" @change="changeRadio($event, 'controlb16')">
+                  <a-radio-group v-decorator="['b16', {...require2, initialValue:  '-1'}]" @change="changeRadio($event, 'controlb16')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
                   </a-radio-group>
@@ -344,8 +362,11 @@
                     <a-checkbox value="1">抑郁</a-checkbox>
                     <a-checkbox value="2">焦虑</a-checkbox>
                     <a-checkbox value="3">认知功能障碍</a-checkbox>
-                    <a-checkbox value="4">其他</a-checkbox>
+                    <a-checkbox value="4" :checked="controlb1614" @change="changeSelect($event, 'controlb1614')">其他</a-checkbox>
                   </a-checkbox-group>
+                </a-form-item>
+                <a-form-item class="no-border" label="其他疾病类型:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb16 && controlb1614">
+                  <a-input style="width: 240px;" v-decorator="['b1614', {...inputRequired, initialValue: initValue('b1614')}]" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
               <a-form-item label="(8) 其他系统相关治疗（非呼吸系统治疗）" :labelCol="wrapper18" class="border-dotted">
@@ -538,14 +559,20 @@ export default {
       controlb811: false,
       controlb9: false,
       controlb911: false,
+      controlb917: false,
       controlb10: false,
       controlb1011: false,
+      controlb1014: false,
       controlb11: false,
       controlb1111: false,
+      controlb1113: false,
       controlb12: false,
       controlb14: false,
+      controlb14316: false,
       controlb15: false,
+      controlb1538: false,
       controlb16: false,
+      controlb1614: false,
       controlb1831: false,
       controlb191: false,
       controlb20: false,
@@ -687,6 +714,9 @@ export default {
           if (splitArr.indexOf('1') > -1) {
             that.controlb911 = true
           }
+          if (splitArr.indexOf('1') > -1) {
+            that.controlb917 = true
+          }
         }
         if (answer.b10 === 1) {
           that.controlb10 = true
@@ -699,12 +729,24 @@ export default {
         }
         if (answer.b14 && answer.b14 === '1') {
           that.controlb14 = true
+          splitArr = answer.b14.split(',')
+          if (splitArr.indexOf('1') > -1) {
+            that.controlb14316 = true
+          }
         }
         if (answer.b15 && answer.b15 === 1) {
           that.controlb15 = true
+          splitArr = answer.b15.split(',')
+          if (splitArr.indexOf('1') > -1) {
+            that.controlb1538 = true
+          }
         }
         if (answer.b16 && answer.b16 === 1) {
           that.controlb16 = true
+          splitArr = answer.b16.split(',')
+          if (splitArr.indexOf('1') > -1) {
+            that.controlb1614 = true
+          }
         }
         if (answer.b20 && answer.b20 === 1) {
           that.controlb20 = true
@@ -717,11 +759,17 @@ export default {
           if (splitArr.indexOf('1') > -1) {
             that.controlb1011 = true
           }
+          if (splitArr.indexOf('1') > -1) {
+            that.controlb1014 = true
+          }
         }
         if (answer.b111) {
           splitArr = answer.b111.split(',')
           if (splitArr.indexOf('1') > -1) {
             that.controlb1111 = true
+          }
+          if (splitArr.indexOf('1') > -1) {
+            that.controlb1113 = true
           }
         }
         if (answer.b19 && (answer.b19 === 1 || answer.b19 === 2)) {
@@ -953,7 +1001,7 @@ export default {
   bottom: 0;
   right: 0;
   background: rgba(0, 0, 0, .2);
-
+  z-index: 2;
   & .ant-spin-dot {
     position: absolute;
     top: 55%;
@@ -1184,9 +1232,10 @@ export default {
     padding-top: 10px;
     padding-right: 20px; 
     width: calc(100% - 8px);
-    height: 42px;
+    // height: 42px;
     background: #fff;
-    // z-index: 1;
+    z-index: 1;
+    padding-bottom: 10px;
   }
   .baselineForm {
     margin-top: 42px;
