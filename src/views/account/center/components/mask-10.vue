@@ -469,7 +469,7 @@ export default {
       getOcrResult(params)
         .then(res => {
           that.spinning = false
-          that.$message.success(res.msg)
+          that.$message.success(res.data.info)
           // console.log(res.data);
           that.qtsyjc = _.extend(that.qtsyjc || {}, that.dealAnswers(res.data))
           that.form.setFieldsValue(that.qtsyjc)

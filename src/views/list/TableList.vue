@@ -103,7 +103,7 @@ import { getPatientList, exportPatient } from '@/api/patient'
 import UserDetail from './modules/UserDetail'
 import Visit from './modules/Visit'
 import { addVasit } from '@/api/basis'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 const visitMap = {
   0: {
@@ -227,6 +227,7 @@ export default {
     };
   },
   created() {
+    this.setSidebar(true)
     this.scroll = {
       y: (window.screen.height - 368) + "px"
     }
@@ -249,6 +250,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['setSidebar']),
     clearForm() {
       console.log(this.dateArr)
       this.queryParam = {}

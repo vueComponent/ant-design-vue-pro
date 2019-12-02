@@ -786,7 +786,7 @@ export default {
         .then(res => {
           console.log(res.data)
           this.spinning = false
-          this.$message.success(res.msg)
+          this.$message.success(res.data.info)
           this.fgnxgjc = _.extend(this.fgnxgjc || {}, this.dealAnswers(res.data))
         })
         .catch(error => {
@@ -803,7 +803,7 @@ export default {
         .then(res => {
           console.log(res.data)
           this.spinning = false
-          this.$message.success(res.msg)
+          this.$message.success(res.data.info)
           this.fgnxgjc = _.extend(this.fgnxgjc || {}, this.dealAnswers(res.data))
           that.form.setFieldsValue(that.fgnxgjc)
         })
