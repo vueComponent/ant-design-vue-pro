@@ -2,10 +2,9 @@
   <div class="logo">
     <router-link :to="{name:'Analysis'}">
       <!--      <LogoSvg alt="logo" /> -->
-      <!-- <img src="~@/assets/logo.png" class="logoImg" alt="logoImg"> -->
+      <img src="~@/assets/logo.png" class="logoImg" alt="logoImg">
       <h1 v-if="showTitle">
-        <!-- <img src="~@/assets/logowords.png" class="logowords" alt=""> -->
-        <img src="~@/assets/logo-right.jpg" class="logowords" alt="">
+        <img src="~@/assets/logowords.png" class="logowords" alt="">
       </h1>
     </router-link>
   </div>
@@ -34,32 +33,16 @@ export default {
 </script>
 <style>
 .logo {
-  /* padding-left: 18px !important; */
-  padding: 0!important;
-
+  padding-left: 5px !important;
 }
-
-/* .logo h1 {
-  margin-left: 0.1875rem !important;
-} */
 
 .logo h1 .logowords {
-  /* width: 100px!important; */
-  width: 100% !important;
-  height: 40px !important;
-}
-.logosImg {
-    vertical-align:middle;
-    display:inline-block;
-    background-color: #fff;
-    width: 46px;
-    height: 40px;
-    padding-left: 0px;
+  width: 120px!important;
+  height: 64px !important;
 }
 
 .logo .router-link-active .logoImg {
-  height: 40px;
-  width: 46px;
-  padding-left: 0px;
+  height: 64px;
+  width: 65px;
 }
 </style>
