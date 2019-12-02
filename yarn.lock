@@ -10844,6 +10844,13 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
 
+vue-input-tag@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/vue-input-tag/-/vue-input-tag-2.0.6.tgz#e5421317c9a89584980be011b95bedc2e4e8ef22"
+  integrity sha512-PFz6XyWjLUsKJdxlK11ojqfw2vWAYFwWb5dlvB0l+U6ES+xtD0MkXTRd9HSeq7KnARA+n16yHtouVoTa9AOU7w==
+  dependencies:
+    vue "^2.5.17"
+
 vue-jest@^3.0.4:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/vue-jest/-/vue-jest-3.0.5.tgz#d6f124b542dcbff207bf9296c19413f4c40b70c9"
