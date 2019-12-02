@@ -352,7 +352,7 @@ export default {
   bottom: 0;
   right: 0;
   background: rgba(0, 0, 0, .2);
-
+  z-index: 2;
   & .ant-spin-dot {
     position: absolute;
     top: 55%;
@@ -584,9 +584,10 @@ export default {
     padding-top: 10px;
     padding-right: 20px; 
     width: calc(100% - 8px);
-    height: 42px;
+    // height: 42px;
     background: #fff;
-    // z-index: 1;
+    z-index: 1;
+    padding-bottom: 10px;
   }
   .baselineForm {
     margin-top: 42px;

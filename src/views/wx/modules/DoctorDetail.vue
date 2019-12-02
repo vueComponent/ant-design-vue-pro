@@ -28,6 +28,9 @@
             </template>
           </a-select>
         </a-form-item>
+        <a-form-item label="医生标签" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <input-tag placeholder="添加标签" v-model="markDetail" :beforeAdding="beforeAdding" :add-tag-on-blur="true" :limit="4"></input-tag>
+        </a-form-item>
         <a-form-item class="textarea" label="医生简介" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea rows="5" v-decorator="['detail', requiredRule]" placeholder="请输入医生简介" />
         </a-form-item>
@@ -50,9 +53,11 @@
 
 <script>
   import { getDoctorDetail, saveDoctor, getCenter } from '@/api/famousDoctor'
+  import InputTag from 'vue-input-tag'
   export default {
     data() {
       return {
+        markDetail: [],
         title: '',
         bodyStyle: {
           height: '500px',
@@ -86,7 +91,17 @@
     mounted() {
       this.getCenterList()
     },
+    components: {
+      'input-tag': InputTag
+    },
     methods: {
+      beforeAdding(val) {
+        if (val.length >= 8) {
+          return false
+        } else {
+          return val
+        }
+      },
       show(id) {
         this.visible = true
 
@@ -102,6 +117,7 @@
             this.confirmLoading = false
 
             this.creatorId = res.data.doctorDetail.creatorId
+            this.markDetail = res.data.doctorDetail.markDetail && res.data.doctorDetail.markDetail.split(',')
             this.form.setFieldsValue({
               doctorName: res.data.doctorDetail.doctorName,
               job: res.data.doctorDetail.job,
@@ -175,6 +191,7 @@
 
           const params = new FormData()
           const doctorDetail = {
+            markDetail: this.markDetail.join(','),
             doctorName: fieldsValue['doctorName'],
             job: fieldsValue['job'],
             department: fieldsValue['department'],
@@ -211,6 +228,21 @@
   .textarea {
     /deep/.ant-form-item-control {
       line-height: 1;
+    }
+  }
+
+  .vue-input-tag-wrapper {
+    border-color: #d9d9d9;
+    border-radius: 5px;
+    line-height: 1.5;
+  }
+
+  /deep/ .vue-input-tag-wrapper .new-tag {
+    padding-left: 5px;
+    margin-top: 0;
+    line-height: normal;
+    &::placeholder {
+      color: #ccc;
     }
   }
 </style>
