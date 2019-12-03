@@ -26,7 +26,7 @@
         </a-col>
         <a-col :span="19" style="height:100%;">
           <!-- 血生化 -->
-          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;">
+          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;-ms-overflow-x: hidden;">
             <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 1">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>

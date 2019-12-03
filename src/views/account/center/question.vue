@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19" style="height:100%;">
-          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden;">
+          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden;-ms-overflow-x: hidden;">
             <div class="head-bar">
               <a-row type="flex">
                 <span class="head-icon"></span>

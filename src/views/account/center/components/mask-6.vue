@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19" style="height:100%;">
-          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;">
+          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;-ms-overflow-x: hidden;">
             <div class="btn-array" v-if="executeStatus !== 2">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
@@ -353,11 +353,11 @@ export default {
     },
     changeSelect(e, t) {
       this[t] = e.target.checked
-      // if (t === 'control3' && e.target.checked) {
-      //   this.control1 = false
-      //   this.control2 = false
-      //   this.form.setFieldsValue({ a: ['3'] })
-      // }
+      if (t === 'control3' && e.target.checked) {
+        this.control1 = false
+        this.control2 = false
+        this.form.setFieldsValue({ a: ['3'] })
+      }
     },
     changeRadio(e, t) {
       if (t === 'controla2' || t === 'controlb2' || t === 'controlc2') {
