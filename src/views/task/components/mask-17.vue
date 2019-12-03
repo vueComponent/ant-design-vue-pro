@@ -23,8 +23,13 @@
           </s-tree>
         </a-col>
         <a-col :span="19" style="height:100%;">
+<<<<<<< HEAD
           <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;-ms-overflow-x: hidden;">
             <div style="overflow: hidden;margin-top: 10px;" v-if="executeStatus !== 2">
+=======
+          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;">
+            <div class="btn-array" v-if="executeStatus !== 2">
+>>>>>>> 48e5e40fef3772bd66f06fb4a1821bb74254278b
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
@@ -354,6 +359,7 @@ export default {
       },
       baselineFormStyle: {
         // height: '444px',
+        'padding-top': '52px'
       },
       labelColHor: {
         xs: { span: 24 },
@@ -758,7 +764,7 @@ export default {
   bottom: 0;
   right: 0;
   background: rgba(0, 0, 0, .2);
-
+  z-index: 2;
   & .ant-spin-dot {
     position: absolute;
     top: 55%;
@@ -982,6 +988,17 @@ export default {
 
   .btn {
     margin-right: 10px;
+  }
+  .btn-array{
+    overflow: hidden;
+    position: absolute;
+    padding-top: 10px;
+    padding-right: 20px; 
+    width: calc(100% - 8px);
+    // height: 42px;
+    background: #fff;
+    z-index: 1;
+    padding-bottom: 10px;
   }
 
   .baselineForm {
