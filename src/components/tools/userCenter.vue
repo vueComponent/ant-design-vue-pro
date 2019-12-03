@@ -14,8 +14,8 @@
   </div>
 </template>
 <script>
-import { getDetailById } from '@/api/login';
-import moment from 'moment';
+import { getDetailById } from '@/api/login'
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 export default {
   data() {
@@ -30,7 +30,7 @@ export default {
     };
   },
   created() {
-    this.getUDetailById(this.token.doctorId);
+    this.getUDetailById(this.token.doctorId)
   },
   computed: {
     ...mapGetters(['token'])
@@ -45,9 +45,9 @@ export default {
   },
   methods: {
     getUDetailById(id) {
-      const Params = new URLSearchParams();
-      Params.append('doctorId', id);
-      getDetailById(Params).then(res => {
+      const params = new URLSearchParams()
+      params.append('doctorId', id);
+      getDetailById(params).then(res => {
         this.ModalText = res.data.doctor
       });
     },
