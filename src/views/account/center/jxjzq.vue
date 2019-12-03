@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19" style="height: 100%;">
-          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;-ms-overflow-x: hidden;">
+          <a-form :form="form" @submit="handleSubmit" class="base-form">
             <div class="btn-array" v-if="executeStatus !== 2">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
@@ -926,8 +926,16 @@ export default {
   padding-right: 0px;
 }
 
-.control-m-line.ant-checkbox-group {
-  top: 10px;
-  position: relative;
+@media screen and (max-width: 1366px) {
+  .control-m-line.ant-checkbox-group {
+    top: 10px;
+    position: relative;
+  }
+}
+
+.base-form {
+  height: 100%;
+  -ms-overflow-x: hidden;
+  overflow: hidden auto;
 }
 </style>

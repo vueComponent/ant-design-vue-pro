@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19" style="height:100%;">
-          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden;-ms-overflow-x: hidden;">
+          <a-form :form="form" @submit="handleSubmit" class="base-form">
             <div class="head-bar">
               <a-row type="flex">
                 <span class="head-icon"></span>
@@ -237,7 +237,7 @@ export default {
       getQuestionDetail(params)
         .then(res => {
           that.spinning = false
-        //   this.listArr = this.initQuestionAnswers(res.data.topTitles)
+          //   this.listArr = this.initQuestionAnswers(res.data.topTitles)
           that.listArr = res.data.topTitles
           that.question = res.data.question
           if (res.data.isFinish === '0') {
@@ -786,69 +786,78 @@ export default {
   padding-right: 0px;
 }
 
-/deep/ .ant-radio-disabled + span {
-        color: inherit;
-      }
+/deep/ .ant-radio-disabled+span {
+  color: inherit;
+}
 
-      /deep/.ant-checkbox-disabled + span {
-        color: inherit;
-      }
+/deep/.ant-checkbox-disabled+span {
+  color: inherit;
+}
 
-      .question-des {
-        font-size: 16px;
-        margin-bottom: 25px;
-      }
+.question-des {
+  font-size: 16px;
+  margin-bottom: 25px;
+}
 
-      .question-t {
-        display: flex;
-        line-height: 40px;
-        font-size: 18px;
-        font-weight: 700;
-        border-bottom: 2px solid #3398dc;
-        padding-bottom: 5px;
-        .question-icon {
-          width: 40px;
-          height: 40px;
-          background-image: url('../../../assets/question-icon.png');
-          background-size: 100% 100%;
-          margin-right: 10px;
-        }
-      }
+.question-t {
+  display: flex;
+  line-height: 40px;
+  font-size: 18px;
+  font-weight: 700;
+  border-bottom: 2px solid #3398dc;
+  padding-bottom: 5px;
 
-      .question-tip {
-        height: 50px;
-        display: flex;
-        align-items: center;
-        .tip-icon {
-          width: 20px;
-          height: 20px;
-          background-image: url('../../../assets/tip-icon.png');
-          background-size: 100% 100%;
-          margin-right: 5px;
-        }
-      }
+  .question-icon {
+    width: 40px;
+    height: 40px;
+    background-image: url('../../../assets/question-icon.png');
+    background-size: 100% 100%;
+    margin-right: 10px;
+  }
+}
 
-      .ant-form-item {
-        margin-bottom: 0px;
-        border-bottom: 1px solid #eee;
-      }
+.question-tip {
+  height: 50px;
+  display: flex;
+  align-items: center;
 
-      /deep/ .ant-form-item-label {
-        text-align: left;
-        display: block;
-        background-color: #f7f8f8;
-        color: #231815;
-        font-size: 16px;
-        font-weight: bold;
-        padding-left: 15px;
-        border-top: 1px solid #eee;
-      }
+  .tip-icon {
+    width: 20px;
+    height: 20px;
+    background-image: url('../../../assets/tip-icon.png');
+    background-size: 100% 100%;
+    margin-right: 5px;
+  }
+}
 
-      /deep/ .ant-form-item-control-wrapper {
-        padding: 5px 0;
-        padding-left: 20px;
-        label {
-          margin: 5px 0;
-        }
-      }
+.ant-form-item {
+  margin-bottom: 0px;
+  border-bottom: 1px solid #eee;
+}
+
+/deep/ .ant-form-item-label {
+  text-align: left;
+  display: block;
+  background-color: #f7f8f8;
+  color: #231815;
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 15px;
+  border-top: 1px solid #eee;
+}
+
+/deep/ .ant-form-item-control-wrapper {
+  padding: 5px 0;
+  padding-left: 20px;
+
+  label {
+    margin: 5px 0;
+  }
+}
+
+.base-form {
+  height: 100%;
+  -ms-overflow-x: hidden;
+  overflow: hidden auto;
+}
 </style>

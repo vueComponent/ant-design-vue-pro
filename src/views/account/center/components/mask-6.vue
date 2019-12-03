@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19" style="height:100%;">
-          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;-ms-overflow-x: hidden;">
+          <a-form :form="form" @submit="handleSubmit" class="base-form">
             <div class="btn-array" v-if="executeStatus !== 2">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
@@ -1175,5 +1175,10 @@ export default {
     top: 10px;
     position: relative;
   }
+}
+.base-form {
+  height: 100%;
+  -ms-overflow-x: hidden;
+  overflow: hidden auto;
 }
 </style>

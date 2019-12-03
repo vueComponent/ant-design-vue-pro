@@ -17,6 +17,7 @@
 import { getDetailById } from '@/api/login'
 import moment from 'moment'
 import { mapGetters } from 'vuex'
+import 'url-search-params-polyfill'
 export default {
   data() {
     return {

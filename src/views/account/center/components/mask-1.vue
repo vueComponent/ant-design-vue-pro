@@ -23,7 +23,7 @@
           </s-tree>
         </a-col>
         <a-col :span="19" style="height:100%;">
-          <a-form :form="form" @submit="handleSubmit" style="height:100%;overflow:hidden auto;-ms-overflow-x: hidden;" :layout="formLayout">
+          <a-form :form="form" @submit="handleSubmit" :layout="formLayout" class="base-form">
             <div class="btn-array" v-if="executeStatus !== 2">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
@@ -465,6 +465,7 @@ import _ from 'lodash'
 import { mapActions } from 'vuex'
 import { getPatientBasis, saveBasis, getBasisForm } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
+import 'url-search-params-polyfill'
 export default {
   name: 'mask1',
   components: {
@@ -643,11 +644,11 @@ export default {
       return current && current > moment().endOf('day');
     },
     handleChange(valus) {
-        if (valus.indexOf('3') >= 0) {
-            this.$nextTick(() => {
-                this.form.setFieldsValue({'a1': ['3']})
-            })
-        }
+      if (valus.indexOf('3') >= 0) {
+        this.$nextTick(() => {
+          this.form.setFieldsValue({ 'a1': ['3'] })
+        })
+      }
     },
     dealAnswers(answer) {
       var that = this
@@ -1001,6 +1002,7 @@ export default {
   right: 0;
   background: rgba(0, 0, 0, .2);
   z-index: 2;
+
   & .ant-spin-dot {
     position: absolute;
     top: 55%;
@@ -1225,17 +1227,19 @@ export default {
   .btn {
     margin-right: 10px;
   }
-  .btn-array{
+
+  .btn-array {
     overflow: hidden;
     position: absolute;
     padding-top: 10px;
-    padding-right: 20px; 
+    padding-right: 20px;
     width: calc(100% - 8px);
     // height: 42px;
     background: #fff;
     z-index: 1;
     padding-bottom: 10px;
   }
+
   .baselineForm {
     margin-top: 42px;
     overflow: auto;
@@ -1327,5 +1331,11 @@ export default {
     top: 10px;
     position: relative;
   }
+}
+
+.base-form {
+  height: 100%;
+  -ms-overflow-x: hidden;
+  overflow: hidden auto;
 }
 </style>
