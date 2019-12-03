@@ -3,10 +3,10 @@
     <p @click="showMicroorganism">
       <a-icon type="edit" class="mcroorganism" /><span>编辑</span>
     </p>
-    <a-modal ref="picUpload" title="药敏检查" width="800px" :visible="visible" :footer="null" :centered="centered" @cancel="handleCancel" :bodyStyle="bodyStyle">
+    <a-modal ref="picUpload" title="药敏检查" width="800px" :visible="visible" :footer="null" :maskClosable="false" :centered="centered" @cancel="handleCancel" :bodyStyle="bodyStyle">
       <a-spin :spinning="confirmLoading">
-        <a-form :form="form" layout="inline">
-          <a-form-item label="类型" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="typeof type1 !== 'undefined' || typeof type2 !== 'undefined'">
+        <a-form :form="form">
+          <a-form-item label="药敏类型" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="typeof type1 !== 'undefined' || typeof type2 !== 'undefined'">
             <a-radio-group v-model="t1" @change="changeType1($event)" v-if="typeof type1 !== 'undefined'">
               <a-radio value="1">粘液型</a-radio>
               <a-radio value="2">非粘液型</a-radio>
@@ -28,7 +28,7 @@
             </div>
           </a-form-item>
         </a-form>
-        <p>
+        <p style="text-align: right">
           <a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button>
         </p>
         <a-table rowKey="keyW" size="middle" :pagination="pagination" :columns="columns" :dataSource="data">
@@ -146,13 +146,13 @@ export default {
       form: this.$form.createForm(this),
       labelColHor: {
         xs: { span: 24 },
-        sm: { span: 9 },
-        md: { span: 9 }
+        sm: { span: 3 },
+        md: { span: 3 }
       },
       wrapperHor: {
         xs: { span: 24 },
-        sm: { span: 15 },
-        md: { span: 15 }
+        sm: { span: 19 },
+        md: { span: 19 }
       },
       uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
       viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
@@ -343,5 +343,10 @@ export default {
       text-decoration: underline;
     }
   }
+}
+
+.editable-add-btn {
+    background-color: #00a59b;
+    color: #fff;
 }
 </style>
