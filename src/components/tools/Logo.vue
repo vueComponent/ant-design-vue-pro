@@ -33,16 +33,11 @@ export default {
 </script>
 <style>
 .logo {
-  padding-left: 5px !important;
+  padding-left: 15px !important;
 }
 
 .logo h1 .logowords {
-  width: 120px!important;
-  height: 64px !important;
-}
-
-.logo .router-link-active .logoImg {
-  height: 64px;
-  width: 65px;
+  width: 110px!important;
+  /* height: 64px !important; */
 }
 </style>
