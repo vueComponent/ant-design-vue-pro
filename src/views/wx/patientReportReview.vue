@@ -59,8 +59,10 @@
       </template>
       <span slot="operation" slot-scope="text, record">
         <template>
-          <a v-if="record.executeStatus == 0" @click="handleReview(record)">审阅</a>
+          <a v-if="record.executeStatus == 0" @click="handleReview(record, true)">审阅</a>
           <span v-else>审阅</span>
+          <a-divider type="vertical" />
+          <a @click="handleReview(record, false)">查看</a>
         </template>
       </span>
     </s-table>
@@ -172,8 +174,8 @@
         this.advanced = false
         this.$refs.table.refresh()
       },
-      handleReview(recode) {
-        this.$refs.reportDetail.show(recode.checkId)
+      handleReview(recode, isSee) {
+        this.$refs.reportDetail.show(recode.checkId, isSee)
       },
       handleOk() {
         this.$refs.table.refresh()
