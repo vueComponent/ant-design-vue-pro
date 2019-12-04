@@ -27,7 +27,10 @@
             <div class="head-bar">
               <a-row type="flex">
                 <span class="head-icon"></span>
-                <div v-if="question.name && question.name" class="question-title">{{question.name}}</div>
+                <div v-if="question.name && question.name" class="question-title">
+                  <span v-if="questionTask.score">{{question.name}}(得分：{{questionTask.score}})</span>
+                  <span v-else>{{question.name}}</span>
+                </div>
               </a-row>
               <a-row v-if="executeStatus !== 2">
                 <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
@@ -109,7 +112,8 @@ export default {
         display: 'block'
       },
       spinning: false,
-      executeStatus: false
+      executeStatus: false,
+      questionTask: {}
     }
   },
   created() {
@@ -240,6 +244,7 @@ export default {
           //   this.listArr = this.initQuestionAnswers(res.data.topTitles)
           that.listArr = res.data.topTitles
           that.question = res.data.question
+          that.questionTask = res.data.questionTask
           if (res.data.isFinish === '0') {
             that.questionFinished = false
           } else {
@@ -265,7 +270,7 @@ export default {
             .then(res => {
               that.spinning = false
               that.$message.success(res.msg)
-              //   that.getFormData()
+              that.getFormData()
               params = new URLSearchParams()
               params.append('patientBasisId', this.patientBasisId)
               getPatientBasis(params)
@@ -351,6 +356,20 @@ export default {
           that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
+          params = new URLSearchParams()
+          params.append('patientBasisId', this.patientBasisId)
+          getPatientBasis(params)
+            .then(res => {
+              that.orgTree = res.data.list
+              that.defaultSelectedKeys = [that.questionId]
+              if (that.patientBasis.type === 1) {
+                that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+              } else if (that.patientBasis.type === 2 || that.patientBasis.type === 4) {
+                that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+              } else if (that.patientBasis.type === 3) {
+                that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+              }
+            })
         })
         .catch(error => {
           that.spinning = false

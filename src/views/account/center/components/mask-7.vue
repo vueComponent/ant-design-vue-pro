@@ -604,6 +604,13 @@ export default {
           that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
+          params = new URLSearchParams()
+          params.append('patientBasisId', this.patientBasisId)
+          getPatientBasis(params)
+            .then(res => {
+              that.orgTree = res.data.list
+              that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+            })
         })
         .catch(error => {
           that.spinning = false
@@ -615,14 +622,16 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:calc(100% - 10px);
+#baselineInfo {
+  height: calc(100% - 10px);
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   height: calc(100% - 54px);
 }
+
 /deep/ .ant-spin {
   position: absolute;
   top: 0;
@@ -631,6 +640,7 @@ export default {
   right: 0;
   background: rgba(0, 0, 0, .2);
   z-index: 2;
+
   & .ant-spin-dot {
     position: absolute;
     top: 55%;
@@ -644,7 +654,7 @@ export default {
   }
 }
 
-/deep/ .font-w .ant-form-item-required{
+/deep/ .font-w .ant-form-item-required {
   font-weight: bold;
 }
 
@@ -819,6 +829,7 @@ export default {
     .anticon-clock-circle {
       color: #06a0e2;
     }
+
     &.ant-menu-submenu-inline {
       .treeSubTitle {
         font-size: 16px;
@@ -859,17 +870,18 @@ export default {
     margin-right: 10px;
   }
 
-  .btn-array{
+  .btn-array {
     overflow: hidden;
     position: absolute;
     padding-top: 10px;
-    padding-right: 20px; 
+    padding-right: 20px;
     width: calc(100% - 8px);
     // height: 42px;
     background: #fff;
     z-index: 1;
     padding-bottom: 10px;
   }
+
   .baselineForm {
     margin-top: 42px;
     overflow: auto;
@@ -975,6 +987,7 @@ export default {
 /deep/.ant-menu-inline .ant-menu-submenu-title {
   padding-right: 0px;
 }
+
 .base-form {
   height: 100%;
   -ms-overflow-x: hidden;
