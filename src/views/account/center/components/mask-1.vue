@@ -192,7 +192,7 @@
                     <a-checkbox value="7" :checked="controlb917" @change="changeSelect($event, 'controlb917')">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
-                <a-form-item class="no-border" label="糖尿病::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb9 && controlb911">
+                <a-form-item class="no-border" label="糖尿病:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb9 && controlb911">
                   <a-radio-group v-decorator="['b911', {...require2, initialValue: initValue('b911')}]">
                     <a-radio value="1">I型</a-radio>
                     <a-radio value="2">II型</a-radio>
