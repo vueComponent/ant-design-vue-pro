@@ -37,7 +37,7 @@ export default {
 }
 
 .logo h1 .logowords {
-  width: 110px!important;
-  /* height: 64px !important; */
+  width: 100px!important;
+  height: 36px!important;
 }
 </style>
