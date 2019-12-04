@@ -465,6 +465,13 @@ export default {
           that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
+          params = new URLSearchParams()
+          params.append('patientBasisId', this.patientBasisId)
+          getPatientBasis(params)
+            .then(res => {
+              that.orgTree = res.data.list
+              that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+            })
         })
         .catch(error => {
           that.spinning = false
@@ -602,6 +609,7 @@ export default {
   right: 0;
   background: rgba(0, 0, 0, .2);
   z-index: 2;
+
   & .ant-spin-dot {
     position: absolute;
     top: 55%;
@@ -944,6 +952,7 @@ export default {
 /deep/.ant-menu-inline .ant-menu-submenu-title {
   padding-right: 0px;
 }
+
 .base-form {
   height: 100%;
   -ms-overflow-x: hidden;

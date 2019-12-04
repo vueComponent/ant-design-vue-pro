@@ -68,7 +68,6 @@
   import moment from 'moment'
   import { getWxQuestionList } from '@/api/distract'
   import { STable } from '@/components'
-  import { mapActions } from 'vuex'
   const visitMap = {
     3: {
       status: 'error',
@@ -175,7 +174,6 @@
       }
     },
     created() {
-      this.setSidebar(true)
       this.scroll = {
         y: window.screen.height - 368 + 'px'
       }
@@ -189,7 +187,6 @@
       }
     },
     methods: {
-      ...mapActions(['setSidebar']),
       onSelectChange(selectedRowKeys, selectedRows) {
         this.selectedRowKeys = selectedRowKeys;
         this.selectedRows = selectedRows;

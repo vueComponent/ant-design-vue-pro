@@ -703,6 +703,16 @@ export default {
           that.$message.success(res.msg)
           that.spinning = false
           that.getFormData()
+          params = new URLSearchParams()
+          params.append('patientBasisId', that.patientBasisId)
+          getPatientBasis(params)
+            .then(res => {
+              that.orgTree = res.data.list
+              that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+            })
+            .catch(error => {
+              console.log(error)
+            })
         })
         .catch(error => {
           that.spinning = false
@@ -744,14 +754,16 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-#baselineInfo{
-  height:calc(100% - 10px);
+#baselineInfo {
+  height: calc(100% - 10px);
 }
-/deep/ .card-box{
+
+/deep/ .card-box {
   margin-top: 10px;
   padding-left: 0;
   height: calc(100% - 54px);
 }
+
 /deep/ .ant-spin {
   position: absolute;
   top: 0;
@@ -760,6 +772,7 @@ export default {
   right: 0;
   background: rgba(0, 0, 0, .2);
   z-index: 2;
+
   & .ant-spin-dot {
     position: absolute;
     top: 55%;
@@ -984,11 +997,12 @@ export default {
   .btn {
     margin-right: 10px;
   }
-  .btn-array{
+
+  .btn-array {
     overflow: hidden;
     position: absolute;
     padding-top: 10px;
-    padding-right: 20px; 
+    padding-right: 20px;
     width: calc(100% - 8px);
     // height: 42px;
     background: #fff;
