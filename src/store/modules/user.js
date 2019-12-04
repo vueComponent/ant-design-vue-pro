@@ -43,7 +43,7 @@ const user = {
             reject(response)
           }else{
             const result = response.data
-            Vue.ls.set(ACCESS_TOKEN, result, 7 * 24 * 60 * 60 * 1000)
+            Vue.ls.set(ACCESS_TOKEN, result, 2 * 60 * 60 * 1000) //2小时过期
             commit('SET_TOKEN', result)
             resolve()
           }         

@@ -163,7 +163,8 @@ export default {
   },
   methods: {
     showMicroorganism() {
-      this.visible = true
+      if (this.vitamin)
+        this.visible = true
     },
     handleCancel() {
       this.visible = false
@@ -177,8 +178,8 @@ export default {
       }
     },
     handlePreview() {
-        const viewer = document.querySelector('.images').$viewer;
-        viewer.show()
+      const viewer = document.querySelector('.images').$viewer;
+      viewer.show()
     },
     handleSelectChange(value, key, column) {
       const newData = [...this.data]
@@ -346,7 +347,7 @@ export default {
 }
 
 .editable-add-btn {
-    background-color: #00a59b;
-    color: #fff;
+  background-color: #00a59b;
+  color: #fff;
 }
 </style>

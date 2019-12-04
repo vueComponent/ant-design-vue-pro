@@ -91,7 +91,7 @@ export default {
       baselineFormStyle: {
         overflow: 'auto',
         padding: '20px 20px 80px',
-        height: '100%'
+        height: '85%'
       },
       title: '',
       openKeys: [],

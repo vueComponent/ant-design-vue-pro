@@ -926,12 +926,12 @@ export default {
   padding-right: 0px;
 }
 
-@media screen and (max-width: 1366px) {
-  .control-m-line.ant-checkbox-group {
-    top: 10px;
-    position: relative;
-  }
+
+.control-m-line.ant-checkbox-group {
+  top: 10px;
+  position: relative;
 }
+
 
 .base-form {
   height: 100%;
