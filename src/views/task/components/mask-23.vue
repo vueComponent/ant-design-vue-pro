@@ -77,7 +77,7 @@
                   <a-input style="width: 240px;" v-decorator="['c1', {...inputRequired, initialValue: initValue('c1')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(2) 左室短轴缩短率:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['c2', {...inputRequired, initialValue: initValue('c2')}]" addonAfter="%" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['c2', { initialValue: initValue('c2')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
                 <div class="title">3.小结</div>
                 <a-form-item label="小结:" :labelCol="labelColHor" :wrapperCol="wrapperHor">

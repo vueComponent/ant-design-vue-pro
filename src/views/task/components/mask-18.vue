@@ -94,7 +94,7 @@
                     <a-input style="width: 240px;" v-decorator="['b414', {...inputRequired, initialValue: initValue('b414')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item label="吸入/雾化抗生素药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px;" v-decorator="['b42', {...inputRequired, initialValue: initValue('b42')}]" autocomplete="off"></a-input>
+                    <a-input style="width: 240px;" v-decorator="['b42', { initialValue: initValue('b42')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item label="祛痰类药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-checkbox-group v-decorator="['b43', {...selectRequired, initialValue: initValue('b43', 'array')}]">
