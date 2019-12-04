@@ -31,7 +31,7 @@
             <div class="head-bar">
               <a-row type="flex">
                 <span class="head-icon"></span>
-                <div v-if="question.name" class="question-title">{{question.name}}<span v-if="score">{{`得分：（${score}分）`}}</span></div>
+                <div v-if="question.name" class="question-title">{{question.name}}<span v-if="score">{{`（得分：${score}分）`}}</span></div>
               </a-row>
               <span v-if="showBtnState == 3">已驳回</span>
               <span v-else-if="showBtnState == 4">已审批</span>
