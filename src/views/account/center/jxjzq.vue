@@ -524,6 +524,15 @@ export default {
           that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
+          params = new URLSearchParams()
+          params.append('patientBasisId', this.patientBasisId)
+          getPatientBasis(params)
+            .then(res => {
+              that.orgTree = res.data.list
+              that.maskId = res.data.list[0].basisMarkId
+              that.defaultSelectedKeys = [that.maskId]
+              that.executeStatus = res.data.list[0].executeStatus
+            })
         })
         .catch(error => {
           that.spinning = false
@@ -598,6 +607,7 @@ export default {
   right: 0;
   background: rgba(0, 0, 0, .2);
   z-index: 2;
+
   & .ant-spin-dot {
     position: absolute;
     top: 55%;
@@ -822,11 +832,12 @@ export default {
   .btn {
     margin-right: 10px;
   }
-  .btn-array{
+
+  .btn-array {
     overflow: hidden;
     position: absolute;
     padding-top: 10px;
-    padding-right: 20px; 
+    padding-right: 20px;
     width: calc(100% - 8px);
     // height: 42px;
     background: #fff;
@@ -926,12 +937,12 @@ export default {
   padding-right: 0px;
 }
 
-@media screen and (max-width: 1366px) {
-  .control-m-line.ant-checkbox-group {
-    top: 10px;
-    position: relative;
-  }
+
+.control-m-line.ant-checkbox-group {
+  top: 10px;
+  position: relative;
 }
+
 
 .base-form {
   height: 100%;

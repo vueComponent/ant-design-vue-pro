@@ -11,7 +11,7 @@ console.log(process.env.NODE_ENV === 'production')
 console.log(process.env.NODE_ENV === 'production' ? '' : '/api')
 const service = axios.create({
   baseURL: process.env.NODE_ENV === 'production' ? 'http://61.132.50.162:9997' : '/api', // api base_url
-  timeout: 6000 // 请求超时时间
+  timeout: 20000 // 请求超时时间
 })
 
 const err = (error) => {

@@ -258,7 +258,7 @@ export default {
       },
       labelColOffset2: {
         md: { span: 4, offset: 7 }
-      }, 
+      },
       wrapperOffset2: {
         md: { span: 13 }
       },
@@ -568,6 +568,13 @@ export default {
           that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
+          params = new URLSearchParams()
+          params.append('patientBasisId', this.patientBasisId)
+          getPatientBasis(params)
+            .then(res => {
+              that.orgTree = res.data.list
+              that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+            })
         })
         .catch(error => {
           that.spinning = false
@@ -828,6 +835,7 @@ export default {
   right: 0;
   background: rgba(0, 0, 0, .2);
   z-index: 2;
+
   & .ant-spin-dot {
     position: absolute;
     top: 55%;
@@ -1052,11 +1060,12 @@ export default {
   .btn {
     margin-right: 10px;
   }
-  .btn-array{
+
+  .btn-array {
     overflow: hidden;
     position: absolute;
     padding-top: 10px;
-    padding-right: 20px; 
+    padding-right: 20px;
     width: calc(100% - 8px);
     // height: 42px;
     background: #fff;
@@ -1176,6 +1185,7 @@ export default {
     position: relative;
   }
 }
+
 .base-form {
   height: 100%;
   -ms-overflow-x: hidden;

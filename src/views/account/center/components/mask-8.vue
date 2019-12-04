@@ -55,10 +55,10 @@
                   </div>
                 </a-form-item>
                 <a-form-item label="肺功能测试名称" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                    <a-row type="flex">
-                        <a-col :span="12">实际值</a-col>
-                        <a-col :span="12">实/预%</a-col>
-                    </a-row>
+                  <a-row type="flex">
+                    <a-col :span="12">实际值</a-col>
+                    <a-col :span="12">实/预%</a-col>
+                  </a-row>
                 </a-form-item>
                 <a-form-item label="FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
                   <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
@@ -235,10 +235,10 @@
                   </div>
                 </a-form-item>
                 <a-form-item label="舒张试验名称" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                    <a-row type="flex">
-                        <a-col :span="12">前次</a-col>
-                        <a-col :span="12">后次</a-col>
-                    </a-row>
+                  <a-row type="flex">
+                    <a-col :span="12">前次</a-col>
+                    <a-col :span="12">后次</a-col>
+                  </a-row>
                 </a-form-item>
                 <a-form-item label="VC MAX::" :labelCol="labelXs" :wrapperCol="wrapperMx">
                   <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%', border: 'none' }">
@@ -409,10 +409,10 @@ export default {
   },
   data() {
     return {
-    //   previewVisible1: false,
-    //   previewImage1: '',
-    //   previewVisible2: false,
-    //   previewImage2: '',
+      //   previewVisible1: false,
+      //   previewImage1: '',
+      //   previewVisible2: false,
+      //   previewImage2: '',
       uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
       viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
       fileList1: [],
@@ -769,6 +769,16 @@ export default {
           that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
+          params = new URLSearchParams()
+          params.append('patientBasisId', that.patientBasisId)
+          getPatientBasis(params)
+            .then(res => {
+              that.orgTree = res.data.list
+              that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+            })
+            .catch(error => {
+              console.log(error)
+            })
         })
         .catch(error => {
           that.spinning = false
@@ -780,10 +790,10 @@ export default {
     //   this.previewVisible1 = false;
     // },
     handlePreview1(file) {
-        const viewer = this.$el.querySelector('.images1').$viewer
-        viewer.show()
-    //   this.previewImage1 = file.url || file.thumbUrl;
-    //   this.previewVisible1 = true;
+      const viewer = this.$el.querySelector('.images1').$viewer
+      viewer.show()
+      //   this.previewImage1 = file.url || file.thumbUrl;
+      //   this.previewVisible1 = true;
     },
     handleChange1({ fileList }) {
       this.fileList1 = fileList;
@@ -792,10 +802,10 @@ export default {
     //   this.previewVisible2 = false;
     // },
     handlePreview2(file) {
-        const viewer = this.$el.querySelector('.images2').$viewer
-        viewer.show()
-    //   this.previewImage2 = file.url || file.thumbUrl;
-    //   this.previewVisible2 = true;
+      const viewer = this.$el.querySelector('.images2').$viewer
+      viewer.show()
+      //   this.previewImage2 = file.url || file.thumbUrl;
+      //   this.previewVisible2 = true;
     },
     handleChange2({ fileList }) {
       this.fileList2 = fileList;
@@ -859,6 +869,7 @@ export default {
   right: 0;
   background: rgba(0, 0, 0, .2);
   z-index: 2;
+
   & .ant-spin-dot {
     position: absolute;
     top: 55%;
@@ -1083,11 +1094,12 @@ export default {
   .btn {
     margin-right: 10px;
   }
-  .btn-array{
+
+  .btn-array {
     overflow: hidden;
     position: absolute;
     padding-top: 10px;
-    padding-right: 20px; 
+    padding-right: 20px;
     width: calc(100% - 8px);
     // height: 42px;
     background: #fff;

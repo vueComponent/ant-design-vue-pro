@@ -27,7 +27,7 @@
             <div class="head-bar">
               <a-row type="flex">
                 <span class="head-icon"></span>
-                <div v-if="question.name && question.name" class="question-title">{{question.name}}<span v-if="score">{{`（${score}分）`}}</span></div>
+                <div v-if="question.name && question.name" class="question-title">{{question.name}}<span v-if="score">{{`得分：（${score}分）`}}</span></div>
               </a-row>
               <a-row v-if="executeStatus !== 2">
                 <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
@@ -110,7 +110,8 @@ export default {
         display: 'block'
       },
       spinning: false,
-      executeStatus: false
+      executeStatus: false,
+      questionTask: {}
     }
   },
   created() {
@@ -319,6 +320,20 @@ export default {
           that.spinning = false
           that.getFormData()
           that.$message.success(res.msg)
+          params = new URLSearchParams()
+          params.append('patientBasisId', this.patientBasisId)
+          getPatientBasis(params)
+            .then(res => {
+              that.orgTree = res.data.list
+              that.defaultSelectedKeys = [that.questionId]
+              if (that.patientBasis.type === 1) {
+                that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+              } else if (that.patientBasis.type === 2 || that.patientBasis.type === 4) {
+                that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+              } else if (that.patientBasis.type === 3) {
+                that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+              }
+            })
         })
         .catch(error => {
           that.spinning = false
