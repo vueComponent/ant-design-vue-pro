@@ -27,7 +27,7 @@
             <div class="head-bar">
               <a-row type="flex">
                 <span class="head-icon"></span>
-                <div v-if="question.name && question.name" class="question-title">{{question.name}}</div>
+                <div v-if="question.name && question.name" class="question-title">{{question.name}}<span v-if="score">{{`（${score}分）`}}</span></div>
               </a-row>
               <a-row v-if="executeStatus !== 2">
                 <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
@@ -100,6 +100,7 @@ export default {
       patient: {},
       patientBasis: {},
       question: {},
+      score: "",
       patientBasisId: parseInt(this.$route.params.id),
       questionId: parseInt(this.$route.params.qid),
       form: this.$form.createForm(this),
@@ -140,84 +141,53 @@ export default {
           that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
       })
-    this.getFormData()
+    // this.getFormData()
   },
   watch: {
-    $route(to, from) {
-      if (to.name === 'BasisQuestion') {
-        this.questionId = parseInt(to.params.qid)
-        this.getFormData()
+      $route:{
+        handler(to, from) {
+          this.questionId = parseInt(to.params.qid)
+          this.getFormData()
+        },
+        immediate: true
       }
-    }
+    // $route(to, from) {
+    //   if (to.name === 'BasisQuestion') {
+    //     this.questionId = parseInt(to.params.qid)
+    //     this.getFormData()
+    //   }
+    // }
   },
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
-    // changeSelect(e, t) {
-    //   this[t] = e.target.checked
-    // },
-    // changeRadio(e, t) {
-    //   if (t === 'control_b_19_1') {
-    //     if (e.target.value === '1' || e.target.value === '2') {
-    //       this[t] = true
-    //     } else {
-    //       this[t] = false
-    //     }
-    //   } else if (e.target.value === '1') {
-    //     this[t] = true
-    //   } else {
-    //     this[t] = false
-    //   }
-    // },
-
-    // handleChangeRadio: function() {
-    //   var that = this;
-    //   var radios = $('input[type="radio"]');
-    //   var chackVal = null;
-    //   var aa = null;
-    //   for (var i = 0; i < radios.length; i++) {
-    //     if (radios[i].checked) {
-    //       chackVal = radios[i].value;
-    //       aa = radios[i].name;
-    //       if (chackVal == 148) {
-    //         $('.ques-box').eq(21).show();
-    //         $('.ques-box').eq(22).show();
-    //         $('.ques-box').eq(23).show();
-    //       } else if (chackVal == 149) {
-    //         $('.ques-box').eq(21).hide();
-    //         $('.ques-box').eq(22).hide();
-    //         $('.ques-box').eq(23).hide();
-    //       }
-    //     } else {}
-    //   }
-    // },
     disabledDate(current) {
       // Can not select days before today and today
       return current && current > moment().endOf('day');
     },
     handleChange(e) {
-      var params = new URLSearchParams()
-      params.append('patientBasisId', this.patientBasisId)
-      var that = this
-      getPatientBasis(params)
-        .then(res => {
-          that.patientBasis = res.data.patientBasis
-          if (that.patientBasis.type === 1) {
-            that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
-          }
-          if (that.patientBasis.type === 2) {
-            that.title = '半年随访'
-            that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
-          }
-          if (that.patientBasis.type === 3) {
-            that.title = '年访视'
-            that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
-          }
-          if (that.patientBasis.type === 4) {
-            that.title = '急性加重期'
-            that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
-          }
-        })
+    //   var params = new URLSearchParams()
+    //   params.append('patientBasisId', this.patientBasisId)
+    //   var that = this
+    //   getPatientBasis(params)
+    //     .then(res => {
+    //       that.patientBasis = res.data.patientBasis
+    //       if (that.patientBasis.type === 1) {
+    //         that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+    //       }
+    //       if (that.patientBasis.type === 2) {
+    //         that.title = '半年随访'
+    //         that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+    //       }
+    //       if (that.patientBasis.type === 3) {
+    //         that.title = '年访视'
+    //         that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+    //       }
+    //       if (that.patientBasis.type === 4) {
+    //         that.title = '急性加重期'
+    //         that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+    //       }
+    //     })
       if (e.key >= 31 && e.key <= 42 || (e.key >= 57 && e.key <= 62) || (e.key >= 45 && e.key <= 50)) {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 1) {
@@ -237,9 +207,9 @@ export default {
       getQuestionDetail(params)
         .then(res => {
           that.spinning = false
-          //   this.listArr = this.initQuestionAnswers(res.data.topTitles)
           that.listArr = res.data.topTitles
           that.question = res.data.question
+          that.score = res.data.questionTask && res.data.questionTask.score
           if (res.data.isFinish === '0') {
             that.questionFinished = false
           } else {
@@ -265,7 +235,6 @@ export default {
             .then(res => {
               that.spinning = false
               that.$message.success(res.msg)
-              //   that.getFormData()
               params = new URLSearchParams()
               params.append('patientBasisId', this.patientBasisId)
               getPatientBasis(params)
@@ -338,7 +307,6 @@ export default {
     save() {
       const that = this
       var result = this.generateQuestionAnswers()
-      console.log(result)
       var params = new URLSearchParams()
       params.append('answers', JSON.stringify(result))
       params.append('patientBasisId', this.patientBasisId)
@@ -355,26 +323,7 @@ export default {
         .catch(error => {
           that.spinning = false
         })
-    },
-    // initQuestionAnswers(list) {
-    //   _.each(list, function(a) {
-    //     if (a.childrens && a.childrens.length) {
-    //       _.each(a.childrens, function(b) {
-    //         if (b.type === 1 && b.answers && b.answers.length) {
-    //           b.inputType = b.answers[0].questionOptionId
-    //         }
-    //         if (b.type === 2) {
-    //           if (b.answers && b.answers.length) {
-    //             b.inputType = _.map(b.answers, function(v) { return v.questionOptionId })
-    //           } else {
-    //             b.inputType = []
-    //           }
-    //         }
-    //       })
-    //     }
-    //   })
-    //   return list
-    // }
+    }
   }
 }
 </script>

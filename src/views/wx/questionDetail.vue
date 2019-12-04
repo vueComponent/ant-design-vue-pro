@@ -31,7 +31,7 @@
             <div class="head-bar">
               <a-row type="flex">
                 <span class="head-icon"></span>
-                <div v-if="question.name" class="question-title">{{question.name}}</div>
+                <div v-if="question.name" class="question-title">{{question.name}}<span v-if="score">{{`（${score}分）`}}</span></div>
               </a-row>
               <span v-if="showBtnState == 3">已驳回</span>
               <span v-else-if="showBtnState == 4">已审批</span>
@@ -44,7 +44,7 @@
               <!-- 调查问卷 -->
               <div v-if="question.remark" class="question-des"><span style="color:#3398dc">说明：</span>{{question.remark}}</div>
               <a-form :form="form">
-                <div v-for="item in listArr" :key="item.id">
+                <div v-for="item in questionList" :key="item.id">
                   <div class="question-t">
                     <span class="question-icon"></span>
                     <span>{{item.name}}</span>
@@ -94,12 +94,13 @@
         form: this.$form.createForm(this),
         question: {},
         orgTree: [],
-        listArr: [],
+        questionList: [],
         disBlock: {
           display: 'block',
         },
         questionTaskId: '',
-        showBtnState: ''
+        showBtnState: '',
+        score: ''
       }
     },
     created() {
@@ -113,13 +114,17 @@
       getWxQuestionDetail(params).then(res => {
         this.isLoading = false
         this.orgTree = res.data.questionList
-        this.listArr = this.initQuestionAnswers(res.data.topTitles)
-        this.questionTask = res.data.questionTask
+        this.questionList = this.initQuestionAnswers(res.data.topTitles)
         this.question = res.data.question
+        this.showBtnState = res.data.questionTask && res.data.questionTask.status
+        this.score = res.data.questionTask && res.data.questionTask.score
       })
     },
+    beforeDestroy() {
+      this.setSidebar(true)
+    },
     methods: {
-      ...mapActions(['CloseSidebar']),
+      ...mapActions(['CloseSidebar', 'setSidebar']),
       moment,
 
       handleChange(id) {
@@ -129,9 +134,10 @@
         params.append('questionTaskId', id)
         getWxQuestionDetail(params).then(res => {
           this.isLoading = false
-          this.listArr = this.initQuestionAnswers(res.data.topTitles)
+          this.questionList = this.initQuestionAnswers(res.data.topTitles)
           this.question = res.data.question
           this.showBtnState = res.data.questionTask && res.data.questionTask.status
+          this.score = res.data.questionTask && res.data.questionTask.score
         })
       },
       save(id) {
