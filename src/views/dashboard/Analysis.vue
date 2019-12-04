@@ -73,7 +73,7 @@
             <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 12px' }">
               <router-link :to="{name:'caseTransferReview'}">
                 <div class="card-wait-data">
-                  <span class="myIcon"><my-icon type="iconziyuan1" /></span>
+                  <span class="myIcon"><my-icon type="iconqitabingli" /></span>
                   <div>
                     <p>待审转移病例</p>
                     <h1>{{ myWork.noDoPatientTransferNum }}</h1>
@@ -95,7 +95,7 @@
             <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 12px' }">
               <router-link :to="{name:'wxPatientReportReview'}">
                 <div class="card-wait-data">
-                  <span class="myIcon"><my-icon type="iconziyuan" /></span>
+                  <span class="myIcon"><my-icon type="icondaishenzhuanyibingli" /></span>
                   <div>
                     <p>待审阅报告</p>
                     <h1>{{ myWork.otherNum }}</h1>
