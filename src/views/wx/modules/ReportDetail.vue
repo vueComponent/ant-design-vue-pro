@@ -1,5 +1,5 @@
 <template>
-  <a-modal title="患者报告审阅" okText="审阅" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
+  <a-modal title="患者报告审阅" okText="审阅" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" :okButtonProps="{ props: {disabled: !isSee} }" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="报告标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -13,10 +13,10 @@
         </a-form-item>
         <a-form-item label="报告附件" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <viewer class="img-list" :images="imgList">
-            <img v-for="item in imgList" :src="`${attachsPrefix}${item.annexAddress}`" :key="item.annexAddress" width="25%" height="150px">
+            <img v-for="item in imgList" :src="`${attachsPrefix}${item.annexAddress}`" :key="item.annexAddress" height="150px">
           </viewer>
         </a-form-item>
-        <a-form-item label="反馈意见" :labelCol="labelCol" :wrapperCol="wrapperCol" style="margin-bottom:0">
+        <a-form-item v-if="isSee" label="反馈意见" :labelCol="labelCol" :wrapperCol="wrapperCol" style="margin-bottom:0">
           <a-textarea rows="3" v-decorator="['feedback', requiredRule]" />
         </a-form-item>
       </a-form>
@@ -39,6 +39,7 @@
         destroyOnClose: true,
         visible: false,
         confirmLoading: false,
+        isSee: false,
         checkId: '',
         form: this.$form.createForm(this),
         labelCol: {
@@ -55,9 +56,10 @@
       }
     },
     methods: {
-      show(id) {
+      show(id, isSee) {
         this.visible = true;
         this.checkId = id
+        this.isSee = isSee
 
         this.confirmLoading = true
 
@@ -103,8 +105,11 @@
 </script>
 
 <style lang="less" scoped>
-  .img-list {
-    display: flex;
-    flex-wrap: wrap;
+  .img-list img {
+    display: inline-block;
+    width: calc(25% - 5px);
+    margin-right: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
   }
 </style>
