@@ -53,12 +53,13 @@
     </div>
 
     <s-table ref="table" :scroll="scroll" size="small" rowKey="ticketId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-      <span slot="operation" slot-scope="text, record">
-        <template>
-          <span v-if="record.executeStatus == 1">注销</span>
-          <a v-else @click="handleLogout(record)">注销</a>
-        </template>
-      </span>
+      <template slot="executeStatus" slot-scope="text">
+        <a-badge :status="text == 0 ? 'success' : 'error'" :text="text == 0 ? '未注销' : '已注销'" />
+      </template>
+      <template slot="operation" slot-scope="text, record">
+        <span v-if="record.executeStatus == 1">注销</span>
+        <a v-else @click="handleLogout(record)">注销</a>
+      </template>
     </s-table>
   </a-card>
 </template>
@@ -135,8 +136,8 @@
           },
           {
             title: '注销状态',
-            dataIndex: 'executeName',
-            scopedSlots: { customRender: 'executeName' },
+            dataIndex: 'executeStatus',
+            scopedSlots: { customRender: 'executeStatus' },
             width: '100px'
           },
           {
