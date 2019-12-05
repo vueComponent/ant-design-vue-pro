@@ -147,17 +147,13 @@ export default {
   watch: {
       $route:{
         handler(to, from) {
-          this.questionId = parseInt(to.params.qid)
-          this.getFormData()
+          if (to.name === 'BasisQuestion') {
+            this.questionId = parseInt(to.params.qid)
+            this.getFormData()
+          }
         },
         immediate: true
       }
-    // $route(to, from) {
-    //   if (to.name === 'BasisQuestion') {
-    //     this.questionId = parseInt(to.params.qid)
-    //     this.getFormData()
-    //   }
-    // }
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -167,28 +163,28 @@ export default {
       return current && current > moment().endOf('day');
     },
     handleChange(e) {
-    //   var params = new URLSearchParams()
-    //   params.append('patientBasisId', this.patientBasisId)
-    //   var that = this
-    //   getPatientBasis(params)
-    //     .then(res => {
-    //       that.patientBasis = res.data.patientBasis
-    //       if (that.patientBasis.type === 1) {
-    //         that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
-    //       }
-    //       if (that.patientBasis.type === 2) {
-    //         that.title = '半年随访'
-    //         that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
-    //       }
-    //       if (that.patientBasis.type === 3) {
-    //         that.title = '年访视'
-    //         that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
-    //       }
-    //       if (that.patientBasis.type === 4) {
-    //         that.title = '急性加重期'
-    //         that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
-    //       }
-    //     })
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      var that = this
+      getPatientBasis(params)
+        .then(res => {
+          that.patientBasis = res.data.patientBasis
+          if (that.patientBasis.type === 1) {
+            that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+          }
+          if (that.patientBasis.type === 2) {
+            that.title = '半年随访'
+            that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+          }
+          if (that.patientBasis.type === 3) {
+            that.title = '年访视'
+            that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+          }
+          if (that.patientBasis.type === 4) {
+            that.title = '急性加重期'
+            that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+          }
+        })
       if (e.key >= 31 && e.key <= 42 || (e.key >= 57 && e.key <= 62) || (e.key >= 45 && e.key <= 50)) {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 1) {
