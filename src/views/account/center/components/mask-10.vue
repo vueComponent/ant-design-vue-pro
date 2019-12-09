@@ -582,7 +582,7 @@ export default {
 }
 
 .page-header-index-wide {
-  /deep/ .ant-card-wider-padding .ant-card-body {
+  /deep/ .ant-card-body {
     padding: 0;
     height: 100%;
   }

@@ -145,15 +145,15 @@ export default {
     // this.getFormData()
   },
   watch: {
-      $route:{
-        handler(to, from) {
-          if (to.name === 'BasisQuestion') {
-            this.questionId = parseInt(to.params.qid)
-            this.getFormData()
-          }
-        },
-        immediate: true
-      }
+    $route: {
+      handler(to, from) {
+        if (to.name === 'BasisQuestion') {
+          this.questionId = parseInt(to.params.qid)
+          this.getFormData()
+        }
+      },
+      immediate: true
+    }
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -232,6 +232,7 @@ export default {
             .then(res => {
               that.spinning = false
               that.$message.success(res.msg)
+              that.getFormData()
               params = new URLSearchParams()
               params.append('patientBasisId', this.patientBasisId)
               getPatientBasis(params)

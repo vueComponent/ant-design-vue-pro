@@ -586,7 +586,6 @@ export default {
     }
   },
   created() {
-
     var that = this
     this.defaultSelectedKeys = [1]
     this.CloseSidebar()
@@ -607,6 +606,15 @@ export default {
   activated() {
     this.defaultSelectedKeys = [1]
     this.CloseSidebar()
+    var params = new URLSearchParams()
+    params.append('patientBasisId', this.patientBasisId)
+    getPatientBasis(params)
+      .then(res => {
+        that.orgTree = res.data.list
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
   mounted() {
 
@@ -1093,7 +1101,7 @@ export default {
 }
 
 .page-header-index-wide {
-  /deep/ .ant-card-wider-padding .ant-card-body {
+  /deep/ .ant-card-body {
     padding: 0;
     height: 100%;
   }
