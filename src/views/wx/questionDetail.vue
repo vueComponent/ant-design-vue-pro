@@ -128,6 +128,7 @@
       moment,
 
       handleChange(id) {
+        if(this.questionTaskId == id) return
         this.questionTaskId = id
         this.isLoading = true
         const params = new FormData()

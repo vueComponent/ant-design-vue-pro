@@ -51,7 +51,7 @@
                   <a-radio-group v-if="qu1.type === 1" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? qu1.answers[0].questionOptionId : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
                     <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
                   </a-radio-group>
-                  <a-checkbox-group v-if="qu1.type === 2" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? qu1.answers[0].questionOptionId : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
+                  <a-checkbox-group v-if="qu1.type === 2" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.inputTypes, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
                     <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-checkbox>
                   </a-checkbox-group>
                   <a-date-picker v-if="qu1.type === 6" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? moment(qu1.answers[0].questionOptionValue, 'YYYY/MM/DD') : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]" format="YYYY-MM-DD" :disabledDate="disabledDate" />
@@ -142,7 +142,6 @@ export default {
           that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
       })
-    // this.getFormData()
   },
   watch: {
     $route: {
@@ -204,7 +203,7 @@ export default {
       getQuestionDetail(params)
         .then(res => {
           that.spinning = false
-          that.listArr = res.data.topTitles
+          that.listArr = that.initQuestionAnswers(res.data.topTitles)
           that.question = res.data.question
           that.score = res.data.questionTask && res.data.questionTask.score
           if (res.data.isFinish === '0') {
@@ -213,6 +212,22 @@ export default {
             that.questionFinished = true
           }
         })
+    },
+    initQuestionAnswers(list) {
+      _.each(list, function (a) {
+        if (a.childrens && a.childrens.length) {
+          _.each(a.childrens, function (b) {
+            if (b.type === 2) {
+              if (b.answers && b.answers.length) {
+                b.inputTypes = _.map(b.answers, function (v) { return v.questionOptionId })
+              } else {
+                b.inputTypes = []
+              }
+            }
+          })
+        }
+      })
+      return list
     },
     handleSubmit(e) {
       e.preventDefault()
@@ -254,6 +269,7 @@ export default {
       })
     },
     generateQuestionAnswers() {
+        let that = this
       var result = []
       var titleObject = {}
       var childrenObject = []
@@ -262,32 +278,48 @@ export default {
         titleObject = {
           options: []
         }
-        titleObject.titleId = title.questionTitleId
+        titleObject.titleId = title.inputType
         childrenObject = []
         if (title.childrens && title.childrens.length) {
           _.each(title.childrens, function(sub) {
             if (sub.type === 3) {
               childrenObject.push({
-                titleId: sub.questionTitleId,
-                value: $('input[name="' + sub.questionTitleId + '"]').val()
+                titleId: sub.inputType,
+                value: $('input[name="' + sub.inputType + '"]').val()
               })
             }
             if (sub.type === 6) {
               childrenObject.push({
-                titleId: sub.questionTitleId,
-                value: $('[name="' + sub.questionTitleId + '"] input').val()
+                titleId: sub.inputType,
+                value: $('[name="' + sub.inputType + '"] input').val()
               })
             }
-            if ((sub.type === 1 || sub.type === 2) && sub.options && sub.options.length) {
+            if(sub.type === 2 && sub.options && sub.options.length) {
+                // console.log(that.form.getFieldValue(sub.inputType))
               subOp = {
-                titleId: sub.questionTitleId,
+                titleId: sub.inputType,
                 options: []
               }
-              $('input[name="' + sub.questionTitleId + '"]:checked').each(function() {
+              if (that.form.getFieldValue(sub.inputType) != null) {
+                that.form.getFieldValue(sub.inputType).forEach(item => {
+                  subOp.options.push({
+                    questionTitleId: sub.inputType,
+                    questionOptionId: item
+                  })
+                })
+              }
+              childrenObject.push(subOp)
+            }
+            if ((sub.type === 1) && sub.options && sub.options.length) {
+              subOp = {
+                titleId: sub.inputType,
+                options: []
+              }
+              $('input[name="' + sub.inputType + '"]:checked').each(function() {
                 console.log("checked......");
 
                 subOp.options.push({
-                  questionTitleId: sub.questionTitleId,
+                  questionTitleId: sub.inputType,
                   questionOptionId: $(this).val()
                 })
                 console.log($(this).val());
@@ -305,6 +337,7 @@ export default {
     save() {
       const that = this
       var result = this.generateQuestionAnswers()
+        console.log(result)
       var params = new URLSearchParams()
       params.append('answers', JSON.stringify(result))
       params.append('patientBasisId', this.patientBasisId)
