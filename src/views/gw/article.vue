@@ -76,12 +76,12 @@
           {
             title: '文章标题',
             dataIndex: 'title',
-            width: '150px'
+            width: '220px'
           },
           {
             title: '文章发布人',
             dataIndex: 'publisher',
-            width: '120px'
+            width: '100px'
           },
           {
             title: '发布终端',

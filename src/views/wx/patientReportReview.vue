@@ -147,7 +147,7 @@
             title: '操作',
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
-            width: '100px'
+            width: '120px'
           }
         ],
       }
