@@ -63,7 +63,7 @@
           <a-checkbox v-decorator="['agreeMent', { rules: [ { required: true, validator: agrValidator }], valuePropName: 'checked' }]" :disabled="options.title == '编辑患者'">
             患者是否已签署
             <a href="#">知情同意书</a>
-            （点开左侧查看详情）
+            （点击下载）
           </a-checkbox>
         </a-form-item>
       </a-form>

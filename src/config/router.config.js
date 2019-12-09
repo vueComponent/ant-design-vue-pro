@@ -327,7 +327,13 @@ export const asyncRouterMap = [
         path: '/wx/healthknowledge',
         name: 'healthknowledge',
         component: () => import('@/views/wx/healthknowledge'),
-        meta: { title: '健康知识', keepAlive: true, icon: jkzs,isBack:false, permission: ['group']}
+        meta: { title: '微信文章', keepAlive: true, icon: jkzs, isBack:false, permission: ['group']}
+      },
+      {
+        path: '/wx/healthknowledge',
+        name: 'healthknowledge',
+        component: () => import('@/views/wx/healthknowledge'),
+        meta: { title: '官网文章', keepAlive: true, icon: jkzs, isBack:false, permission: ['group']}
       },
       {
         path: '/wx/famousDoctor',
@@ -336,9 +342,9 @@ export const asyncRouterMap = [
         meta: { title: '名医专家', keepAlive: true, icon: myzj,isBack:false, permission: ['group']}
       },
       {
-        path: '/pageConfigure/index',
+        path: '/gw/pageConfigure',
         name: 'pageConfigure',
-        component: () => import('@/views/pageConfigure/index'),
+        component: () => import('@/views/gw/pageConfigure'),
         meta: { title: '官网首页配置', keepAlive: true, icon: webconfig,isBack:false, permission: ['group']}
       },
       {
