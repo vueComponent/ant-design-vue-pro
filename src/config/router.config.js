@@ -324,15 +324,15 @@ export const asyncRouterMap = [
         meta: { title: '活动券登记', keepAlive: true, icon: huodongquan,isBack:false, permission: [ 'center', 'group']}
       },
       {
-        path: '/wx/healthknowledge',
-        name: 'healthknowledge',
-        component: () => import('@/views/wx/healthknowledge'),
+        path: '/wx/article',
+        name: 'wxArticle',
+        component: () => import('@/views/wx/article'),
         meta: { title: '微信文章', keepAlive: true, icon: jkzs, isBack:false, permission: ['group']}
       },
       {
-        path: '/wx/healthknowledge',
-        name: 'healthknowledge',
-        component: () => import('@/views/wx/healthknowledge'),
+        path: '/gw/article',
+        name: 'gwArticle',
+        component: () => import('@/views/gw/article'),
         meta: { title: '官网文章', keepAlive: true, icon: jkzs, isBack:false, permission: ['group']}
       },
       {

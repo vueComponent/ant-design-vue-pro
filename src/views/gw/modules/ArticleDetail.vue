@@ -17,15 +17,18 @@
         </a-form-item>
         <!-- <a-form-item label="发布终端" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-model="terminal">
-            <a-radio value="1">微信</a-radio>
+            <a-radio value="2">官网</a-radio>
           </a-radio-group>
         </a-form-item> -->
         <a-form-item label="模块类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select style="width: 100%" v-decorator="['type', requiredRule]">
-            <a-select-option value="3">科普知识</a-select-option>
-            <a-select-option value="4">日常护理</a-select-option>
-            <a-select-option value="5">饮食健康</a-select-option>
-            <a-select-option value="6">注意事项</a-select-option>
+            <a-select-option value="1">新闻动态</a-select-option>
+            <a-select-option value="2">通知公告</a-select-option>
+            <a-select-option value="3">前言热点</a-select-option>
+            <a-select-option value="4">继教学院</a-select-option>
+            <a-select-option value="6">科普文章</a-select-option>
+            <a-select-option value="7">患教课件</a-select-option>
+            <a-select-option value="8">关于我们</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="文章发布人" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -89,7 +92,7 @@
           this.title = '修改文章'
           const params = {
             textId,
-            terminal: '1'
+            terminal: '2'
           }
           getArticleDetail(params).then(res => {
             this.confirmLoading = false
@@ -166,7 +169,7 @@
           const params = new FormData()
           const textWx = {
             ...fieldsValue,
-            terminal: '1',
+            terminal: '2',
             url: this.fileName
           }
           if (this.textId) {

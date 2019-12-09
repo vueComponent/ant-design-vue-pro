@@ -2,17 +2,25 @@ import {
   axios
 } from '@/utils/request'
 
-export function getWxArticleList(parameter) {
+export function getWXList(parameter) {
   return axios({
-    url: '/text/getForm',
+    url: '/text/getWXList',
     method: 'post',
     params: parameter
   })
 }
 
-export function getWxArticleDetail(parameter) {
+export function getWebsiteList(parameter) {
+    return axios({
+      url: '/text/getWebsiteList',
+      method: 'post',
+      params: parameter
+    })
+  }
+
+export function getArticleDetail(parameter) {
   return axios({
-    url: `/text/viewAll`,
+    url: '/text/viewAll',
     method: 'get',
     params: parameter
   })

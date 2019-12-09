@@ -20,9 +20,9 @@
       </a-form>
     </div>
 
-    <s-table ref="table" :scroll="scroll" size="small" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" :scroll="scroll" size="small" rowKey="textId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <template slot="terminal" slot-scope="text">
-        <span v-if="text == 1">微信端</span>
+        <span v-if="text == 1">微信</span>
         <span v-if="text == 2">官网</span>
       </template>
       <template slot="operation" slot-scope="text, record">
@@ -36,7 +36,7 @@
 
 <script>
   import moment from 'moment'
-  import { getWxArticleList } from '@/api/text'
+  import { getWebsiteList } from '@/api/text'
   import { STable } from '@/components'
   import ArticleDetail from './modules/ArticleDetail'
   export default {
@@ -54,7 +54,7 @@
         queryParam: {},
         scroll: false,
         loadData: parameter => {
-          return getWxArticleList(Object.assign(parameter, this.queryParam)).then(res => {
+          return getWebsiteList(Object.assign(parameter, this.queryParam)).then(res => {
             return res
           })
         },
@@ -123,11 +123,7 @@
         this.$refs.table.refresh()
       },
       handleReview(recode) {
-        const params = {
-          textId: recode.textId,
-          terminal: recode.terminal
-        }
-        this.$refs.articleDetail.show(params)
+        this.$refs.articleDetail.show(recode.textId)
       },
       handleOk() {
         this.$refs.table.refresh()
