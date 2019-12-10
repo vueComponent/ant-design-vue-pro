@@ -42,20 +42,24 @@
                   <span class="question-icon"></span>
                   <span>{{item.name}}</span>
                 </div>
-                <a-form-item class="ques-box" v-for="(qu1, index) in item.childrens" :key="index" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''">
-                  <p v-if="qu1.type == 5" class="question-tip">
-                    <span class="tip-icon"></span>
-                    <span>{{qu1.name}}</span>
-                  </p>
-                  <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? qu1.answers[0].questionOptionValue : null , rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]" />
-                  <a-radio-group v-if="qu1.type === 1" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? qu1.answers[0].questionOptionId : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
-                    <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
-                  </a-radio-group>
-                  <a-checkbox-group v-if="qu1.type === 2" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.inputTypes, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
-                    <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-checkbox>
-                  </a-checkbox-group>
-                  <a-date-picker v-if="qu1.type === 6" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? moment(qu1.answers[0].questionOptionValue, 'YYYY/MM/DD') : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]" format="YYYY-MM-DD" :disabledDate="disabledDate" />
-                </a-form-item>
+                <div v-for="(qu1, index) in item.childrens" :key="index">
+                  <div  v-if="showFlag || [37,38,39].indexOf(parseInt(qu1.inputType)) < 0">
+                    <a-form-item class="ques-box"  :colon="false" :label="qu1.type !== 5 ? qu1.name : ''">
+                      <p v-if="qu1.type == 5" class="question-tip">
+                        <span class="tip-icon"></span>
+                        <span>{{qu1.name}}</span>
+                      </p>
+                      <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? qu1.answers[0].questionOptionValue : null , rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]" />
+                      <a-radio-group @change="handleClick" v-if="qu1.type === 1" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? qu1.answers[0].questionOptionId : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
+                          <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
+                      </a-radio-group>
+                      <a-checkbox-group v-if="qu1.type === 2" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.inputTypes, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
+                          <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-checkbox>
+                      </a-checkbox-group>
+                      <a-date-picker v-if="qu1.type === 6" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? moment(qu1.answers[0].questionOptionValue, 'YYYY/MM/DD') : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]" format="YYYY-MM-DD" :disabledDate="disabledDate" />
+                    </a-form-item>
+                  </div>
+                </div>
               </div>
             </div>
           </a-form>
@@ -111,7 +115,8 @@ export default {
       },
       spinning: false,
       executeStatus: false,
-      questionTask: {}
+      questionTask: {},
+      showFlag: true
     }
   },
   created() {
@@ -193,6 +198,13 @@ export default {
       } else {
         this.$router.replace('/list/task/' + this.patientBasisId + '/' + e.key)
       }
+    },
+    handleClick(e) {
+        if (e.target.value == '149') {
+            this.showFlag = false
+        }else if (e.target.value == '148'){
+            this.showFlag = true
+        }
     },
     getFormData() {
       this.spinning = true

@@ -24,7 +24,7 @@
           <a-select style="width: 100%" v-decorator="['type', requiredRule]">
             <a-select-option value="1">新闻动态</a-select-option>
             <a-select-option value="2">通知公告</a-select-option>
-            <a-select-option value="3">前言热点</a-select-option>
+            <a-select-option value="3">前沿热点</a-select-option>
             <a-select-option value="4">继教学院</a-select-option>
             <a-select-option value="6">科普文章</a-select-option>
             <a-select-option value="7">患教课件</a-select-option>
