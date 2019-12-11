@@ -325,6 +325,9 @@ export default {
       })
     this.getFormData()
   },
+  activated() {
+    this.getFormData()
+  },
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
@@ -414,6 +417,8 @@ export default {
         .then(res => {
           if (res.data && res.data.xbyxx) {
             that.xbyxx = that.dealAnswers(res.data.xbyxx)
+          } else {
+            that.form.resetFields()
           }
           if (res.data && res.data.annexListXbyxx) {
             that.fileList = _.map(res.data.annexListXbyxx, function(v) {
@@ -424,6 +429,8 @@ export default {
                 status: 'done'
               }
             })
+          } else {
+            that.fileList = []
           }
         })
         .catch(error => {

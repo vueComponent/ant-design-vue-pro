@@ -106,6 +106,7 @@
                 </a-form-item>
                 <a-form-item label="吸入治疗(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['b', {...selectRequired, initialValue: initValue('b', 'array')}]" class="control-m-line">
+                    <a-checkbox value="0">无</a-checkbox>
                     <a-checkbox value="1" @change="changeSelect($event, 'controlb01')">吸入激素</a-checkbox>
                     <a-checkbox value="2" @change="changeSelect($event, 'controlb02')">吸入激素/长效β受体激动剂</a-checkbox>
                     <a-checkbox value="3" @change="changeSelect($event, 'controlb03')">长效抗胆碱能药物</a-checkbox>
@@ -349,6 +350,9 @@ export default {
       })
     that.getFormData()
   },
+  activated() {
+    this.getFormData()
+  },
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
@@ -575,8 +579,11 @@ export default {
       params.append('basisMarkId', this.maskId)
       getBasisForm(params)
         .then(res => {
-          if (res.data && res.data.hxxt)
+          if (res.data && res.data.hxxt) {
             that.hxxt = that.dealAnswers(res.data.hxxt)
+          } else {
+            that.form.resetFields()
+          }
         })
         .catch(error => {
           console.log(error)
@@ -604,6 +611,7 @@ export default {
   right: 0;
   background: rgba(0, 0, 0, .2);
   z-index: 2;
+
   & .ant-spin-dot {
     position: absolute;
     top: 55%;
@@ -829,17 +837,18 @@ export default {
     margin-right: 10px;
   }
 
-  .btn-array{
+  .btn-array {
     overflow: hidden;
     position: absolute;
     padding-top: 10px;
-    padding-right: 20px; 
+    padding-right: 20px;
     width: calc(100% - 8px);
     // height: 42px;
     background: #fff;
     z-index: 1;
     padding-bottom: 10px;
   }
+
   .baselineForm {
     margin-top: 42px;
     overflow: auto;
@@ -952,6 +961,7 @@ export default {
     position: relative;
   }
 }
+
 .base-form {
   height: 100%;
   -ms-overflow-x: hidden;

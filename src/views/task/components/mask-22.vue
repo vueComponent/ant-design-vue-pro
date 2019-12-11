@@ -360,7 +360,7 @@
               <a-form-item label="二氧化碳分压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
                 <a-input style="width: 240px;" v-decorator="['f2', {...inputRequired, initialValue: initValue('f2')}]" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="肺动脉氧分压差:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+              <a-form-item label="肺泡动脉氧分压差:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
                 <a-input style="width: 240px;" v-decorator="['f3', {...inputRequired, initialValue: initValue('f3')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="氧饱和度:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
