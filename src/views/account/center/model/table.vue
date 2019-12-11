@@ -163,8 +163,11 @@ export default {
   },
   methods: {
     showMicroorganism() {
-      if (this.vitamin)
+      if (this.vitamin){
         this.visible = true
+      }else{
+        this.$message.warn('请输入其他菌种名称')
+      }
     },
     handleCancel() {
       this.visible = false
