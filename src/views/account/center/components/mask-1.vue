@@ -582,7 +582,8 @@ export default {
       executeStatus: false,
       b2: undefined,
       b3: undefined,
-      controlb70: false
+      controlb70: false,
+      selectedKeys: []
     }
   },
   created() {
@@ -604,8 +605,9 @@ export default {
     this.getFormData()
   },
   activated() {
-    this.defaultSelectedKeys = [1]
+    this.selectedKeys = [1]
     this.CloseSidebar()
+    var that = this
     var params = new URLSearchParams()
     params.append('patientBasisId', this.patientBasisId)
     getPatientBasis(params)
