@@ -206,3 +206,10 @@ export function getOcrResult(params) {
     data: params
   })
 }
+
+export function manualList(params) {
+  return axios({
+    url: '/index/manual',
+    method: 'post'
+  })
+}

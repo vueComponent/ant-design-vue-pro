@@ -338,16 +338,19 @@ export default {
     ...mapActions(['CloseSidebar']),
     moment,
     getFormData() {
+      this.spinning = true
       var that = this
       var params = new URLSearchParams()
       params.append('patientBasisId', this.patientBasisId)
       params.append('basisMarkId', this.maskId)
       getBasisForm(params)
         .then(res => {
+          this.spinning = false
           if (res.data && res.data.bywsw)
             that.bywsw = that.dealAnswers(res.data)
         })
         .catch(error => {
+          this.spinning = false
           console.log(error)
         })
     },
