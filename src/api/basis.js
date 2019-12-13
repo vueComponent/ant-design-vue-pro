@@ -207,9 +207,9 @@ export function getOcrResult(params) {
   })
 }
 
-export function manualList(params) {
+export function downLoadManual(params) {
   return axios({
-    url: '/index/manual',
+    url: '/index/downLoad',
     method: 'post'
   })
 }
