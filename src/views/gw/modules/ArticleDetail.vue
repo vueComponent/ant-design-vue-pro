@@ -171,7 +171,7 @@ export default {
         this.fileName2 = e.file.response.fileName
         this.originalFileName = e.file.response.originalFileName
       }
-      return []
+      return e && e.fileList
     },
     handleRemove(file) {
       this.fileName = ''
