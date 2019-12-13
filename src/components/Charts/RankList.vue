@@ -3,7 +3,7 @@
     <h4 class="title">{{ title }}</h4>
     <ul class="list">
       <li :key="index" v-for="(item, index) in list">
-        <span :class="index < 3 ? 'active' : null">{{ index + 1 }}</span>
+        <span>{{ index + 1 }}</span>
         <span class="download" @click="download(item.id)">{{ item.name }}</span>
         <span>{{ item.downloads }}</span>
       </li>
@@ -11,8 +11,6 @@
   </div>
 </template>
 <script>
-import { downLoadManual } from '@/api/basis'
-
 export default {
   name: 'RankList',
   // ['title', 'list']
@@ -26,11 +24,14 @@ export default {
       default: null
     }
   },
+  data(){
+    return {
+      baseUrl: process.env.VUE_APP_API_BASE_URL
+    }
+  },
   methods: {
     download(id) {
-      var params = new URLSearchParams()
-      params.append('id', id)
-      downLoadManual(params)
+      window.open(this.baseUrl + '/index/downLoad?id=' + id)
     }
   }
 }

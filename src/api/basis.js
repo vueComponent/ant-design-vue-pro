@@ -207,9 +207,9 @@ export function getOcrResult(params) {
   })
 }
 
-export function downLoadManual(params) {
+export function downLoadManual(id) {
   return axios({
-    url: '/index/downLoad',
-    method: 'post'
+    url: '/index/downLoad?id=' + id,
+    method: 'get'
   })
 }

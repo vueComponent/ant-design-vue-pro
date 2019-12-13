@@ -132,6 +132,8 @@ export default {
       } else {
         this.title = '新增文章'
         this.fileName = ''
+        this.fileName2 = ''
+        this.originalFileName = ''
       }
     },
     handleChange(e) {
