@@ -13,6 +13,7 @@
         @change="handleTabClick"
       >
         <a-tab-pane key="tab1" tab="账号密码登录">
+          <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px;" message="账户或密码错误（admin/ant.design )" />
           <a-form-item>
             <a-input
               size="large"
@@ -131,6 +132,7 @@ export default {
       loginBtn: false,
       // login type: 0 email, 1 username, 2 telephone
       loginType: 0,
+      isLoginError: false,
       requiredTwoStepCaptcha: false,
       stepCaptchaVisible: false,
       form: this.$form.createForm(this),
@@ -248,7 +250,18 @@ export default {
     },
     loginSuccess (res) {
       console.log(res)
-      this.$router.push({ name: 'dashboard' })
+      // check res.homePage define, set $router.push name res.homePage
+      // Why not enter onComplete
+      /*
+      this.$router.push({ name: 'analysis' }, () => {
+        console.log('onComplete')
+        this.$notification.success({
+          message: '欢迎',
+          description: `${timeFix()}，欢迎回来`
+        })
+      })
+      */
+      this.$router.push({ path: '/' })
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         this.$notification.success({
@@ -256,8 +269,10 @@ export default {
           description: `${timeFix()}，欢迎回来`
         })
       }, 1000)
+      this.isLoginError = false
     },
     requestFailed (err) {
+      this.isLoginError = true
       this.$notification['error']({
         message: '错误',
         description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',

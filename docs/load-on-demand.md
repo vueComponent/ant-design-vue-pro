@@ -72,7 +72,7 @@
    import App from './App'
    
    // 引入 按需组件的统一引入文件
-   import './core/use'
+   import './core/lazy_use'
    
    import './style/index.less'
    

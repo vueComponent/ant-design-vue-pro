@@ -72,7 +72,7 @@ export default {
     }
   },
   mounted () {
-    document.body.addEventListener('scroll', this.handleScroll, { passive: true })
+    document.addEventListener('scroll', this.handleScroll, { passive: true })
   },
   methods: {
     handleScroll () {
@@ -107,9 +107,11 @@ export default {
 </script>
 
 <style lang="less">
+@import '../index.less';
+
 .header-animat{
   position: relative;
-  z-index: 2;
+  z-index: @ant-global-header-zindex;
 }
 .showHeader-enter-active {
   transition: all 0.25s ease;

@@ -38,6 +38,13 @@ export function getInfo () {
   })
 }
 
+export function getCurrentUserNav (token) {
+  return axios({
+    url: '/user/nav',
+    method: 'get'
+  })
+}
+
 export function logout () {
   return axios({
     url: '/auth/logout',

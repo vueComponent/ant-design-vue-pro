@@ -96,7 +96,7 @@ export default {
           sorter: true
         },
         {
-          table: '操作',
+          title: '操作',
           dataIndex: 'action',
           width: '150px',
           scopedSlots: { customRender: 'action' }

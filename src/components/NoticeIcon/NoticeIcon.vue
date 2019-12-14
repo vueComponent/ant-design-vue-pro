@@ -10,7 +10,7 @@
     :overlayStyle="{ width: '300px', top: '50px' }"
   >
     <template slot="content">
-      <a-spin :spinning="loadding">
+      <a-spin :spinning="loading">
         <a-tabs>
           <a-tab-pane tab="通知" key="1">
             <a-list>
@@ -40,7 +40,7 @@
         </a-tabs>
       </a-spin>
     </template>
-    <span @click="fetchNotice" class="header-notice" ref="noticeRef">
+    <span @click="fetchNotice" class="header-notice" ref="noticeRef" style="padding: 0 18px">
       <a-badge count="12">
         <a-icon style="font-size: 16px; padding: 4px" type="bell" />
       </a-badge>
@@ -53,19 +53,19 @@ export default {
   name: 'HeaderNotice',
   data () {
     return {
-      loadding: false,
+      loading: false,
       visible: false
     }
   },
   methods: {
     fetchNotice () {
       if (!this.visible) {
-        this.loadding = true
+        this.loading = true
         setTimeout(() => {
-          this.loadding = false
+          this.loading = false
         }, 2000)
       } else {
-        this.loadding = false
+        this.loading = false
       }
       this.visible = !this.visible
     }
