@@ -25,11 +25,22 @@
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form">
             <div class="head-bar">
-              <a-row type="flex">
+              <a-row type="flex" style="flex:1">
                 <span class="head-icon"></span>
-                <div v-if="question.name && question.name" class="question-title">{{question.name}}<span v-if="score">{{`（得分：${score}分）`}}</span></div>
+                <div v-if="question.name && question.name" class="question-title">{{question.name}}</div>
+                <span v-if="score" class="question-score">{{`（得分：${score}分）`}}</span>
+                <a-row v-if="questionId=='32' && questionTask != '{}'" type="flex" style="flex:1;margin-left:40px">
+                    <a-col :span="6"><strong>身体功能性维度（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>角色功能性维度（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>活力性维度（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>情绪功能性维度（<span style="color: #3398dc">{{ questionTask.score4 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>社会功能性维度（<span style="color: #3398dc">{{ questionTask.score5 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>医疗负担性维度（<span style="color: #3398dc">{{ questionTask.score6 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>健康感觉性维度（<span style="color: #3398dc">{{ questionTask.score7 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>呼吸症状性维度（<span style="color: #3398dc">{{ questionTask.score8 }}分</span>）</strong></a-col>
+                </a-row>
               </a-row>
-              <a-row v-if="executeStatus !== 2">
+              <a-row type="flex" align="middle" class="btn-group" v-if="executeStatus !== 2">
                 <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
                 <a-button class="btn fr" @click="save">保存</a-button>
               </a-row>
@@ -217,6 +228,7 @@ export default {
           that.spinning = false
           that.listArr = that.initQuestionAnswers(res.data.topTitles)
           that.question = res.data.question
+          that.questionTask =  res.data.questionTask
           that.score = res.data.questionTask && res.data.questionTask.score
           if (res.data.isFinish === '0') {
             that.questionFinished = false
@@ -421,11 +433,11 @@ export default {
   margin: 10px 20px 0;
   padding: 0 15px;
 
-  /deep/ .ant-btn {
-    // height: 40px;
-    // padding: 0 20px;
-    // font-size: 16px;
-    margin-top: 12px;
+  .head-icon {
+    width: 50px;
+    height: 50px;
+    background-image: url('../../../assets/head-icon.png');
+    background-size: 100% 100%;
   }
 
   .question-title {
@@ -435,12 +447,16 @@ export default {
     margin-left: 15px;
   }
 
-  .head-icon {
-    width: 50px;
-    height: 50px;
-    background-image: url('../../../assets/head-icon.png');
-    background-size: 100% 100%;
+  .question-score {
+    font-size: 30px;
+    color: #3398dc;
+    font-weight: bold;
   }
+}
+
+.btn-group {
+    width: 140px;
+    justify-content: space-between;
 }
 
 /deep/ #baselineHeader {
@@ -453,10 +469,6 @@ export default {
   background-color: #e6f7ff;
 }
 
-.ml-10 {
-  margin-left: 10px;
-}
-
 .UserNameCard {
   font-size: 20px;
 
@@ -466,10 +478,6 @@ export default {
     position: relative;
     left: -5px;
   }
-}
-
-.clear {
-  clear: both;
 }
 
 .ant-calendar-picker {
@@ -657,9 +665,9 @@ export default {
     float: right;
   }
 
-  .btn {
-    margin-right: 10px;
-  }
+//   .btn {
+//     margin-right: 10px;
+//   }
 
   .baselineForm {
 
@@ -739,12 +747,6 @@ export default {
     //   background-color: #e6f7ff;
     // }
   }
-}
-
-.question-title {
-  text-align: center;
-  font-size: 22px;
-  color: #3398DC;
 }
 
 .question-des {
