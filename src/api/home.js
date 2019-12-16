@@ -27,3 +27,10 @@ export function getProvinceCompare() {
     method: 'post',
   })
 }
+
+export function manualList(params) {
+  return axios({
+    url: '/index/manual',
+    method: 'post'
+  })
+}

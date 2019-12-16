@@ -582,7 +582,8 @@ export default {
       executeStatus: false,
       b2: undefined,
       b3: undefined,
-      controlb70: false
+      controlb70: false,
+      selectedKeys: []
     }
   },
   created() {
@@ -604,8 +605,9 @@ export default {
     this.getFormData()
   },
   activated() {
-    this.defaultSelectedKeys = [1]
+    this.selectedKeys = [1]
     this.CloseSidebar()
+    var that = this
     var params = new URLSearchParams()
     params.append('patientBasisId', this.patientBasisId)
     getPatientBasis(params)
@@ -623,16 +625,19 @@ export default {
     ...mapActions(['CloseSidebar']),
     moment,
     getFormData() {
+      this.spinning = true
       var that = this
       var params = new URLSearchParams()
       params.append('patientBasisId', this.patientBasisId)
       params.append('basisMarkId', this.maskId)
       getBasisForm(params)
         .then(res => {
+          this.spinning = false
           if (res.data && res.data.zkbszl)
             that.zkbszl = that.dealAnswers(res.data.zkbszl)
         })
         .catch(error => {
+          this.spinning = false
           console.log(error)
         })
     },

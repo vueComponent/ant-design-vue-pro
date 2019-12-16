@@ -105,6 +105,7 @@
                 </a-form-item>
                 <a-form-item label="吸入治疗(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['b', {...selectRequired, initialValue: initValue('b', 'array')}]" class="control-m-line">
+                    <a-checkbox value="0">无</a-checkbox>
                     <a-checkbox value="1" @change="changeSelect($event, 'controlb01')">吸入激素</a-checkbox>
                     <a-checkbox value="2" @change="changeSelect($event, 'controlb02')">吸入激素/长效β受体激动剂</a-checkbox>
                     <a-checkbox value="3" @change="changeSelect($event, 'controlb03')">长效抗胆碱能药物</a-checkbox>

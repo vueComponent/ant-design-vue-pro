@@ -206,3 +206,10 @@ export function getOcrResult(params) {
     data: params
   })
 }
+
+export function downLoadManual(id) {
+  return axios({
+    url: '/index/downLoad?id=' + id,
+    method: 'get'
+  })
+}

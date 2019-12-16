@@ -19,7 +19,7 @@
     <a-card :bordered="false" class="card-box">
       <a-row :gutter="8">
         <a-col :span="5" :style="baselineInfoStyle">
-          <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleChange">
+          <s-tree :treeTitle="title" :defaultSelectedKeys="defaultSelectedKeys" :selectedKeys="selectedKeys" :dataSource="orgTree" :openKeys.sync="openKeys" :search="false" @click="handleChange">
           </s-tree>
         </a-col>
         <a-col :span="19" style="height:100%;">
@@ -127,7 +127,8 @@ export default {
       spinning: false,
       executeStatus: false,
       questionTask: {},
-      showFlag: true
+      showFlag: true,
+      selectedKeys: []
     }
   },
   created() {
@@ -165,6 +166,7 @@ export default {
         if (to.name === 'BasisQuestion') {
           this.questionId = parseInt(to.params.qid)
           this.getFormData()
+          this.defaultSelectedKeys = this.selectedKeys = [this.questionId]
         }
       },
       immediate: true
@@ -277,7 +279,7 @@ export default {
               getPatientBasis(params)
                 .then(res => {
                   that.orgTree = res.data.list
-                  that.defaultSelectedKeys = [that.questionId]
+                  that.selectedKeys = [that.questionId]
                   if (that.patientBasis.type === 1) {
                     that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
                   } else if (that.patientBasis.type === 2 || that.patientBasis.type === 4) {
@@ -379,7 +381,7 @@ export default {
           getPatientBasis(params)
             .then(res => {
               that.orgTree = res.data.list
-              that.defaultSelectedKeys = [that.questionId]
+              that.selectedKeys = [that.questionId]
               if (that.patientBasis.type === 1) {
                 that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
               } else if (that.patientBasis.type === 2 || that.patientBasis.type === 4) {

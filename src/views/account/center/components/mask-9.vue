@@ -266,16 +266,19 @@ export default {
       return answer
     },
     getFormData() {
+      this.spinning = true
       var that = this
       var params = new URLSearchParams()
       params.append('patientBasisId', this.patientBasisId)
       params.append('basisMarkId', this.maskId)
       getBasisForm(params)
         .then(res => {
+          this.spinning = false
           if (res.data && res.data.xzcc)
             that.xzcc = that.dealAnswers(res.data.xzcc)
         })
         .catch(error => {
+          this.spinning = false
           console.log(error)
         })
     },

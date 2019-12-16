@@ -356,6 +356,7 @@ export default {
       return answer
     },
     getFormData() {
+      this.spinning = true
       var that = this
       var params = new URLSearchParams()
       params.append('patientBasisId', this.patientBasisId)
@@ -385,8 +386,10 @@ export default {
               }
             })
           }
+          this.spinning = false
         })
         .catch(error => {
+          this.spinning = false
           console.log(error)
         })
     },
