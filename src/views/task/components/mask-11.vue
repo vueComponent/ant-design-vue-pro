@@ -115,6 +115,7 @@
                 </a-form-item>
                 <a-form-item label="吸入激素:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb01">
                   <a-checkbox-group v-decorator="['b44', {...selectRequired, initialValue: initValue('b44', 'array')}]">
+                    <a-checkbox value="0">无</a-checkbox>
                     <a-checkbox value="1">布地奈德</a-checkbox>
                     <a-checkbox value="2">氟替卡松</a-checkbox>
                     <a-checkbox value="3" @change="changeSelect($event, 'controlb44')">其他</a-checkbox>
@@ -125,6 +126,7 @@
                 </a-form-item>
                 <a-form-item label="吸入激素/长效β受体激动剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb02">
                   <a-checkbox-group v-decorator="['b45', {...selectRequired, initialValue: initValue('b45', 'array')}]">
+                    <a-checkbox value="0">无</a-checkbox>
                     <a-checkbox value="1">布地奈德/福莫特罗</a-checkbox>
                     <a-checkbox value="2">沙美特罗/氟替卡松</a-checkbox>
                     <a-checkbox value="3" @change="changeSelect($event, 'controlb45')">其他</a-checkbox>
@@ -143,18 +145,21 @@
                 </a-form-item>
                 <a-form-item label="长效β受体激动剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb04">
                   <a-checkbox-group v-decorator="['b48', {...selectRequired, initialValue: initValue('b48', 'array')}]">
+                    <a-checkbox value="0">无</a-checkbox>
                     <a-checkbox value="1">福莫特罗</a-checkbox>
                     <a-checkbox value="2">茚达特罗</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="白三烯受体拮抗剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb05">
                   <a-checkbox-group v-decorator="['b49', {...selectRequired, initialValue: initValue('b49', 'array')}]">
+                    <a-checkbox value="0">无</a-checkbox>
                     <a-checkbox value="1">孟鲁司特</a-checkbox>
                     <a-checkbox value="2">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="止血药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['b410', {...selectRequired, initialValue: initValue('b410', 'array')}]">
+                    <a-checkbox value="0">无</a-checkbox>
                     <a-checkbox value="1">安络血</a-checkbox>
                     <a-checkbox value="2">云南白药</a-checkbox>
                     <a-checkbox value="3">垂体</a-checkbox>
@@ -181,6 +186,7 @@
                 </div>
                 <a-form-item label="ICS:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['b412', {...selectRequired, initialValue: initValue('b412', 'array')}]">
+                    <a-checkbox value="0">无</a-checkbox>
                     <a-checkbox value="1">布地奈德</a-checkbox>
                     <a-checkbox value="2" @change="changeSelect($event, 'controlb412')">其他</a-checkbox>
                   </a-checkbox-group>
@@ -190,6 +196,7 @@
                 </a-form-item>
                 <a-form-item label="支气管扩张剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['b413', {...selectRequired, initialValue: initValue('b413', 'array')}]">
+                    <a-checkbox value="0">无</a-checkbox>
                     <a-checkbox value="1">异丙托溴胺</a-checkbox>
                     <a-checkbox value="2">沙丁胺醇</a-checkbox>
                     <a-checkbox value="3">特布他林</a-checkbox>

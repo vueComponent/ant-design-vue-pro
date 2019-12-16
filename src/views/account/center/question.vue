@@ -27,7 +27,10 @@
             <div class="head-bar">
               <a-row type="flex">
                 <span class="head-icon"></span>
-                <div v-if="question.name && question.name" class="question-title">{{question.name}}<span v-if="score">{{`（得分：${score}分）`}}</span></div>
+                <!-- <div v-if="question.name && question.name" class="question-title">{{question.name}}<span v-if="score">{{`（得分：${score}分）`}}</span></div> -->
+                <div class="question-title">
+                  {{question.name}}
+                </div>
               </a-row>
               <a-row v-if="executeStatus !== 2">
                 <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
@@ -43,18 +46,18 @@
                   <span>{{item.name}}</span>
                 </div>
                 <div v-for="(qu1, index) in item.childrens" :key="index">
-                  <div  v-if="showFlag || [37,38,39].indexOf(parseInt(qu1.inputType)) < 0">
-                    <a-form-item class="ques-box"  :colon="false" :label="qu1.type !== 5 ? qu1.name : ''">
+                  <div v-if="showFlag || [37,38,39].indexOf(parseInt(qu1.inputType)) < 0">
+                    <a-form-item class="ques-box" :colon="false" :label="qu1.type !== 5 ? qu1.name : ''">
                       <p v-if="qu1.type == 5" class="question-tip">
                         <span class="tip-icon"></span>
                         <span>{{qu1.name}}</span>
                       </p>
                       <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? qu1.answers[0].questionOptionValue : null , rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]" />
                       <a-radio-group @change="handleClick" v-if="qu1.type === 1" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? qu1.answers[0].questionOptionId : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
-                          <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
+                        <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
                       </a-radio-group>
                       <a-checkbox-group v-if="qu1.type === 2" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.inputTypes, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
-                          <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-checkbox>
+                        <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-checkbox>
                       </a-checkbox-group>
                       <a-date-picker v-if="qu1.type === 6" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? moment(qu1.answers[0].questionOptionValue, 'YYYY/MM/DD') : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]" format="YYYY-MM-DD" :disabledDate="disabledDate" />
                     </a-form-item>
@@ -202,11 +205,11 @@ export default {
       }
     },
     handleClick(e) {
-        if (e.target.value == '149') {
-            this.showFlag = false
-        }else if (e.target.value == '148'){
-            this.showFlag = true
-        }
+      if (e.target.value == '149') {
+        this.showFlag = false
+      } else if (e.target.value == '148') {
+        this.showFlag = true
+      }
     },
     getFormData() {
       this.spinning = true
@@ -228,12 +231,12 @@ export default {
         })
     },
     initQuestionAnswers(list) {
-      _.each(list, function (a) {
+      _.each(list, function(a) {
         if (a.childrens && a.childrens.length) {
-          _.each(a.childrens, function (b) {
+          _.each(a.childrens, function(b) {
             if (b.type === 2) {
               if (b.answers && b.answers.length) {
-                b.inputTypes = _.map(b.answers, function (v) { return v.questionOptionId })
+                b.inputTypes = _.map(b.answers, function(v) { return v.questionOptionId })
               } else {
                 b.inputTypes = []
               }
@@ -283,7 +286,8 @@ export default {
       })
     },
     generateQuestionAnswers() {
-        let that = this
+      debugger
+      let that = this
       var result = []
       var titleObject = {}
       var childrenObject = []
@@ -308,8 +312,8 @@ export default {
                 value: $('[name="' + sub.inputType + '"] input').val()
               })
             }
-            if(sub.type === 2 && sub.options && sub.options.length) {
-                // console.log(that.form.getFieldValue(sub.inputType))
+            if (sub.type === 2 && sub.options && sub.options.length) {
+              // console.log(that.form.getFieldValue(sub.inputType))
               subOp = {
                 titleId: sub.inputType,
                 options: []
@@ -351,7 +355,7 @@ export default {
     save() {
       const that = this
       var result = this.generateQuestionAnswers()
-        console.log(result)
+      console.log(result)
       var params = new URLSearchParams()
       params.append('answers', JSON.stringify(result))
       params.append('patientBasisId', this.patientBasisId)
