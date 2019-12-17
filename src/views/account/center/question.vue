@@ -29,7 +29,7 @@
                 <span class="head-icon"></span>
                 <div v-if="question.name && question.name" class="question-title">{{question.name}}</div>
                 <span v-if="score" class="question-score">{{`（得分：${score}分）`}}</span>
-                <a-row v-if="questionId=='32' && questionTask != '{}'" type="flex" style="flex:1;margin-left:40px">
+                <a-row v-if="questionId=='32' && questionTask.status === 1" type="flex" style="flex:1;margin-left:40px">
                     <a-col :span="6"><strong>身体功能性维度（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
                     <a-col :span="6"><strong>角色功能性维度（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
                     <a-col :span="6"><strong>活力性维度（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
@@ -61,13 +61,13 @@
                         <span>{{qu1.name}}</span>
                       </p>
                       <a-input v-if="qu1.type === 3" style="width: 200px" :addonAfter="qu1.unit" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? qu1.answers[0].questionOptionValue : null , rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]" />
-                      <a-radio-group @change="handleClick" v-if="qu1.type === 1" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? qu1.answers[0].questionOptionId : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
+                      <a-radio-group @change="handleClick" v-if="qu1.type === 1" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? qu1.answers[0].questionOptionId : (qu1.questionTitleId === 16 ? (patient.sex === 0 ? 76 : 75) : null), rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
                         <a-radio :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-radio>
                       </a-radio-group>
                       <a-checkbox-group v-if="qu1.type === 2" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.inputTypes, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]">
                         <a-checkbox :style="disBlock" v-for="(item, index) in qu1.options" :key="index" :value="item.questionOptionId">{{item.name}}</a-checkbox>
                       </a-checkbox-group>
-                      <a-date-picker v-if="qu1.type === 6" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? moment(qu1.answers[0].questionOptionValue, 'YYYY/MM/DD') : null, rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]" format="YYYY-MM-DD" :disabledDate="disabledDate" />
+                      <a-date-picker v-if="qu1.type === 6" :name="qu1.inputType" v-decorator="[qu1.inputType, { initialValue: qu1.answers && qu1.answers.length ? moment(qu1.answers[0].questionOptionValue, 'YYYY/MM/DD') : (qu1.questionTitleId === 15 ? moment(patient.birthDate) : null), rules: [{ required: qu1.isRequired && qu1.isRequired === 1, message: '该选项必填' }] }]" format="YYYY-MM-DD" :disabledDate="disabledDate" />
                     </a-form-item>
                   </div>
                 </div>
