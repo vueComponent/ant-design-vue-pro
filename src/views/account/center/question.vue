@@ -47,8 +47,8 @@
                 </a-row>
               </a-row>
               <a-row type="flex" align="middle" class="btn-group" v-if="executeStatus !== 2">
-                <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
                 <a-button class="btn fr" @click="save">保存</a-button>
+                <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               </a-row>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
