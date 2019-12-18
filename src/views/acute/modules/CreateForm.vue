@@ -5,7 +5,7 @@
         <a-form-item>
           <a-input-search placeholder="搜索患者姓名,身份证号" @search="onSearch" v-decorator="['card', { rules: [{ required: true , message: '该选项必填'}] }]" enterButton autocomplete="off" />
         </a-form-item>
-        <a-table v-if="data.length > 0" :columns="columns" :rowSelection="rowSelection" :dataSource="data" :pagination="pagination" rowKey="patientId">
+        <a-table v-if="data.length > 0" :columns="columns" :rowSelection="rowSelection" :dataSource="data" :pagination="pagination" rowKey="patientId" @change="handleTableChange">
         </a-table>
       </a-form>
     </a-spin>
@@ -58,13 +58,9 @@ export default {
       },
       form: this.$form.createForm(this),
       requiredRule: { rules: [{ required: true, message: '该选项必填' }] },
-      pagination: {
-        defaultPageSize: 5,
-        pageSize: 5,
-        hideOnSinglePage: true,
-        total: 0
-      },
-      columns
+      pagination: {},
+      columns,
+      keyword: ''
     };
   },
   computed: {
@@ -92,7 +88,15 @@ export default {
       this.patientId = null;
     },
     onSearch(value) {
-      this.getPatientList(1, this.pagination.pageSize, value);
+      this.keyword = value
+      this.getPatientList(1, 5);
+    },
+    handleTableChange(pagination) {
+      console.log(pagination);
+      const pager = { ...this.pagination };
+      pager.current = pagination.current;
+      this.pagination = pager;
+      this.getPatientList(pagination.current, 5);
     },
     handleSubmit() {
       if (!this.patientId) {
@@ -112,16 +116,17 @@ export default {
     handleCancel() {
       this.visible = false;
     },
-    getPatientList(pageNumber, pageSize, keyword) {
-      const keyWord = keyword ? keyword : '';
+    getPatientList(pageNumber, pageSize) {
       const Params = new URLSearchParams();
       Params.append('pageNumber', pageNumber);
       Params.append('pageSize', pageSize);
-      Params.append('keyWord', keyWord);
+      Params.append('keyWord', this.keyword);
       getPatientList(Params).then(res => {
         this.data = res.data;
-        this.pagination.total = res.total;
-        this.confirmLoading = false;
+        const pagination = { ...this.pagination };
+        pagination.total = res.total;
+        // this.confirmLoading = false;
+        this.pagination = pagination;
       });
     }
   }
