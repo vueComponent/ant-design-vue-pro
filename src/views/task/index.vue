@@ -11,7 +11,7 @@
           <a-col :md="4" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="refreshTable">查询</a-button>
-              <a @click="advanced = !advanced" style="margin-left: 8px">
+              <a @click="advanced = !advanced" style="margin-left: 8px" class="toggleAdvanced">
                 更多筛选
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
@@ -84,207 +84,219 @@
   </a-card>
 </template>
 <script>
-  import moment from 'moment';
-  import { getVisitTask } from '@/api/task';
-  import { STable } from '@/components';
-  import UserDetail from '../list/modules/UserDetail'
-  const executeStatusMap = {
-    0: {
-      status: 'default',
-      text: '忽略'
-    },
-    1: {
-      status: 'error',
-      text: '未执行'
-    },
-    2: {
-      status: 'processing',
-      text: '执行中'
-    },
-    3: {
-      status: 'success',
-      text: '已完成'
-    }
-  };
-  export default {
-    name: 'Task',
-    components: {
-      STable,
-      UserDetail
-    },
-    data() {
-      return {
-        bodyStyle: {
-          padding: "10px",
-          paddingBottom: "0px"
+import moment from 'moment'
+import { getVisitTask } from '@/api/task'
+import { STable } from '@/components'
+import UserDetail from '../list/modules/UserDetail'
+import $ from 'jquery'
+
+const executeStatusMap = {
+  0: {
+    status: 'default',
+    text: '忽略'
+  },
+  1: {
+    status: 'error',
+    text: '未执行'
+  },
+  2: {
+    status: 'processing',
+    text: '执行中'
+  },
+  3: {
+    status: 'success',
+    text: '已完成'
+  }
+};
+export default {
+  name: 'Task',
+  components: {
+    STable,
+    UserDetail
+  },
+  data() {
+    return {
+      bodyStyle: {
+        padding: "10px",
+        paddingBottom: "0px"
+      },
+      // 查询参数
+      queryParam: {},
+      advanced: false,
+      // 表头
+      columns: [{
+          title: '预警',
+          dataIndex: 'warnStatus',
+          scopedSlots: { customRender: 'warnStatus' },
+          width: "70px"
         },
-        // 查询参数
-        queryParam: {},
-        advanced: false,
-        // 表头
-        columns: [
-          {
-            title: '预警',
-            dataIndex: 'warnStatus',
-            scopedSlots: { customRender: 'warnStatus' },
-            width: "70px"
-          },
-          {
-            title: '任务编号',
-            dataIndex: 'code',
-            width: "100px"
-          },
-          {
-            title: '任务名称',
-            dataIndex: 'typeName',
-            customRender: typeName => typeName + '任务',
-            width: "120px"
-          },
-          {
-            title: '档案号',
-            dataIndex: 'fileCode',
-            width: "110px"
-          },
-          {
-            title: '患者姓名',
-            dataIndex: 'patientName',
-            scopedSlots: { customRender: 'patientName' },
-            align: 'center',
-            width: '100px'
-          },
-          {
-            title: '身份证号',
-            dataIndex: 'card',
-            width: '160px',
-          },
-          {
-            title: '联系电话',
-            dataIndex: 'telephone',
-            width: '120px',
-          },
-          {
-            title: '创建日期',
-            dataIndex: 'createDate',
-            customRender: createDate => moment(createDate).format('YYYY-MM-DD'),
-            width: '120px'
-          },
-          {
-            title: '到期时间',
-            dataIndex: 'planDate',
-            customRender: planDate => moment(planDate).format('YYYY-MM-DD'),
-            width: '120px',
-          },
-          {
-            title: '任务状态',
-            dataIndex: 'executeStatus',
-            scopedSlots: { customRender: 'executeStatus' },
-            width: '110px',
-          },
-          {
-            title: '操作',
-            width: '100px',
-            scopedSlots: { customRender: 'operation' }
-          }
-        ],
-        // 加载数据方法 必须为 Promise 对象
-        loadData: parameter => {
-          if (!parameter.queryType) {
-            parameter.queryType = 1
-          }
-          return getVisitTask(Object.assign(parameter, this.queryParam)).then(res => {
-            return res;
-          });
+        {
+          title: '任务编号',
+          dataIndex: 'code',
+          width: "100px"
         },
-        selectedRowKeys: [],
-        selectedRows: [],
-        scroll: false,
-        dateArr: [],
-        // custom table alert & rowSelection
-        options: {
-          alert: {
-            show: false,
-            clear: () => {
-              this.selectedRowKeys = [];
-            }
-          },
-          rowSelection: {
-            selectedRowKeys: this.selectedRowKeys,
-            onChange: this.onSelectChange
-          }
+        {
+          title: '任务名称',
+          dataIndex: 'typeName',
+          customRender: typeName => typeName + '任务',
+          width: "120px"
+        },
+        {
+          title: '档案号',
+          dataIndex: 'fileCode',
+          width: "110px"
+        },
+        {
+          title: '患者姓名',
+          dataIndex: 'patientName',
+          scopedSlots: { customRender: 'patientName' },
+          align: 'center',
+          width: '100px'
+        },
+        {
+          title: '身份证号',
+          dataIndex: 'card',
+          width: '160px',
+        },
+        {
+          title: '联系电话',
+          dataIndex: 'telephone',
+          width: '120px',
+        },
+        {
+          title: '创建日期',
+          dataIndex: 'createDate',
+          customRender: createDate => moment(createDate).format('YYYY-MM-DD'),
+          width: '120px'
+        },
+        {
+          title: '到期时间',
+          dataIndex: 'planDate',
+          customRender: planDate => moment(planDate).format('YYYY-MM-DD'),
+          width: '120px',
+        },
+        {
+          title: '任务状态',
+          dataIndex: 'executeStatus',
+          scopedSlots: { customRender: 'executeStatus' },
+          width: '110px',
+        },
+        {
+          title: '操作',
+          width: '100px',
+          scopedSlots: { customRender: 'operation' }
         }
-      };
-    },
-    created() {
-      this.scroll = {
-        y: (window.screen.height - 368) + "px"
+      ],
+      // 加载数据方法 必须为 Promise 对象
+      loadData: parameter => {
+        if (!parameter.queryType) {
+          parameter.queryType = 1
+        }
+        return getVisitTask(Object.assign(parameter, this.queryParam)).then(res => {
+          return res;
+        });
+      },
+      selectedRowKeys: [],
+      selectedRows: [],
+      scroll: false,
+      dateArr: [],
+      // custom table alert & rowSelection
+      options: {
+        alert: {
+          show: false,
+          clear: () => {
+            this.selectedRowKeys = [];
+          }
+        },
+        rowSelection: {
+          selectedRowKeys: this.selectedRowKeys,
+          onChange: this.onSelectChange
+        }
       }
+    };
+  },
+  created() {
+    this.scroll = {
+      y: (window.screen.height - 368) + "px"
+    }
+  },
+  filters: {
+    executeStatusFilter(type) {
+      return executeStatusMap[type].text;
     },
-    filters: {
-      executeStatusFilter(type) {
-        return executeStatusMap[type].text;
-      },
-      executeStatusTypeFilter(type) {
-        return executeStatusMap[type].status;
+    executeStatusTypeFilter(type) {
+      return executeStatusMap[type].status;
+    }
+  },
+  mounted() {
+    var that = this
+    $(document).on('click', function(e) {
+      if (e.target.className === 'toggleAdvanced') {
+        return
       }
+      if ($(e.target).closest(".tableSearch").length == 0) {
+        that.advanced = false
+      }
+    })
+  },
+  methods: {
+    clearForm() {
+      this.queryParam = {}
+      this.dateArr = []
     },
-    methods: {
-      clearForm() {
-        this.queryParam = {}
-        this.dateArr = []
-      },
-      refreshTable() {
-        this.advanced = false;
-        this.$refs.table.refresh();
-      },
-      changeTime(time) {
-        this.dateArr = time;
-        this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD');
-        this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD');
-      },
-      tableSearch(type) {
+    refreshTable() {
+      this.advanced = false;
+      this.$refs.table.refresh();
+    },
+    changeTime(time) {
+      this.dateArr = time;
+      this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD');
+      this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD');
+    },
+    tableSearch(type) {
       this.queryParam.queryType = type
       this.$refs.table.refresh();
       this.advanced = false;
-      },
-      showUser(record) {
-        this.$refs.detailModal.show(record);
-      },
-      implement(record) {
-        //执行
-        this.$router.push('/list/task/' + record.patientBasisId)
-      },
-      onSelectChange(selectedRowKeys, selectedRows) {
-        this.selectedRowKeys = selectedRowKeys;
-        this.selectedRows = selectedRows;
-      }
+    },
+    showUser(record) {
+      this.$refs.detailModal.show(record);
+    },
+    implement(record) {
+      //执行
+      this.$router.push('/list/task/' + record.patientBasisId)
+    },
+    onSelectChange(selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys;
+      this.selectedRows = selectedRows;
     }
-  };
+  }
+};
 </script>
 <style lang="less" scoped>
-  /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
-    margin-bottom: 10px;
+/deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
+  margin-bottom: 10px;
+}
+
+.tableSearch {
+  background: #ffffff;
+  position: absolute;
+  top: 52px;
+  box-shadow: 4px 4px 10px #ddd;
+  z-index: 100;
+
+  /deep/ .ant-card-body .ant-form-horizontal .ant-form-item>.ant-form-item-label {
+    width: 100px !important;
   }
 
-  .tableSearch {
-    background: #ffffff;
-    position: absolute;
-    top: 52px;
-    box-shadow: 4px 4px 10px #ddd;
-    z-index: 100;
+  .commonRetrieval {
+    padding: 10px;
 
-    /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
-      width: 100px !important;
-    }
-
-    .commonRetrieval {
-      padding: 10px;
-
-      p {
-        &:hover {
-          cursor: pointer;
-          text-decoration: underline;
-        }
+    p {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
       }
     }
   }
+}
 </style>

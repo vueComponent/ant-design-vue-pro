@@ -11,7 +11,7 @@
           <a-col :md="6" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="refreshTable">查询</a-button>
-              <a @click="toggleAdvanced" style="margin-left: 8px">
+              <a @click="toggleAdvanced" style="margin-left: 8px" class="toggleAdvanced">
                 {{ advanced ? '更多筛选' : '更多筛选' }}
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
@@ -82,11 +82,13 @@
 </template>
 <script>
 import moment from 'moment';
-import { STable, Ellipsis } from '@/components';
-import StepByStepModal from './modules/StepByStepModal';
-import CreateForm from './modules/CreateForm';
-import { getSFJxDataList } from '@/api/basis';
-import UserDetail from './modules/UserDetail';
+import { STable, Ellipsis } from '@/components'
+import StepByStepModal from './modules/StepByStepModal'
+import CreateForm from './modules/CreateForm'
+import { getSFJxDataList } from '@/api/basis'
+import UserDetail from './modules/UserDetail'
+import $ from 'jquery'
+
 const visitMap = {
   0: {
     status: 'warning',
@@ -205,6 +207,17 @@ export default {
     this.scroll = {
       y: (window.screen.height - 368) + "px"
     }
+  },
+  mounted() {
+    var that = this
+    $(document).on('click', function(e) {
+      if (e.target.className === 'toggleAdvanced') {
+        return
+      }
+      if ($(e.target).closest(".tableSearch").length == 0) {
+        that.advanced = false
+      }
+    })
   },
   filters: {
     statusFilter(type) {

@@ -11,7 +11,7 @@
           <a-col :md="6" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="refreshTable">查询</a-button>
-              <a @click="toggleAdvanced" style="margin-left: 8px">
+              <a @click="toggleAdvanced" style="margin-left: 8px" class="toggleAdvanced">
                 {{ advanced ? '更多筛选' : '更多筛选' }}
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
@@ -73,9 +73,9 @@
               <div class="progressTagContent">
                 <a-progress class="progressline" :strokeColor="basisList[0].progress == 100 ? '#4BC5AC' : '#00A0E9'" :showInfo="false" :percent="parseInt(basisList[0].progress)" size="small" />
               </div>
-              <a-icon v-if="basisList[0].executeStatus != 3" type="clock-circle" theme="filled" style="color:#00A0E9"/>
+              <a-icon v-if="basisList[0].executeStatus != 3" type="clock-circle" theme="filled" style="color:#00A0E9" />
               <!-- <span class="ant-progress-span" v-if="basisList[0].executeStatus == 2">{{basisList[0].progress}}%</span> -->
-              <a-icon v-else-if="basisList[0].executeStatus == 3" type="check-circle" theme="filled" style="color:#4BC5AC"/>
+              <a-icon v-else-if="basisList[0].executeStatus == 3" type="check-circle" theme="filled" style="color:#4BC5AC" />
             </div>
           </router-link>
           <Visit :patientId="basisList[0].patientId"></Visit>
@@ -104,6 +104,7 @@ import UserDetail from './modules/UserDetail'
 import Visit from './modules/Visit'
 import { addVasit } from '@/api/basis'
 import { mapGetters, mapActions } from 'vuex'
+import $ from 'jquery'
 
 const visitMap = {
   0: {
@@ -197,11 +198,11 @@ export default {
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
         return getPatientList(Object.assign(parameter, this.queryParam)).then(res => {
-            res.data.forEach(item=>{
-                if(item.basisList.length > 0) {
-                    item.basisList[0].progress = item.basisList[0].executeStatus == 3 ? 100 :  item.basisList[0].progress
-                }
-            })
+          res.data.forEach(item => {
+            if (item.basisList.length > 0) {
+              item.basisList[0].progress = item.basisList[0].executeStatus == 3 ? 100 : item.basisList[0].progress
+            }
+          })
           return res;
         });
       },
@@ -234,6 +235,17 @@ export default {
   },
   computed: {
     ...mapGetters(['token'])
+  },
+  mounted() {
+    var that = this
+    $(document).on('click', function(e) {
+      if (e.target.className === 'toggleAdvanced') {
+        return
+      }
+      if ($(e.target).closest(".tableSearch").length == 0) {
+        that.advanced = false
+      }
+    })
   },
   filters: {
     statusFilter(type) {
