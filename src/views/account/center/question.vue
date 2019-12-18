@@ -29,7 +29,7 @@
                 <span class="head-icon"></span>
                 <div v-if="question.name && question.name" class="question-title">{{question.name}}</div>
                 <span v-if="score" class="question-score">{{`（得分：${score}分）`}}</span>
-                <a-row v-if="questionId=='32' && questionTask.status === 1" type="flex" style="flex:1;margin-left:40px">
+                <a-row v-if="questionId === 32 && questionTask.status === 1" type="flex" style="flex:1;margin-left:40px">
                     <a-col :span="6"><strong>身体功能性维度（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
                     <a-col :span="6"><strong>角色功能性维度（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
                     <a-col :span="6"><strong>活力性维度（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
@@ -38,6 +38,12 @@
                     <a-col :span="6"><strong>医疗负担性维度（<span style="color: #3398dc">{{ questionTask.score6 }}分</span>）</strong></a-col>
                     <a-col :span="6"><strong>健康感觉性维度（<span style="color: #3398dc">{{ questionTask.score7 }}分</span>）</strong></a-col>
                     <a-col :span="6"><strong>呼吸症状性维度（<span style="color: #3398dc">{{ questionTask.score8 }}分</span>）</strong></a-col>
+                </a-row>
+                <a-row v-if="questionId === 33 && questionTask.status === 1" type="flex" style="flex:1;margin-left:40px;align-items: center;">
+                    <a-col :span="6"><strong>症状symptom（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>活动activity（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>影响impact（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>合计（<span style="color: #3398dc">{{ questionTask.score }}分</span>）</strong></a-col>
                 </a-row>
               </a-row>
               <a-row type="flex" align="middle" class="btn-group" v-if="executeStatus !== 2">
@@ -231,7 +237,7 @@ export default {
           that.listArr = that.initQuestionAnswers(res.data.topTitles)
           that.question = res.data.question
           that.questionTask =  res.data.questionTask
-          that.score = res.data.questionTask && res.data.questionTask.score
+          that.score = that.questionId !== 33 && res.data.questionTask && res.data.questionTask.score
           if (res.data.isFinish === '0') {
             that.questionFinished = false
           } else {
@@ -295,7 +301,6 @@ export default {
       })
     },
     generateQuestionAnswers() {
-      debugger
       let that = this
       var result = []
       var titleObject = {}
