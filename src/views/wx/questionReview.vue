@@ -11,7 +11,7 @@
           <a-col :md="6" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="refreshTable">查询</a-button>
-              <a @click="advanced = !advanced" style="margin-left: 8px">
+              <a @click="advanced = !advanced" style="margin-left: 8px" class="toggleAdvanced">
                 更多筛选
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
@@ -52,7 +52,6 @@
         </a-row>
       </a-form>
     </div>
-
     <s-table ref="table" :scroll="scroll" size="small" rowKey="questionTaskId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <template slot="status" slot-scope="text">
         <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" />
@@ -63,128 +62,144 @@
     </s-table>
   </a-card>
 </template>
-
 <script>
-  import moment from 'moment'
-  import { getWxQuestionList } from '@/api/distract'
-  import { STable } from '@/components'
-  const visitMap = {
-    3: {
-      status: 'error',
-      text: '驳回'
-    },
-    4: {
-      status: 'success',
-      text: '已审阅'
-    },
-    5: {
-      status: 'default',
-      text: '未审阅'
-    },
-  };
-  export default {
-    components: {
-      STable
-    },
-    data() {
-      return {
-        bodyStyle: {
-          padding: '10px',
-          paddingBottom: '0px'
-        },
-        // 高级搜索 展开/关闭
-        advanced: false,
-        // 查询参数
-        queryParam: {},
-        scroll: false,
-        loadData: parameter => {
-          return getWxQuestionList(Object.assign(parameter, this.queryParam)).then(res => {
-            return res
-          })
-        },
-        selectedRowKeys: [],
-        selectedRows: [],
-        options: {
-          alert: {
-            show: false,
-            clear: () => {
-              this.selectedRowKeys = []
-            }
-          },
-          rowSelection: {
-            selectedRowKeys: this.selectedRowKeys,
-            onChange: this.onSelectChange
-          }
-        },
-        columns: [
-          {
-            title: '档案号',
-            dataIndex: 'fileCode',
-            width: '150px'
-          },
-          {
-            title: '问卷名称',
-            dataIndex: 'questionName',
-            width: '120px'
-          },
-          {
-            title: '微信号',
-            dataIndex: 'wxCode',
-            width: '120px'
-          },
-          {
-            title: '姓名',
-            dataIndex: 'name',
-            width: '100px'
-          },
-          {
-            title: '身份证号',
-            dataIndex: 'card',
-            width: '150px'
-          },
-          {
-            title: '填写日期',
-            dataIndex: 'realExecuteTime',
-            customRender: realExecuteTime => moment(realExecuteTime).format('YYYY-MM-DD'),
-            width: '120px'
-          },
-          {
-            title: '推送日期',
-            dataIndex: 'createDate',
-            width: '120px'
-          },
-          {
-            title: '类型',
-            dataIndex: 'visitType',
-            width: '120px'
-          },
-          {
-            title: '审阅状态',
-            dataIndex: 'status',
-            scopedSlots: { customRender: 'status' },
-            width: '100px'
-          },
-          {
-            title: '操作',
-            dataIndex: 'operation',
-            scopedSlots: { customRender: 'operation' },
-            width: '100px'
-          }
-        ],
-      }
-    },
-    created() {
-      this.scroll = {
-        y: window.screen.height - 368 + 'px'
-      }
-    },
-    filters: {
-      visitFilter(type) {
-        return visitMap[type].text;
+import moment from 'moment'
+import { getWxQuestionList } from '@/api/distract'
+import { STable } from '@/components'
+import $ from 'jquery'
+
+const visitMap = {
+  3: {
+    status: 'error',
+    text: '驳回'
+  },
+  4: {
+    status: 'success',
+    text: '已审阅'
+  },
+  5: {
+    status: 'default',
+    text: '未审阅'
+  },
+};
+export default {
+  components: {
+    STable
+  },
+  data() {
+    return {
+      bodyStyle: {
+        padding: '10px',
+        paddingBottom: '0px'
       },
-      visitTypeFilter(type) {
-        return visitMap[type].status;
+      // 高级搜索 展开/关闭
+      advanced: false,
+      // 查询参数
+      queryParam: {},
+      scroll: false,
+      loadData: parameter => {
+        return getWxQuestionList(Object.assign(parameter, this.queryParam)).then(res => {
+          return res
+        })
+      },
+      selectedRowKeys: [],
+      selectedRows: [],
+      options: {
+        alert: {
+          show: false,
+          clear: () => {
+            this.selectedRowKeys = []
+          }
+        },
+        rowSelection: {
+          selectedRowKeys: this.selectedRowKeys,
+          onChange: this.onSelectChange
+        }
+      },
+      columns: [{
+          title: '档案号',
+          dataIndex: 'fileCode',
+          width: '150px'
+        },
+        {
+          title: '问卷名称',
+          dataIndex: 'questionName',
+          width: '120px'
+        },
+        {
+          title: '微信号',
+          dataIndex: 'wxCode',
+          width: '120px'
+        },
+        {
+          title: '姓名',
+          dataIndex: 'name',
+          width: '100px'
+        },
+        {
+          title: '身份证号',
+          dataIndex: 'card',
+          width: '150px'
+        },
+        {
+          title: '填写日期',
+          dataIndex: 'realExecuteTime',
+          customRender: realExecuteTime => moment(realExecuteTime).format('YYYY-MM-DD'),
+          width: '120px'
+        },
+        {
+          title: '推送日期',
+          dataIndex: 'createDate',
+          width: '120px'
+        },
+        {
+          title: '类型',
+          dataIndex: 'visitType',
+          width: '120px'
+        },
+        {
+          title: '审阅状态',
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'status' },
+          width: '100px'
+        },
+        {
+          title: '操作',
+          dataIndex: 'operation',
+          scopedSlots: { customRender: 'operation' },
+          width: '100px'
+        }
+      ],
+    }
+  },
+  created() {
+    this.scroll = {
+      y: window.screen.height - 368 + 'px'
+    }
+  },
+  mounted() {
+    var that = this
+    $(document).on('click', function(e) {
+      if (e.target.className === 'toggleAdvanced') {
+        return
       }
+      if ($(e.target).closest(".tableSearch").length == 0) {
+        that.advanced = false
+      }
+    })
+  },
+  filters: {
+    visitFilter(type) {
+      return visitMap[type].text;
+    },
+    visitTypeFilter(type) {
+      return visitMap[type].status;
+    }
+  },
+  methods: {
+    onSelectChange(selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys;
+      this.selectedRows = selectedRows;
     },
     methods: {
       onSelectChange(selectedRowKeys, selectedRows) {
@@ -213,30 +228,38 @@
         this.$refs.table.refresh()
       }
     },
-  }
-</script>
-
-<style lang="less" scoped>
-  /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
-    margin-bottom: 10px;
-  }
-  .tableSearch {
-    background: #ffffff;
-    position: absolute;
-    top: 52px;
-    box-shadow: 4px 4px 10px #ddd;
-    z-index: 100;
-    /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
-      width: 70px !important;
+    refreshTable() {
+      this.advanced = false
+      this.$refs.table.refresh()
     }
-    .commonRetrieval {
-      padding: 10px;
-      p {
-        &:hover {
-          cursor: pointer;
-          text-decoration: underline;
-        }
+  },
+}
+</script>
+<style lang="less" scoped>
+/deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
+  margin-bottom: 10px;
+}
+
+.tableSearch {
+  background: #ffffff;
+  position: absolute;
+  top: 52px;
+  box-shadow: 4px 4px 10px #ddd;
+  z-index: 100;
+
+  /deep/ .ant-card-body .ant-form-horizontal .ant-form-item>.ant-form-item-label {
+    width: 70px !important;
+  }
+
+  .commonRetrieval {
+    padding: 10px;
+
+    p {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
       }
     }
   }
+}
 </style>

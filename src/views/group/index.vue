@@ -11,7 +11,7 @@
           <a-col :md="6" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="refreshTable">查询</a-button>
-              <a @click="toggleAdvanced" style="margin-left: 8px">
+              <a @click="toggleAdvanced" style="margin-left: 8px" class="toggleAdvanced">
                 更多筛选
                 <a-icon :type="advanced ? 'up' : 'down'" />
               </a>
@@ -95,11 +95,12 @@
   </a-card>
 </template>
 <script>
-import moment from 'moment';
-import { STable, Ellipsis } from '@/components';
-import { getDatalList, getPatientList, deleteCase } from '@/api/group';
+import moment from 'moment'
+import { STable, Ellipsis } from '@/components'
+import { getDatalList, getPatientList, deleteCase } from '@/api/group'
 import UserDetail from '../list/modules/UserDetail'
 import Drawer from './modules/Drawer'
+import $ from 'jquery'
 
 const visitMap = {
   0: {
@@ -201,7 +202,7 @@ export default {
       },
       scroll: false,
       optionAlertShow: false
-    };
+    }
   },
   filters: {
     statusFilter(type) {
@@ -222,8 +223,17 @@ export default {
       y: (window.screen.height - 368) + "px"
     }
   },
-  mounted(){
-    this.checkProject();
+  mounted() {
+    this.checkProject()
+    var that = this
+    $(document).on('click', function(e) {
+      if (e.target.className === 'toggleAdvanced') {
+        return
+      }
+      if ($(e.target).closest(".tableSearch").length == 0) {
+        that.advanced = false
+      }
+    })
   },
   methods: {
     clearForm() {
@@ -386,22 +396,26 @@ export default {
   text-decoration-color: #1FB2FA;
   cursor: pointer;
 }
-.button-group{
+
+.button-group {
   overflow: hidden;
-  span{
+
+  span {
     float: left;
     color: #1890ff;
     font-size: 18px;
     height: 32px;
     line-height: 32px;
-    img{
+
+    img {
       display: inline-block;
       width: 18px;
       height: 18px;
       margin-bottom: 3px;
     }
   }
-  button{
+
+  button {
     float: right;
     margin-right: 10px;
   }

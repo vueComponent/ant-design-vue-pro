@@ -30,14 +30,14 @@
                 <div v-if="question.name && question.name" class="question-title">{{question.name}}</div>
                 <span v-if="score" class="question-score">{{`（得分：${score}分）`}}</span>
                 <a-row v-if="questionId === 32 && questionTask.status === 1 && typeof questionTask.score1 !== 'undefined'" type="flex" style="flex:1;margin-left:40px">
-                    <a-col :span="6"><strong>身体功能性维度（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>角色功能性维度（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>活力性维度（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>情绪功能性维度（<span style="color: #3398dc">{{ questionTask.score4 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>社会功能性维度（<span style="color: #3398dc">{{ questionTask.score5 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>医疗负担性维度（<span style="color: #3398dc">{{ questionTask.score6 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>健康感觉性维度（<span style="color: #3398dc">{{ questionTask.score7 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>呼吸症状性维度（<span style="color: #3398dc">{{ questionTask.score8 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>身体功能性维度（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>角色功能性维度（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>活力性维度（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>情绪功能性维度（<span style="color: #3398dc">{{ questionTask.score4 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>社会功能性维度（<span style="color: #3398dc">{{ questionTask.score5 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>医疗负担性维度（<span style="color: #3398dc">{{ questionTask.score6 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>健康感觉性维度（<span style="color: #3398dc">{{ questionTask.score7 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>呼吸症状性维度（<span style="color: #3398dc">{{ questionTask.score8 }}分</span>）</strong></a-col>
                 </a-row>
                 <a-row v-if="questionId === 33 && questionTask.status === 1 && typeof questionTask.score1 !== 'undefined'" type="flex" align="middle" style="flex:1;margin-left:40px;">
                     <a-col :span="6"><strong>症状symptom（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
@@ -173,10 +173,17 @@ export default {
           this.questionId = parseInt(to.params.qid)
           this.getFormData()
           this.defaultSelectedKeys = this.selectedKeys = [this.questionId]
+          document.querySelector('.baselineForm').scrollTop = 0
         }
       },
       immediate: true
     }
+  },
+  activated() {
+    console.log(document.querySelector('.baselineForm').scrollTop)
+  },
+  mounted() {
+    console.log(document.querySelector('.baselineForm').scrollTop)
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -236,7 +243,7 @@ export default {
           that.spinning = false
           that.listArr = that.initQuestionAnswers(res.data.topTitles)
           that.question = res.data.question
-          that.questionTask =  res.data.questionTask
+          that.questionTask = res.data.questionTask
           that.score = that.questionId !== 33 && res.data.questionTask && res.data.questionTask.score
           if (res.data.isFinish === '0') {
             that.questionFinished = false
@@ -463,8 +470,8 @@ export default {
 }
 
 .btn-group {
-    width: 140px;
-    justify-content: space-between;
+  width: 140px;
+  justify-content: space-between;
 }
 
 /deep/ #baselineHeader {
