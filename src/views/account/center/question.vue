@@ -39,7 +39,7 @@
                     <a-col :span="6"><strong>健康感觉性维度（<span style="color: #3398dc">{{ questionTask.score7 }}分</span>）</strong></a-col>
                     <a-col :span="6"><strong>呼吸症状性维度（<span style="color: #3398dc">{{ questionTask.score8 }}分</span>）</strong></a-col>
                 </a-row>
-                <a-row v-if="questionId === 33 && questionTask.status === 1 && typeof questionTask.score1 !== 'undefined'" type="flex" style="flex:1;margin-left:40px;align-items: center;">
+                <a-row v-if="questionId === 33 && questionTask.status === 1 && typeof questionTask.score1 !== 'undefined'" type="flex" align="middle" style="flex:1;margin-left:40px;">
                     <a-col :span="6"><strong>症状symptom（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
                     <a-col :span="6"><strong>活动activity（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
                     <a-col :span="6"><strong>影响impact（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>

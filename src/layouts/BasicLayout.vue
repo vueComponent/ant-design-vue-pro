@@ -42,9 +42,13 @@
       <!-- layout content -->
       <a-layout-content :style="{ overflowY:'auto',overflowX:'hidden', margin: '10px 10px 0', paddingTop: fixedHeader ? '64px' : '0' }">
         <multi-tab v-if="multiTab"></multi-tab>
-        <transition name="page-transition">
-          <route-view />
-        </transition>
+        <!-- <transition name="page-transition"> -->
+          <!-- <route-view /> -->
+          <keep-alive >
+            <router-view v-if="$route.meta.keepAlive"></router-view>
+          </keep-alive>
+          <router-view v-if="!$route.meta.keepAlive"></router-view>
+        <!-- </transition> -->
       </a-layout-content>
 
       <!-- layout footer -->
@@ -65,7 +69,7 @@ import { mapState, mapActions } from 'vuex'
 import { mixin, mixinDevice } from '@/utils/mixin'
 import config from '@/config/defaultSettings'
 
-import RouteView from './RouteView'
+// import RouteView from './RouteView'
 import MultiTab from '@/components/MultiTab'
 import SideMenu from '@/components/Menu/SideMenu'
 import GlobalHeader from '@/components/GlobalHeader'
@@ -77,7 +81,7 @@ export default {
   name: 'BasicLayout',
   mixins: [mixin, mixinDevice],
   components: {
-    RouteView,
+    // RouteView,
     MultiTab,
     SideMenu,
     GlobalHeader,

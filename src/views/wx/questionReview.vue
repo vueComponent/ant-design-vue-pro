@@ -58,7 +58,7 @@
         <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" />
       </template>
       <template slot="operation" slot-scope="text, record">
-        <router-link :to="{name:'wxQuestionDetail', params: {'id': record.questionTaskId}}" @click.native="handleClick(record)">审阅</router-link>
+          <a @click="handleClick(record)">审阅</a>
       </template>
     </s-table>
   </a-card>
@@ -206,6 +206,7 @@
           createDate: record.createDate
         }
         localStorage.setItem('questionInfo', JSON.stringify(params))
+        this.$router.push({ path: `/wx/questionDetail/${record.questionTaskId}`})
       },
       refreshTable() {
         this.advanced = false
