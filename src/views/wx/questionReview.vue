@@ -201,38 +201,28 @@ export default {
       this.selectedRowKeys = selectedRowKeys;
       this.selectedRows = selectedRows;
     },
-    methods: {
-      onSelectChange(selectedRowKeys, selectedRows) {
-        this.selectedRowKeys = selectedRowKeys;
-        this.selectedRows = selectedRows;
-      },
-      clearForm() {
-        this.queryParam = {}
-      },
-      tableSearch(type) {
-        this.queryParam.queryType = type
-        this.$refs.table.refresh();
-        this.advanced = false
-      },
-      handleClick(record) {
-        const params = {
-          name: record.name,
-          card: record.card,
-          createDate: record.createDate
-        }
-        localStorage.setItem('questionInfo', JSON.stringify(params))
-        this.$router.push({ path: `/wx/questionDetail/${record.questionTaskId}`})
-      },
-      refreshTable() {
-        this.advanced = false
-        this.$refs.table.refresh()
+    clearForm() {
+      this.queryParam = {}
+    },
+    tableSearch(type) {
+      this.queryParam.queryType = type
+      this.$refs.table.refresh();
+      this.advanced = false
+    },
+    handleClick(record) {
+      const params = {
+        name: record.name,
+        card: record.card,
+        createDate: record.createDate
       }
+      localStorage.setItem('questionInfo', JSON.stringify(params))
+      this.$router.push({ path: `/wx/questionDetail/${record.questionTaskId}`})
     },
     refreshTable() {
       this.advanced = false
       this.$refs.table.refresh()
     }
-  },
+  }
 }
 </script>
 <style lang="less" scoped>
