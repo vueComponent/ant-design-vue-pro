@@ -112,6 +112,13 @@ export default {
     }
   },
   watch: {
+      $route (to,from) {
+        if(to.meta.title) {
+            this.collapsed = false
+        }else {
+            this.collapsed = true
+        }
+      },
     sidebarOpened (val) {
       this.collapsed = !val
     }
@@ -133,7 +140,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setSidebar']),
+    ...mapActions(['CloseSidebar','setSidebar']),
     toggle () {
       this.collapsed = !this.collapsed
       this.setSidebar(!this.collapsed)

@@ -75,7 +75,6 @@
 </template>
 <script>
   import moment from 'moment'
-  import { mapActions } from 'vuex'
   import { getWxQuestionDetail, questionReview } from '@/api/distract'
   import { MyIcon } from '@/components/_util/util'
   export default {
@@ -104,7 +103,6 @@
       }
     },
     created() {
-      this.CloseSidebar()
       this.info = JSON.parse(localStorage.getItem('questionInfo'))
       this.questionTaskId = this.$route.params.id
 
@@ -120,11 +118,7 @@
         this.score = res.data.questionTask && res.data.questionTask.score
       })
     },
-    beforeDestroy() {
-      this.setSidebar(true)
-    },
     methods: {
-      ...mapActions(['CloseSidebar', 'setSidebar']),
       moment,
 
       handleChange(id) {
