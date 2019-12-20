@@ -230,7 +230,7 @@ export default {
       if (e.target.className === 'toggleAdvanced') {
         return
       }
-      if ($(e.target).closest(".tableSearch").length == 0) {
+      if ($(e.target).closest(".tableSearch").length == 0 && $(e.target).closest(".ant-calendar").length == 0) {
         that.advanced = false
       }
     })
