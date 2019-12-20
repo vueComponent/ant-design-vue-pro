@@ -48,7 +48,7 @@
                           <a-select-option value="3">年访视任务</a-select-option>
                         </a-select>
                       </a-form-item>
-                      <a-form-item label="计划执行日期" style="margin-bottom:0;">
+                      <a-form-item label="到期时间" style="margin-bottom:0;">
                         <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
                       </a-form-item>
                       <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
@@ -250,8 +250,8 @@ export default {
     },
     changeTime(time) {
       this.dateArr = time;
-      this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD');
-      this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD');
+      this.queryParam.planDateStart = moment(time[0]).format('YYYY-MM-DD');
+      this.queryParam.planDateEnd = moment(time[1]).format('YYYY-MM-DD');
     },
     tableSearch(type) {
       this.queryParam.queryType = type

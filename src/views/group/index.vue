@@ -45,7 +45,7 @@
                       <a-form-item label="身份证号">
                         <a-input v-model.trim="queryParam.card" style="width: 100%" />
                       </a-form-item>
-                      <a-form-item label="创建日期" style="margin-bottom:0;">
+                      <a-form-item label="入组日期" style="margin-bottom:0;">
                         <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
                       </a-form-item>
                       <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
@@ -304,7 +304,6 @@ export default {
     checkedP(data) {
       this.project.projectId = data.projectId;
       this.projectName = data.projectName;
-      console.log("this.project.projectId", this.project.projectId)
       const key = {
         projectId: data.projectId
       };
@@ -312,8 +311,8 @@ export default {
     },
     changeTime(time) {
       this.dateArr = time;
-      this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD')
-      this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD')
+      this.queryParam.joinDateStart = moment(time[0]).format('YYYY-MM-DD')
+      this.queryParam.joinDateEnd = moment(time[1]).format('YYYY-MM-DD')
     }
   }
 };
