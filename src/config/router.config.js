@@ -20,7 +20,7 @@ export const asyncRouterMap = [
         path: '/list/index',
         name: 'list',
         component: () => import('@/views/list/TableList'),
-        meta: { title: '病历管理', keepAlive: true, icon: bingli, permission: [ 'center', 'group' ]}
+        meta: { title: '病例管理', keepAlive: true, icon: bingli, permission: [ 'center', 'group' ]}
       },
       {
         path: '/acute/index',
