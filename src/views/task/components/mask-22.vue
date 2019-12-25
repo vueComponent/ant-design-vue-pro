@@ -687,8 +687,8 @@ export default {
           if (res.data && res.data.fgnxgjc) {
             that.fgnxgjc = that.dealAnswers(res.data.fgnxgjc)
           }
-          if (res.data.annexListQ && res.data.annexListQ.length) {
-            that.fileList1 = _.map(res.data.annexListQ, function(v) {
+          if (res.data.annexListFgn && res.data.annexListFgn.length) {
+            that.fileList1 = _.map(res.data.annexListFgn, function(v) {
               return {
                 uid: v.annexId,
                 url: that.viewPicUrl + v.annexAddress,
@@ -697,8 +697,8 @@ export default {
               }
             })
           }
-          if (res.data.annexListH && res.data.annexListH.length) {
-            that.fileList2 = _.map(res.data.annexListH, function(v) {
+          if (res.data.annexListQH && res.data.annexListQH.length) {
+            that.fileList2 = _.map(res.data.annexListQH, function(v) {
               return {
                 uid: v.annexId,
                 url: that.viewPicUrl + v.annexAddress,
