@@ -84,6 +84,7 @@
                 <div v-if="controlb4">
                   <a-form-item label="长期性抗生素治疗(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-checkbox-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41', 'array')}]">
+                      <a-checkbox value="0">无</a-checkbox>
                       <a-checkbox value="1">阿奇霉素</a-checkbox>
                       <a-checkbox value="2">克拉霉素</a-checkbox>
                       <a-checkbox value="3">红霉素</a-checkbox>
@@ -98,6 +99,7 @@
                   </a-form-item>
                   <a-form-item label="祛痰类药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-checkbox-group v-decorator="['b43', {...selectRequired, initialValue: initValue('b43', 'array')}]">
+                      <a-checkbox value="0">无</a-checkbox>
                       <a-checkbox value="1">N乙酰半胱氨酸</a-checkbox>
                       <a-checkbox value="2">氨溴索</a-checkbox>
                       <a-checkbox value="3">桉柠蒎</a-checkbox>
@@ -219,6 +221,7 @@
                 </a-form-item>
                 <a-form-item label="抗真菌药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb5">
                   <a-checkbox-group v-decorator="['b52', {...selectRequired, initialValue: initValue('b52', 'array')}]">
+                    <a-checkbox value="0">无</a-checkbox>
                     <a-checkbox value="1">伊曲康唑</a-checkbox>
                     <a-checkbox value="2">伏立康唑</a-checkbox>
                   </a-checkbox-group>
