@@ -44,7 +44,7 @@
                 <a-checkbox-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4', 'array')}]" class="control-m-line">
                   <a-checkbox value="1">咳嗽</a-checkbox>
                   <a-checkbox value="2" :checked="controla41" @change="changeSelect($event, 'controla41')">咳痰</a-checkbox>
-                  <a-checkbox value="3">痰血</a-checkbox>
+                  <a-checkbox value="3" :checked="controla43" @change="changeSelect($event, 'controla43')">痰血</a-checkbox>
                   <a-checkbox value="4" :checked="controla42" @change="changeSelect($event, 'controla42')">咯血</a-checkbox>
                   <a-checkbox value="5">胸闷</a-checkbox>
                   <a-checkbox value="6">喘息</a-checkbox>
@@ -72,6 +72,9 @@
                   <a-radio value="3">脓性</a-radio>
                 </a-radio-group>
               </a-form-item>
+              <a-form-item label="痰血量" v-if="controla43" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['todo', {...inputRequired, initialValue: initValue('todo')}]" autocomplete="off"></a-input>
+              </a-form-item>
               <a-form-item label="咯血量(最多)" v-if="controla42" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]" autocomplete="off"></a-input>
               </a-form-item>
@@ -90,7 +93,7 @@
               </a-form-item>
               <a-form-item label="(5) 有无以下疾病及事件（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-checkbox-group v-decorator="['b5', {...selectRequired, initialValue: initValue('b5', 'array')}]">
-                  <a-checkbox value="1">既往有无麻疹</a-checkbox>
+                  <a-checkbox value="1">麻疹</a-checkbox>
                   <a-checkbox value="2">百日咳</a-checkbox>
                   <a-checkbox value="3">肺结核</a-checkbox>
                   <a-checkbox value="4">NTM</a-checkbox>
@@ -132,13 +135,13 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controlb70">
-                <a-form-item label="1.心血管系统" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="1.心脑血管系统" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['b7', {...require2, initialValue: '-1'}]" @change="changeRadio($event, 'controlb7')">
                     <a-radio value="1">有</a-radio>
                     <a-radio value="-1">无</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item class="no-border" label="心血管系统疾病类型(多选)" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb7">
+                <a-form-item class="no-border" label="心脑血管系统疾病类型(多选)" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb7">
                   <a-checkbox-group v-decorator="['b71', {...selectRequired, initialValue: initValue('b71', 'array')}]" class="control-m-line">
                     <a-checkbox value="1">心梗</a-checkbox>
                     <a-checkbox value="2">心绞痛</a-checkbox>
@@ -209,13 +212,13 @@
                 </a-form-item>
                 <a-form-item class="no-border" label="血液系统疾病类型(多选)" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb10">
                   <a-checkbox-group v-decorator="['b101', {...selectRequired, initialValue: initValue('b101', 'array')}]">
-                    <a-checkbox value="1" :checked="controlb1011" @change="changeSelect($event, 'controlb1011')">缺铁性贫血</a-checkbox>
+                    <a-checkbox value="1" :checked="controlb1011" @change="changeSelect($event, 'controlb1011')">贫血</a-checkbox>
                     <a-checkbox value="2">白血病</a-checkbox>
                     <a-checkbox value="3">淋巴瘤</a-checkbox>
                     <a-checkbox value="4" :checked="controlb1014" @change="changeSelect($event, 'controlb1014')">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
-                <a-form-item class="no-border" label="缺铁性贫血::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb10 && controlb1011">
+                <a-form-item class="no-border" label="贫血::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb10 && controlb1011">
                   <a-radio-group v-decorator="['b1011', {...require2, initialValue: initValue('b1011')}]">
                     <a-radio value="1">I型</a-radio>
                     <a-radio value="2">II型</a-radio>
@@ -258,11 +261,11 @@
                 <a-form-item class="no-border" label="风湿系统疾病类型(多选)" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb12">
                   <a-checkbox-group v-decorator="['b121', {...selectRequired, initialValue: initValue('b121', 'array')}]" class="control-m-line">
                     <a-checkbox value="1">系统性红斑狼疮</a-checkbox>
-                    <a-checkbox value="2">干燥综合征</a-checkbox>
-                    <a-checkbox value="3">系统性硬化</a-checkbox>
-                    <a-checkbox value="4">皮肌炎</a-checkbox>
-                    <a-checkbox value="5">先天性结缔组织发育不全病</a-checkbox>
-                    <a-checkbox value="6">青少年特发性关节炎</a-checkbox>
+                    <a-checkbox value="2">类风湿性关节炎</a-checkbox>
+                    <a-checkbox value="3">干燥综合征</a-checkbox>
+                    <a-checkbox value="4">系统性硬化</a-checkbox>
+                    <a-checkbox value="5">皮肌炎</a-checkbox>
+                    <a-checkbox value="6">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="7.是否有HIV" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -547,6 +550,7 @@ export default {
       zkbszl: undefined,
       controla41: false,
       controla42: false,
+      controla43: false,
       controlb61: false,
       controlb51: false,
       controlb62: false,
@@ -671,6 +675,9 @@ export default {
           splitArr = answer.a4.split(',')
           if (splitArr.indexOf('2') > -1) {
             that.controla41 = true
+          }
+          if (splitArr.indexOf('3') > -1) {
+            that.controla43 = true
           }
           if (splitArr.indexOf('4') > -1) {
             that.controla42 = true

@@ -144,11 +144,11 @@
                     <a-checkbox-group v-decorator="['b61', {...selectRequired, initialValue: initValue('b61', 'array')}]" class="control-m-line">
                       <a-checkbox value="0" @change="showList($event, '铜绿假单胞菌', 'controlb610')">铜绿假单胞菌</a-checkbox>
                       <add-table :dataSource="optionDataSource[0]" v-if="controlb610" :type1="type1" @listen="changeType" :picSource="picList[0]" @changePic1="changePic($event, 0)"></add-table>
-                      <a-checkbox value="1" @change="showList($event, '阴沟肠杆菌', 'controlb611')">阴沟肠杆菌</a-checkbox>
+                      <a-checkbox value="1" @change="showList($event, '肺炎链球菌', 'controlb611')">肺炎链球菌</a-checkbox>
                       <add-table :dataSource="optionDataSource[1]" v-if="controlb611" :picSource="picList[1]" @changePic1="changePic($event, 1)"></add-table>
                       <a-checkbox value="2" @change="showList($event, '肺炎克雷伯菌', 'controlb612')">肺炎克雷伯菌</a-checkbox>
                       <add-table :dataSource="optionDataSource[2]" v-if="controlb612" :picSource="picList[2]" @changePic1="changePic($event, 2)"></add-table>
-                      <a-checkbox value="3" @change="showList($event, '肺炎链球菌', 'controlb613')">肺炎链球菌</a-checkbox>
+                      <a-checkbox value="3" @change="showList($event, '阴沟肠杆菌', 'controlb613')">阴沟肠杆菌</a-checkbox>
                       <add-table :dataSource="optionDataSource[3]" v-if="controlb613" :picSource="picList[3]" @changePic1="changePic($event, 3)"></add-table>
                       <a-checkbox value="4" @change="showList($event, '副流感嗜血杆菌', 'controlb614')">副流感嗜血杆菌</a-checkbox>
                       <add-table :dataSource="optionDataSource[4]" v-if="controlb614" :picSource="picList[4]" @changePic1="changePic($event, 4)"></add-table>
