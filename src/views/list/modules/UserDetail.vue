@@ -1,16 +1,5 @@
 <template>
-  <a-modal
-    title="患者详情"
-    :width="800"
-    :bodyStyle="bodyStyle"
-    :maskClosable="maskClosable"
-    :centered="centered"
-    :destroyOnClose="destroyOnClose"
-    :visible="visible"
-    :confirmLoading="confirmLoading"
-    :footer="null"
-    @cancel="handleCancel"
-  >
+  <a-modal title="患者详情" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="visible" :confirmLoading="confirmLoading" :footer="null" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <user-detail :option="patient"></user-detail>
       <a-tabs defaultActiveKey="1">
@@ -84,20 +73,20 @@
               </p>
               <p>
                 <span>随访摘要：</span>
-                 {{item.typeName}}
+                {{item.typeName}}
               </p>
-                <router-link :to="{path:'/list/task/' + item.patientBasisId}"> 
-              <a-button type="primary" size="small" style="float:right;">
-                <my-icon type="iconxiangqing_huaban" />
-                执行
-              </a-button>
-               </router-link>
+              <router-link :to="{path:'/list/task/' + item.patientBasisId}">
+                <a-button type="primary" size="small" style="float:right;">
+                  <my-icon type="iconxiangqing_huaban" />
+                  执行
+                </a-button>
+              </router-link>
             </div>
           </div>
           <div v-else class="userCard">
-               <div style="text-align: center;">
-                   <img src="@/assets/noData.png" alt="">
-                   <p>暂无数据</p>
+            <div style="text-align: center;">
+              <img src="@/assets/noData.png" alt="">
+              <p>暂无数据</p>
             </div>
           </div>
         </a-tab-pane>
@@ -115,40 +104,40 @@
                     <p>访视时间: {{item.wirteDate|formDate}}</p>
                   </div>
                   <div class="followupInfoItemPro">
-                      <p>
-                        访视进度:
-                        <span>{{item.executeStatus == 3 ? '已完成' : '未完成'}}</span>
-                      </p>
+                    <p>
+                      访视进度:
+                      <span>{{item.executeStatus == 3 ? '已完成' : '未完成'}}</span>
+                    </p>
                     <!-- <p>
                       <a-progress  :percent="item.progress" status="active" />
                     </p> -->
                   </div>
-                   <router-link v-if="item.type == 1" :to="{path:'/list/basis/' + item.patientBasisId}"> 
-                  <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
-                    <my-icon type="iconxiangqing_huaban" />
-                    详情
-                  </a-button>
-                  </router-link>
-                   <router-link v-else-if="item.type == 2||item.type == 3" :to="{path:'/list/task/' + item.patientBasisId}">
-                   <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
-                    <my-icon type="iconxiangqing_huaban" />
-                    详情
-                  </a-button>
-                  </router-link>
-                   <router-link v-else-if="item.type == 4" :to="{path:'/jxjzq/' + item.patientBasisId}">
-                   <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
-                    <my-icon type="iconxiangqing_huaban" />
-                    详情
-                  </a-button>
-                  </router-link>
+                  <a v-if="item.type == 1" @click="basisDetail(item.patientBasisId)">
+                    <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
+                      <my-icon type="iconxiangqing_huaban" />
+                      详情
+                    </a-button>
+                  </a>
+                  <a v-else-if="item.type == 2||item.type == 3" @click="taskDetail(item.patientBasisId)">
+                    <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
+                      <my-icon type="iconxiangqing_huaban" />
+                      详情
+                    </a-button>
+                  </a>
+                  <a v-else-if="item.type == 4" @click="jxjzq(item.patientBasisId)">
+                    <a-button type="primary" size="small" style="float:right;margin-top:5px;">
+                      <my-icon type="iconxiangqing_huaban" />
+                      详情
+                    </a-button>
+                  </a>
                 </div>
               </a-timeline-item>
             </a-timeline>
           </div>
           <div v-else class="userCard">
             <div style="text-align: center;">
-                   <img src="@/assets/noData.png" alt="">
-                   <p>暂无数据</p>
+              <img src="@/assets/noData.png" alt="">
+              <p>暂无数据</p>
             </div>
           </div>
         </a-tab-pane>
@@ -156,7 +145,6 @@
     </a-spin>
   </a-modal>
 </template>
-
 <script>
 import { getPatientDetail } from '@/api/patient'
 import UserDetail from './UserDetailTop'
@@ -183,7 +171,7 @@ export default {
       bodyStyle: {
         height: '500px',
         overflow: 'auto',
-        background:"#F8FBFC"
+        background: "#F8FBFC"
       }
     };
   },
@@ -200,26 +188,38 @@ export default {
     //   };
     //   return visitMap[value];
     // },
-    patientBasisType(type){
-      const patientBasisTypeMap=['','基线','半年随访','年访视','急性加重期随访']
+    patientBasisType(type) {
+      const patientBasisTypeMap = ['', '基线', '半年随访', '年访视', '急性加重期随访']
       return patientBasisTypeMap[type];
     }
   },
   methods: {
     show(value) {
-      this.visible = true;
-      this.confirmLoading = true;
-      const Params = new URLSearchParams();
-      Params.append('patientId', value.patientId);
+      this.visible = true
+      this.confirmLoading = true
+      const Params = new URLSearchParams()
+      Params.append('patientId', value.patientId)
       getPatientDetail(Params).then(res => {
-          this.patient = res.data.patient;
-          this.patientBasisList = res.data.patientBasisList;
-          this.visitTasks = res.data.visitTasks;
-        this.confirmLoading = false;
+        this.patient = res.data.patient
+        this.patientBasisList = res.data.patientBasisList
+        this.visitTasks = res.data.visitTasks
+        this.confirmLoading = false
       });
     },
     handleCancel() {
-      this.visible = false;
+      this.visible = false
+    },
+    basisDetail(id) {
+      this.visible = false
+      this.$router.push('/list/basis/' + id)
+    },
+    taskDetail(id) {
+      this.visible = false
+      this.$router.push('/list/task/' + id)
+    },
+    jxjzq(id) {
+      this.visible = false
+      this.$router.push('/jxjzq/' + id)
     }
   }
 };
@@ -228,44 +228,52 @@ export default {
 /deep/ .ant-modal-body {
   background-color: #fdfdfd;
 }
+
 .userCard {
   background: #ffffff;
   padding: 20px;
   border: 1px solid #f1f1f1;
-  padding-right:0px; 
+  padding-right: 0px;
   height: 300px;
   overflow: auto;
+
   #userInfo {
     p.userInfoItem {
       color: #000000;
+
       span {
         color: #888888;
       }
     }
   }
+
   .followupItem {
     border-bottom: 1px dashed #f3f3f3;
     padding-bottom: 10px;
     margin-bottom: 15px;
     padding-right: 20px;
+
     .my-icon-huaban {
       color: #26adfa;
       font-size: 30px;
       margin-right: 10px;
       vertical-align: middle;
     }
+
     p {
       display: inline-block;
       margin: 0px;
       margin-right: 40px;
       color: #000000;
+
       span {
         color: #888888;
       }
     }
   }
-  span.followupDate{
-      display: inline-block;
+
+  span.followupDate {
+    display: inline-block;
     border: 1px solid #dddddd;
     padding: 5px 10px;
     font-size: 12px;
@@ -274,65 +282,79 @@ export default {
     position: relative;
     top: -3px;
   }
-  div.followupInfoItem{
-   display: inline-block;
+
+  div.followupInfoItem {
+    display: inline-block;
     width: 590px;
     background: #F1F8FE;
     margin-left: 20px;
     position: relative;
     top: -11px;
     padding: 5px 20px;
-     div.followupInfoItemType{
-       display: inline-block;
-       width: 200px;
-       font-size: 12px;
-       p:first-child{
-             color: #000;
-            margin-bottom: 5px;
-            font-size: 14px;
-            span{
-              color: #F0C070;
-            }
-       }
-       p:nth-child(2){
-             margin: 0;
-       }
-     }
-     div.followupInfoItemPro{
-       display: inline-block;
-       width: 200px;
-       vertical-align: top;
-       span{
-         font-size: 14px;
-         color: #000;
-       }
-       p{
+
+    div.followupInfoItemType {
+      display: inline-block;
+      width: 200px;
+      font-size: 12px;
+
+      p:first-child {
+        color: #000;
+        margin-bottom: 5px;
+        font-size: 14px;
+
+        span {
+          color: #F0C070;
+        }
+      }
+
+      p:nth-child(2) {
+        margin: 0;
+      }
+    }
+
+    div.followupInfoItemPro {
+      display: inline-block;
+      width: 200px;
+      vertical-align: top;
+
+      span {
+        font-size: 14px;
+        color: #000;
+      }
+
+      p {
         //  width: 100px;
-         display: inline-block;
-         margin: 0;
-         margin-left: 10px;
+        display: inline-block;
+        margin: 0;
+        margin-left: 10px;
         //  /deep/ .ant-progress-inner{
         //    background-color:#C4C4C4;
         //  }
-       }
-     }
+      }
+    }
   }
 
 }
 
-::-webkit-scrollbar-track-piece { //滚动条凹槽的颜色，还可以设置边框属性
-background-color:#f8f8f8;
+::-webkit-scrollbar-track-piece {
+  //滚动条凹槽的颜色，还可以设置边框属性
+  background-color: #f8f8f8;
 }
-::-webkit-scrollbar {//滚动条的宽度
-width:5px;
-height:9px;
+
+::-webkit-scrollbar {
+  //滚动条的宽度
+  width: 5px;
+  height: 9px;
 }
-::-webkit-scrollbar-thumb {//滚动条的设置
-background-color:#dddddd;
-background-clip:padding-box;
-min-height:28px;
+
+::-webkit-scrollbar-thumb {
+  //滚动条的设置
+  background-color: #dddddd;
+  background-clip: padding-box;
+  min-height: 28px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-background-color:#bbb;
+  background-color: #bbb;
 }
 </style>
