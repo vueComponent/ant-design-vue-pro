@@ -7,6 +7,9 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 // default language
 import enUS from './lang/en-US'
+import zhCN from './lang/zh-CN'
+import zhTW from './lang/zh-TW'
+import ptBR from './lang/pt-BR'
 // change default accept-language
 import { axios } from '@/utils/request'
 
@@ -15,9 +18,10 @@ Vue.use(VueI18n)
 export const defaultLang = 'en-US'
 
 const messages = {
-  'en-US': {
-    ...enUS
-  }
+  'en-US': { ...enUS },
+  'zh-CN': { ...zhCN },
+  'zh-TW': { ...zhTW },
+  'pt-BR': { ...ptBR }
 }
 
 const i18n = new VueI18n({
