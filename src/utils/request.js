@@ -10,7 +10,7 @@ console.log(process.env.NODE_ENV)
 console.log(process.env.NODE_ENV === 'production')
 console.log(process.env.NODE_ENV === 'production' ? '' : '/api')
 const service = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? 'http://www.chinabronchiectasis.com:9997' : '/api', // api base_url
+  baseURL: process.env.NODE_ENV === 'production' ? 'http://www.chinabronchiectasis.com' : '/api', // api base_url
   timeout: 20000 // 请求超时时间
 })
 

@@ -29,7 +29,7 @@
                 <span class="head-icon"></span>
                 <div v-if="question.name && question.name" class="question-title">{{question.name}}</div>
                 <span v-if="score" class="question-score">{{`（得分：${score}分）`}}</span>
-                <a-row v-if="(questionId === 32 || questionId === 58) && questionTask.status === 1 && typeof questionTask.score1 !== 'undefined'" type="flex" style="flex:1;margin-left:40px">
+                <a-row v-if="(questionId === 32 || questionId === 46 || questionId === 58) && (questionTask.status === 1 || questionTask.status === 5) && typeof questionTask.score1 !== 'undefined'" type="flex" style="flex:1;margin-left:40px">
                   <a-col :span="6"><strong>身体功能性维度（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
                   <a-col :span="6"><strong>角色功能性维度（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
                   <a-col :span="6"><strong>活力性维度（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
@@ -46,7 +46,7 @@
                     <a-col :span="6"><strong>合计（<span style="color: #3398dc">{{ questionTask.score }}分</span>）</strong></a-col>
                 </a-row>
               </a-row>
-              <a-row type="flex" align="middle" class="btn-group" v-if="executeStatus !== 2">
+              <a-row type="flex" align="middle" class="btn-group" v-if="executeStatus !== 2 && questionTask.status !== 5">
                 <a-button class="btn fr" @click="save">保存</a-button>
                 <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               </a-row>
@@ -158,7 +158,7 @@ export default {
         }
         if (that.patientBasis.type === 3) {
           that.title = '年访视'
-          that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+          that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
         if (that.patientBasis.type === 4) {
           that.title = '急性加重期'
@@ -208,7 +208,7 @@ export default {
           }
           if (that.patientBasis.type === 3) {
             that.title = '年访视'
-            that.executeStatus = _.find(res.data.list[5].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+            that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
           }
           if (that.patientBasis.type === 4) {
             that.title = '急性加重期'
