@@ -8,7 +8,7 @@
         <p style="font-size: 14px;color: rgba(0,0,0,.65)">{{ description }}</p>
         <div class="link">
           <template v-for="(link, index) in linkList">
-            <a :key="index" :href="link.href">
+            <a :key="index" @click="() => { link.callback && link.callback() }">
               <a-icon :type="link.icon" />
               <span>{{ link.title }}</span>
             </a>
@@ -72,6 +72,10 @@ export default {
     logo: {
       type: String,
       default: null
+    },
+    directTabs: {
+      type: Object,
+      default: null
     }
   },
   data () {
@@ -90,6 +94,7 @@ export default {
     })
   },
   mounted () {
+    this.tabs = this.directTabs
     this.getPageMeta()
   },
   updated () {

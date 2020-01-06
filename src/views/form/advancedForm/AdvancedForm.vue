@@ -198,27 +198,29 @@ export default {
           resolve({ loop: false })
         }, 800)
       }).then(() => {
-        const target = this.data.filter(item => item.key === key)[0]
+        const target = this.data.find(item => item.key === key)
         target.editable = false
         target.isNew = false
         this.memberLoading = false
       })
     },
     toggle (key) {
-      const target = this.data.filter(item => item.key === key)[0]
+      const target = this.data.find(item => item.key === key)
+      target._originalData = { ...target }
       target.editable = !target.editable
     },
     getRowByKey (key, newData) {
       const data = this.data
-      return (newData || data).filter(item => item.key === key)[0]
+      return (newData || data).find(item => item.key === key)
     },
     cancel (key) {
-      const target = this.data.filter(item => item.key === key)[0]
-      target.editable = false
+      const target = this.data.find(item => item.key === key)
+      Object.keys(target).forEach(key => { target[key] = target._originalData[key] })
+      target._originalData = undefined
     },
     handleChange (value, key, column) {
       const newData = [...this.data]
-      const target = newData.filter(item => key === item.key)[0]
+      const target = newData.find(item => key === item.key)
       if (target) {
         target[column] = value
         this.data = newData
@@ -258,24 +260,19 @@ export default {
         const errors = Object.assign({}, repository.form.getFieldsError(), task.form.getFieldsError())
         const tmp = { ...errors }
         this.errorList(tmp)
-        console.log(tmp)
       })
     },
     errorList (errors) {
       if (!errors || errors.length === 0) {
-        return null
+        return
       }
-      this.errors = Object.keys(errors).map(key => {
-        if (!errors[key]) {
-          return null
-        }
-
-        return {
+      this.errors = Object.keys(errors)
+        .filter(key => errors[key])
+        .map(key => ({
           key: key,
           message: errors[key][0],
           fieldLabel: fieldLabels[key]
-        }
-      })
+        }))
     },
     scrollToField (fieldKey) {
       const labelNode = document.querySelector(`label[for="${fieldKey}"]`)

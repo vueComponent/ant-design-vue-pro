@@ -32,7 +32,7 @@
 
 2. 修改引入组件方式 (注意，这只是一个例子，请完整引入你所需要的组件)
 
-   文件 `@/components/use.js`
+   文件 `@/core/lazy_lib/component_use.js`
 
    ```javascript
    import Vue from 'vue'
@@ -64,7 +64,7 @@
    ```
 
 
-3. 最后在 `main.js` 中引入 `@/components/use.js` 文件即可，如下
+3. 最后在 `main.js` 中引入 `@/core/lazy_use.js` 文件即可，如下
 
    ```javascript
    
@@ -72,7 +72,7 @@
    import App from './App'
    
    // 引入 按需组件的统一引入文件
-   import './components/use'
+   import './core/lazy_use'
    
    import './style/index.less'
    
@@ -84,12 +84,6 @@
    }).$mount('#app')
 
    ```
-
-**具体完整实现可参考分支 [feature/demand_load](https://github.com/sendya/ant-design-pro-vue/tree/feature/demand_load)**
-
-
-
-
 
 
 

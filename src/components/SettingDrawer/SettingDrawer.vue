@@ -6,8 +6,7 @@
       @close="onClose"
       :closable="false"
       :visible="visible"
-      :getContainer="() => $refs.settingDrawer"
-      :style="{}"
+      :handle="handle"
     >
       <div class="setting-drawer-index-content">
 
@@ -185,23 +184,16 @@ export default {
   mixins: [mixin, mixinDevice],
   data () {
     return {
-      visible: true,
+      visible: false,
       colorList,
-      baseConfig: Object.assign({}, config)
+      handle: <div/>
     }
   },
   watch: {
 
   },
   mounted () {
-    const vm = this
-    setTimeout(() => {
-      vm.visible = false
-    }, 16)
-    // 当主题色不是默认色时，才进行主题编译
-    if (this.primaryColor !== config.primaryColor) {
-      updateTheme(this.primaryColor)
-    }
+    updateTheme(this.primaryColor)
     if (this.colorWeak !== config.colorWeak) {
       updateColorWeak(this.colorWeak)
     }
@@ -217,29 +209,27 @@ export default {
       this.visible = !this.visible
     },
     onColorWeak (checked) {
-      this.baseConfig.colorWeak = checked
       this.$store.dispatch('ToggleWeak', checked)
       updateColorWeak(checked)
     },
     onMultiTab (checked) {
-      this.baseConfig.multiTab = checked
       this.$store.dispatch('ToggleMultiTab', checked)
     },
     handleMenuTheme (theme) {
-      this.baseConfig.navTheme = theme
       this.$store.dispatch('ToggleTheme', theme)
     },
     doCopy () {
+      // get current settings from mixin or this.$store.state.app, pay attention to the property name
       const text = `export default {
-  primaryColor: '${this.baseConfig.primaryColor}', // primary color of ant design
-  navTheme: '${this.baseConfig.navTheme}', // theme for nav menu
-  layout: '${this.baseConfig.layout}', // nav menu position: sidemenu or topmenu
-  contentWidth: '${this.baseConfig.contentWidth}', // layout of content: Fluid or Fixed, only works when layout is topmenu
-  fixedHeader: ${this.baseConfig.fixedHeader}, // sticky header
-  fixSiderbar: ${this.baseConfig.fixSiderbar}, // sticky siderbar
-  autoHideHeader: ${this.baseConfig.autoHideHeader}, //  auto hide header
-  colorWeak: ${this.baseConfig.colorWeak},
-  multiTab: ${this.baseConfig.multiTab},
+  primaryColor: '${this.primaryColor}', // primary color of ant design
+  navTheme: '${this.navTheme}', // theme for nav menu
+  layout: '${this.layoutMode}', // nav menu position: sidemenu or topmenu
+  contentWidth: '${this.contentWidth}', // layout of content: Fluid or Fixed, only works when layout is topmenu
+  fixedHeader: ${this.fixedHeader}, // sticky header
+  fixSiderbar: ${this.fixSiderbar}, // sticky siderbar
+  autoHideHeader: ${this.autoHideHeader}, //  auto hide header
+  colorWeak: ${this.colorWeak},
+  multiTab: ${this.multiTab},
   production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true',
   // vue-ls options
   storageOptions: {
@@ -257,38 +247,30 @@ export default {
       })
     },
     handleLayout (mode) {
-      this.baseConfig.layout = mode
       this.$store.dispatch('ToggleLayoutMode', mode)
       // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
-      //
       this.handleFixSiderbar(false)
     },
     handleContentWidthChange (type) {
-      this.baseConfig.contentWidth = type
       this.$store.dispatch('ToggleContentWidth', type)
     },
     changeColor (color) {
-      this.baseConfig.primaryColor = color
       if (this.primaryColor !== color) {
         this.$store.dispatch('ToggleColor', color)
         updateTheme(color)
       }
     },
     handleFixedHeader (fixed) {
-      this.baseConfig.fixedHeader = fixed
       this.$store.dispatch('ToggleFixedHeader', fixed)
     },
     handleFixedHeaderHidden (autoHidden) {
-      this.baseConfig.autoHideHeader = autoHidden
       this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
     },
     handleFixSiderbar (fixed) {
       if (this.layoutMode === 'topmenu') {
-        this.baseConfig.fixSiderbar = false
         this.$store.dispatch('ToggleFixSiderbar', false)
         return
       }
-      this.baseConfig.fixSiderbar = fixed
       this.$store.dispatch('ToggleFixSiderbar', fixed)
     }
   }

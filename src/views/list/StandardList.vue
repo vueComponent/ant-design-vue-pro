@@ -20,16 +20,16 @@
       title="标准列表">
 
       <div slot="extra">
-        <a-radio-group>
-          <a-radio-button>全部</a-radio-button>
-          <a-radio-button>进行中</a-radio-button>
-          <a-radio-button>等待中</a-radio-button>
+        <a-radio-group v-model="status">
+          <a-radio-button value="all">全部</a-radio-button>
+          <a-radio-button value="processing">进行中</a-radio-button>
+          <a-radio-button value="waiting">等待中</a-radio-button>
         </a-radio-group>
         <a-input-search style="margin-left: 16px; width: 272px;" />
       </div>
 
       <div class="operate">
-        <a-button type="dashed" style="width: 100%" icon="plus">添加</a-button>
+        <a-button type="dashed" style="width: 100%" icon="plus" @click="$refs.taskForm.add()">添加</a-button>
       </div>
 
       <a-list size="large" :pagination="{showSizeChanger: true, showQuickJumper: true, pageSize: 5, total: 50}">
@@ -66,12 +66,14 @@
         </a-list-item>
       </a-list>
 
+      <task-form ref="taskForm" />
     </a-card>
   </div>
 </template>
 
 <script>
 import HeadInfo from '@/components/tools/HeadInfo'
+import TaskForm from './modules/TaskForm'
 
 const data = []
 data.push({
@@ -129,11 +131,13 @@ data.push({
 export default {
   name: 'StandardList',
   components: {
-    HeadInfo
+    HeadInfo,
+    TaskForm
   },
   data () {
     return {
-      data
+      data,
+      status: 'all'
     }
   }
 }

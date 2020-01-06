@@ -31,7 +31,7 @@ Table 重封装组件说明
 </template>
 
 <script>
-  import STable from '@/components/table/'
+  import STable from '@/components'
 
   export default {
     components: {
@@ -210,7 +210,7 @@ Table 重封装组件说明
 ----
 > 除去 `a-table` 自带属性外，还而外提供了一些额外属性属性  
 
-  
+
 | 属性           | 说明                                            | 类型              | 默认值 |
 | -------------- | ----------------------------------------------- | ----------------- | ------ |
 | alert          | 设置是否显示表格信息栏                          | [object, boolean] | null   |
@@ -231,35 +231,43 @@ alert: {
 ----
 
 > 你可能需要为了与后端提供的接口返回结果一致而去修改以下代码：
-(需要注意的是，这里的修改是全局性的，意味着整个项目所有使用该 table 组件都需要遵守这个返回结果定义的字段。)
+> (需要注意的是，这里的修改是全局性的，意味着整个项目所有使用该 table 组件都需要遵守这个返回结果定义的字段。)
+>
+> 文档中的结构有可能由于组件 bug 进行修正而改动。实际修改请以当时最新版本为准
 
-修改 `@/components/table/index.js`  第 132 行起
+修改 `@/components/table/index.js`  第 156 行起
 
 
 
 ```javascript
 result.then(r => {
-  this.localPagination = Object.assign({}, this.localPagination, {
-    current: r.pageNo,  // 返回结果中的当前分页数
-    total: r.totalCount, // 返回结果中的总记录数
-    showSizeChanger: this.showSizeChanger,
-    pageSize: (pagination && pagination.pageSize) ||
-      this.localPagination.pageSize
-  })
+          this.localPagination = this.showPagination && Object.assign({}, this.localPagination, {
+            current: r.pageNo, // 返回结果中的当前分页数
+            total: r.totalCount, // 返回结果中的总记录数
+            showSizeChanger: this.showSizeChanger,
+            pageSize: (pagination && pagination.pageSize) ||
+              this.localPagination.pageSize
+          }) || false
+          // 为防止删除数据后导致页面当前页面数据长度为 0 ,自动翻页到上一页
+          if (r.data.length === 0 && this.showPagination && this.localPagination.current > 1) {
+            this.localPagination.current--
+            this.loadData()
+            return
+          }
 
-  // 为防止删除数据后导致页面当前页面数据长度为 0 ,自动翻页到上一页
-  if (r.data.length == 0 && this.localPagination.current != 1) {
-    this.localPagination.current--
-    this.loadData()
-    return
-  }
-
-  // 这里用于判断接口是否有返回 r.totalCount 或 this.showPagination = false
-  // 当情况满足时，表示数据不满足分页大小，关闭 table 分页功能
-  !r.totalCount && ['auto', false].includes(this.showPagination) && (this.localPagination = false)
-  this.localDataSource = r.data // 返回结果中的数组数据
-  this.localLoading = false
-});
+          // 这里用于判断接口是否有返回 r.totalCount 且 this.showPagination = true 且 pageNo 和 pageSize 存在 且 totalCount 小于等于 pageNo * pageSize 的大小
+          // 当情况满足时，表示数据不满足分页大小，关闭 table 分页功能
+          try {
+            if ((['auto', true].includes(this.showPagination) && r.totalCount <= (r.pageNo * this.localPagination.pageSize))) {
+              this.localPagination.hideOnSinglePage = true
+            }
+          } catch (e) {
+            this.localPagination = false
+          }
+          console.log('loadData -> this.localPagination', this.localPagination)
+          this.localDataSource = r.data // 返回结果中的数组数据
+          this.localLoading = false
+        })
 ```
 返回 JSON 例子：
 ```json
@@ -330,4 +338,4 @@ result.then(r => {
 更新时间
 ----
 
-该文档最后更新于： 2019-01-21 AM 08:37
+该文档最后更新于： 2019-06-23 PM 17:19

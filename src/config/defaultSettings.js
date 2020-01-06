@@ -1,6 +1,6 @@
 /**
  * 项目默认配置项
- * primaryColor - 默认主题色
+ * primaryColor - 默认主题色, 如果修改颜色不生效，请清理 localStorage
  * navTheme - sidebar theme ['dark', 'light'] 两种主题
  * colorWeak - 色盲模式
  * layout - 整体布局方式 ['sidemenu', 'topmenu'] 两种布局
@@ -14,7 +14,7 @@
  */
 
 export default {
-  primaryColor: '#1890FF', // primary color of ant design
+  primaryColor: '#52C41A', // primary color of ant design
   navTheme: 'dark', // theme for nav menu
   layout: 'sidemenu', // nav menu position: sidemenu or topmenu
   contentWidth: 'Fixed', // layout of content: Fluid or Fixed, only works when layout is topmenu
