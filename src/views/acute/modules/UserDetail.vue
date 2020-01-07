@@ -86,12 +86,12 @@
                 <span>随访摘要：</span>
                  {{item.typeName}}
               </p>
-                <router-link :to="{path:'/list/task/' + item.patientBasisId}"> 
-              <a-button type="primary" size="small" style="float:right;">
-                <my-icon type="iconxiangqing_huaban" />
-                执行
-              </a-button>
-               </router-link>
+              <a @click="exec(item.patientBasisId)">
+                <a-button type="primary" size="small" style="float:right;">
+                  <my-icon type="iconxiangqing_huaban" />
+                  执行
+                </a-button>
+              </a>
             </div>
           </div>
           <div v-else class="userCard">
@@ -124,24 +124,24 @@
                       <a-progress  :percent="item.progress" status="active" />
                     </p> -->
                   </div>
-                  <router-link v-if="item.type == 1" :to="{path:'/list/basis/' + item.patientBasisId}"> 
-                  <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
-                    <my-icon type="iconxiangqing_huaban" />
-                    详情
-                  </a-button>
-                  </router-link>
-                  <router-link v-else-if="item.type == 2||item.type == 3" :to="{path:'/list/task/' + item.patientBasisId}">
-                   <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
-                    <my-icon type="iconxiangqing_huaban" />
-                    详情
-                  </a-button>
-                  </router-link>
-                  <router-link v-else-if="item.type == 4" :to="{path:'/jxjzq/' + item.patientBasisId}">
-                   <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
-                    <my-icon type="iconxiangqing_huaban" />
-                    详情
-                  </a-button>
-                  </router-link>
+                  <a v-if="item.type == 1" @click="basisDetail(item.patientBasisId)">
+                    <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
+                      <my-icon type="iconxiangqing_huaban" />
+                      详情
+                    </a-button>
+                  </a>
+                  <a v-else-if="item.type == 2||item.type == 3" @click="taskDetail(item.patientBasisId)">
+                    <a-button type="primary" size="small" style="float:right;margin-top:5px ;">
+                      <my-icon type="iconxiangqing_huaban" />
+                      详情
+                    </a-button>
+                  </a>
+                  <a v-else-if="item.type == 4" @click="jxjzq(item.patientBasisId)">
+                    <a-button type="primary" size="small" style="float:right;margin-top:5px;">
+                      <my-icon type="iconxiangqing_huaban" />
+                      详情
+                    </a-button>
+                  </a>
                 </div>
               </a-timeline-item>
             </a-timeline>
@@ -219,6 +219,22 @@ export default {
     },
     handleCancel() {
       this.visible = false;
+    },
+    basisDetail(id) {
+      this.visible = false
+      this.$router.push('/list/basis/' + id)
+    },
+    taskDetail(id) {
+      this.visible = false
+      this.$router.push('/list/task/' + id)
+    },
+    jxjzq(id) {
+      this.visible = false
+      this.$router.push('/jxjzq/' + id)
+    },
+    exec(id) {
+      this.visible = false
+      this.$router.push('/list/task/' + id)
     }
   }
 };

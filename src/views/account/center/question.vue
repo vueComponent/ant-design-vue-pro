@@ -243,7 +243,7 @@ export default {
           that.spinning = false
           that.listArr = that.initQuestionAnswers(res.data.topTitles)
           that.question = res.data.question
-          that.questionTask = res.data.questionTask
+          that.questionTask = res.data.questionTask || {}
           that.score = that.questionId !== 33 && that.questionId !== 59 && res.data.questionTask && res.data.questionTask.score
           if (res.data.isFinish === '0') {
             that.questionFinished = false

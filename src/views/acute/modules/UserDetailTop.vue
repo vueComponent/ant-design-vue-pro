@@ -26,14 +26,6 @@
         <span class="userDetailItemTitle">联系电话</span>
         <span class="userDetailItemInfo">{{option.telephone1}}</span>
       </p>
-      <!-- <p class="userDetailItem">
-        <span class="userDetailItemTitle">所在医院</span>
-          <span class="userDetailItemInfo">{{option.centerName}}</span>
-      </p>
-      <p class="userDetailItem">
-        <span class="userDetailItemTitle">病种</span>
-         <span class="userDetailItemInfo"></span>
-      </p> -->
       <p class="userDetailItem">
         <span class="userDetailItemTitle">出生日期</span>
         <span class="userDetailItemInfo">{{birthDay}}</span>
@@ -47,6 +39,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   data() {
     return {};
@@ -62,6 +55,9 @@ export default {
   },
   computed:{
     birthDay() {
+      if (_.isEmpty(this.option)) {
+        return ''
+      }
       let card = this.option.card;
       let birthDay = ''
       if (card.length == 15) {
@@ -72,6 +68,9 @@ export default {
       return birthDay
     },
     getAge() {
+      if(_.isEmpty(this.option)){
+        return ''
+      }
       var identityCard=this.option.card;
       var len = (identityCard + '').length;
       if (len == 0) {

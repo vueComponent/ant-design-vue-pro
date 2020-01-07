@@ -75,12 +75,12 @@
                 <span>随访摘要：</span>
                 {{item.typeName}}
               </p>
-              <router-link :to="{path:'/list/task/' + item.patientBasisId}">
+              <a @click="exec(item.patientBasisId)">
                 <a-button type="primary" size="small" style="float:right;">
                   <my-icon type="iconxiangqing_huaban" />
                   执行
                 </a-button>
-              </router-link>
+              </a>
             </div>
           </div>
           <div v-else class="userCard">
@@ -220,6 +220,10 @@ export default {
     jxjzq(id) {
       this.visible = false
       this.$router.push('/jxjzq/' + id)
+    },
+    exec(id) {
+      this.visible = false
+      this.$router.push('/list/task/' + id)
     }
   }
 };
