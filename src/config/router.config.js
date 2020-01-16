@@ -361,7 +361,19 @@ export const asyncRouterMap = [
         hidden:true,
         component: () => import('@/views/group/addProject'),
         meta: { hiddenHeaderContent:true, hidden: true }
-      }
+      },
+      {
+        path: '/center/list',
+        name: 'centerList',
+        component: () => import('@/views/center/list'),
+        meta: { title: '中心管理', keepAlive: true, icon: wxyhbd,isBack:false, permission: [ 'center', 'group' ]}
+      },
+      {
+        path: '/role/list',
+        name: 'roleList',
+        component: () => import('@/views/role/list'),
+        meta: { title: '角色管理', keepAlive: true, icon: wxyhbd,isBack:false, permission: [ 'center', 'group' ]}
+      },
     ]
   },
   {
