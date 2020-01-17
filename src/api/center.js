@@ -34,3 +34,19 @@ export function saveRole(parameter) {
     params: parameter
   })
 }
+
+export function getDoctorDataList(parameter) {
+  return axios({
+    url: '/authority/getDoctorDataList',
+    method: 'post',
+    params: parameter
+  })
+}
+
+export function saveDoctor(parameter) {
+  return axios({
+    url: '/authority/saveDoctor',
+    method: 'post',
+    params: parameter
+  })
+}

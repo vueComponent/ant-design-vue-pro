@@ -28,7 +28,6 @@
   </a-modal>
 </template>
 <script>
-import { getProvinceAndCity } from '@/api/basis'
 import { saveRole } from '@/api/center'
 import moment from 'moment'
 import _ from 'lodash'
@@ -37,7 +36,6 @@ export default {
     return {
       options: {},
       maskClosable: false,
-      payTypeList: [],
       labelCol: {
         xs: { span: 24 },
         sm: { span: 7 }

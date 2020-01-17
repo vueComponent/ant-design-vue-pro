@@ -374,6 +374,12 @@ export const asyncRouterMap = [
         component: () => import('@/views/role/list'),
         meta: { title: '角色管理', keepAlive: true, icon: wxyhbd,isBack:false, permission: [ 'center', 'group' ]}
       },
+      {
+        path: '/user/list',
+        name: 'userList',
+        component: () => import('@/views/user/list'),
+        meta: { title: '用户管理', keepAlive: true, icon: wxyhbd,isBack:false, permission: [ 'center', 'group' ]}
+      }
     ]
   },
   {
