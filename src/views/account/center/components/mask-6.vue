@@ -292,11 +292,9 @@ export default {
       control3: false,
       control4: false,
       type1: '',
-      type2: '',
       otherName1: '',
       otherName2: '',
-      picList1: [],
-      picList2: []
+      picList1: []
     }
   },
   created() {
@@ -336,12 +334,13 @@ export default {
     changeSelect(e, t) {
       var that = this
       this[t] = e.target.checked
-      if (t === 'control3' && e.target.checked) {
+      if (t === 'control4' && e.target.checked) {
         this.control1 = false
         this.control2 = false
+        this.control3 = false
         //赋值必须要延时
         setTimeout(function() {
-          that.form.setFieldsValue({ a: ['3'] })
+          that.form.setFieldsValue({ a: ['4'] })
         }, 0)
       }
     },
@@ -409,21 +408,13 @@ export default {
           }
           //处理附件
           var alList1 = ['铜绿假单胞菌', '阴沟肠杆菌', '肺炎克雷伯菌', '肺炎链球菌', '副流感嗜血杆菌', '鲍曼不动杆菌', '金黄色葡萄球菌', this.form.getFieldValue('otherName1')]
-          var alList2 = ['铜绿假单胞菌', '阴沟肠杆菌', '肺炎克雷伯菌', '肺炎链球菌', '副流感嗜血杆菌', '鲍曼不动杆菌', '金黄色葡萄球菌', this.form.getFieldValue('otherName2')]
 
-          var pic1 = [],
-            pic2 = []
+          var pic1 = []
           if (!_.isEmpty(this.picList1)) {
             pic1 = _.map(this.picList1, function(v, i) {
               return '1-' + alList1[i] + '-' + v
             })
           }
-          if (!_.isEmpty(this.picList2)) {
-            pic2 = _.map(this.picList2, function(v, i) {
-              return '2-' + alList2[i] + '-' + v
-            })
-          }
-          pic1 = pic1.concat(pic2)
           var re = this.form.getFieldsValue()
           var that = this
           re = {
@@ -499,21 +490,13 @@ export default {
       }
       //处理附件
       var alList1 = ['铜绿假单胞菌', '阴沟肠杆菌', '肺炎克雷伯菌', '肺炎链球菌', '副流感嗜血杆菌', '鲍曼不动杆菌', '金黄色葡萄球菌', this.form.getFieldValue('otherName1')]
-      var alList2 = ['铜绿假单胞菌', '阴沟肠杆菌', '肺炎克雷伯菌', '肺炎链球菌', '副流感嗜血杆菌', '鲍曼不动杆菌', '金黄色葡萄球菌', this.form.getFieldValue('otherName2')]
 
-      var pic1 = [],
-        pic2 = []
+      var pic1 = []
       if (!_.isEmpty(this.picList1)) {
         pic1 = _.map(this.picList1, function(v, i) {
           return '1-' + alList1[i] + '-' + v
         })
       }
-      if (!_.isEmpty(this.picList2)) {
-        pic2 = _.map(this.picList2, function(v, i) {
-          return '2-' + alList2[i] + '-' + v
-        })
-      }
-      pic1 = pic1.concat(pic2)
       var re = this.form.getFieldsValue()
       var that = this
       re = {
@@ -703,16 +686,6 @@ export default {
             this.controlc415 = true
           }
         }
-        if (answer.a44 === 1) {
-          this.type1 = '1'
-        } else if (answer.a44 === 2) {
-          this.type1 = '2'
-        }
-        if (answer.b44 === 1) {
-          this.type2 = '1'
-        } else if (answer.b44 === 2) {
-          this.type2 = '2'
-        }
       }
       return answer
     },
@@ -762,14 +735,8 @@ export default {
     changeType1(v) {
       this.type1 = v
     },
-    changeType2(v) {
-      this.type2 = v
-    },
     changePic1(e, index) {
       this.picList1[index] = e
-    },
-    changePic2(e, index) {
-      this.picList2[index] = e
     }
   }
 }
