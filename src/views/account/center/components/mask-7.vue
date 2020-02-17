@@ -32,9 +32,7 @@
               <div class="title">1.病因学相关检查</div>
               <a-form-item class="border-dotted" label="(1) 胃食管反流病量表评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-popover>
-                  <template slot="content">
-                    评分标准：Gerd-Q计分>=8分，提示胃食管反流
-                  </template>
+                  <template slot="content">评分标准：Gerd-Q计分>=8分，提示胃食管反流</template>
                   <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
                 </a-popover>
                 <a-input style="width: 240px;" v-decorator="['z', {...inputRequired, initialValue: initValue('z')}]" autocomplete="off" :readOnly="true"></a-input>

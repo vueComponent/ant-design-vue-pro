@@ -37,67 +37,124 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla">
-                <a-form-item label="(1) ABPA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item class="border-dotted" label="(1) 胃食管反流病量表评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-popover>
+                    <template slot="content">评分标准：Gerd-Q计分>=8分，提示胃食管反流</template>
+                    <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
+                  </a-popover>
+                  <a-input style="width: 240px;" v-decorator="['z', {...inputRequired, initialValue: initValue('z')}]" autocomplete="off" :readOnly="true"></a-input>
+                </a-form-item>
+                <div class="font-w">回忆过去7天当中下列症状发生的频率：</div>
+                <a-form-item label="您胸骨后出现灼烧感(烧心)的频率？:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['z1', {...require1, initialValue: initValue('z1')}]" @change="computeGerd">
+                    <a-radio value="1">0天/周</a-radio>
+                    <a-radio value="2">1天/周</a-radio>
+                    <a-radio value="3">2-3天/周</a-radio>
+                    <a-radio value="4">4-7天/周</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="感觉到有胃内容物(液体或食物)上返到您的喉咙或口腔(反流)的频率？:" :labelCol="wrapper18">
+                  <a-radio-group v-decorator="['z2', {...require1, initialValue: initValue('z2')}]" @change="computeGerd">
+                    <a-radio value="1">0天/周</a-radio>
+                    <a-radio value="2">1天/周</a-radio>
+                    <a-radio value="3">2-3天/周</a-radio>
+                    <a-radio value="4">4-7天/周</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="您感到上腹部中央疼痛的频率？:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['z3', {...require1, initialValue: initValue('z3')}]" @change="computeGerd">
+                    <a-radio value="1">0天/周</a-radio>
+                    <a-radio value="2">1天/周</a-radio>
+                    <a-radio value="3">2-3天/周</a-radio>
+                    <a-radio value="4">4-7天/周</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="您感到恶心的频率？:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['z4', {...require1, initialValue: initValue('z4')}]" @change="computeGerd">
+                    <a-radio value="1">0天/周</a-radio>
+                    <a-radio value="2">1天/周</a-radio>
+                    <a-radio value="3">2-3天/周</a-radio>
+                    <a-radio value="4">4-7天/周</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="由于您的烧心和/或反流而难以获得良好夜间睡眠的频率？:" :labelCol="wrapper18" class="border-dotted">
+                  <a-radio-group v-decorator="['z5', {...require1, initialValue: initValue('z5')}]" @change="computeGerd">
+                    <a-radio value="1">0天/周</a-radio>
+                    <a-radio value="2">1天/周</a-radio>
+                    <a-radio value="3">2-3天/周</a-radio>
+                    <a-radio value="4">4-7天/周</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="除以上告知服用的药物外，您额外服用药物来缓解烧心和/或反流的频率？(如碳酸钙、氢氧化铝等抗酸剂):" :labelCol="wrapper18">
+                  <a-radio-group v-decorator="['z6', {...require1, initialValue: initValue('z6')}]" @change="computeGerd">
+                    <a-radio value="1">0天/周</a-radio>
+                    <a-radio value="2">1天/周</a-radio>
+                    <a-radio value="3">2-3天/周</a-radio>
+                    <a-radio value="4">4-7天/周</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="(2) ABPA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a1', {...require1, initialValue: initValue('a1')}]" @change="changeRadio($event, 'controla1')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
+                    <a-radio value="-2">未做</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controla1">
-                  <a-form-item label="血嗜酸里细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-form-item label="血嗜酸粒细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-input addonAfter="*10^9/L" style="width: 240px; margin-right: 20px;" v-decorator="['a11', {...inputRequired, initialValue: initValue('a11')}]" autocomplete="off"></a-input>
                     <a-radio-group v-decorator="['a12', {...selectRequired, initialValue: initValue('a12')}]">
                       <a-radio value="1">升高</a-radio>
                       <a-radio value="2">正常</a-radio>
-                      <a-radio value="3">未测</a-radio>
+                      <a-radio value="3">未测量</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="血总IgE:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input addonAfter="IU/mL" style="width: 240px; margin-right: 20px;" v-decorator="['a13', {...inputRequired, initialValue: initValue('a13')}]" autocomplete="off"></a-input>
+                    <a-input addonAfter="Iu/mL" style="width: 240px; margin-right: 20px;" v-decorator="['a13', {...inputRequired, initialValue: initValue('a13')}]" autocomplete="off"></a-input>
                     <a-radio-group v-decorator="['a14', {...selectRequired, initialValue: initValue('a14')}]">
                       <a-radio value="1">升高</a-radio>
                       <a-radio value="2">正常</a-radio>
-                      <a-radio value="3">未测</a-radio>
+                      <a-radio value="3">未测量</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="曲霉特异IgE:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input addonAfter="IU/mL" style="width: 240px; margin-right: 20px;" v-decorator="['a15', {...inputRequired, initialValue: initValue('a15')}]" autocomplete="off"></a-input>
+                    <a-input addonAfter="Iu/mL" style="width: 240px; margin-right: 20px;" v-decorator="['a15', {...inputRequired, initialValue: initValue('a15')}]" autocomplete="off"></a-input>
                     <a-radio-group v-decorator="['a16', {...selectRequired, initialValue: initValue('a16')}]">
                       <a-radio value="1">升高</a-radio>
                       <a-radio value="2">正常</a-radio>
-                      <a-radio value="3">未测</a-radio>
+                      <a-radio value="3">未测量</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="曲霉皮肤点刺试验:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-radio-group v-decorator="['a17', {...selectRequired, initialValue: initValue('a17')}]">
-                      <a-radio value="1">升高</a-radio>
-                      <a-radio value="2">正常</a-radio>
-                      <a-radio value="3">未测</a-radio>
+                      <a-radio value="1">阴性</a-radio>
+                      <a-radio value="2">阳性</a-radio>
+                      <a-radio value="3">未测量</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="胸部CT有无中心性支扩:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-radio-group v-decorator="['a18', {...selectRequired, initialValue: initValue('a18')}]">
                       <a-radio value="1">升高</a-radio>
                       <a-radio value="2">正常</a-radio>
-                      <a-radio value="3">未测</a-radio>
+                      <a-radio value="3">未测量</a-radio>
                     </a-radio-group>
                   </a-form-item>
+                    <a-form-item label="胸部CT提示高密度黏液栓嵌顿:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                      <a-radio-group v-decorator="['a19', {...selectRequired, initialValue: initValue('a19')}]">
+                        <a-radio value="1">有</a-radio>
+                        <a-radio value="2">无</a-radio>
+                        <a-radio value="3">未测量</a-radio>
+                      </a-radio-group>
+                    </a-form-item>
                 </div>
-                <a-form-item label="(2) 自身免疫抗体检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="(3) 自身免疫抗体检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a2', {...require1, initialValue: initValue('a2')}]" @change="changeRadio($event, 'controla2')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
+                  <a-radio value="-2">未做</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controla2">
-                  <a-form-item label="CCP:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-radio-group v-decorator="['a21', {...selectRequired, initialValue: initValue('a21')}]">
-                      <a-radio value="1">阳性</a-radio>
-                      <a-radio value="2">中间</a-radio>
-                      <a-radio value="3">阴性</a-radio>
-                      <a-radio value="4">未测量</a-radio>
-                    </a-radio-group>
-                  </a-form-item>
                   <a-form-item label="ANA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-radio-group v-decorator="['a22', {...selectRequired, initialValue: initValue('a22')}]">
                       <a-radio value="1">阳性</a-radio>
@@ -107,32 +164,24 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="ENA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-radio-group v-decorator="['a23', {...selectRequired, initialValue: initValue('a23')}]" @change="changeRadio($event, 'controla23')">
+                    <a-radio-group v-decorator="['a23', {...selectRequired, initialValue: initValue('a23')}]">
                       <a-radio value="1">阳性</a-radio>
-                      <a-radio value="2">中间</a-radio>
-                      <a-radio value="3">阴性</a-radio>
-                      <a-radio value="4">未测量</a-radio>
+                      <a-radio value="2">阴性</a-radio>
+                      <a-radio value="3">未测量</a-radio>
                     </a-radio-group>
-                  </a-form-item>
-                  <a-form-item class="no-border" label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla23">
-                    <a-input style="width: 240px;" v-decorator="['a24', {...inputRequired, initialValue: initValue('a24')}]" autocomplete="off"></a-input>
                   </a-form-item>
                   <a-form-item label="ANCA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-radio-group v-decorator="['a25', {...selectRequired, initialValue: initValue('a25')}]" @change="changeRadio($event, 'controla25')">
+                    <a-radio-group v-decorator="['a25', {...selectRequired, initialValue: initValue('a25')}]">
                       <a-radio value="1">阳性</a-radio>
-                      <a-radio value="2">中间</a-radio>
-                      <a-radio value="3">阴性</a-radio>
-                      <a-radio value="4">未测量</a-radio>
+                      <a-radio value="2">阴性</a-radio>
+                      <a-radio value="3">未测量</a-radio>
                     </a-radio-group>
                   </a-form-item>
-                  <a-form-item class="no-border" label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla25">
-                    <a-input style="width: 240px;" v-decorator="['a26', {...inputRequired, initialValue: initValue('a26')}]" autocomplete="off"></a-input>
-                  </a-form-item>
                   <a-form-item label="其他检查（记录阳性结果）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px;" v-decorator="['a27', {...inputRequired, initialValue: initValue('a27')}]" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['a27', {...inputRequired, initialValue: initValue('a27')}]" autocomplete="off"></a-input>
                   </a-form-item>
                 </div>
-                <a-form-item label="(3) 球蛋白缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="(4) 球蛋白缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a3', {...require1, initialValue: initValue('a3')}]" @change="changeRadio($event, 'controla3')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
@@ -140,7 +189,7 @@
                 </a-form-item>
                 <div v-if="controla3">
                   <a-form-item label="IgM:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a31', {...inputRequired, initialValue: initValue('a31')}]" autocomplete="off"></a-input>
+                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a31', {...inputRequired, initialValue: initValue('a31')}]" autocomplete="off" addonAfter="g/L"></a-input>
                     <a-radio-group v-decorator="['a32', {...selectRequired, initialValue: initValue('a32')}]">
                       <a-radio value="1">正常</a-radio>
                       <a-radio value="2">降低</a-radio>
@@ -149,7 +198,7 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="IgG:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a33', {...inputRequired, initialValue: initValue('a33')}]" autocomplete="off"></a-input>
+                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a33', {...inputRequired, initialValue: initValue('a33')}]" autocomplete="off" addonAfter="g/L"></a-input>
                     <a-radio-group v-decorator="['a34', {...selectRequired, initialValue: initValue('a34')}]">
                       <a-radio value="1">正常</a-radio>
                       <a-radio value="2">降低</a-radio>
@@ -158,7 +207,7 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="IgA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a35', {...inputRequired, initialValue: initValue('a35')}]" autocomplete="off"></a-input>
+                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a35', {...inputRequired, initialValue: initValue('a35')}]" autocomplete="off" addonAfter="g/L"></a-input>
                     <a-radio-group v-decorator="['a36', {...selectRequired, initialValue: initValue('a36')}]">
                       <a-radio value="1">正常</a-radio>
                       <a-radio value="2">降低</a-radio>
@@ -167,15 +216,16 @@
                     </a-radio-group>
                   </a-form-item>
                 </div>
-                <a-form-item label="(4) 补体缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="(5) 补体缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a4', {...require1, initialValue: initValue('a4')}]" @change="changeRadio($event, 'controla4')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
+                    <a-radio value="-2">未做</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controla4">
                   <a-form-item label="C3:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" autocomplete="off"></a-input>
+                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" autocomplete="off" addonAfter="g/L"></a-input>
                     <a-radio-group v-decorator="['a42', {...selectRequired, initialValue: initValue('a42')}]">
                       <a-radio value="1">正常</a-radio>
                       <a-radio value="2">降低</a-radio>
@@ -184,7 +234,7 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="C4:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a43', {...inputRequired, initialValue: initValue('a43')}]" autocomplete="off"></a-input>
+                    <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a43', {...inputRequired, initialValue: initValue('a43')}]" autocomplete="off" addonAfter="g/L"></a-input>
                     <a-radio-group v-decorator="['a44', {...selectRequired, initialValue: initValue('a44')}]">
                       <a-radio value="1">正常</a-radio>
                       <a-radio value="2">降低</a-radio>
@@ -193,7 +243,7 @@
                     </a-radio-group>
                   </a-form-item>
                 </div>
-                <a-form-item label="(5) α-1 抗蛋白酶缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="(6) α-1 抗蛋白酶缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a5', {...require1, initialValue: initValue('a5')}]" @change="changeRadio($event, 'controla5')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="2">否</a-radio>
@@ -201,26 +251,17 @@
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controla5">
-                  <!-- <a-form-item label="水平:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['a51', {...selectRequired, initialValue: initValue('a51')}]">
-                    <a-radio value="1">正常</a-radio>
-                    <a-radio value="2">降低</a-radio>
-                    <a-radio value="3">升高</a-radio>
-                    <a-radio value="4">未测量</a-radio>
-                  </a-radio-group>
-                </a-form-item> -->
                   <a-form-item label="基因:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-radio-group v-decorator="['a52', { initialValue: initValue('a52')}]" @change="changeRadio($event, 'controla52')">
                       <a-radio value="1">阳性</a-radio>
                       <a-radio value="2">阴性</a-radio>
-                      <!-- <a-radio value="3">未测</a-radio> -->
                     </a-radio-group>
                   </a-form-item>
-                  <a-form-item class="no-border" label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla52">
+                  <!-- <a-form-item class="no-border" label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controla52">
                     <a-input style="width: 240px;" v-decorator="['a53', {...inputRequired, initialValue: initValue('a53')}]" autocomplete="off"></a-input>
-                  </a-form-item>
+                  </a-form-item> -->
                 </div>
-                <a-form-item label="(6) 囊性纤维化:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="(7) 囊性纤维化:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a6', {...require1, initialValue: initValue('a6')}]" @change="changeRadio($event, 'controla6')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="2">否</a-radio>
@@ -232,7 +273,7 @@
                     <a-radio-group v-decorator="['a61', { initialValue: initValue('a61')}]">
                       <a-radio value="1">阳性</a-radio>
                       <a-radio value="2">阴性</a-radio>
-                      <a-radio value="3">未测</a-radio>
+                      <!-- <a-radio value="3">未测</a-radio> -->
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="基因检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -244,7 +285,7 @@
                     </a-radio-group>
                   </a-form-item>
                 </div>
-                <a-form-item label="(7) 纤毛功能检测:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="(8) 纤毛功能检测:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a7', {...require1, initialValue: initValue('a7')}]" @change="changeRadio($event, 'controla7')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="2">否</a-radio>
@@ -256,28 +297,18 @@
                     <a-radio-group v-decorator="['a71', { initialValue: initValue('a71')}]">
                       <a-radio value="1">阳性</a-radio>
                       <a-radio value="2">阴性</a-radio>
-                      <a-radio value="3">未测量</a-radio>
-                    </a-radio-group>
-                  </a-form-item>
-                  <a-form-item label="糖精试验:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-radio-group v-decorator="['a72', { initialValue: initValue('a72')}]">
-                      <a-radio value="1">阳性</a-radio>
-                      <a-radio value="2">阴性</a-radio>
-                      <a-radio value="3">未测量</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="电镜检测的活检:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-radio-group v-decorator="['a73', { initialValue: initValue('a73')}]">
                       <a-radio value="1">阳性</a-radio>
                       <a-radio value="2">阴性</a-radio>
-                      <a-radio value="3">未测量</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="分析纤毛摆动频率的活检:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-radio-group v-decorator="['a74', { initialValue: initValue('a74')}]">
                       <a-radio value="1">阳性</a-radio>
                       <a-radio value="2">阴性</a-radio>
-                      <a-radio value="3">未测量</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="基因检测:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -291,10 +322,10 @@
                     <a-input style="width: 240px;" v-decorator="['a76', {...inputRequired, initialValue: initValue('a76')}]" autocomplete="off"></a-input>
                   </a-form-item>
                 </div>
-                <a-form-item label="(8) 其他:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="(9) 其他:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['a8', {initialValue: initValue('a8')}]" autocomplete="off"></a-input>
                 </a-form-item>
-                <a-form-item class="font-w" label="(9) 小结：根据实验室检查及既往病史判断(多选):" :labelCol="{md: 20}" :wrapperCol="wrapperHor">
+                <a-form-item class="font-w" label="(10) 小结：根据实验室检查及既往病史判断(多选):" :labelCol="{md: 20}" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['a9', {...selectRequired, initialValue: initValue('a9', 'array')}]">
                     <a-checkbox value="1">特发性</a-checkbox>
                     <a-checkbox value="2">感染后性</a-checkbox>
@@ -334,7 +365,7 @@
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, computeScore } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 export default {
   name: 'task21',
@@ -409,10 +440,11 @@ export default {
       maskId: this.$route.meta.maskId,
       patientBasisId: this.$route.params.id,
       byxxgjc: undefined,
+      controla: false,
       controla1: false,
       controla2: false,
-      controla23: false,
-      controla25: false,
+    //   controla23: false,
+    //   controla25: false,
       controla3: false,
       controla4: false,
       controla5: false,
@@ -462,13 +494,7 @@ export default {
       this[t] = e.target.checked
     },
     changeRadio(e, t) {
-      if (t === 'controla23' || t === 'controla25') {
-        if (e.target.value === '4') {
-          this[t] = true
-        } else {
-          this[t] = false
-        }
-      } else if (t === 'controla52' || t === 'controla75') {
+      if (t === 'controla52' || t === 'controla75') {
         if (e.target.value === '3') {
           this[t] = true
         } else {
@@ -574,12 +600,6 @@ export default {
         if (answer.a7 === 1) {
           this.controla7 = true
         }
-        if (answer.a23 === 4) {
-          this.controla23 = true
-        }
-        if (answer.a25 === 4) {
-          this.controla25 = true
-        }
         if (answer.a9)
           var splitArr = answer.a9.split(',')
         if (splitArr.indexOf('20') > -1) {
@@ -634,6 +654,24 @@ export default {
           console.log(error)
         })
       return false
+    },
+    computeGerd() {
+      var that = this
+      this.$nextTick(() => {
+        var params = new URLSearchParams()
+        params.append('scoreType', 'gerd')
+        params.append('byxxgjcStr', JSON.stringify(that.form.getFieldsValue()))
+        computeScore(params)
+          .then(res => {
+            console.log(res.data.z)
+            that.form.setFieldsValue({
+              z: res.data.z
+            })
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      })
     }
   }
 }
@@ -669,6 +707,10 @@ export default {
   .ant-card-body {
     padding: 10px
   }
+}
+
+/deep/ .font-w .ant-form-item-required {
+  font-weight: bold;
 }
 
 .ant-row.ant-form-item:hover {

@@ -43,7 +43,7 @@
                   <a-radio value="-1">否</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(3) 患者是否行有规律的物理治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(3) 患者是否进行有规律的物理治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b3', {...require1, initialValue: initValue('b3')}]" @change="changeRadio($event, 'controlb3')">
                   <a-radio value="1">是</a-radio>
                   <a-radio value="-1">否</a-radio>
@@ -160,12 +160,6 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controlb5">
-                <a-form-item label="激素治疗" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b51', {...require1, initialValue: initValue('b51')}]">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                  </a-radio-group>
-                </a-form-item>
                 <a-form-item label="抗真菌药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['b52', {...selectRequired, initialValue: initValue('b52', 'array')}]">
                     <a-checkbox value="0">无</a-checkbox>
@@ -176,6 +170,12 @@
                 </a-form-item>
                 <a-form-item label="其他抗真菌药物::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb5 && controlb52">
                   <a-input style="width: 240px;" v-decorator="['b53', {...inputRequired, initialValue: initValue('b53')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="激素治疗" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['b51', {...require1, initialValue: initValue('b51')}]">
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="-1">否</a-radio>
+                  </a-radio-group>
                 </a-form-item>
               </div>
               <a-form-item label="(6) 免疫球蛋白缺乏相关治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -284,9 +284,11 @@ export default {
       controlb3: false,
       controlb4: false,
       controlb41: false,
+      controlb44: false,
       controlb411: false,
       controlb412: false,
       controlb5: false,
+      controlb52: false,
       controlb6: false,
       spinning: false,
       executeStatus: false,

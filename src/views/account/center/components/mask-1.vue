@@ -424,7 +424,7 @@
                   <a-checkbox value="5" :checked="controlb202" @change="changeSelect($event, 'controlb202')">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item label="其他手术名称::" :labelCol="labelColOffset2" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlb20 && controlb202">
+              <a-form-item label="其他手术名称" :labelCol="labelColOffset2" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlb20 && controlb202">
                 <a-input style="width: 240px;" v-decorator="['b202', {...inputRequired, initialValue: initValue('b202')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(13) 支气管动脉栓塞病史" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -818,7 +818,7 @@ export default {
           answer.b13 = -1
           answer.b14 = -1
           answer.b15 = -1
-          answer.b16 = -1
+        //   answer.b16 = -1
         } else {
           that.controlb70 = true
         }

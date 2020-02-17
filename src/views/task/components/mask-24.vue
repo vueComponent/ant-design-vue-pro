@@ -81,14 +81,14 @@
                 <a-form-item label="(1) 血糖:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['c1', {...selectRequired, initialValue: initValue('c1')}]" addonAfter="mmol/L" autocomplete="off"></a-input>
                 </a-form-item>
-                <a-form-item label="(2) 谷丙转氨酶:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="(2) 白蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['c4', {...selectRequired, initialValue: initValue('c4')}]" addonAfter="g/L" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(3) 谷丙转氨酶:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['c2', { initialValue: initValue('c2')}]" addonAfter="IU/L" autocomplete="off"></a-input>
                 </a-form-item>
-                <a-form-item label="(3) 谷草转氨酶:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="(4) 谷草转氨酶:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['c3', { initialValue: initValue('c3')}]" addonAfter="IU/L" autocomplete="off"></a-input>
-                </a-form-item>
-                <a-form-item label="(4) 白蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['c4', {...selectRequired, initialValue: initValue('c4')}]" addonAfter="g/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(5) 前白蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['c5', { initialValue: initValue('c5')}]" addonAfter="g/L" autocomplete="off"></a-input>
