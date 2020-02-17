@@ -1,6 +1,6 @@
 <template>
   <div id="baselineInfo" class="page-header-index-wide page-header-wrapper-grid-content-main">
-    <a-card :bordered="false" id="baselineHeader" style="background-color: #0399EC;color:#FFFFFF;">
+    <a-card :bordered="false" id="baselineHeader" style="background-color: #0399EC;color:#FFFFFF;" v-if="!isGroup">
       <a-row :gutter="30" style="line-height: 34px;">
         <a-col :md="1" :sm="4">
           <a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" />
@@ -24,7 +24,7 @@
         </a-col>
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form" :layout="formLayout">
-            <div class="btn-array" v-if="executeStatus !== 2">
+            <div class="btn-array" v-if="executeStatus !== 2 && !isGroup">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
@@ -469,6 +469,7 @@ import _ from 'lodash'
 import { mapActions } from 'vuex'
 import { getPatientBasis, saveBasis, getBasisForm } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
+import { ACCESS_TOKEN } from '@/store/mutation-types'
 export default {
   name: 'task14',
   components: {
@@ -586,7 +587,8 @@ export default {
       executeStatus: false,
       b2: undefined,
       b3: undefined,
-      controlb70: false
+      controlb70: false,
+      isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false
     }
   },
   created() {

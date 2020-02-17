@@ -1,6 +1,6 @@
 <template>
   <div id="baselineInfo" class="page-header-index-wide page-header-wrapper-grid-content-main">
-    <a-card :bordered="false" id="baselineHeader" style="background-color: #0399EC;color:#FFFFFF;">
+    <a-card :bordered="false" id="baselineHeader" style="background-color: #0399EC;color:#FFFFFF;" v-if="!isGroup">
       <a-row :gutter="30" style="line-height: 34px;">
         <a-col :md="1" :sm="4">
           <a-icon type="left" style="fontSize:18px;cursor: pointer;" @click="$router.back(-1)" />
@@ -46,7 +46,7 @@
                     <a-col :span="6"><strong>合计（<span style="color: #3398dc">{{ questionTask.score }}分</span>）</strong></a-col>
                 </a-row>
               </a-row>
-              <a-row type="flex" align="middle" class="btn-group" v-if="executeStatus !== 2 && questionTask.status !== 5">
+              <a-row type="flex" align="middle" class="btn-group" v-if="executeStatus !== 2 && questionTask.status !== 5 && !isGroup">
                 <a-button class="btn fr" @click="save">保存</a-button>
                 <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               </a-row>
@@ -94,6 +94,7 @@ import _ from 'lodash'
 import $ from 'jquery'
 import moment from 'moment'
 import { MyIcon } from '@/components/_util/util'
+import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 export default {
   name: 'BasisQuestion',
@@ -134,7 +135,8 @@ export default {
       executeStatus: false,
       questionTask: {},
       showFlag: true,
-      selectedKeys: []
+      selectedKeys: [],
+      isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false
     }
   },
   created() {
