@@ -108,7 +108,7 @@
               <a-form-item label="疾病名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb51">
                 <a-input style="width: 240px;" v-decorator="['b51', {...inputRequired, initialValue: initValue('b51')}]" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(6) 目前合并呼吸系统相关疾病(具体诊断时间)" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(6) 目前合并呼吸系统相关疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['b6', {...selectRequired, initialValue: initValue('b6', 'array')}]">
                   <a-checkbox value="1" :checked="controlb61" @change="changeSelect($event, 'controlb61')">鼻炎</a-checkbox>
                   <a-checkbox value="2" :checked="controlb62" @change="changeSelect($event, 'controlb62')">鼻窦炎</a-checkbox>
@@ -606,6 +606,9 @@ export default {
       })
     this.getFormData()
   },
+  mounted() {
+    this.form.setFieldsValue({ b70: '-1' })
+  },
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
@@ -682,6 +685,10 @@ export default {
           if (splitArr.indexOf('5') > -1) {
             that.controlb65 = true
           }
+        }
+
+        if (answer.b70) {
+          that.controlb70 = true
         }
 
         if (answer.b7 === 1) {
@@ -792,21 +799,6 @@ export default {
             that.controlb202 = true
           }
         }
-        if (!answer.b70 || answer.b70 === -1) {
-          that.controlb70 = false
-          answer.b7 = -1
-          answer.b8 = -1
-          answer.b9 = -1
-          answer.b10 = -1
-          answer.b11 = -1
-          answer.b12 = -1
-          answer.b13 = -1
-          answer.b14 = -1
-          answer.b15 = -1
-        //   answer.b16 = -1
-        } else {
-          that.controlb70 = true
-        }
       }
       return answer
     },
@@ -814,6 +806,40 @@ export default {
       this[t] = e.target.checked
     },
     changeRadio(e, t) {
+      let that = this
+      if (t === 'controlb70' && e.target.value === '1') {
+        this.controlb7 = false
+        this.controlb72 = false
+        this.controlb8 = false
+        this.controlb82 = false
+        this.controlb9 = false
+        this.controlb917 = false
+        this.controlb10 = false
+        this.controlb1014 = false
+        this.controlb11 = false
+        this.controlb1113 = false
+        this.controlb12 = false
+        this.controlb122 = false
+        this.controlb14 = false
+        this.controlb144 = false
+        this.controlb15 = false
+        this.controlb1538 = false
+        this.controlb1615 = false
+        setTimeout(function () {
+          that.form.setFieldsValue({
+            b7: '-1',
+            b8: '-1',
+            b9: '-1',
+            b10: '-1',
+            b11: '-1',
+            b12: '-1',
+            b13: '-1',
+            b14: '-1',
+            b15: '-1',
+            b161: '1',
+          })
+        })
+      }
       if (t === 'controlb191') {
         if (e.target.value === '1' || e.target.value === '2') {
           this[t] = true
