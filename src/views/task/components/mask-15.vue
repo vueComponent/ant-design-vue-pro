@@ -43,7 +43,7 @@
               <a-form-item label="(4) BMI(自动演算出):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input v-decorator="['a8', {initialValue: initValue('a8')}]" :readOnly="true" style="width: 240px;" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(5) 肺部体征：双肺呼吸音:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <a-form-item label="(5) 肺部体征:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
               </a-form-item>
               <a-form-item label="桶状胸" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-radio-group v-decorator="['b1', {...require2, initialValue: initValue('b1')}]">

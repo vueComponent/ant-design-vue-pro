@@ -3,22 +3,22 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="用户名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', requiredRule]" autocomplete="off" />
+          <a-input v-decorator="['name', requiredRule]" />
         </a-form-item>
         <a-form-item label="用户账号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['account', requiredRule]" autocomplete="off" />
+          <a-input v-decorator="['account', requiredRule]" />
         </a-form-item>
         <a-form-item label="密码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input type="password" placeholder="至少6位密码，区分大小写" v-decorator="['password', {rules: [{ required: true, message: '至少6位密码，区分大小写'}]}]" autocomplete="off" />
+          <a-input type="password" placeholder="请输入密码" @blur="handleConfirmBlur" v-decorator="['password', {rules: [{ required: true, message: '至少6位密码，区分大小写'}, {validator: validateToNextPassword}]}]" />
         </a-form-item>
         <a-form-item label="确认密码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input type="password" autocomplete="false" placeholder="确认密码" v-decorator="['password2', {rules: [{ required: true, message: '至少6位密码，区分大小写' }]}]"></a-input>
+          <a-input type="password" placeholder="请确认密码" v-decorator="['password2', {rules: [{ required: true, message: '请确认密码' }, {validator: compareToFirstPassword}]}]" />
         </a-form-item>
         <a-form-item label="用户角色" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-radio-group v-decorator="['id', requiredRule]" :options="roleList" @change="chooseRole">
+          <a-radio-group v-decorator="['roleId', requiredRule]" :options="roleList">
           </a-radio-group>
         </a-form-item>
-        <a-form-item label="分支中心" :labelCol="labelCol" :wrapperCol="wrapperCol" v-if="chooseCenter">
+        <a-form-item label="分支中心" :labelCol="labelCol" :wrapperCol="wrapperCol" v-if="form.getFieldValue('roleId') == 2">
           <a-radio-group v-decorator="['centerId', requiredRule]" :options="centerList">
           </a-radio-group>
         </a-form-item>
@@ -33,7 +33,7 @@
   </a-modal>
 </template>
 <script>
-import { saveDoctor, getRoleDataList, getCenterDataList } from '@/api/center'
+import { saveDoctor, getRoleDataList, getCenterDataList, getDoctorDetail } from '@/api/center'
 import moment from 'moment'
 import _ from 'lodash'
 export default {
@@ -61,8 +61,8 @@ export default {
       },
       form: this.$form.createForm(this),
       requiredRule: { rules: [{ required: true, message: '该选项必填！' }] },
-      doctorId: undefined,
-      chooseCenter: false
+      confirmDirty: false,
+      doctorId: undefined
     }
   },
   created() {
@@ -96,15 +96,25 @@ export default {
     edit(value) {
       this.options.title = '编辑用户'
       this.doctorId = value.doctorId
-      setTimeout(() => {
+
+      const params = new URLSearchParams()
+      params.append('doctorId', value.doctorId)
+      getDoctorDetail(params).then(res => {
+        var data = res.data.doctor;
         this.form.setFieldsValue({
-          code: value.code,
-          name: value.name,
-          type: String(value.type),
-          status: String(value.status),
-          description: value.description
+          name: data.name,
+          account: data.account,
+          password: data.password,
+          password2: data.password,
+          roleId: data.roleId,
+          status: String(data.status)
         })
-      }, 0)
+        if (this.form.getFieldValue('roleId') == 2) {
+          this.form.setFieldsValue({
+            centerId: data.centerId
+          })
+        }
+      })
       this.visible = true
     },
     handleSubmit() {
@@ -119,6 +129,9 @@ export default {
           ...fieldsValue,
           doctorId: this.doctorId
         };
+        if (this.doctorId) {
+            values.doctorId = this.doctorId
+        }
         const params = new URLSearchParams()
         params.append('doctorStr', JSON.stringify(values))
         saveDoctor(params).then(res => {
@@ -131,6 +144,47 @@ export default {
     },
     handleCancel() {
       this.visible = false
+    },
+    handleConfirmBlur(e) {
+      const value = e.target.value;
+      this.confirmDirty = this.confirmDirty || !!value;
+    },
+    validateToNextPassword(rule, value, callback) {
+      if (value.length < 6) {
+        callback(new Error('至少6位密码'))
+      }
+      
+      let level = 0
+
+      // 判断这个字符串中有没有数字
+      if (/[0-9]/.test(value)) {
+        level++
+      }
+      // 判断字符串中有没有字母
+      if (/[a-zA-Z]/.test(value)) {
+        level++
+      }
+      // 判断字符串中有没有特殊符号
+      if (/[^0-9a-zA-Z_]/.test(value)) {
+        level++
+      }
+      if (level < 2) {
+        callback(new Error('密码强度不够'))
+      }
+
+      const form = this.form;
+      if (value && this.confirmDirty) {
+        form.validateFields(['password2'], { force: true });
+      }
+      callback();
+    },
+    compareToFirstPassword(rule, value, callback) {
+      const form = this.form;
+      if (value && value !== form.getFieldValue('password')) {
+        callback('您两次输入的密码不一致！');
+      } else {
+        callback();
+      }
     },
     handlePasswordLevel(rule, value, callback) {
       if (!value) callback()
@@ -152,25 +206,6 @@ export default {
         callback()
       } else {
         callback(new Error('密码强度不够'))
-      }
-    },
-    handlePasswordCheck(rule, value, callback) {
-      const password = this.form.getFieldValue('password')
-      console.log('value', value)
-      if (value === undefined) {
-        callback(new Error('请输入密码'))
-      }
-      if (value && password && value.trim() !== password.trim()) {
-        callback(new Error('两次密码不一致'))
-      }
-      callback()
-    },
-    chooseRole(e) {
-      //中心用户
-      if (e.target.value === 2) {
-        this.chooseCenter = true
-      } else {
-        this.chooseCenter = false
       }
     }
   }

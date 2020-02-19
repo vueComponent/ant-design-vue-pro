@@ -283,17 +283,19 @@
                       <a-checkbox value="1">头颈部</a-checkbox>
                       <a-checkbox value="2">肺</a-checkbox>
                       <a-checkbox value="3">乳腺</a-checkbox>
-                      <a-checkbox value="4">胃肠道</a-checkbox>
-                      <a-checkbox value="5">肝</a-checkbox>
-                      <a-checkbox value="6">胰腺</a-checkbox>
-                      <a-checkbox value="7">肾</a-checkbox>
-                      <a-checkbox value="8">前列腺</a-checkbox>
-                      <a-checkbox value="9">膀胱</a-checkbox>
-                      <a-checkbox value="10">子宫及附件</a-checkbox>
-                      <a-checkbox value="11">骨</a-checkbox>
-                      <a-checkbox value="12">皮肤</a-checkbox>
-                      <a-checkbox value="13">脑</a-checkbox>
-                      <a-checkbox value="14" :checked="controlb144" @change="changeSelect($event, 'controlb144')">其他</a-checkbox>
+                      <a-checkbox value="4">胃</a-checkbox>
+                      <a-checkbox value="5">小肠</a-checkbox>
+                      <a-checkbox value="6">结肠</a-checkbox>
+                      <a-checkbox value="7">肝</a-checkbox>
+                      <a-checkbox value="8">胰腺</a-checkbox>
+                      <a-checkbox value="9">肾</a-checkbox>
+                      <a-checkbox value="10">前列腺</a-checkbox>
+                      <a-checkbox value="11">膀胱</a-checkbox>
+                      <a-checkbox value="12">子宫附件</a-checkbox>
+                      <a-checkbox value="13">骨</a-checkbox>
+                      <a-checkbox value="14">皮肤</a-checkbox>
+                      <a-checkbox value="15">脑</a-checkbox>
+                      <a-checkbox value="16" :checked="controlb144" @change="changeSelect($event, 'controlb144')">其他</a-checkbox>
                     </a-checkbox-group>
                   </a-form-item>
                 </div>
@@ -367,7 +369,7 @@
                   <a-checkbox value="4" :checked="controlb1721" @change="changeSelect($event, 'controlb1721')">其他</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item class="no-border" label="其他调脂:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb1721">
+              <a-form-item class="no-border" label="其他抗凝:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb1721">
                 <a-input style="width: 240px;" v-decorator="['b1721', {...inputRequired, initialValue: initValue('b1721')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(9) 家族史" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
@@ -734,7 +736,7 @@ export default {
         }
         if (answer.b143) {
           splitArr = answer.b143.split(',')
-          if (splitArr.indexOf('14') > -1) {
+          if (splitArr.indexOf('16') > -1) {
             that.controlb144 = true
           }
         }

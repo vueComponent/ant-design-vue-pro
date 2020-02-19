@@ -50,3 +50,11 @@ export function saveDoctor(parameter) {
     params: parameter
   })
 }
+
+export function getDoctorDetail(parameter) {
+    return axios({
+      url: '/authority/getDoctorDetail',
+      method: 'post',
+      params: parameter
+    })
+  }

@@ -158,9 +158,9 @@
                   <a-form-item label="ANA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-radio-group v-decorator="['a22', {...selectRequired, initialValue: initValue('a22')}]">
                       <a-radio value="1">阳性</a-radio>
-                      <a-radio value="2">中间</a-radio>
-                      <a-radio value="3">阴性</a-radio>
-                      <a-radio value="4">未测量</a-radio>
+                      <!-- <a-radio value="2">中间</a-radio> -->
+                      <a-radio value="2">阴性</a-radio>
+                      <a-radio value="3">未测量</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="ENA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -185,6 +185,7 @@
                   <a-radio-group v-decorator="['a3', {...require1, initialValue: initValue('a3')}]" @change="changeRadio($event, 'controla3')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
+                    <a-radio value="-2">未做</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controla3">
