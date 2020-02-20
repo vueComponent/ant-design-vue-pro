@@ -109,11 +109,13 @@ export default {
           roleId: data.roleId,
           status: String(data.status)
         })
-        if (this.form.getFieldValue('roleId') == 2) {
-          this.form.setFieldsValue({
-            centerId: data.centerId
-          })
-        }
+        this.$nextTick(() => {
+          if (this.form.getFieldValue('roleId') == 2) {
+            this.form.setFieldsValue({
+              centerId: data.centerId
+            })
+          }
+        })
       })
       this.visible = true
     },
