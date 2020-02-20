@@ -84,13 +84,13 @@
               </a-form-item>
               <div class="title">2.既往病史</div>
               <a-form-item label="(1) 过去两年的住院急性加重次数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input addonAfter="次" style="width: 240px;" v-decorator="['b2', {...inputRequired, initialValue: initValue('b2')}]" autocomplete="off" @change="changeB2($event)"></a-input>
+                <a-input addonAfter="次" style="width: 240px;" v-decorator="['b2', {...inputRequired, initialValue: initValue('b2')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(2) 过去一年的住院急性加重次数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input addonAfter="次" style="width: 240px;" v-decorator="['b3', {...inputRequired, initialValue: initValue('b3')}]" autocomplete="off" @change="changeB3($event)"></a-input>
+                <a-input addonAfter="次" style="width: 240px;" v-decorator="['b3', {...inputRequired, initialValue: initValue('b3')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(3) 过去一年的急性加重次数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input addonAfter="次" style="width: 240px;" v-decorator="['b1', {...inputRequired, initialValue: initValue('b1')}]" autocomplete="off" :readOnly="true"></a-input>
+                <a-input addonAfter="次" style="width: 240px;" v-decorator="['b1', {...inputRequired, initialValue: initValue('b1')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(4) 最后一次因急性加重住院的时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['b4', {...dateRequire, initialValue: initValue('b4', 'time')}]"></a-date-picker>
@@ -998,33 +998,6 @@ export default {
           console.log(error)
         })
       return false
-    },
-    changeB2(e) {
-      if (!e.target.value) {
-        this.form.setFieldsValue({
-          b1: ''
-        })
-      } else {
-        this.b2 = parseInt(e.target.value)
-        this.computeB1()
-      }
-    },
-    changeB3(e) {
-      if (!e.target.value) {
-        this.form.setFieldsValue({
-          b1: ''
-        })
-      } else {
-        this.b3 = parseInt(e.target.value)
-        this.computeB1()
-      }
-    },
-    computeB1() {
-      if ((this.b2 || this.b2 === 0) && (this.b3 || this.b3 === 0)) {
-        this.form.setFieldsValue({
-          b1: this.b2 + this.b3
-        })
-      }
     }
   }
 }
