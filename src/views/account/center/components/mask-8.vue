@@ -142,7 +142,8 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="MVV::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input>
+                <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input>
+                <!-- <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['b81', {...inputRequired, initialValue: initValue('b81')}]" addonAfter="L/min" autocomplete="off"></a-input>
                 </a-form-item>

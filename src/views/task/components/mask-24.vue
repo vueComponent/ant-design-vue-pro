@@ -49,22 +49,22 @@
                   </div>
                 </a-form-item>
                 <a-form-item label="(1) 血红蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b1', {...selectRequired, initialValue: initValue('b1')}]" addonAfter="g/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b1', {...inputRequired, initialValue: initValue('b1')}]" addonAfter="g/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(2) 白细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b2', {...selectRequired, initialValue: initValue('b2')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b2', {...inputRequired, initialValue: initValue('b2')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(3) 红细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b3', {...selectRequired, initialValue: initValue('b3')}]" addonAfter="10^12/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b3', {...inputRequired, initialValue: initValue('b3')}]" addonAfter="10^12/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(4) 血小板:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b4', {...selectRequired, initialValue: initValue('b4')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b4', {...inputRequired, initialValue: initValue('b4')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(5) 中性粒细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b5', {...selectRequired, initialValue: initValue('b5')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b5', {...inputRequired, initialValue: initValue('b5')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(6) 嗜酸细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b6', {...selectRequired, initialValue: initValue('b6')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b6', {...inputRequired, initialValue: initValue('b6')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <div class="title">2.血生化</div>
                 <a-form-item label="血生化报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
@@ -79,10 +79,10 @@
                   </div>
                 </a-form-item>
                 <a-form-item label="(1) 血糖:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['c1', {...selectRequired, initialValue: initValue('c1')}]" addonAfter="mmol/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['c1', {...inputRequired, initialValue: initValue('c1')}]" addonAfter="mmol/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(2) 白蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['c4', {...selectRequired, initialValue: initValue('c4')}]" addonAfter="g/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['c4', {...inputRequired, initialValue: initValue('c4')}]" addonAfter="g/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(3) 谷丙转氨酶:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['c2', { initialValue: initValue('c2')}]" addonAfter="IU/L" autocomplete="off"></a-input>
@@ -218,17 +218,8 @@ export default {
       wrapperOffset: {
         md: { span: 13 }
       },
-      dateRequire: {
-        rules: [{ type: 'object', required: true, message: '请选择时间！' }]
-      },
-      require1: {
-        rules: [{ required: true, message: '请选择是或否！' }]
-      },
       require2: {
         rules: [{ required: true, message: '请选择有或无！' }]
-      },
-      selectRequired: {
-        rules: [{ required: true, message: '请选择！' }]
       },
       inputRequired: {
         rules: [{ required: true, message: '请填写！' }]
@@ -398,7 +389,9 @@ export default {
     },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
-
+        if (answer.a1 == '1') {
+          this.controla1 = true
+        }
       }
       return answer
     },

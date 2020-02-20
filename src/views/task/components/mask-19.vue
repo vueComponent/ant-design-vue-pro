@@ -34,7 +34,7 @@
                 <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item label="(2) 图像类型:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a2', {...require1, initialValue: initValue('a2')}]">
+                <a-radio-group v-decorator="['a2', {...selectRequired, initialValue: initValue('a2')}]">
                   <a-radio value="1">HRCT</a-radio>
                   <a-radio value="2">CT</a-radio>
                 </a-radio-group>
@@ -71,42 +71,42 @@
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item label="右上叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla3">
-                <a-radio-group v-decorator="['a3', {...require1, initialValue: initValue('a3')}]" @change="computeReiff">
+                <a-radio-group v-decorator="['a3', {...selectRequired, initialValue: initValue('a3')}]" @change="computeReiff">
                   <a-radio value="1">柱状</a-radio>
                   <a-radio value="2">静脉曲张型(混合型)</a-radio>
                   <a-radio value="3">囊状</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="左上叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla4">
-                <a-radio-group v-decorator="['a4', {...require1, initialValue: initValue('a4')}]" @change="computeReiff">
+                <a-radio-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4')}]" @change="computeReiff">
                   <a-radio value="1">柱状</a-radio>
                   <a-radio value="2">静脉曲张型(混合型)</a-radio>
                   <a-radio value="3">囊状</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="右中叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla5">
-                <a-radio-group v-decorator="['a5', {...require1, initialValue: initValue('a5')}]" @change="computeReiff">
+                <a-radio-group v-decorator="['a5', {...selectRequired, initialValue: initValue('a5')}]" @change="computeReiff">
                   <a-radio value="1">柱状</a-radio>
                   <a-radio value="2">静脉曲张型(混合型)</a-radio>
                   <a-radio value="3">囊状</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="左舌叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla6">
-                <a-radio-group v-decorator="['a6', {...require1, initialValue: initValue('a6')}]" @change="computeReiff">
+                <a-radio-group v-decorator="['a6', {...selectRequired, initialValue: initValue('a6')}]" @change="computeReiff">
                   <a-radio value="1">柱状</a-radio>
                   <a-radio value="2">静脉曲张型(混合型)</a-radio>
                   <a-radio value="3">囊状</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="右下叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla7">
-                <a-radio-group v-decorator="['a7', {...require1, initialValue: initValue('a7')}]" @change="computeReiff">
+                <a-radio-group v-decorator="['a7', {...selectRequired, initialValue: initValue('a7')}]" @change="computeReiff">
                   <a-radio value="1">柱状</a-radio>
                   <a-radio value="2">静脉曲张型(混合型)</a-radio>
                   <a-radio value="3">囊状</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="左下叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controla8">
-                <a-radio-group v-decorator="['a8', {...require1, initialValue: initValue('a8')}]" @change="computeReiff">
+                <a-radio-group v-decorator="['a8', {...selectRequired, initialValue: initValue('a8')}]" @change="computeReiff">
                   <a-radio value="1">柱状</a-radio>
                   <a-radio value="2">静脉曲张型(混合型)</a-radio>
                   <a-radio value="3">囊状</a-radio>
@@ -284,9 +284,6 @@ export default {
       },
       dateRequire: {
         rules: [{ type: 'object', required: true, message: '请选择时间！' }]
-      },
-      require1: {
-        rules: [{ required: true, message: '请选择是或否！' }]
       },
       require2: {
         rules: [{ required: true, message: '请选择有或无！' }]

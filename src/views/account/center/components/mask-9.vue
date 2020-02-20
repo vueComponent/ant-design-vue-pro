@@ -81,7 +81,7 @@
               </a-form-item>
               <div class="title">3.小结</div>
               <a-form-item label="小结:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['d1', {...require2, initialValue: initValue('d1')}]">
+                <a-radio-group v-decorator="['d1', {...selectRequired, initialValue: initValue('d1')}]">
                   <a-radio value="1">肺动脉高压</a-radio>
                   <a-radio value="2">肺源性心脏病</a-radio>
                   <a-radio value="3">无</a-radio>

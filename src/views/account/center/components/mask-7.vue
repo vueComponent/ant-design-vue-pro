@@ -39,7 +39,7 @@
               </a-form-item>
               <div class="font-w">回忆过去7天当中下列症状发生的频率：</div>
               <a-form-item label="您胸骨后出现灼烧感(烧心)的频率？:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['z1', {...require1, initialValue: initValue('z1')}]" @change="computeGerd">
+                <a-radio-group v-decorator="['z1', {...selectRequired, initialValue: initValue('z1')}]" @change="computeGerd">
                   <a-radio value="1">0天/周</a-radio>
                   <a-radio value="2">1天/周</a-radio>
                   <a-radio value="3">2-3天/周</a-radio>
@@ -47,7 +47,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="感觉到有胃内容物(液体或食物)上返到您的喉咙或口腔(反流)的频率？:" :labelCol="wrapper18">
-                <a-radio-group v-decorator="['z2', {...require1, initialValue: initValue('z2')}]" @change="computeGerd">
+                <a-radio-group v-decorator="['z2', {...selectRequired, initialValue: initValue('z2')}]" @change="computeGerd">
                   <a-radio value="1">0天/周</a-radio>
                   <a-radio value="2">1天/周</a-radio>
                   <a-radio value="3">2-3天/周</a-radio>
@@ -55,7 +55,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="您感到上腹部中央疼痛的频率？:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['z3', {...require1, initialValue: initValue('z3')}]" @change="computeGerd">
+                <a-radio-group v-decorator="['z3', {...selectRequired, initialValue: initValue('z3')}]" @change="computeGerd">
                   <a-radio value="1">0天/周</a-radio>
                   <a-radio value="2">1天/周</a-radio>
                   <a-radio value="3">2-3天/周</a-radio>
@@ -63,7 +63,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="您感到恶心的频率？:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['z4', {...require1, initialValue: initValue('z4')}]" @change="computeGerd">
+                <a-radio-group v-decorator="['z4', {...selectRequired, initialValue: initValue('z4')}]" @change="computeGerd">
                   <a-radio value="1">0天/周</a-radio>
                   <a-radio value="2">1天/周</a-radio>
                   <a-radio value="3">2-3天/周</a-radio>
@@ -71,7 +71,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="由于您的烧心和/或反流而难以获得良好夜间睡眠的频率？:" :labelCol="wrapper18" class="border-dotted">
-                <a-radio-group v-decorator="['z5', {...require1, initialValue: initValue('z5')}]" @change="computeGerd">
+                <a-radio-group v-decorator="['z5', {...selectRequired, initialValue: initValue('z5')}]" @change="computeGerd">
                   <a-radio value="1">0天/周</a-radio>
                   <a-radio value="2">1天/周</a-radio>
                   <a-radio value="3">2-3天/周</a-radio>
@@ -79,7 +79,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="除以上告知服用的药物外，您额外服用药物来缓解烧心和/或反流的频率？(如碳酸钙、氢氧化铝等抗酸剂):" :labelCol="wrapper18">
-                <a-radio-group v-decorator="['z6', {...require1, initialValue: initValue('z6')}]" @change="computeGerd">
+                <a-radio-group v-decorator="['z6', {...selectRequired, initialValue: initValue('z6')}]" @change="computeGerd">
                   <a-radio value="1">0天/周</a-radio>
                   <a-radio value="2">1天/周</a-radio>
                   <a-radio value="3">2-3天/周</a-radio>
@@ -87,7 +87,7 @@
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="(2) ABPA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a1', {...require1, initialValue: initValue('a1')}]" @change="changeRadio($event, 'controla1')">
+                <a-radio-group v-decorator="['a1', {...selectRequired, initialValue: initValue('a1')}]" @change="changeRadio($event, 'controla1')">
                   <a-radio value="1">是</a-radio>
                   <a-radio value="-1">否</a-radio>
                   <a-radio value="-2">未做</a-radio>
@@ -153,7 +153,7 @@
                 </a-form-item>
               </div>
               <a-form-item label="(3) 自身免疫抗体检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a2', {...require1, initialValue: initValue('a2')}]" @change="changeRadio($event, 'controla2')">
+                <a-radio-group v-decorator="['a2', {...selectRequired, initialValue: initValue('a2')}]" @change="changeRadio($event, 'controla2')">
                   <a-radio value="1">是</a-radio>
                   <a-radio value="-1">否</a-radio>
                   <a-radio value="-2">未做</a-radio>
@@ -187,7 +187,7 @@
                 </a-form-item>
               </div>
               <a-form-item label="(4) 球蛋白缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a3', {...require1, initialValue: initValue('a3')}]" @change="changeRadio($event, 'controla3')">
+                <a-radio-group v-decorator="['a3', {...selectRequired, initialValue: initValue('a3')}]" @change="changeRadio($event, 'controla3')">
                   <a-radio value="1">是</a-radio>
                   <a-radio value="-1">否</a-radio>
                   <a-radio value="-2">未做</a-radio>
@@ -235,7 +235,7 @@
                 </a-form-item>
               </div>
               <a-form-item label="(5) 补体缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a4', {...require1, initialValue: initValue('a4')}]" @change="changeRadio($event, 'controla4')">
+                <a-radio-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4')}]" @change="changeRadio($event, 'controla4')">
                   <a-radio value="1">是</a-radio>
                   <a-radio value="-1">否</a-radio>
                   <a-radio value="-2">未做</a-radio>
@@ -270,7 +270,7 @@
                 </a-form-item>
               </div>
               <a-form-item label="(6) α-1 抗蛋白酶缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a5', {...require1, initialValue: initValue('a5')}]" @change="changeRadio($event, 'controla5')">
+                <a-radio-group v-decorator="['a5', {...selectRequired, initialValue: initValue('a5')}]" @change="changeRadio($event, 'controla5')">
                   <a-radio value="1">是</a-radio>
                   <a-radio value="2">否</a-radio>
                   <a-radio value="3">未做</a-radio>
@@ -288,7 +288,7 @@
                 </a-form-item> -->
               </div>
               <a-form-item label="(7) 囊性纤维化:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a6', {...require1, initialValue: initValue('a6')}]" @change="changeRadio($event, 'controla6')">
+                <a-radio-group v-decorator="['a6', {...selectRequired, initialValue: initValue('a6')}]" @change="changeRadio($event, 'controla6')">
                   <a-radio value="1">是</a-radio>
                   <a-radio value="2">否</a-radio>
                   <a-radio value="3">未做</a-radio>
@@ -312,7 +312,7 @@
                 </a-form-item>
               </div>
               <a-form-item label="(8) 纤毛功能检测:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a7', {...require1, initialValue: initValue('a7')}]" @change="changeRadio($event, 'controla7')">
+                <a-radio-group v-decorator="['a7', {...selectRequired, initialValue: initValue('a7')}]" @change="changeRadio($event, 'controla7')">
                   <a-radio value="1">是</a-radio>
                   <a-radio value="2">否</a-radio>
                   <a-radio value="3">未做</a-radio>
@@ -449,12 +449,6 @@ export default {
       },
       dateRequire: {
         rules: [{ type: 'object', required: true, message: '请选择时间！' }]
-      },
-      require1: {
-        rules: [{ required: true, message: '请选择是或否！' }]
-      },
-      require2: {
-        rules: [{ required: true, message: '请选择有或无！' }]
       },
       selectRequired: {
         rules: [{ required: true, message: '请选择！' }]

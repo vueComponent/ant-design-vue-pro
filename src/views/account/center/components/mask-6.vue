@@ -53,7 +53,7 @@
                   <a-input style="width: 240px;" v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(3) 标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['a3', {...require1, initialValue: initValue('a3')}]">
+                  <a-radio-group v-decorator="['a3', {...selectRequired, initialValue: initValue('a3')}]">
                     <a-radio value="1">痰液</a-radio>
                     <a-radio value="2">诱导痰</a-radio>
                     <a-radio value="3">支气管肺泡灌洗液</a-radio>
@@ -108,7 +108,7 @@
                   <a-input style="width: 240px;" v-decorator="['b21', {...inputRequired, initialValue: initValue('b21')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b3', {...require1, initialValue: initValue('b3')}]">
+                  <a-radio-group v-decorator="['b3', {...selectRequired, initialValue: initValue('b3')}]">
                     <a-radio value="1">痰液</a-radio>
                     <a-radio value="2">诱导痰</a-radio>
                     <a-radio value="3">支气管肺泡灌洗液</a-radio>
@@ -145,7 +145,7 @@
                   <a-input style="width: 240px;" v-decorator="['c21', {...inputRequired, initialValue: initValue('c21')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="(3) 标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['c3', {...require1, initialValue: initValue('c3')}]">
+                  <a-radio-group v-decorator="['c3', {...selectRequired, initialValue: initValue('c3')}]">
                     <a-radio value="1">痰液</a-radio>
                     <a-radio value="2">诱导痰</a-radio>
                     <a-radio value="3">支气管肺泡灌洗液</a-radio>
@@ -256,9 +256,6 @@ export default {
       },
       require1: {
         rules: [{ required: true, message: '请选择是或否！' }]
-      },
-      require2: {
-        rules: [{ required: true, message: '请选择有或无！' }]
       },
       selectRequired: {
         rules: [{ required: true, message: '请选择！' }]

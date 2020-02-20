@@ -142,7 +142,8 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="MVV::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input>
+                <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input>
+                <!-- <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['b81', {...inputRequired, initialValue: initValue('b81')}]" addonAfter="L/min" autocomplete="off"></a-input>
                 </a-form-item>
@@ -359,7 +360,7 @@
                   <a-radio value="3">混合型</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(4) 呼出气一氧化氮(eNO):" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <a-form-item label="(4) 呼出气一氧化氮(FeNO):" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-input addonAfter="ppb" style="width: 240px;" v-decorator="['d1', {...inputRequired, initialValue: initValue('d1')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(5) 6分钟步行试验总距离:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
