@@ -187,10 +187,10 @@
                 <a-form-item label="真菌:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb4">
                   <a-checkbox-group v-decorator="['b42', {...selectRequired, initialValue: initValue('b42', 'array')}]">
                     <a-checkbox value="1">曲霉</a-checkbox>
-                    <a-checkbox value="2" :checked="controlb42">其他</a-checkbox>
+                    <a-checkbox value="2" :checked="controlb42" @change="changeSelect($event, 'controlb42')">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
-                <a-form-item class="border-dotted" label="其他真菌" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb42">
+                <a-form-item class="border-dotted" label="其他真菌" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb42">
                   <a-input style="width: 240px;" v-decorator="['b43', {...inputRequired, initialValue: initValue('b43')}]" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
