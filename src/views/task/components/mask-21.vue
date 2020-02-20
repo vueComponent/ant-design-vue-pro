@@ -285,7 +285,7 @@
                 </a-form-item>
                 <div v-if="controla5">
                   <a-form-item label="基因:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-radio-group v-decorator="['a52', { initialValue: initValue('a52')}]" @change="changeRadio($event, 'controla52')">
+                    <a-radio-group v-decorator="['a52', { ...selectRequired, initialValue: initValue('a52')}]" @change="changeRadio($event, 'controla52')">
                       <a-radio value="1">阳性</a-radio>
                       <a-radio value="2">阴性</a-radio>
                     </a-radio-group>
@@ -303,14 +303,14 @@
                 </a-form-item>
                 <div v-if="controla6">
                   <a-form-item label="汗液实验:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-radio-group v-decorator="['a61', { initialValue: initValue('a61')}]">
+                    <a-radio-group v-decorator="['a61', { ...selectRequired, initialValue: initValue('a61')}]">
                       <a-radio value="1">阳性</a-radio>
                       <a-radio value="2">阴性</a-radio>
                       <!-- <a-radio value="3">未测</a-radio> -->
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="基因检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-radio-group v-decorator="['a62', { initialValue: initValue('a62')}]">
+                    <a-radio-group v-decorator="['a62', { ...selectRequired, initialValue: initValue('a62')}]">
                       <a-radio value="1">纯合</a-radio>
                       <a-radio value="2">杂合</a-radio>
                       <a-radio value="3">无突变</a-radio>
@@ -327,25 +327,25 @@
                 </a-form-item>
                 <div v-if="controla7">
                   <a-form-item label="FeNOppd:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-radio-group v-decorator="['a71', { initialValue: initValue('a71')}]">
+                    <a-radio-group v-decorator="['a71', { ...selectRequired, initialValue: initValue('a71')}]">
                       <a-radio value="1">阳性</a-radio>
                       <a-radio value="2">阴性</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="电镜检测的活检:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-radio-group v-decorator="['a73', { initialValue: initValue('a73')}]">
+                    <a-radio-group v-decorator="['a73', { ...selectRequired, initialValue: initValue('a73')}]">
                       <a-radio value="1">阳性</a-radio>
                       <a-radio value="2">阴性</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="分析纤毛摆动频率的活检:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-radio-group v-decorator="['a74', { initialValue: initValue('a74')}]">
+                    <a-radio-group v-decorator="['a74', { ...selectRequired, initialValue: initValue('a74')}]">
                       <a-radio value="1">阳性</a-radio>
                       <a-radio value="2">阴性</a-radio>
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item label="基因检测:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-radio-group v-decorator="['a75', { initialValue: initValue('a75')}]" @change="changeRadio($event, 'controla75')">
+                    <a-radio-group v-decorator="['a75', { ...selectRequired, initialValue: initValue('a75')}]" @change="changeRadio($event, 'controla75')">
                       <a-radio value="1">阳性</a-radio>
                       <a-radio value="2">阴性</a-radio>
                       <!-- <a-radio value="3">未测量</a-radio> -->
