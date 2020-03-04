@@ -23,6 +23,10 @@ export default {
       type: Function,
       required: true
     },
+    onExpand: {
+      type: Function,
+      required: false
+    },
     pageNum: {
       type: Number,
       default: 1
@@ -301,7 +305,7 @@ export default {
       return props[k]
     })
     const table = (
-      <a-table {...{ props, scopedSlots: { ...this.$scopedSlots } }} onChange={this.loadData}>
+      <a-table {...{ props, scopedSlots: { ...this.$scopedSlots } }} onChange={this.loadData} onExpand={ (expanded, record) => { this.onExpand && this.onExpand(expanded, record) } }>
         { Object.keys(this.$slots).map(name => (<template slot={name}>{this.$slots[name]}</template>)) }
       </a-table>
     )
