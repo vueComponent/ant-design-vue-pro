@@ -83,7 +83,7 @@ yarn run lint
 
 - Disable Eslint (not recommended): remove `eslintConfig`  field in `package.json`  and `vue.config.js` field `lintOnSave: false`
 
-- Load on Demand: modify `/src/main.js` L14,  replace to `import './core/lazy_use'` code. more [load-on-demand.md](./docs/load-on-demand.md)
+- Load on Demand `/src/main.js` L14, in `import './core/lazy_use'`, `import './core/use''`. more [load-on-demand.md](./docs/load-on-demand.md)
 
 - Customize Theme:  [Custom Theme Config (@kokoroli)](https://github.com/kokoroli/antd-awesome/blob/master/docs/Ant_Design_%E6%A0%B7%E5%BC%8F%E8%A6%86%E7%9B%96.md)
 
@@ -91,7 +91,7 @@ yarn run lint
 
 - Production env `mock` is disabled. use `src/mock/index.js`
 
-- Plz use `release` version
+- pls use `release` version
 
 ## Browsers support
 
