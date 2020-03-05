@@ -36,7 +36,7 @@ const updateTheme = newPrimaryColor => {
   themeColor.changeColor(newPrimaryColor).finally(t => {
     setTimeout(() => {
       hideMessage()
-    })
+    }, 10)
   })
 }
 
