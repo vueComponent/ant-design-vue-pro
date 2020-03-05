@@ -19,6 +19,7 @@
     "enquire.js": "^2.1.6",
     "lodash.get": "^4.4.2",
     "lodash.pick": "^4.4.0",
+    "lodash.clonedeep": "^4.5.0",
     "md5": "^2.2.1",
     "mockjs2": "1.0.8",
     "moment": "^2.24.0",
