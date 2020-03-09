@@ -87,7 +87,7 @@ export default {
       pageTitle: ''
     }
   },
-  created () {
+  mounted () {
     this.updateMenu()
   },
   methods: {
