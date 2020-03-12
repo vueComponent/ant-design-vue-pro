@@ -76,7 +76,7 @@ const vueConfig = {
 
           // 'primary-color': '#F5222D',
           // 'link-color': '#F5222D',
-          // 'border-radius-base': '4px'
+          'border-radius-base': '2px'
         },
         // DO NOT REMOVE THIS LINE
         javascriptEnabled: true
