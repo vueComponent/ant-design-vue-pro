@@ -13,13 +13,13 @@
   },
   "dependencies": {
     "@antv/data-set": "^0.10.2",
-    "ant-design-vue": "1.5.0-alpha.1",
+    "ant-design-vue": "1.5.0-beta.1",
     "axios": "^0.19.0",
     "core-js": "^3.1.2",
     "enquire.js": "^2.1.6",
+    "lodash.clonedeep": "^4.5.0",
     "lodash.get": "^4.4.2",
     "lodash.pick": "^4.4.0",
-    "lodash.clonedeep": "^4.5.0",
     "md5": "^2.2.1",
     "mockjs2": "1.0.8",
     "moment": "^2.24.0",
@@ -31,9 +31,9 @@
     "vue-ls": "^3.2.1",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.1.2",
+    "vue-svg-component-runtime": "^1.0.1",
     "vuex": "^3.1.1",
-    "wangeditor": "^3.1.1",
-    "vue-svg-component-runtime": "^1.0.1"
+    "wangeditor": "^3.1.1"
   },
   "devDependencies": {
     "@ant-design/colors": "^3.2.1",
@@ -53,11 +53,11 @@
     "eslint-plugin-vue": "^5.2.3",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
-    "vue-template-compiler": "^2.6.10",
-    "vue-svg-icon-loader": "^2.1.1",
-    "webpack-theme-color-replacer": "^1.2.17",
     "opencollective": "^1.0.3",
-    "opencollective-postinstall": "^2.0.2"
+    "opencollective-postinstall": "^2.0.2",
+    "vue-svg-icon-loader": "^2.1.1",
+    "vue-template-compiler": "^2.6.10",
+    "webpack-theme-color-replacer": "^1.2.17"
   },
   "collective": {
     "type": "opencollective",
