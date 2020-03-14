@@ -39,7 +39,7 @@
             <a slot="title">{{ item.title }}</a>
           </a-list-item-meta>
           <div slot="actions">
-            <a>编辑</a>
+            <a @click="edit(item)">编辑</a>
           </div>
           <div slot="actions">
             <a-dropdown>
@@ -65,8 +65,6 @@
           </div>
         </a-list-item>
       </a-list>
-
-      <task-form ref="taskForm" />
     </a-card>
   </div>
 </template>
@@ -138,6 +136,26 @@ export default {
     return {
       data,
       status: 'all'
+    }
+  },
+  methods: {
+    edit (record) {
+      console.log('record', record)
+      // mockdata
+      record.taskName = '测试'
+      // mockend
+      this.$dialog(TaskForm,
+        // component props
+        {
+          record
+        },
+        // modal props
+        {
+          title: '操作',
+          width: 700,
+          centered: true,
+          maskClosable: false
+        })
     }
   }
 }
