@@ -28,6 +28,7 @@
     </div>
 
     <s-table
+      row-key="id"
       size="default"
       :columns="columns"
       :data="loadData"
@@ -79,7 +80,7 @@
       v-model="visible"
       @ok="handleOk"
     >
-      <a-form :autoFormCreate="(form)=>{this.form = form}">
+      <a-form :form="form">
 
         <a-form-item
           :labelCol="labelCol"
@@ -88,7 +89,12 @@
           hasFeedback
           validateStatus="success"
         >
-          <a-input placeholder="唯一识别码" v-model="mdl.id" id="no" disabled="disabled" />
+          <a-input
+            placeholder="唯一识别码"
+            id="no"
+            disabled="disabled"
+            v-decorator="['no']"
+          />
         </a-form-item>
 
         <a-form-item
@@ -98,7 +104,11 @@
           hasFeedback
           validateStatus="success"
         >
-          <a-input placeholder="起一个名字" v-model="mdl.name" id="role_name" />
+          <a-input
+            placeholder="起一个名字"
+            id="role_name"
+            v-decorator="['roleName']"
+          />
         </a-form-item>
 
         <a-form-item
@@ -108,9 +118,9 @@
           hasFeedback
           validateStatus="warning"
         >
-          <a-select v-model="mdl.status">
-            <a-select-option value="1">正常</a-select-option>
-            <a-select-option value="2">禁用</a-select-option>
+          <a-select v-decorator="['status', { initialValue: 1 }]">
+            <a-select-option :value="1">正常</a-select-option>
+            <a-select-option :value="2">禁用</a-select-option>
           </a-select>
         </a-form-item>
 
@@ -120,7 +130,12 @@
           label="描述"
           hasFeedback
         >
-          <a-textarea :rows="5" v-model="mdl.describe" placeholder="..." id="describe"/>
+          <a-textarea
+            :rows="5"
+            placeholder="..."
+            id="describe"
+            v-decorator="['describe']"
+          />
         </a-form-item>
 
         <a-divider />
@@ -149,6 +164,7 @@
 </template>
 
 <script>
+import pick from 'lodash.pick'
 import { STable } from '@/components'
 import { getRoleList, getServiceList } from '@/api/manage'
 
@@ -170,7 +186,7 @@ export default {
         xs: { span: 24 },
         sm: { span: 16 }
       },
-      form: null,
+      form: this.$form.createForm(this),
       mdl: {},
 
       // 高级搜索 展开/关闭
@@ -226,7 +242,7 @@ export default {
   },
   methods: {
     handleEdit (record) {
-      this.mdl = Object.assign({}, record)
+      this.form.setFieldsValue(pick(record, ['no', 'status', 'describe', 'roleName']))
 
       this.mdl.permissions.forEach(permission => {
         permission.actionsOptions = permission.actionEntitySet.map(action => {
