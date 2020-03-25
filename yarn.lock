@@ -1970,10 +1970,10 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ant-design-vue@1.5.0-beta.1:
-  version "1.5.0-beta.1"
-  resolved "https://registry.npmjs.org/ant-design-vue/-/ant-design-vue-1.5.0-beta.1.tgz#9396e1bb4435c9bc5dc224e2bd888a000144a8f9"
-  integrity sha512-Fv5vxO+qHakbjsswgZ70/bjiZK4FphdFxv31VjBJKfhA5Ud7K6sNqC0BVpYS8nL0BwxGCVG8I30efNdU3VifnA==
+ant-design-vue@1.5.0-rc.6:
+  version "1.5.0-rc.6"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.5.0-rc.6.tgz#a9616550e0386bf7a6b1bf00aae5cadc13159967"
+  integrity sha512-ILUyMCKa2oYAaymlWNlT2gVsNBugUCLZl28pUR+RAWjxYvxxqh6PCZj6hO9gRRgdz5WvwK1Z1gi5ua2JROOZfQ==
   dependencies:
     "@ant-design/icons" "^2.1.1"
     "@ant-design/icons-vue" "^2.0.0"
