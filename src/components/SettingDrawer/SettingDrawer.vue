@@ -1,11 +1,13 @@
 <template>
-  <div class="setting-drawer" ref="settingDrawer">
+  <div class="setting-drawer">
     <a-drawer
       width="300"
       placement="right"
       @close="onClose"
       :closable="false"
       :visible="visible"
+      :drawer-style="{ position: 'absolute' }"
+      style="position: absolute"
     >
       <div class="setting-drawer-index-content">
 

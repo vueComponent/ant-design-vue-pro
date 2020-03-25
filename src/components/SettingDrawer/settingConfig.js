@@ -101,7 +101,8 @@ const updateTheme = primaryColor => {
 
 const updateColorWeak = colorWeak => {
   // document.body.className = colorWeak ? 'colorWeak' : '';
-  colorWeak ? document.body.classList.add('colorWeak') : document.body.classList.remove('colorWeak')
+  const app = document.body.querySelector('#app')
+  colorWeak ? app.classList.add('colorWeak') : app.classList.remove('colorWeak')
 }
 
 export { updateTheme, colorList, updateColorWeak }
