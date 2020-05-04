@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <page-header-wrapper content="高级表单常见于一次性输入和提交大批量数据的场景">
     <a-card class="card" title="仓库管理" :bordered="false">
       <repository-form ref="repository" :showSubmit="false" />
     </a-card>
@@ -54,7 +54,7 @@
     </a-card>
 
     <!-- fixed footer toolbar -->
-    <footer-tool-bar :style="{ width: isSideMenu() && isDesktop() ? `calc(100% - ${sidebarOpened ? 256 : 80}px)` : '100%'}">
+    <footer-tool-bar :is-mobile="isMobile" :collapsed="sideCollapsed">
       <span class="popover-wrapper">
         <a-popover title="表单校验信息" overlayClassName="antd-pro-pages-forms-style-errorPopover" trigger="click" :getPopupContainer="trigger => trigger.parentNode">
           <template slot="content">
@@ -71,14 +71,14 @@
       </span>
       <a-button type="primary" @click="validate" :loading="loading">提交</a-button>
     </footer-tool-bar>
-  </div>
+  </page-header-wrapper>
 </template>
 
 <script>
 import RepositoryForm from './RepositoryForm'
 import TaskForm from './TaskForm'
 import FooterToolBar from '@/components/FooterToolbar'
-import { mixin, mixinDevice } from '@/utils/mixin'
+import { baseMixin } from '@/store/app-mixin'
 
 const fieldLabels = {
   name: '仓库名',
@@ -97,7 +97,7 @@ const fieldLabels = {
 
 export default {
   name: 'AdvancedForm',
-  mixins: [mixin, mixinDevice],
+  mixins: [baseMixin],
   components: {
     FooterToolBar,
     RepositoryForm,
@@ -105,7 +105,6 @@ export default {
   },
   data () {
     return {
-      description: '高级表单常见于一次性输入和提交大批量数据的场景。',
       loading: false,
       memberLoading: false,
 

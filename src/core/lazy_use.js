@@ -39,7 +39,10 @@ import {
   Progress,
   Skeleton,
   Popconfirm,
+  PageHeader,
   Result,
+  Statistic,
+  Descriptions,
   message,
   notification
 } from 'ant-design-vue'
@@ -90,7 +93,10 @@ Vue.use(Upload)
 Vue.use(Progress)
 Vue.use(Skeleton)
 Vue.use(Popconfirm)
+Vue.use(PageHeader)
 Vue.use(Result)
+Vue.use(Statistic)
+Vue.use(Descriptions)
 
 Vue.prototype.$confirm = Modal.confirm
 Vue.prototype.$message = message

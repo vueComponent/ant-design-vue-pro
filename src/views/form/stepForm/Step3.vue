@@ -1,7 +1,7 @@
 <template>
   <div>
-    <a-form style="margin: 40px auto 0;">
-      <a-result title="操作成功" :is-success="true" sub-title="预计两小时内到账" style="max-width: 560px;">
+    <a-form>
+      <a-result title="操作成功" :is-success="true" sub-title="预计两小时内到账" style="max-width: 560px; margin: 40px auto 0;">
         <div class="information">
           <a-row>
             <a-col :sm="8" :xs="24">付款账户：</a-col>

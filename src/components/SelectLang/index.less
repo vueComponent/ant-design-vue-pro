@@ -1,0 +1,23 @@
+@import "~ant-design-vue/es/style/themes/default";
+
+@header-menu-prefix-cls: ~'@{ant-prefix}-pro-header-menu';
+
+.ant-pro-drop-down-lang {
+  line-height: @layout-header-height;
+  vertical-align: top;
+  cursor: pointer;
+  > i {
+    font-size: 16px !important;
+    transform: none !important;
+    svg {
+      position: relative;
+      top: -1px;
+    }
+  }
+
+  &.select-lang {
+    .ant-dropdown-menu-item {
+      min-width: 120px;
+    }
+  }
+}

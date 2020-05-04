@@ -1,6 +1,6 @@
 <template>
   <a-card :bordered="false" style="margin: -24px -24px 0px;">
-    <a-result type="success" :sub-title="description" :title="title">
+    <a-result status="success" :sub-title="description" :title="title">
       <template #extra>
         <a-button type="primary">返回列表</a-button>
         <a-button style="margin-left: 8px">查看项目</a-button>

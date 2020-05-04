@@ -1,5 +1,6 @@
 const getters = {
-  device: state => state.app.device,
+  isMobile: state => state.app.isMobile,
+  lang: state => state.i18n.lang,
   theme: state => state.app.theme,
   color: state => state.app.color,
   token: state => state.user.token,
@@ -9,8 +10,7 @@ const getters = {
   roles: state => state.user.roles,
   userInfo: state => state.user.info,
   addRouters: state => state.permission.addRouters,
-  multiTab: state => state.app.multiTab,
-  lang: state => state.i18n.lang
+  multiTab: state => state.app.multiTab
 }
 
 export default getters

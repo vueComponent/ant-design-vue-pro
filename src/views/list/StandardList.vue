@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <page-header-wrapper>
     <a-card :bordered="false">
       <a-row>
         <a-col :sm="8" :xs="24">
@@ -66,7 +66,7 @@
         </a-list-item>
       </a-list>
     </a-card>
-  </div>
+  </page-header-wrapper>
 </template>
 
 <script>

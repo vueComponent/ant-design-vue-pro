@@ -12,6 +12,7 @@
     "postinstall": "opencollective-postinstall"
   },
   "dependencies": {
+    "@ant-design-vue/pro-layout": "^0.2.3",
     "@antv/data-set": "^0.10.2",
     "ant-design-vue": "1.5.3",
     "axios": "^0.19.0",
@@ -29,6 +30,7 @@
     "vue": "^2.6.10",
     "vue-clipboard2": "^0.2.1",
     "vue-cropper": "0.4.9",
+    "vue-i18n": "^8.17.4",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.1.2",
     "vue-svg-component-runtime": "^1.0.1",

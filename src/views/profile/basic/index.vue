@@ -1,5 +1,5 @@
 <template>
-  <page-view :title="title">
+  <page-header-wrapper>
     <a-card :bordered="false">
       <detail-list title="退款申请">
         <detail-list-item term="取货单号">1000000000</detail-list-item>
@@ -41,7 +41,7 @@
 
       </s-table>
     </a-card>
-  </page-view>
+  </page-header-wrapper>
 </template>
 
 <script>

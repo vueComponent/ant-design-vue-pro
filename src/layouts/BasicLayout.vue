@@ -1,118 +1,83 @@
 <template>
-  <a-layout :class="['layout', device]">
-    <!-- SideMenu -->
-    <a-drawer
-      v-if="isMobile()"
-      placement="left"
-      :wrapClassName="`drawer-sider ${navTheme}`"
-      :closable="false"
-      :visible="collapsed"
-      @close="drawerClose"
-    >
-      <side-menu
-        mode="inline"
-        :menus="menus"
-        :theme="navTheme"
-        :collapsed="false"
-        :collapsible="true"
-        @menuSelect="menuSelect"
-      ></side-menu>
-    </a-drawer>
-
-    <side-menu
-      v-else-if="isSideMenu()"
-      mode="inline"
-      :menus="menus"
-      :theme="navTheme"
-      :collapsed="collapsed"
-      :collapsible="true"
-    ></side-menu>
-
-    <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: contentPaddingLeft, minHeight: '100vh' }">
-      <!-- layout header -->
-      <global-header
-        :mode="layoutMode"
-        :menus="menus"
-        :theme="navTheme"
-        :collapsed="collapsed"
-        :device="device"
-        @toggle="toggle"
-      />
-
-      <!-- layout content -->
-      <a-layout-content :style="{ height: '100%', margin: '24px 24px 0', paddingTop: fixedHeader ? '64px' : '0' }">
-        <multi-tab v-if="multiTab"></multi-tab>
-        <transition name="page-transition">
-          <route-view />
-        </transition>
-      </a-layout-content>
-
-      <!-- layout footer -->
-      <a-layout-footer>
-        <global-footer />
-      </a-layout-footer>
-
-      <!-- Setting Drawer (show in development mode) -->
-      <setting-drawer v-if="!production"></setting-drawer>
-    </a-layout>
-  </a-layout>
-
+  <pro-layout
+    title="Ant Design Pro"
+    :menus="menus"
+    :collapsed="collapsed"
+    :theme="theme"
+    :layout="layout"
+    :contentWidth="contentWidth"
+    :auto-hide-header="autoHideHeader"
+    :mediaQuery="query"
+    :isMobile="isMobile"
+    :handleMediaQuery="handleMediaQuery"
+    :handleCollapse="handleCollapse"
+    :logo="logoRender"
+    :i18nRender="i18nRender"
+  >
+    <template v-slot:rightContentRender>
+      <right-content />
+    </template>
+    <template v-slot:footerRender>
+      <global-footer />
+    </template>
+    <router-view />
+  </pro-layout>
 </template>
 
 <script>
-import { triggerWindowResizeEvent } from '@/utils/util'
-import { mapState, mapActions } from 'vuex'
-import { mixin, mixinDevice } from '@/utils/mixin'
-import config from '@/config/defaultSettings'
-
-import RouteView from './RouteView'
-import SideMenu from '@/components/Menu/SideMenu'
-import GlobalHeader from '@/components/GlobalHeader'
+import { i18nRender } from '@/locales'
+import { mapState } from 'vuex'
+import ProLayout from '@ant-design-vue/pro-layout'
+import RightContent from '@/components/GlobalHeader/RightContent'
 import GlobalFooter from '@/components/GlobalFooter'
-import SettingDrawer from '@/components/SettingDrawer'
-import { convertRoutes } from '@/utils/routeConvert'
+
+import LogoSvg from '../assets/logo.svg?inline'
+import { SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mutation-types'
 
 export default {
   name: 'BasicLayout',
-  mixins: [mixin, mixinDevice],
   components: {
-    RouteView,
-    SideMenu,
-    GlobalHeader,
+    ProLayout,
+    RightContent,
     GlobalFooter,
-    SettingDrawer
+    LogoSvg
   },
   data () {
     return {
-      production: config.production,
+      // base
+      menus: [],
+      // 侧栏收起状态
       collapsed: false,
-      menus: []
+      // 自动隐藏头部栏
+      autoHideHeader: false,
+      // 媒体查询
+      query: {},
+      // 布局类型
+      layout: 'sidemenu', // 'sidemenu', 'topmenu'
+      // 定宽: true / 流式: false
+      contentWidth: true,
+      // 主题 'dark' | 'light'
+      theme: 'dark',
+      // 是否手机模式
+      isMobile: false
     }
   },
   computed: {
     ...mapState({
       // 动态主路由
       mainMenu: state => state.permission.addRouters
-    }),
-    contentPaddingLeft () {
-      if (!this.fixSidebar || this.isMobile()) {
-        return '0'
-      }
-      if (this.sidebarOpened) {
-        return '256px'
-      }
-      return '80px'
-    }
-  },
-  watch: {
-    sidebarOpened (val) {
-      this.collapsed = !val
-    }
+    })
   },
   created () {
-    const routes = convertRoutes(this.mainMenu.find(item => item.path === '/'))
+    const routes = this.mainMenu.find(item => item.path === '/')
     this.menus = (routes && routes.children) || []
-    this.collapsed = !this.sidebarOpened
+    // 处理侧栏收起状态
+    this.$watch('collapsed', () => {
+      this.$store.commit(SIDEBAR_TYPE, this.collapsed)
+    })
+    this.$watch('isMobile', () => {
+      this.$store.commit(TOGGLE_MOBILE_TYPE, this.isMobile)
+    })
   },
   mounted () {
     const userAgent = navigator.userAgent
@@ -126,51 +91,28 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setSidebar']),
-    toggle () {
-      this.collapsed = !this.collapsed
-      this.setSidebar(!this.collapsed)
-      triggerWindowResizeEvent()
-    },
-    paddingCalc () {
-      let left = ''
-      if (this.sidebarOpened) {
-        left = this.isDesktop() ? '256px' : '80px'
-      } else {
-        left = (this.isMobile() && '0') || ((this.fixSidebar && '80px') || '0')
+    i18nRender,
+    handleMediaQuery (val) {
+      this.query = val
+      if (this.isMobile && !val['screen-xs']) {
+        this.isMobile = false
+        return
       }
-      return left
+      if (!this.isMobile && val['screen-xs']) {
+        this.isMobile = true
+        this.collapsed = false
+      }
     },
-    menuSelect () {
+    handleCollapse (val) {
+      this.collapsed = val
     },
-    drawerClose () {
-      this.collapsed = false
+    logoRender () {
+      return <LogoSvg />
     }
   }
 }
 </script>
 
 <style lang="less">
-/*
- * The following styles are auto-applied to elements with
- * transition="page-transition" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the page transition by editing
- * these styles.
- */
-
-.page-transition-enter {
-  opacity: 0;
-}
-
-.page-transition-leave-active {
-  opacity: 0;
-}
-
-.page-transition-enter .page-transition-container,
-.page-transition-leave-active .page-transition-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
+@import "./BasicLayout.less";
 </style>
