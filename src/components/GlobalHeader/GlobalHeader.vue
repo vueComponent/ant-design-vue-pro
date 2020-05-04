@@ -14,7 +14,7 @@
           <div class="header-index-wide">
             <div class="header-index-left">
               <logo class="top-nav-header" :show-title="device !== 'mobile'"/>
-              <s-menu v-if="device !== 'mobile'" mode="horizontal" :menu="menus" :theme="theme" />
+              <s-menu v-if="device !== 'mobile'" mode="horizontal" :menus="menus" :theme="theme" />
               <a-icon v-else class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle" />
             </div>
             <user-menu class="header-index-right"></user-menu>

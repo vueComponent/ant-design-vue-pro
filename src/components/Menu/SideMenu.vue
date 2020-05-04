@@ -8,7 +8,7 @@
     <logo />
     <s-menu
       :collapsed="collapsed"
-      :menu="menus"
+      :menus="menus"
       :theme="theme"
       :mode="mode"
       @select="onSelect"
