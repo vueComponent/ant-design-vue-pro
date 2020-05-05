@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.menu {
+.ant-pro-drop-down {
   /deep/ .action {
     margin-right: 8px;
   }

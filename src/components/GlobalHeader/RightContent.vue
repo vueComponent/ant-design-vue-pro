@@ -1,7 +1,7 @@
 <template>
   <div :class="wrpCls">
-    <avatar-dropdown :menu="showMenu" :current-user="currentUser" class="ant-pro-global-header-index-action" />
-    <select-lang class="ant-pro-global-header-index-action" />
+    <avatar-dropdown :menu="showMenu" :current-user="currentUser" :class="actionClassName" />
+    <select-lang :class="actionClassName" />
   </div>
 </template>
 
@@ -22,6 +22,7 @@ export default {
     }
   },
   data () {
+    this.actionClassName = 'ant-pro-global-header-index-action'
     return {
       showMenu: true,
       currentUser: {}
@@ -41,7 +42,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
