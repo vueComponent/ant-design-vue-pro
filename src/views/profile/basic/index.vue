@@ -1,20 +1,20 @@
 <template>
   <page-header-wrapper>
     <a-card :bordered="false">
-      <detail-list title="退款申请">
-        <detail-list-item term="取货单号">1000000000</detail-list-item>
-        <detail-list-item term="状态">已取货</detail-list-item>
-        <detail-list-item term="销售单号">1234123421</detail-list-item>
-        <detail-list-item term="子订单">3214321432</detail-list-item>
-      </detail-list>
+      <a-descriptions title="退款申请">
+        <a-descriptions-item label="取货单号">1000000000</a-descriptions-item>
+        <a-descriptions-item label="状态">已取货</a-descriptions-item>
+        <a-descriptions-item label="销售单号">1234123421</a-descriptions-item>
+        <a-descriptions-item label="子订单">3214321432</a-descriptions-item>
+      </a-descriptions>
       <a-divider style="margin-bottom: 32px"/>
-      <detail-list title="用户信息">
-        <detail-list-item term="用户姓名">付小小</detail-list-item>
-        <detail-list-item term="联系电话">18100000000</detail-list-item>
-        <detail-list-item term="常用快递">菜鸟仓储</detail-list-item>
-        <detail-list-item term="取货地址">浙江省杭州市西湖区万塘路18号</detail-list-item>
-        <detail-list-item term="备注">	无</detail-list-item>
-      </detail-list>
+      <a-descriptions title="用户信息">
+        <a-descriptions-item label="用户姓名">付小小</a-descriptions-item>
+        <a-descriptions-item label="联系电话">18100000000</a-descriptions-item>
+        <a-descriptions-item label="常用快递">菜鸟仓储</a-descriptions-item>
+        <a-descriptions-item label="取货地址">浙江省杭州市西湖区万塘路18号</a-descriptions-item>
+        <a-descriptions-item label="备注">	无</a-descriptions-item>
+      </a-descriptions>
       <a-divider style="margin-bottom: 32px"/>
 
       <div class="title">退货商品</div>
@@ -45,16 +45,10 @@
 </template>
 
 <script>
-import { PageView } from '@/layouts'
 import { STable } from '@/components'
-import DetailList from '@/components/tools/DetailList'
-const DetailListItem = DetailList.Item
 
 export default {
   components: {
-    PageView,
-    DetailList,
-    DetailListItem,
     STable
   },
   data () {

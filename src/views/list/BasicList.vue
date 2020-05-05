@@ -3,13 +3,13 @@
     <a-card :bordered="false">
       <a-row>
         <a-col :sm="8" :xs="24">
-          <head-info title="我的待办" content="8个任务" :bordered="true"/>
+          <info title="我的待办" value="8个任务" :bordered="true" />
         </a-col>
         <a-col :sm="8" :xs="24">
-          <head-info title="本周任务平均处理时间" content="32分钟" :bordered="true"/>
+          <info title="本周任务平均处理时间" value="32分钟" :bordered="true" />
         </a-col>
         <a-col :sm="8" :xs="24">
-          <head-info title="本周完成任务数" content="24个"/>
+          <info title="本周完成任务数" value="24个" />
         </a-col>
       </a-row>
     </a-card>
@@ -70,8 +70,8 @@
 </template>
 
 <script>
-import HeadInfo from '@/components/tools/HeadInfo'
 import TaskForm from './modules/TaskForm'
+import Info from './components/Info'
 
 const data = []
 data.push({
@@ -129,8 +129,8 @@ data.push({
 export default {
   name: 'StandardList',
   components: {
-    HeadInfo,
-    TaskForm
+    TaskForm,
+    Info
   },
   data () {
     return {
@@ -162,25 +162,25 @@ export default {
 </script>
 
 <style lang="less" scoped>
-    .ant-avatar-lg {
-        width: 48px;
-        height: 48px;
-        line-height: 48px;
-    }
+.ant-avatar-lg {
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+}
 
-    .list-content-item {
-        color: rgba(0, 0, 0, .45);
-        display: inline-block;
-        vertical-align: middle;
-        font-size: 14px;
-        margin-left: 40px;
-        span {
-            line-height: 20px;
-        }
-        p {
-            margin-top: 4px;
-            margin-bottom: 0;
-            line-height: 22px;
-        }
+.list-content-item {
+    color: rgba(0, 0, 0, .45);
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    margin-left: 40px;
+    span {
+        line-height: 20px;
     }
+    p {
+        margin-top: 4px;
+        margin-bottom: 0;
+        line-height: 22px;
+    }
+}
 </style>

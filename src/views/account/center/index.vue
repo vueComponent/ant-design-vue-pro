@@ -5,9 +5,9 @@
         <a-card :bordered="false">
           <div class="account-center-avatarHolder">
             <div class="avatar">
-              <img :src="avatar()">
+              <img :src="avatar">
             </div>
-            <div class="username">{{ nickname() }}</div>
+            <div class="username">{{ nickname }}</div>
             <div class="bio">海纳百川，有容乃大</div>
           </div>
           <div class="account-center-detail">
@@ -33,14 +33,14 @@
                   <a-tag
                     :key="tag"
                     :closable="index !== 0"
-                    :afterClose="() => handleTagClose(tag)"
+                    :close="() => handleTagClose(tag)"
                   >{{ `${tag.slice(0, 20)}...` }}</a-tag>
                 </a-tooltip>
                 <a-tag
                   v-else
                   :key="tag"
                   :closable="index !== 0"
-                  :afterClose="() => handleTagClose(tag)"
+                  :close="() => handleTagClose(tag)"
                 >{{ tag }}</a-tag>
               </template>
               <a-input
@@ -136,12 +136,13 @@ export default {
       noTitleKey: 'app'
     }
   },
+  computed: {
+    ...mapGetters(['nickname', 'avatar'])
+  },
   mounted () {
     this.getTeams()
   },
   methods: {
-    ...mapGetters(['nickname', 'avatar']),
-
     getTeams () {
       this.$http.get('/workplace/teams').then(res => {
         this.teams = res.result
