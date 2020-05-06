@@ -4,7 +4,7 @@ import Icon from 'ant-design-vue/es/icon'
 export default {
   name: 'SMenu',
   props: {
-    menu: {
+    menus: {
       type: Array,
       required: true
     },
@@ -34,7 +34,7 @@ export default {
   computed: {
     rootSubmenuKeys: vm => {
       const keys = []
-      vm.menu.forEach(item => keys.push(item.path))
+      vm.menus.forEach(item => keys.push(item.path))
       return keys
     }
   },
@@ -165,7 +165,7 @@ export default {
       }
     }
 
-    const menuTree = this.menu.map(item => {
+    const menuTree = this.menus.map(item => {
       if (item.hidden) {
         return null
       }
