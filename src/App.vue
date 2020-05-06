@@ -7,16 +7,23 @@
 </template>
 
 <script>
-import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
-
 export default {
   data () {
     return {
-      locale: zhCN
+    }
+  },
+  computed: {
+    locale () {
+      return this.$i18n.getLocaleMessage(this.$store.getters.lang).antLocale
     }
   },
   mounted () {
-
+    this.test()
+  },
+  methods: {
+    test () {
+      console.log('this', this)
+    }
   }
 }
 </script>

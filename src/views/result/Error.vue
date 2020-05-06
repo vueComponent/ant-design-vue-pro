@@ -1,5 +1,5 @@
 <template>
-  <a-card :bordered="false" style="margin: -24px -24px 0px;">
+  <a-card :bordered="false">
     <a-result status="error" :title="title" :sub-title="description">
       <template #extra>
         <a-button type="primary" >返回修改</a-button>
