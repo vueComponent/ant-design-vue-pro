@@ -2,17 +2,19 @@
 # yarn lockfile v1
 
 
-"@ant-design-vue/pro-layout@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.npm.taobao.org/@ant-design-vue/pro-layout/download/@ant-design-vue/pro-layout-0.2.5.tgz?cache=0&sync_timestamp=1588774629698&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40ant-design-vue%2Fpro-layout%2Fdownload%2F%40ant-design-vue%2Fpro-layout-0.2.5.tgz#415dd09b00747d324ca0b25c993bee57580bdcc9"
-  integrity sha1-QV3QmwB0fTJMoLJcmTvuV1gL3Mk=
+"@ant-design-vue/pro-layout@^0.2.7":
+  version "0.2.7"
+  resolved "https://registry.npm.taobao.org/@ant-design-vue/pro-layout/download/@ant-design-vue/pro-layout-0.2.7.tgz?cache=0&sync_timestamp=1589462968164&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40ant-design-vue%2Fpro-layout%2Fdownload%2F%40ant-design-vue%2Fpro-layout-0.2.7.tgz#664b006dfcf8c2126cd9af745b5c6891f296aa52"
+  integrity sha1-ZksAbfz4whJs2a90W1xokfKWqlI=
   dependencies:
     ant-design-vue "^1.5.3"
     classnames "^2.2.6"
     insert-css "^2.0.0"
     lodash "^4.17.15"
+    omit.js "^1.0.2"
     umi-request "^1.2.11"
     vue-container-query "^0.1.0"
+    vue-copy-to-clipboard "1.0.0"
 
 "@ant-design/colors@^3.1.0", "@ant-design/colors@^3.2.1":
   version "3.2.2"
@@ -1979,10 +1981,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
 
-ant-design-vue@1.5.3:
-  version "1.5.3"
-  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.5.3.tgz#777a43a76dd233efc72abe9704103dbb2a95c558"
-  integrity sha1-d3pDp23SM+/HKr6XBBA9uyqVxVg=
+ant-design-vue@1.5.5:
+  version "1.5.5"
+  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.5.5.tgz#11e5fabedfb6f51ccedb3f7b1650d5f388157eb3"
+  integrity sha1-EeX6vt+29RzO2z97FlDV84gVfrM=
   dependencies:
     "@ant-design/icons" "^2.1.1"
     "@ant-design/icons-vue" "^2.0.0"
@@ -3358,6 +3360,13 @@ copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://registry.npm.taobao.org/copy-descriptor/download/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
+
+copy-to-clipboard@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.npm.taobao.org/copy-to-clipboard/download/copy-to-clipboard-3.3.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcopy-to-clipboard%2Fdownload%2Fcopy-to-clipboard-3.3.1.tgz#115aa1a9998ffab6196f93076ad6da3b913662ae"
+  integrity sha1-EVqhqZmP+rYZb5MHatbaO5E2Yq4=
+  dependencies:
+    toggle-selection "^1.0.6"
 
 copy-webpack-plugin@^5.1.1:
   version "5.1.1"
@@ -7867,7 +7876,7 @@ obuf@^1.0.0, obuf@^1.1.2:
   resolved "https://registry.npm.taobao.org/obuf/download/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha1-Cb6jND1BhZ69RGKS0RydTbYZCE4=
 
-omit.js@^1.0.0:
+omit.js@^1.0.0, omit.js@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/omit.js/download/omit.js-1.0.2.tgz#91a14f0eba84066dfa015bf30e474c47f30bc858"
   integrity sha1-kaFPDrqEBm36AVvzDkdMR/MLyFg=
@@ -10438,6 +10447,11 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
+toggle-selection@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npm.taobao.org/toggle-selection/download/toggle-selection-1.0.6.tgz#6e45b1263f2017fa0acc7d89d78b15b8bf77da32"
+  integrity sha1-bkWxJj8gF/oKzH2J14sVuL932jI=
+
 toidentifier@1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/toidentifier/download/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
@@ -10861,6 +10875,13 @@ vue-container-query@^0.1.0:
     container-query-toolkit "^0.1.3"
     resize-observer-lite "^0.2.3"
     vue "^2.5.17"
+
+vue-copy-to-clipboard@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/vue-copy-to-clipboard/download/vue-copy-to-clipboard-1.0.0.tgz#1d1aa57a342827cfe094846c6aa2c604340c07a4"
+  integrity sha1-HRqlejQoJ8/glIRsaqLGBDQMB6Q=
+  dependencies:
+    copy-to-clipboard "^3.3.1"
 
 vue-cropper@0.4.9:
   version "0.4.9"

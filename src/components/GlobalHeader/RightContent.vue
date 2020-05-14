@@ -16,9 +16,13 @@ export default {
     SelectLang
   },
   props: {
+    topMenu: {
+      type: Boolean,
+      required: true
+    },
     theme: {
       type: String,
-      default: 'light'
+      required: true
     }
   },
   data () {
@@ -30,7 +34,10 @@ export default {
   },
   computed: {
     wrpCls () {
-      return { 'ant-pro-global-header-index-right': true, [`ant-pro-global-header-index-${this.theme}`]: true }
+      return {
+        'ant-pro-global-header-index-right': true,
+        [`ant-pro-global-header-index-${this.topMenu && this.theme || 'light'}`]: true
+      }
     }
   },
   mounted () {

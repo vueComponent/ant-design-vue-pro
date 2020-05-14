@@ -43,14 +43,30 @@
 
     <a-card :bordered="false" title="流程进度">
       <a-steps :direction="isMobile && 'vertical' || 'horizontal'" :current="1" progressDot>
-        <a-step title="创建项目">
+        <a-step>
+          <template v-slot:title>
+            <span>创建项目</span>
+          </template>
+          <template v-slot:description>
+            <div class="antd-pro-pages-profile-advanced-style-stepDescription">
+              曲丽丽<a-icon type="dingding" style="margin-left: 8px;" />
+              <div>2016-12-12 12:32</div>
+            </div>
+          </template>
         </a-step>
-        <a-step title="部门初审">
+        <a-step>
+          <template v-slot:title>
+            <span>部门初审</span>
+          </template>
+          <template v-slot:description>
+            <div class="antd-pro-pages-profile-advanced-style-stepDescription">
+              周毛毛<a-icon type="dingding" style="color: rgb(0, 160, 233); margin-left: 8px;" />
+              <div><a>催一下</a></div>
+            </div>
+          </template>
         </a-step>
-        <a-step title="财务复核">
-        </a-step>
-        <a-step title="完成">
-        </a-step>
+        <a-step title="财务复核" />
+        <a-step title="完成" />
       </a-steps>
     </a-card>
 

@@ -3,19 +3,17 @@
     title="Ant Design Pro"
     :menus="menus"
     :collapsed="collapsed"
-    :theme="theme"
-    :layout="layout"
-    :contentWidth="contentWidth"
-    :auto-hide-header="autoHideHeader"
     :mediaQuery="query"
     :isMobile="isMobile"
     :handleMediaQuery="handleMediaQuery"
     :handleCollapse="handleCollapse"
     :logo="logoRender"
     :i18nRender="i18nRender"
+    v-bind="settings"
   >
+    <setting-drawer :settings="settings" @change="handleSettingChange" />
     <template v-slot:rightContentRender>
-      <right-content />
+      <right-content :top-menu="settings.layout === 'topmenu'" :theme="settings.theme" />
     </template>
     <template v-slot:footerRender>
       <global-footer />
@@ -25,20 +23,21 @@
 </template>
 
 <script>
+import { SettingDrawer } from '@ant-design-vue/pro-layout'
 import { i18nRender } from '@/locales'
 import { mapState } from 'vuex'
+import { SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mutation-types'
+
 import RightContent from '@/components/GlobalHeader/RightContent'
 import GlobalFooter from '@/components/GlobalFooter'
-
 import LogoSvg from '../assets/logo.svg?inline'
-import { SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mutation-types'
 
 export default {
   name: 'BasicLayout',
   components: {
+    SettingDrawer,
     RightContent,
-    GlobalFooter,
-    LogoSvg
+    GlobalFooter
   },
   data () {
     return {
@@ -46,16 +45,24 @@ export default {
       menus: [],
       // 侧栏收起状态
       collapsed: false,
-      // 自动隐藏头部栏
-      autoHideHeader: false,
+      settings: {
+        // 布局类型
+        layout: 'sidemenu', // 'sidemenu', 'topmenu'
+        // 定宽: true / 流式: false
+        contentWidth: true,
+        // 主题 'dark' | 'light'
+        theme: 'dark',
+        // 主色调
+        primaryColor: '#1890ff',
+        fixedHeader: false,
+        fixSiderbar: false,
+
+        hideHintAlert: false,
+        hideCopyButton: false
+      },
       // 媒体查询
       query: {},
-      // 布局类型
-      layout: 'sidemenu', // 'sidemenu', 'topmenu'
-      // 定宽: true / 流式: false
-      contentWidth: true,
-      // 主题 'dark' | 'light'
-      theme: 'dark',
+
       // 是否手机模式
       isMobile: false
     }
@@ -103,6 +110,23 @@ export default {
     },
     handleCollapse (val) {
       this.collapsed = val
+    },
+    handleSettingChange ({ type, value }) {
+      console.log('type', type, value)
+      type && (this.settings[type] = value)
+      switch (type) {
+        case 'contentWidth':
+          this.settings[type] = value === 'Fixed'
+          break
+        case 'layout':
+          if (value === 'sidemenu') {
+            this.settings.contentWidth = false
+          } else {
+            this.settings.fixSiderbar = false
+            this.settings.contentWidth = true
+          }
+          break
+      }
     },
     logoRender () {
       return <LogoSvg />

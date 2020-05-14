@@ -18,6 +18,18 @@
 </template>
 
 <script>
+const getActiveKey = (path) => {
+  switch (path) {
+    case '/list/search/article':
+      return '1'
+    case '/list/search/project':
+      return '2'
+    case '/list/search/application':
+      return '3'
+    default:
+      return '1'
+  }
+}
 export default {
   name: 'SearchLayout',
   data () {
@@ -30,6 +42,13 @@ export default {
       tabActiveKey: '1',
       search: true
     }
+  },
+  created () {
+    this.tabActiveKey = getActiveKey(this.$route.path)
+
+    this.$watch('$route', (val) => {
+      this.tabActiveKey = getActiveKey(val.path)
+    })
   },
   methods: {
     handleTabChange (key) {
