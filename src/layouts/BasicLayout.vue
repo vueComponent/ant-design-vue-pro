@@ -49,13 +49,14 @@ export default {
         // 布局类型
         layout: 'sidemenu', // 'sidemenu', 'topmenu'
         // 定宽: true / 流式: false
-        contentWidth: true,
+        contentWidth: false,
         // 主题 'dark' | 'light'
         theme: 'dark',
         // 主色调
         primaryColor: '#1890ff',
         fixedHeader: false,
         fixSiderbar: false,
+        colorWeak: false,
 
         hideHintAlert: false,
         hideCopyButton: false

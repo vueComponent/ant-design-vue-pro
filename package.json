@@ -12,7 +12,7 @@
     "postinstall": "opencollective-postinstall"
   },
   "dependencies": {
-    "@ant-design-vue/pro-layout": "^0.2.7",
+    "@ant-design-vue/pro-layout": "^0.2.8",
     "@antv/data-set": "^0.10.2",
     "ant-design-vue": "1.5.5",
     "axios": "^0.19.0",
