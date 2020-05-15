@@ -73,7 +73,6 @@ const app = {
       storage.set(TOGGLE_WEAK, mode)
     },
     [APP_LANGUAGE]: (state, lang, antd = {}) => {
-      console.log('lang', lang)
       state.lang = lang
       state._antLocale = antd
       storage.set(APP_LANGUAGE, lang)

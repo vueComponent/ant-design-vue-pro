@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ant-design-vue/pro-layout@^0.2.8":
-  version "0.2.8"
-  resolved "https://registry.npm.taobao.org/@ant-design-vue/pro-layout/download/@ant-design-vue/pro-layout-0.2.8.tgz?cache=0&sync_timestamp=1589509677371&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40ant-design-vue%2Fpro-layout%2Fdownload%2F%40ant-design-vue%2Fpro-layout-0.2.8.tgz#671249fde066640197c8ca0697cb292a9ea22baa"
-  integrity sha1-ZxJJ/eBmZAGXyMoGl8spKp6iK6o=
+"@ant-design-vue/pro-layout@^0.2.9":
+  version "0.2.9"
+  resolved "https://registry.npm.taobao.org/@ant-design-vue/pro-layout/download/@ant-design-vue/pro-layout-0.2.9.tgz?cache=0&sync_timestamp=1589537984599&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40ant-design-vue%2Fpro-layout%2Fdownload%2F%40ant-design-vue%2Fpro-layout-0.2.9.tgz#eb6d439322fe50ff0add454bf24eab6342f92e75"
+  integrity sha1-621DkyL+UP8K3UVL8k6rY0L5LnU=
   dependencies:
     ant-design-vue "^1.5.3"
     classnames "^2.2.6"
@@ -5232,6 +5232,11 @@ getpass@^0.1.1:
   integrity sha1-Xv+OPmhNVprkyysSgmBOi6YhSfo=
   dependencies:
     assert-plus "^1.0.0"
+
+git-revision-webpack-plugin@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.npm.taobao.org/git-revision-webpack-plugin/download/git-revision-webpack-plugin-3.0.6.tgz#5dd6c6829fae05b405059dea6195b23875d69d4d"
+  integrity sha1-XdbGgp+uBbQFBZ3qYZWyOHXWnU0=
 
 glob-parent@^3.1.0:
   version "3.1.0"

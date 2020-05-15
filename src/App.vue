@@ -23,14 +23,6 @@ export default {
 
       return this.$i18n.getLocaleMessage(this.$store.getters.lang).antLocale
     }
-  },
-  mounted () {
-    this.test()
-  },
-  methods: {
-    test () {
-      console.log('this', this)
-    }
   }
 }
 </script>
