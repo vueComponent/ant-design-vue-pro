@@ -49,7 +49,6 @@ import {
 import Viser from 'viser-vue'
 
 // ext library
-import VueClipboard from 'vue-clipboard2'
 import VueCropper from 'vue-cropper'
 import MultiTab from '@/components/MultiTab'
 import PageLoading from '@/components/PageLoading'
@@ -106,12 +105,9 @@ Vue.prototype.$success = Modal.success
 Vue.prototype.$error = Modal.error
 Vue.prototype.$warning = Modal.warning
 
-VueClipboard.config.autoSetContainer = true
-
 Vue.use(Viser)
 Vue.use(MultiTab)
 Vue.use(PageLoading)
-Vue.use(VueClipboard)
 Vue.use(PermissionHelper)
 Vue.use(VueCropper)
 

@@ -1,3 +1,5 @@
+import config from '@/config/defaultSettings'
+
 export const setDocumentTitle = function (title) {
   document.title = title
   const ua = navigator.userAgent
@@ -16,4 +18,4 @@ export const setDocumentTitle = function (title) {
   }
 }
 
-export const domTitle = 'Ant Design Pro'
+export const domTitle = config.title
