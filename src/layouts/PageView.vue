@@ -41,7 +41,7 @@
       <div class="page-header-index-wide">
         <slot>
           <!-- keep-alive  -->
-          <keep-alive v-if="multiTab">
+          <keep-alive v-if="multiTab || $route.meta.keepAlive">
             <router-view ref="content" />
           </keep-alive>
           <router-view v-else ref="content" />
