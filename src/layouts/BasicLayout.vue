@@ -107,6 +107,8 @@ export default {
       if (!this.isMobile && val['screen-xs']) {
         this.isMobile = true
         this.collapsed = false
+        this.settings.contentWidth = false
+        this.settings.fixSiderbar = false
       }
     },
     handleCollapse (val) {
