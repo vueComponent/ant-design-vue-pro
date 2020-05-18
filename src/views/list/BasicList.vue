@@ -29,7 +29,7 @@
       </div>
 
       <div class="operate">
-        <a-button type="dashed" style="width: 100%" icon="plus" @click="$refs.taskForm.add()">添加</a-button>
+        <a-button type="dashed" style="width: 100%" icon="plus" @click="add">添加</a-button>
       </div>
 
       <a-list size="large" :pagination="{showSizeChanger: true, showQuickJumper: true, pageSize: 5, total: 50}">
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+// 演示如何使用 this.$dialog 封装 modal 组件
 import TaskForm from './modules/TaskForm'
 import Info from './components/Info'
 
@@ -139,15 +140,48 @@ export default {
     }
   },
   methods: {
-    edit (record) {
-      console.log('record', record)
-      // mockdata
-      record.taskName = '测试'
-      // mockend
+    add () {
       this.$dialog(TaskForm,
         // component props
         {
-          record
+          record: {},
+          on: {
+            ok () {
+              console.log('ok 回调')
+            },
+            cancel () {
+              console.log('cancel 回调')
+            },
+            close () {
+              console.log('modal close 回调')
+            }
+          }
+        },
+        // modal props
+        {
+          title: '新增',
+          width: 700,
+          centered: true,
+          maskClosable: false
+        })
+    },
+    edit (record) {
+      console.log('record', record)
+      this.$dialog(TaskForm,
+        // component props
+        {
+          record,
+          on: {
+            ok () {
+              console.log('ok 回调')
+            },
+            cancel () {
+              console.log('cancel 回调')
+            },
+            close () {
+              console.log('modal close 回调')
+            }
+          }
         },
         // modal props
         {

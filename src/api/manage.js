@@ -60,3 +60,11 @@ export function saveService (parameter) {
     data: parameter
   })
 }
+
+export function saveSub (sub) {
+  return request({
+    url: '/sub',
+    method: sub.id === 0 ? 'post' : 'put',
+    data: sub
+  })
+}
