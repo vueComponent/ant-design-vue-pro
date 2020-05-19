@@ -11,9 +11,9 @@
     "lint:nofix": "vue-cli-service lint --no-fix"
   },
   "dependencies": {
-    "@ant-design-vue/pro-layout": "^0.2.9",
+    "@ant-design-vue/pro-layout": "^0.2.10",
     "@antv/data-set": "^0.10.2",
-    "ant-design-vue": "1.5.5",
+    "ant-design-vue": "1.6.0",
     "axios": "^0.19.0",
     "core-js": "^3.1.2",
     "enquire.js": "^2.1.6",
