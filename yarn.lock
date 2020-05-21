@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ant-design-vue/pro-layout@^0.2.10":
-  version "0.2.10"
-  resolved "https://registry.npm.taobao.org/@ant-design-vue/pro-layout/download/@ant-design-vue/pro-layout-0.2.10.tgz#f27c958480997d7cc780c051e887bd33008d97fa"
-  integrity sha1-8nyVhICZfXzHgMBR6Ie9MwCNl/o=
+"@ant-design-vue/pro-layout@^0.2.11-0":
+  version "0.2.11-0"
+  resolved "https://registry.npm.taobao.org/@ant-design-vue/pro-layout/download/@ant-design-vue/pro-layout-0.2.11-0.tgz#945cbbc6b24e888f2cc8315e7e31ebff1250bf05"
+  integrity sha1-lFy7xrJOiI8syDFefjHr/xJQvwU=
   dependencies:
     ant-design-vue "^1.5.3"
     classnames "^2.2.6"
@@ -14,7 +14,7 @@
     omit.js "^1.0.2"
     umi-request "^1.2.11"
     vue-container-query "^0.1.0"
-    vue-copy-to-clipboard "1.0.0"
+    vue-copy-to-clipboard "^1.0.1"
 
 "@ant-design/colors@^3.1.0", "@ant-design/colors@^3.2.1":
   version "3.2.2"
@@ -10881,10 +10881,10 @@ vue-container-query@^0.1.0:
     resize-observer-lite "^0.2.3"
     vue "^2.5.17"
 
-vue-copy-to-clipboard@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npm.taobao.org/vue-copy-to-clipboard/download/vue-copy-to-clipboard-1.0.0.tgz#1d1aa57a342827cfe094846c6aa2c604340c07a4"
-  integrity sha1-HRqlejQoJ8/glIRsaqLGBDQMB6Q=
+vue-copy-to-clipboard@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/vue-copy-to-clipboard/download/vue-copy-to-clipboard-1.0.1.tgz#eb2af3f2be73f519d93e41af75e604d964a5d05a"
+  integrity sha1-6yrz8r5z9RnZPkGvdeYE2WSl0Fo=
   dependencies:
     copy-to-clipboard "^3.3.1"
 
