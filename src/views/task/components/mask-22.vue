@@ -977,12 +977,15 @@ export default {
     color: #8ac51b;
   }
 
-  /deep/ li.ant-menu-submenu.ant-menu-submenu-inline.ant-menu-submenu-open {
+  /deep/ li.ant-menu-submenu.ant-menu-submenu-inline {
     background-color: rgba(245, 251, 255);
 
     .ant-menu.ant-menu-inline.ant-menu-sub {
       background-color: rgba(245, 251, 255);
-
+      padding-left: 20px;
+      .treeSubTitle{
+        font-size: 14px;
+      }
       li {
         border-bottom: none;
         height: 40px;

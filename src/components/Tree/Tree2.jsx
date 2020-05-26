@@ -82,7 +82,7 @@ export default {
     renderMenuItem (item) {
       return (
         <Item key={item.reportTypeId}>
-          <div style="padding-left:20px;">
+          <div style="padding-left:40px;">
           {this.renderTreeIcon(item.executeStatus)}
           { this.renderIcon(item.icon) }
           <span class="treeSubTitle">{ item.reportTypeName }</span>
@@ -121,7 +121,7 @@ export default {
       })
 
       const title = (
-        <span slot="title" style="padding-left:20px;">
+        <span slot="title" style="padding-left:40px;">
           {/*<Icon type="clock-circle" theme="filled" />*/}
           {this.renderTreeIcon(item.executeStatus)}
           { this.renderIcon(item.icon) }
