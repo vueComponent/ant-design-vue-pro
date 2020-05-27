@@ -19,8 +19,9 @@
           </a-radio-group>
         </a-form-item>
         <a-form-item label="分支中心" :labelCol="labelCol" :wrapperCol="wrapperCol" v-if="form.getFieldValue('roleId') == 2">
-          <a-radio-group v-decorator="['centerId', requiredRule]" :options="centerList">
-          </a-radio-group>
+          <a-select :placeholder="centerPlaceholder" showSearch v-decorator="['centerId', requiredRule]" optionFilterProp="label">
+            <a-select-option v-for="item in centerList" :key="item.value" :value="item.value" :label="item.label">{{item.label}}</a-select-option>
+          </a-select>
         </a-form-item>
         <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['status', requiredRule]">
@@ -62,7 +63,8 @@ export default {
       form: this.$form.createForm(this),
       requiredRule: { rules: [{ required: true, message: '该选项必填！' }] },
       confirmDirty: false,
-      doctorId: undefined
+      doctorId: undefined,
+      centerPlaceholder: '选择分支中心'
     }
   },
   created() {
