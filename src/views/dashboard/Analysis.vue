@@ -9,7 +9,7 @@
           <div>
             <trend flag="up" style="margin-right: 16px;">
               <span slot="term">周同比</span>
-              12%
+              15%
             </trend>
             <trend flag="down">
               <span slot="term">日同比</span>

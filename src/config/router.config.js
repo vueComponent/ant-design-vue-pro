@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import { UserLayout, BasicLayout, BlankLayout } from '@/layouts'
+import { UserLayout, BasicLayout, BlankLayout,PageView } from '@/layouts'
 import { bxAnaalyse } from '@/core/icons'
 
 const RouteView = {
@@ -32,9 +32,16 @@ export const asyncRouterMap = [
           },
           // 外部链接
           {
-            path: 'https://www.baidu.com/',
+            path: 'https://www.baidu.com',
+            name: 'Baidu',
+            meta: { title: 'menu.dashboard.baidu', target: '_blank' }
+            // meta: { title: 'menu.dashboard.monitor', keepAlive: false, permission: [ 'dashboard' ] }
+          },
+          {
+            path: '/dashboard/monitor',
             name: 'Monitor',
-            meta: { title: 'menu.dashboard.monitor', target: '_blank' }
+            // meta: { title: 'menu.dashboard.monitor', target: '_blank' }
+            meta: { title: 'menu.dashboard.monitor', keepAlive: false, permission: [ 'dashboard' ] }
           },
           {
             path: '/dashboard/workplace',
@@ -260,16 +267,15 @@ export const asyncRouterMap = [
             ]
           }
         ]
-      }
-
+      },
       // other
-      /*
       {
         path: '/other',
         name: 'otherPage',
+        // component: RouteView,
         component: PageView,
         meta: { title: '其他组件', icon: 'slack', permission: [ 'dashboard' ] },
-        redirect: '/other/icon-selector',
+        redirect: '/other/list/tree-list',
         children: [
           {
             path: '/other/icon-selector',
@@ -323,7 +329,6 @@ export const asyncRouterMap = [
           }
         ]
       }
-      */
     ]
   },
   {

@@ -1,14 +1,5 @@
 import request from '@/utils/request'
-
-const api = {
-  user: '/user',
-  role: '/role',
-  service: '/service',
-  permission: '/permission',
-  permissionNoPager: '/permission/no-pager',
-  orgTree: '/org/tree'
-}
-
+import { api } from './url'
 export default api
 
 export function getUserList (parameter) {

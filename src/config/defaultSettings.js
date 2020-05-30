@@ -25,7 +25,7 @@ export default {
   menu: {
     locale: true
   },
-  title: 'Ant Design Pro',
+  title: 'AntDV Pro',
   multiTab: false,
   pwa: false,
   iconfontUrl: '',

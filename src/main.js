@@ -37,3 +37,5 @@ new Vue({
   created: bootstrap,
   render: h => h(App)
 }).$mount('#app')
+
+// i18n工作原理？？
