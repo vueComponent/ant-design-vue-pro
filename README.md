@@ -1,23 +1,23 @@
 English | [简体中文](./README.zh-CN.md)
 
-<h1 align="center">Ant Design Pro Vue</h1>
+<h1 align="center">Ant Design Vue Pro</h1>
 <div align="center">
 An out-of-box UI solution for enterprise applications as a Vue boilerplate. based on  <a href="https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/" target="_blank">Ant Design of Vue</a>
 </div>
 
 <div align="center">
 
-[![Backers on Open Collective](https://opencollective.com/ant-design-pro-vue/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/ant-design-pro-vue/sponsors/badge.svg)](#sponsors) [![License](https://img.shields.io/npm/l/package.json.svg?style=flat)](https://github.com/sendya/ant-design-pro-vue/blob/master/LICENSE)
-[![Release](https://img.shields.io/github/release/sendya/ant-design-pro-vue.svg?style=flat)](https://github.com/sendya/ant-design-pro-vue/releases/latest)
-[![Travis branch](https://travis-ci.org/sendya/ant-design-pro-vue.svg?branch=master)](https://travis-ci.org/sendya/ant-design-pro-vue)
+[![License](https://img.shields.io/npm/l/package.json.svg?style=flat)](https://github.com/sendya/ant-design-pro-vue/blob/master/LICENSE)
+[![Release](https://img.shields.io/github/release/vueComponent/ant-design-vue-pro.svg?style=flat)](https://github.com/sendya/ant-design-pro-vue/releases/latest)
+[![Travis branch](https://travis-ci.org/vueComponent/ant-design-vue-pro.svg?branch=master)](https://travis-ci.org/sendya/ant-design-pro-vue)
 
 </div>
 
-- Preview: https://preview.pro.loacg.com
-- Home Page: https://pro.loacg.com
-- Documentation: https://pro.loacg.com/docs/getting-started
-- ChangeLog: https://pro.loacg.com/docs/changelog
-- FAQ: https://pro.loacg.com/docs/faq
+- Preview: https://preview.pro.antdv.com
+- Home Page: https://pro.antdv.com
+- Documentation: https://pro.antdv.com/docs/getting-started
+- ChangeLog: https://pro.antdv.com/docs/changelog
+- FAQ: https://pro.antdv.com/docs/faq
 
 Overview
 ----
@@ -50,7 +50,7 @@ Overview
 
 - Clone repo
 ```bash
-git clone https://github.com/sendya/ant-design-pro-vue.git
+git clone https://github.com/vueComponent/ant-design-vue-pro.git
 cd ant-design-pro-vue
 ```
 
@@ -77,7 +77,7 @@ yarn run lint
 
 ### Other
 
-- **IMPORTANT : About Issue feedback !! when opening Issue read [Issue / PR Contributing](https://github.com/sendya/ant-design-pro-vue/issues/90)**
+- **IMPORTANT : About Issue feedback !! when opening Issue read [Issue / PR Contributing](https://github.com/vueComponent/ant-design-vue-pro/issues/90)**
 
 - [Vue-cli3](https://cli.vuejs.org/guide/) used by the project.
 
@@ -105,4 +105,4 @@ Modern browsers and IE10.
 ## Contributors
 
 This project exists thanks to all the people who contribute. 
-<a href="https://github.com/sendya/ant-design-pro-vue/graphs/contributors"><img src="https://opencollective.com/ant-design-pro-vue/contributors.svg?width=890&button=false" /></a>
+<a href="https://github.com/vueComponent/ant-design-vue-pro/graphs/contributors"><img src="https://opencollective.com/ant-design-pro-vue/contributors.svg?width=890&button=false" /></a>

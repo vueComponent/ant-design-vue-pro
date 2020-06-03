@@ -1,23 +1,23 @@
 [English](./README.md) | 简体中文
 
-<h1 align="center">Ant Design Pro Vue</h1>
+<h1 align="center">Ant Design Vue Pro</h1>
 <div align="center">
 An out-of-box UI solution for enterprise applications as a Vue boilerplate. based on  <a href="https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/" target="_blank">Ant Design of Vue</a>
 </div>
 
 <div align="center">
 
-[![Backers on Open Collective](https://opencollective.com/ant-design-pro-vue/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/ant-design-pro-vue/sponsors/badge.svg)](#sponsors) [![License](https://img.shields.io/npm/l/package.json.svg?style=flat)](https://github.com/sendya/ant-design-pro-vue/blob/master/LICENSE)
-[![Release](https://img.shields.io/github/release/sendya/ant-design-pro-vue.svg?style=flat)](https://github.com/sendya/ant-design-pro-vue/releases/latest)
-[![Travis branch](https://travis-ci.org/sendya/ant-design-pro-vue.svg?branch=master)](https://travis-ci.org/sendya/ant-design-pro-vue)
+[![License](https://img.shields.io/npm/l/package.json.svg?style=flat)](https://github.com/vueComponent/ant-design-vue-pro/blob/master/LICENSE)
+[![Release](https://img.shields.io/github/release/vueComponent/ant-design-vue-pro.svg?style=flat)](https://github.com/vueComponent/ant-design-vue-pro/releases/latest)
+[![Travis branch](https://travis-ci.org/vueComponent/ant-design-vue-pro.svg?branch=master)](https://travis-ci.org/sendya/ant-design-pro-vue)
 
 </div>
 
-- 预览: https://preview.pro.loacg.com
-- 首页: https://pro.loacg.com
-- 文档: https://pro.loacg.com/docs/getting-started
-- 更新日志: https://pro.loacg.com/docs/changelog
-- 常见问题: https://pro.loacg.com/docs/faq
+- 预览: https://preview.pro.antdv.com
+- 首页: https://pro.antdv.com
+- 文档: https://pro.antdv.com/docs/getting-started
+- 更新日志: https://pro.antdv.com/docs/changelog
+- 常见问题: https://pro.antdv.com/docs/faq
 
 
 Overview
@@ -54,7 +54,7 @@ Overview
 
 - 拉取项目代码
 ```bash
-git clone https://github.com/sendya/ant-design-pro-vue.git
+git clone https://github.com/vueComponent/ant-design-vue-pro.git
 cd ant-design-pro-vue
 ```
 
@@ -83,7 +83,7 @@ yarn run lint
 其他说明
 ----
 
-- **关于 Issue 反馈 (重要!重要!重要!) 请在开 *Issue* 前，先阅读该内容：[Issue / PR 编写建议](https://github.com/sendya/ant-design-pro-vue/issues/90)** 
+- **关于 Issue 反馈 (重要!重要!重要!) 请在开 *Issue* 前，先阅读该内容：[Issue / PR 编写建议](https://github.com/vueComponent/ant-design-vue-pro/issues/90)** 
 
 - 项目使用的 [vue-cli3](https://cli.vuejs.org/guide/), 请确保你所使用的 vue-cli 是新版，并且已经学习 cli 官方文档使用教程
 
@@ -111,4 +111,4 @@ Modern browsers and IE10.
 ## Contributors
 
 This project exists thanks to all the people who contribute. 
-<a href="https://github.com/sendya/ant-design-pro-vue/graphs/contributors"><img src="https://opencollective.com/ant-design-pro-vue/contributors.svg?width=890&button=false" /></a>
+<a href="https://github.com/vueComponent/ant-design-vue-pro/graphs/contributors"><img src="https://opencollective.com/ant-design-pro-vue/contributors.svg?width=890&button=false" /></a>
