@@ -22,14 +22,7 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 Overview
 ----
 
-![dashboard + multi-tabs](https://static-2.loacg.com/open/static/github/20190224163345.jpg)
-
-![dashboard + setting](https://static-2.loacg.com/open/static/github/20181126112124.png)
-
-![user profile](https://static-2.loacg.com/open/static/github/20180916-134251.png)
-
-![permission list](https://static-2.loacg.com/open/static/github/20180916-154937.png)
-
+![dashboard](https://static-2.loacg.com/open/static/github/SP1.png)
 
 ### Env and dependencies
 
