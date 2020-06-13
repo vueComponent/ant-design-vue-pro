@@ -13,6 +13,8 @@
       :mode="mode"
       @select="onSelect"
       style="padding: 16px 0px;"></s-menu>
+    <!-- 广告代码 真实项目中请移除 -->
+    <ads v-if="!collapsed"/>
   </a-layout-sider>
 
 </template>
@@ -21,10 +23,11 @@
 import Logo from '@/components/tools/Logo'
 import SMenu from './index'
 import { mixin, mixinDevice } from '@/utils/mixin'
+import Ads from '@/components/Other/CarbonAds'
 
 export default {
   name: 'SideMenu',
-  components: { Logo, SMenu },
+  components: { Logo, SMenu, Ads },
   mixins: [mixin, mixinDevice],
   props: {
     mode: {
