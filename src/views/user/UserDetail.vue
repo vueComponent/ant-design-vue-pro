@@ -34,7 +34,7 @@
   </a-modal>
 </template>
 <script>
-import { saveDoctor, getRoleDataList, getCenterDataList, getDoctorDetail } from '@/api/center'
+import { saveDoctor, getRoleDataList, selectCenterDataList, getDoctorDetail } from '@/api/center'
 import moment from 'moment'
 import _ from 'lodash'
 export default {
@@ -79,7 +79,7 @@ export default {
         })
       })
 
-    getCenterDataList()
+    selectCenterDataList()
       .then(res => {
         that.centerList = _.map(res.data, function(v) {
           return {

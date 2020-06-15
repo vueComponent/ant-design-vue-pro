@@ -11,6 +11,14 @@ export function getCenterDataList(parameter) {
   })
 }
 
+export function selectCenterDataList(parameter) {
+  return axios({
+    url: '/authority/selectCenterDataList',
+    method: 'post',
+    params: parameter
+  })
+}
+
 export function saveCenter(parameter) {
   return axios({
     url: '/authority/saveCenter',
