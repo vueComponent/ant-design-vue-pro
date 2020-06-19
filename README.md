@@ -44,7 +44,7 @@ Overview
 - Clone repo
 ```bash
 git clone https://github.com/vueComponent/ant-design-vue-pro.git
-cd ant-design-pro-vue
+cd ant-design-vue-pro
 ```
 
 - Install dependencies
