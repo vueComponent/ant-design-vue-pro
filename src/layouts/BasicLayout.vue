@@ -52,7 +52,7 @@ export default {
   data () {
     return {
       // preview.pro.antdv.com only use.
-      isProPreviewSite: process.env.VUE_APP_PREVIEW === 'true',
+      isProPreviewSite: process.env.VUE_APP_PREVIEW === 'true' && process.env.NODE_ENV !== 'development',
       // end
 
       // base
