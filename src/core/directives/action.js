@@ -12,7 +12,7 @@ import store from '@/store'
  *  - 当前用户没有权限时，组件上使用了该指令则会被隐藏
  *  - 当后台权限跟 pro 提供的模式不同时，只需要针对这里的权限过滤进行修改即可
  *
- *  @see https://github.com/sendya/ant-design-pro-vue/pull/53
+ *  @see https://github.com/vueComponent/ant-design-vue-pro/pull/53
  */
 const action = Vue.directive('action', {
   inserted: function (el, binding, vnode) {
