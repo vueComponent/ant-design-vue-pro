@@ -626,6 +626,7 @@ export default {
     background: #fff;
     z-index: 1;
     padding-bottom: 10px;
+    bottom: 0;
   }
 
   .baselineForm {

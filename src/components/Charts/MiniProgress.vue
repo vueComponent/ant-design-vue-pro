@@ -15,8 +15,8 @@ export default {
   name: 'MiniProgress',
   props: {
     target: {
-      type: Number,
-      default: 0
+      type: String,
+      default: '0'
     },
     height: {
       type: String,
@@ -27,8 +27,8 @@ export default {
       default: '#13C2C2'
     },
     percentage: {
-      type: Number,
-      default: 0
+      type: String,
+      default: '0'
     }
   }
 }
