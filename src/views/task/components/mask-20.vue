@@ -28,6 +28,10 @@
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
+            <div class="btn-array" v-if="executeStatus === 2">
+              <a-button class="btn fr" @click="withdraw">撤回</a-button>
+            </div>
+
             <div class="baselineForm" :style="baselineFormStyle">
               <a-form-item label="采样性质（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['a', {...selectRequired, initialValue: initValue('a', 'array')}]">
@@ -736,6 +740,9 @@ export default {
     },
     changePic1(e, index) {
       this.picList1[index] = e
+    },
+    withdraw(){
+      
     }
   }
 }

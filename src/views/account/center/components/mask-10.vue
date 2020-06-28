@@ -28,6 +28,9 @@
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
+            <div class="btn-array" v-if="executeStatus === 2">
+              <a-button class="btn fr" @click="withdraw">撤回</a-button>
+            </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.血常规</div>
               <a-form-item label="血常规报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
@@ -470,6 +473,9 @@ export default {
           that.spinning = false
           that.$message.error(res.msg)
         })
+    },
+    withdraw(){
+      
     }
   }
 }

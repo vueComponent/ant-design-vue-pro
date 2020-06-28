@@ -28,6 +28,10 @@
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
+            <div class="btn-array" v-if="executeStatus === 2">
+              <a-button class="btn fr" @click="withdraw">撤回</a-button>
+            </div>
+
             <div class="baselineForm" :style="baselineFormStyle">
               <a-form-item label="有无新增心脏彩超:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a1', {...require2, initialValue: initValue('a1')}]" @change="changeRadio($event, 'controla1')">
@@ -364,6 +368,9 @@ export default {
     },
     handleChange({ fileList }) {
       this.fileList = fileList
+    },
+    withdraw(){
+      
     }
   }
 }

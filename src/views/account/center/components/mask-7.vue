@@ -28,6 +28,10 @@
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
+            <div class="btn-array" v-if="executeStatus === 2">
+              <a-button class="btn fr" @click="withdraw">撤回</a-button>
+            </div>
+
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.病因学相关检查</div>
               <a-form-item class="border-dotted" label="(1) 胃食管反流病量表评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -684,6 +688,9 @@ export default {
             console.log(error)
           })
       })
+    },
+    withdraw(){
+      
     }
   }
 }

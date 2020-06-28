@@ -29,6 +29,9 @@
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
+            <div class="btn-array" v-if="executeStatus === 2">
+              <a-button class="btn fr" @click="withdraw">撤回</a-button>
+            </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.CT基本信息</div>
               <a-form-item label="(1) CT检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -595,6 +598,9 @@ export default {
         .catch(error => {
           this.spinning = false
         })
+    },
+    withdraw(){
+      
     }
   }
 }

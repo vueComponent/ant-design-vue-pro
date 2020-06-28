@@ -28,6 +28,10 @@
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
+            <div class="btn-array" v-if="executeStatus === 2">
+              <a-button class="btn fr" @click="withdraw">撤回</a-button>
+            </div>
+
             <div class="baselineForm" :style="baselineFormStyle">
               <a-form-item label="报告上传:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <div class="clearfix" style="margin-top: 10px;">
@@ -352,6 +356,9 @@ export default {
     },
     handleChange({ fileList }) {
       this.fileList = fileList
+    },
+    withdraw(){
+      
     }
   }
 }

@@ -29,6 +29,9 @@
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
+            <div class="btn-array" v-if="executeStatus === 2">
+              <a-button class="btn fr" @click="withdraw">撤回</a-button>
+            </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.呼吸系统相关治疗</div>
               <a-form-item label="(1) 长期氧疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -533,6 +536,9 @@ export default {
           this.spinning = false
           console.log(error)
         })
+    },
+    withdraw(){
+      
     }
   }
 }
