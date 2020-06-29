@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ant-design-vue/pro-layout@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.npm.taobao.org/@ant-design-vue/pro-layout/download/@ant-design-vue/pro-layout-0.3.0.tgz?cache=0&sync_timestamp=1591115854914&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40ant-design-vue%2Fpro-layout%2Fdownload%2F%40ant-design-vue%2Fpro-layout-0.3.0.tgz#dbf170ded4a21765593bf22d2792ed8fe21d07b4"
-  integrity sha1-2/Fw3tSiF2VZO/ItJ5Ltj+IdB7Q=
+"@ant-design-vue/pro-layout@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.npm.taobao.org/@ant-design-vue/pro-layout/download/@ant-design-vue/pro-layout-0.3.2.tgz#79c960cd310e8a4dd9b9aa9a58733f924f2360b2"
+  integrity sha1-eclgzTEOik3ZuaqaWHM/kk8jYLI=
   dependencies:
     ant-design-vue "^1.5.3"
     classnames "^2.2.6"
@@ -1981,10 +1981,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
 
-ant-design-vue@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.6.0.tgz?cache=0&sync_timestamp=1589552419910&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fant-design-vue%2Fdownload%2Fant-design-vue-1.6.0.tgz#673e09e3ac56feb14154a711e52357fb7518cc32"
-  integrity sha1-Zz4J46xW/rFBVKcR5SNX+3UYzDI=
+ant-design-vue@1.6.2:
+  version "1.6.2"
+  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.6.2.tgz?cache=0&sync_timestamp=1591081225900&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fant-design-vue%2Fdownload%2Fant-design-vue-1.6.2.tgz#983634caac9cdaca0b3a095b540105b4f76da29f"
+  integrity sha1-mDY0yqyc2soLOglbVAEFtPdtop8=
   dependencies:
     "@ant-design/icons" "^2.1.1"
     "@ant-design/icons-vue" "^2.0.0"
