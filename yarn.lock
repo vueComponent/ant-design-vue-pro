@@ -1981,10 +1981,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
 
-ant-design-vue@1.6.2:
-  version "1.6.2"
-  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.6.2.tgz?cache=0&sync_timestamp=1591081225900&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fant-design-vue%2Fdownload%2Fant-design-vue-1.6.2.tgz#983634caac9cdaca0b3a095b540105b4f76da29f"
-  integrity sha1-mDY0yqyc2soLOglbVAEFtPdtop8=
+ant-design-vue@^1.5.3:
+  version "1.5.4"
+  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.5.4.tgz#428473de9f6b22df63cacdfe07d5096258f871a9"
+  integrity sha1-QoRz3p9rIt9jys3+B9UJYlj4cak=
   dependencies:
     "@ant-design/icons" "^2.1.1"
     "@ant-design/icons-vue" "^2.0.0"
@@ -2016,10 +2016,10 @@ ant-design-vue@1.6.2:
     vue-ref "^2.0.0"
     warning "^4.0.0"
 
-ant-design-vue@^1.5.3:
-  version "1.5.4"
-  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.5.4.tgz#428473de9f6b22df63cacdfe07d5096258f871a9"
-  integrity sha1-QoRz3p9rIt9jys3+B9UJYlj4cak=
+ant-design-vue@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.6.2.tgz#983634caac9cdaca0b3a095b540105b4f76da29f"
+  integrity sha1-mDY0yqyc2soLOglbVAEFtPdtop8=
   dependencies:
     "@ant-design/icons" "^2.1.1"
     "@ant-design/icons-vue" "^2.0.0"
