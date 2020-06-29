@@ -63,16 +63,21 @@ export default {
   data () {
     return {}
   },
+  computed: {
+    avatarSize () {
+      return this.size !== 'mini' && this.size || 20
+    }
+  },
   methods: {
     getItems (items) {
       const classString = {
         [`${this.prefixCls}-item`]: true,
         [`${this.size}`]: true
       }
-
-      if (this.maxLength > 0) {
+      const excessItemsLength = items.length - this.maxLength
+      if (excessItemsLength > 0) {
         items = items.slice(0, this.maxLength)
-        items.push((<Avatar size={ this.size } style={ this.excessItemsStyle }>{`+${this.maxLength}`}</Avatar>))
+        items.push((<Avatar size={ this.avatarSize } style={ this.excessItemsStyle }>{`+${excessItemsLength}`}</Avatar>))
       }
       const itemList = items.map((item) => (
         <li class={ classString }>{ item }</li>
