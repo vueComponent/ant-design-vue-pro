@@ -101,7 +101,7 @@ export default {
 
     },
     submit() {
-      this.form.validateFields((err, values) => {
+      this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           // eslint-disable-next-line no-console
           console.log('Received values of form: ', values)

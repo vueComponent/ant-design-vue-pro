@@ -105,7 +105,7 @@
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controla1">
-                  <a-form-item label="血嗜酸粒细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-form-item label="ABPA相关检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-form-item :style="{ display: 'inline-block'}">
                       <a-input addonAfter="*10^9/L" style="width: 240px; margin-right: 20px;" v-decorator="['a11', {...inputRequired, initialValue: initValue('a11')}]" autocomplete="off"></a-input>
                     </a-form-item>
@@ -119,7 +119,7 @@
                   </a-form-item>
                   <a-form-item label="血总IgE:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-form-item :style="{ display: 'inline-block'}">
-                      <a-input addonAfter="Iu/mL" style="width: 240px; margin-right: 20px;" v-decorator="['a13', {...inputRequired, initialValue: initValue('a13')}]" autocomplete="off"></a-input>
+                      <a-input addonAfter="IU/L" style="width: 240px; margin-right: 20px;" v-decorator="['a13', {...inputRequired, initialValue: initValue('a13')}]" autocomplete="off"></a-input>
                     </a-form-item>
                     <a-form-item :style="{ display: 'inline-block'}">
                       <a-radio-group v-decorator="['a14', {...selectRequired, initialValue: initValue('a14')}]">
@@ -131,7 +131,7 @@
                   </a-form-item>
                   <a-form-item label="曲霉特异IgE:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-form-item :style="{ display: 'inline-block'}">
-                      <a-input addonAfter="Iu/mL" style="width: 240px; margin-right: 20px;" v-decorator="['a15', {...inputRequired, initialValue: initValue('a15')}]" autocomplete="off"></a-input>
+                      <a-input addonAfter="IU/L" style="width: 240px; margin-right: 20px;" v-decorator="['a15', {...inputRequired, initialValue: initValue('a15')}]" autocomplete="off"></a-input>
                     </a-form-item>
                     <a-form-item :style="{ display: 'inline-block'}">
                       <a-radio-group v-decorator="['a16', {...selectRequired, initialValue: initValue('a16')}]">
@@ -552,8 +552,8 @@ export default {
     },
     handleSubmit(e) {
       e.preventDefault()
-      const { form: { validateFields } } = this
-      validateFields((errors, values) => {
+      const { form: { validateFieldsAndScroll } } = this
+      validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           console.log('values', values)
           var re = this.form.getFieldsValue()

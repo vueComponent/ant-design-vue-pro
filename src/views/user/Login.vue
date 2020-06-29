@@ -65,7 +65,7 @@ export default {
       const that = this;
       e.preventDefault();
       const {
-        form: { validateFields },
+        form: { validateFieldsAndScroll },
         state,
         customActiveKey,
         Login
@@ -73,9 +73,9 @@ export default {
 
       state.loginBtn = true;
 
-      const validateFieldsKey = customActiveKey === 'tab1' ? ['account', 'password'] : ['mobile', 'captcha'];
+      const validateFieldsAndScrollKey = customActiveKey === 'tab1' ? ['account', 'password'] : ['mobile', 'captcha'];
 
-      validateFields(validateFieldsKey, { force: true }, (err, values) => {
+      validateFieldsAndScroll(validateFieldsAndScrollKey, { force: true }, (err, values) => {
         if (!err) {
           const loginParams = { ...values };
           Login(loginParams)

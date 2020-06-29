@@ -80,9 +80,9 @@
       handleSubmit() {
         this.confirmLoading = true;
 
-        const { form: { validateFields } } = this;
+        const { form: { validateFieldsAndScroll } } = this;
 
-        validateFields((errors, fieldsValue) => {
+        validateFieldsAndScroll((errors, fieldsValue) => {
           const that = this;
           if (errors) {
             this.confirmLoading = false;

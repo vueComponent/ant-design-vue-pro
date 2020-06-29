@@ -66,9 +66,9 @@ export default {
       })
     },
     handleSubmit () {
-      const { form: { validateFields } } = this
+      const { form: { validateFieldsAndScroll } } = this
       this.visible = true
-      validateFields((errors, values) => {
+      validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           console.log('values', values)
         }

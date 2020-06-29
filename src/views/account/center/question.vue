@@ -273,8 +273,8 @@ export default {
     handleSubmit(e) {
       e.preventDefault()
       this.spinning = true
-      const { form: { validateFields } } = this
-      validateFields((errors, values) => {
+      const { form: { validateFieldsAndScroll } } = this
+      validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           const that = this
           var result = this.generateQuestionAnswers()

@@ -94,10 +94,10 @@
                 <a-input style="width: 240px;" v-decorator="['c14', { initialValue: initValue('c14')}]" addonAfter="mmol/L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="高密度脂蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['c15', { initialValue: initValue('c15')}]" addonAfter="g/L" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['c15', { initialValue: initValue('c15')}]" addonAfter="mmol/L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="低密度脂蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['c16', { initialValue: initValue('c16')}]" addonAfter="g/L" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['c16', { initialValue: initValue('c16')}]" addonAfter="mmol/L" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="DD二聚体:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
                 <a-input style="width: 240px;" v-decorator="['c17', { initialValue: initValue('c17')}]" addonAfter="ng/ml" autocomplete="off"></a-input>
@@ -325,8 +325,8 @@ export default {
     },
     handleSubmit(e) {
       e.preventDefault()
-      const { form: { validateFields } } = this
-      validateFields((errors, values) => {
+      const { form: { validateFieldsAndScroll } } = this
+      validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           console.log('values', values)
           if (!this.fileList.length) {

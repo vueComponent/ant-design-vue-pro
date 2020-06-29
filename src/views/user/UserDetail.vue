@@ -123,7 +123,7 @@ export default {
     },
     handleSubmit() {
       this.confirmLoading = true;
-      this.form.validateFields((errors, fieldsValue) => {
+      this.form.validateFieldsAndScroll((errors, fieldsValue) => {
         const that = this;
         if (errors) {
           this.confirmLoading = false
@@ -178,7 +178,7 @@ export default {
 
       const form = this.form;
       if (value && this.confirmDirty) {
-        form.validateFields(['password2'], { force: true });
+        form.validateFieldsAndScroll(['password2'], { force: true });
       }
       callback();
     },

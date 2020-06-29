@@ -72,9 +72,9 @@ export default {
   },
   methods: {
     nextStep () {
-      const { form: { validateFields } } = this
+      const { form: { validateFieldsAndScroll } } = this
       // 先校验，通过表单校验后，才进入下一步
-      validateFields((err, values) => {
+      validateFieldsAndScroll((err, values) => {
         if (!err) {
           this.$emit('nextStep')
         }

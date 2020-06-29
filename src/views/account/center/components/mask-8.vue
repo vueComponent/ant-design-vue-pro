@@ -77,9 +77,6 @@
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
-                <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
-                  <a-input style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]" addonAfter="%" autocomplete="off"></a-input>
-                </a-form-item>
               </a-form-item>
               <a-form-item label="FEV1%VC MAX::" :labelCol="labelXs" :wrapperCol="wrapperMx">
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
@@ -267,9 +264,6 @@
                 <a-form-item label="FEV1%FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
                   <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%', border: 'none' }">
                     <a-input style="width: 240px;" v-decorator="['c41', { initialValue: initValue('c41')}]" addonAfter="%" autocomplete="off"></a-input>
-                  </a-form-item>
-                  <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%', border: 'none' }">
-                    <a-input style="width: 240px;" v-decorator="['c42', { initialValue: initValue('c42')}]" addonAfter="%" autocomplete="off"></a-input>
                   </a-form-item>
                 </a-form-item>
                 <a-form-item label="FEV1%VC MAX::" :labelCol="labelXs" :wrapperCol="wrapperMx">
@@ -558,9 +552,9 @@ export default {
     },
     handleSubmit(e) {
       e.preventDefault()
-      const { form: { validateFields } } = this
+      const { form: { validateFieldsAndScroll } } = this
       this.confirmLoading = true
-      validateFields((errors, values) => {
+      validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           console.log('values', values)
           var re = this.form.getFieldsValue()

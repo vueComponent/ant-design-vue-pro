@@ -73,9 +73,9 @@ export default {
   methods: {
     nextStep () {
       const that = this
-      const { form: { validateFields } } = this
+      const { form: { validateFieldsAndScroll } } = this
       that.loading = true
-      validateFields((err, values) => {
+      validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log('表单 values', values)
           that.timer = setTimeout(function () {

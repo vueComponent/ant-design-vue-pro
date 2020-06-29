@@ -211,8 +211,8 @@ export default {
     },
 
     handleSubmit () {
-      const { form: { validateFields }, state, $router } = this
-      validateFields({ force: true }, (err, values) => {
+      const { form: { validateFieldsAndScroll }, state, $router } = this
+      validateFieldsAndScroll({ force: true }, (err, values) => {
         if (!err) {
           state.passwordLevelChecked = false
           $router.push({ name: 'registerResult', params: { ...values } })
@@ -222,9 +222,9 @@ export default {
 
     getCaptcha (e) {
       e.preventDefault()
-      const { form: { validateFields }, state, $message, $notification } = this
+      const { form: { validateFieldsAndScroll }, state, $message, $notification } = this
 
-      validateFields(['mobile'], { force: true },
+      validateFieldsAndScroll(['mobile'], { force: true },
         (err, values) => {
           if (!err) {
             state.smsSendBtn = true

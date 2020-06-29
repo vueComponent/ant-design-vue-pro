@@ -474,9 +474,9 @@ export default {
       this.getElementsAnswer()
     },
     handleSubmit () {
-      const { form: { validateFields } } = this
+      const { form: { validateFieldsAndScroll } } = this
       this.confirmLoading = true
-      validateFields((errors, values) => {
+      validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           console.log('values', values)
           setTimeout(() => {
@@ -734,7 +734,7 @@ export default {
       })
     },
     submit (){
-      this.form.validateFields((err, values) => {
+      this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           // eslint-disable-next-line no-console
           console.log('Received values of form: ', values)

@@ -381,8 +381,8 @@ export default {
     },
     handleSubmit(e) {
       e.preventDefault()
-      const { form: { validateFields } } = this
-      validateFields((errors, values) => {
+      const { form: { validateFieldsAndScroll } } = this
+      validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           console.log('values', values)
           const allergy = []

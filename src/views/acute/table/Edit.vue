@@ -131,8 +131,8 @@ export default {
       this.$emit('onGoBack')
     },
     handleSubmit () {
-      const { form: { validateFields } } = this
-      validateFields((err, values) => {
+      const { form: { validateFieldsAndScroll } } = this
+      validateFieldsAndScroll((err, values) => {
         if (!err) {
           // eslint-disable-next-line no-console
           console.log('Received values of form: ', values)

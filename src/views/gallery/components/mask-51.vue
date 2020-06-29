@@ -268,9 +268,9 @@ export default {
     },
     handleSubmit(e) {
       e.preventDefault()
-      const { form: { validateFields } } = this
+      const { form: { validateFieldsAndScroll } } = this
       this.confirmLoading = true
-      validateFields((errors, values) => {
+      validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           console.log('values', values)
           if (!this.fileList.length) {

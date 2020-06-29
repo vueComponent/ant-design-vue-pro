@@ -133,11 +133,11 @@ export default {
       })
     },
     handleNext (step) {
-      const { form: { validateFields } } = this
+      const { form: { validateFieldsAndScroll } } = this
       const currentStep = step + 1
       if (currentStep <= 2) {
         // stepForms
-        validateFields(stepForms[ this.currentStep ], (errors, values) => {
+        validateFieldsAndScroll(stepForms[ this.currentStep ], (errors, values) => {
           if (!errors) {
             this.currentStep = currentStep
           }
@@ -146,7 +146,7 @@ export default {
       }
       // last step
       this.confirmLoading = true
-      validateFields((errors, values) => {
+      validateFieldsAndScroll((errors, values) => {
         console.log('errors:', errors, 'val:', values)
         if (!errors) {
           console.log('values:', values)

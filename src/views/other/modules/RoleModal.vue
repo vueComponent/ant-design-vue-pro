@@ -82,7 +82,7 @@ export default {
     handleOk () {
       const _this = this
       // 触发表单验证
-      this.form.validateFields((err, values) => {
+      this.form.validateFieldsAndScroll((err, values) => {
         // 验证表单没错误
         if (!err) {
           console.log('form values', values)

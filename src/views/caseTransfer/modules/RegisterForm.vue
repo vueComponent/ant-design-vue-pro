@@ -61,8 +61,8 @@
       onSearch(value) {
         this.confirmLoading = true;
         this.patient = {};
-        const { form: { validateFields } } = this
-        validateFields(['card'], (errors, values) => {
+        const { form: { validateFieldsAndScroll } } = this
+        validateFieldsAndScroll(['card'], (errors, values) => {
           if (errors) {
             this.confirmLoading = false;
             return
@@ -83,7 +83,7 @@
       },
       handleSubmit() {
         this.confirmLoading = false
-        this.form.validateFields((errors, fieldsValue) => {
+        this.form.validateFieldsAndScroll((errors, fieldsValue) => {
           if (errors) {
             this.confirmLoading = false
             return

@@ -68,10 +68,10 @@
       },
       handleSubmit() {
         const {
-          form: { validateFields }
+          form: { validateFieldsAndScroll }
         } = this;
         this.confirmLoading = true;
-        validateFields((errors, fieldsValue) => {
+        validateFieldsAndScroll((errors, fieldsValue) => {
           const that = this;
           if (errors) {
             this.confirmLoading = false;
@@ -96,7 +96,7 @@
         this.visible = false;
       },
       onSearch(value) {
-        // this.form.validateFields(['card'], (errors, values) => {
+        // this.form.validateFieldsAndScroll(['card'], (errors, values) => {
         //     if (errors) {
         //         return
         //     }

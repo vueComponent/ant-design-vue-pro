@@ -229,7 +229,7 @@ export default {
     validate () {
       const { $refs: { repository, task }, $notification } = this
       const repositoryForm = new Promise((resolve, reject) => {
-        repository.form.validateFields((err, values) => {
+        repository.form.validateFieldsAndScroll((err, values) => {
           if (err) {
             reject(err)
             return
@@ -238,7 +238,7 @@ export default {
         })
       })
       const taskForm = new Promise((resolve, reject) => {
-        task.form.validateFields((err, values) => {
+        task.form.validateFieldsAndScroll((err, values) => {
           if (err) {
             reject(err)
             return

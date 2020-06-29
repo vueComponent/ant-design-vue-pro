@@ -87,6 +87,10 @@
             <span slot="action" slot-scope="text, record" style="text-align: center;">
         <template>
           <a @click="handleEdit(record)">编辑</a>
+          <a-divider type="vertical" />
+          <a @click="handleSubmit(record)">提交</a>
+          <a-divider type="vertical" />
+          <a @click="handleOut(record)">出组</a>
         </template>
       </span>
         </s-table>
@@ -343,7 +347,11 @@ export default {
         },
         exportData() {
             window.open(this.baseUrl + '/patient/export?doctorId=' + this.token.doctorId)
-        }
+        },
+        handleSubmit(record){
+
+        },
+        handleOut(record){}
     }
 };
 </script>

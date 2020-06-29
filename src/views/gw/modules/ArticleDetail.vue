@@ -189,9 +189,9 @@ export default {
     handleSubmit() {
       this.confirmLoading = true
 
-      const { form: { validateFields } } = this;
+      const { form: { validateFieldsAndScroll } } = this;
 
-      validateFields((errors, fieldsValue) => {
+      validateFieldsAndScroll((errors, fieldsValue) => {
         if (errors) {
           this.confirmLoading = false;
           return;
