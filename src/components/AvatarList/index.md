@@ -9,7 +9,7 @@
 
 ```javascript
 import AvatarList from '@/components/AvatarList'
-const AvatarListItem = AvatarList.AvatarItem
+const AvatarListItem = AvatarList.Item
 
 export default {
     components: {
