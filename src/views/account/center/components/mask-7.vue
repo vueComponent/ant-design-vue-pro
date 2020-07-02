@@ -602,10 +602,11 @@ export default {
         if (answer.a7 === 1) {
           this.controla7 = true
         }
-        if (answer.a9)
+        if (answer.a9){
           var splitArr = answer.a9.split(',')
-        if (splitArr.indexOf('20') > -1) {
-          this.controla920 = true
+          if (splitArr.indexOf('20') > -1) {
+            this.controla920 = true
+          }
         }
         if (answer.a52 === 3) {
           this.controla52 = true
