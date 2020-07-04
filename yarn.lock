@@ -2,19 +2,19 @@
 # yarn lockfile v1
 
 
-"@ant-design-vue/pro-layout@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.npm.taobao.org/@ant-design-vue/pro-layout/download/@ant-design-vue/pro-layout-0.3.2.tgz#79c960cd310e8a4dd9b9aa9a58733f924f2360b2"
-  integrity sha1-eclgzTEOik3ZuaqaWHM/kk8jYLI=
+"@ant-design-vue/pro-layout@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.npm.taobao.org/@ant-design-vue/pro-layout/download/@ant-design-vue/pro-layout-0.3.3.tgz#f59344c7acdb2f147ca1d4a4c4a6a2c6dc4833b5"
+  integrity sha1-9ZNEx6zbLxR8odSkxKaixtxIM7U=
   dependencies:
-    ant-design-vue "^1.5.3"
+    ant-design-vue "^1.6.2"
     classnames "^2.2.6"
     insert-css "^2.0.0"
     lodash "^4.17.15"
     omit.js "^1.0.2"
     umi-request "^1.2.11"
     vue-container-query "^0.1.0"
-    vue-copy-to-clipboard "^1.0.1"
+    vue-copy-to-clipboard "^1.0.2"
 
 "@ant-design/colors@^3.1.0", "@ant-design/colors@^3.2.1":
   version "3.2.2"
@@ -1980,41 +1980,6 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
-
-ant-design-vue@^1.5.3:
-  version "1.5.4"
-  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.5.4.tgz#428473de9f6b22df63cacdfe07d5096258f871a9"
-  integrity sha1-QoRz3p9rIt9jys3+B9UJYlj4cak=
-  dependencies:
-    "@ant-design/icons" "^2.1.1"
-    "@ant-design/icons-vue" "^2.0.0"
-    add-dom-event-listener "^1.0.2"
-    array-tree-filter "^2.1.0"
-    async-validator "^3.0.3"
-    babel-helper-vue-jsx-merge-props "^2.0.3"
-    babel-runtime "6.x"
-    classnames "^2.2.5"
-    component-classes "^1.2.6"
-    dom-align "^1.10.4"
-    dom-closest "^0.2.0"
-    dom-scroll-into-view "^2.0.0"
-    enquire.js "^2.1.6"
-    intersperse "^1.0.0"
-    is-mobile "^2.2.1"
-    is-negative-zero "^2.0.0"
-    ismobilejs "^1.0.0"
-    json2mq "^0.2.0"
-    lodash "^4.17.5"
-    moment "^2.21.0"
-    mutationobserver-shim "^0.3.2"
-    node-emoji "^1.10.0"
-    omit.js "^1.0.0"
-    raf "^3.4.0"
-    resize-observer-polyfill "^1.5.1"
-    shallow-equal "^1.0.0"
-    shallowequal "^1.0.2"
-    vue-ref "^2.0.0"
-    warning "^4.0.0"
 
 ant-design-vue@^1.6.2:
   version "1.6.2"
@@ -10881,10 +10846,10 @@ vue-container-query@^0.1.0:
     resize-observer-lite "^0.2.3"
     vue "^2.5.17"
 
-vue-copy-to-clipboard@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npm.taobao.org/vue-copy-to-clipboard/download/vue-copy-to-clipboard-1.0.1.tgz#eb2af3f2be73f519d93e41af75e604d964a5d05a"
-  integrity sha1-6yrz8r5z9RnZPkGvdeYE2WSl0Fo=
+vue-copy-to-clipboard@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/vue-copy-to-clipboard/download/vue-copy-to-clipboard-1.0.2.tgz#6052bb3b41c50f5a7f00acb667baab2de5e753c7"
+  integrity sha1-YFK7O0HFD1p/AKy2Z7qrLeXnU8c=
   dependencies:
     copy-to-clipboard "^3.3.1"
 
