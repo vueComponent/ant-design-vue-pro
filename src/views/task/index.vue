@@ -78,6 +78,8 @@
       </template>
       <template slot="operation" slot-scope="text, record">
         <a @click="implement(record)">执行</a>
+        <a-divider type="vertical" />
+        <a @click="ignore(record)">忽略</a>
       </template>
     </s-table>
     <user-detail ref="detailModal" />
@@ -85,7 +87,7 @@
 </template>
 <script>
 import moment from 'moment'
-import { getVisitTask } from '@/api/task'
+import { getVisitTask, ignoreBNTask } from '@/api/task'
 import { STable } from '@/components'
 import UserDetail from '../list/modules/UserDetail'
 import $ from 'jquery'
@@ -131,11 +133,6 @@ export default {
           width: 70
         },
         {
-          title: '任务编号',
-          dataIndex: 'code',
-          width: 100
-        },
-        {
           title: '任务名称',
           dataIndex: 'typeName',
           customRender: typeName => typeName + '任务',
@@ -170,7 +167,7 @@ export default {
           width: 120
         },
         {
-          title: '到期时间',
+          title: '到期日期',
           dataIndex: 'planDate',
           customRender: planDate => moment(planDate).format('YYYY-MM-DD'),
           width: 120,
@@ -273,6 +270,13 @@ export default {
     onSelectChange(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys;
       this.selectedRows = selectedRows;
+    },
+    ignore(record) {
+      console.log(record)
+      if (record.type != 2) {
+        this.$message.warning('只能忽略半年随访任务！');
+        return false;
+      }
     }
   }
 };
