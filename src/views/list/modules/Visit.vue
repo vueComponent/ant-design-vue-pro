@@ -71,7 +71,7 @@ export default {
       this.visible = false
     },
     jump(v) {
-      console.log(v)
+      this.visible = false
       if (v.type === 3) {
         this.$router.push('/list/task/' + v.patientBasisId)
       } else if (v.type === 4) {

@@ -213,3 +213,19 @@ export function downLoadManual(id) {
     method: 'get'
   })
 }
+
+export function recoverSubmit(params) {
+  return axios({
+    url: '/basis/recoverSubmit',
+    method: 'post',
+    data: params
+  })
+}
+
+export function outGroup(params) {
+  return axios({
+    url: '/basis/outGroup',
+    method: 'post',
+    data: params
+  })
+}

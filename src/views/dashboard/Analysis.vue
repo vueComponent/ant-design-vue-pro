@@ -131,32 +131,25 @@
       </a-col>
     </a-row>
     <a-row :gutter="10">
-      <a-col :sm="48" :md="24" :lg="14" :style="{ marginBottom: '10px' }">
+      <a-col :sm="48" :md="48" :lg="48" :style="{ marginBottom: '10px' }">
         <a-card :loading="loading" :bordered="false" :body-style="{ padding: '0' }">
           <div class="salesCard tooltip-y">
             <a-tabs default-active-key="1" size="large" :tab-bar-style="{ marginBottom: '10px', paddingLeft: '16px' }">
               <a-tab-pane loading="true" tab="新增病例数" key="1">
                 <a-row>
-                  <a-col :push="1" :xl="22" :lg="22" :md="22" :sm="24" :xs="24">
+                  <a-col :push="1" :xl="22" :lg="22" :md="22" :sm="48" :xs="48">
                     <bar :data="eachMonthPatients" title="新增病例数" />
                   </a-col>
                 </a-row>
               </a-tab-pane>
               <a-tab-pane tab="新增访视数" key="2">
                 <a-row>
-                  <a-col :push="1" :xl="22" :lg="22" :md="22" :sm="24" :xs="24">
+                  <a-col :push="1" :xl="22" :lg="22" :md="22" :sm="48" :xs="48">
                     <bar :data="eachMonthBasiss" title="新增访视数" />
                   </a-col>
                 </a-row>
               </a-tab-pane>
             </a-tabs>
-          </div>
-        </a-card>
-      </a-col>
-      <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '10px' }">
-        <a-card :loading="loading" title="操作培训" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '360px' }">
-          <div class="salesCard">
-            <rank-list :list="rankList" />
           </div>
         </a-card>
       </a-col>
