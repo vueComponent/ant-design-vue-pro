@@ -5,7 +5,7 @@
         <a-form-item label="病例识别号" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input placeholder="请输入身份证号" v-decorator="['card', { rules: [ { required: true, validator: isIdCardNo }] }]" />
         </a-form-item>
-        <!-- <a-form-item label="病例档案号" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['card', { rules: [{ required: true }] }]" /></a-form-item> -->
+        <!-- <a-form-item label="病例入组编号" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['card', { rules: [{ required: true }] }]" /></a-form-item> -->
         <a-form-item label="患者同意注册日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['registerDate', requiredRule]" :disabledDate="disabledDate" />
         </a-form-item>

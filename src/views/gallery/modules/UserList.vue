@@ -26,7 +26,7 @@ import moment from 'moment'
 import _ from 'lodash'
 const columns = [
   {
-    title: '档案号',
+    title: '入组编号',
     dataIndex: 'fileCode'
   },
   {

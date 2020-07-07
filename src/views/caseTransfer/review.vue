@@ -73,7 +73,7 @@
             width: '120px'
           },
           {
-            title: '档案号',
+            title: '入组编号',
             dataIndex: 'fileCode',
             width: '180px'
           },

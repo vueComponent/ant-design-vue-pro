@@ -121,7 +121,7 @@ export default {
       // 表头
       columns: [
         {
-          title: '档案号',
+          title: '入组编号',
           dataIndex: 'fileCode',
           width: '120px',
         },

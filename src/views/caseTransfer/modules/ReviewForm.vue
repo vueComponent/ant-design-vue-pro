@@ -5,7 +5,7 @@
         <a-form-item label="申请单号" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['distractCode']" readOnly />
         </a-form-item>
-        <a-form-item label="档案号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="入组编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['fileCode']" readOnly />
         </a-form-item>
         <a-form-item label="患者姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">

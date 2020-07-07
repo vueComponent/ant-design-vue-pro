@@ -34,7 +34,7 @@
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
                   <a-card :bordered="false">
                     <a-form>
-                      <a-form-item label="档案号">
+                      <a-form-item label="入组编号">
                         <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="姓名">
@@ -122,7 +122,7 @@ export default {
           width: '150px',
         },
         {
-          title: '档案号',
+          title: '入组编号',
           dataIndex: 'fileCode',
           width: '180px',
         },

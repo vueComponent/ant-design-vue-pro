@@ -16,7 +16,7 @@ import { getPatientList } from '@/api/patient'
 import { createSFJx } from '@/api/basis'
 import moment from 'moment'
 const columns = [{
-    title: '档案号',
+    title: '入组编号',
     dataIndex: 'fileCode'
   },
   {
