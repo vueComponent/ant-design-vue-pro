@@ -63,7 +63,7 @@
       <template slot="patientName" slot-scope="text, record">
         <a @click="showUser(record)">{{ text }}</a>
       </template>
-      <template slot="executeStatus" slot-scope="text">       
+      <template slot="executeStatus" slot-scope="text">
         <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" />
       </template>
       <span slot="serial" slot-scope="text, record, index">{{ index + 1 }}</span>
@@ -131,47 +131,50 @@ export default {
       // 表头
       columns: [{
           title: '档案号',
-          width: "100px",
+          width: 100,
           dataIndex: 'fileCode'
         },
         {
           title: '患者姓名',
           dataIndex: 'patientName',
-          width: "100px",
+          width: 100,
           scopedSlots: { customRender: 'patientName' }
         },
         {
           title: '身份证号',
-          width: "150px",
+          width: 150,
           dataIndex: 'card'
         },
         {
           title: '急性加重日期',
           dataIndex: 'createDate',
-          width: "120px",
+          width: 120,
           customRender: createDate => moment(createDate).format('YYYY-MM-DD')
         },
         {
           title: '创建人',
           dataIndex: 'creatorName',
-          width: "100px"
+          width: 100
         },
         {
           title: '创建日期',
           dataIndex: 'createDate2',
-          width: "120px",
+          width: 120,
           customRender: createDate => moment(createDate).format('YYYY-MM-DD')
         },
         {
           title: '任务状态',
           dataIndex: 'executeStatus',
           scopedSlots: { customRender: 'executeStatus' },
-          width: "120px",
-        },
-        {
+          width: 120,
+        }, {
+          title: '分支中心',
+          dataIndex: 'centerName',
+          width: 200
+        }, {
           title: '操作',
           dataIndex: 'action',
-          width: '100px',
+          width: 100,
           className: 'operation',
           scopedSlots: { customRender: 'action' }
         }
@@ -266,8 +269,8 @@ export default {
     },
     changeTime(time) {
       this.dateArr = time;
-        this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD')
-        this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD')
+      this.queryParam.createDateStart = moment(time[0]).format('YYYY-MM-DD')
+      this.queryParam.createDateEnd = moment(time[1]).format('YYYY-MM-DD')
     },
   }
 };

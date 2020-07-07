@@ -128,62 +128,67 @@ export default {
           title: '预警',
           dataIndex: 'warnStatus',
           scopedSlots: { customRender: 'warnStatus' },
-          width: "70px"
+          width: 70
         },
         {
           title: '任务编号',
           dataIndex: 'code',
-          width: "100px"
+          width: 100
         },
         {
           title: '任务名称',
           dataIndex: 'typeName',
           customRender: typeName => typeName + '任务',
-          width: "120px"
+          width: 120
         },
         {
           title: '档案号',
           dataIndex: 'fileCode',
-          width: "110px"
+          width: 100
         },
         {
           title: '患者姓名',
           dataIndex: 'patientName',
           scopedSlots: { customRender: 'patientName' },
           align: 'center',
-          width: '100px'
+          width: 100
         },
         {
           title: '身份证号',
           dataIndex: 'card',
-          width: '160px',
+          width: 160,
         },
         {
           title: '联系电话',
           dataIndex: 'telephone',
-          width: '120px',
+          width: 120,
         },
         {
           title: '创建日期',
           dataIndex: 'createDate',
           customRender: createDate => moment(createDate).format('YYYY-MM-DD'),
-          width: '120px'
+          width: 120
         },
         {
           title: '到期时间',
           dataIndex: 'planDate',
           customRender: planDate => moment(planDate).format('YYYY-MM-DD'),
-          width: '120px',
+          width: 120,
         },
         {
           title: '任务状态',
           dataIndex: 'executeStatus',
           scopedSlots: { customRender: 'executeStatus' },
-          width: '110px',
+          width: 110,
+        },
+        {
+          title: '分支中心',
+          dataIndex: 'centerName',
+          width: 200
         },
         {
           title: '操作',
-          width: '100px',
+          width: 100,
           scopedSlots: { customRender: 'operation' }
         }
       ],

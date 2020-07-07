@@ -59,7 +59,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="small" :scroll="scroll" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="small" :scroll="{ x: 1000 }" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="name" slot-scope="text, record" @click="showUser(record)">
         <p class="userName">{{ text }}</p>
       </span>
@@ -162,42 +162,46 @@ const visitMap = {
 
 var columns = [{
   title: '档案号',
-  width: "110px",
+  width: 110,
   dataIndex: 'fileCode'
 }, {
   title: '患者姓名',
   dataIndex: 'name',
-  width: "80px",
+  width: 80,
   scopedSlots: {
     customRender: 'name'
   }
 }, {
   title: '身份证号',
-  width: "160px",
+  width: 160,
   dataIndex: 'card'
 }, {
   title: '创建日期',
   dataIndex: 'createDate',
-  width: "90px",
+  width: 90,
   customRender: createDate => moment(createDate).format('YYYY-MM-DD')
 }, {
   title: '访视状态',
   dataIndex: 'visit',
-  width: "80px",
+  width: 80,
   scopedSlots: {
     customRender: 'visit'
   }
 }, {
   title: '访视进度',
   dataIndex: 'basisList',
-  width: "280px",
+  width: 160,
   scopedSlots: {
     customRender: 'basisList'
   }
 }, {
+  title: '分支中心',
+  width: 200,
+  dataIndex: 'centerName'
+},{
   title: '操作',
   dataIndex: 'action',
-  width: '120px',
+  width: 120,
   className: 'operation',
   scopedSlots: {
     customRender: 'action'
@@ -206,27 +210,31 @@ var columns = [{
 
 var groupColumns = [{
   title: '档案号',
-  width: "110px",
+  width: 110,
   dataIndex: 'fileCode'
 }, {
   title: '创建日期',
   dataIndex: 'createDate',
-  width: "90px",
+  width: 90,
   customRender: createDate => moment(createDate).format('YYYY-MM-DD')
 }, {
   title: '访视状态',
   dataIndex: 'visit',
-  width: "80px",
+  width: 80,
   scopedSlots: {
     customRender: 'visit'
   }
 }, {
   title: '访视进度',
   dataIndex: 'basisList',
-  width: "280px",
+  width: 160,
   scopedSlots: {
     customRender: 'basisList'
   }
+}, {
+  title: '分支中心',
+  dataIndex: 'centerName',
+  width: 200
 }]
 
 export default {
