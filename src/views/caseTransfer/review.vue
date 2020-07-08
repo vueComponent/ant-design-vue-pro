@@ -74,7 +74,7 @@
           },
           {
             title: '入组编号',
-            dataIndex: 'fileCode',
+            dataIndex: 'fileBasisCode',
             width: '180px'
           },
           {
@@ -122,7 +122,7 @@
           targetCenterId: recode.targetCenterId,
           distractId: recode.distractId,
           distractCode: recode.distractCode,
-          fileCode: recode.fileCode,
+          fileBasisCode: recode.fileBasisCode,
           patientId: recode.patientId,
           patientName: recode.patientName,
           card: recode.card,

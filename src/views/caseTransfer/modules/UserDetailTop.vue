@@ -14,7 +14,7 @@
     </div>
     <a-row>
       <a-col :span="8">
-        <p>档案编号：{{patient.fileCode}}</p>
+        <p>患者编号：{{patient.code}}</p>
       </a-col>
       <a-col :span="8">
         <p>身份证号：{{patient.card}}</p>

@@ -216,7 +216,6 @@ export default {
   padding: 20px;
   border: 1px solid #f1f1f1;
   padding-right:0px; 
-  height: 300px;
   overflow: auto;
   #userInfo {
     p.userInfoItem {

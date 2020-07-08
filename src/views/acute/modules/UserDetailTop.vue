@@ -19,8 +19,8 @@
     </div>
     <div class="userDetailContent">
       <p class="userDetailItem">
-        <span class="userDetailItemTitle">档案编号</span>
-        <span class="userDetailItemInfo"> {{option.fileCode}}</span>
+        <span class="userDetailItemTitle">患者编号</span>
+        <span class="userDetailItemInfo"> {{option.code}}</span>
       </p>
       <p class="userDetailItem">
         <span class="userDetailItemTitle">联系电话</span>

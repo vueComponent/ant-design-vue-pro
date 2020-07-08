@@ -30,8 +30,8 @@
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
                   <a-card :bordered="false">
                     <a-form>
-                      <a-form-item label="入组编号">
-                        <a-input v-model.trim="queryParam.fileCode" />
+                      <a-form-item label="患者编号">
+                        <a-input v-model.trim="queryParam.code" />
                       </a-form-item>
                       <a-form-item label="姓名">
                         <a-input v-model.trim="queryParam.name" />
@@ -109,8 +109,8 @@ export default {
         }
       },
       columns: [{
-          title: '入组编号',
-          dataIndex: 'fileCode',
+          title: '患者编号',
+          dataIndex: 'code',
           width: '120px'
         },
         {

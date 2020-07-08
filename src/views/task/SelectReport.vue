@@ -12,7 +12,7 @@ import moment from 'moment'
 import _ from 'lodash'
 const columns = [{
     title: '入组编号',
-    dataIndex: 'fileCode'
+    dataIndex: 'fileBasisCode'
   },
   {
     title: '患者姓名',

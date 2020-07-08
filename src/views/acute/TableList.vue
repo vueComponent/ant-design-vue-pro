@@ -35,7 +35,7 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="入组编号">
-                        <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.fileBasisCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="姓名">
                         <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
@@ -132,7 +132,7 @@ export default {
       columns: [{
           title: '入组编号',
           width: 100,
-          dataIndex: 'fileCode'
+          dataIndex: 'fileBasisCode'
         },
         {
           title: '患者姓名',

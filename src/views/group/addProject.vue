@@ -122,7 +122,7 @@ export default {
       columns: [
         {
           title: '入组编号',
-          dataIndex: 'fileCode',
+          dataIndex: 'fileBasisCode',
           width: '120px',
         },
         {

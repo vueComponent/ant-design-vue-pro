@@ -18,7 +18,6 @@
             </a-form-item>
           </a-col>
           <a-col :md="13" style="text-align:right" :sm="24">
-            <a-button type="primary" @click="$refs.createModal.add()" v-if="!isGroup">新建</a-button>
             <a-button type="primary" style="margin-left: 10px;" @click="exportData">导出</a-button>
           </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
@@ -35,7 +34,7 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="入组编号">
-                        <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.fileBasisCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="姓名">
                         <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
@@ -163,7 +162,7 @@ const visitMap = {
 var columns = [{
   title: '入组编号',
   width: 110,
-  dataIndex: 'fileCode'
+  dataIndex: 'fileBasisCode'
 }, {
   title: '患者姓名',
   dataIndex: 'name',
@@ -211,7 +210,7 @@ var columns = [{
 var groupColumns = [{
   title: '入组编号',
   width: 110,
-  dataIndex: 'fileCode'
+  dataIndex: 'fileBasisCode'
 }, {
   title: '创建日期',
   dataIndex: 'createDate',

@@ -11,50 +11,11 @@
           <a-col :md="6" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="refreshTable">查询</a-button>
-              <a @click="toggleAdvanced" style="margin-left: 8px" class="toggleAdvanced">
-                {{ advanced ? '更多筛选' : '更多筛选' }}
-                <a-icon :type="advanced ? 'up' : 'down'" />
-              </a>
             </a-form-item>
           </a-col>
           <a-col :md="13" style="text-align:right" :sm="24">
             <a-button type="primary" @click="$refs.createModal.add()">新建</a-button>
             <!-- <a-button type="primary" style="margin-left: 10px;">导出</a-button> -->
-          </a-col>
-          <a-col v-if="advanced" class="tableSearch" :md="8">
-            <div>
-              <a-tabs defaultActiveKey="1">
-                <a-tab-pane tab="常用检索" key="1">
-                  <div class="commonRetrieval">
-                    <p @click="tableSearch(9)">全部急性加重期</p>
-                    <p @click="tableSearch(7)">本月新增急性加重期</p>
-                    <p @click="tableSearch(8)">本年新增急性加重期</p>
-                  </div>
-                </a-tab-pane>
-                <a-tab-pane tab="自定义检索" key="2" forceRender>
-                  <a-card :bordered="false">
-                    <a-form>
-                      <a-form-item label="入组编号">
-                        <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
-                      </a-form-item>
-                      <a-form-item label="姓名">
-                        <a-input v-model.trim="queryParam.name" style="width: 100%" />
-                      </a-form-item>
-                      <a-form-item label="身份证号">
-                        <a-input v-model.trim="queryParam.card" style="width: 100%" />
-                      </a-form-item>
-                      <a-form-item label="创建日期" style="margin-bottom:0;">
-                        <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
-                      </a-form-item>
-                      <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
-                        <a-button type="primary" @click="clearForm()">清空</a-button>
-                        <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
-                      </a-form-item>
-                    </a-form>
-                  </a-card>
-                </a-tab-pane>
-              </a-tabs>
-            </div>
           </a-col>
         </a-row>
       </a-form>
@@ -76,7 +37,7 @@
 <script>
 import moment from 'moment';
 import { STable, Ellipsis } from '@/components'
-import UserDetail from '@/views/acute/modules/UserDetail'
+import UserDetail from '@/views/list/modules/UserDetail'
 import { getPatientList } from '@/api/patient'
 import CreateForm from '@/views/list/modules/CreateForm'
 import $ from 'jquery'
@@ -103,9 +64,9 @@ export default {
       queryParam: {},
       // 表头
       columns: [{
-          title: '入组编号',
+          title: '患者编号',
           width: 100,
-          dataIndex: 'fileCode'
+          dataIndex: 'code'
         },
         {
           title: '姓名',

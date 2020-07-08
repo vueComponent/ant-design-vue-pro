@@ -15,8 +15,8 @@
         <a-row>
           <a-col :span="12">
             <p class>
-              <span class>档案编号：</span>
-              <span class>{{patientDetail.fileCode}}</span>
+              <span class>患者编号：</span>
+              <span class>{{patientDetail.code}}</span>
             </p>
           </a-col>
           <a-col :span="12">

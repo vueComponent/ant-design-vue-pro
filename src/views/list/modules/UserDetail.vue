@@ -142,6 +142,9 @@
           </div>
         </a-tab-pane>
       </a-tabs>
+      <div class="scores">
+        
+      </div>
     </a-spin>
   </a-modal>
 </template>
@@ -238,7 +241,6 @@ export default {
   padding: 20px;
   border: 1px solid #f1f1f1;
   padding-right: 0px;
-  height: 300px;
   overflow: auto;
 
   #userInfo {
@@ -360,5 +362,10 @@ export default {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: #bbb;
+}
+.scores{
+  margin-top: 10px;
+  border-top: 2px solid #168ffd;
+  
 }
 </style>
