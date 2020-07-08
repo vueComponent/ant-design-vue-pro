@@ -229,3 +229,11 @@ export function outGroup(params) {
     data: params
   })
 }
+
+export function getJxDataList(params) {
+  return axios({
+    url: '/basis/getJxDataList',
+    method: 'post',
+    data: params
+  })
+}

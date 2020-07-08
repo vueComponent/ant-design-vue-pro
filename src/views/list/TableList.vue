@@ -17,9 +17,6 @@
               </a>
             </a-form-item>
           </a-col>
-          <a-col :md="13" style="text-align:right" :sm="24">
-            <a-button type="primary" style="margin-left: 10px;" @click="exportData">导出</a-button>
-          </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
             <div>
               <a-tabs defaultActiveKey="1">
@@ -117,15 +114,12 @@ import {
 } from '@/components'
 import StepByStepModal from './modules/StepByStepModal'
 import CreateForm from './modules/CreateForm'
-import {
-  getPatientList,
-  exportPatient
-} from '@/api/patient'
 import UserDetail from './modules/UserDetail'
 import Visit from './modules/Visit'
 import {
   addVasit,
-  outGroup
+  outGroup,
+  getJxDataList
 } from '@/api/basis'
 import {
   mapGetters,
@@ -263,7 +257,7 @@ export default {
       columns: this.$ls.get(ACCESS_TOKEN).roleId === 1 ? groupColumns : columns,
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        return getPatientList(Object.assign(parameter, this.queryParam)).then(res => {
+        return getJxDataList(Object.assign(parameter, this.queryParam)).then(res => {
           res.data.forEach(item => {
             if (item.basisList.length > 0) {
               item.basisList[0].progress = item.basisList[0].executeStatus == 3 ? 100 : item.basisList[0].progress

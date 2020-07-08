@@ -32,7 +32,7 @@ export const asyncRouterMap = [
         path: '/acute/index',
         name: 'acute',
         component: () => import('@/views/acute/TableList'),
-        meta: { title: '急性加重', keepAlive: true, icon: jixing, permission: [ 'center', 'group' ]}
+        meta: { title: '急性加重管理', keepAlive: true, icon: jixing, permission: [ 'center', 'group' ]}
       },
       {
         path: '/list/basis/:id(\\d*)',
@@ -231,7 +231,7 @@ export const asyncRouterMap = [
         path: '/task/index',
         name: 'Task',
         component: () => import('@/views/task/index'),
-        meta: { title: '访视任务', keepAlive: true, icon: fangshi, permission: [ 'center', 'group' ]}
+        meta: { title: '访视管理', keepAlive: true, icon: fangshi, permission: [ 'center', 'group' ]}
       },
       {
         path: '/gallery/index',
