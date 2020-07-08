@@ -103,7 +103,7 @@
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm, recoverSubmit, recoverSubmit } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, recoverSubmit } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 import { getOcrResult } from '@/api/basis'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
