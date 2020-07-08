@@ -116,6 +116,7 @@ import StepByStepModal from './modules/StepByStepModal'
 import CreateForm from './modules/CreateForm'
 import UserDetail from './modules/UserDetail'
 import Visit from './modules/Visit'
+import { getPatientList } from '@/api/patient'
 import {
   addVasit,
   outGroup,
@@ -257,7 +258,7 @@ export default {
       columns: this.$ls.get(ACCESS_TOKEN).roleId === 1 ? groupColumns : columns,
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        return getJxDataList(Object.assign(parameter, this.queryParam)).then(res => {
+        return getPatientList(Object.assign(parameter, this.queryParam)).then(res => {
           res.data.forEach(item => {
             if (item.basisList.length > 0) {
               item.basisList[0].progress = item.basisList[0].executeStatus == 3 ? 100 : item.basisList[0].progress

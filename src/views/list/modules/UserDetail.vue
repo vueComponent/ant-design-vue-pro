@@ -143,7 +143,117 @@
         </a-tab-pane>
       </a-tabs>
       <div class="scores">
-        
+        <p class="title">支扩评分</p>
+        <a-row :gutter="10">
+          <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">BSI评分</div>
+              <div class="score no">暂无评分</div>
+              <mini-progress color="rgb(24,144,255)" target="0" percentage="0" height="8px" />
+            </div>
+          </a-col>
+          <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">FACED评分</div>
+              <div class="score">9分</div>
+              <mini-progress color="rgb(24,144,255)" target="9" percentage="9" height="8px" />
+            </div>
+          </a-col>
+          <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">BACI评分</div>
+              <div class="score">9分</div>
+              <mini-progress color="rgb(24,144,255)" target="9" percentage="9" height="8px" />
+            </div>
+          </a-col>
+          <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">Reffi评分</div>
+              <div class="score">9分</div>
+              <mini-progress color="rgb(24,144,255)" target="9" percentage="9" height="8px" />
+            </div>
+          </a-col>
+        </a-row>
+      </div>
+      <div class="scores">
+        <p class="title">问卷评分</p>
+        <a-row :gutter="10">
+          <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">BHQ评分</div>
+              <div class="score">54.52分</div>
+              <mini-progress color="rgb(24,144,255)" target="0" percentage="0" height="8px" />
+            </div>
+          </a-col>
+          <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">MMRC评分</div>
+              <div class="score">54.52分</div>
+              <mini-progress color="rgb(24,144,255)" target="0" percentage="0" height="8px" />
+            </div>
+          </a-col>
+          <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">HAD评分</div>
+              <div class="score">54.52分</div>
+              <mini-progress color="rgb(24,144,255)" target="0" percentage="0" height="8px" />
+            </div>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col :sm="24" :md="24" :xl="24" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">LCQ评分</div>
+              <div class="score">总5分</div>
+              <a-row :gutter="10">
+                <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+                  <label>生理</label>
+                  <mini-progress color="rgb(24,144,255)" target="5" percentage="5" height="8px" />
+                  <label>5分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+                  <label>心理</label>
+                  <mini-progress color="rgb(24,144,255)" target="5" percentage="5" height="8px" />
+                  <label>5分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+                  <label>社会</label>
+                  <mini-progress color="rgb(24,144,255)" target="5" percentage="5" height="8px" />
+                  <label>5分</label>
+                </a-col>
+              </a-row>
+            </div>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col :sm="24" :md="24" :xl="24" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">QoL-B评分</div>
+              <a-row :gutter="10">
+                <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
+                  <label>身体功能性维度</label>
+                  <mini-progress color="rgb(24,144,255)" target="5" percentage="5" height="8px" />
+                  <label>5分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
+                  <label>角色功能性维度</label>
+                  <mini-progress color="rgb(24,144,255)" target="5" percentage="5" height="8px" />
+                  <label>5分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
+                  <label>活力性维度</label>
+                  <mini-progress color="rgb(24,144,255)" target="5" percentage="5" height="8px" />
+                  <label>5分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
+                  <label>情绪功能性维度</label>
+                  <mini-progress color="rgb(24,144,255)" target="5" percentage="5" height="8px" />
+                  <label>5分</label>
+                </a-col>
+              </a-row>
+            </div>
+          </a-col>
+        </a-row>
       </div>
     </a-spin>
   </a-modal>
@@ -152,6 +262,7 @@
 import { getPatientDetail } from '@/api/patient'
 import UserDetail from './UserDetailTop'
 import { MyIcon } from '@/components/_util/util'
+import { ChartCard, MiniProgress } from '@/components';
 import moment from 'moment'
 import _ from 'lodash'
 import 'url-search-params-polyfill'
@@ -159,7 +270,9 @@ import 'url-search-params-polyfill'
 export default {
   components: {
     UserDetail,
-    MyIcon
+    MyIcon,
+    ChartCard,
+    MiniProgress
   },
   data() {
     return {
@@ -366,6 +479,43 @@ export default {
 .scores{
   margin-top: 10px;
   border-top: 2px solid #168ffd;
+  background-color: #fff;
+  padding: 10px;
+  .title{
+    color: #096dd9;
+    margin-bottom: 0;
+  }
+  .block{
+    border: 1px solid #eee;
+    padding: 10px;
+    .name{
+      float: left;
+    }
+    .score{
+      float: right;
+      color: #096dd9;
+      &.no{
+        color: gray;
+      }
+    }
+    .chart-mini-progress{
+      clear: both;
+    }
+    .ant-row{
+      clear: both;
+      margin-top: 30px;
+      .chart-mini-progress{
+        clear: none;
+        float: left;
+        width: 60%;
+        margin: 0 10px;
+      }
+      label{
+        float: left;
+        font-size: 12px;
+      }
+    }
+  }
   
 }
 </style>
