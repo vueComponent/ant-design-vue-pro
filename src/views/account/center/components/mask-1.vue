@@ -459,7 +459,7 @@ import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import _ from 'lodash'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, recoverSubmit } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 import 'url-search-params-polyfill'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
@@ -794,13 +794,13 @@ export default {
             that.controlb122 = true
           }
         }
-        if(answer.b171){
+        if (answer.b171) {
           splitArr = answer.b171.split(',')
           if (splitArr.indexOf('2') > -1) {
             that.controlb1711 = true
           }
         }
-        if(answer.b172){
+        if (answer.b172) {
           splitArr = answer.b172.split(',')
           if (splitArr.indexOf('4') > -1) {
             that.controlb1721 = true
@@ -844,7 +844,7 @@ export default {
         this.controlb15 = false
         this.controlb1538 = false
         this.controlb1615 = false
-        setTimeout(function () {
+        setTimeout(function() {
           that.form.setFieldsValue({
             b7: '-1',
             b8: '-1',
@@ -1015,8 +1015,35 @@ export default {
         })
       return false
     },
-    withdraw(){
-      
+    withdraw() {
+      var that = this
+      this.$confirm({
+        title: '确认撤销？',
+        onOk() {
+          that.spinning = true
+          var params = new URLSearchParams()
+          params.append('patientBasisMarkId', that.zkbszl.patientBasisMarkId)
+          recoverSubmit(params)
+            .then(res => {
+              that.spinning = false
+              that.$message.success(res.msg)
+              params = new URLSearchParams()
+              params.append('patientBasisId', that.patientBasisId)
+              getPatientBasis(params)
+                .then(res => {
+                  
+                  that.orgTree = res.data.list
+                  that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+            }).catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
+        }
+      })
     }
   }
 }
@@ -1166,7 +1193,8 @@ export default {
     .ant-menu.ant-menu-inline.ant-menu-sub {
       background-color: rgba(245, 251, 255);
       padding-left: 20px;
-      .treeSubTitle{
+
+      .treeSubTitle {
         font-size: 14px;
       }
 
@@ -1300,7 +1328,7 @@ export default {
       line-height: 40px;
     }
 
-    padding: 20px;
+    padding: 40px 20px;
 
     .ant-form-item {
       // padding-bottom: 10px;

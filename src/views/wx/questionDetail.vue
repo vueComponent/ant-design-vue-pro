@@ -252,7 +252,7 @@
     .baselineForm {
       flex: 1;
       overflow: auto;
-      padding: 20px;
+      padding: 40px 20px;
 
       /deep/ .ant-radio-disabled + span {
         color: inherit;

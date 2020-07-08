@@ -689,7 +689,7 @@ export default {
 
     overflow: auto;
 
-    padding: 20px;
+    padding: 40px 20px;
   }
 }
 

@@ -1047,7 +1047,7 @@ export default {
     height: 350px;
     overflow: auto;
 
-    padding: 20px;
+    padding: 40px 20px;
     .ant-row {
       // padding-bottom: 10px;
       // padding-top: 10px;

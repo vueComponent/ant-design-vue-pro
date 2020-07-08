@@ -1122,7 +1122,7 @@ export default {
       line-height: 40px;
     }
 
-    padding: 20px;
+    padding: 40px 20px;
 
     .ant-form-item {
       // padding-bottom: 10px;

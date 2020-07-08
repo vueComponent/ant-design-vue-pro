@@ -17,6 +17,12 @@ export const asyncRouterMap = [
         meta: { title: '首页', keepAlive: true, icon: home, permission: [ 'center', 'group' ] }
       },
       {
+        path: '/patient/list',
+        name: 'patientList',
+        component: () => import('@/views/patient/list'),
+        meta: { title: '患者管理', keepAlive: true, icon: wxyhbd, permission: [ 'center', 'group' ]}
+      },
+      {
         path: '/list/index',
         name: 'list',
         component: () => import('@/views/list/TableList'),
