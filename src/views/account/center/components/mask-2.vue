@@ -89,7 +89,7 @@
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm, computeScore } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, computeScore, recoverSubmit } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 export default {
@@ -375,7 +375,34 @@ export default {
       }
     },
     withdraw(){
-      
+      var that = this
+      this.$confirm({
+        title: '确认撤销？',
+        onOk() {
+          that.spinning = true
+          var params = new URLSearchParams()
+          params.append('patientBasisMarkId', that.zkbszl.patientBasisMarkId)
+          recoverSubmit(params)
+            .then(res => {
+              that.spinning = false
+              that.$message.success(res.msg)
+              params = new URLSearchParams()
+              params.append('patientBasisId', that.patientBasisId)
+              getPatientBasis(params)
+                .then(res => {
+                  
+                  that.orgTree = res.data.list
+                  that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+            }).catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
+        }
+      })
     }
   }
 }
