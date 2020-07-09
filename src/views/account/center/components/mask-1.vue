@@ -709,7 +709,7 @@ export default {
           }
         }
 
-        if (answer.b70) {
+        if (answer.b70 === 1) {
           that.controlb70 = true
         }
 
