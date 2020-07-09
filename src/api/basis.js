@@ -245,3 +245,11 @@ export function submitCheck(params) {
     data: params
   })
 }
+
+export function getCenterNum(params) {
+  return axios({
+    url: '/basis/getCenterNum',
+    method: 'post',
+    data: params
+  })
+}
