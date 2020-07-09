@@ -92,7 +92,7 @@
     </s-table>
     <create-form ref="createModal" @ok="handleOk" />
     <user-detail ref="detailModal" />
-    <a-modal :visible="visible" title="出组" @ok="outSubmit" :confirmLoading="confirmLoading">
+    <a-modal :visible="visible" title="出组" @ok="outSubmit" :confirmLoading="confirmLoading" :centered="centered" :destroyOnClose="destroyOnClose" @cancel="handleClose">
       <a-form :form="form">
         <input type="hidden" v-model="patientId">
         <a-form-item label="出组原因" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -103,6 +103,155 @@
           </a-radio-group>
         </a-form-item>
       </a-form>
+    </a-modal>
+    <a-modal title="基线提交" :width="800" :bodyStyle="detailStyle" :maskClosable="maskClosable" :centered="centered" :destroyOnClose="destroyOnClose" :visible="detailVisible" :footer="null" @cancel="handleCancel">
+      <div class="userDetail">
+        <div class="userDetailTop">
+          <img src="../../assets/woman.png" alt="" v-if="scoreData.sex == 0" />
+          <img src="../../assets/man.png" alt="" v-else />
+          <div class="name">{{scoreData.patientName}}</div>
+          <div class="age">
+            <span class="userDetailAge" :class="scoreData.sex == 0 ? 'womenBg' : ''">
+              <a-icon :type="scoreData.sex == 1 ? 'man':'woman'" />
+              {{scoreData.age}}岁
+            </span>
+          </div>
+          <div class="tl">{{scoreData.isTl}}</div>
+        </div>
+      </div>
+      <div class="scores">
+        <p class="title">支扩评分</p>
+        <a-row :gutter="10">
+          <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">BSI评分</div>
+              <div class="score">{{scoreData.BSI}}分</div>
+              <mini-progress color="rgb(24,144,255)" :target="scoreData.BSI" :percentage="scoreData.BSI" height="8px" />
+            </div>
+          </a-col>
+          <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">FACED评分</div>
+              <div class="score">{{scoreData.FACED}}分</div>
+              <mini-progress color="rgb(24,144,255)" :target="scoreData.FACED" :percentage="scoreData.FACED" height="8px" />
+            </div>
+          </a-col>
+          <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">BACI评分</div>
+              <div class="score">{{scoreData.BACI}}分</div>
+              <mini-progress color="rgb(24,144,255)" :target="scoreData.BACI" :percentage="scoreData.BACI" height="8px" />
+            </div>
+          </a-col>
+          <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">Reffi评分</div>
+              <div class="score">{{scoreData.Reiff}}分</div>
+              <mini-progress color="rgb(24,144,255)" :target="scoreData.Reiff" :percentage="scoreData.Reiff" height="8px" />
+            </div>
+          </a-col>
+        </a-row>
+      </div>
+      <div class="scores">
+        <p class="title">问卷评分</p>
+        <a-row :gutter="10">
+          <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">BHQ评分</div>
+              <div class="score">{{scoreData.BHQ.score}}分</div>
+              <mini-progress color="rgb(24,144,255)" :target="scoreData.BHQ.score" :percentage="scoreData.BHQ.score" height="8px" />
+            </div>
+          </a-col>
+          <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">MMRC评分</div>
+              <div class="score">{{scoreData.MMRC.score}}分</div>
+              <mini-progress color="rgb(24,144,255)" :target="scoreData.MMRC.score" :percentage="scoreData.MMRC.score" height="8px" />
+            </div>
+          </a-col>
+          <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">HAD评分</div>
+              <div class="score">{{scoreData.HAD.score}}分</div>
+              <mini-progress color="rgb(24,144,255)" :target="scoreData.HAD.score" :percentage="scoreData.HAD.score" height="8px" />
+            </div>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col :sm="24" :md="24" :xl="24" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">LCQ评分</div>
+              <div class="score">总{{scoreData.LCQ.score}}分</div>
+              <a-row :gutter="10">
+                <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+                  <label>生理</label>
+                  <mini-progress color="rgb(24,144,255)" :target="scoreData.LCQ.score1" :percentage="scoreData.LCQ.score1" height="8px" />
+                  <label>{{scoreData.LCQ.score1}}分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+                  <label>心理</label>
+                  <mini-progress color="rgb(24,144,255)" :target="scoreData.LCQ.score2" :percentage="scoreData.LCQ.score2" height="8px" />
+                  <label>{{scoreData.LCQ.score2}}分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+                  <label>社会</label>
+                  <mini-progress color="rgb(24,144,255)" :target="scoreData.LCQ.score3" :percentage="scoreData.LCQ.score3" height="8px" />
+                  <label>{{scoreData.LCQ.score3}}分</label>
+                </a-col>
+              </a-row>
+            </div>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col :sm="24" :md="24" :xl="24" :style="{ marginBottom: '10px' }">
+            <div class="block clearfix">
+              <div class="name">QoL-B评分</div>
+              <a-row :gutter="10">
+                <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
+                  <label>身体功能性维度</label>
+                  <mini-progress color="rgb(24,144,255)" :target="scoreData.QOLB.score1" :percentage="scoreData.QOLB.score1" height="8px" />
+                  <label>{{scoreData.QOLB.score1}}分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
+                  <label>角色功能性维度</label>
+                  <mini-progress color="rgb(24,144,255)" :target="scoreData.QOLB.score2" :percentage="scoreData.QOLB.score2" height="8px" />
+                  <label>{{scoreData.QOLB.score2}}分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
+                  <label>活力性维度</label>
+                  <mini-progress color="rgb(24,144,255)" :target="scoreData.QOLB.score3" :percentage="scoreData.QOLB.score3" height="8px" />
+                  <label>{{scoreData.QOLB.score3}}分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
+                  <label>情绪功能性维度</label>
+                  <mini-progress color="rgb(24,144,255)" :target="scoreData.QOLB.score4" :percentage="scoreData.QOLB.score4" height="8px" />
+                  <label>{{scoreData.QOLB.score4}}分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
+                  <label>社会功能性维度</label>
+                  <mini-progress color="rgb(24,144,255)" :target="scoreData.QOLB.score5" :percentage="scoreData.QOLB.score5" height="8px" />
+                  <label>{{scoreData.QOLB.score5}}分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
+                  <label>医疗负担性维度</label>
+                  <mini-progress color="rgb(24,144,255)" :target="scoreData.QOLB.score6" :percentage="scoreData.QOLB.score6" height="8px" />
+                  <label>{{scoreData.QOLB.score6}}分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
+                  <label>健康感觉性维度</label>
+                  <mini-progress color="rgb(24,144,255)" :target="scoreData.QOLB.score7" :percentage="scoreData.QOLB.score7" height="8px" />
+                  <label>{{scoreData.QOLB.score7}}分</label>
+                </a-col>
+                <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
+                  <label>呼吸症状性维度</label>
+                  <mini-progress color="rgb(24,144,255)" :target="scoreData.QOLB.score8" :percentage="scoreData.QOLB.score8" height="8px" />
+                  <label>{{scoreData.QOLB.score8}}分</label>
+                </a-col>
+              </a-row>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
     </a-modal>
   </a-card>
 </template>
@@ -117,6 +266,8 @@ import CreateForm from './modules/CreateForm'
 import UserDetail from './modules/UserDetail'
 import Visit from './modules/Visit'
 import { getPatientList } from '@/api/patient'
+import { ChartCard, MiniProgress } from '@/components'
+import { MyIcon } from '@/components/_util/util'
 import {
   addVasit,
   outGroup,
@@ -240,7 +391,10 @@ export default {
     CreateForm,
     StepByStepModal,
     UserDetail,
-    Visit
+    Visit,
+    MyIcon,
+    ChartCard,
+    MiniProgress
   },
   data() {
     return {
@@ -250,6 +404,49 @@ export default {
       bodyStyle: {
         padding: "10px",
         paddingBottom: "0px"
+      },
+      detailStyle: {
+        height: '500px',
+        overflow: 'auto',
+        background: "#F8FBFC"
+      },
+      maskClosable: false,
+      centered: true,
+      destroyOnClose: true,
+      scoreData: {
+        isTl: '铜绿感染',
+        age: 62,
+        patientName: '宋国军',
+        sex: 1,
+        BACI: 0,
+        BSI: 9,
+        FACED: 4,
+        Reiff: 12,
+        HAD: {
+          score: 22
+        },
+        LCQ: {
+          score: 9.79,
+          score1: 3.25,
+          score2: 3.29,
+          score3: 3.25
+        },
+        MMRC: {
+          score: 3
+        },
+        BHQ: {
+          score: 46.32649
+        },
+        QOLB: {
+          score1: 26.67,
+          score2: 26.67,
+          score3: 26.67,
+          score4: 16.67,
+          score5: 26.67,
+          score6: 26.67,
+          score7: 8.33,
+          score8: 25.39
+        }
       },
       // 高级搜索 展开/关闭
       advanced: false,
@@ -289,7 +486,6 @@ export default {
       form: this.$form.createForm(this),
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
       visible: false,
-      form: this.$form.createForm(this),
       labelCol: {
         xs: { span: 24 },
         sm: { span: 7 }
@@ -300,7 +496,8 @@ export default {
       },
       requiredRule: { rules: [{ required: true, message: '该选项必填！' }] },
       patientId: null,
-      confirmLoading: false
+      confirmLoading: false,
+      detailVisible: false
     }
   },
   created() {
@@ -377,6 +574,12 @@ export default {
     exportData() {
       window.open(this.baseUrl + '/patient/export?doctorId=' + this.token.doctorId)
     },
+    handleCancel() {
+      this.detailVisible = false
+    },
+    handleClose() {
+      this.visible = false
+    },
     handleSubmit(record) {
       var that = this
       this.$confirm({
@@ -387,7 +590,9 @@ export default {
           submitCheck(params)
             .then(res => {
               that.$message.success(res.msg)
-              that.$refs.table.refresh();
+              that.$refs.table.refresh()
+              that.scoreData = res.data
+              that.detailVisible = true
             }).catch(error => {
               console.log(error)
             })
@@ -412,7 +617,7 @@ export default {
           that.visible = false
           that.confirmLoading = false
           that.$message.success(res.msg)
-          that.$refs.table.refresh();
+          that.$refs.table.refresh()
         });
       });
     }
@@ -508,5 +713,112 @@ export default {
     text-decoration-color: #1fb2fa;
     cursor: pointer;
   }
+}
+
+.userDetail {
+  border: 1px solid #f8f8f8;
+  border-top: 4px solid #168ffd;
+  padding: 15px 25px;
+  background-color: #ffffff;
+
+  .userDetailTop {
+    overflow: hidden;
+
+    img {
+      display: inline-block;
+      vertical-align: top;
+      width: 60px;
+      height: 60px;
+      float: left;
+    }
+
+    .name {
+      float: left;
+      line-height: 60px;
+      height: 60px;
+      margin: 0 10px;
+    }
+
+    .age {
+      float: left;
+      margin-top: 20px;
+
+      .userDetailAge {
+        display: inline-block;
+        background-color: #96dcfd;
+        color: #ffffff;
+        padding: 0px 10px;
+        border-radius: 3px;
+
+        .anticon {
+          margin-right: 5px;
+        }
+      }
+    }
+
+    .tl {
+      float: left;
+      height: 21px;
+      line-height: 21px;
+      background: #ff4856;
+      border-radius: 3px;
+      padding: 0 10px;
+      margin-top: 20px;
+      margin-left: 10px;
+      color: #fff;
+    }
+  }
+}
+
+.scores {
+  margin-top: 10px;
+  border-top: 2px solid #168ffd;
+  background-color: #fff;
+  padding: 10px;
+
+  .title {
+    color: #096dd9;
+    margin-bottom: 10px;
+  }
+
+  .block {
+    border: 1px solid #eee;
+    padding: 10px;
+
+    .name {
+      float: left;
+    }
+
+    .score {
+      float: right;
+      color: #096dd9;
+
+      &.no {
+        color: gray;
+      }
+    }
+
+    .chart-mini-progress {
+      clear: both;
+    }
+
+    .ant-row {
+      clear: both;
+      margin-top: 30px;
+
+      .chart-mini-progress {
+        clear: none;
+        float: left;
+        width: 56%;
+        margin: 0 10px;
+      }
+
+      label {
+        float: left;
+        font-size: 12px;
+      }
+    }
+  }
+
 }
 </style>

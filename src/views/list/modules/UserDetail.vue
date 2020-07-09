@@ -507,7 +507,7 @@ export default {
   padding: 10px;
   .title{
     color: #096dd9;
-    margin-bottom: 0;
+    margin-bottom: 10px;
   }
   .block{
     border: 1px solid #eee;
