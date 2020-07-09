@@ -33,7 +33,9 @@
               <a-button class="btn fr" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <div class="title">1.CT基本信息</div>
+              <div class="title">1.CT基本信息
+                <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;" @click="changeOcr" />
+              </div>
               <a-form-item label="(1) CT检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
@@ -51,7 +53,7 @@
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
-                  <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1">OCR识别</a-button>
+                  <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1 && showOcr">OCR识别</a-button>
                   <!-- <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
                     <img alt="example" style="width: 100%" :src="previewImage" />
                   </a-modal> -->
@@ -231,6 +233,7 @@ export default {
   },
   data() {
     return {
+      showOcr: false,
       spinning: false,
       previewVisible: false,
       previewImage: '',
@@ -599,7 +602,7 @@ export default {
           this.spinning = false
         })
     },
-    withdraw(){
+    withdraw() {
       var that = this
       this.$confirm({
         title: '确认撤销？',
@@ -615,7 +618,7 @@ export default {
               params.append('patientBasisId', that.patientBasisId)
               getPatientBasis(params)
                 .then(res => {
-                  
+
                   that.orgTree = res.data.list
                   that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
@@ -628,6 +631,9 @@ export default {
             })
         }
       })
+    },
+    changeOcr() {
+      this.showOcr = true
     }
   }
 }
@@ -776,9 +782,11 @@ export default {
     .ant-menu.ant-menu-inline.ant-menu-sub {
       background-color: rgba(245, 251, 255);
       padding-left: 20px;
-      .treeSubTitle{
+
+      .treeSubTitle {
         font-size: 14px;
       }
+
       li {
         border-bottom: none;
         height: 40px;
