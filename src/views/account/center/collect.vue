@@ -500,9 +500,9 @@ export default {
       this.getElementsAnswer()
     },
     handleSubmit () {
-      const { form: { validateFieldsAndScrollAndScroll } } = this
+      const { form: { validateFieldsAndScroll } } = this
       this.confirmLoading = true
-      validateFieldsAndScrollAndScroll((errors, values) => {
+      validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           console.log('values', values)
           setTimeout(() => {

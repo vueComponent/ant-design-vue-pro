@@ -880,8 +880,8 @@ export default {
     },
     handleSubmit(e) {
       e.preventDefault()
-      const { form: { validateFieldsAndScrollAndScroll } } = this
-      validateFieldsAndScrollAndScroll((errors, values) => {
+      const { form: { validateFieldsAndScroll } } = this
+      validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           console.log('values', values)
           var re = this.form.getFieldsValue()

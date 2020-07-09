@@ -120,7 +120,8 @@ import { getPatientList } from '@/api/patient'
 import {
   addVasit,
   outGroup,
-  getJxDataList
+  getJxDataList,
+  submitCheck
 } from '@/api/basis'
 import {
   mapGetters,
@@ -192,7 +193,7 @@ var columns = [{
   title: '分支中心',
   width: 200,
   dataIndex: 'centerName'
-},{
+}, {
   title: '操作',
   dataIndex: 'action',
   width: 120,
@@ -377,7 +378,21 @@ export default {
       window.open(this.baseUrl + '/patient/export?doctorId=' + this.token.doctorId)
     },
     handleSubmit(record) {
-
+      var that = this
+      this.$confirm({
+        title: '确认提交？',
+        onOk() {
+          var params = new URLSearchParams()
+          params.append('patientBasisId', record.basisList[0].patientBasisId)
+          submitCheck(params)
+            .then(res => {
+              that.$message.success(res.msg)
+              that.$refs.table.refresh();
+            }).catch(error => {
+              console.log(error)
+            })
+        }
+      })
     },
     handleOut(record) {
       this.visible = true

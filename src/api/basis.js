@@ -237,3 +237,11 @@ export function getJxDataList(params) {
     data: params
   })
 }
+
+export function submitCheck(params) {
+  return axios({
+    url: '/basis/submitCheck',
+    method: 'post',
+    data: params
+  })
+}
