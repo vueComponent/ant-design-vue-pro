@@ -31,9 +31,10 @@
             <div class="btn-array" v-if="executeStatus === 2">
               <a-button class="btn fr" @click="withdraw">撤回</a-button>
             </div>
-
             <div class="baselineForm" :style="baselineFormStyle">
-              <div class="title">1.肺功能相关检查</div>
+              <div class="title">1.肺功能相关检查
+                <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" />
+              </div>
               <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" class="images1" v-viewer listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
@@ -42,7 +43,7 @@
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
-                  <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_importF" v-if="fileList1.length === 1">OCR识别</a-button>
+                  <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_importF" v-if="fileList1.length === 1 && showOcr">OCR识别</a-button>
                   <!-- <a-modal :visible="previewVisible1" :footer="null" @cancel="handleCancel1">
                       <img alt="example" style="width: 100%" :src="previewImage1" />
                     </a-modal> -->
@@ -225,7 +226,7 @@
                         <div class="ant-upload-text">Upload</div>
                       </div>
                     </a-upload>
-                    <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_importS" v-if="fileList2.length === 1">OCR识别</a-button>
+                    <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_importS" v-if="fileList2.length === 1 && showOcr">OCR识别</a-button>
                     <!-- <a-modal :visible="previewVisible2" :footer="null" @cancel="handleCancel2">
                       <img alt="example" style="width: 100%" :src="previewImage2" />
                     </a-modal> -->
@@ -404,6 +405,7 @@ export default {
   },
   data() {
     return {
+      showOcr: false,
       //   previewVisible1: false,
       //   previewImage1: '',
       //   previewVisible2: false,
@@ -839,7 +841,7 @@ export default {
           this.confirmLoading = false
         })
     },
-    withdraw(){
+    withdraw() {
       var that = this
       this.$confirm({
         title: '确认撤销？',
@@ -855,7 +857,7 @@ export default {
               params.append('patientBasisId', that.patientBasisId)
               getPatientBasis(params)
                 .then(res => {
-                  
+
                   that.orgTree = res.data.list
                   that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
@@ -868,6 +870,9 @@ export default {
             })
         }
       })
+    },
+    changeOcr() {
+      this.showOcr = true
     }
   }
 }
@@ -1016,9 +1021,11 @@ export default {
     .ant-menu.ant-menu-inline.ant-menu-sub {
       background-color: rgba(245, 251, 255);
       padding-left: 20px;
-      .treeSubTitle{
+
+      .treeSubTitle {
         font-size: 14px;
       }
+
       li {
         border-bottom: none;
         height: 40px;

@@ -32,7 +32,7 @@
               <a-button class="btn fr" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <div class="title">1.血常规</div>
+              <div class="title">1.血常规<a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /></div>
               <a-form-item label="血常规报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" class="images1" v-viewer listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
@@ -41,7 +41,7 @@
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
-                  <a-button style="position: absolute;top: 74px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList1,1)" v-if="fileList1.length === 1">OCR识别</a-button>
+                  <a-button style="position: absolute;top: 74px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList1,1)" v-if="fileList1.length === 1 && showOcr">OCR识别</a-button>
                   <!-- <a-modal :visible="previewVisible1" :footer="null" @cancel="handleCancel1">
                     <img alt="example" style="width: 100%" :src="previewImage1" />
                   </a-modal> -->
@@ -74,7 +74,7 @@
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
-                  <a-button style="position: absolute;top: 74px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList2,2)" v-if="fileList2.length === 1">OCR识别</a-button>
+                  <a-button style="position: absolute;top: 74px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList2,2)" v-if="fileList2.length === 1 && showOcr">OCR识别</a-button>
                   <!-- <a-modal :visible="previewVisible2" :footer="null" @cancel="handleCancel2">
                     <img alt="example" style="width: 100%" :src="previewImage2" />
                   </a-modal> -->
@@ -172,10 +172,11 @@ export default {
   },
   data() {
     return {
-    //   previewVisible1: false,
-    //   previewImage1: '',
-    //   previewVisible2: false,
-    //   previewImage2: '',
+      showOcr: false,
+      //   previewVisible1: false,
+      //   previewImage1: '',
+      //   previewVisible2: false,
+      //   previewImage2: '',
       uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
       viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
       fileList1: [],
@@ -433,10 +434,10 @@ export default {
     //   this.previewVisible1 = false;
     // },
     handlePreview1(file) {
-        const viewer = this.$el.querySelector('.images1').$viewer
-        viewer.show()
-    //   this.previewImage1 = file.url || file.thumbUrl;
-    //   this.previewVisible1 = true;
+      const viewer = this.$el.querySelector('.images1').$viewer
+      viewer.show()
+      //   this.previewImage1 = file.url || file.thumbUrl;
+      //   this.previewVisible1 = true;
     },
     handleChange1({ fileList }) {
       this.fileList1 = fileList;
@@ -445,10 +446,10 @@ export default {
     //   this.previewVisible2 = false;
     // },
     handlePreview2(file) {
-        const viewer = this.$el.querySelector('.images2').$viewer
-        viewer.show()
-    //   this.previewImage2 = file.url || file.thumbUrl;
-    //   this.previewVisible2 = true;
+      const viewer = this.$el.querySelector('.images2').$viewer
+      viewer.show()
+      //   this.previewImage2 = file.url || file.thumbUrl;
+      //   this.previewVisible2 = true;
     },
     handleChange2({ fileList }) {
       this.fileList2 = fileList;
@@ -474,7 +475,7 @@ export default {
           that.$message.error(res.msg)
         })
     },
-    withdraw(){
+    withdraw() {
       var that = this
       this.$confirm({
         title: '确认撤销？',
@@ -490,7 +491,7 @@ export default {
               params.append('patientBasisId', that.patientBasisId)
               getPatientBasis(params)
                 .then(res => {
-                  
+
                   that.orgTree = res.data.list
                   that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
@@ -503,6 +504,9 @@ export default {
             })
         }
       })
+    },
+    changeOcr(){
+      this.showOcr = true
     }
   }
 }
@@ -526,6 +530,7 @@ export default {
   right: 0;
   background: rgba(0, 0, 0, .2);
   z-index: 2;
+
   & .ant-spin-dot {
     position: absolute;
     top: 55%;
@@ -650,9 +655,11 @@ export default {
     .ant-menu.ant-menu-inline.ant-menu-sub {
       background-color: rgba(245, 251, 255);
       padding-left: 20px;
-      .treeSubTitle{
+
+      .treeSubTitle {
         font-size: 14px;
       }
+
       li {
         border-bottom: none;
         height: 40px;
@@ -754,11 +761,11 @@ export default {
     margin-right: 10px;
   }
 
-  .btn-array{
+  .btn-array {
     overflow: hidden;
     position: absolute;
     padding-top: 10px;
-    padding-right: 20px; 
+    padding-right: 20px;
     width: calc(100% - 8px);
     // height: 42px;
     background: #fff;
@@ -766,6 +773,7 @@ export default {
     padding-bottom: 10px;
     bottom: 0;
   }
+
   .baselineForm {
     margin-top: 42px;
     overflow: auto;
@@ -871,6 +879,7 @@ export default {
 /deep/.ant-menu-inline .ant-menu-submenu-title {
   padding-right: 0px;
 }
+
 .base-form {
   height: 100%;
   -ms-overflow-x: hidden;
