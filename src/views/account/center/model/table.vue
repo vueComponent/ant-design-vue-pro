@@ -24,10 +24,11 @@
                   <div class="ant-upload-text">Upload</div>
                 </div>
               </a-upload>
-              <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1">OCR识别</a-button>
+              <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1 && showOcr">OCR识别</a-button>
             </div>
           </a-form-item>
         </a-form>
+        <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-left: 12px;color: #ccc;" @click="changeOcr" />
         <p style="text-align: right">
           <a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button>
         </p>
@@ -130,6 +131,7 @@ export default {
   data() {
     this.cacheData = this.dataSource.map(item => ({ ...item }));
     return {
+      showOcr: false,
       pagination: false,
       data: this.dataSource,
       columns,
@@ -286,6 +288,9 @@ export default {
         .catch(error => {
           this.confirmLoading = false
         })
+    },
+    changeOcr() {
+      this.showOcr = true
     }
   },
   watch: {

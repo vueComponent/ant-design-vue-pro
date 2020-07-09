@@ -34,7 +34,7 @@
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.CT基本信息
-                <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;" @click="changeOcr" />
+                <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" />
               </div>
               <a-form-item label="(1) CT检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
