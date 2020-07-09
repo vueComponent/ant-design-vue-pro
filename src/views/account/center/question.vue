@@ -45,6 +45,12 @@
                     <a-col :span="6"><strong>影响impact（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
                     <a-col :span="6"><strong>合计（<span style="color: #3398dc">{{ questionTask.score }}分</span>）</strong></a-col>
                 </a-row>
+                <a-row v-if="(questionId === 35 || questionId === 41 || questionId === 61) && questionTask.status === 1 && typeof questionTask.score1 !== 'undefined'" type="flex" align="middle" style="flex:1;margin-left:40px;">
+                    <a-col :span="6"><strong>生理（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>心理（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>社会（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
+                    <a-col :span="6"><strong>合计（<span style="color: #3398dc">{{ questionTask.score }}分</span>）</strong></a-col>
+                </a-row>
               </a-row>
               <a-row type="flex" align="middle" class="btn-group" v-if="executeStatus !== 2 && questionTask.status !== 5 && !isGroup">
                 <a-button class="btn fr" @click="save">保存</a-button>

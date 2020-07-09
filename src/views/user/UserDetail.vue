@@ -23,6 +23,12 @@
             <a-select-option v-for="item in centerList" :key="item.value" :value="item.value" :label="item.label">{{item.label}}</a-select-option>
           </a-select>
         </a-form-item>
+        <a-form-item label="是否查看全部中心" :labelCol="labelCol" :wrapperCol="wrapperCol" v-if="form.getFieldValue('roleId') == 2">
+          <a-radio-group v-decorator="['purviewType', requiredRule]">
+            <a-radio value="1">是</a-radio>
+            <a-radio value="2">否</a-radio>
+          </a-radio-group>
+        </a-form-item>
         <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['status', requiredRule]">
             <a-radio value="1">使用</a-radio>
@@ -109,7 +115,8 @@ export default {
           password: data.password,
           password2: data.password,
           roleId: data.roleId,
-          status: String(data.status)
+          status: String(data.status),
+          purviewType: String(data.purviewType)
         })
         this.$nextTick(() => {
           if (this.form.getFieldValue('roleId') == 2) {
