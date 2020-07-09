@@ -66,6 +66,7 @@
         <a-checkbox value="4">NTM</a-checkbox>
         <a-checkbox value="5">溺水</a-checkbox>
         <a-checkbox value="6">其他</a-checkbox>
+        <a-checkbox value="7">无</a-checkbox>
       </a-checkbox-group>
     </a-form-item>
     <a-form-item label="(6) 目前合并呼吸系统相关疾病:" :labelCol="labelColHor" :wrapperCol="wrapperHor">

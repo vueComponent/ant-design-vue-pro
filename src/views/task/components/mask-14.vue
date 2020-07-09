@@ -107,6 +107,7 @@
                   <a-checkbox value="4">NTM</a-checkbox>
                   <a-checkbox value="5">溺水</a-checkbox>
                   <a-checkbox value="6" :checked="controlb51" @change="changeSelect($event, 'controlb51')">其他</a-checkbox>
+                  <a-checkbox value="7">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item label="疾病名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb51">
@@ -360,6 +361,7 @@
                 <a-checkbox-group v-decorator="['b171', {...selectRequired, initialValue: initValue('b171', 'array')}]">
                   <a-checkbox value="1">他汀类</a-checkbox>
                   <a-checkbox value="2" :checked="controlb1711" @change="changeSelect($event, 'controlb1711')">其他</a-checkbox>
+                  <a-checkbox value="3">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item class="no-border" label="其他调脂:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb1711">
@@ -371,6 +373,7 @@
                   <a-checkbox value="2">非阿司匹林抑制剂（如：氯吡格雷）</a-checkbox>
                   <a-checkbox value="3">华法林/口服抗凝药</a-checkbox>         
                   <a-checkbox value="4" :checked="controlb1721" @change="changeSelect($event, 'controlb1721')">其他</a-checkbox>
+                  <a-checkbox value="5">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item class="no-border" label="其他抗凝:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb1721">
