@@ -1,19 +1,17 @@
 <template>
   <transition name="showHeader">
     <div v-if="visible" class="header-animat">
-      <a-layout-header
-        v-if="visible"
-        :class="[fixedHeader && 'ant-header-fixedHeader', sidebarOpened ? 'ant-header-side-opened' : 'ant-header-side-closed', ]"
-        :style="{ padding: '0' }">
+      <a-layout-header v-if="visible" :class="[fixedHeader && 'ant-header-fixedHeader', sidebarOpened ? 'ant-header-side-opened' : 'ant-header-side-closed', ]" :style="{ padding: '0' }">
         <div v-if="mode === 'sidemenu'" class="header">
-          <a-icon v-if="device==='mobile'" class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle"/>
-          <a-icon v-else class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle"/>
+          <a-icon v-if="device==='mobile'" class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle" />
+          <a-icon v-else class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle" />
+          <a-icon type="bar-chart" style="cursor: pointer;font-size: 20px;" @click="jumpReport" />
           <user-menu></user-menu>
         </div>
         <div v-else :class="['top-nav-header-index', theme]">
           <div class="header-index-wide">
             <div class="header-index-left">
-              <logo class="top-nav-header" :show-title="device !== 'mobile'"/>
+              <logo class="top-nav-header" :show-title="device !== 'mobile'" />
               <s-menu v-if="device !== 'mobile'" mode="horizontal" :menu="menus" :theme="theme" />
               <a-icon v-else class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle" />
             </div>
@@ -24,7 +22,6 @@
     </div>
   </transition>
 </template>
-
 <script>
 import UserMenu from '../tools/UserMenu'
 import SMenu from '../Menu/'
@@ -65,17 +62,17 @@ export default {
       default: 'desktop'
     }
   },
-  data () {
+  data() {
     return {
       visible: true,
       oldScrollTop: 0
     }
   },
-  mounted () {
+  mounted() {
     document.addEventListener('scroll', this.handleScroll, { passive: true })
   },
   methods: {
-    handleScroll () {
+    handleScroll() {
       if (!this.autoHideHeader) {
         return
       }
@@ -96,30 +93,36 @@ export default {
         })
       }
     },
-    toggle () {
+    toggle() {
       this.$emit('toggle')
+    },
+    jumpReport() {
+      this.$router.push('/report/index')
     }
   },
-  beforeDestroy () {
+  beforeDestroy() {
     document.body.removeEventListener('scroll', this.handleScroll, true)
   }
 }
 </script>
-
 <style lang="less">
 @import '../index.less';
 
-.header-animat{
+.header-animat {
   position: relative;
   z-index: @ant-global-header-zindex;
 }
+
 .showHeader-enter-active {
   transition: all 0.25s ease;
 }
+
 .showHeader-leave-active {
   transition: all 0.5s ease;
 }
-.showHeader-enter, .showHeader-leave-to {
+
+.showHeader-enter,
+.showHeader-leave-to {
   opacity: 0;
 }
 </style>
