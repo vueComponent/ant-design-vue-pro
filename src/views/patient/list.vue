@@ -24,6 +24,8 @@
       <template slot="name" slot-scope="text, record">
         <a @click="showUser(record)">{{ text }}</a>
       </template>
+      <span slot="visit" slot-scope="text">
+        <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <span slot="action" slot-scope="text, record" style="text-align: center;">
         <template>
           <a @click="exec(record)">编辑</a>
@@ -41,6 +43,29 @@ import UserDetail from '@/views/list/modules/UserDetail'
 import { getPatientList } from '@/api/patient'
 import CreateForm from '@/views/list/modules/CreateForm'
 import $ from 'jquery'
+
+const visitMap = {
+  0: {
+    status: 'default',
+    text: '死亡'
+  },
+  1: {
+    status: 'processing',
+    text: '跟踪'
+  },
+  2: {
+    status: 'success',
+    text: '完成'
+  },
+  3: {
+    status: 'error',
+    text: '失访'
+  },
+  4: {
+    status: "warning",
+    text: "警告"
+  }
+};
 
 export default {
   name: 'patientList',
@@ -83,6 +108,14 @@ export default {
           title: '分支中心',
           dataIndex: 'centerName',
           width: 200
+        },
+        {
+          title: '访视状态',
+          dataIndex: 'visit',
+          width: 120,
+          scopedSlots: {
+            customRender: 'visit'
+          }
         },
         {
           title: '创建日期',
@@ -147,12 +180,6 @@ export default {
     })
   },
   filters: {
-    statusFilter(type) {
-      return statusMap[type].text;
-    },
-    statusTypeFilter(type) {
-      return statusMap[type].status;
-    },
     visitFilter(type) {
       return visitMap[type].text;
     },

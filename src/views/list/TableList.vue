@@ -364,12 +364,9 @@ var groupColumns = [{
   width: 90,
   customRender: createDate => moment(createDate).format('YYYY-MM-DD')
 }, {
-  title: '访视状态',
+  title: '基线状态',
   dataIndex: 'visit',
-  width: 80,
-  scopedSlots: {
-    customRender: 'visit'
-  }
+  width: 80
 }, {
   title: '访视进度',
   dataIndex: 'basisList',
