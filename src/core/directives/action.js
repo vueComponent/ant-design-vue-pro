@@ -21,7 +21,9 @@ const action = Vue.directive('action', {
     const elVal = vnode.context.$route.meta.permission
     const permissionId = elVal instanceof String && [elVal] || elVal
     roles.permissions.forEach(p => {
-      if (!permissionId.includes(p.permissionId)) {
+      // Enda <endachao@gmail.com>
+      // if (!permissionId.includes(p.permissionId)) {
+      if (permissionId !== p.permissionId) {
         return
       }
       if (p.actionList && !p.actionList.includes(actionName)) {
