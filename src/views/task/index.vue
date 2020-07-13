@@ -170,12 +170,6 @@ export default {
           width: 120,
         },
         {
-          title: '任务状态',
-          dataIndex: 'executeStatus',
-          scopedSlots: { customRender: 'executeStatus' },
-          width: 110,
-        },
-        {
           title: '分支中心',
           dataIndex: 'centerName',
           width: 200
