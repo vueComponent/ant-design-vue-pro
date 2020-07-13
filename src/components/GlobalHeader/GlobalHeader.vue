@@ -5,7 +5,7 @@
         <div v-if="mode === 'sidemenu'" class="header">
           <a-icon v-if="device==='mobile'" class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle" />
           <a-icon v-else class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle" />
-          <a-icon type="bar-chart" style="cursor: pointer;font-size: 20px;" @click="jumpReport" />
+          <a-icon type="bar-chart" style="cursor: pointer;font-size: 20px;" @click="jumpReport" v-if="displayAll" />
           <user-menu></user-menu>
         </div>
         <div v-else :class="['top-nav-header-index', theme]">
@@ -27,6 +27,7 @@ import UserMenu from '../tools/UserMenu'
 import SMenu from '../Menu/'
 import Logo from '../tools/Logo'
 import { mixin } from '@/utils/mixin'
+import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 export default {
   name: 'GlobalHeader',
@@ -65,7 +66,8 @@ export default {
   data() {
     return {
       visible: true,
-      oldScrollTop: 0
+      oldScrollTop: 0,
+      displayAll: this.$ls.get(ACCESS_TOKEN).purviewType === 1 || false
     }
   },
   mounted() {

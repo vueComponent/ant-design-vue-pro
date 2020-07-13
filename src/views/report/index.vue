@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索用户名称" />
+              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索分支中心" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
@@ -24,7 +24,7 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="分支中心">
-                        <a-input v-model.trim="queryParam.Keyword" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.keyWord" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="提交时间">
                         <a-range-picker :value="submitArr" @change="changeSubmit" style="width: 100%" />

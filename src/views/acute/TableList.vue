@@ -34,9 +34,6 @@
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
                   <a-card :bordered="false">
                     <a-form>
-                      <a-form-item label="入组编号">
-                        <a-input v-model.trim="queryParam.fileBasisCode" style="width: 100%" />
-                      </a-form-item>
                       <a-form-item label="姓名">
                         <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
                       </a-form-item>
@@ -63,9 +60,8 @@
       <template slot="patientName" slot-scope="text, record">
         <a @click="showUser(record)">{{ text }}</a>
       </template>
-      <template slot="executeStatus" slot-scope="text">
-        <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" />
-      </template>
+      <span slot="submitStatus" slot-scope="text">
+        <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <span slot="serial" slot-scope="text, record, index">{{ index + 1 }}</span>
       <span slot="description" slot-scope="text">
         <ellipsis :length="8" tooltip>{{ text }}</ellipsis>
@@ -90,22 +86,14 @@ import UserDetail from './modules/UserDetail'
 import $ from 'jquery'
 
 const visitMap = {
-  0: {
-    status: 'warning',
-    text: '忽略'
-  },
-  1: {
-    status: 'default',
-    text: '未执行'
-  },
-  2: {
-    status: 'processing',
-    text: '执行中'
-  },
-  3: {
+  '已提交': {
     status: 'success',
-    text: '已完成'
+    text: '已提交'
   },
+  '未提交': {
+    status: 'error',
+    text: '未提交'
+  }
 };
 export default {
   name: 'acute',
@@ -129,16 +117,20 @@ export default {
       // 查询参数
       queryParam: {},
       // 表头
-      columns: [{
-          title: '入组编号',
-          width: 100,
-          dataIndex: 'fileBasisCode'
-        },
+      columns: [
         {
           title: '患者姓名',
           dataIndex: 'patientName',
           width: 100,
           scopedSlots: { customRender: 'patientName' }
+        },
+        {
+          title: '急性加重期状态',
+          dataIndex: 'submitStatusStr',
+          width: 120,
+          scopedSlots: {
+            customRender: 'submitStatus'
+          }
         },
         {
           title: '身份证号',
@@ -163,11 +155,6 @@ export default {
           customRender: createDate => moment(createDate).format('YYYY-MM-DD')
         },
         {
-          title: '任务状态',
-          dataIndex: 'executeStatus',
-          scopedSlots: { customRender: 'executeStatus' },
-          width: 120,
-        }, {
           title: '分支中心',
           dataIndex: 'centerName',
           width: 200

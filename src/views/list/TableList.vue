@@ -59,7 +59,7 @@
       <span slot="name" slot-scope="text, record" @click="showUser(record)">
         <p class="userName">{{ text }}</p>
       </span>
-      <span slot="visit" slot-scope="text">
+      <span slot="submitStatus" slot-scope="text">
         <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <span slot="basisList" slot-scope="basisList" v-if="basisList.length">
         <div class="progressTag">
@@ -84,9 +84,9 @@
         <template>
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
-          <a @click="handleSubmit(record)">提交</a>
+          <a @click="handleSubmit(record)" :disabled="record.submitStatus == '已提交'">提交</a>
           <a-divider type="vertical" />
-          <a @click="handleOut(record)">出组</a>
+          <a @click="handleOut(record)" :disabled="record.visit != 1">出组</a>
         </template>
       </span>
     </s-table>
@@ -123,31 +123,31 @@
         <p class="title">支扩评分</p>
         <a-row :gutter="10">
           <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
-            <div class="block clearfix">
+            <div class="block clearfix heighter">
               <div class="name">BSI评分</div>
               <div class="score">{{scoreData.BSI}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.BSI" :percentage="scoreData.BSI" height="8px" />
+              <mini-area />
             </div>
           </a-col>
           <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
-            <div class="block clearfix">
+            <div class="block clearfix heighter">
               <div class="name">FACED评分</div>
               <div class="score">{{scoreData.FACED}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.FACED" :percentage="scoreData.FACED" height="8px" />
+              <mini-area />
             </div>
           </a-col>
           <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
-            <div class="block clearfix">
+            <div class="block clearfix heighter">
               <div class="name">BACI评分</div>
               <div class="score">{{scoreData.BACI}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.BACI" :percentage="scoreData.BACI" height="8px" />
+              <mini-area />
             </div>
           </a-col>
           <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
-            <div class="block clearfix">
+            <div class="block clearfix heighter">
               <div class="name">Reffi评分</div>
               <div class="score">{{scoreData.Reiff}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.Reiff" :percentage="scoreData.Reiff" height="8px" />
+              <mini-area />
             </div>
           </a-col>
         </a-row>
@@ -158,22 +158,22 @@
           <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
             <div class="block clearfix">
               <div class="name">BHQ评分</div>
-              <div class="score">{{scoreData.BHQ.score}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.BHQ.score" :percentage="scoreData.BHQ.score" height="8px" />
+              <div class="score" style="color: mediumpurple">{{scoreData.BHQ.score}}分</div>
+              <mini-progress color="mediumpurple" :target="scoreData.BHQ.score" :percentage="scoreData.BHQ.score" height="8px" />
             </div>
           </a-col>
           <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
             <div class="block clearfix">
               <div class="name">MMRC评分</div>
-              <div class="score">{{scoreData.MMRC.score}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.MMRC.score" :percentage="scoreData.MMRC.score" height="8px" />
+              <div class="score" style="color: #fd94dc">{{scoreData.MMRC.score}}分</div>
+              <mini-progress color="#fd94dc" :target="scoreData.MMRC.score / 4 * 100" :percentage="scoreData.MMRC.score / 4 * 100" height="8px" />
             </div>
           </a-col>
           <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
             <div class="block clearfix">
               <div class="name">HAD评分</div>
-              <div class="score">{{scoreData.HAD.score}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.HAD.score" :percentage="scoreData.HAD.score" height="8px" />
+              <div class="score" style="color: orange">{{scoreData.HAD.score}}分</div>
+              <mini-progress color="orange" :target="scoreData.HAD.score / 42 * 100" :percentage="scoreData.HAD.score / 42 * 100" height="8px" />
             </div>
           </a-col>
         </a-row>
@@ -181,21 +181,21 @@
           <a-col :sm="24" :md="24" :xl="24" :style="{ marginBottom: '10px' }">
             <div class="block clearfix">
               <div class="name">LCQ评分</div>
-              <div class="score">总{{scoreData.LCQ.score}}分</div>
+              <div class="score" style="color: lightseagreen">总{{scoreData.LCQ.score}}分</div>
               <a-row :gutter="10">
                 <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
                   <label>生理</label>
-                  <mini-progress color="rgb(24,144,255)" :target="scoreData.LCQ.score1" :percentage="scoreData.LCQ.score1" height="8px" />
+                  <mini-progress color="lightseagreen" :target="scoreData.LCQ.score1 / 56 * 100" :percentage="scoreData.LCQ.score1 / 56 * 100" height="8px" />
                   <label>{{scoreData.LCQ.score1}}分</label>
                 </a-col>
                 <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
                   <label>心理</label>
-                  <mini-progress color="rgb(24,144,255)" :target="scoreData.LCQ.score2" :percentage="scoreData.LCQ.score2" height="8px" />
+                  <mini-progress color="lightseagreen" :target="scoreData.LCQ.score2 / 49 * 100" :percentage="scoreData.LCQ.score2 / 49 * 100" height="8px" />
                   <label>{{scoreData.LCQ.score2}}分</label>
                 </a-col>
                 <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
                   <label>社会</label>
-                  <mini-progress color="rgb(24,144,255)" :target="scoreData.LCQ.score3" :percentage="scoreData.LCQ.score3" height="8px" />
+                  <mini-progress color="lightseagreen" :target="scoreData.LCQ.score3 / 28 * 100" :percentage="scoreData.LCQ.score3/ 28 * 100" height="8px" />
                   <label>{{scoreData.LCQ.score3}}分</label>
                 </a-col>
               </a-row>
@@ -266,7 +266,7 @@ import CreateForm from './modules/CreateForm'
 import UserDetail from './modules/UserDetail'
 import Visit from './modules/Visit'
 import { getPatientList } from '@/api/patient'
-import { ChartCard, MiniProgress } from '@/components'
+import { ChartCard, MiniProgress, MiniArea } from '@/components'
 import { MyIcon } from '@/components/_util/util'
 import {
   addVasit,
@@ -284,25 +284,13 @@ import {
 } from '@/store/mutation-types'
 
 const visitMap = {
-  0: {
-    status: 'default',
-    text: '死亡'
-  },
-  1: {
-    status: 'processing',
-    text: '跟踪'
-  },
-  2: {
+  '已提交': {
     status: 'success',
-    text: '完成'
+    text: '已提交'
   },
-  3: {
+  '未提交': {
     status: 'error',
-    text: '失访'
-  },
-  4: {
-    status: "warning",
-    text: "警告"
+    text: '未提交'
   }
 };
 
@@ -327,11 +315,11 @@ var columns = [{
   width: 90,
   customRender: createDate => moment(createDate).format('YYYY-MM-DD')
 }, {
-  title: '访视状态',
-  dataIndex: 'visit',
+  title: '提交状态',
+  dataIndex: 'submitStatus',
   width: 80,
   scopedSlots: {
-    customRender: 'visit'
+    customRender: 'submitStatus'
   }
 }, {
   title: '访视进度',
@@ -364,9 +352,12 @@ var groupColumns = [{
   width: 90,
   customRender: createDate => moment(createDate).format('YYYY-MM-DD')
 }, {
-  title: '基线状态',
-  dataIndex: 'visit',
-  width: 80
+  title: '提交状态',
+  dataIndex: 'submitStatus',
+  width: 80,
+  scopedSlots: {
+    customRender: 'submitStatus'
+  }
 }, {
   title: '访视进度',
   dataIndex: 'basisList',
@@ -391,7 +382,8 @@ export default {
     Visit,
     MyIcon,
     ChartCard,
-    MiniProgress
+    MiniProgress,
+    MiniArea
   },
   data() {
     return {
@@ -586,10 +578,15 @@ export default {
           params.append('patientBasisId', record.basisList[0].patientBasisId)
           submitCheck(params)
             .then(res => {
-              that.$message.success(res.msg)
-              that.$refs.table.refresh()
-              that.scoreData = res.data
-              that.detailVisible = true
+              if (res.code === -1) {
+                that.$message.error(res.msg)
+              } else {
+                that.$message.success(res.msg)
+                that.$refs.table.refresh()
+                that.scoreData = res.data
+                that.detailVisible = true
+              }
+
             }).catch(error => {
               console.log(error)
             })
@@ -782,6 +779,10 @@ export default {
     border: 1px solid #eee;
     padding: 10px;
 
+    &.heighter {
+      height: 100px;
+    }
+
     .name {
       float: left;
     }
@@ -789,7 +790,7 @@ export default {
     .score {
       float: right;
       color: #096dd9;
-
+      font-weight: bold;
       &.no {
         color: gray;
       }
@@ -814,6 +815,10 @@ export default {
         float: left;
         font-size: 12px;
       }
+    }
+
+    /deep/.antv-chart-mini .chart-wrapper {
+      bottom: -100px !important;
     }
   }
 

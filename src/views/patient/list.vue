@@ -94,6 +94,14 @@ export default {
           dataIndex: 'code'
         },
         {
+          title: '访视状态',
+          dataIndex: 'visit',
+          width: 120,
+          scopedSlots: {
+            customRender: 'visit'
+          }
+        },
+        {
           title: '姓名',
           dataIndex: 'name',
           width: 100,
@@ -109,14 +117,7 @@ export default {
           dataIndex: 'centerName',
           width: 200
         },
-        {
-          title: '访视状态',
-          dataIndex: 'visit',
-          width: 120,
-          scopedSlots: {
-            customRender: 'visit'
-          }
-        },
+        
         {
           title: '创建日期',
           dataIndex: 'createDate',

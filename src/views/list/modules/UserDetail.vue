@@ -146,31 +146,31 @@
         <p class="title">支扩评分</p>
         <a-row :gutter="10">
           <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
-            <div class="block clearfix">
+            <div class="block clearfix heighter">
               <div class="name">BSI评分</div>
               <div class="score">{{scoreData.BSI}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.BSI" :percentage="scoreData.BSI" height="8px" />
+              <mini-area />
             </div>
           </a-col>
           <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
-            <div class="block clearfix">
+            <div class="block clearfix heighter">
               <div class="name">FACED评分</div>
               <div class="score">{{scoreData.FACED}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.FACED" :percentage="scoreData.FACED" height="8px" />
+              <mini-area />
             </div>
           </a-col>
           <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
-            <div class="block clearfix">
+            <div class="block clearfix heighter">
               <div class="name">BACI评分</div>
               <div class="score">{{scoreData.BACI}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.BACI" :percentage="scoreData.BACI" height="8px" />
+              <mini-area />
             </div>
           </a-col>
           <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
-            <div class="block clearfix">
+            <div class="block clearfix heighter">
               <div class="name">Reffi评分</div>
               <div class="score">{{scoreData.Reiff}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.Reiff" :percentage="scoreData.Reiff" height="8px" />
+              <mini-area />
             </div>
           </a-col>
         </a-row>
@@ -181,22 +181,22 @@
           <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
             <div class="block clearfix">
               <div class="name">BHQ评分</div>
-              <div class="score">{{scoreData.BHQ.score}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.BHQ.score" :percentage="scoreData.BHQ.score" height="8px" />
+              <div class="score" style="color: mediumpurple">{{scoreData.BHQ.score}}分</div>
+              <mini-progress color="mediumpurple" :target="scoreData.BHQ.score" :percentage="scoreData.BHQ.score" height="8px" />
             </div>
           </a-col>
           <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
             <div class="block clearfix">
               <div class="name">MMRC评分</div>
-              <div class="score">{{scoreData.MMRC.score}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.MMRC.score" :percentage="scoreData.MMRC.score" height="8px" />
+              <div class="score" style="color: #fd94dc">{{scoreData.MMRC.score}}分</div>
+              <mini-progress color="#fd94dc" :target="scoreData.MMRC.score / 4 * 100" :percentage="scoreData.MMRC.score / 4 * 100" height="8px" />
             </div>
           </a-col>
           <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
             <div class="block clearfix">
               <div class="name">HAD评分</div>
-              <div class="score">{{scoreData.HAD.score}}分</div>
-              <mini-progress color="rgb(24,144,255)" :target="scoreData.HAD.score" :percentage="scoreData.HAD.score" height="8px" />
+              <div class="score" style="color: orange">{{scoreData.HAD.score}}分</div>
+              <mini-progress color="orange" :target="scoreData.HAD.score / 42 * 100" :percentage="scoreData.HAD.score / 42 * 100" height="8px" />
             </div>
           </a-col>
         </a-row>
@@ -204,21 +204,21 @@
           <a-col :sm="24" :md="24" :xl="24" :style="{ marginBottom: '10px' }">
             <div class="block clearfix">
               <div class="name">LCQ评分</div>
-              <div class="score">总{{scoreData.LCQ.score}}分</div>
+              <div class="score" style="color: lightseagreen">总{{scoreData.LCQ.score}}分</div>
               <a-row :gutter="10">
                 <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
                   <label>生理</label>
-                  <mini-progress color="rgb(24,144,255)" :target="scoreData.LCQ.score1" :percentage="scoreData.LCQ.score1" height="8px" />
+                  <mini-progress color="lightseagreen" :target="scoreData.LCQ.score1 / 56 * 100" :percentage="scoreData.LCQ.score1 / 56 * 100" height="8px" />
                   <label>{{scoreData.LCQ.score1}}分</label>
                 </a-col>
                 <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
                   <label>心理</label>
-                  <mini-progress color="rgb(24,144,255)" :target="scoreData.LCQ.score2" :percentage="scoreData.LCQ.score2" height="8px" />
+                  <mini-progress color="lightseagreen" :target="scoreData.LCQ.score2 / 49 * 100" :percentage="scoreData.LCQ.score2 / 49 * 100" height="8px" />
                   <label>{{scoreData.LCQ.score2}}分</label>
                 </a-col>
                 <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
                   <label>社会</label>
-                  <mini-progress color="rgb(24,144,255)" :target="scoreData.LCQ.score3" :percentage="scoreData.LCQ.score3" height="8px" />
+                  <mini-progress color="lightseagreen" :target="scoreData.LCQ.score3 / 28 * 100" :percentage="scoreData.LCQ.score3/ 28 * 100" height="8px" />
                   <label>{{scoreData.LCQ.score3}}分</label>
                 </a-col>
               </a-row>
@@ -258,7 +258,7 @@
                 <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
                   <label>医疗负担性维度</label>
                   <mini-progress color="rgb(24,144,255)" :target="scoreData.QOLB.score6" :percentage="scoreData.QOLB.score6" height="8px" />
-                  <label>{{scoreData.QOLB.score6}}分</label>
+                  <label>{{scoreData.QOLB.score6 || 0}}分</label>
                 </a-col>
                 <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '10px' }">
                   <label>健康感觉性维度</label>
@@ -282,7 +282,7 @@
 import { getPatientDetail } from '@/api/patient'
 import UserDetail from './UserDetailTop'
 import { MyIcon } from '@/components/_util/util'
-import { ChartCard, MiniProgress } from '@/components';
+import { ChartCard, MiniProgress, MiniArea } from '@/components';
 import moment from 'moment'
 import _ from 'lodash'
 import 'url-search-params-polyfill'
@@ -292,7 +292,8 @@ export default {
     UserDetail,
     MyIcon,
     ChartCard,
-    MiniProgress
+    MiniProgress,
+    MiniArea
   },
   data() {
     return {
@@ -512,12 +513,17 @@ export default {
   .block{
     border: 1px solid #eee;
     padding: 10px;
+    
+    &.heighter{
+      height: 100px;
+    }
     .name{
       float: left;
     }
     .score{
       float: right;
       color: #096dd9;
+      font-weight: bold;
       &.no{
         color: gray;
       }
@@ -538,6 +544,9 @@ export default {
         float: left;
         font-size: 12px;
       }
+    }
+    /deep/.antv-chart-mini .chart-wrapper{
+      bottom: -100px!important;
     }
   }
   

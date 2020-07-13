@@ -73,9 +73,8 @@
       <template slot="patientName" slot-scope="text,record">
         <a @click="showUser(record)">{{text}}</a>
       </template>
-      <template slot="executeStatus" slot-scope="text">
-        <a-badge :status="text | executeStatusTypeFilter" :text="text | executeStatusFilter" />
-      </template>
+      <span slot="submitStatusStr" slot-scope="text">
+        <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <template slot="operation" slot-scope="text, record">
         <a @click="implement(record)">执行</a>
         <a-divider type="vertical" />
@@ -91,25 +90,21 @@ import { getVisitTask, ignoreBNTask } from '@/api/task'
 import { STable } from '@/components'
 import UserDetail from '../list/modules/UserDetail'
 import $ from 'jquery'
-
-const executeStatusMap = {
-  0: {
+const visitMap = {
+  '已提交': {
+    status: 'success',
+    text: '已提交'
+  },
+  '未提交': {
+    status: 'error',
+    text: '未提交'
+  },
+  '忽略': {
     status: 'default',
     text: '忽略'
-  },
-  1: {
-    status: 'error',
-    text: '未执行'
-  },
-  2: {
-    status: 'processing',
-    text: '执行中'
-  },
-  3: {
-    status: 'success',
-    text: '已完成'
   }
 };
+
 export default {
   name: 'Task',
   components: {
@@ -131,17 +126,19 @@ export default {
           dataIndex: 'warnStatus',
           scopedSlots: { customRender: 'warnStatus' },
           width: 70
+        }, {
+          title: '访视状态',
+          dataIndex: 'submitStatusStr',
+          width: 80,
+          scopedSlots: {
+            customRender: 'submitStatusStr'
+          }
         },
         {
           title: '任务名称',
           dataIndex: 'typeName',
           customRender: typeName => typeName + '任务',
           width: 120
-        },
-        {
-          title: '入组编号',
-          dataIndex: 'fileBasisCode',
-          width: 100
         },
         {
           title: '患者姓名',
@@ -223,11 +220,11 @@ export default {
     }
   },
   filters: {
-    executeStatusFilter(type) {
-      return executeStatusMap[type].text;
+    visitFilter(type) {
+      return visitMap[type].text;
     },
-    executeStatusTypeFilter(type) {
-      return executeStatusMap[type].status;
+    visitTypeFilter(type) {
+      return visitMap[type].status;
     }
   },
   mounted() {
@@ -272,11 +269,27 @@ export default {
       this.selectedRows = selectedRows;
     },
     ignore(record) {
+      var that = this
       console.log(record)
       if (record.type != 2) {
         this.$message.warning('只能忽略半年随访任务！');
         return false;
       }
+      if (record.executeStatus == 0 || record.executeStatus == 3) {
+        this.$message.warning('只能忽略未执行或执行中的半年随访任务！');
+        return false;
+      }
+      if(record.submitStatus == 2){
+        this.$message.warning('只能忽略未忽略的半年随访任务！');
+        return false;
+      }
+      const params = new URLSearchParams()
+      params.append('patientBasisId', record.patientBasisId)
+      ignoreBNTask(params)
+        .then(res => {
+          that.$message.success(res.msg)
+          that.$refs.table.refresh()
+        });
     }
   }
 };

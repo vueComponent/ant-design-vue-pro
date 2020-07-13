@@ -29,7 +29,7 @@
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="btn-array" v-if="executeStatus === 2">
-              <a-button class="btn fr" @click="withdraw">撤回</a-button>
+              <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
 
             <div class="baselineForm" :style="baselineFormStyle">
@@ -97,7 +97,7 @@
                     <a-radio value="4">4-7天/周</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="(2) ABPA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="(2) ABPA检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a1', {...selectRequired, initialValue: initValue('a1')}]" @change="changeRadio($event, 'controla1')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
@@ -717,7 +717,7 @@ export default {
         onOk() {
           that.spinning = true
           var params = new URLSearchParams()
-          params.append('patientBasisMarkId', that.zkbszl.patientBasisMarkId)
+          params.append('patientBasisMarkId', that.byxxgjc.patientBasisMarkId)
           recoverSubmit(params)
             .then(res => {
               that.spinning = false
@@ -728,7 +728,7 @@ export default {
                 .then(res => {
                   
                   that.orgTree = res.data.list
-                  that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                  that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
                 .catch(error => {
                   console.log(error)

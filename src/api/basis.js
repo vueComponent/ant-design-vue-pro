@@ -250,6 +250,6 @@ export function getCenterNum(params) {
   return axios({
     url: '/basis/getCenterNum',
     method: 'post',
-    data: params
+    params: params
   })
 }

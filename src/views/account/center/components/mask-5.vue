@@ -30,7 +30,7 @@
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="btn-array" v-if="executeStatus === 2">
-              <a-button class="btn fr" @click="withdraw">撤回</a-button>
+              <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.CT基本信息
@@ -609,7 +609,7 @@ export default {
         onOk() {
           that.spinning = true
           var params = new URLSearchParams()
-          params.append('patientBasisMarkId', that.zkbszl.patientBasisMarkId)
+          params.append('patientBasisMarkId', that.xbyxx.patientBasisMarkId)
           recoverSubmit(params)
             .then(res => {
               that.spinning = false
@@ -620,7 +620,7 @@ export default {
                 .then(res => {
 
                   that.orgTree = res.data.list
-                  that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                  that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
                 .catch(error => {
                   console.log(error)

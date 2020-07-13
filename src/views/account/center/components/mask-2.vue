@@ -30,7 +30,7 @@
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="btn-array" v-if="executeStatus === 2">
-              <a-button class="btn fr" @click="withdraw">撤回</a-button>
+              <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.体格检查</div>
@@ -381,7 +381,7 @@ export default {
         onOk() {
           that.spinning = true
           var params = new URLSearchParams()
-          params.append('patientBasisMarkId', that.zkbszl.patientBasisMarkId)
+          params.append('patientBasisMarkId', that.tgjc.patientBasisMarkId)
           recoverSubmit(params)
             .then(res => {
               that.spinning = false
