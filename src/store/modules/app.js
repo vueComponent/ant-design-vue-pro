@@ -1,4 +1,4 @@
-import storage from 'store'
+import storage from '@/utils/storage'
 import {
   SIDEBAR_TYPE,
   TOGGLE_MOBILE_TYPE,

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import storage from 'store'
+import storage from '@/utils/storage'
 import moment from 'moment'
 
 // default lang

@@ -1,6 +1,6 @@
 import router from './router'
 import store from './store'
-import storage from 'store'
+import storage from '@/utils/storage'
 import NProgress from 'nprogress' // progress bar
 import '@/components/NProgress/nprogress.less' // progress bar custom style
 import notification from 'ant-design-vue/es/notification'
@@ -17,6 +17,8 @@ const defaultRoutePath = '/dashboard/workplace'
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${i18nRender(to.meta.title)} - ${domTitle}`))
+
+  storage.removeExpiredKeys() // remove expired localstorage key
   /* has token */
   if (storage.get(ACCESS_TOKEN)) {
     if (to.path === loginRoutePath) {

@@ -1,5 +1,5 @@
 import store from '@/store'
-import storage from 'store'
+import storage from '@/utils/storage'
 import {
   ACCESS_TOKEN,
   APP_LANGUAGE,
