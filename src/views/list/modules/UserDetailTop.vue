@@ -13,6 +13,7 @@
             <a-icon :type="option.sex == 1 ? 'man':'woman'" />
             {{getAge}}岁
           </span>
+          <span class="tl" v-if="option.isTl">{{option.isTl}}</span>
           <span class="userDetailNation">{{option.nationName}}</span>
         </p>
       </div>
@@ -148,6 +149,13 @@ export default {
           .anticon {
             margin-right: 5px;
           }
+        }
+        .tl {
+          background: #ff4856;
+          border-radius: 3px;
+          padding: 0 10px;
+          margin-left: 10px;
+          color: #fff;
         }
 
         .userDetailNation {
