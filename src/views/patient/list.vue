@@ -89,9 +89,9 @@ export default {
       queryParam: {},
       // 表头
       columns: [{
-          title: '患者编号',
+          title: '入组编号',
           width: 100,
-          dataIndex: 'code'
+          dataIndex: 'fileCode'
         },
         {
           title: '访视状态',
