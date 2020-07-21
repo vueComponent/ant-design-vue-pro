@@ -336,7 +336,7 @@ export const asyncRouterMap = [{
       },
       {
         path: '/reportApply/review',
-        name: 'reportApply',
+        name: 'reportReview',
         component: () => import('@/views/reportApply/review'),
         meta: { title: '开通报表审核', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
       },

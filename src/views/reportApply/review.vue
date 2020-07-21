@@ -58,6 +58,7 @@ import $ from 'jquery'
 import { submitCheck } from '../../api/basis'
 
 export default {
+  name: 'reportReview',
   components: {
     STable
   },

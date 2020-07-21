@@ -82,6 +82,18 @@
       </template>
     </s-table>
     <user-detail ref="detailModal" />
+    <a-modal :visible="visible" title="退组" @ok="outSubmit" :confirmLoading="confirmLoading" :centered="centered" :destroyOnClose="destroyOnClose" @cancel="handleClose">
+      <a-form :form="form">
+        <input type="hidden" v-model="patientId">
+        <a-form-item label="退组原因" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-radio-group v-decorator="['status', requiredRule]">
+            <a-radio value="1">访视结束</a-radio>
+            <a-radio value="2">失访</a-radio>
+            <a-radio value="3">死亡</a-radio>
+          </a-radio-group>
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </a-card>
 </template>
 <script>
@@ -113,6 +125,11 @@ export default {
   },
   data() {
     return {
+      visible: false,
+      confirmLoading: false,
+      centered: true,
+      destroyOnClose: true,
+      outPatientBasisId: undefined,
       bodyStyle: {
         padding: "10px",
         paddingBottom: "0px"
@@ -233,6 +250,9 @@ export default {
     })
   },
   methods: {
+    handleClose(){
+      this.visible = false
+    },
     clearForm() {
       this.queryParam = {}
       this.dateArr = []
@@ -264,17 +284,17 @@ export default {
     },
     ignore(record) {
       var that = this
-      console.log(record)
-      if (record.type != 2) {
-        this.$message.warning('只能忽略半年随访任务！');
-        return false;
-      }
-      if (record.executeStatus == 0 || record.executeStatus == 3) {
-        this.$message.warning('只能忽略未执行或执行中的半年随访任务！');
+      if (record.executeStatus == 0) {
+        this.$message.warning('只能忽略未执行的任务！');
         return false;
       }
       if(record.submitStatus == 2){
-        this.$message.warning('只能忽略未忽略的半年随访任务！');
+        this.$message.warning('只能忽略未忽略的任务！');
+        return false;
+      }
+      if(record.type != 2){
+        this.visible = true;
+        this.outPatientBasisId = record.patientBasisId
         return false;
       }
       const params = new URLSearchParams()
@@ -284,6 +304,22 @@ export default {
           that.$message.success(res.msg)
           that.$refs.table.refresh()
         });
+    },
+    outSubmit(){
+      var that = this
+      this.form.validateFieldsAndScroll((errors, fieldsValue) => {
+        if (errors) {
+          that.confirmLoading = false
+          return
+        }
+        const params = new URLSearchParams()
+        params.append('patientBasisId', that.outPatientBasisId)
+        params.append('status', fieldsValue.status)
+        ignoreBNTask(params).then(res => {
+          that.$message.success(res.msg)
+          that.$refs.table.refresh()
+        });
+      });
     }
   }
 };
