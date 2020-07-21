@@ -16,6 +16,9 @@
             上月患者数
             <span>{{ indexData.lastMonthPatients }}</span>
           </template>
+          <div class="page-header-index-img">
+              <img  style="width: 64px; height: 64px" src="../../assets/home2.png">
+          </div>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
@@ -24,12 +27,18 @@
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
-            <mini-area />
+           <trend style="margin-right: 16px;">
+              <!-- <span slot="term">月同比</span>
+              {{ indexData.compareMonth }}% -->
+            </trend>
           </div>
           <template slot="footer">
             上月访视数
             <span>{{ indexData.lastMonthBasis }}</span>
           </template>
+           <div class="page-header-index-img">
+              <img  style="width: 64px; height: 64px" src="../../assets/home3.png">
+          </div>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
@@ -38,12 +47,18 @@
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
-            <mini-bar />
+            <trend  style="margin-right: 16px;">
+              <!-- <span slot="term">月同比</span>
+              {{ indexData.compareMonth }}% -->
+            </trend>
           </div>
           <template slot="footer">
             上年患者数
             <span>{{ indexData.currYearPatients }}</span>
           </template>
+           <div class="page-header-index-img">
+              <img  style="width: 64px; height: 64px" src="../../assets/home1.png">
+          </div>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
@@ -347,5 +362,10 @@ export default {
       left: -30px;
     }
   }
+}
+.page-header-index-img{
+  position: absolute;
+    top: -50px;
+    right: 40px;
 }
 </style>
