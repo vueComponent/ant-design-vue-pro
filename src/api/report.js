@@ -79,3 +79,24 @@ export function getImportDataList(parameter) {
     params: parameter
   })
 }
+export function getReporApplyList(params) {
+  return axios({
+    url: '/reportApply/getDataList',
+    method: 'post',
+    params: params
+  })
+}
+export function saveReporApply(params) {
+  return axios({
+    url: '/reportApply/saveApply',
+    method: 'post',
+    data: params
+  })
+}
+export function checReporApply(params) {
+  return axios({
+    url: '/reportApply/checkApply',
+    method: 'post',
+    data: params
+  })
+}
