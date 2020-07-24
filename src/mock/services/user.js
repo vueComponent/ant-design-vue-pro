@@ -417,16 +417,6 @@ const userNav = (options) => {
       'component': 'Analysis',
       'path': '/dashboard/analysis'
     },
-    {
-      'name': 'tests',
-      'parentId': 1,
-      'id': 8,
-      'meta': {
-        'title': '测试功能',
-        'show': true
-      },
-      'component': 'TestWork'
-    },
 
     // form
     {
