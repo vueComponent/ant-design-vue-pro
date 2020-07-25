@@ -96,6 +96,7 @@
 
 <script>
 import { getSmsCaptcha } from '@/api/login'
+import { deviceMixin } from '@/store/device-mixin'
 
 const levelNames = {
   0: '低',
@@ -119,7 +120,7 @@ export default {
   name: 'Register',
   components: {
   },
-  mixins: [],
+  mixins: [deviceMixin],
   data () {
     return {
       form: this.$form.createForm(this),
@@ -198,7 +199,7 @@ export default {
     },
 
     handlePasswordInputClick () {
-      if (!this.isMobile()) {
+      if (!this.isMobile) {
         this.state.passwordLevelChecked = true
         return
       }
