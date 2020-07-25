@@ -9,6 +9,14 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
+// check Git
+function getGitHash () {
+  try {
+    return GitRevision.version()
+  } catch (e) {}
+  return 'unknown'
+}
+
 const isProd = process.env.NODE_ENV === 'production'
 
 const assetsCDN = {
@@ -38,7 +46,7 @@ const vueConfig = {
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.DefinePlugin({
         APP_VERSION: `"${require('./package.json').version}"`,
-        GIT_HASH: JSON.stringify(GitRevision.version()),
+        GIT_HASH: JSON.stringify(getGitHash()),
         BUILD_DATE: buildDate
       })
     ],
