@@ -1,5 +1,5 @@
 <template>
-  <div id="userLayout" :class="['user-layout-wrapper', device]">
+  <div id="userLayout" :class="['user-layout-wrapper', isMobile && 'mobile']">
     <div class="container">
       <div class="top">
         <div class="header">
@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <route-view></route-view>
+      <router-view />
 
       <div class="footer">
         <div class="links">
@@ -22,7 +22,7 @@
           <a href="_self">条款</a>
         </div>
         <div class="copyright">
-          Copyright &copy; 2018 白鹭学园技术组出品
+          Copyright &copy; 2018 vueComponent
         </div>
       </div>
     </div>
@@ -30,16 +30,11 @@
 </template>
 
 <script>
-import RouteView from './RouteView'
-import { mixinDevice } from '@/utils/mixin'
+import { deviceMixin } from '@/store/device-mixin'
 
 export default {
   name: 'UserLayout',
-  components: { RouteView },
-  mixins: [mixinDevice],
-  data () {
-    return {}
-  },
+  mixins: [deviceMixin],
   mounted () {
     document.body.classList.add('userLayout')
   },
@@ -50,7 +45,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  #userLayout.user-layout-wrapper {
+#userLayout.user-layout-wrapper {
     height: 100%;
 
     &.mobile {

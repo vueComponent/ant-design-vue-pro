@@ -63,14 +63,14 @@
 </template>
 
 <script>
-import { getRoleList, getPermissions } from '@/api/manage'
-import { mixinDevice } from '@/utils/mixin'
-import { actionToObject } from '@/utils/permissions'
 import pick from 'lodash.pick'
+import { getRoleList, getPermissions } from '@/api/manage'
+import { actionToObject } from '@/utils/permissions'
+import { baseMixin } from '@/store/app-mixin'
 
 export default {
   name: 'RoleList',
-  mixins: [mixinDevice],
+  mixins: [baseMixin],
   components: {},
   data () {
     return {

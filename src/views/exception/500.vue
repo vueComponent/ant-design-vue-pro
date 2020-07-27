@@ -1,17 +1,20 @@
 <template>
-  <exception-page type="500" />
+  <a-result status="500" title="500" sub-title="Sorry, the server is reporting an error.">
+    <template #extra>
+      <a-button type="primary" @click="toHome">
+        Back Home
+      </a-button>
+    </template>
+  </a-result>
 </template>
 
 <script>
-import { ExceptionPage } from '@/components'
-
-export default {
-  components: {
-    ExceptionPage
+  export default {
+    name: 'Exception500',
+    methods: {
+      toHome () {
+        this.$router.push({ path: '/' })
+      }
+    }
   }
-}
 </script>
-
-<style scoped>
-
-</style>

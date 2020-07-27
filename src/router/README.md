@@ -42,7 +42,7 @@ const routerObject = {
 | keepAlive           | 缓存该路由                                                   | boolean | false  |
 | target              | 菜单链接跳转目标（参考 html a 标记）                          | string | -  |
 | hidden              | 配合`hideChildrenInMenu`使用，用于隐藏菜单时，提供递归到父菜单显示 选中菜单项_（可参考 个人页 配置方式）_ | boolean | false  |
-| hiddenHeaderContent | *特殊 隐藏 [PageHeader](https://github.com/sendya/ant-design-pro-vue/blob/master/src/components/PageHeader/PageHeader.vue#L6) 组件中的页面带的 面包屑和页面标题栏 | boolean | false  |
+| hiddenHeaderContent | *特殊 隐藏 [PageHeader](https://github.com/vueComponent/ant-design-vue-pro/blob/master/src/components/PageHeader/PageHeader.vue#L6) 组件中的页面带的 面包屑和页面标题栏 | boolean | false  |
 | permission          | 与项目提供的权限拦截匹配的权限，如果不匹配，则会被禁止访问该路由页面 | array   | []     |
 
 > 路由自定义 `Icon` 请引入自定义 `svg` Icon 文件，然后传递给路由的 `meta.icon` 参数即可
@@ -123,7 +123,7 @@ const asyncRouterMap = [
 > 1. 请注意 `component: () => import('..') ` 方式引入路由的页面组件为 懒加载模式。具体可以看 [Vue 官方文档](https://router.vuejs.org/zh/guide/advanced/lazy-loading.html)
 > 2. 增加新的路由应该增加在 '/' (index) 路由的 `children` 内
 > 3. 子路由的父级路由必须有 `router-view` 才能让子路由渲染出来，请仔细查阅 vue-router 文档
-> 4. `permission` 可以进行自定义修改，只需要对这个模块进行自定义修改即可 [src/store/modules/permission.js#L10](https://github.com/sendya/ant-design-pro-vue/blob/master/src/store/modules/permission.js#L10)
+> 4. `permission` 可以进行自定义修改，只需要对这个模块进行自定义修改即可 [src/store/modules/permission.js#L10](https://github.com/vueComponent/ant-design-vue-pro/blob/master/src/store/modules/permission.js#L10)
 
 
 附权限路由结构：
@@ -131,4 +131,4 @@ const asyncRouterMap = [
 ![权限结构](https://static-2.loacg.com/open/static/github/permissions.png)
 
 
-第二种前端路由由后端动态生成的设计，可以前往官网文档 https://pro.loacg.com/docs/authority-management 参考
+第二种前端路由由后端动态生成的设计，可以前往官网文档 https://pro.antdv.com/docs/authority-management 参考

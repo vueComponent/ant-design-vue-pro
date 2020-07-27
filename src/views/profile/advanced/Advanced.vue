@@ -1,27 +1,25 @@
-
 <template>
-  <page-view title="单号：234231029431" logo="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png">
+  <page-header-wrapper
+    title="单号：234231029431"
+    :tab-list="tabList"
+    :tab-active-key="tabActiveKey"
+    @tabChange="handleTabChange"
+  >
+    <template v-slot:content>
+      <a-descriptions size="small" :column="isMobile ? 1 : 2">
+        <a-descriptions-item label="创建人">曲丽丽</a-descriptions-item>
+        <a-descriptions-item label="订购产品">XX 服务</a-descriptions-item>
+        <a-descriptions-item label="创建时间">2017-07-07</a-descriptions-item>
+        <a-descriptions-item label="关联单据">
+          <a href="">12421</a>
+        </a-descriptions-item>
+        <a-descriptions-item label="生效日期">2017-07-07 ~ 2017-08-08</a-descriptions-item>
+        <a-descriptions-item label="备注">请于两个工作日内确认</a-descriptions-item>
+      </a-descriptions>
+    </template>
 
-    <detail-list slot="headerContent" size="small" :col="2" class="detail-layout">
-      <detail-list-item term="创建人">曲丽丽</detail-list-item>
-      <detail-list-item term="订购产品">XX服务</detail-list-item>
-      <detail-list-item term="创建时间">2018-08-07</detail-list-item>
-      <detail-list-item term="关联单据"><a>12421</a></detail-list-item>
-      <detail-list-item term="生效日期">2018-08-07 ~ 2018-12-11</detail-list-item>
-      <detail-list-item term="备注">请于两个工作日内确认</detail-list-item>
-    </detail-list>
-    <a-row slot="extra" class="status-list">
-      <a-col :xs="12" :sm="12">
-        <div class="text">状态</div>
-        <div class="heading">待审批</div>
-      </a-col>
-      <a-col :xs="12" :sm="12">
-        <div class="text">订单金额</div>
-        <div class="heading">¥ 568.08</div>
-      </a-col>
-    </a-row>
     <!-- actions -->
-    <template slot="action">
+    <template v-slot:extra>
       <a-button-group style="margin-right: 4px;">
         <a-button>操作</a-button>
         <a-button>操作</a-button>
@@ -30,52 +28,81 @@
       <a-button type="primary" >主操作</a-button>
     </template>
 
+    <template v-slot:extraContent>
+      <a-row class="status-list">
+        <a-col :xs="12" :sm="12">
+          <div class="text">状态</div>
+          <div class="heading">待审批</div>
+        </a-col>
+        <a-col :xs="12" :sm="12">
+          <div class="text">订单金额</div>
+          <div class="heading">¥ 568.08</div>
+        </a-col>
+      </a-row>
+    </template>
+
     <a-card :bordered="false" title="流程进度">
-      <a-steps :direction="isMobile() && 'vertical' || 'horizontal'" :current="1" progressDot>
-        <a-step title="创建项目">
+      <a-steps :direction="isMobile && 'vertical' || 'horizontal'" :current="1" progressDot>
+        <a-step>
+          <template v-slot:title>
+            <span>创建项目</span>
+          </template>
+          <template v-slot:description>
+            <div class="antd-pro-pages-profile-advanced-style-stepDescription">
+              曲丽丽<a-icon type="dingding" style="margin-left: 8px;" />
+              <div>2016-12-12 12:32</div>
+            </div>
+          </template>
         </a-step>
-        <a-step title="部门初审">
+        <a-step>
+          <template v-slot:title>
+            <span>部门初审</span>
+          </template>
+          <template v-slot:description>
+            <div class="antd-pro-pages-profile-advanced-style-stepDescription">
+              周毛毛<a-icon type="dingding" style="color: rgb(0, 160, 233); margin-left: 8px;" />
+              <div><a>催一下</a></div>
+            </div>
+          </template>
         </a-step>
-        <a-step title="财务复核">
-        </a-step>
-        <a-step title="完成">
-        </a-step>
+        <a-step title="财务复核" />
+        <a-step title="完成" />
       </a-steps>
     </a-card>
 
     <a-card style="margin-top: 24px" :bordered="false" title="用户信息">
-      <detail-list>
-        <detail-list-item term="用户姓名">付晓晓</detail-list-item>
-        <detail-list-item term="会员卡号">32943898021309809423</detail-list-item>
-        <detail-list-item term="身份证">3321944288191034921</detail-list-item>
-        <detail-list-item term="联系方式">18112345678</detail-list-item>
-        <detail-list-item term="联系地址">浙江省杭州市西湖区黄姑山路工专路交叉路口</detail-list-item>
-      </detail-list>
-      <detail-list title="信息组">
-        <detail-list-item term="某某数据">725</detail-list-item>
-        <detail-list-item term="该数据更新时间">2018-08-08</detail-list-item>
-        <detail-list-item ></detail-list-item>
-        <detail-list-item term="某某数据">725</detail-list-item>
-        <detail-list-item term="该数据更新时间">2018-08-08</detail-list-item>
-        <detail-list-item ></detail-list-item>
-      </detail-list>
+      <a-descriptions>
+        <a-descriptions-item label="用户姓名">付晓晓</a-descriptions-item>
+        <a-descriptions-item label="会员卡号">32943898021309809423</a-descriptions-item>
+        <a-descriptions-item label="身份证">3321944288191034921</a-descriptions-item>
+        <a-descriptions-item label="联系方式">18112345678</a-descriptions-item>
+        <a-descriptions-item label="联系地址">浙江省杭州市西湖区黄姑山路工专路交叉路口</a-descriptions-item>
+      </a-descriptions>
+      <a-descriptions title="信息组">
+        <a-descriptions-item label="某某数据">725</a-descriptions-item>
+        <a-descriptions-item label="该数据更新时间">2018-08-08</a-descriptions-item>
+        <a-descriptions-item ></a-descriptions-item>
+        <a-descriptions-item label="某某数据">725</a-descriptions-item>
+        <a-descriptions-item label="该数据更新时间">2018-08-08</a-descriptions-item>
+        <a-descriptions-item ></a-descriptions-item>
+      </a-descriptions>
       <a-card type="inner" title="多层信息组">
-        <detail-list title="组名称" size="small">
-          <detail-list-item term="负责人">林东东</detail-list-item>
-          <detail-list-item term="角色码">1234567</detail-list-item>
-          <detail-list-item term="所属部门">XX公司-YY部</detail-list-item>
-          <detail-list-item term="过期时间">2018-08-08</detail-list-item>
-          <detail-list-item term="描述">这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长...</detail-list-item>
-        </detail-list>
+        <a-descriptions title="组名称" size="small">
+          <a-descriptions-item label="负责人">林东东</a-descriptions-item>
+          <a-descriptions-item label="角色码">1234567</a-descriptions-item>
+          <a-descriptions-item label="所属部门">XX公司-YY部</a-descriptions-item>
+          <a-descriptions-item label="过期时间">2018-08-08</a-descriptions-item>
+          <a-descriptions-item label="描述">这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长...</a-descriptions-item>
+        </a-descriptions>
         <a-divider style="margin: 16px 0" />
-        <detail-list title="组名称" size="small" :col="1">
-          <detail-list-item term="学名">	Citrullus lanatus (Thunb.) Matsum. et Nakai一年生蔓生藤本；茎、枝粗壮，具明显的棱。卷须较粗..</detail-list-item>
-        </detail-list>
+        <a-descriptions title="组名称" size="small" :col="1">
+          <a-descriptions-item label="学名">	Citrullus lanatus (Thunb.) Matsum. et Nakai一年生蔓生藤本；茎、枝粗壮，具明显的棱。卷须较粗..</a-descriptions-item>
+        </a-descriptions>
         <a-divider style="margin: 16px 0" />
-        <detail-list title="组名称" size="small" :col="2">
-          <detail-list-item term="负责人">付小小</detail-list-item>
-          <detail-list-item term="角色码">1234567</detail-list-item>
-        </detail-list>
+        <a-descriptions title="组名称" size="small" :col="2">
+          <a-descriptions-item label="负责人">付小小</a-descriptions-item>
+          <a-descriptions-item label="角色码">1234567</a-descriptions-item>
+        </a-descriptions>
       </a-card>
 
     </a-card>
@@ -88,12 +115,12 @@
     <a-card
       style="margin-top: 24px"
       :bordered="false"
-      :tabList="tabList"
-      :activeTabKey="activeTabKey"
-      @tabChange="(key) => {this.activeTabKey = key}"
+      :tabList="operationTabList"
+      :activeTabKey="operationActiveTabKey"
+      @tabChange="(key) => {this.operationActiveTabKey = key}"
     >
       <a-table
-        v-if="activeTabKey === '1'"
+        v-if="operationActiveTabKey === '1'"
         :columns="operationColumns"
         :dataSource="operation1"
         :pagination="false"
@@ -105,7 +132,7 @@
         </template>
       </a-table>
       <a-table
-        v-if="activeTabKey === '2'"
+        v-if="operationActiveTabKey === '2'"
         :columns="operationColumns"
         :dataSource="operation2"
         :pagination="false"
@@ -117,7 +144,7 @@
         </template>
       </a-table>
       <a-table
-        v-if="activeTabKey === '3'"
+        v-if="operationActiveTabKey === '3'"
         :columns="operationColumns"
         :dataSource="operation3"
         :pagination="false"
@@ -130,27 +157,24 @@
       </a-table>
     </a-card>
 
-  </page-view>
+  </page-header-wrapper>
 </template>
 
 <script>
-import { mixinDevice } from '@/utils/mixin'
-import { PageView } from '@/layouts'
-import DetailList from '@/components/tools/DetailList'
-
-const DetailListItem = DetailList.Item
+import { baseMixin } from '@/store/app-mixin'
 
 export default {
   name: 'Advanced',
-  components: {
-    PageView,
-    DetailList,
-    DetailListItem
-  },
-  mixins: [mixinDevice],
+  mixins: [baseMixin],
   data () {
     return {
       tabList: [
+        { key: 'detail', tab: '详情' },
+        { key: 'rule', tab: '规则' }
+      ],
+      tabActiveKey: 'detail',
+
+      operationTabList: [
         {
           key: '1',
           tab: '操作日志一'
@@ -164,7 +188,7 @@ export default {
           tab: '操作日志三'
         }
       ],
-      activeTabKey: '1',
+      operationActiveTabKey: '1',
 
       operationColumns: [
         {
@@ -296,6 +320,12 @@ export default {
         'reject': 'error'
       }
       return statusTypeMap[type]
+    }
+  },
+  methods: {
+    handleTabChange (key) {
+      console.log('')
+      this.tabActiveKey = key
     }
   }
 }

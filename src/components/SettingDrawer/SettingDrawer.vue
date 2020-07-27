@@ -171,18 +171,15 @@
 </template>
 
 <script>
-import { DetailList } from '@/components'
 import SettingItem from './SettingItem'
 import config from '@/config/defaultSettings'
 import { updateTheme, updateColorWeak, colorList } from './settingConfig'
-import { mixin, mixinDevice } from '@/utils/mixin'
 
 export default {
   components: {
-    DetailList,
     SettingItem
   },
-  mixins: [mixin, mixinDevice],
+  mixins: [],
   data () {
     return {
       visible: false,
@@ -230,13 +227,7 @@ export default {
   autoHideHeader: ${this.autoHideHeader}, //  auto hide header
   colorWeak: ${this.colorWeak},
   multiTab: ${this.multiTab},
-  production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true',
-  // vue-ls options
-  storageOptions: {
-    namespace: 'pro__',
-    name: 'ls',
-    storage: 'local',
-  }
+  production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'
 }`
       this.$copyText(text).then(message => {
         console.log('copy', message)
