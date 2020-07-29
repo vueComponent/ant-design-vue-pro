@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" />
+              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、身份证号、入组编号" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
@@ -89,9 +89,9 @@ export default {
       queryParam: {},
       // 表头
       columns: [{
-          title: '患者编号',
+          title: '入组编号',
           width: 100,
-          dataIndex: 'code'
+          dataIndex: 'fileCode'
         },
         {
           title: '访视状态',

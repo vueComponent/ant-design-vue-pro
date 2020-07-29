@@ -329,6 +329,18 @@ export const asyncRouterMap = [{
         meta: { title: '活动券登记', keepAlive: true, icon: huodongquan, isBack: false, permission: ['center', 'group'] }
       },
       {
+        path: '/reportApply/index',
+        name: 'reportApply',
+        component: () => import('@/views/reportApply/index'),
+        meta: { title: '申请开通报表', keepAlive: true, icon: blzysq, isBack: false, permission: ['center', 'group'] }
+      },
+      {
+        path: '/reportApply/review',
+        name: 'reportReview',
+        component: () => import('@/views/reportApply/review'),
+        meta: { title: '开通报表审核', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
+      },
+      {
         path: '/wx/article',
         name: 'wxArticle',
         component: () => import('@/views/wx/article'),

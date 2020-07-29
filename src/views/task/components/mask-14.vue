@@ -44,7 +44,13 @@
               <a-form-item label="(2) 患者支扩确诊时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
               </a-form-item>
-              <a-form-item label="(3) 主要临床症状（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(3)" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b23', {...selectRequired, initialValue: initValue('b23')}]">
+                  <a-radio value="1">急性加重期</a-radio>
+                  <a-radio value="2">稳定期</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(4) 主要临床症状（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4', 'array')}]" class="control-m-line">
                   <a-checkbox value="1">咳嗽</a-checkbox>
                   <a-checkbox value="2" :checked="controla41" @change="changeSelect($event, 'controla41')">咳痰</a-checkbox>

@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" />
+              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、身份证号、入组编号" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
@@ -86,20 +86,20 @@
           <a-divider type="vertical" />
           <a @click="handleSubmit(record)" :disabled="record.submitStatus == '已提交'">提交</a>
           <a-divider type="vertical" />
-          <a @click="handleOut(record)" :disabled="record.visit != 1">出组</a>
+          <a @click="handleOut(record)" :disabled="record.visit != 1">退组</a>
         </template>
       </span>
     </s-table>
     <create-form ref="createModal" @ok="handleOk" />
     <user-detail ref="detailModal" />
-    <a-modal :visible="visible" title="出组" @ok="outSubmit" :confirmLoading="confirmLoading" :centered="centered" :destroyOnClose="destroyOnClose" @cancel="handleClose">
+    <a-modal :visible="visible" title="退组" @ok="outSubmit" :confirmLoading="confirmLoading" :centered="centered" :destroyOnClose="destroyOnClose" @cancel="handleClose">
       <a-form :form="form">
         <input type="hidden" v-model="patientId">
-        <a-form-item label="出组原因" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="退组原因" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['status', requiredRule]">
-            <a-radio value="0">死亡</a-radio>
-            <a-radio value="2">出组</a-radio>
-            <a-radio value="3">失访</a-radio>
+            <a-radio value="1">访视结束</a-radio>
+            <a-radio value="2">失访</a-radio>
+            <a-radio value="3">死亡</a-radio>
           </a-radio-group>
         </a-form-item>
       </a-form>

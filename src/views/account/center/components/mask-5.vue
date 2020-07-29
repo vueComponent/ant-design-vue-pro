@@ -48,7 +48,7 @@
               <a-form-item label="上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" class="images" v-viewer listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
-                    <div v-if="fileList.length < 1">
+                    <div v-if="fileList.length < 10">
                       <a-icon type="plus" />
                       <div class="ant-upload-text">Upload</div>
                     </div>
