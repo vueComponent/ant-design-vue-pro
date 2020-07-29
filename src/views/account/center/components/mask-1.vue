@@ -119,6 +119,7 @@
                   <a-checkbox value="3" :checked="controlb63" @change="changeSelect($event, 'controlb63')">鼻息肉</a-checkbox>
                   <a-checkbox value="4" :checked="controlb64" @change="changeSelect($event, 'controlb64')">哮喘</a-checkbox>
                   <a-checkbox value="5" :checked="controlb65" @change="changeSelect($event, 'controlb65')">慢阻肺</a-checkbox>
+                  <a-checkbox value="6" :checked="controlb66" @change="changeSelect($event, 'controlb66')">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item class="no-border" label="鼻炎具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb61">
@@ -554,6 +555,7 @@ export default {
       controlb63: false,
       controlb64: false,
       controlb65: false,
+      controlb66: false,
       controlb7: false,
       controlb72: false,
       controlb8: false,
@@ -706,6 +708,9 @@ export default {
           }
           if (splitArr.indexOf('5') > -1) {
             that.controlb65 = true
+          }
+          if (splitArr.indexOf('6') > -1) {
+            that.controlb66 = true
           }
         }
 
