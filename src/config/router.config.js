@@ -101,12 +101,17 @@ export const asyncRouterMap = [{
             meta: { title: '申请开通报表', keepAlive: true, icon: blzysq, isBack: false, permission: ['center', 'group'] }
           },
           {
+            path: '/score/list',
+            name: 'scoreList',
+            component: () => import('@/views/score/list'),
+            meta: { title: '支扩评分报表', keepAlive: true, icon: huodongquan, isBack: false, permission: ['center', 'group'] }
+          },
+          {
             path: '/reportApply/review',
             name: 'reportReview',
             component: () => import('@/views/reportApply/review'),
             meta: { title: '开通报表审核', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
-          },
-
+          }
         ]
       },
       {
@@ -301,8 +306,6 @@ export const asyncRouterMap = [{
         component: () => import('@/views/task/components/mask-18'),
         meta: { maskId: 18, permission: ['center', 'group'] }
       },
-
-
       {
         path: '/gallery/index',
         name: 'Gallery',
@@ -365,8 +368,6 @@ export const asyncRouterMap = [{
         component: () => import('@/views/wx/questionDetail'),
         meta: { permission: ['center', 'group'] }
       },
-
-
       {
         path: '/wx/article',
         name: 'wxArticle',

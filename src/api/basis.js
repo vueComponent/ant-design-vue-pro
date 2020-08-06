@@ -253,3 +253,11 @@ export function getCenterNum(params) {
     params: params
   })
 }
+
+export function patientReport(params) {
+  return axios({
+    url: '/patientReport/getDataList',
+    method: 'post',
+    params: params
+  })
+}
