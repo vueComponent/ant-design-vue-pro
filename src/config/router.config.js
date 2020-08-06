@@ -329,6 +329,12 @@ export const asyncRouterMap = [{
         meta: { title: '活动券登记', keepAlive: true, icon: huodongquan, isBack: false, permission: ['center', 'group'] }
       },
       {
+        path: '/score/list',
+        name: 'scoreList',
+        component: () => import('@/views/score/list'),
+        meta: { title: '支扩评分报表', keepAlive: true, icon: huodongquan, isBack: false, permission: ['center', 'group'] }
+      },
+      {
         path: '/reportApply/index',
         name: 'reportApply',
         component: () => import('@/views/reportApply/index'),
