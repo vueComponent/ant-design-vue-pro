@@ -68,10 +68,10 @@
               </a-form-item>
               <div v-if="controla9">
                 <a-form-item label="啰音类型" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                  <a-radio-group v-decorator="['a91', {...selectRequired, initialValue: initValue('a91')}]">
-                    <a-radio value="1">湿罗音</a-radio>
-                    <a-radio value="2">干啰音</a-radio>
-                  </a-radio-group>
+                  <a-checkbox-group v-decorator="['a91', {...selectRequired, initialValue: initValue('a91', 'array')}]">
+                    <a-checkbox value="1">湿罗音</a-checkbox>
+                    <a-checkbox value="2">干啰音</a-checkbox>
+                  </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="啰音部位" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                   <a-input style="width: 240px;" v-decorator="['a92', {...inputRequired, initialValue: initValue('a92')}]" autocomplete="off"></a-input>
@@ -234,6 +234,10 @@ export default {
         if (!errors) {
           var re = this.form.getFieldsValue()
           var that = this
+          re = {
+            ...re,
+            'a91': typeof re['a91'] !== 'undefined' ? re['a91'].join(',') : ''
+          }
           console.log(re)
           this.patientBasis.status = 2
           var params = new URLSearchParams()
@@ -300,6 +304,10 @@ export default {
     save() {
       var re = this.form.getFieldsValue()
       var that = this
+      re = {
+        ...re,
+        'a91': typeof re['a91'] !== 'undefined' ? re['a91'].join(',') : ''
+      }
       console.log(re)
       this.patientBasis.status = 1
       var params = new URLSearchParams()
