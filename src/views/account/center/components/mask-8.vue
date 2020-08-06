@@ -35,7 +35,7 @@
               <div class="title">1.肺功能相关检查
                 <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" />
               </div>
-              <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="showOcr">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" class="images1" v-viewer listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
                     <div v-if="fileList1.length < 1">
@@ -218,7 +218,7 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controlc">
-                <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="showOcr">
                   <div class="clearfix" style="margin-top: 10px;">
                     <a-upload :action="uploadUrl" class="images2" v-viewer listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
                       <div v-if="fileList2.length < 1">

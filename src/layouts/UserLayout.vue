@@ -17,8 +17,11 @@
           <span>
             &copy;支气管扩张症临床诊治与研究联盟
           </span>
+          <a href="http://beian.miit.gov.cn/" target="_blank">
+             苏ICP备15031540号-4
+          </a>
           <span>
-            当前版本：2.0.0
+            当前版本：1.0.1
           </span>
           <span>
              技术支持：南京德益康信息科技有限公司

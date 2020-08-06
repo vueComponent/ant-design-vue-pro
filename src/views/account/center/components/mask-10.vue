@@ -33,7 +33,7 @@
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.血常规<a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /></div>
-              <a-form-item label="血常规报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
+              <a-form-item label="血常规报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;" v-if="showOcr">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" class="images1" v-viewer listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
                     <div v-if="fileList1.length < 1">
@@ -66,7 +66,7 @@
                 <a-input style="width: 240px;" v-decorator="['b6', {...inputRequired, initialValue: initValue('b6')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
               </a-form-item>
               <div class="title">2.血生化</div>
-              <a-form-item label="血生化报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;">
+              <a-form-item label="血生化报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;" v-if="showOcr">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" class="images2" v-viewer listType="picture-card" :fileList="fileList2" @preview="handlePreview2" @change="handleChange2">
                     <div v-if="fileList2.length < 1">

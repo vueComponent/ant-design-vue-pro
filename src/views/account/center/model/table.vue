@@ -16,7 +16,7 @@
               <a-radio value="2">非粘液型</a-radio>
             </a-radio-group>
           </a-form-item>
-          <a-form-item label="上传图像" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+          <a-form-item label="上传图像" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="showOcr">
             <div class="clearfix" style="margin-top: 10px;">
               <a-upload :action="uploadUrl" listType="picture-card" class="images" v-viewer @preview="handlePreview" :fileList="fileList" @change="picChange">
                 <div v-if="fileList.length < 1">

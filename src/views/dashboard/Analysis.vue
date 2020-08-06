@@ -6,12 +6,6 @@
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
-          <div>
-            <trend flag="up" style="margin-right: 16px;">
-              <span slot="term">月同比</span>
-              {{ indexData.compareMonth }}%
-            </trend>
-          </div>
           <template slot="footer">
             上月患者数
             <span>{{ indexData.lastMonthPatients }}</span>
@@ -26,12 +20,6 @@
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
-          <div>
-           <trend style="margin-right: 16px;">
-              <!-- <span slot="term">月同比</span>
-              {{ indexData.compareMonth }}% -->
-            </trend>
-          </div>
           <template slot="footer">
             上月访视数
             <span>{{ indexData.lastMonthBasis }}</span>
@@ -46,12 +34,6 @@
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
-          <div>
-            <trend  style="margin-right: 16px;">
-              <!-- <span slot="term">月同比</span>
-              {{ indexData.compareMonth }}% -->
-            </trend>
-          </div>
           <template slot="footer">
             上年患者数
             <span>{{ indexData.currYearPatients }}</span>
@@ -74,10 +56,6 @@
               <span slot="term">计划数</span>
               {{ indexData.planNum }}
             </p>
-            <trend flag="up" style="float: right;">
-              <span slot="term">完成率</span>
-              {{ indexData.completionRate }}%
-            </trend>
           </template>
         </chart-card>
       </a-col>
@@ -173,7 +151,7 @@
 </template>
 <script>
 import moment from 'moment';
-import { Pie, ChartCard, MiniArea, MiniBar, MiniProgress, RankList, Bar, Trend, NumberInfo, MiniSmoothArea } from '@/components';
+import { Pie, ChartCard, MiniArea, MiniBar, MiniProgress, RankList, Bar, NumberInfo, MiniSmoothArea } from '@/components';
 import { mixinDevice } from '@/utils/mixin';
 import { getAllNumbers, getMyWork, getPatientsAndBasiss, getProvinceCompare, manualList } from '@/api/home';
 import { MyIcon } from '@/components/_util/util';
@@ -191,8 +169,7 @@ export default {
     NumberInfo,
     MiniSmoothArea,
     Pie,
-    MyIcon,
-    Trend
+    MyIcon
   },
   data() {
     return {

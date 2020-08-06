@@ -16,22 +16,98 @@ export const asyncRouterMap = [{
         meta: { title: '首页', keepAlive: true, icon: home, permission: ['center', 'group'] }
       },
       {
-        path: '/patient/list',
-        name: 'patientList',
-        component: () => import('@/views/patient/list'),
-        meta: { title: '患者管理', keepAlive: true, icon: wxyhbd, permission: ['center', 'group'] }
+        path: '/patient',
+        component: RouteView,
+        redirect: '/patient/list',
+        meta: { title: '病历管理', keepAlive: true, icon: wxyhbd, permission: ['center', 'group'] },
+        children: [{
+            path: '/patient/list',
+            name: 'patientList',
+            component: () => import('@/views/patient/list'),
+            meta: { title: '患者管理', keepAlive: false, icon: wxyhbd, permission: ['center', 'group'] }
+          }, {
+            path: '/list/index',
+            name: 'list',
+            component: () => import('@/views/list/TableList'),
+            meta: { title: '基线管理', keepAlive: true, icon: bingli, permission: ['center', 'group'] }
+          }, {
+            path: '/acute/index',
+            name: 'acute',
+            component: () => import('@/views/acute/TableList'),
+            meta: { title: '急性加重信息', keepAlive: true, icon: jixing, permission: ['center', 'group'] }
+          }, {
+            path: '/task/index',
+            name: 'Task',
+            component: () => import('@/views/task/index'),
+            meta: { title: '访视信息', keepAlive: true, icon: fangshi, permission: ['center', 'group'] }
+          }, {
+            path: '/caseTransfer/index',
+            name: 'CaseTransfer',
+            component: () => import('@/views/caseTransfer/index'),
+            meta: { title: '病历转移申请', keepAlive: true, icon: blzysq, permission: ['center', 'group'] }
+          },
+          {
+            path: '/caseTransfer/review',
+            name: 'caseTransferReview',
+            component: () => import('@/views/caseTransfer/review'),
+            meta: { title: '病历转移审核', keepAlive: true, icon: blzysh, permission: ['center', 'group'] }
+          }
+        ]
       },
       {
-        path: '/list/index',
-        name: 'list',
-        component: () => import('@/views/list/TableList'),
-        meta: { title: '基线管理', keepAlive: true, icon: bingli, permission: ['center', 'group'] }
+        path: '/wx',
+        component: RouteView,
+        redirect: '/wx/userBind',
+        meta: { title: '微信管理', keepAlive: true, icon: wxyhbd, permission: ['center', 'group'] },
+        children: [{
+            path: '/wx/userBind',
+            name: 'wxUserBind',
+            component: () => import('@/views/wx/userBind'),
+            meta: { title: '微信用户绑定', keepAlive: true, icon: wxyhbd, isBack: false, permission: ['center', 'group'] }
+          },
+          {
+            path: '/wx/questionReview',
+            name: 'wxQuestionReview',
+            component: () => import('@/views/wx/questionReview'),
+            meta: { title: '微信问卷审阅', keepAlive: true, icon: wenjuan, isBack: false, permission: ['center', 'group'] }
+          }, {
+            path: '/wx/patientReportReview',
+            name: 'wxPatientReportReview',
+            component: () => import('@/views/wx/patientReportReview'),
+            meta: { title: '患者报告审阅', keepAlive: true, icon: hzbgsy, isBack: false, permission: ['center', 'group'] }
+          },
+          {
+            path: '/wx/ticketRegister',
+            name: 'wxTicketRegister',
+            component: () => import('@/views/wx/ticketRegister'),
+            meta: { title: '活动券登记', keepAlive: true, icon: huodongquan, isBack: false, permission: ['center', 'group'] }
+          },
+        ]
       },
       {
-        path: '/acute/index',
-        name: 'acute',
-        component: () => import('@/views/acute/TableList'),
-        meta: { title: '急性加重管理', keepAlive: true, icon: jixing, permission: ['center', 'group'] }
+        path: '/report',
+        component: RouteView,
+        redirect: '/report/index',
+        meta: { title: '报表管理', keepAlive: true, icon: wxyhbd, permission: ['center', 'group'] },
+        children: [{
+            path: '/report/index',
+            name: 'report',
+            component: () => import('@/views/report/index'),
+            meta: { title: '数据统计', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
+          }, {
+            path: '/reportApply/index',
+            name: 'reportApply',
+            component: () => import('@/views/reportApply/index'),
+            meta: { title: '申请开通报表', keepAlive: true, icon: blzysq, isBack: false, permission: ['center', 'group'] }
+          },
+          {
+            path: '/reportApply/review',
+            name: 'reportReview',
+            component: () => import('@/views/reportApply/review'),
+            meta: { title: '开通报表审核', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
+          },
+
+        ]
       },
       {
         path: '/list/basis/:id(\\d*)',
@@ -226,12 +302,7 @@ export const asyncRouterMap = [{
         meta: { maskId: 18, permission: ['center', 'group'] }
       },
 
-      {
-        path: '/task/index',
-        name: 'Task',
-        component: () => import('@/views/task/index'),
-        meta: { title: '访视管理', keepAlive: true, icon: fangshi, permission: ['center', 'group'] }
-      },
+
       {
         path: '/gallery/index',
         name: 'Gallery',
@@ -284,30 +355,8 @@ export const asyncRouterMap = [{
         component: () => import('@/views/gallery/execute'),
         meta: { permission: ['center', 'group'] }
       },
-      {
-        path: '/caseTransfer/index',
-        name: 'CaseTransfer',
-        component: () => import('@/views/caseTransfer/index'),
-        meta: { title: '病例转移申请', keepAlive: true, icon: blzysq, isBack: false, permission: ['center', 'group'] }
-      },
-      {
-        path: '/caseTransfer/review',
-        name: 'caseTransferReview',
-        component: () => import('@/views/caseTransfer/review'),
-        meta: { title: '病例转移审核', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
-      },
-      {
-        path: '/wx/userBind',
-        name: 'wxUserBind',
-        component: () => import('@/views/wx/userBind'),
-        meta: { title: '微信用户绑定', keepAlive: true, icon: wxyhbd, isBack: false, permission: ['center', 'group'] }
-      },
-      {
-        path: '/wx/questionReview',
-        name: 'wxQuestionReview',
-        component: () => import('@/views/wx/questionReview'),
-        meta: { title: '微信问卷审阅', keepAlive: true, icon: wenjuan, isBack: false, permission: ['center', 'group'] }
-      },
+
+
       {
         path: '/wx/questionDetail/:id(\\d*)',
         name: 'wxQuestionDetail',
@@ -316,30 +365,8 @@ export const asyncRouterMap = [{
         component: () => import('@/views/wx/questionDetail'),
         meta: { permission: ['center', 'group'] }
       },
-      {
-        path: '/wx/patientReportReview',
-        name: 'wxPatientReportReview',
-        component: () => import('@/views/wx/patientReportReview'),
-        meta: { title: '患者报告审阅', keepAlive: true, icon: hzbgsy, isBack: false, permission: ['center', 'group'] }
-      },
-      {
-        path: '/wx/ticketRegister',
-        name: 'wxTicketRegister',
-        component: () => import('@/views/wx/ticketRegister'),
-        meta: { title: '活动券登记', keepAlive: true, icon: huodongquan, isBack: false, permission: ['center', 'group'] }
-      },
-      {
-        path: '/reportApply/index',
-        name: 'reportApply',
-        component: () => import('@/views/reportApply/index'),
-        meta: { title: '申请开通报表', keepAlive: true, icon: blzysq, isBack: false, permission: ['center', 'group'] }
-      },
-      {
-        path: '/reportApply/review',
-        name: 'reportReview',
-        component: () => import('@/views/reportApply/review'),
-        meta: { title: '开通报表审核', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
-      },
+
+
       {
         path: '/wx/article',
         name: 'wxArticle',
@@ -396,13 +423,6 @@ export const asyncRouterMap = [{
         name: 'userList',
         component: () => import('@/views/user/list'),
         meta: { title: '用户管理', keepAlive: true, icon: wxyhbd, isBack: false, permission: ['center', 'group'] }
-      },
-      {
-        path: '/report/index',
-        name: 'report',
-        hidden: true,
-        component: () => import('@/views/report/index'),
-        meta: { hiddenHeaderContent: true, hidden: true }
       }
     ]
   },

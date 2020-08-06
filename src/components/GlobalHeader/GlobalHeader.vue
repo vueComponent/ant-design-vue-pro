@@ -5,7 +5,6 @@
         <div v-if="mode === 'sidemenu'" class="header">
           <a-icon v-if="device==='mobile'" class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle" />
           <a-icon v-else class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle" />
-          <a-icon type="bar-chart" style="cursor: pointer;font-size: 20px;" @click="jumpReport" v-if="displayAll" />
           <user-menu></user-menu>
         </div>
         <div v-else :class="['top-nav-header-index', theme]">
