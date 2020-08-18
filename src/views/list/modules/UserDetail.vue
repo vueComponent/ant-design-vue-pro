@@ -192,7 +192,7 @@
               <mini-progress color="#fd94dc" :target="scoreData.MMRC.score / 4 * 100" :percentage="scoreData.MMRC.score / 4 * 100" height="8px" />
             </div>
           </a-col>
-          <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+          <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }"  v-if="scoreData.HAD">
             <div class="block clearfix">
               <div class="name">HAD评分</div>
               <div class="score" style="color: orange">{{scoreData.HAD.score}}分</div>
@@ -200,7 +200,7 @@
             </div>
           </a-col>
         </a-row>
-        <a-row>
+        <a-row v-if="scoreData.LCQ">
           <a-col :sm="24" :md="24" :xl="24" :style="{ marginBottom: '10px' }">
             <div class="block clearfix">
               <div class="name">LCQ评分</div>

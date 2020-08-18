@@ -90,7 +90,7 @@
                   <a-radio value="4">4-7天/周</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(2) ABPA检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(2) ABPA相关检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a1', {...selectRequired, initialValue: initValue('a1')}]" @change="changeRadio($event, 'controla1')">
                   <a-radio value="1">是</a-radio>
                   <a-radio value="-1">否</a-radio>
@@ -98,7 +98,7 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla1">
-                <a-form-item label="ABPA相关检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="ABPA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-form-item :style="{ display: 'inline-block'}">
                     <a-input addonAfter="*10^9/L" style="width: 240px; margin-right: 20px;" v-decorator="['a11', {...inputRequired, initialValue: initValue('a11')}]" autocomplete="off"></a-input>
                   </a-form-item>

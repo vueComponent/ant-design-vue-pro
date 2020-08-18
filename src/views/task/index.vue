@@ -34,7 +34,7 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="入组编号">
-                        <a-input v-model.trim="queryParam.fileBasisCode" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="患者姓名">
                         <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
@@ -143,13 +143,24 @@ export default {
           dataIndex: 'warnStatus',
           scopedSlots: { customRender: 'warnStatus' },
           width: 70
-        }, {
-          title: '访视状态',
+        },
+        {
+          title: '提交状态',
           dataIndex: 'submitStatusStr',
           width: 80,
           scopedSlots: {
             customRender: 'submitStatusStr'
           }
+        },
+        {
+          title: '入组编号',
+          dataIndex: 'fileCode',
+          width: 100
+        },
+        {
+          title: '任务状态',
+          dataIndex: 'executeStatusName',
+          width: 80
         },
         {
           title: '任务名称',

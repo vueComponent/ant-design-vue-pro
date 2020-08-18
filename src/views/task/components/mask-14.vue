@@ -44,7 +44,7 @@
               <a-form-item label="(2) 患者支扩确诊时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-month-picker placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-month-picker>
               </a-form-item>
-              <a-form-item label="(3)" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(3) 访视类型" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b23', {...selectRequired, initialValue: initValue('b23')}]">
                   <a-radio value="1">急性加重期</a-radio>
                   <a-radio value="2">稳定期</a-radio>
