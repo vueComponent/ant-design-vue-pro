@@ -84,7 +84,7 @@
     <user-detail ref="detailModal" />
     <a-modal :visible="visible" title="退组" @ok="outSubmit" :confirmLoading="confirmLoading" :centered="centered" :destroyOnClose="destroyOnClose" @cancel="handleClose">
       <a-form :form="form">
-        <input type="hidden" v-model="patientId">
+        <input type="hidden" v-model="outPatientBasisId">
         <a-form-item label="退组原因" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['status', requiredRule]">
             <a-radio value="1">访视结束</a-radio>
@@ -125,7 +125,17 @@ export default {
   },
   data() {
     return {
-      visible: false,
+      visible: false, 
+      form: this.$form.createForm(this),
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 7 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 15 }
+      },
+      requiredRule: { rules: [{ required: true, message: '该选项必填！' }] },
       confirmLoading: false,
       centered: true,
       destroyOnClose: true,
@@ -327,6 +337,8 @@ export default {
         params.append('patientBasisId', that.outPatientBasisId)
         params.append('status', fieldsValue.status)
         ignoreBNTask(params).then(res => {
+          that.visible = false
+          that.confirmLoading = false
           that.$message.success(res.msg)
           that.$refs.table.refresh()
         });
