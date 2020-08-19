@@ -84,7 +84,8 @@
         <template>
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
-          <a @click="handleSubmit(record)" :disabled="record.submitStatus == '已提交'">提交</a>
+          <a @click="handleSubmit(record)" v-if="record.basisList[0].executeStatus == 3 && record.basisList[0].submitStatus == 0">提交</a>
+          <span v-else style="color:rgba(0, 0, 0, 0.25)">提交</span>
           <a-divider type="vertical" />
           <a @click="handleOut(record)" :disabled="record.visit != 1">退组</a>
         </template>
