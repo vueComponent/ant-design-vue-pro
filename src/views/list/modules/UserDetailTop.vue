@@ -33,7 +33,7 @@
       </p>
       <p class="userDetailItem">
         <span class="userDetailItemTitle">居住地</span>
-        <span class="userDetailItemInfo">{{option.address}}</span>
+        <span class="userDetailItemInfo">{{option.addressDetail}}</span>
       </p>
     </div>
   </div>

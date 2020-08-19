@@ -40,7 +40,7 @@
                       <a-form-item label="身份证号">
                         <a-input v-model.trim="queryParam.card" style="width: 100%" />
                       </a-form-item>
-                      <a-form-item label="创建日期" style="margin-bottom:0;">
+                      <a-form-item label="急性加重日期" style="margin-bottom:0;">
                         <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
                       </a-form-item>
                       <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
@@ -125,7 +125,7 @@ export default {
           scopedSlots: { customRender: 'patientName' }
         },
         {
-          title: '急性加重期状态',
+          title: '提交状态',
           dataIndex: 'submitStatusStr',
           width: 120,
           scopedSlots: {
