@@ -297,7 +297,7 @@ const visitMap = {
 var columns = [{
   title: '入组编号',
   width: 110,
-  dataIndex: 'fileBasisCode'
+  dataIndex: 'fileCode'
 }, {
   title: '患者姓名',
   dataIndex: 'name',

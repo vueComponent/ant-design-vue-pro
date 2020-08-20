@@ -88,23 +88,23 @@ export const asyncRouterMap = [{
         path: '/report',
         component: RouteView,
         redirect: '/report/index',
-        meta: { title: '报表管理', keepAlive: true, icon: wxyhbd, permission: ['center', 'group'] },
+        meta: { title: '报表管理', keepAlive: true, icon: baogao, permission: ['center', 'group'] },
         children: [{
             path: '/report/index',
             name: 'report',
             component: () => import('@/views/report/index'),
-            meta: { title: '数据统计', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
+            meta: { title: '数据统计', keepAlive: true, icon: baogao, isBack: false, permission: ['center', 'group'] }
           }, {
             path: '/reportApply/index',
             name: 'reportApply',
             component: () => import('@/views/reportApply/index'),
-            meta: { title: '申请开通报表', keepAlive: true, icon: blzysq, isBack: false, permission: ['center', 'group'] }
+            meta: { title: '申请开通报表', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
           },
           {
             path: '/score/list',
             name: 'scoreList',
             component: () => import('@/views/score/list'),
-            meta: { title: '支扩评分报表', keepAlive: true, icon: huodongquan, isBack: false, permission: ['center', 'group'] }
+            meta: { title: '支扩评分报表', keepAlive: true, icon: baogao, isBack: false, permission: ['center', 'group'] }
           },
           {
             path: '/reportApply/review',
