@@ -87,7 +87,7 @@ export default {
         }
       },
       columns: [{
-          title: '申请人',
+          title: '申请中心',
           dataIndex: 'applyName',
           width: '120px'
         },

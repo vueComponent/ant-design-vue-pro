@@ -5,19 +5,19 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索分支中心" />
+              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、入组编号" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="refreshTable">查询</a-button>
-              <a @click="advanced = !advanced" style="margin-left: 8px" class="toggleAdvanced">
+              <!-- <a @click="advanced = !advanced" style="margin-left: 8px" class="toggleAdvanced">
                 更多筛选
                 <a-icon :type="advanced ? 'up' : 'down'" />
-              </a>
+              </a> -->
             </a-form-item>
           </a-col>
-          <a-col v-if="advanced" class="tableSearch" :md="8">
+          <!-- <a-col v-if="advanced" class="tableSearch" :md="8">
             <div>
               <a-tabs defaultActiveKey="2">
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
@@ -38,7 +38,7 @@
                 </a-tab-pane>
               </a-tabs>
             </div>
-          </a-col>
+          </a-col> -->
         </a-row>
       </a-form>
     </div>
@@ -101,6 +101,10 @@ export default {
       columns: [{
           title: '患者姓名',
           dataIndex: 'patientName',
+        },{
+          title: '入组编号',
+          dataIndex: 'fileCode',
+          width: '100px'
         },{
           title: '是否有铜绿',
           dataIndex: 'isTlStr',

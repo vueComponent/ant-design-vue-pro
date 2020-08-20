@@ -31,7 +31,7 @@
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="入组编号">
-                        <a-input v-model.trim="queryParam.fileBasisCode" style="width: 100%" />
+                        <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
                       <a-form-item label="姓名">
                         <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
@@ -84,7 +84,8 @@
         <template>
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
-          <a @click="handleSubmit(record)" :disabled="record.submitStatus == '已提交'">提交</a>
+          <a @click="handleSubmit(record)" v-if="record.basisList[0].executeStatus == 3 && record.basisList[0].submitStatus == 0">提交</a>
+          <span v-else style="color:rgba(0, 0, 0, 0.25)">提交</span>
           <a-divider type="vertical" />
           <a @click="handleOut(record)" :disabled="record.visit != 1">退组</a>
         </template>
@@ -345,7 +346,7 @@ var columns = [{
 var groupColumns = [{
   title: '入组编号',
   width: 110,
-  dataIndex: 'fileBasisCode'
+  dataIndex: 'fileCode'
 }, {
   title: '创建日期',
   dataIndex: 'createDate',

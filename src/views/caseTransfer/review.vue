@@ -74,7 +74,7 @@
           },
           {
             title: '入组编号',
-            dataIndex: 'fileBasisCode',
+            dataIndex: 'fileCode',
             width: '180px'
           },
           {

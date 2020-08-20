@@ -29,7 +29,7 @@
         <a v-else @click="reportApplyshow(record)">审核</a>
       </template>
     </s-table>
-    <a-modal :visible="visible" title="审核开通申请" @ok="outSubmit" >
+    <a-modal :visible="visible" title="审核开通申请" @ok="outSubmit" @cancel="handleClose">
        <template slot="footer">
         <a-button key="back" @click="reportApplyhide">
           不通过
@@ -200,6 +200,9 @@ export default {
           }
         });
       });
+    },
+    handleClose() {
+      this.visible = false
     },
     outSubmit(){
       var that = this
