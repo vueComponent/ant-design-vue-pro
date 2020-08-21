@@ -21,7 +21,7 @@
              苏ICP备15031540号-4
           </a>
           <span>
-            当前版本：1.0.1
+            当前版本：{{version}}
           </span>
           <span>
              技术支持：南京德益康信息科技有限公司
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import RouteView from './RouteView'
 import { mixinDevice } from '@/utils/mixin'
 
@@ -41,7 +42,9 @@ export default {
   components: { RouteView },
   mixins: [mixinDevice],
   data () {
-    return {}
+    return {
+      version: Vue.ls.get('version') || '1.0.1'
+    }
   },
   mounted () {
     document.body.classList.add('userLayout')
