@@ -78,7 +78,7 @@
       <template slot="operation" slot-scope="text, record">
         <a @click="implement(record)">执行</a>
         <a-divider type="vertical" />
-        <a @click="ignore(record)">忽略</a>
+        <a @click="ignore(record)" >忽略</a>
       </template>
     </s-table>
     <user-detail ref="detailModal" />

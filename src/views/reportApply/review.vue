@@ -42,7 +42,7 @@
          <input type="hidden" v-model="reportApplyId">
         <a-form-item label="备注" >
           <a-input  type="textarea" v-decorator="[
-          'reason',
+          'checkReason',
           { rules: [{ required: checkStatus, message: '请填写不通过理由' }] },
         ]" />
         </a-form-item>
@@ -132,7 +132,7 @@ export default {
         }
       ],
       form:this.$form.createForm(this),
-      reason:'',
+      checkReason:'',
       visible:false,
       checkStatus:false,
       reportApplyId:null,
@@ -182,7 +182,7 @@ export default {
       var that = this
       this.checkStatus=true;
       this.$nextTick(() => {
-        this.form.validateFields(['reason'], { force: true });
+        this.form.validateFields(['checkReason'], { force: true });
           this.form.validateFieldsAndScroll((errors, fieldsValue) => {
           if (!errors) {
             const params = new URLSearchParams()
@@ -208,7 +208,7 @@ export default {
       var that = this
       this.checkStatus=false;
       this.$nextTick(() => {
-        this.form.validateFields(['reason'], { force: true });
+        this.form.validateFields(['checkReason'], { force: true });
       });
       this.form.validateFieldsAndScroll((errors, fieldsValue) => {
         if (!errors) {
