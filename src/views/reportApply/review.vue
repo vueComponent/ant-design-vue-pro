@@ -132,7 +132,6 @@ export default {
         }
       ],
       form:this.$form.createForm(this),
-      checkReason:'',
       visible:false,
       checkStatus:false,
       reportApplyId:null,
@@ -180,10 +179,9 @@ export default {
     },
     reportApplyhide(){
       var that = this
-      this.checkStatus=true;
+      this.checkStatus=false;
       this.$nextTick(() => {
-        this.form.validateFields(['checkReason'], { force: true });
-          this.form.validateFieldsAndScroll((errors, fieldsValue) => {
+        this.form.validateFields({ force: true }, (errors, fieldsValue) => {
           if (!errors) {
             const params = new URLSearchParams()
             params.append('reportApplyId', that.reportApplyId)
@@ -206,15 +204,14 @@ export default {
     },
     outSubmit(){
       var that = this
-      this.checkStatus=false;
+      this.checkStatus=true;
       this.$nextTick(() => {
-        this.form.validateFields(['checkReason'], { force: true });
-      });
-      this.form.validateFieldsAndScroll((errors, fieldsValue) => {
+        this.form.validateFields({ force: true }, (errors, values) => {
         if (!errors) {
           const params = new URLSearchParams()
-                    params.append('reportApplyId', that.reportApplyId)
-        params.append('status', 1)
+          params.append('reportApplyId', that.reportApplyId)
+          params.append('checkReason', values.checkReason)
+          params.append('status', 1)
           checReporApply(params).then(res => {
               if (res.code === -1) {
                 that.$message.error(res.msg)
@@ -226,6 +223,7 @@ export default {
           });
         }
       });
+    })
     }
   },
   mounted() {

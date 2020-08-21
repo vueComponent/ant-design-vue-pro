@@ -305,10 +305,10 @@ export default {
     },
     ignore(record) {
       var that = this
-      if (record.executeStatus == 0) {
-        this.$message.warning('只能忽略未执行的任务！');
-        return false;
-      }
+      // if (record.executeStatus == 0) {
+      //   this.$message.warning('只能忽略未执行的任务！');
+      //   return false;
+      // }
       if(record.submitStatus == 2){
         this.$message.warning('只能忽略未忽略的任务！');
         return false;
@@ -318,13 +318,18 @@ export default {
         this.outPatientBasisId = record.patientBasisId
         return false;
       }
-      const params = new URLSearchParams()
-      params.append('patientBasisId', record.patientBasisId)
-      ignoreBNTask(params)
-        .then(res => {
-          that.$message.success(res.msg)
-          that.$refs.table.refresh()
-        });
+      this.$confirm({
+        title: '是否忽略?',
+        onOk() {
+          const params = new URLSearchParams()
+          params.append('patientBasisId', record.patientBasisId)
+          ignoreBNTask(params)
+            .then(res => {
+              that.$message.success(res.msg)
+              that.$refs.table.refresh()
+            });
+        }
+      });
     },
     outSubmit(){
       var that = this

@@ -120,7 +120,6 @@ export default {
         },
       ],
       form:this.$form.createForm(this),
-      reason:'',
       visible:false
     }
   },
@@ -171,6 +170,7 @@ export default {
       this.form.validateFieldsAndScroll((errors, fieldsValue) => {
         if (!errors) {
           const params = new URLSearchParams()
+          params.append('checkReason', fieldsValue.reason)
           saveReporApply(params).then(res => {
               if (res.code === -1) {
                 that.$message.error(res.msg)
