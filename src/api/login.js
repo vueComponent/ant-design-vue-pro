@@ -72,3 +72,10 @@ export function updatePwd (parameter) {
     params: parameter
   })
 }
+
+export function getVersion () {
+  return axios({
+    url: '/text/getHtmlVersion',
+    method: 'post'
+  })
+}

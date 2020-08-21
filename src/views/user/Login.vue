@@ -21,9 +21,11 @@
   </div>
 </template>
 <script>
+import Vue from 'vue'
 import md5 from 'md5'
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
+import { getVersion } from '@/api/login'
 
 export default {
   components: {},
@@ -46,7 +48,13 @@ export default {
     };
   },
   created() {
-
+    getVersion()
+    .then(res => {
+      console.log(res)
+      if(res.code === 0){
+        Vue.ls.set('version', res.data.htmlVersionNumber)
+      }
+    })
   },
   methods: {
     ...mapActions(['Login', 'Logout']),
