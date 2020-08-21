@@ -170,7 +170,7 @@ export default {
       this.form.validateFieldsAndScroll((errors, fieldsValue) => {
         if (!errors) {
           const params = new URLSearchParams()
-          params.append('checkReason', fieldsValue.reason)
+          params.append('reason', fieldsValue.reason)
           saveReporApply(params).then(res => {
               if (res.code === -1) {
                 that.$message.error(res.msg)
