@@ -75,7 +75,10 @@ export default {
       advanced: false,
       // 查询参数
       queryParam: {},
-      scroll: false,
+      scroll: {
+        x: 6000,
+        y: 1000
+      },
       loadData: parameter => {
         return patientReport(Object.assign(parameter, this.queryParam)).then(res => {
           return res
@@ -98,7 +101,6 @@ export default {
       columns: [{
           title: '患者姓名',
           dataIndex: 'patientName',
-          width: '80px'
         },{
           title: '入组编号',
           dataIndex: 'fileCode',
@@ -106,79 +108,78 @@ export default {
         },{
           title: '是否有铜绿',
           dataIndex: 'isTlStr',
-          width: '80px'
+          
         },{
           title: 'FACED评分',
           dataIndex: 'faced',
-          width: '80px'
+          
         },{
           title: 'BACI评分',
           dataIndex: 'baci',
-          width: '80px'
+          
         },{
           title: 'REFFI评分',
           dataIndex: 'reffi',
-          width: '80px'
+          
         },{
           title: 'BHQ问卷得分',
           dataIndex: 'bhq',
-          width: '80px'
+          
         },{
           title: 'MMRC评分',
           dataIndex: 'mmrc',
-          width: '80px'
+          
         },{
           title: 'HAD评分',
           dataIndex: 'had',
-          width: '80px'
+          
         },{
           title: 'lcq总评分',
           dataIndex: 'lcq',
-          width: '80px'
+          
         },{
           title: 'lcq生理评分',
-          dataIndex: 'lcq_sl',
-          width: '80px'
+          dataIndex: 'lcqSl',
+          
         },{
           title: 'lcq心理评分',
-          dataIndex: 'lcq_xl',
-          width: '80px'
+          dataIndex: 'lcqXl',
+          
         },{
           title: 'lcq社会评分',
-          dataIndex: 'lcq_sh',
-          width: '80px'
+          dataIndex: 'lcqSh',
+          
         },{
           title: 'qolb身体评分',
           dataIndex: 'qolb1',
-          width: '80px'
+          
         },{
           title: 'qolb角色评分',
           dataIndex: 'qolb2',
-          width: '80px'
+          
         },{
           title: 'qolb活力评分',
           dataIndex: 'qolb3',
-          width: '80px'
+          
         },{
           title: 'qolb情绪评分',
           dataIndex: 'qolb4',
-          width: '80px'
+          
         },{
           title: 'qolb社会评分',
           dataIndex: 'qolb5',
-          width: '80px'
+          
         },{
           title: 'qolb医疗评分',
           dataIndex: 'qolb6',
-          width: '80px'
+          
         },{
           title: 'qolb健康评分',
           dataIndex: 'qolb7',
-          width: '80px'
+          
         },{
           title: 'qolb呼吸评分',
-          dataIndex: 'qolb8',
-          width: '80px'
+          dataIndex: 'qolb8'
         }
       ],
       createArr: [],
@@ -264,5 +265,8 @@ export default {
       }
     }
   }
+}
+/deep/ .ant-table td{
+  white-space: nowrap;
 }
 </style>
