@@ -23,7 +23,8 @@ import huodongquan from '@/assets/icons/huodongquan.svg?inline' // path to your 
 import jkzs from '@/assets/icons/jkzs.svg?inline' // path to your '*.svg?inline' file.
 import myzj from '@/assets/icons/myzj.svg?inline' // path to your '*.svg?inline' file.
 import webconfig from '@/assets/icons/webconfig.svg?inline' // path to your '*.svg?inline' file.
+import wx from '@/assets/icons/wx.svg?inline' // path to your '*.svg?inline' file.
 
 export { 
-  bxAnaalyse,baogao,bingli,fangshi,ruzhu,zhanghao,home,jixing,blzysq,blzysh,wxyhbd,wenjuan,hzbgsy,huodongquan,jkzs,myzj,webconfig
+  bxAnaalyse,baogao,bingli,fangshi,ruzhu,zhanghao,home,jixing,blzysq,blzysh,wxyhbd,wenjuan,hzbgsy,huodongquan,jkzs,myzj,webconfig,wx
 }
