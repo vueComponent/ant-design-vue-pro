@@ -14,13 +14,16 @@
 
       <div class="footer">
         <div class="copyright">
-          <span>
+          <span style="margin-right: 10px;">
             &copy;支气管扩张症临床诊治与研究联盟
           </span>
-          <a href="http://beian.miit.gov.cn/" target="_blank">
+          <a href="http://beian.miit.gov.cn/" target="_blank" style="margin-right: 10px;">
              苏ICP备15031540号-4
           </a>
-          <span>
+          <span style="margin-right: 10px;">
+            备案号：32010602010785
+          </span>
+          <span style="margin-right: 10px;">
             当前版本：{{version}}
           </span>
           <span>
