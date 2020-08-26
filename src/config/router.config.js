@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import { UserLayout, BasicLayout, RouteView, /*BlankLayout,*/ PageView } from '@/layouts'
-import { bxAnaalyse, baogao, bingli, fangshi, ruzhu, zhanghao, home, jixing, blzysq, blzysh, wxyhbd, wenjuan, hzbgsy, huodongquan, jkzs, myzj, webconfig } from '@/core/icons'
+import { bxAnaalyse, baogao, bingli, fangshi, ruzhu, zhanghao, home, jixing, blzysq, blzysh, wxyhbd, wenjuan, hzbgsy, huodongquan, jkzs, myzj, webconfig,wx } from '@/core/icons'
 export const asyncRouterMap = [{
     path: '/',
     name: 'index',
@@ -58,7 +58,7 @@ export const asyncRouterMap = [{
         path: '/wx',
         component: RouteView,
         redirect: '/wx/userBind',
-        meta: { title: '微信管理', keepAlive: true, icon: wxyhbd, permission: ['center', 'group'] },
+        meta: { title: '微信管理', keepAlive: true, icon: wx, permission: ['center', 'group'] },
         children: [{
             path: '/wx/userBind',
             name: 'wxUserBind',

@@ -101,11 +101,11 @@ export default {
         },{
           title: '入组编号',
           dataIndex: 'fileCode',
-          width: 100
+          width: 130
         },{
           title: '是否有铜绿',
-          dataIndex: 'isTlStr',
-          width: 100
+          dataIndex: 'itTlStr',
+          width: 120
         },{
           title: 'FACED评分',
           dataIndex: 'faced',
