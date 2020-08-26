@@ -32,7 +32,10 @@
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <div class="title">1.血常规<a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /></div>
+              <div class="title">1.血常规
+                <a style="float: right;font-size:12px;margin-right: 12px;" @click="showOcr = !showOcr">OCR</a>
+                <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /> -->
+              </div>
               <a-form-item label="血常规报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" style="margin-top: 10px;" v-if="showOcr">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" class="images1" v-viewer listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">

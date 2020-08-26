@@ -34,18 +34,18 @@
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.CT基本信息
-                <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" />
+                <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /> -->
               </div>
               <a-form-item label="(1) CT检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
-              <a-form-item label="(2) 图像类型:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="showOcr">
+              <a-form-item label="(2) 图像类型:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a2', { initialValue: initValue('a2')}]">
                   <a-radio value="1">HRCT</a-radio>
                   <a-radio value="2">CT</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="showOcr">
+              <a-form-item label="上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" class="images" v-viewer listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
                     <div v-if="fileList.length < 10">

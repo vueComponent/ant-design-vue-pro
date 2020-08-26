@@ -28,7 +28,8 @@
             </div>
           </a-form-item>
         </a-form>
-        <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-left: 12px;color: #ccc;" @click="changeOcr" />
+        <a style="float: right;font-size:12px;line-height:32px;margin-left: 12px;" @click="showOcr = !showOcr">OCR</a>
+        <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-left: 12px;color: #ccc;" @click="changeOcr" /> -->
         <p style="text-align: right">
           <a-button class="editable-add-btn" @click="handleAdd">添加抗生素</a-button>
         </p>

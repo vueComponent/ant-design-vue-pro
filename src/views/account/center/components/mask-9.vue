@@ -32,8 +32,10 @@
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
+              <div style="background-color:#f7f8f8;overflow:hidden">
+                <a style="float: right;font-size:12px;line-height:40px;margin-right: 12px;font-weight: bold;" @click="showOcr = !showOcr">OCR</a>
+              </div>
               <a-form-item label="报告上传:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="showOcr">
-                
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" class="images" v-viewer listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
                     <div v-if="fileList.length < 1">
@@ -44,7 +46,7 @@
                   <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1 && showOcr">OCR识别</a-button>
                 </div>
               </a-form-item>
-              <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" />
+              <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /> -->
               <a-form-item label="(1) 主动脉根部内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="cm" autocomplete="off"></a-input>
               </a-form-item>
