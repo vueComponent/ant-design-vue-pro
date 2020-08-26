@@ -60,7 +60,11 @@ export default {
 }
 </script>
 <style leng="less">
- .ant-layout-sider-children .ant-menu .ant-menu-item .anticon{
-	font-size: 20px;
-	}
+ /* .ant-layout-sider-children .ant-menu .ant-menu-item .anticon{
+	font-size: 14px;
+	} */
+  .ant-menu-root > .ant-menu-item .anticon,
+  .ant-menu-submenu-title .anticon {
+	  font-size: 16px!important;
+  }
 </style>

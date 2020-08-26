@@ -33,7 +33,8 @@
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.肺功能相关检查
-                <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" />
+                <a style="float: right;font-size:12px;margin-right: 12px;" @click="showOcr = !showOcr">OCR</a>
+                <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /> -->
               </div>
               <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="showOcr">
                 <div class="clearfix" style="margin-top: 10px;">

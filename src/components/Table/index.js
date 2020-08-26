@@ -72,7 +72,10 @@ export default {
     },
     scroll: {
       type:Object,
-      default:null
+      default: {
+        x: 'calc(1600px + 50%)',
+        y: window.screen.height - 368 + 'px'
+      }
     },
     /**
      * enable page URI mode

@@ -42,7 +42,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" :scroll="scroll" size="small" rowKey="centerName" :columns="columns" :data="loadData" :alert="options.alert" showPagination="auto">
+    <s-table ref="table" size="small" rowKey="centerName" :columns="columns" :data="loadData" :alert="options.alert" showPagination="auto">
     </s-table>
   </a-card>
 </template>
@@ -75,10 +75,6 @@ export default {
       advanced: false,
       // 查询参数
       queryParam: {},
-      scroll: {
-        x: 6000,
-        y: 1000
-      },
       loadData: parameter => {
         return patientReport(Object.assign(parameter, this.queryParam)).then(res => {
           return res
@@ -101,94 +97,91 @@ export default {
       columns: [{
           title: '患者姓名',
           dataIndex: 'patientName',
+          width: 100
         },{
           title: '入组编号',
           dataIndex: 'fileCode',
-          width: '100px'
+          width: 100
         },{
           title: '是否有铜绿',
           dataIndex: 'isTlStr',
-          
+          width: 100
         },{
           title: 'FACED评分',
           dataIndex: 'faced',
-          
+          width: 100
         },{
           title: 'BACI评分',
           dataIndex: 'baci',
-          
+          width: 100
         },{
           title: 'REFFI评分',
           dataIndex: 'reffi',
-          
+          width: 100
         },{
           title: 'BHQ问卷得分',
           dataIndex: 'bhq',
-          
+          width: 100
         },{
           title: 'MMRC评分',
           dataIndex: 'mmrc',
-          
+          width: 100
         },{
           title: 'HAD评分',
           dataIndex: 'had',
-          
+          width: 100
         },{
           title: 'lcq总评分',
           dataIndex: 'lcq',
-          
+          width: 100
         },{
           title: 'lcq生理评分',
           dataIndex: 'lcqSl',
-          
+          width: 100
         },{
           title: 'lcq心理评分',
           dataIndex: 'lcqXl',
-          
+          width: 100
         },{
           title: 'lcq社会评分',
           dataIndex: 'lcqSh',
-          
+          width: 100
         },{
           title: 'qolb身体评分',
           dataIndex: 'qolb1',
-          
+          width: 100
         },{
           title: 'qolb角色评分',
           dataIndex: 'qolb2',
-          
+          width: 100
         },{
           title: 'qolb活力评分',
           dataIndex: 'qolb3',
-          
+          width: 100
         },{
           title: 'qolb情绪评分',
           dataIndex: 'qolb4',
-          
+          width: 100
         },{
           title: 'qolb社会评分',
           dataIndex: 'qolb5',
-          
+          width: 100
         },{
           title: 'qolb医疗评分',
           dataIndex: 'qolb6',
-          
+          width: 100
         },{
           title: 'qolb健康评分',
           dataIndex: 'qolb7',
-          
+          width: 100
         },{
           title: 'qolb呼吸评分',
-          dataIndex: 'qolb8'
+          dataIndex: 'qolb8',
+          width: 100
         }
       ],
       createArr: [],
       submitArr: []
-    }
-  },
-  created() {
-    this.scroll = {
-      y: window.screen.height - 368 + 'px'
     }
   },
   filters: {
