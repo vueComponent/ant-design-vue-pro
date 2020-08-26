@@ -72,9 +72,11 @@ export default {
     },
     scroll: {
       type:Object,
-      default: {
-        x: 'calc(1600px + 50%)',
-        y: window.screen.height - 368 + 'px'
+      default: function(){
+        return {
+          x: 'calc(1600px + 50%)',
+          y: window.screen.height - 368 + 'px'
+        }
       }
     },
     /**

@@ -65,6 +65,6 @@ export default {
 	} */
   .ant-menu-root > .ant-menu-item .anticon,
   .ant-menu-submenu-title .anticon {
-	  font-size: 16px!important;
+	  font-size: 20px!important;
   }
 </style>
