@@ -20,6 +20,13 @@ export function getPatientList (parameter) {
   })
 }
 
+export function deletePatient (parameter) {
+  return axios({
+    url: '/patient/deletePatient',
+    method: 'post',
+    params: parameter
+  })
+}
 
 export function getPatientDetail (parameter) {
   return axios({

@@ -111,6 +111,16 @@ export default {
           title: '急性加重期数量',
           dataIndex: 'type4Num',
           width: '120px'
+        },
+        {
+          title: '基线提交数量',
+          dataIndex: 'type5Num',
+          width: '120px'
+        },
+        {
+          title: '年访视提交数量',
+          dataIndex: 'type6Num',
+          width: '120px'
         }
       ],
       createArr: [],

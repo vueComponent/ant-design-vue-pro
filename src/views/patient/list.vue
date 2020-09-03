@@ -29,6 +29,8 @@
       <span slot="action" slot-scope="text, record" style="text-align: center;">
         <template>
           <a @click="exec(record)">编辑</a>
+          <a-divider type="vertical" />
+          <a @click="del(record)">删除</a>
         </template>
       </span>
     </s-table>
@@ -40,7 +42,7 @@
 import moment from 'moment';
 import { STable, Ellipsis } from '@/components'
 import UserDetail from '@/views/list/modules/UserDetail'
-import { getPatientList } from '@/api/patient'
+import { getPatientList, deletePatient } from '@/api/patient'
 import CreateForm from '@/views/list/modules/CreateForm'
 import $ from 'jquery'
 
@@ -207,6 +209,24 @@ export default {
     },
     exec(record) {
       this.$refs.createModal.edit(record)
+    },
+    del(record) {
+      let that = this
+      this.$confirm({
+        title: '是否删除?',
+        onOk() {
+          let params = {
+            patientId: record.patientId
+          }
+          deletePatient(params).then(res => {
+            if (res.code == 0) {
+              that.$message.success('删除成功')
+              that.$refs.table.refresh()
+            }
+          })
+        },
+        onCancel() {}
+      })
     },
     handleOk() {
       this.$refs.table.refresh();
