@@ -130,6 +130,28 @@ export const asyncRouterMap = [
         ]
       },
 
+      // bill
+      {
+        path: '/bill',
+        redirect: '/bill/income',
+        component: RouteView,
+        meta: { title: '个人账单', icon: 'account-book', permission: [ 'form' ] },
+        children: [
+          {
+            path: '/bill/income',
+            name: 'Income',
+            component: () => import('@/views/bill/Income'),
+            meta: { title: '收入账单', keepAlive: true, permission: [ 'form' ] }
+          },
+          {
+            path: '/bill/disbure',
+            name: 'Disbure',
+            component: () => import('@/views/bill/Disbure'),
+            meta: { title: '支出账单', keepAlive: true, permission: [ 'form' ] }
+          }
+        ]
+      },
+
       // profile
       {
         path: '/profile',
