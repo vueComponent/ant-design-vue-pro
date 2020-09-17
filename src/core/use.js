@@ -10,7 +10,7 @@ import 'ant-design-vue/dist/antd.less'
 import VueClipboard from 'vue-clipboard2'
 import MultiTab from '@/components/MultiTab'
 import PageLoading from '@/components/PageLoading'
-import PermissionHelper from '@/utils/helper/permission'
+import PermissionHelper from '@/core/permission/permission'
 // import '@/components/use'
 import './directives/action'
 

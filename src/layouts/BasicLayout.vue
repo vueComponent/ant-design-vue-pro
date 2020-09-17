@@ -1,13 +1,11 @@
 <template>
   <pro-layout
-    :title="title"
     :menus="menus"
     :collapsed="collapsed"
     :mediaQuery="query"
     :isMobile="isMobile"
     :handleMediaQuery="handleMediaQuery"
     :handleCollapse="handleCollapse"
-    :logo="logoRender"
     :i18nRender="i18nRender"
     v-bind="settings"
   >
@@ -17,6 +15,16 @@
     -->
     <ads v-if="isProPreviewSite && !collapsed"/>
     <!-- Ads end -->
+
+    <!-- 1.0.0+ 版本 pro-layout 提供 API，
+          我们推荐使用这种方式进行 LOGO 和 title 自定义
+    -->
+    <template v-slot:menuHeaderRender>
+      <div>
+        <logo-svg />
+        <h1>{{ title }}</h1>
+      </div>
+    </template>
 
     <setting-drawer :settings="settings" @change="handleSettingChange" />
     <template v-slot:rightContentRender>
@@ -47,6 +55,7 @@ export default {
     SettingDrawer,
     RightContent,
     GlobalFooter,
+    LogoSvg,
     Ads
   },
   data () {
@@ -151,9 +160,6 @@ export default {
           }
           break
       }
-    },
-    logoRender () {
-      return <LogoSvg />
     }
   }
 }

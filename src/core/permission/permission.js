@@ -10,6 +10,10 @@ export const PERMISSION_ENUM = {
   'export': { key: 'export', label: '导出' }
 }
 
+/**
+ * <a-button v-if="$auth('form.edit')">Button</a-button>
+ * @param Vue
+ */
 function plugin (Vue) {
   if (plugin.installed) {
     return
