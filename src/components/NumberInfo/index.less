@@ -3,7 +3,18 @@
 @numberInfo-prefix-cls: ~"@{ant-pro-prefix}-number-info";
 
 .@{numberInfo-prefix-cls} {
-
+  .suffix {
+    color: @text-color;
+    font-size: 16px;
+    font-style: normal;
+    margin-left: 4px;
+  }
+  .ant-pro-number-info-title {
+    color: @text-color;
+    font-size: @font-size-lg;
+    margin-bottom: 16px;
+    transition: all 0.3s;
+  }
   .ant-pro-number-info-subtitle {
     color: @text-color-secondary;
     font-size: @font-size-base;
@@ -41,6 +52,12 @@
         font-size: 12px;
         transform: scale(0.82);
         margin-left: 4px;
+      }
+      .anticon-caret-up{
+        color: @red-6;
+      }
+      .anticon-caret-down {
+        color: @green-6;
       }
       :global {
         .anticon-caret-up {
