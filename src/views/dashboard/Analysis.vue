@@ -68,12 +68,12 @@
         <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
           <div class="extra-wrapper" slot="tabBarExtraContent">
             <div class="extra-item">
-              <a>今日</a>
-              <a>本周</a>
-              <a>本月</a>
-              <a>本年</a>
+              <a :class="isActive('today')" @click.stop="selectDate('today')">今日</a>
+              <a :class="isActive('week')" @click.stop="selectDate('week')">本周</a>
+              <a :class="isActive('month')" @click.stop="selectDate('month')">本月</a>
+              <a :class="isActive('year')" @click.stop="selectDate('year')">本年</a>
             </div>
-            <a-range-picker :style="{width: '256px'}" />
+            <a-range-picker :style="{width: '256px'}" :value="rangePickerValue" @change="handleRangePickerChange" />
           </div>
           <a-tab-pane loading="true" tab="销售额" key="1">
             <a-row>
@@ -118,28 +118,26 @@
             </a-dropdown>
             <a-row :gutter="68">
               <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
-                <number-info :total="12321" :sub-total="17.1">
-                  <span slot="subtitle">
-                    <span>搜索用户数</span>
-                    <a-tooltip title="指标说明" slot="action">
-                      <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }" />
-                    </a-tooltip>
-                  </span>
-                </number-info>
+                <number-info
+                  :total="12321"
+                  :sub-total="17.1"
+                  :subTitle="'搜索用户数'"
+                  :showTooltip="true"
+                  :tooltipTitle="'指标说明'"
+                  status="up" />
                 <!-- miniChart -->
                 <div>
                   <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale" />
                 </div>
               </a-col>
               <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
-                <number-info :total="2.7" :sub-total="26.2" status="down">
-                  <span slot="subtitle">
-                    <span>人均搜索次数</span>
-                    <a-tooltip title="指标说明" slot="action">
-                      <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }" />
-                    </a-tooltip>
-                  </span>
-                </number-info>
+                <number-info
+                  :total="2.7"
+                  :sub-total="26.2"
+                  :subTitle="'人均搜索次数'"
+                  :showTooltip="true"
+                  :tooltipTitle="'指标说明'"
+                  status="down" />
                 <!-- miniChart -->
                 <div>
                   <mini-smooth-area :style="{ height: '45px' }" :dataSource="searchUserData" :scale="searchUserScale" />
@@ -181,10 +179,10 @@
                 </a-dropdown>
               </span>
               <div class="analysis-salesTypeRadio">
-                <a-radio-group defaultValue="a">
-                  <a-radio-button value="a">全部渠道</a-radio-button>
-                  <a-radio-button value="b">线上</a-radio-button>
-                  <a-radio-button value="c">门店</a-radio-button>
+                <a-radio-group :value="salesType" @change="handleChangeSalesType">
+                  <a-radio-button value="all">全部渠道</a-radio-button>
+                  <a-radio-button value="online">线上</a-radio-button>
+                  <a-radio-button value="stores">门店</a-radio-button>
                 </a-radio-group>
               </div>
 
@@ -193,7 +191,7 @@
             <div>
               <!-- style="width: calc(100% - 240px);" -->
               <div>
-                <v-chart :force-fit="true" :height="405" :data="pieData" :scale="pieScale">
+                <v-chart :force-fit="true" :height="405" :data="salesPieData" :scale="pieScale">
                   <v-tooltip :showTitle="false" dataKey="item*percent" />
                   <v-axis />
                   <!-- position="right" :offsetX="-140" -->
@@ -225,6 +223,7 @@ import {
   MiniSmoothArea
 } from '@/components'
 import { baseMixin } from '@/store/app-mixin'
+import { getTimeDistance } from '@/utils/util'
 
 const barData = []
 const barData2 = []
@@ -278,7 +277,9 @@ const searchTableColumns = [
   },
   {
     dataIndex: 'count',
-    title: '用户数'
+    title: '用户数',
+    key: 'count',
+    sorter: (a, b) => a.count - b.count
   },
   {
     dataIndex: 'range',
@@ -301,10 +302,28 @@ for (let i = 0; i < 50; i += 1) {
 
 const DataSet = require('@antv/data-set')
 
-const sourceData = [
+const salesTypeData = [
   { item: '家用电器', count: 32.2 },
   { item: '食用酒水', count: 21 },
   { item: '个护健康', count: 17 },
+  { item: '服饰箱包', count: 13 },
+  { item: '母婴产品', count: 9 },
+  { item: '其他', count: 7.8 }
+]
+
+const salesTypeDataOnline = [
+  { item: '家用电器', count: 32.2 },
+  { item: '食用酒水', count: 11 },
+  { item: '个护健康', count: 11 },
+  { item: '服饰箱包', count: 13 },
+  { item: '母婴产品', count: 9 },
+  { item: '其他', count: 7.8 }
+]
+
+const salesTypeDataOffline = [
+  { item: '家用电器', count: 32.2 },
+  { item: '食用酒水', count: 10 },
+  { item: '个护健康', count: 6 },
   { item: '服饰箱包', count: 13 },
   { item: '母婴产品', count: 9 },
   { item: '其他', count: 7.8 }
@@ -316,14 +335,21 @@ const pieScale = [{
   formatter: '.0%'
 }]
 
-const dv = new DataSet.View().source(sourceData)
+const dv = new DataSet.View()
 dv.transform({
   type: 'percent',
   field: 'count',
   dimension: 'item',
   as: 'percent'
 })
-const pieData = dv.rows
+
+const offlineData = []
+for (let i = 0; i < 10; i += 1) {
+  offlineData.push({
+    name: `Stores ${i}`,
+    cvr: Math.ceil(Math.random() * 9) / 10
+  })
+}
 
 export default {
   name: 'Analysis',
@@ -355,23 +381,71 @@ export default {
 
       //
       pieScale,
-      pieData,
-      sourceData,
+      salesTypeData,
+      salesTypeDataOnline,
+      salesTypeDataOffline,
       pieStyle: {
         stroke: '#fff',
         lineWidth: 1
-      }
+      },
+      dv,
+      rangePickerValue: getTimeDistance('week'),
+      salesType: 'all',
+      salesPieData: dv.source(salesTypeData).rows,
+      offlineData,
+      currentTabKey: '' || (offlineData[0] && offlineData[0].name)
     }
   },
   created () {
     setTimeout(() => {
       this.loading = !this.loading
     }, 1000)
+  },
+  watch: {
+    salesType (val) {
+      if (val === 'all') {
+        this.salesPieData = this.dv.source(this.salesTypeData).rows
+      } else {
+        const sourceData = val === 'online' ? this.salesTypeDataOnline : this.salesTypeDataOffline
+        this.salesPieData = this.dv.source(sourceData).rows
+      }
+    }
+  },
+  methods: {
+    handleRangePickerChange (dates) {
+      this.rangePickerValue = dates
+      // todo:根据时间段和tab[key]改变data/data2
+    },
+    selectDate (type) {
+      this.rangePickerValue = getTimeDistance(type)
+      // todo:根据时间段和tab[key]改变data/data2
+    },
+    isActive (type) {
+      const value = getTimeDistance(type)
+      if (!this.rangePickerValue[0] || !this.rangePickerValue[1]) {
+        return ''
+      }
+      if (
+        this.rangePickerValue[0].isSame(value[0], 'day') &&
+        this.rangePickerValue[1].isSame(value[1], 'day')
+      ) {
+        return 'currentDate'
+      }
+      return ''
+    },
+    handleChangeSalesType (e) {
+      this.salesType = e.target.value
+    },
+    handleTabChange (key) {
+      this.currentTabKey = key
+    }
   }
 }
 </script>
 
 <style lang="less" scoped>
+  @import "../../components/index.less";
+
   .extra-wrapper {
     line-height: 55px;
     padding-right: 24px;
@@ -382,6 +456,13 @@ export default {
 
       a {
         margin-left: 24px;
+        color: @text-color;
+        &:hover {
+          color: @primary-color;
+        }
+        &.currentDate{
+          color: @primary-color;
+        }
       }
     }
   }
@@ -397,6 +478,32 @@ export default {
     height: calc(100% - 24px);
     /deep/ .ant-card-head {
       position: relative;
+    }
+  }
+
+  .antd-pro-pages-dashboard-analysis-offlineCard {
+    :global {
+      .ant-tabs-ink-bar {
+        bottom: auto;
+      }
+      .ant-tabs-bar {
+        border-bottom: none;
+      }
+      .ant-tabs-nav-container-scrolling {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+      .ant-tabs-tab-prev-icon:before {
+        position: relative;
+        left: 6px;
+      }
+      .ant-tabs-tab-next-icon:before {
+        position: relative;
+        right: 6px;
+      }
+      .ant-tabs-tab-active h4 {
+        color: @primary-color;
+      }
     }
   }
 

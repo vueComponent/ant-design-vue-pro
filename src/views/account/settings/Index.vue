@@ -39,7 +39,7 @@
         </div>
         <div class="account-settings-info-right">
           <div class="account-settings-info-title">
-            <span>{{ $route.meta.title }}</span>
+            <span>{{ $t($route.meta.title) }}</span>
           </div>
           <route-view></route-view>
         </div>
