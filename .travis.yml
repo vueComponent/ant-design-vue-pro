@@ -3,5 +3,5 @@ node_js:
   - 10.15.0
 cache: yarn
 script:
-  - yarn
+  - yarn --frozen-lockfile
   - yarn run lint --no-fix && yarn run build
