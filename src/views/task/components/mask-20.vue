@@ -24,11 +24,11 @@
         </a-col>
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form">
-            <div class="btn-array" v-if="executeStatus !== 2 && !isGroup">
+            <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
-            <div class="btn-array" v-if="executeStatus === 2">
+            <div class="btn-array" v-if="executeStatus === 2 && canEdit">
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
 
@@ -158,6 +158,7 @@
                     <a-checkbox-group v-decorator="['c4', {...selectRequired, initialValue: initValue('c4', 'array')}]">
                     <a-checkbox value="0">结核分枝杆菌</a-checkbox>
                     <a-checkbox value="1" @change="changeSelect($event, 'controlc4')">非结核分枝杆菌</a-checkbox>
+                    <a-checkbox value="2">阴性</a-checkbox>
                     </a-checkbox-group>
                 </a-form-item>
                 <div v-if="controlc4">
@@ -300,7 +301,8 @@ export default {
       otherName1: '',
       otherName2: '',
       picList1: [],
-      isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false
+      isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
+      canEdit: false
     }
   },
   created() {
@@ -314,6 +316,7 @@ export default {
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
         that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+        that.canEdit = that.$ls.get(ACCESS_TOKEN).centerId === that.patient.targetCenterId
       })
     this.getFormData()
   },

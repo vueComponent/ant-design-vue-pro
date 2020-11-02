@@ -52,7 +52,7 @@
                     <a-col :span="6"><strong>合计（<span style="color: #3398dc">{{ questionTask.score }}分</span>）</strong></a-col>
                 </a-row>
               </a-row>
-              <a-row type="flex" align="middle" class="btn-group" v-if="executeStatus !== 2 && questionTask.status !== 5 && !isGroup">
+              <a-row type="flex" align="middle" class="btn-group" v-if="executeStatus !== 2 && questionTask.status !== 5 && canEdit">
                 <a-button class="btn fr" @click="save">保存</a-button>
                 <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               </a-row>
@@ -142,7 +142,8 @@ export default {
       questionTask: {},
       showFlag: true,
       selectedKeys: [],
-      isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false
+      isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
+      canEdit: false
     }
   },
   created() {
@@ -156,6 +157,7 @@ export default {
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
         that.defaultSelectedKeys = [that.questionId]
+        that.canEdit = that.$ls.get(ACCESS_TOKEN).centerId === that.patient.targetCenterId
         if (that.patientBasis.type === 1) {
           that.title = '基线'
           that.executeStatus = _.find(res.data.list[4].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus

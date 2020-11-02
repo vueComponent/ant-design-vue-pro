@@ -24,11 +24,11 @@
         </a-col>
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" :layout="formLayout" class="base-form">
-            <div class="btn-array" v-if="executeStatus !== 2 && !isGroup">
+            <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
-            <div class="btn-array" v-if="executeStatus === 2">
+            <div class="btn-array" v-if="executeStatus === 2 && canEdit">
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
 
@@ -98,7 +98,7 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla1">
-                <a-form-item label="ABPA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="外周血嗜酸细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-form-item :style="{ display: 'inline-block'}">
                     <a-input addonAfter="*10^9/L" style="width: 240px; margin-right: 20px;" v-decorator="['a11', {...inputRequired, initialValue: initValue('a11')}]" autocomplete="off"></a-input>
                   </a-form-item>
@@ -477,7 +477,8 @@ export default {
       controla75: false,
       spinning: false,
       executeStatus: false,
-      isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false
+      isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
+      canEdit: false
     }
   },
   created() {
@@ -492,6 +493,7 @@ export default {
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
         that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+        that.canEdit = that.$ls.get(ACCESS_TOKEN).centerId === that.patient.targetCenterId
       })
     this.getFormData()
   },

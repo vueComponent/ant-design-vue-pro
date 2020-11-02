@@ -24,11 +24,11 @@
         </a-col>
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form">
-            <div class="btn-array" v-if="executeStatus !== 2 && !isGroup">
+            <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
               <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
-            <div class="btn-array" v-if="executeStatus === 2">
+            <div class="btn-array" v-if="executeStatus === 2 && canEdit">
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
 
@@ -440,7 +440,8 @@ export default {
       controld112: false,
       spinning: false,
       executeStatus: false,
-      isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false
+      isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
+      canEdit: false
     }
   },
   created() {
@@ -455,6 +456,7 @@ export default {
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
         that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+        that.canEdit = that.$ls.get(ACCESS_TOKEN).centerId === that.patient.targetCenterId
         that.getFormData()
       })
   },
