@@ -11,38 +11,12 @@
           <a-col :md="6" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="refreshTable">查询</a-button>
-              <!-- <a @click="advanced = !advanced" style="margin-left: 8px" class="toggleAdvanced">
-                更多筛选
-                <a-icon :type="advanced ? 'up' : 'down'" />
-              </a> -->
             </a-form-item>
           </a-col>
-          <!-- <a-col v-if="advanced" class="tableSearch" :md="8">
-            <div>
-              <a-tabs defaultActiveKey="2">
-                <a-tab-pane tab="自定义检索" key="2" forceRender>
-                  <a-card :bordered="false">
-                    <a-form>
-                      <a-form-item label="分支中心">
-                        <a-input v-model.trim="queryParam.keyWord" style="width: 100%" />
-                      </a-form-item>
-                      <a-form-item label="创建日期" style="margin-bottom:0;">
-                        <a-range-picker @change="changeCreate" style="width: 100%" :value="createArr" />
-                      </a-form-item>
-                      <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
-                        <a-button type="primary" @click="clearForm()">清空</a-button>
-                        <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
-                      </a-form-item>
-                    </a-form>
-                  </a-card>
-                </a-tab-pane>
-              </a-tabs>
-            </div>
-          </a-col> -->
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="small" rowKey="centerName" :columns="columns" :data="loadData" :alert="options.alert" showPagination="auto">
+    <s-table ref="table" size="small" rowKey="centerName" :scroll="scroll" :columns="columns" :data="loadData" :alert="options.alert" showPagination="auto">
     </s-table>
   </a-card>
 </template>
@@ -80,6 +54,7 @@ export default {
           return res
         })
       },
+      scroll: {x: 3160},
       selectedRowKeys: [],
       selectedRows: [],
       options: {
@@ -95,94 +70,129 @@ export default {
         }
       },
       columns: [{
-          title: '患者姓名',
-          dataIndex: 'patientName',
-          width: 100
-        },{
-          title: '入组编号',
-          dataIndex: 'fileCode',
-          width: 130
-        },{
-          title: '是否有铜绿',
-          dataIndex: 'itTlStr',
-          width: 120
-        },{
-          title: 'FACED评分',
-          dataIndex: 'faced',
-          width: 100
-        },{
-          title: 'BACI评分',
-          dataIndex: 'baci',
-          width: 100
-        },{
-          title: 'REFFI评分',
-          dataIndex: 'reffi',
-          width: 100
-        },{
-          title: 'BHQ问卷得分',
-          dataIndex: 'bhq',
-          width: 100
-        },{
-          title: 'MMRC评分',
-          dataIndex: 'mmrc',
-          width: 100
-        },{
-          title: 'HAD评分',
-          dataIndex: 'had',
-          width: 100
-        },{
-          title: 'lcq总评分',
-          dataIndex: 'lcq',
-          width: 100
-        },{
-          title: 'lcq生理评分',
-          dataIndex: 'lcqSl',
-          width: 100
-        },{
-          title: 'lcq心理评分',
-          dataIndex: 'lcqXl',
-          width: 100
-        },{
-          title: 'lcq社会评分',
-          dataIndex: 'lcqSh',
-          width: 100
-        },{
-          title: 'qolb身体评分',
-          dataIndex: 'qolb1',
-          width: 100
-        },{
-          title: 'qolb角色评分',
-          dataIndex: 'qolb2',
-          width: 100
-        },{
-          title: 'qolb活力评分',
-          dataIndex: 'qolb3',
-          width: 100
-        },{
-          title: 'qolb情绪评分',
-          dataIndex: 'qolb4',
-          width: 100
-        },{
-          title: 'qolb社会评分',
-          dataIndex: 'qolb5',
-          width: 100
-        },{
-          title: 'qolb医疗评分',
-          dataIndex: 'qolb6',
-          width: 100
-        },{
-          title: 'qolb健康评分',
-          dataIndex: 'qolb7',
-          width: 100
-        },{
-          title: 'qolb呼吸评分',
-          dataIndex: 'qolb8',
-          width: 100
-        }
-      ],
+        title: '患者姓名',
+        dataIndex: 'patientName',
+        width: 80
+      },{
+        title: '患者性别',
+        dataIndex: 'sexName',
+        width: 80
+      },{
+        title: '患者年龄',
+        dataIndex: 'age',
+        width: 80
+      }, {
+        title: '入组编号',
+        dataIndex: 'fileCode',
+        width: 100
+      }, {
+        title: '是否有铜绿',
+        dataIndex: 'itTlStr',
+        width: 100
+      }, {
+        title: 'FACED评分',
+        dataIndex: 'faced',
+        width: 100
+      }, {
+        title: 'BACI评分',
+        dataIndex: 'baci',
+        width: 100
+      }, {
+        title: 'REFFI评分',
+        dataIndex: 'reffi',
+        width: 100
+      }, {
+        title: '病因诊断',
+        dataIndex: 'byzd',
+        width: 240
+      }, {
+        title: 'FVC',
+        dataIndex: 'a21',
+        width: 150
+      }, {
+        title: 'FEV1',
+        dataIndex: 'a31',
+        width: 150
+      }, {
+        title: 'FEV1%FVC',
+        dataIndex: 'a41',
+        width: 150
+      }, {
+        title: 'BSI评分',
+        dataIndex: 'bsi',
+        width: 100
+      }, {
+        title: 'BHQ问卷得分',
+        dataIndex: 'bhq',
+        width: 100
+      }, {
+        title: 'MMRC评分',
+        dataIndex: 'mmrc',
+        width: 100
+      }, {
+        title: 'HAD评分',
+        dataIndex: 'had',
+        width: 100
+      }, {
+        title: 'lcq总评分',
+        dataIndex: 'lcq',
+        width: 100
+      }, {
+        title: 'lcq生理评分',
+        dataIndex: 'lcqSl',
+        width: 100
+      }, {
+        title: 'lcq心理评分',
+        dataIndex: 'lcqXl',
+        width: 100
+      }, {
+        title: 'lcq社会评分',
+        dataIndex: 'lcqSh',
+        width: 100
+      }, {
+        title: 'qolb身体评分',
+        dataIndex: 'qolb1',
+        width: 100
+      }, {
+        title: 'qolb角色评分',
+        dataIndex: 'qolb2',
+        width: 100
+      }, {
+        title: 'qolb活力评分',
+        dataIndex: 'qolb3',
+        width: 100
+      }, {
+        title: 'qolb情绪评分',
+        dataIndex: 'qolb4',
+        width: 100
+      }, {
+        title: 'qolb社会评分',
+        dataIndex: 'qolb5',
+        width: 100
+      }, {
+        title: 'qolb医疗评分',
+        dataIndex: 'qolb6',
+        width: 100
+      }, {
+        title: 'qolb健康评分',
+        dataIndex: 'qolb7',
+        width: 100
+      }, {
+        title: 'qolb呼吸评分',
+        dataIndex: 'qolb8',
+        width: 100
+      }],
       createArr: [],
       submitArr: []
     }
+  },
+  created() {
+    // this.scroll = {
+    //   X: '9999999px',
+    //   y: window.screen.height - 400 + 'px'
+    // }
+    // this.scroll.x = 9999999 + 'px'
+    this.scroll.y = window.screen.height - 400 + 'px'
   },
   filters: {
     visitFilter(type) {
@@ -259,7 +269,8 @@ export default {
     }
   }
 }
-/deep/ .ant-table td{
+
+/deep/ .ant-table td {
   white-space: nowrap;
 }
 </style>

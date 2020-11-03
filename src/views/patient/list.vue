@@ -28,9 +28,11 @@
         <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <span slot="action" slot-scope="text, record" style="text-align: center;">
         <template>
-          <a @click="exec(record)">编辑</a>
-          <a-divider type="vertical" />
-          <a @click="del(record)">删除</a>
+          <div v-if="record.targetCenterId === centerId">
+            <a @click="exec(record)">编辑</a>
+            <a-divider type="vertical" />
+            <a @click="del(record)">删除</a>
+          </div>
         </template>
       </span>
     </s-table>
@@ -45,6 +47,7 @@ import UserDetail from '@/views/list/modules/UserDetail'
 import { getPatientList, deletePatient } from '@/api/patient'
 import CreateForm from '@/views/list/modules/CreateForm'
 import $ from 'jquery'
+import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 const visitMap = {
   0: {
@@ -80,6 +83,7 @@ export default {
   data() {
     return {
       dateArr: [],
+      centerId: this.$ls.get(ACCESS_TOKEN).centerId,
       mdl: {},
       bodyStyle: {
         padding: "10px",
@@ -119,7 +123,7 @@ export default {
           dataIndex: 'centerName',
           width: 200
         },
-        
+
         {
           title: '创建日期',
           dataIndex: 'createDate',

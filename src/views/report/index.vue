@@ -129,6 +129,7 @@ export default {
   },
   created() {
     this.scroll = {
+      x: true,
       y: window.screen.height - 368 + 'px'
     }
   },
@@ -202,4 +203,5 @@ export default {
     }
   }
 }
+.ant-table td { white-space: nowrap; }
 </style>

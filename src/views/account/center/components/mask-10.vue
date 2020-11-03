@@ -167,6 +167,7 @@ import moment from 'moment'
 import { mapActions } from 'vuex'
 import { getPatientBasis, saveBasis, getBasisForm, getOcrResult, recoverSubmit } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
+import { ACCESS_TOKEN } from '@/store/mutation-types'
 export default {
   name: 'mask10',
   components: {
