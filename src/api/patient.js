@@ -12,7 +12,7 @@ const api = {
 export default api
 
 
-export function getPatientList (parameter) {
+export function getPatientList(parameter) {
   return axios({
     url: '/patient/getDataList',
     method: 'post',
@@ -20,7 +20,7 @@ export function getPatientList (parameter) {
   })
 }
 
-export function deletePatient (parameter) {
+export function deletePatient(parameter) {
   return axios({
     url: '/patient/deletePatient',
     method: 'post',
@@ -28,7 +28,7 @@ export function deletePatient (parameter) {
   })
 }
 
-export function getPatientDetail (parameter) {
+export function getPatientDetail(parameter) {
   return axios({
     url: '/patient/detail',
     method: 'post',
@@ -37,7 +37,7 @@ export function getPatientDetail (parameter) {
 }
 
 //根据身份证号获取患者详情
-export function getPatientDetailByCard (parameter) {
+export function getPatientDetailByCard(parameter) {
   return axios({
     url: '/patient/getPatientDetailByCard',
     method: 'post',
@@ -45,7 +45,7 @@ export function getPatientDetailByCard (parameter) {
   })
 }
 
-export function getSFDataList (parameter) {
+export function getSFDataList(parameter) {
   return axios({
     url: '/patient/getSFDataList',
     method: 'post',
@@ -53,9 +53,17 @@ export function getSFDataList (parameter) {
   })
 }
 
-export function exportPatient () {
+export function exportPatient() {
   return axios({
     url: '/patient/export',
     method: 'get'
+  })
+}
+
+export function resetPwd(params) {
+  return axios({
+    url: '/authority/resetPassword',
+    method: 'post',
+    data: params
   })
 }

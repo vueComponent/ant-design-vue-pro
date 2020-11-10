@@ -334,14 +334,14 @@
                   <a-radio-group v-decorator="['a73', { ...selectRequired, initialValue: initValue('a73')}]">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
-                    <!-- <a-radio value="3">未测量</a-radio> -->
+                    <a-radio value="3">未测量</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="分析纤毛摆动频率的活检:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a74', { ...selectRequired, initialValue: initValue('a74')}]">
                     <a-radio value="1">阳性</a-radio>
                     <a-radio value="2">阴性</a-radio>
-                    <!-- <a-radio value="3">未测量</a-radio> -->
+                    <a-radio value="3">未测量</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="基因检测:" :labelCol="labelColHor" :wrapperCol="wrapperHor">

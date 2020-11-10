@@ -47,11 +47,12 @@
         </a-row>
       </a-form>
     </div>
-
     <s-table ref="table" :scroll="scroll" size="small" rowKey="doctorId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="operation" slot-scope="text, record">
         <template>
           <a @click="handleReview(record)">编辑</a>
+          <a-divider type="vertical" />
+          <a @click="resetPwd(record)">重置密码</a>
         </template>
       </span>
       <template slot="status" slot-scope="text">
@@ -60,92 +61,93 @@
       </template>
     </s-table>
     <user-detail ref="userDetail" @ok="handleOk"></user-detail>
+    <!-- <a-spin :spinning="spinning"></a-spin> -->
   </a-card>
 </template>
-
 <script>
-  import moment from 'moment'
-  import { getDoctorDataList } from '@/api/center'
-  import { STable } from '@/components'
-  import UserDetail from './UserDetail'
-  export default {
-    components: {
-      STable,
-      UserDetail
-    },
-    data() {
-      return {
-        bodyStyle: {
-          padding: '10px',
-          paddingBottom: '0px'
-        },
-        // 高级搜索 展开/关闭
-        advanced: false,
-        // 查询参数
-        queryParam: {},
-        scroll: false,
-        loadData: parameter => {
-          return getDoctorDataList(Object.assign(parameter, this.queryParam)).then(res => {
-            return res
-          })
-        },
-        selectedRowKeys: [],
-        selectedRows: [],
-        options: {
-          alert: {
-            show: false,
-            clear: () => {
-              this.selectedRowKeys = []
-            }
-          },
-          rowSelection: {
-            selectedRowKeys: this.selectedRowKeys,
-            onChange: this.onSelectChange
+import moment from 'moment'
+import { getDoctorDataList } from '@/api/center'
+import { resetPwd } from '@/api/patient'
+import { STable } from '@/components'
+import UserDetail from './UserDetail'
+export default {
+  components: {
+    STable,
+    UserDetail
+  },
+  data() {
+    return {
+      bodyStyle: {
+        padding: '10px',
+        paddingBottom: '0px'
+      },
+      // 高级搜索 展开/关闭
+      advanced: false,
+      // 查询参数
+      queryParam: {},
+      scroll: false,
+      loadData: parameter => {
+        return getDoctorDataList(Object.assign(parameter, this.queryParam)).then(res => {
+          return res
+        })
+      },
+      spinning: false,
+      selectedRowKeys: [],
+      selectedRows: [],
+      options: {
+        alert: {
+          show: false,
+          clear: () => {
+            this.selectedRowKeys = []
           }
         },
-        columns: [
-          {
-            title: '用户名称',
-            dataIndex: 'name',
-            width: '150px'
-          },
-          {
-            title: '账号',
-            dataIndex: 'account',
-            width: '150px'
-          },
-          {
-            title: '所属分支中心',
-            dataIndex: 'centerName',
-            width: '120px'
-          },
-          {
-            title: '状态',
-            dataIndex: 'status',
-            width: '120px',
-            scopedSlots: { customRender: 'status' }
-          },
-          {
-            title: '创建时间',
-            dataIndex: 'createTime',
-            customRender: createTime => moment(createTime).format('YYYY-MM-DD'),
-            width: '120px'
-          },
-          {
-            title: '操作',
-            dataIndex: 'operation',
-            scopedSlots: { customRender: 'operation' },
-            width: '100px'
-          }
-        ],
-      }
-    },
-    created() {
-      this.scroll = {
-        y: window.screen.height - 368 + 'px'
-      }
-    },
-    mounted() {
+        rowSelection: {
+          selectedRowKeys: this.selectedRowKeys,
+          onChange: this.onSelectChange
+        }
+      },
+      columns: [{
+          title: '用户名称',
+          dataIndex: 'name',
+          width: '150px'
+        },
+        {
+          title: '账号',
+          dataIndex: 'account',
+          width: '150px'
+        },
+        {
+          title: '所属分支中心',
+          dataIndex: 'centerName',
+          width: '120px'
+        },
+        {
+          title: '状态',
+          dataIndex: 'status',
+          width: '120px',
+          scopedSlots: { customRender: 'status' }
+        },
+        {
+          title: '创建时间',
+          dataIndex: 'createTime',
+          customRender: createTime => moment(createTime).format('YYYY-MM-DD'),
+          width: '120px'
+        },
+        {
+          title: '操作',
+          dataIndex: 'operation',
+          scopedSlots: { customRender: 'operation' },
+          width: '100px'
+        }
+      ],
+    }
+  },
+  created() {
+    this.scroll = {
+      y: window.screen.height - 368 + 'px'
+    }
+  },
+  mounted() {
     var that = this
     $(document).on('click', function(e) {
       if (e.target.className === 'toggleAdvanced') {
@@ -156,54 +158,74 @@
       }
     })
   },
-    methods: {
-      onSelectChange(selectedRowKeys, selectedRows) {
-        this.selectedRowKeys = selectedRowKeys;
-        this.selectedRows = selectedRows;
-      },
-      clearForm() {
-        this.queryParam = {}
-      },
-      tableSearch(type) {
-        this.queryParam.isUser = type
-        this.$refs.table.refresh()
-        this.advanced = false
-      },
-      refreshTable() {
-        this.advanced = false
-        this.$refs.table.refresh()
-      },
-      handleReview(record) {
-        this.$refs.userDetail.edit(record)
-      },
-      handleOk() {
-        this.$refs.table.refresh()
-      }
-    }
-  }
-</script>
-
-<style lang="less" scoped>
-  /deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
-    margin-bottom: 10px;
-  }
-  .tableSearch {
-    background: #ffffff;
-    position: absolute;
-    top: 52px;
-    box-shadow: 4px 4px 10px #ddd;
-    z-index: 100;
-    /deep/ .ant-card-body .ant-form-horizontal .ant-form-item > .ant-form-item-label {
-      width: 70px !important;
-    }
-    .commonRetrieval {
-      padding: 10px;
-      p {
-        &:hover {
-          cursor: pointer;
-          text-decoration: underline;
+  methods: {
+    onSelectChange(selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys;
+      this.selectedRows = selectedRows;
+    },
+    clearForm() {
+      this.queryParam = {}
+    },
+    tableSearch(type) {
+      this.queryParam.isUser = type
+      this.$refs.table.refresh()
+      this.advanced = false
+    },
+    refreshTable() {
+      this.advanced = false
+      this.$refs.table.refresh()
+    },
+    handleReview(record) {
+      this.$refs.userDetail.edit(record)
+    },
+    handleOk() {
+      this.$refs.table.refresh()
+    },
+    resetPwd(record) {
+      var that = this
+      this.$confirm({
+        title: '确认重置密码？',
+        onOk() {
+          var params = new URLSearchParams()
+          params.append('doctorId', record.doctorId)
+          resetPwd(params)
+            .then(res => {
+              that.$message.success(res.msg)
+            }).catch(error => {
+              console.log(error)
+            })
         }
+      })
+    }
+  }
+}
+</script>
+<style lang="less" scoped>
+
+/deep/.table-page-search-wrapper .ant-form-inline .ant-form-item {
+  margin-bottom: 10px;
+}
+
+.tableSearch {
+  background: #ffffff;
+  position: absolute;
+  top: 52px;
+  box-shadow: 4px 4px 10px #ddd;
+  z-index: 100;
+
+  /deep/ .ant-card-body .ant-form-horizontal .ant-form-item>.ant-form-item-label {
+    width: 70px !important;
+  }
+
+  .commonRetrieval {
+    padding: 10px;
+
+    p {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
       }
     }
   }
+}
 </style>
