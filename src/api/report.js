@@ -7,7 +7,7 @@ const api = {
 export default api
 
 
-export function getReportList (parameter) {
+export function getReportList(parameter) {
   return axios({
     url: '/reportCollectBase/getDataList',
     method: 'post',

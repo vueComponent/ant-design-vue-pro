@@ -389,7 +389,7 @@
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controla920">
-                  <a-input style="width: 240px;" v-decorator="['a91', {...inputRequired, initialValue: initValue('a91')}]" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['a91', {...inputRequiredNotEmpty, initialValue: initValue('a91')}]" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
             </div>
@@ -472,6 +472,9 @@ export default {
       },
       inputRequired: {
         rules: [{ required: true, message: '请填写！' }]
+      },
+      inputRequiredNotEmpty: {
+        rules: [{ required: true, message: '请填写！', whitespace: true }]
       },
       form: this.$form.createForm(this),
       maskId: this.$route.meta.maskId,
@@ -1028,7 +1031,7 @@ export default {
       line-height: 40px;
     }
 
-    padding: 20px;
+    padding: 40px 20px 50px;
 
     .ant-form-item {
       // padding-bottom: 10px;

@@ -42,6 +42,9 @@
               </a-tabs>
             </div>
           </a-col>
+          <a-col :md="13" style="text-align:right" :sm="24">
+            <a-button type="primary" @click="_export">导出</a-button>
+          </a-col>
         </a-row>
       </a-form>
     </div>
@@ -59,6 +62,7 @@ export default {
   },
   data() {
     return {
+      baseUrl: process.env.VUE_APP_API_BASE_URL,
       bodyStyle: {
         padding: '10px',
         paddingBottom: '0px'
@@ -88,6 +92,10 @@ export default {
         }
       },
       columns: [{
+          title: '中心编号',
+          dataIndex: 'centerCode',
+          width: '100px'
+        },{
           title: '分支中心',
           dataIndex: 'centerName',
           width: '120px'
@@ -172,6 +180,9 @@ export default {
       this.submitArr = time;
       this.queryParam.submitDateStart = moment(time[0]).format('YYYY-MM-DD')
       this.queryParam.submitDateEnd = moment(time[1]).format('YYYY-MM-DD')
+    },
+    _export() {
+      window.open(this.baseUrl + 'basis/exportCenterNum')
     }
   }
 }
@@ -203,5 +214,8 @@ export default {
     }
   }
 }
-.ant-table td { white-space: nowrap; }
+
+.ant-table td {
+  white-space: nowrap;
+}
 </style>

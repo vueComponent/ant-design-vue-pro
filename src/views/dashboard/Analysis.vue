@@ -36,7 +36,7 @@
           </a-tooltip>
           <template slot="footer">
             上年患者数
-            <span>{{ indexData.currYearPatients }}</span>
+            <span>{{ indexData.lastYearPatients }}</span>
           </template>
            <div class="page-header-index-img">
               <img  style="width: 64px; height: 64px" src="../../assets/home1.png">

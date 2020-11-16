@@ -13,6 +13,9 @@
               <a-button type="primary" @click="refreshTable">查询</a-button>
             </a-form-item>
           </a-col>
+          <a-col :md="13" style="text-align:right" :sm="24">
+            <a-button type="primary" @click="_export">导出</a-button>
+          </a-col>
         </a-row>
       </a-form>
     </div>
@@ -41,6 +44,7 @@ export default {
   },
   data() {
     return {
+      baseUrl: process.env.VUE_APP_API_BASE_URL,
       bodyStyle: {
         padding: '10px',
         paddingBottom: '0px'
@@ -238,6 +242,9 @@ export default {
       this.submitArr = time;
       this.queryParam.submitDateStart = moment(time[0]).format('YYYY-MM-DD')
       this.queryParam.submitDateEnd = moment(time[1]).format('YYYY-MM-DD')
+    },
+    _export() {
+      window.open(this.baseUrl + 'patientReport/export')
     }
   }
 }

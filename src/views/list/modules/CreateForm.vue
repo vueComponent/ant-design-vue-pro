@@ -59,6 +59,9 @@
         <a-form-item label="联系电话3" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['telephone3']" />
         </a-form-item>
+        <a-form-item label="随访开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['startDate', requiredRule]" />
+        </a-form-item>
         <a-form-item :wrapperCol="agrWrapperCol">
           <a-checkbox v-decorator="['agreeMent', { rules: [ { required: true, validator: agrValidator }], valuePropName: 'checked' }]" :disabled="options.title == '编辑患者'">
             患者是否已签署
@@ -208,6 +211,10 @@ export default {
           telephone3: value.telephone3,
           agreeMent: JSON.parse(value.agreeMent)
         })
+        if (value.startDate)
+          this.form.setFieldsValue({
+            startDate: moment(value.startDate, 'YYYY-MM-DD')
+          })
       }, 0);
       this.visible = true
     },
@@ -224,6 +231,7 @@ export default {
           ...fieldsValue,
           birthDate: fieldsValue['birthDate'].format('YYYY-MM-DD'),
           registerDate: fieldsValue['registerDate'].format('YYYY-MM-DD'),
+          startDate: fieldsValue['startDate'].format('YYYY-MM-DD'),
           addressP: residence[0],
           addressC: residence[1],
           patientId: this.patientId
