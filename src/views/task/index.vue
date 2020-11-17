@@ -73,6 +73,11 @@
       <template slot="patientName" slot-scope="text,record">
         <a @click="showUser(record)">{{text}}</a>
       </template>
+      <span slot="unSubmitquestion" slot-scope="text, record">
+        <p>{{ record.unSubmitquestion }}</p>
+      </span>
+      <span slot="questionStatus" slot-scope="text">
+        <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <span slot="submitStatusStr" slot-scope="text">
         <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <template slot="operation" slot-scope="text, record">
@@ -211,6 +216,20 @@ export default {
           title: '分支中心',
           dataIndex: 'centerName',
           width: 200
+        },{
+          title: '问卷状态',
+          width: 80,
+          dataIndex: 'questionStatus',
+          scopedSlots: {
+            customRender: 'questionStatus'
+          }
+        },{
+          title: '未提交问卷',
+          width: 200,
+          dataIndex: ' unSubmitquestion',
+          scopedSlots: {
+            customRender: 'unSubmitquestion'
+          }
         },
         {
           title: '操作',

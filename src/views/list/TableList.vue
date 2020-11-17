@@ -55,11 +55,16 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="small" :scroll="{ x: 1000 }" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="small" :scroll="{ x: 1600 }" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="name" slot-scope="text, record" @click="showUser(record)">
         <p class="userName">{{ text }}</p>
       </span>
+      <span slot="unSubmitquestion" slot-scope="text, record">
+        <p>{{ record.unSubmitquestion }}</p>
+      </span>
       <span slot="submitStatus" slot-scope="text">
+        <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
+      <span slot="questionStatus" slot-scope="text">
         <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
       <span slot="basisList" slot-scope="basisList" v-if="basisList.length">
         <div class="progressTag">
@@ -333,6 +338,20 @@ var columns = [{
   title: '分支中心',
   width: 200,
   dataIndex: 'centerName'
+},{
+  title: '问卷状态',
+  width: 80,
+  dataIndex: 'questionStatus',
+  scopedSlots: {
+    customRender: 'questionStatus'
+  }
+},{
+  title: '未提交问卷',
+  width: 200,
+  dataIndex: ' unSubmitquestion',
+  scopedSlots: {
+    customRender: 'unSubmitquestion'
+  }
 }, {
   title: '操作',
   dataIndex: 'action',
@@ -370,6 +389,20 @@ var groupColumns = [{
   title: '分支中心',
   dataIndex: 'centerName',
   width: 200
+},{
+  title: '问卷状态',
+  width: 80,
+  dataIndex: 'questionStatus',
+  scopedSlots: {
+    customRender: 'questionStatus'
+  }
+},{
+  title: '未提交问卷',
+  width: 200,
+  dataIndex: ' unSubmitquestion',
+  scopedSlots: {
+    customRender: 'unSubmitquestion'
+  }
 }]
 
 export default {
