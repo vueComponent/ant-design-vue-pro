@@ -25,7 +25,7 @@
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form">
             <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
-              <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
+              <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="btn-array" v-if="executeStatus === 2 && canEdit">
@@ -223,11 +223,13 @@ import { getPatientBasis, saveBasis, getBasisForm, computeScore, recoverSubmit }
 import { MyIcon } from '@/components/_util/util'
 import { getOcrResult } from '@/api/basis'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
+import ContactForm from '@/views/account/ContactForm'
 export default {
   name: 'task19',
   components: {
     STree,
-    MyIcon
+    MyIcon,
+    ContactForm
   },
   data() {
     return {
@@ -311,7 +313,8 @@ export default {
       controla8: false,
       controla9: false,
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
-      canEdit: false
+      canEdit: false,
+      submitInfo: undefined
     }
   },
   created() {
@@ -354,16 +357,25 @@ export default {
         this.$router.replace('/list/task/' + this.patientBasisId + '/' + this.maskId)
       }
     },
+    handleOk(v) {
+      this.submitInfo = v
+      this.$refs.submitBtn.$el.click()
+    },
     handleSubmit(e) {
+      var _this = this
       e.preventDefault()
       const { form: { validateFieldsAndScroll } } = this
-      var that = this
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
-          console.log('values', values)
+          if (!_this.submitInfo) {
+            _this.$refs.createModal.add()
+            return false
+          }
           var re = this.form.getFieldsValue()
+          var that = this
           re = {
             ...re,
+            ..._this.submitInfo,
             'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
             'b': typeof re['b'] !== 'undefined' ? re['b'].join(',') : ''
           }

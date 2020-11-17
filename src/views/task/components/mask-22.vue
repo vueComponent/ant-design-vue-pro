@@ -25,13 +25,12 @@
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form">
             <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
-              <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
+              <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="btn-array" v-if="executeStatus === 2 && canEdit">
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
-
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.肺功能相关检查</div>
               <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -479,18 +478,20 @@ import { getPatientBasis, saveBasis, getBasisForm, recoverSubmit } from '@/api/b
 import { MyIcon } from '@/components/_util/util'
 import { getOcrResult } from '@/api/basis'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
+import ContactForm from '@/views/account/ContactForm'
 export default {
   name: 'task22',
   components: {
     STree,
-    MyIcon
+    MyIcon,
+    ContactForm
   },
   data() {
     return {
-    //   previewVisible1: false,
-    //   previewImage1: '',
-    //   previewVisible2: false,
-    //   previewImage2: '',
+      //   previewVisible1: false,
+      //   previewImage1: '',
+      //   previewVisible2: false,
+      //   previewImage2: '',
       uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
       viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
       fileList1: [],
@@ -580,8 +581,8 @@ export default {
       maskId: this.$route.meta.maskId,
       patientBasisId: this.$route.params.id,
       fgnxgjc: undefined,
-    //   controla1p: false,
-    //   controla1n: false,
+      //   controla1p: false,
+      //   controla1n: false,
       controla21: false,
       controla31: false,
       controla41: false,
@@ -601,7 +602,8 @@ export default {
       spinning: false,
       executeStatus: false,
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
-      canEdit: false
+      canEdit: false,
+      submitInfo: undefined
     }
   },
   created() {
@@ -645,16 +647,26 @@ export default {
         this.$router.replace('/list/task/' + this.patientBasisId + '/' + e.key)
       }
     },
+    handleOk(v) {
+      this.submitInfo = v
+      this.$refs.submitBtn.$el.click()
+    },
     handleSubmit(e) {
+      var _this = this
       e.preventDefault()
       const { form: { validateFieldsAndScroll } } = this
-      this.confirmLoading = true
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
-          console.log('values', values)
+          if (!_this.submitInfo) {
+            _this.$refs.createModal.add()
+            return false
+          }
           var re = this.form.getFieldsValue()
           var that = this
-          console.log(re)
+          re = {
+            ...re,
+            ..._this.submitInfo
+          }
           this.patientBasis.status = 2
           var params = new URLSearchParams()
           if (this.fgnxgjc && this.fgnxgjc.fgnxgjcId) {
@@ -876,8 +888,8 @@ export default {
     handlePreview1(file) {
       const viewer = this.$el.querySelector('.images1').$viewer
       viewer.show()
-    //   this.previewImage1 = file.url || file.thumbUrl;
-    //   this.previewVisible1 = true;
+      //   this.previewImage1 = file.url || file.thumbUrl;
+      //   this.previewVisible1 = true;
     },
     handleChange1({ fileList }) {
       this.fileList1 = fileList;
@@ -888,8 +900,8 @@ export default {
     handlePreview2(file) {
       const viewer = this.$el.querySelector('.images2').$viewer
       viewer.show()
-    //   this.previewImage2 = file.url || file.thumbUrl;
-    //   this.previewVisible2 = true;
+      //   this.previewImage2 = file.url || file.thumbUrl;
+      //   this.previewVisible2 = true;
     },
     handleChange2({ fileList }) {
       this.fileList2 = fileList;
@@ -919,17 +931,17 @@ export default {
       var that = this
       getOcrResult(params)
         .then(res => {
-        //   console.log(res.data)
+          //   console.log(res.data)
           that.spinning = false
           that.$message.success(res.data.info)
           that.fgnxgjc = _.extend(that.fgnxgjc || {}, that.dealAnswers(res.data))
-        //   that.form.setFieldsValue(that.fgnxgjc)
+          //   that.form.setFieldsValue(that.fgnxgjc)
         })
         .catch(error => {
           that.confirmLoading = false
         })
     },
-    withdraw(){
+    withdraw() {
       var that = this
       this.$confirm({
         title: '确认撤销？',
@@ -945,7 +957,7 @@ export default {
               params.append('patientBasisId', that.patientBasisId)
               getPatientBasis(params)
                 .then(res => {
-                  
+
                   that.orgTree = res.data.list
                   that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
@@ -1106,9 +1118,11 @@ export default {
     .ant-menu.ant-menu-inline.ant-menu-sub {
       background-color: rgba(245, 251, 255);
       padding-left: 20px;
-      .treeSubTitle{
+
+      .treeSubTitle {
         font-size: 14px;
       }
+
       li {
         border-bottom: none;
         height: 40px;

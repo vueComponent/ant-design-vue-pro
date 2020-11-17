@@ -25,13 +25,12 @@
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form">
             <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
-              <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
+              <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="btn-array" v-if="executeStatus === 2 && canEdit">
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
-
             <div class="baselineForm" :style="baselineFormStyle">
               <a-form-item label="有无新增其他实验室检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a1', {...require2, initialValue: initValue('a1')}]" @change="changeRadio($event, 'controla1')">
@@ -168,11 +167,13 @@ import { mapActions } from 'vuex'
 import { getPatientBasis, saveBasis, getBasisForm, getOcrResult, recoverSubmit } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
+import ContactForm from '@/views/account/ContactForm'
 export default {
   name: 'task24',
   components: {
     STree,
-    MyIcon
+    MyIcon,
+    ContactForm
   },
   data() {
     return {
@@ -244,7 +245,8 @@ export default {
       fileList1: [],
       fileList2: [],
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
-      canEdit: false
+      canEdit: false,
+      submitInfo: undefined
     }
   },
   created() {
@@ -320,14 +322,21 @@ export default {
       }
     },
     handleSubmit(e) {
+      var _this = this
       e.preventDefault()
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
-          console.log('values', values)
+          if (!_this.submitInfo) {
+            _this.$refs.createModal.add()
+            return false
+          }
           var re = this.form.getFieldsValue()
           var that = this
-          console.log(re)
+          re = {
+            ...re,
+            ..._this.submitInfo
+          }
           this.patientBasis.status = 2
           var params = new URLSearchParams()
           if (this.qtsyjc && this.qtsyjc.qtsyjcId) {
@@ -400,6 +409,10 @@ export default {
         }
       }
       return answer
+    },
+    handleOk(v) {
+      this.submitInfo = v
+      this.$refs.submitBtn.$el.click()
     },
     save() {
       var re = this.form.getFieldsValue()
@@ -488,7 +501,7 @@ export default {
           that.$message.error(res.msg)
         })
     },
-    withdraw(){
+    withdraw() {
       var that = this
       this.$confirm({
         title: '确认撤销？',
@@ -504,7 +517,7 @@ export default {
               params.append('patientBasisId', that.patientBasisId)
               getPatientBasis(params)
                 .then(res => {
-                  
+
                   that.orgTree = res.data.list
                   that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
@@ -665,9 +678,11 @@ export default {
     .ant-menu.ant-menu-inline.ant-menu-sub {
       background-color: rgba(245, 251, 255);
       padding-left: 20px;
-      .treeSubTitle{
+
+      .treeSubTitle {
         font-size: 14px;
       }
+
       li {
         border-bottom: none;
         height: 40px;

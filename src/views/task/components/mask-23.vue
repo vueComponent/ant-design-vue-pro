@@ -25,13 +25,12 @@
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form">
             <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
-              <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
+              <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="btn-array" v-if="executeStatus === 2 && canEdit">
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
-
             <div class="baselineForm" :style="baselineFormStyle">
               <a-form-item label="有无新增心脏彩超:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a1', {...require2, initialValue: initValue('a1')}]" @change="changeRadio($event, 'controla1')">
@@ -115,11 +114,13 @@ import { getPatientBasis, saveBasis, getBasisForm, recoverSubmit } from '@/api/b
 import { MyIcon } from '@/components/_util/util'
 import { getOcrResult } from '@/api/basis'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
+import ContactForm from '@/views/account/ContactForm'
 export default {
   name: 'task23',
   components: {
     STree,
-    MyIcon
+    MyIcon,
+    ContactForm
   },
   data() {
     return {
@@ -195,7 +196,8 @@ export default {
       viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
       fileList: [],
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
-      canEdit: false
+      canEdit: false,
+      submitInfo: undefined
     }
   },
   created() {
@@ -249,15 +251,26 @@ export default {
         this.$router.replace('/list/task/' + this.patientBasisId + '/' + this.maskId)
       }
     },
+    handleOk(v) {
+      this.submitInfo = v
+      this.$refs.submitBtn.$el.click()
+    },
     handleSubmit(e) {
+      var _this = this
       e.preventDefault()
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
-          console.log('values', values)
+          if (!_this.submitInfo) {
+            _this.$refs.createModal.add()
+            return false
+          }
           var re = this.form.getFieldsValue()
           var that = this
-          console.log(re)
+          re = {
+            ...re,
+            ..._this.submitInfo
+          }
           this.patientBasis.status = 2
           var params = new URLSearchParams()
           if (this.xzcc && this.xzcc.xzccId) {
@@ -371,7 +384,7 @@ export default {
     handleChange({ fileList }) {
       this.fileList = fileList
     },
-    withdraw(){
+    withdraw() {
       var that = this
       this.$confirm({
         title: '确认撤销？',
@@ -387,7 +400,7 @@ export default {
               params.append('patientBasisId', that.patientBasisId)
               getPatientBasis(params)
                 .then(res => {
-                  
+
                   that.orgTree = res.data.list
                   that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
@@ -548,9 +561,11 @@ export default {
     .ant-menu.ant-menu-inline.ant-menu-sub {
       background-color: rgba(245, 251, 255);
       padding-left: 20px;
-      .treeSubTitle{
+
+      .treeSubTitle {
         font-size: 14px;
       }
+
       li {
         border-bottom: none;
         height: 40px;

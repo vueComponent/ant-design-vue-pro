@@ -25,7 +25,7 @@
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form" :layout="formLayout">
             <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
-              <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
+              <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="btn-array" v-if="executeStatus === 2 && canEdit">
@@ -473,11 +473,13 @@ import { mapActions } from 'vuex'
 import { getPatientBasis, saveBasis, getBasisForm, recoverSubmit } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
+import ContactForm from '@/views/account/ContactForm'
 export default {
   name: 'task14',
   components: {
     STree,
-    MyIcon
+    MyIcon,
+    ContactForm
   },
   data() {
     return {
@@ -599,7 +601,8 @@ export default {
       controlb1711: false,
       controlb1721: false,
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
-      canEdit: false
+      canEdit: false,
+      submitInfo: undefined
     }
   },
   created() {
@@ -884,15 +887,20 @@ export default {
       }
     },
     handleSubmit(e) {
+      var _this = this
       e.preventDefault()
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
-          console.log('values', values)
+          if (!_this.submitInfo) {
+            _this.$refs.createModal.add()
+            return false
+          }
           var re = this.form.getFieldsValue()
           var that = this
           re = {
             ...re,
+            ..._this.submitInfo,
             'a1': typeof re['a1'] !== 'undefined' ? re['a1'].join(',') : '',
             'a3': typeof re['a3'] !== 'undefined' ? re['a3'].format('YYYY-MM-DD') : '',
             'a4': typeof re['a4'] !== 'undefined' ? re['a4'].join(',') : '',
@@ -1018,6 +1026,10 @@ export default {
           console.log(error)
         })
       return false
+    },
+    handleOk(v) {
+      this.submitInfo = v
+      this.$refs.submitBtn.$el.click()
     },
     withdraw(){
       var that = this

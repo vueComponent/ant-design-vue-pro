@@ -25,7 +25,7 @@
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form">
             <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
-              <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
+              <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="btn-array" v-if="executeStatus === 2 && canEdit">
@@ -334,12 +334,14 @@ import { getPatientBasis, saveBasis, getBasisForm, getMedicineAllergyList, recov
 import { MyIcon } from '@/components/_util/util'
 import AddTable from '@/views/account/center/model/table'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
+import ContactForm from '@/views/account/ContactForm'
 export default {
   name: 'jxjzq',
   components: {
     STree,
     MyIcon,
-    AddTable
+    AddTable,
+    ContactForm
   },
   data() {
     return {
@@ -441,7 +443,8 @@ export default {
       spinning: false,
       executeStatus: false,
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
-      canEdit: false
+      canEdit: false,
+      submitInfo: undefined
     }
   },
   created() {
@@ -508,11 +511,15 @@ export default {
       }
     },
     handleSubmit(e) {
+      var _this = this
       e.preventDefault()
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
-          console.log('values', values)
+          if (!_this.submitInfo) {
+            _this.$refs.createModal.add()
+            return false
+          }
           const allergy = []
           for (var key in this.optionDataSource) {
             _.each(this.optionDataSource[key], function(item) {
@@ -528,6 +535,7 @@ export default {
           var re = this.form.getFieldsValue()
           re = {
             ...re,
+            ..._this.submitInfo,
             'b4': typeof re['b4'] !== 'undefined' ? re['b4'].join(',') : '',
             'b12': typeof re['b12'] !== 'undefined' ? re['b12'].format('YYYY-MM-DD') : '',
             'c1': typeof re['c1'] !== 'undefined' ? re['c1'].format('YYYY-MM-DD') : '',
@@ -583,6 +591,10 @@ export default {
           this.spinning = false
         }
       })
+    },
+    handleOk(v) {
+      this.submitInfo = v
+      this.$refs.submitBtn.$el.click()
     },
     initValue(key, type = 'normal') {
       if (!this.jxjzq) return type === 'array' ? [] : type === 'time' ? undefined : ''

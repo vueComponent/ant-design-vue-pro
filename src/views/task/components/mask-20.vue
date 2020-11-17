@@ -25,7 +25,7 @@
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form">
             <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
-              <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
+              <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="btn-array" v-if="executeStatus === 2 && canEdit">
@@ -191,6 +191,7 @@ import { mapActions } from 'vuex'
 import { getPatientBasis, saveBasis, getBasisForm, computeScore, getMedicineAllergyList, recoverSubmit } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 import AddTable from "@/views/account/center/model/table"
+import ContactForm from '@/views/account/ContactForm'
 import _ from 'lodash'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 export default {
@@ -198,7 +199,8 @@ export default {
   components: {
     STree,
     MyIcon,
-    AddTable
+    AddTable,
+    ContactForm
   },
   data() {
     return {
@@ -302,7 +304,8 @@ export default {
       otherName2: '',
       picList1: [],
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
-      canEdit: false
+      canEdit: false,
+      submitInfo: undefined
     }
   },
   created() {
@@ -383,12 +386,20 @@ export default {
         this.$router.replace('/list/task/' + this.patientBasisId + '/' + e.key)
       }
     },
+    handleOk(v) {
+      this.submitInfo = v
+      this.$refs.submitBtn.$el.click()
+    },
     handleSubmit(e) {
+      var _this = this
       e.preventDefault()
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
-          console.log('values', values)
+          if (!_this.submitInfo) {
+            _this.$refs.createModal.add()
+            return false
+          }
           const allergy = []
           for (var key in this.optionDataSource) {
             _.each(this.optionDataSource[key], function(item) {
@@ -425,6 +436,7 @@ export default {
           var that = this
           re = {
             ...re,
+            ..._this.submitInfo,
             'a': typeof re['a'] !== 'undefined' ? re['a'].join(',') : '',
             'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
             'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',

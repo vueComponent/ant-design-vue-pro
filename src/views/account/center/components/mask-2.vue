@@ -26,7 +26,7 @@
           <a-form :form="form" @submit="handleSubmit" class="base-form">
             <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
-              <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
+              <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
             <div class="btn-array" v-if="executeStatus === 2 && canEdit">
@@ -92,11 +92,13 @@ import { mapActions } from 'vuex'
 import { getPatientBasis, saveBasis, getBasisForm, computeScore, recoverSubmit } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
+import ContactForm from '@/views/account/ContactForm'
 export default {
   name: 'mask2',
   components: {
     STree,
-    MyIcon
+    MyIcon,
+    ContactForm
   },
   data() {
     return {
@@ -164,7 +166,8 @@ export default {
       spinning: false,
       executeStatus: false,
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
-      canEdit: false
+      canEdit: false,
+      submitInfo: undefined
     }
   },
   created() {
@@ -230,14 +233,20 @@ export default {
         })
     },
     handleSubmit(e) {
+      var _this = this
       e.preventDefault()
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
+          if (!_this.submitInfo) {
+            _this.$refs.createModal.add()
+            return false
+          }
           var re = this.form.getFieldsValue()
           var that = this
           re = {
             ...re,
+            ..._this.submitInfo,
             'a91': typeof re['a91'] !== 'undefined' ? re['a91'].join(',') : ''
           }
           console.log(re)
@@ -302,6 +311,10 @@ export default {
         }
       }
       return answer
+    },
+    handleOk(v) {
+      this.submitInfo = v
+      this.$refs.submitBtn.$el.click()
     },
     save() {
       var re = this.form.getFieldsValue()
