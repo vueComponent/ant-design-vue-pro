@@ -59,7 +59,13 @@
         <a-form-item label="联系电话3" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['telephone3']" />
         </a-form-item>
-        <a-form-item label="随访开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="随访开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol" class="aaa">
+          <a-popover>
+            <template slot="content">
+              第一次半年随访根据此时间生成
+            </template>
+            <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
+          </a-popover>
           <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['startDate', requiredRule]" />
         </a-form-item>
         <a-form-item :wrapperCol="agrWrapperCol">
@@ -386,13 +392,14 @@ export default {
   margin-bottom: 0;
 }
 
-//   .ant-modal-header {
-//     padding: 12px 24px !important;
-//   }
+/deep/ .aaa .ant-form-item-label {
+  position: relative;
+  left: -18px;
+}
 
-//   .ant-modal-close-x {
-//     width: 50px !important;
-//     height: 50px !important;
-//     line-height: 50px !important;
-//   }
+.aaa .ant-form-item-children>i {
+  position: absolute!important;
+  left: -22px!important;
+  top: 4px;
+}
 </style>
