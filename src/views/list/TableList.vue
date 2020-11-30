@@ -57,7 +57,7 @@
     </div>
     <s-table ref="table" size="small" :scroll="{ x: 1600 }" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="name" slot-scope="text, record" @click="showUser(record)">
-        <p class="userName">{{ text }}</p>
+        <p class="userName">{{modifyName(text)}}</p>
       </span>
       <span slot="unSubmitquestion" slot-scope="text, record">
         <p>{{ record.unSubmitquestion }}</p>
@@ -259,6 +259,7 @@
         </a-row>
       </div>
     </a-modal>
+    <contact-form ref="contactModal" @ok="handleOk" />
   </a-card>
 </template>
 <script>
@@ -274,6 +275,7 @@ import Visit from './modules/Visit'
 import { getPatientList } from '@/api/patient'
 import { ChartCard, MiniProgress, MiniArea } from '@/components'
 import { MyIcon } from '@/components/_util/util'
+import ContactForm from '@/views/account/ContactForm'
 import {
   addVasit,
   outGroup,
@@ -312,10 +314,6 @@ var columns = [{
     customRender: 'name'
   }
 }, {
-  title: '身份证号',
-  width: 160,
-  dataIndex: 'card'
-}, {
   title: '创建日期',
   dataIndex: 'createDate',
   width: 90,
@@ -338,14 +336,14 @@ var columns = [{
   title: '分支中心',
   width: 200,
   dataIndex: 'centerName'
-},{
+}, {
   title: '问卷状态',
   width: 80,
   dataIndex: 'questionStatus',
   scopedSlots: {
     customRender: 'questionStatus'
   }
-},{
+}, {
   title: '未提交问卷',
   width: 200,
   dataIndex: ' unSubmitquestion',
@@ -389,14 +387,14 @@ var groupColumns = [{
   title: '分支中心',
   dataIndex: 'centerName',
   width: 200
-},{
+}, {
   title: '问卷状态',
   width: 80,
   dataIndex: 'questionStatus',
   scopedSlots: {
     customRender: 'questionStatus'
   }
-},{
+}, {
   title: '未提交问卷',
   width: 200,
   dataIndex: ' unSubmitquestion',
@@ -417,10 +415,12 @@ export default {
     MyIcon,
     ChartCard,
     MiniProgress,
-    MiniArea
+    MiniArea,
+    ContactForm
   },
   data() {
     return {
+      patientBasisId: '',
       dateArr: [],
       mdl: {},
       baseUrl: process.env.VUE_APP_API_BASE_URL,
@@ -559,6 +559,9 @@ export default {
   },
   methods: {
     ...mapActions(['setSidebar']),
+    modifyName(name) {
+      return name.replace(/(.)(.*)/, (_, $1, $2) => $1 + '*'.repeat($2.length))
+    },
     clearForm() {
       console.log(this.dateArr)
       this.queryParam = {}
@@ -604,28 +607,8 @@ export default {
       this.visible = false
     },
     handleSubmit(record) {
-      var that = this
-      this.$confirm({
-        title: '确认提交？',
-        onOk() {
-          var params = new URLSearchParams()
-          params.append('patientBasisId', record.basisList[0].patientBasisId)
-          submitCheck(params)
-            .then(res => {
-              if (res.code === -1) {
-                that.$message.error(res.msg)
-              } else {
-                that.$message.success(res.msg)
-                that.$refs.table.refresh()
-                that.scoreData = res.data
-                that.detailVisible = true
-              }
-
-            }).catch(error => {
-              console.log(error)
-            })
-        }
-      })
+      this.patientBasisId = record.basisList[0].patientBasisId
+      this.$refs.contactModal.add()
     },
     handleOut(record) {
       this.visible = true
@@ -648,6 +631,32 @@ export default {
           that.$refs.table.refresh()
         });
       });
+    },
+    handleOk(v) {
+      var that = this
+      this.$confirm({
+        title: '确认提交？',
+        onOk() {
+          var params = new URLSearchParams()
+          params.append('patientBasisId', that.patientBasisId)
+          params.append('submitName', v.submitName)
+          params.append('submitTelephone', v.submitTelephone)
+          submitCheck(params)
+            .then(res => {
+              if (res.code === -1) {
+                that.$message.error(res.msg)
+              } else {
+                that.$message.success(res.msg)
+                that.$refs.table.refresh()
+                that.scoreData = res.data
+                that.detailVisible = true
+              }
+
+            }).catch(error => {
+              console.log(error)
+            })
+        }
+      })
     }
   }
 };
@@ -825,6 +834,7 @@ export default {
       float: right;
       color: #096dd9;
       font-weight: bold;
+
       &.no {
         color: gray;
       }

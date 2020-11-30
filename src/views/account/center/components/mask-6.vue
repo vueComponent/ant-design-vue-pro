@@ -391,10 +391,6 @@ export default {
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
-          if (!_this.submitInfo) {
-            _this.$refs.createModal.add()
-            return false
-          }
           const allergy = []
           for (var key in this.optionDataSource) {
             _.each(this.optionDataSource[key], function(item) {
@@ -431,7 +427,6 @@ export default {
           var that = this
           re = {
             ...re,
-            ..._this.submitInfo,
             'a': typeof re['a'] !== 'undefined' ? re['a'].join(',') : '',
             'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
             'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',

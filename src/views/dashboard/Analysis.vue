@@ -11,7 +11,7 @@
             <span>{{ indexData.lastMonthPatients }}</span>
           </template>
           <div class="page-header-index-img">
-              <img  style="width: 64px; height: 64px" src="../../assets/home2.png">
+            <img style="width: 64px; height: 64px" src="../../assets/home2.png">
           </div>
         </chart-card>
       </a-col>
@@ -24,8 +24,8 @@
             上月访视数
             <span>{{ indexData.lastMonthBasis }}</span>
           </template>
-           <div class="page-header-index-img">
-              <img  style="width: 64px; height: 64px" src="../../assets/home3.png">
+          <div class="page-header-index-img">
+            <img style="width: 64px; height: 64px" src="../../assets/home3.png">
           </div>
         </chart-card>
       </a-col>
@@ -38,8 +38,8 @@
             上年患者数
             <span>{{ indexData.lastYearPatients }}</span>
           </template>
-           <div class="page-header-index-img">
-              <img  style="width: 64px; height: 64px" src="../../assets/home1.png">
+          <div class="page-header-index-img">
+            <img style="width: 64px; height: 64px" src="../../assets/home1.png">
           </div>
         </chart-card>
       </a-col>
@@ -124,7 +124,7 @@
       </a-col>
     </a-row>
     <a-row :gutter="10">
-      <a-col :sm="48" :md="48" :lg="48" :style="{ marginBottom: '10px' }">
+      <a-col :sm="48" :md="24" :lg="14" :style="{ marginBottom: '10px' }">
         <a-card :loading="loading" :bordered="false" :body-style="{ padding: '0' }">
           <div class="salesCard tooltip-y">
             <a-tabs default-active-key="1" size="large" :tab-bar-style="{ marginBottom: '10px', paddingLeft: '16px' }">
@@ -145,6 +145,14 @@
             </a-tabs>
           </div>
         </a-card>
+      </a-col>
+      <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '10px' }">
+          <a-card :loading="loading" title="操作培训" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '360px' }">
+            <div class="salesCard">
+              <rank-list :list="rankList" />
+            </div>
+        </a-card>
+      </a-col>
       </a-col>
     </a-row>
   </div>
@@ -340,9 +348,10 @@ export default {
     }
   }
 }
-.page-header-index-img{
+
+.page-header-index-img {
   position: absolute;
-    top: -50px;
-    right: 40px;
+  top: -50px;
+  right: 40px;
 }
 </style>

@@ -52,6 +52,9 @@
       </a-form>
     </div>
     <s-table ref="table" :scroll="scroll" size="small" rowKey="ticketId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+      <template slot="patientName" slot-scope="text,record">
+        <p>{{modifyName(text)}}</p>
+      </template>
       <template slot="executeStatus" slot-scope="text">
         <a-badge :status="text == 0 ? 'success' : 'error'" :text="text == 0 ? '未注销' : '已注销'" />
       </template>
@@ -115,12 +118,8 @@ export default {
         {
           title: '姓名',
           dataIndex: 'patientNanme',
-          width: '100px'
-        },
-        {
-          title: '身份证号',
-          dataIndex: 'card',
-          width: '150px'
+          width: '100px',
+          scopedSlots: { customRender: 'patientName' }
         },
         {
           title: '活动券编号',
@@ -154,6 +153,9 @@ export default {
     }
   },
   methods: {
+    modifyName(name) {
+      return name.replace(/(.)(.*)/, (_, $1, $2) => $1 + '*'.repeat($2.length))
+    },
     onSelectChange(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys;
       this.selectedRows = selectedRows;

@@ -58,7 +58,7 @@
     </div>
     <s-table ref="table" size="small" :scroll="scroll" rowKey="patientBasisId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <template slot="patientName" slot-scope="text, record">
-        <a @click="showUser(record)">{{ text }}</a>
+        <a @click="showUser(record)">{{modifyName(text)}}</a>
       </template>
       <span slot="submitStatus" slot-scope="text">
         <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
@@ -131,11 +131,6 @@ export default {
           scopedSlots: {
             customRender: 'submitStatus'
           }
-        },
-        {
-          title: '身份证号',
-          width: 150,
-          dataIndex: 'card'
         },
         {
           title: '急性加重日期',
@@ -224,6 +219,9 @@ export default {
     }
   },
   methods: {
+    modifyName(name) {
+      return name.replace(/(.)(.*)/, (_, $1, $2) => $1 + '*'.repeat($2.length))
+    },
     clearForm() {
       this.queryParam = {}
       this.dateArr = []

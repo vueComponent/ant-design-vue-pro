@@ -62,6 +62,9 @@
       <template slot="executeStatus" slot-scope="text">
         <a-badge :status="text == 0 ? 'default' : text == 1 ? 'success' : 'error'" :text="text == 0 ? '未审核': text == 1 ? '审核通过' : '审核不通过'" />
       </template>
+      <template slot="patientName" slot-scope="text,record">
+        <p>{{modifyName(text)}}</p>
+      </template>
       <template slot="reason" slot-scope="text">
         <a-tooltip placement="topLeft">
           <template slot="title">{{ text }}</template>
@@ -110,12 +113,8 @@ export default {
         {
           title: '患者姓名',
           dataIndex: 'patientName',
-          width: 120
-        },
-        {
-          title: '身份证号',
-          dataIndex: 'card',
-          width: 200
+          width: 120,
+          scopedSlots: { customRender: 'patientName' }
         },
         {
           title: '原中心',
@@ -183,6 +182,9 @@ export default {
     })
   },
   methods: {
+    modifyName(name) {
+      return name.replace(/(.)(.*)/, (_, $1, $2) => $1 + '*'.repeat($2.length))
+    },
     onSelectChange(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys;
       this.selectedRows = selectedRows;

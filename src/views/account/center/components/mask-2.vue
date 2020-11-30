@@ -238,15 +238,10 @@ export default {
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
-          if (!_this.submitInfo) {
-            _this.$refs.createModal.add()
-            return false
-          }
           var re = this.form.getFieldsValue()
           var that = this
           re = {
             ...re,
-            ..._this.submitInfo,
             'a91': typeof re['a91'] !== 'undefined' ? re['a91'].join(',') : ''
           }
           console.log(re)

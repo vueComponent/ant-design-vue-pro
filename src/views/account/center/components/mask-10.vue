@@ -281,16 +281,8 @@ export default {
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
-          if (!_this.submitInfo) {
-            _this.$refs.createModal.add()
-            return false
-          }
           var re = this.form.getFieldsValue()
           var that = this
-          re = {
-            ...re,
-            ..._this.submitInfo
-          }
           this.patientBasis.status = 2
           var params = new URLSearchParams()
           if (this.qtsyjc && this.qtsyjc.qtsyjcId) {

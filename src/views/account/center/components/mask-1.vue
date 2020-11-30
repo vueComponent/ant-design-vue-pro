@@ -28,7 +28,7 @@
               <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
             </div>
-            <div class="btn-array" v-if="executeStatus === 2 && canEdit">
+            <div class="btn-array" v-if="executeStatus === 2 && canEdit && totalStatus == 0">
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
@@ -598,7 +598,8 @@ export default {
       controlb1721: false,
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId == 1 || false,
       canEdit: false,
-      submitInfo: undefined
+      submitInfo: undefined,
+      totalStatus: 1
     }
   },
   created() {
@@ -614,6 +615,7 @@ export default {
         that.orgTree = res.data.list
         that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
         that.canEdit = that.$ls.get(ACCESS_TOKEN).centerId === that.patient.targetCenterId
+        that.totalStatus = res.data.patientBasis.submitStatus
       })
       .catch(error => {
         console.log(error)
@@ -904,15 +906,10 @@ export default {
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
-          if (!_this.submitInfo) {
-            _this.$refs.createModal.add()
-            return false
-          }
           var re = this.form.getFieldsValue()
           var that = this
           re = {
             ...re,
-            ..._this.submitInfo,
             'a1': typeof re['a1'] !== 'undefined' ? re['a1'].join(',') : '',
             'a3': typeof re['a3'] !== 'undefined' ? re['a3'].format('YYYY-MM-DD') : '',
             'a4': typeof re['a4'] !== 'undefined' ? re['a4'].join(',') : '',

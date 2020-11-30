@@ -71,7 +71,7 @@
         <img width="25px" v-else-if="text > 2" src="../../assets/warn-3.png" :alt="text">
       </template>
       <template slot="patientName" slot-scope="text,record">
-        <a @click="showUser(record)">{{text}}</a>
+        <a @click="showUser(record)">{{modifyName(text)}}</a>
       </template>
       <span slot="unSubmitquestion" slot-scope="text, record">
         <p>{{ record.unSubmitquestion }}</p>
@@ -191,11 +191,6 @@ export default {
           width: 100
         },
         {
-          title: '身份证号',
-          dataIndex: 'card',
-          width: 160,
-        },
-        {
           title: '联系电话',
           dataIndex: 'telephone',
           width: 120,
@@ -290,6 +285,9 @@ export default {
     })
   },
   methods: {
+    modifyName(name) {
+      return name.replace(/(.)(.*)/, (_, $1, $2) => $1 + '*'.repeat($2.length))
+    },
     handleClose(){
       this.visible = false
     },
