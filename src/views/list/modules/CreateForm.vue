@@ -225,34 +225,36 @@ export default {
       this.visible = true
     },
     handleSubmit() {
-      this.confirmLoading = true;
-      this.form.validateFieldsAndScroll((errors, fieldsValue) => {
-        const that = this;
-        if (errors) {
-          this.confirmLoading = false;
-          return;
-        }
-        const residence = fieldsValue['residence'];
-        const values = {
-          ...fieldsValue,
-          birthDate: fieldsValue['birthDate'].format('YYYY-MM-DD'),
-          registerDate: fieldsValue['registerDate'].format('YYYY-MM-DD'),
-          startDate: fieldsValue['startDate'].format('YYYY-MM-DD'),
-          addressP: residence[0],
-          addressC: residence[1],
-          patientId: this.patientId
-        };
-        const params = new URLSearchParams();
-        params.append('patientStr', JSON.stringify(values));
-        params.append('changeCenter', '');
-        params.append('centerId', '');
-        addOrUpdate(params).then(res => {
-          that.visible = false;
-          that.confirmLoading = false;
-          that.$message.success(res.msg)
-          that.$emit('ok', values);
+      if (!this.confirmLoading) {
+        this.confirmLoading = true;
+        this.form.validateFieldsAndScroll((errors, fieldsValue) => {
+          const that = this;
+          if (errors) {
+            this.confirmLoading = false;
+            return;
+          }
+          const residence = fieldsValue['residence'];
+          const values = {
+            ...fieldsValue,
+            birthDate: fieldsValue['birthDate'].format('YYYY-MM-DD'),
+            registerDate: fieldsValue['registerDate'].format('YYYY-MM-DD'),
+            startDate: fieldsValue['startDate'].format('YYYY-MM-DD'),
+            addressP: residence[0],
+            addressC: residence[1],
+            patientId: this.patientId
+          };
+          const params = new URLSearchParams();
+          params.append('patientStr', JSON.stringify(values));
+          params.append('changeCenter', '');
+          params.append('centerId', '');
+          addOrUpdate(params).then(res => {
+            that.visible = false;
+            that.confirmLoading = false;
+            that.$message.success(res.msg)
+            that.$emit('ok', values);
+          });
         });
-      });
+      }
     },
     handleCancel() {
       this.visible = false;
@@ -398,8 +400,8 @@ export default {
 }
 
 .aaa .ant-form-item-children>i {
-  position: absolute!important;
-  left: -22px!important;
+  position: absolute !important;
+  left: -22px !important;
   top: 4px;
 }
 </style>
