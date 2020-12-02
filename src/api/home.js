@@ -34,3 +34,18 @@ export function manualList(params) {
     method: 'post'
   })
 }
+
+export function uploadFlie(params) {
+  return axios({
+    url: '/ethics/save',
+    method: 'post',
+    data: params
+  })
+}
+
+export function fileList() {
+  return axios({
+    url: '/ethics/getEthics',
+    method: 'post'
+  })
+}
