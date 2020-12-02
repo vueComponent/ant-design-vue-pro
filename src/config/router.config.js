@@ -115,7 +115,7 @@ export const asyncRouterMap = [{
             path: '/reportApply/ethics',
             name: 'reportEthics',
             component: () => import('@/views/reportApply/ethics'),
-            meta: { title: '伦理数据统计', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
+            meta: { title: '伦理批件统计', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
           },
           {
             path: '/reportApply/statistics',
