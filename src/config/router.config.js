@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import { UserLayout, BasicLayout, RouteView, /*BlankLayout,*/ PageView } from '@/layouts'
 import { bxAnaalyse, baogao, bingli, fangshi, ruzhu, zhanghao, home, jixing, blzysq, blzysh, wxyhbd, wenjuan, hzbgsy, huodongquan, jkzs, myzj, webconfig,wx } from '@/core/icons'
 export const asyncRouterMap = [{
