@@ -100,3 +100,17 @@ export function checReporApply(params) {
     data: params
   })
 }
+export function getEthicsList() {
+  return axios({
+    url: '/ethics/getDataList',
+    method: 'post',
+  })
+}
+
+export function ethicsDownload(params) {
+  return axios({
+    url: '/ethics/download',
+    method: 'post',
+    data: params
+  })
+}

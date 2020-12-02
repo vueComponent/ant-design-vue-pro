@@ -147,10 +147,34 @@
         </a-card>
       </a-col>
       <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '10px' }">
-          <a-card :loading="loading" title="操作培训" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '360px' }">
+          <a-card :loading="loading" title="资料下载" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '180px' }">
             <div class="salesCard">
               <rank-list :list="rankList" />
             </div>
+        </a-card>
+      </a-col>
+      <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '10px' }">
+          <a-card :loading="loading" title="伦理批件上传" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '170px' }">
+            <div class="uploadFile" :style="file" >
+              <p v-if="showFile">
+                  <img src="../../assets/pdf.png"/>
+              </p>
+              <div v-if="showList" style="margin-bottom: 10px;">
+                <img src="../../assets/file.png" style="margin: -1px 10px 0 0;"/>
+                <span style="color: #3aa1ff;">{{fileName}}</span>
+              </div>
+              <a-upload
+                name="file"
+                :multiple="true"
+                :action="uploadUrl"
+                :headers="headers"
+                :showUploadList= "false"
+                @change="handleChange"
+              >
+                <a-button>上传文件</a-button>
+              </a-upload>
+            </div>
+            
         </a-card>
       </a-col>
       </a-col>
@@ -161,7 +185,7 @@
 import moment from 'moment';
 import { Pie, ChartCard, MiniArea, MiniBar, MiniProgress, RankList, Bar, NumberInfo, MiniSmoothArea } from '@/components';
 import { mixinDevice } from '@/utils/mixin';
-import { getAllNumbers, getMyWork, getPatientsAndBasiss, getProvinceCompare, manualList } from '@/api/home';
+import { getAllNumbers, getMyWork, getPatientsAndBasiss, getProvinceCompare, manualList,uploadFlie,fileList } from '@/api/home';
 import { MyIcon } from '@/components/_util/util';
 
 export default {
@@ -193,11 +217,27 @@ export default {
       pieStyle: {
         stroke: '#fff',
         lineWidth: 1
-      }
+      },
+      headers: {
+        authorization: 'authorization-text',
+      },
+      uploadUrl:'',
+      showFile:true,
+      showList:false,
+      fileName:'',
+      file:"text-align: center; padding: 10px 0 10px 25px;"
     };
   },
   created() {
     var that = this
+    fileList().then(res => {
+      if(res.fileName){
+          this.showFile = false
+          this.showList = true
+          this.file = "text-align: left; padding: 10px 0 10px 25px;"
+      }
+      this.fileName = res.fileName;
+    });
     getAllNumbers().then(res => {
       this.indexData = res.data.allNumbers;
     });
@@ -233,7 +273,43 @@ export default {
     setTimeout(() => {
       this.loading = !this.loading;
     }, 1000)
-  }
+    this.loadComments()
+  },
+  methods: {
+    loadComments() {
+      var list = JSON.parse(localStorage.getItem("pro__Access-Token"));
+      this.uploadUrl = list.value.uploadPicURL;
+    },
+    handleChange(info) {
+       
+        var url = info.file.response.fileName
+        var fileNames = info.file.response.originalFileName
+        // 判断文件格式
+        var filextension = fileNames.substring(fileNames.lastIndexOf("."),fileNames.length);
+        filextension = filextension.toLowerCase();
+
+        if (filextension == '.pdf') {
+          const params = new URLSearchParams()
+          params.append('url', url)
+          params.append('fileName', fileNames)
+          uploadFlie(params).then(res => {
+            this.$message.success('文件上传成功');
+            this.fileName = info.file.response.originalFileName
+            this.showFile = false
+            this.showList = true
+            this.file = "text-align: left; padding: 10px 0 10px 25px;"
+          })
+          .catch(()=>{
+            this.$message.error('文件上传失败');
+          }) 
+          
+        }else{
+          this.$message.error('对不起，系统仅支持pdf格式的文件');
+          return
+        }
+        
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -354,4 +430,19 @@ export default {
   top: -50px;
   right: 40px;
 }
+
+.rank{
+  padding: 0 32px 32px 30px;
+}
+// 上传文件
+.uploadFile button{
+  background: #3aa1ff;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  padding: 2px 10px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
 </style>
