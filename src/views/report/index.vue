@@ -129,6 +129,31 @@ export default {
           title: '年访视提交数量',
           dataIndex: 'type6Num',
           width: '120px'
+        },
+        {
+          title: '病人联系方式',
+          dataIndex: 'type7Num',
+          width: '120px'
+        },
+        {
+          title: '合并症',
+          dataIndex: 'type8Num',
+          width: '120px'
+        },
+        {
+          title: '病因',
+          dataIndex: 'type9Num',
+          width: '120px'
+        },
+        {
+          title: '影像学评分',
+          dataIndex: 'type10Num',
+          width: '120px'
+        },
+        {
+          title: '痰检',
+          dataIndex: 'type11Num',
+          width: '120px'
         }
       ],
       createArr: [],

@@ -114,3 +114,10 @@ export function ethicsDownload(params) {
     data: params
   })
 }
+
+export function getPatientEntry() {
+  return axios({
+    url: '/patient/getPatientEntry',
+    method: 'post',
+  })
+}
