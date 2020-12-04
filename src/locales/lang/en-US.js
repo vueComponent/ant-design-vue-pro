@@ -13,7 +13,7 @@ export default {
   'message': '-',
 
   'layouts.usermenu.dialog.title': 'Message',
-  'layouts.usermenu.dialog.content': 'Do you really log-out.',
+  'layouts.usermenu.dialog.content': 'Are you sure you would like to logout?',
 
   ...components,
   ...menu,
