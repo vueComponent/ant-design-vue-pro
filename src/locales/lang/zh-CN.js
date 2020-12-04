@@ -11,6 +11,9 @@ const components = {
 export default {
   'message': '-',
 
+  'layouts.usermenu.dialog.title': 'Message',
+  'layouts.usermenu.dialog.content': 'Do you really log-out.',
+
   ...components,
   ...menu
 }
