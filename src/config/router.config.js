@@ -209,19 +209,19 @@ export const asyncRouterMap = [
         component: RouteView,
         redirect: '/account/center',
         name: 'account',
-        meta: { title: '个人页', icon: 'user', keepAlive: true, permission: [ 'user' ] },
+        meta: { title: 'menu.account', icon: 'user', keepAlive: true, permission: [ 'user' ] },
         children: [
-          {
+           {
             path: '/account/center',
             name: 'center',
             component: () => import('@/views/account/center'),
-            meta: { title: '个人中心', keepAlive: true, permission: [ 'user' ] }
+            meta: { title: 'menu.account.center', keepAlive: true, permission: [ 'user' ] }
           },
           {
             path: '/account/settings',
             name: 'settings',
             component: () => import('@/views/account/settings/Index'),
-            meta: { title: '个人设置', hideHeader: true, permission: [ 'user' ] },
+            meta: { title: 'menu.account.settings', hideHeader: true, permission: [ 'user' ] },
             redirect: '/account/settings/base',
             hideChildrenInMenu: true,
             children: [
