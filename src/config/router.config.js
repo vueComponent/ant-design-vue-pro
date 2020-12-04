@@ -157,19 +157,19 @@ export const asyncRouterMap = [
         name: 'result',
         component: RouteView,
         redirect: '/result/success',
-        meta: { title: '结果页', icon: 'check-circle-o', permission: [ 'result' ] },
+        meta: { title: 'menu.result', icon: 'check-circle-o', permission: [ 'result' ] },
         children: [
           {
             path: '/result/success',
             name: 'ResultSuccess',
             component: () => import(/* webpackChunkName: "result" */ '@/views/result/Success'),
-            meta: { title: '成功', keepAlive: false, hiddenHeaderContent: true, permission: [ 'result' ] }
+            meta: { title: 'menu.result.success', keepAlive: false, hiddenHeaderContent: true, permission: [ 'result' ] }
           },
           {
             path: '/result/fail',
             name: 'ResultFail',
             component: () => import(/* webpackChunkName: "result" */ '@/views/result/Error'),
-            meta: { title: '失败', keepAlive: false, hiddenHeaderContent: true, permission: [ 'result' ] }
+            meta: { title: 'menu.result.fail', keepAlive: false, hiddenHeaderContent: true, permission: [ 'result' ] }
           }
         ]
       },
@@ -180,25 +180,25 @@ export const asyncRouterMap = [
         name: 'exception',
         component: RouteView,
         redirect: '/exception/403',
-        meta: { title: '异常页', icon: 'warning', permission: [ 'exception' ] },
+        meta: { title: 'menu.exception', icon: 'warning', permission: [ 'exception' ] },
         children: [
           {
-            path: '/exception/403',
+             path: '/exception/403',
             name: 'Exception403',
             component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/403'),
-            meta: { title: '403', permission: [ 'exception' ] }
+            meta: { title: 'menu.exception.not-permission', permission: [ 'exception' ] }
           },
           {
             path: '/exception/404',
             name: 'Exception404',
             component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404'),
-            meta: { title: '404', permission: [ 'exception' ] }
+            meta: { title: 'menu.exception.not-find', permission: [ 'exception' ] }
           },
           {
             path: '/exception/500',
             name: 'Exception500',
             component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/500'),
-            meta: { title: '500', permission: [ 'exception' ] }
+            meta: { title: 'menu.exception.server-error', permission: [ 'exception' ] }
           }
         ]
       },
