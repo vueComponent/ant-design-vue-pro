@@ -1,5 +1,6 @@
 {
   "printWidth": 120,
   "semi": false,
-  "singleQuote": true
+  "singleQuote": true,
+  "prettier.spaceBeforeFunctionParen": true
 }
