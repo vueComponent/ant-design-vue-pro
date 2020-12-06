@@ -68,30 +68,30 @@
         <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
           <div class="extra-wrapper" slot="tabBarExtraContent">
             <div class="extra-item">
-              <a>今日</a>
-              <a>本周</a>
-              <a>本月</a>
-              <a>本年</a>
+              <a>{{ $t('dashboard.analysis.all-day') }}</a>
+              <a>{{ $t('dashboard.analysis.all-week') }}</a>
+              <a>{{ $t('dashboard.analysis.all-month') }}</a>
+              <a>{{ $t('dashboard.analysis.all-year') }}</a>
             </div>
             <a-range-picker :style="{width: '256px'}" />
           </div>
-          <a-tab-pane loading="true" tab="销售额" key="1">
+          <a-tab-pane loading="true" :tab="$t('dashboard.analysis.sales')" key="1">
             <a-row>
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :data="barData" title="销售额排行" />
+                <bar :data="barData" :title="$t('dashboard.analysis.sales-trend')" />
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <rank-list title="门店销售排行榜" :list="rankList"/>
+                <rank-list :title="$t('dashboard.analysis.sales-ranking')" :list="rankList"/>
               </a-col>
             </a-row>
           </a-tab-pane>
-          <a-tab-pane tab="访问量" key="2">
+          <a-tab-pane :tab="$t('dashboard.analysis.visits')" key="2">
             <a-row>
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :data="barData2" title="销售额趋势" />
+                <bar :data="barData2" :title="$t('dashboard.analysis.visits-trend')" />
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <rank-list title="门店销售排行榜" :list="rankList"/>
+                <rank-list :title="$t('dashboard.analysis.visits-ranking')" :list="rankList"/>
               </a-col>
             </a-row>
           </a-tab-pane>
@@ -102,17 +102,17 @@
     <div class="antd-pro-pages-dashboard-analysis-twoColLayout" :class="!isMobile && 'desktop'">
       <a-row :gutter="24" type="flex" :style="{ marginTop: '24px' }">
         <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-          <a-card :loading="loading" :bordered="false" title="线上热门搜索" :style="{ height: '100%' }">
+          <a-card :loading="loading" :bordered="false" :title="$t('dashboard.analysis.online-top-search')" :style="{ height: '100%' }">
             <a-dropdown :trigger="['click']" placement="bottomLeft" slot="extra">
               <a class="ant-dropdown-link" href="#">
                 <a-icon type="ellipsis" />
               </a>
               <a-menu slot="overlay">
                 <a-menu-item>
-                  <a href="javascript:;">操作一</a>
+                  <a href="javascript:;">{{ $t('dashboard.analysis.dropdown-option-one') }}</a>
                 </a-menu-item>
                 <a-menu-item>
-                  <a href="javascript:;">操作二</a>
+                  <a href="javascript:;">{{ $t('dashboard.analysis.dropdown-option-two') }}</a>
                 </a-menu-item>
               </a-menu>
             </a-dropdown>
@@ -120,7 +120,7 @@
               <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
                 <number-info :total="12321" :sub-total="17.1">
                   <span slot="subtitle">
-                    <span>搜索用户数</span>
+                    <span>{{ $t('dashboard.analysis.search-users') }}</span>
                     <a-tooltip :title="$t('dashboard.analysis.introduce')" slot="action">
                       <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }" />
                     </a-tooltip>
@@ -134,7 +134,7 @@
               <a-col :xs="24" :sm="12" :style="{ marginBottom: ' 24px'}">
                 <number-info :total="2.7" :sub-total="26.2" status="down">
                   <span slot="subtitle">
-                    <span>人均搜索次数</span>
+                    <span>{{ $t('dashboard.analysis.per-capita-search') }}</span>
                     <a-tooltip :title="$t('dashboard.analysis.introduce')" slot="action">
                       <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }" />
                     </a-tooltip>
@@ -164,7 +164,7 @@
           </a-card>
         </a-col>
         <a-col :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-          <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false" title="销售额类别占比" :style="{ height: '100%' }">
+          <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false" :title="$t('dashboard.analysis.the-proportion-of-sales')" :style="{ height: '100%' }">
             <div slot="extra" style="height: inherit;">
               <!-- style="bottom: 12px;display: inline-block;" -->
               <span class="dashboard-analysis-iconGroup">
@@ -172,24 +172,24 @@
                   <a-icon type="ellipsis" class="ant-dropdown-link" />
                   <a-menu slot="overlay">
                     <a-menu-item>
-                      <a href="javascript:;">操作一</a>
+                      <a href="javascript:;">{{ $t('dashboard.analysis.dropdown-option-one') }}</a>
                     </a-menu-item>
                     <a-menu-item>
-                      <a href="javascript:;">操作二</a>
+                      <a href="javascript:;">{{ $t('dashboard.analysis.dropdown-option-two') }}</a>
                     </a-menu-item>
                   </a-menu>
                 </a-dropdown>
               </span>
               <div class="analysis-salesTypeRadio">
                 <a-radio-group defaultValue="a">
-                  <a-radio-button value="a">全部渠道</a-radio-button>
-                  <a-radio-button value="b">线上</a-radio-button>
-                  <a-radio-button value="c">门店</a-radio-button>
+                  <a-radio-button value="a">{{ $t('dashboard.analysis.channel.all') }}</a-radio-button>
+                  <a-radio-button value="b">{{ $t('dashboard.analysis.channel.online') }}</a-radio-button>
+                  <a-radio-button value="c">{{ $t('dashboard.analysis.channel.stores') }}</a-radio-button>
                 </a-radio-group>
               </div>
 
             </div>
-            <h4>销售额</h4>
+            <h4>{{ $t('dashboard.analysis.sales') }}</h4>
             <div>
               <!-- style="width: calc(100% - 240px);" -->
               <div>
