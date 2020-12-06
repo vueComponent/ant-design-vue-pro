@@ -3,7 +3,7 @@
     <a-row :gutter="24">
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
         <chart-card :loading="loading" title="总销售额" total="￥126,560">
-          <a-tooltip title="指标说明" slot="action">
+          <a-tooltip :title="$t('dashboard.analysis.introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
@@ -21,7 +21,7 @@
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
         <chart-card :loading="loading" title="访问量" :total="8846 | NumberFormat">
-          <a-tooltip title="指标说明" slot="action">
+          <a-tooltip :title="$t('dashboard.analysis.introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
@@ -32,7 +32,7 @@
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
         <chart-card :loading="loading" title="支付笔数" :total="6560 | NumberFormat">
-          <a-tooltip title="指标说明" slot="action">
+          <a-tooltip :title="$t('dashboard.analysis.introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
@@ -43,7 +43,7 @@
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
         <chart-card :loading="loading" title="运营活动效果" total="78%">
-          <a-tooltip title="指标说明" slot="action">
+          <a-tooltip :title="$t('dashboard.analysis.introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
@@ -121,7 +121,7 @@
                 <number-info :total="12321" :sub-total="17.1">
                   <span slot="subtitle">
                     <span>搜索用户数</span>
-                    <a-tooltip title="指标说明" slot="action">
+                    <a-tooltip :title="$t('dashboard.analysis.introduce')" slot="action">
                       <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }" />
                     </a-tooltip>
                   </span>
@@ -135,7 +135,7 @@
                 <number-info :total="2.7" :sub-total="26.2" status="down">
                   <span slot="subtitle">
                     <span>人均搜索次数</span>
-                    <a-tooltip title="指标说明" slot="action">
+                    <a-tooltip :title="$t('dashboard.analysis.introduce')" slot="action">
                       <a-icon type="info-circle-o" :style="{ marginLeft: '8px' }" />
                     </a-tooltip>
                   </span>

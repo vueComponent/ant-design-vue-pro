@@ -2,6 +2,7 @@ import antdEnUS from 'ant-design-vue/es/locale-provider/en_US'
 import momentEU from 'moment/locale/eu'
 import menu from './en-US/menu'
 import setting from './en-US/setting'
+import dashboard from './en-US/dashboard'
 
 const components = {
   antLocale: antdEnUS,
@@ -17,5 +18,6 @@ export default {
 
   ...components,
   ...menu,
-  ...setting
+  ...setting,
+  ...dashboard
 }
