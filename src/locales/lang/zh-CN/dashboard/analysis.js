@@ -2,7 +2,7 @@ export default {
   'dashboard.analysis.test': '工专路 {no} 号店',
   'dashboard.analysis.introduce': '指标说明',
   'dashboard.analysis.total-sales': '总销售额',
-  'dashboard.analysis.day-sales': '日销售额',
+  'dashboard.analysis.day-sales': '日均销售额￥',
   'dashboard.analysis.visits': '访问量',
   'dashboard.analysis.visits-trend': '访问量趋势',
   'dashboard.analysis.visits-ranking': '门店访问量排名',

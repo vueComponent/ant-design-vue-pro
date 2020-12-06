@@ -2,21 +2,21 @@
   <div>
     <a-row :gutter="24">
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="总销售额" total="￥126,560">
+        <chart-card :loading="loading" :title="$t('dashboard.analysis.total-sales')" total="￥126,560">
           <a-tooltip :title="$t('dashboard.analysis.introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
             <trend flag="up" style="margin-right: 16px;">
-              <span slot="term">周同比</span>
+              <span slot="term">{{ $t('dashboard.analysis.week') }}</span>
               12%
             </trend>
             <trend flag="down">
-              <span slot="term">日同比</span>
+              <span slot="term">{{ $t('dashboard.analysis.day') }}</span>
               11%
             </trend>
           </div>
-          <template slot="footer">日均销售额<span>￥ 234.56</span></template>
+          <template slot="footer">{{ $t('dashboard.analysis.day-sales') }}<span>￥ 234.56</span></template>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
