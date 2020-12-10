@@ -138,6 +138,7 @@
                     <a-radio value="1">痰液</a-radio>
                     <a-radio value="2">诱导痰</a-radio>
                     <a-radio value="3">支气管肺泡灌洗液</a-radio>
+                    <a-radio value="4">血标本</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="(4) 是否分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
