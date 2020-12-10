@@ -29,8 +29,8 @@ export default {
   'dashboard.analysis.channel.stores': '门店',
   'dashboard.analysis.sales': '销售额',
   'dashboard.analysis.traffic': '客流量',
-  'dashboard.table.rank': '排名',
-  'dashboard.table.search-keyword': '搜索关键词',
-  'dashboard.table.users': '用户数',
-  'dashboard.table.weekly-range': '周涨幅'
+  'dashboard.analysis.table.rank': '排名',
+  'dashboard.analysis.table.search-keyword': '搜索关键词',
+  'dashboard.analysis.table.users': '用户数',
+  'dashboard.analysis.table.weekly-range': '周涨幅'
 }

@@ -266,28 +266,30 @@ const searchUserScale = [
     max: 10
   }]
 
-const searchTableColumns = [
-  {
-    dataIndex: 'index',
-    title: '排名',
-    width: 90
-  },
-  {
-    dataIndex: 'keyword',
-    title: '搜索关键词'
-  },
-  {
-    dataIndex: 'count',
-    title: '用户数'
-  },
-  {
-    dataIndex: 'range',
-    title: '周涨幅',
-    align: 'right',
-    sorter: (a, b) => a.range - b.range,
-    scopedSlots: { customRender: 'range' }
-  }
-]
+// const searchTableColumns = [
+//   {
+//     dataIndex: 'index',
+//     title: '排名',
+//     width: 90
+//   },
+//   console.log('this is console'),
+//   console.log(this),
+//   {
+//     dataIndex: 'keyword',
+//     title: '搜索关键词'
+//   },
+//   {
+//     dataIndex: 'count',
+//     title: '用户数'
+//   },
+//   {
+//     dataIndex: 'range',
+//     title: '周涨幅',
+//     align: 'right',
+//     sorter: (a, b) => a.range - b.range,
+//     scopedSlots: { customRender: 'range' }
+//   }
+// ]
 const searchData = []
 for (let i = 0; i < 50; i += 1) {
   searchData.push({
@@ -347,7 +349,7 @@ export default {
       // 搜索用户数
       searchUserData,
       searchUserScale,
-      searchTableColumns,
+      // searchTableColumns,
       searchData,
 
       barData,
@@ -361,6 +363,32 @@ export default {
         stroke: '#fff',
         lineWidth: 1
       }
+    }
+  },
+  computed: {
+    searchTableColumns () {
+        return [
+      {
+        dataIndex: 'index',
+        title: this.$t('dashboard.analysis.table.rank'),
+        width: 90
+      },
+      {
+        dataIndex: 'keyword',
+        title: this.$t('dashboard.analysis.table.search-keyword')
+      },
+      {
+        dataIndex: 'count',
+        title: this.$t('dashboard.analysis.table.users')
+      },
+      {
+        dataIndex: 'range',
+        title: this.$t('dashboard.analysis.table.weekly-range'),
+        align: 'right',
+        sorter: (a, b) => a.range - b.range,
+        scopedSlots: { customRender: 'range' }
+      }
+]
     }
   },
   created () {

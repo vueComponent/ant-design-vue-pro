@@ -29,8 +29,8 @@ export default {
   'dashboard.analysis.channel.stores': 'Stores',
   'dashboard.analysis.sales': 'Sales',
   'dashboard.analysis.traffic': 'Traffic',
-  'dashboard.table.rank': 'Rank',
-  'dashboard.table.search-keyword': 'Keyword',
-  'dashboard.table.users': 'Users',
-  'dashboard.table.weekly-range': 'Weekly Range'
+  'dashboard.analysis.table.rank': 'Rank',
+  'dashboard.analysis.table.search-keyword': 'Keyword',
+  'dashboard.analysis.table.users': 'Users',
+  'dashboard.analysis.table.weekly-range': 'Weekly Range'
 }
