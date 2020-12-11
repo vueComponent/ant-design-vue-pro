@@ -1,5 +1,5 @@
-import dashboard from './dashboard/analysis'
+import analysis from './dashboard/analysis'
 
 export default {
-    ...dashboard
+    ...analysis
   }
