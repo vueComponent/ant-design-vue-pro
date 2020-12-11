@@ -13,7 +13,7 @@
               {rules: [{ required: true, message: '请输入标题' }]}
             ]"
             name="name"
-            placeholder="给目标起个名字" />
+            :placeholder="$t('form.basic-form.title.placeholder')" />
         </a-form-item>
         <a-form-item
           :label="$t('form.basic-form.date.label')"
@@ -33,7 +33,7 @@
           :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
           <a-textarea
             rows="4"
-            placeholder="请输入你阶段性工作目标"
+            :placeholder="$t('form.basic-form.goal.placeholder')"
             v-decorator="[
               'description',
               {rules: [{ required: true, message: '请输入目标描述' }]}
@@ -45,7 +45,7 @@
           :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
           <a-textarea
             rows="4"
-            placeholder="请输入衡量标准"
+            :placeholder="$t('form.basic-form.standard.placeholder')"
             v-decorator="[
               'type',
               {rules: [{ required: true, message: '请输入衡量标准' }]}
@@ -56,7 +56,7 @@
           :labelCol="{lg: {span: 7}, sm: {span: 7}}"
           :wrapperCol="{lg: {span: 10}, sm: {span: 17} }">
           <a-input
-            placeholder="请描述你服务的客户，内部客户直接 @姓名／工号"
+            :placeholder="$t('form.basic-form.client.placeholder')"
             v-decorator="[
               'customer',
               {rules: [{ required: true, message: '请描述你服务的客户' }]}
@@ -68,7 +68,7 @@
           :wrapperCol="{lg: {span: 10}, sm: {span: 17} }"
           :required="false"
         >
-          <a-input placeholder="请直接 @姓名／工号，最多可邀请 5 人" />
+          <a-input :placeholder="$t('form.basic-form.invites.placeholder')" />
         </a-form-item>
         <a-form-item
           :label="$t('form.basic-form.weight.label')"
