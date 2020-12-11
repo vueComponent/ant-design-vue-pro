@@ -10,7 +10,7 @@
           <a-input
             v-decorator="[
               'name',
-              {rules: [{ required: true, message: '请输入标题' }]}
+              {rules: [{ required: true, message: $t('form.basic-form.title.required') }]}
             ]"
             name="name"
             :placeholder="$t('form.basic-form.title.placeholder')" />
@@ -24,7 +24,7 @@
             style="width: 100%"
             v-decorator="[
               'buildTime',
-              {rules: [{ required: true, message: '请选择起止日期' }]}
+              {rules: [{ required: true, message: $t('form.basic-form.date.required') }]}
             ]" />
         </a-form-item>
         <a-form-item
@@ -36,7 +36,7 @@
             :placeholder="$t('form.basic-form.goal.placeholder')"
             v-decorator="[
               'description',
-              {rules: [{ required: true, message: '请输入目标描述' }]}
+              {rules: [{ required: true, message: $t('form.basic-form.goal.required') }]}
             ]" />
         </a-form-item>
         <a-form-item
@@ -48,7 +48,7 @@
             :placeholder="$t('form.basic-form.standard.placeholder')"
             v-decorator="[
               'type',
-              {rules: [{ required: true, message: '请输入衡量标准' }]}
+              {rules: [{ required: true, message: $t('form.basic-form.standard.required') }]}
             ]" />
         </a-form-item>
         <a-form-item
@@ -59,7 +59,7 @@
             :placeholder="$t('form.basic-form.client.placeholder')"
             v-decorator="[
               'customer',
-              {rules: [{ required: true, message: '请描述你服务的客户' }]}
+              {rules: [{ required: true, message: $t('form.basic-form.client.required') }]}
             ]" />
         </a-form-item>
         <a-form-item
@@ -118,6 +118,11 @@ export default {
     return {
       form: this.$form.createForm(this)
     }
+  },
+  compute: {
+      formatMessage: function () {
+        return '请选择起止日期'
+      }
   },
   methods: {
     // handler

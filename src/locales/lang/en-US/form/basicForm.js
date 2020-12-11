@@ -1,20 +1,25 @@
 export default {
   'form.basic-form.basic.title': 'Basic form',
   'form.basic-form.basic.description':
-  'Form pages are used to collect or verify information to users, and basic forms are common in scenarios where there are fewer data items.',
+   'Form pages are used to collect or verify information to users, and basic forms are common in scenarios where there are fewer data items.',
   'form.basic-form.title.label': 'Title',
   'form.basic-form.title.placeholder': 'Give the target a name',
+  'form.basic-form.title.required': 'Please enter a title',
   'form.basic-form.date.label': 'Start and end date',
   'form.basic-form.placeholder.start': 'Start date',
   'form.basic-form.placeholder.end': 'End date',
+  'form.basic-form.date.required': 'Please select the start and end date',
   'form.basic-form.goal.label': 'Goal description',
   'form.basic-form.goal.placeholder': 'Please enter your work goals',
+  'form.basic-form.goal.required': 'Please enter a description of the goal',
   'form.basic-form.standard.label': 'Metrics',
   'form.basic-form.standard.placeholder': 'Please enter a metric',
+  'form.basic-form.standard.required': 'Please enter a metric',
   'form.basic-form.client.label': 'Client',
   'form.basic-form.label.tooltip': 'Target service object',
   'form.basic-form.client.placeholder':
     'Please describe your customer service, internal customers directly @ Name / job number',
+  'form.basic-form.client.required': 'Please describe the customers you serve',
   'form.basic-form.invites.label': 'Inviting critics',
   'form.basic-form.invites.placeholder':
     'Please direct @ Name / job number, you can invite up to 5 people',
@@ -43,11 +48,6 @@ export default {
   'form.basic-form.phone-number.required': 'Please enter your phone number!',
   'form.basic-form.phone-number.wrong-format': 'Malformed phone number!',
   'form.basic-form.verification-code.required': 'Please enter the verification code!',
-  'form.basic-form.title.required': 'Please enter a title',
-  'form.basic-form.date.required': 'Please select the start and end date',
-  'form.basic-form.goal.required': 'Please enter a description of the goal',
-  'form.basic-form.standard.required': 'Please enter a metric',
-
   'form.basic-form.form.get-captcha': 'Get Captcha',
   'form.basic-form.captcha.second': 'sec',
   'form.basic-form.form.optional': ' (optional) ',
