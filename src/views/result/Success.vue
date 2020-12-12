@@ -1,5 +1,6 @@
 <template>
   <a-card :bordered="false">
+    <!-- :dataSource="result" -->
     <a-result status="success" :sub-title="description" :title="title">
       <template #extra>
         <a-button type="primary">{{ $t('result.success.btn-return') }}</a-button>
@@ -77,5 +78,13 @@ export default {
       description: this.$t('result.success.description')
     }
   }
+  // computed: {
+  //   result () {
+  //     return {
+  //     title: this.$t('result.success.title'),
+  //     description: this.$t('result.success.description')
+  //     }
+  //   }
+  // }
 }
 </script>
