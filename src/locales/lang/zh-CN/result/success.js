@@ -15,5 +15,5 @@ export default {
   'result.success.step4-title': '完成',
   'result.success.btn-return': '返回列表',
   'result.success.btn-project': '查看项目',
-  'result.success.btn-print': '打印',
+  'result.success.btn-print': '打印'
 }
