@@ -12,7 +12,7 @@
           >
             <a-menu-item key="/account/settings/base">
               <router-link :to="{ name: 'BaseSettings' }">
-                基本设置
+                {{ $t('account.settings.menuMap.basic') }}
               </router-link>
             </a-menu-item>
             <a-menu-item key="/account/settings/security">

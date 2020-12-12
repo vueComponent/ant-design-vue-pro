@@ -4,6 +4,7 @@ import menu from './zh-CN/menu'
 import dashboard from './zh-CN/dashboard'
 import form from './zh-CN/form'
 import result from './zh-CN/result'
+import account from './zh-CN/account'
 
 const components = {
   antLocale: antd,
@@ -21,5 +22,6 @@ export default {
   ...menu,
   ...dashboard,
   ...form,
-  ...result
+  ...result,
+  ...account
 }
