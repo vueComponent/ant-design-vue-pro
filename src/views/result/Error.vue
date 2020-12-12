@@ -1,6 +1,6 @@
 <template>
   <a-card :bordered="false">
-    <a-result status="error" :title="title" :sub-title="description">
+    <a-result status="error" :title="result.title" :sub-title="result.description">
       <template #extra>
         <a-button type="primary" >{{ $t('result.fail.error.btn-text') }}</a-button>
       </template>
@@ -27,10 +27,12 @@
 
 export default {
   name: 'Error',
-  data () {
-    return {
+  computed: {
+    result () {
+      return {
       title: this.$t('result.fail.error.title'),
       description: this.$t('result.fail.error.description')
+      }
     }
   }
 }

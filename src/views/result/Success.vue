@@ -1,7 +1,6 @@
 <template>
   <a-card :bordered="false">
-    <!-- :dataSource="result" -->
-    <a-result status="success" :sub-title="description" :title="title">
+    <a-result status="success" :title="result.title" :sub-title="result.description">
       <template #extra>
         <a-button type="primary">{{ $t('result.success.btn-return') }}</a-button>
         <a-button style="margin-left: 8px">{{ $t('result.success.btn-project') }}</a-button>
@@ -74,17 +73,17 @@ export default {
   data () {
     this.directionType = directionType
     return {
+      // title: this.$t('result.success.title'),
+      // description: this.$t('result.success.description')
+    }
+  },
+  computed: {
+    result () {
+      return {
       title: this.$t('result.success.title'),
       description: this.$t('result.success.description')
+      }
     }
   }
-  // computed: {
-  //   result () {
-  //     return {
-  //     title: this.$t('result.success.title'),
-  //     description: this.$t('result.success.description')
-  //     }
-  //   }
-  // }
 }
 </script>
