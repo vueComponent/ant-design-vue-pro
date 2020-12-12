@@ -5,7 +5,7 @@
 
         <a-form layout="vertical">
           <a-form-item
-            label="昵称"
+            label="昵pp称"
           >
             <a-input placeholder="给自己起个名字" />
           </a-form-item>

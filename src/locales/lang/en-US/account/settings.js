@@ -1,6 +1,7 @@
 export default {
   'account.settings.menuMap.basic': 'Basic Settings',
   'account.settings.menuMap.security': 'Security Settings',
+  'account.settings.menuMap.custom': 'Custom Settings',
   'account.settings.menuMap.binding': 'Account Binding',
   'account.settings.menuMap.notification': 'New Message Notification',
   'account.settings.basic.avatar': 'Avatar',
