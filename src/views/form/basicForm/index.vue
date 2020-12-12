@@ -119,11 +119,6 @@ export default {
       form: this.$form.createForm(this)
     }
   },
-  compute: {
-      formatMessage: function () {
-        return '请选择起止日期'
-      }
-  },
   methods: {
     // handler
     handleSubmit (e) {

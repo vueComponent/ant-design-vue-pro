@@ -363,7 +363,7 @@ export default {
         sorter: (a, b) => a.range - b.range,
         scopedSlots: { customRender: 'range' }
       }
-]
+      ]
     }
   },
   created () {
