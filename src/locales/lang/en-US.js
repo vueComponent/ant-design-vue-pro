@@ -2,6 +2,7 @@ import antdEnUS from 'ant-design-vue/es/locale-provider/en_US'
 import momentEU from 'moment/locale/eu'
 import menu from './en-US/menu'
 import setting from './en-US/setting'
+import user from './en-US/user'
 import dashboard from './en-US/dashboard'
 import form from './en-US/form'
 import result from './en-US/result'
@@ -22,6 +23,7 @@ export default {
   ...components,
   ...menu,
   ...setting,
+  ...user,
   ...dashboard,
   ...form,
   ...result,
