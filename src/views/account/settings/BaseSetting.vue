@@ -5,24 +5,24 @@
 
         <a-form layout="vertical">
           <a-form-item
-            label="昵称"
+            :label="$t('account.settings.basic.nickname')"
           >
-            <a-input placeholder="给自己起个名字" />
+            <a-input :placeholder="$t('account.settings.basic.nickname-message')" />
           </a-form-item>
           <a-form-item
-            label="Bio"
+            :label="$t('account.settings.basic.profile')"
           >
-            <a-textarea rows="4" placeholder="You are not alone."/>
+            <a-textarea rows="4" :placeholder="$t('account.settings.basic.profile-message')"/>
           </a-form-item>
 
           <a-form-item
-            label="电子邮件"
+            :label="$t('account.settings.basic.email')"
             :required="false"
           >
             <a-input placeholder="exp@admin.com"/>
           </a-form-item>
           <a-form-item
-            label="加密方式"
+            :label="$t('account.settings.basic.nickname')"
             :required="false"
           >
             <a-select defaultValue="aes-256-cfb">
