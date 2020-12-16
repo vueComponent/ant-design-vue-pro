@@ -222,14 +222,14 @@ export const asyncRouterMap = [
             name: 'settings',
             component: () => import('@/views/account/settings/Index'),
             meta: { title: 'menu.account.settings', hideHeader: true, permission: [ 'user' ] },
-            redirect: '/account/settings/base',
+            redirect: '/account/settings/basic',
             hideChildrenInMenu: true,
             children: [
               {
-                path: '/account/settings/base',
-                name: 'BaseSettings',
-                component: () => import('@/views/account/settings/BaseSetting'),
-                meta: { title: '基本设置', hidden: true, permission: [ 'user' ] }
+                path: '/account/settings/basic',
+                name: 'BasicSettings',
+                component: () => import('@/views/account/settings/BasicSetting'),
+                meta: { title: 'account.settings.menuMap.basic', hidden: true, permission: [ 'user' ] }
               },
               {
                 path: '/account/settings/security',

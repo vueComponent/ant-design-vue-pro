@@ -22,7 +22,7 @@
             <a-input placeholder="exp@admin.com"/>
           </a-form-item>
           <a-form-item
-            :label="$t('account.settings.basic.nickname')"
+            label="加密方式"
             :required="false"
           >
             <a-select defaultValue="aes-256-cfb">
