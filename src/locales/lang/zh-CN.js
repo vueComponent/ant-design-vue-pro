@@ -1,5 +1,7 @@
 import antd from 'ant-design-vue/es/locale-provider/zh_CN'
 import momentCN from 'moment/locale/zh-cn'
+import global from './zh-CN/global'
+
 import menu from './zh-CN/menu'
 import dashboard from './zh-CN/dashboard'
 import form from './zh-CN/form'
@@ -13,12 +15,13 @@ const components = {
 }
 
 export default {
-  'message': '-',
+  message: '-',
 
   'layouts.usermenu.dialog.title': '信息',
   'layouts.usermenu.dialog.content': '您确定要注销吗？',
 
   ...components,
+  ...global,
   ...menu,
   ...dashboard,
   ...form,
