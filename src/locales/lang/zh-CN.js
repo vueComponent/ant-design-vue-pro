@@ -3,6 +3,7 @@ import momentCN from 'moment/locale/zh-cn'
 import menu from './zh-CN/menu'
 import dashboard from './zh-CN/dashboard'
 import form from './zh-CN/form'
+import result from './zh-CN/result'
 
 const components = {
   antLocale: antd,
@@ -19,5 +20,6 @@ export default {
   ...components,
   ...menu,
   ...dashboard,
-  ...form
+  ...form,
+  ...result
 }

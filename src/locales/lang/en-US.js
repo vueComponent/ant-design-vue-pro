@@ -4,6 +4,7 @@ import menu from './en-US/menu'
 import setting from './en-US/setting'
 import dashboard from './en-US/dashboard'
 import form from './en-US/form'
+import result from './en-US/result'
 
 const components = {
   antLocale: antdEnUS,
@@ -21,5 +22,6 @@ export default {
   ...menu,
   ...setting,
   ...dashboard,
-  ...form
+  ...form,
+  ...result
 }
