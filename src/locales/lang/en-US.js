@@ -4,6 +4,8 @@ import global from './en-US/global'
 
 import menu from './en-US/menu'
 import setting from './en-US/setting'
+import user from './en-US/user'
+
 import dashboard from './en-US/dashboard'
 import form from './en-US/form'
 import result from './en-US/result'
@@ -25,6 +27,7 @@ export default {
   ...global,
   ...menu,
   ...setting,
+  ...user,
   ...dashboard,
   ...form,
   ...result,
