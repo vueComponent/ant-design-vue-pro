@@ -1,6 +1,10 @@
 <template>
+
   <div id="userLayout" :class="['user-layout-wrapper', isMobile && 'mobile']">
     <div class="container">
+      <div :class="wrpCls">
+        <select-lang :class="prefixCls" />
+      </div>
       <div class="top">
         <div class="header">
           <a href="/">
@@ -31,9 +35,27 @@
 
 <script>
 import { deviceMixin } from '@/store/device-mixin'
+import SelectLang from '@/components/SelectLang'
 
 export default {
   name: 'UserLayout',
+  components: {
+    SelectLang
+  },
+  props: {
+    prefixCls: {
+      type: String,
+      default: 'ant-pro-global-header-index-action'
+    }
+  },
+  computed: {
+    wrpCls () {
+      return {
+        'ant-pro-global-header-index-right': true,
+        [`ant-pro-global-header-index-${(this.isMobile || !this.topMenu) ? 'light' : this.theme}`]: true
+      }
+    }
+  },
   mixins: [deviceMixin],
   mounted () {
     document.body.classList.add('userLayout')
@@ -62,7 +84,7 @@ export default {
       min-height: 100%;
       background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
       background-size: 100%;
-      padding: 110px 0 144px;
+      padding: 110px 0 84px;
       position: relative;
 
       a {
