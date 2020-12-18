@@ -12,6 +12,7 @@ import moment from 'moment'
 import { getEthicsList,ethicsDownload } from '@/api/report'
 import { STable } from '@/components'
 export default {
+  name: 'reportEthics',
   components: {
     STable
   },
