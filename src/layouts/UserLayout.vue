@@ -2,31 +2,33 @@
 
   <div id="userLayout" :class="['user-layout-wrapper', isMobile && 'mobile']">
     <div class="container">
-      <div :class="wrpCls">
-        <select-lang :class="prefixCls" />
+      <div class="user-layout-lang">
+        <select-lang class="select-lang-trigger" />
       </div>
-      <div class="top">
-        <div class="header">
-          <a href="/">
-            <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">Ant Design</span>
-          </a>
+      <div class="user-layout-content">
+        <div class="top">
+          <div class="header">
+            <a href="/">
+              <img src="~@/assets/logo.svg" class="logo" alt="logo">
+              <span class="title">Ant Design</span>
+            </a>
+          </div>
+          <div class="desc">
+            {{ $t('layouts.userLayout.title') }}
+          </div>
         </div>
-        <div class="desc">
-          {{ $t('layouts.userLayout.title') }}
-        </div>
-      </div>
 
-      <router-view />
+        <router-view />
 
-      <div class="footer">
-        <div class="links">
-          <a href="_self">帮助</a>
-          <a href="_self">隐私</a>
-          <a href="_self">条款</a>
-        </div>
-        <div class="copyright">
-          Copyright &copy; 2018 vueComponent
+        <div class="footer">
+          <div class="links">
+            <a href="_self">帮助</a>
+            <a href="_self">隐私</a>
+            <a href="_self">条款</a>
+          </div>
+          <div class="copyright">
+            Copyright &copy; 2018 vueComponent
+          </div>
         </div>
       </div>
     </div>
@@ -42,20 +44,6 @@ export default {
   components: {
     SelectLang
   },
-  props: {
-    prefixCls: {
-      type: String,
-      default: 'ant-pro-global-header-index-action'
-    }
-  },
-  computed: {
-    wrpCls () {
-      return {
-        'ant-pro-global-header-index-right': true,
-        [`ant-pro-global-header-index-${(this.isMobile || !this.topMenu) ? 'light' : this.theme}`]: true
-      }
-    }
-  },
   mixins: [deviceMixin],
   mounted () {
     document.body.classList.add('userLayout')
@@ -68,28 +56,45 @@ export default {
 
 <style lang="less" scoped>
 #userLayout.user-layout-wrapper {
-    height: 100%;
+  height: 100%;
 
-    &.mobile {
-      .container {
-        .main {
-          max-width: 368px;
-          width: 98%;
-        }
+  &.mobile {
+    .container {
+      .main {
+        max-width: 368px;
+        width: 98%;
+      }
+    }
+  }
+
+  .container {
+    width: 100%;
+    min-height: 100%;
+    background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
+    background-size: 100%;
+    //padding: 50px 0 84px;
+    position: relative;
+
+    .user-layout-lang {
+      width: 100%;
+      height: 40px;
+      line-height: 44px;
+      text-align: right;
+
+      .select-lang-trigger {
+        cursor: pointer;
+        padding: 12px;
+        margin-right: 24px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        vertical-align: middle;
       }
     }
 
-    .container {
-      width: 100%;
-      min-height: 100%;
-      background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
-      background-size: 100%;
-      padding: 50px 0 84px;
-      position: relative;
-
-      a {
-        text-decoration: none;
-      }
+    .user-layout-content {
+      padding: 32px 0 24px;
 
       .top {
         text-align: center;
@@ -163,5 +168,11 @@ export default {
         }
       }
     }
+
+    a {
+      text-decoration: none;
+    }
+
   }
+}
 </style>
