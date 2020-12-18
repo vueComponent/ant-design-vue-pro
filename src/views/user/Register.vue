@@ -18,7 +18,7 @@
         v-model="state.passwordLevelChecked">
         <template slot="content">
           <div :style="{ width: '240px' }" >
-            <div :class="['user-register', passwordLevelClass]">强度：<span>{{ passwordLevelName }}</span></div>
+            <div :class="['user-register', passwordLevelClass]">{{ $t(passwordLevelName) }}</div>
             <a-progress :percent="state.percent" :showInfo="false" :strokeColor=" passwordLevelColor " />
             <div style="margin-top: 10px;">
               <span>{{ $t('user.register.password.popover-message') }}
@@ -98,12 +98,13 @@
 <script>
 import { getSmsCaptcha } from '@/api/login'
 import { deviceMixin } from '@/store/device-mixin'
+import { scorePassword } from '@/utils/util'
 
 const levelNames = {
-  0: '低',
-  1: '低',
-  2: '中',
-  3: '强'
+  0: 'user.password.strength.short',
+  1: 'user.password.strength.low',
+  2: 'user.password.strength.medium',
+  3: 'user.password.strength.strong'
 }
 const levelClass = {
   0: 'error',
@@ -151,37 +152,26 @@ export default {
   },
   methods: {
     handlePasswordLevel (rule, value, callback) {
-      console.log('value form handlePassword level', value)
       if (value === '') {
-        callback()
-      } else {
-      console.log('level inside else form handlePassword level', this.state.level)
-      // 判断这个字符串中有没有数字
-      if (/[0-9]/.test(value)) {
-        this.state.level++
+       return callback()
       }
-      // 判断字符串中有没有字母
-      if (/[a-zA-Z]/.test(value)) {
-        this.state.level++
-      }
-      // 判断字符串中有没有特殊符号
-      if (/[^0-9a-zA-Z_]/.test(value)) {
-        this.state.level++
-      }
-      this.state.passwordLevel = this.state.level
-      this.state.percent = this.state.level * 30
-      if (this.state.level >= 2) {
-        if (this.state.level >= 3) {
-          this.state.percent = 100
+      console.log('scorePassword ; ', scorePassword(value))
+      if (value.length >= 6) {
+        if (scorePassword(value) >= 30) {
+          this.state.level = 1
         }
-        callback()
-      } else {
-        if (this.state.level === 0) {
-          this.state.percent = 10
+        if (scorePassword(value) >= 60) {
+        this.state.level = 2
         }
+        if (scorePassword(value) >= 80) {
+        this.state.level = 3
+        }
+      } else {
+        this.state.level = 0
         callback(new Error(this.$t('user.password.strength.msg')))
       }
-      }
+      this.state.passwordLevel = this.state.level
+      this.state.percent = this.state.level * 33
     },
 
     handlePasswordCheck (rule, value, callback) {

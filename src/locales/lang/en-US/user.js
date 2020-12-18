@@ -36,6 +36,7 @@ export default {
     'The password is not strong enough',
   'user.password.strength.strong': 'Strength: strong',
   'user.password.strength.medium': 'Strength: medium',
+  'user.password.strength.low': 'Strength: low',
   'user.password.strength.short': 'Strength: too short',
   'user.confirm-password.required': 'Please confirm your password!',
   'user.phone-number.required': 'Please enter your phone number!',
