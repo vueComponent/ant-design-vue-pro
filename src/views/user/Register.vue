@@ -31,7 +31,7 @@
             size="large"
             @click="handlePasswordInputClick"
             :placeholder="$t('user.register.password.placeholder')"
-            v-decorator="['password', {rules: [{ required: true, message: $t('user.password.required')}, { validator: this.handlePasswordLevel }], validateTrigger: ['change', 'blur']}]"
+            v-decorator="['password', {rules: [{ required: true, message: $t('user.password.required') }, { validator: this.handlePasswordLevel }], validateTrigger: ['change', 'blur']}]"
           ></a-input-password>
         </a-form-item>
       </a-popover>
@@ -128,6 +128,7 @@ export default {
 
       state: {
         time: 60,
+        level: 0,
         smsSendBtn: false,
         passwordLevel: 0,
         passwordLevelChecked: false,
@@ -150,43 +151,47 @@ export default {
   },
   methods: {
     handlePasswordLevel (rule, value, callback) {
-      let level = 0
-
+      console.log('value form handlePassword level', value)
+      if (value === '') {
+        callback()
+      } else {
+      console.log('level inside else form handlePassword level', this.state.level)
       // 判断这个字符串中有没有数字
       if (/[0-9]/.test(value)) {
-        level++
+        this.state.level++
       }
       // 判断字符串中有没有字母
       if (/[a-zA-Z]/.test(value)) {
-        level++
+        this.state.level++
       }
       // 判断字符串中有没有特殊符号
       if (/[^0-9a-zA-Z_]/.test(value)) {
-        level++
+        this.state.level++
       }
-      this.state.passwordLevel = level
-      this.state.percent = level * 30
-      if (level >= 2) {
-        if (level >= 3) {
+      this.state.passwordLevel = this.state.level
+      this.state.percent = this.state.level * 30
+      if (this.state.level >= 2) {
+        if (this.state.level >= 3) {
           this.state.percent = 100
         }
         callback()
       } else {
-        if (level === 0) {
+        if (this.state.level === 0) {
           this.state.percent = 10
         }
-        callback(new Error('密码强度不够'))
+        callback(new Error(this.$t('user.password.strength.msg')))
+      }
       }
     },
 
     handlePasswordCheck (rule, value, callback) {
       const password = this.form.getFieldValue('password')
-      console.log('value', value)
+      // console.log('value', value)
       if (value === undefined) {
-        callback(new Error('请输入密码'))
+        callback(new Error(this.$t('user.password.required')))
       }
       if (value && password && value.trim() !== password.trim()) {
-        callback(new Error('两次密码不一致'))
+        callback(new Error(this.$t('user.password.twice.msg')))
       }
       callback()
     },

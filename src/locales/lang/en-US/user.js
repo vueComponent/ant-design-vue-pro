@@ -31,12 +31,12 @@ export default {
   'user.email.wrong-format': 'The email address is in the wrong format!',
   'user.userName.required': 'Please enter account name or email address',
   'user.password.required': 'Please enter your password!',
-  'user.password.twice': 'The passwords entered twice do not match!',
-  'user.strength.msg':
-    "Please enter at least 6 characters and don't use passwords that are easy to guess.",
-  'user.strength.strong': 'Strength: strong',
-  'user.strength.medium': 'Strength: medium',
-  'user.strength.short': 'Strength: too short',
+  'user.password.twice.msg': 'The passwords entered twice do not match!',
+  'user.password.strength.msg':
+    'The password is not strong enough',
+  'user.password.strength.strong': 'Strength: strong',
+  'user.password.strength.medium': 'Strength: medium',
+  'user.password.strength.short': 'Strength: too short',
   'user.confirm-password.required': 'Please confirm your password!',
   'user.phone-number.required': 'Please enter your phone number!',
   'user.phone-number.wrong-format': 'Please enter a valid phone number',
