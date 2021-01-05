@@ -14,7 +14,7 @@
     "@ant-design-vue/pro-layout": "^1.0.7",
     "@antv/data-set": "^0.10.2",
     "ant-design-vue": "^1.7.2",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "core-js": "^3.1.2",
     "enquire.js": "^2.1.6",
     "lodash.clonedeep": "^4.5.0",
