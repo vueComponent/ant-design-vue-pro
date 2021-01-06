@@ -26,6 +26,8 @@ export default {
     'menu.result': 'Result',
     'menu.result.success': 'Success',
     'menu.result.fail': 'Fail',
+    'menu.practice': 'Practice',
+    'menu.practice.classOne': 'Practice1',
     'menu.exception': 'Exception',
     'menu.exception.not-permission': '403',
     'menu.exception.not-find': '404',

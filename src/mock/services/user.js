@@ -115,6 +115,34 @@ const info = (options) => {
       'dataAccess': null
     }, {
       'roleId': 'admin',
+      'permissionId': 'practice',
+      'permissionName': '练习权限',
+      'actions': '[{"action":"add","defaultCheck":false,"describe":"新增"},{"action":"query","defaultCheck":false,"describe":"查询"},{"action":"get","defaultCheck":false,"describe":"详情"},{"action":"update","defaultCheck":false,"describe":"修改"},{"action":"delete","defaultCheck":false,"describe":"删除"}]',
+      'actionEntitySet': [{
+        'action': 'add',
+        'describe': '新增',
+        'defaultCheck': false
+      }, {
+        'action': 'query',
+        'describe': '查询',
+        'defaultCheck': false
+      }, {
+        'action': 'get',
+        'describe': '详情',
+        'defaultCheck': false
+      }, {
+        'action': 'update',
+        'describe': '修改',
+        'defaultCheck': false
+      }, {
+        'action': 'delete',
+        'describe': '删除',
+        'defaultCheck': false
+      }],
+      'actionList': null,
+      'dataAccess': null
+    }, {
+      'roleId': 'admin',
       'permissionId': 'profile',
       'permissionName': '详细页权限',
       'actions': '[{"action":"add","defaultCheck":false,"describe":"新增"},{"action":"query","defaultCheck":false,"describe":"查询"},{"action":"get","defaultCheck":false,"describe":"详情"},{"action":"update","defaultCheck":false,"describe":"修改"},{"action":"delete","defaultCheck":false,"describe":"删除"}]',
@@ -612,6 +640,31 @@ const userNav = (options) => {
         'show': true
       },
       'component': 'ResultFail'
+    },
+
+    // practice
+    {
+      'name': 'practice',
+      'parentId': 0,
+      'id': 10091,
+      'meta': {
+        'title': 'Vue 练习',
+        'icon': 'check-circle-o',
+        'show': true
+      },
+      'redirect': '/practice/classOne',
+      'component': 'PageView'
+    },
+    {
+      'name': 'success',
+      'parentId': 10091,
+      'id': 10092,
+      'meta': {
+        'title': '练习1',
+        'hiddenHeaderContent': true,
+        'show': true
+      },
+      'component': 'PracticeClassOne'
     },
 
     // Exception

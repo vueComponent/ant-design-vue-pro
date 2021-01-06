@@ -38,6 +38,9 @@ const constantRouterComponents = {
   'ResultSuccess': () => import(/* webpackChunkName: "result" */ '@/views/result/Success'),
   'ResultFail': () => import(/* webpackChunkName: "result" */ '@/views/result/Error'),
 
+  // practice
+  'PracticeClassOne': () => import(/* webpackChunkName: "practice" */ '@/views/practice/ClassOne'),
+
   // exception
   'Exception403': () => import(/* webpackChunkName: "fail" */ '@/views/exception/403'),
   'Exception404': () => import(/* webpackChunkName: "fail" */ '@/views/exception/404'),
