@@ -666,6 +666,17 @@ const userNav = (options) => {
       },
       'component': 'PracticeClassOne'
     },
+    {
+      'name': 'success',
+      'parentId': 10091,
+      'id': 10093,
+      'meta': {
+        'title': '练习2',
+        'hiddenHeaderContent': true,
+        'show': true
+      },
+      'component': 'PracticeClassTwo'
+    },
 
     // Exception
     {

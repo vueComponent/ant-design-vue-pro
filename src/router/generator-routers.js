@@ -40,6 +40,7 @@ const constantRouterComponents = {
 
   // practice
   'PracticeClassOne': () => import(/* webpackChunkName: "practice" */ '@/views/practice/ClassOne'),
+  'PracticeClassTwo': () => import(/* webpackChunkName: "practice" */ '@/views/practice/ClassTwo'),
 
   // exception
   'Exception403': () => import(/* webpackChunkName: "fail" */ '@/views/exception/403'),

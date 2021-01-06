@@ -288,6 +288,12 @@ export const asyncRouterMap = [
             name: 'PracticeClassOne',
             component: () => import('@/views/practice/ClassOne'),
             meta: { title: 'menu.practice.classOne', keepAlive: false, hiddenHeaderContent: true, permission: ['practice'] }
+          },
+          {
+            path: '/practice/classTwo',
+            name: 'PracticeClassTwo',
+            component: () => import('@/views/practice/ClassTwo'),
+            meta: { title: 'menu.practice.classTwo', keepAlive: false, hiddenHeaderContent: true, permission: ['practice'] }
           }
         ]
       }
