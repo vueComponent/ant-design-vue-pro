@@ -221,7 +221,7 @@ export default {
       headers: {
         authorization: 'authorization-text',
       },
-      uploadUrl:'',
+      uploadUrl:'../ethics/uploadFile',
       showFile:true,
       showList:false,
       fileName:'',
@@ -273,13 +273,13 @@ export default {
     setTimeout(() => {
       this.loading = !this.loading;
     }, 1000)
-    this.loadComments()
+    // this.loadComments()
   },
   methods: {
-    loadComments() {
-      var list = JSON.parse(localStorage.getItem("pro__Access-Token"));
-      this.uploadUrl = list.value.uploadPicURL;
-    },
+    // loadComments() {
+    //   var list = JSON.parse(localStorage.getItem("pro__Access-Token"));
+    //   this.uploadUrl = list.value.uploadPicURL;
+    // },
     handleChange(info) {
        
         var url = info.file.response.fileName
