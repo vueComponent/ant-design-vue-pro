@@ -90,7 +90,7 @@ yarn run lint
 
 - I18n: [多语言支持 (@musnow)](./src/locales/index.js)
 
-- 生成环境默认不加载 `mock`，更多详情请看 `src/mock/index.js`
+- 生产环境默认不加载 `mock`，更多详情请看 `src/mock/index.js`
 
 - **用于生产环境，请使用 `release` 版本代码，使用 master 代码出现的任何问题需要你自行解决**
 
