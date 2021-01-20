@@ -3,7 +3,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="病例识别号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input placeholder="请输入身份证号" v-decorator="['card', { rules: [ { required: true, validator: isIdCardNo }] }]" />
+          <a-input placeholder="请输入身份证号" v-decorator="['card', { rules: [ { validator: isIdCardNo }] }]" />
         </a-form-item>
         <!-- <a-form-item label="病例入组编号" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['card', { rules: [{ required: true }] }]" /></a-form-item> -->
         <a-form-item label="患者同意注册日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -271,113 +271,114 @@ export default {
       callback()
     },
     isIdCardNo(rule, value, callback) {
+      if (this.form.getFieldValue('work') === 4 && !value) {
+        callback();
+        return;
+      }
       if (!value) {
         callback('该选项必填！')
         return
       }
       let num = value.toUpperCase();
-      // 验证长度
-      if (!/(^\d{17}([0-9]|X)$)/.test(num)) {
-        callback('身份证号不正确或不符合规定！');
-        return;
+      if (num.length === 18) {
+        //验证城市
+        let aCity = {
+          11: '北京',
+          12: '天津',
+          13: '河北',
+          14: '山西',
+          15: '内蒙古',
+          21: '辽宁',
+          22: '吉林',
+          23: '黑龙江 ',
+          31: '上海',
+          32: '江苏',
+          33: '浙江',
+          34: '安徽',
+          35: '福建',
+          36: '江西',
+          37: '山东',
+          41: '河南',
+          42: '湖北',
+          43: '湖南',
+          44: '广东',
+          45: '广西',
+          46: '海南',
+          50: '重庆',
+          51: '四川',
+          52: '贵州',
+          53: '云南',
+          54: '西藏',
+          61: '陕西',
+          62: '甘肃',
+          63: '青海',
+          64: '宁夏',
+          65: '新疆',
+          71: '台湾',
+          81: '香港',
+          82: '澳门',
+          91: '国外'
+        };
+        if (aCity[parseInt(num.substr(0, 2))] == null) {
+          callback('身份证号不正确或不符合规定！');
+          return;
+        }
+        // 验证生日
+        let reg = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/);
+        let arrSplit = num.match(reg);
+        let dtmBirth = new Date(arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]);
+        let bGoodDay;
+        bGoodDay = dtmBirth.getFullYear() == Number(arrSplit[2]) && dtmBirth.getMonth() + 1 == Number(arrSplit[3]) && dtmBirth.getDate() == Number(arrSplit[4]);
+        if (!bGoodDay) {
+          callback('身份证号不正确或不符合规定！');
+          return
+        }
+        // 验证格式
+        var valnum;
+        var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+        var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+        var nTemp = 0,
+          i;
+        for (i = 0; i < 17; i++) {
+          nTemp += num.substr(i, 1) * arrInt[i];
+        }
+        valnum = arrCh[nTemp % 11];
+        if (valnum != num.substr(17, 1)) {
+          callback('身份证号不正确或不符合规定！');
+          return
+        }
+        // 回显性别、生日
+        if (!this.patientId) {
+          this.form.resetFields(['birthDate', 'sex'])
+          this.confirmLoading = true
+          const params = new FormData();
+          params.append('card', num);
+          validateCard(params).then(res => {
+            this.confirmLoading = false
+            switch (res.code) {
+              case 2:
+                callback(res.msg);
+                break
+              case 3:
+                let birthDate = new Date(num.substr(6, 8).replace(/(.{4})(.{2})/, "$1-$2-")).getTime();
+                let sex = parseInt(num.charAt(16) / 2) * 2 != num.charAt(16) ? '1' : '0';
+                this.form.setFieldsValue({
+                  birthDate: moment(birthDate, 'x'),
+                  sex
+                })
+                callback();
+                break
+              case 4:
+                callback('该患者已存在，请在列表内搜索！');
+                break
+              default:
+                callback();
+            }
+          })
+        }
       }
-      //验证城市
-      let aCity = {
-        11: '北京',
-        12: '天津',
-        13: '河北',
-        14: '山西',
-        15: '内蒙古',
-        21: '辽宁',
-        22: '吉林',
-        23: '黑龙江 ',
-        31: '上海',
-        32: '江苏',
-        33: '浙江',
-        34: '安徽',
-        35: '福建',
-        36: '江西',
-        37: '山东',
-        41: '河南',
-        42: '湖北',
-        43: '湖南',
-        44: '广东',
-        45: '广西',
-        46: '海南',
-        50: '重庆',
-        51: '四川',
-        52: '贵州',
-        53: '云南',
-        54: '西藏',
-        61: '陕西',
-        62: '甘肃',
-        63: '青海',
-        64: '宁夏',
-        65: '新疆',
-        71: '台湾',
-        81: '香港',
-        82: '澳门',
-        91: '国外'
-      };
-      if (aCity[parseInt(num.substr(0, 2))] == null) {
-        callback('身份证号不正确或不符合规定！');
-        return;
-      }
-      // 验证生日
-      let reg = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/);
-      let arrSplit = num.match(reg);
-      let dtmBirth = new Date(arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]);
-      let bGoodDay;
-      bGoodDay = dtmBirth.getFullYear() == Number(arrSplit[2]) && dtmBirth.getMonth() + 1 == Number(arrSplit[3]) && dtmBirth.getDate() == Number(arrSplit[4]);
-      if (!bGoodDay) {
-        callback('身份证号不正确或不符合规定！');
-        return
-      }
-      // 验证格式
-      var valnum;
-      var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
-      var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
-      var nTemp = 0,
-        i;
-      for (i = 0; i < 17; i++) {
-        nTemp += num.substr(i, 1) * arrInt[i];
-      }
-      valnum = arrCh[nTemp % 11];
-      if (valnum != num.substr(17, 1)) {
-        callback('身份证号不正确或不符合规定！');
-        return
-      }
-      // 回显性别、生日
-      if (!this.patientId) {
-        this.form.resetFields(['birthDate', 'sex'])
-        this.confirmLoading = true
-        const params = new FormData();
-        params.append('card', num);
-        validateCard(params).then(res => {
-          this.confirmLoading = false
-          switch (res.code) {
-            case 2:
-              callback(res.msg);
-              break
-            case 3:
-              let birthDate = new Date(num.substr(6, 8).replace(/(.{4})(.{2})/, "$1-$2-")).getTime();
-              let sex = parseInt(num.charAt(16) / 2) * 2 != num.charAt(16) ? '1' : '0';
-              this.form.setFieldsValue({
-                birthDate: moment(birthDate, 'x'),
-                sex
-              })
-              callback();
-              break
-            case 4:
-              callback('该患者已存在，请在列表内搜索！');
-              break
-            default:
-              callback();
-          }
-        })
-      } else {
-        callback();
-      }
+      callback();
+      return;
     },
     disabledDate(current) {
       // Can not select days before today and today
