@@ -51,6 +51,9 @@
                   </div>
                 </a-form-item>
                 <!-- <div class="title">1.M型主要测值</div> -->
+                <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" v-decorator="['t1', {...dateRequire, initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                </a-form-item>
                 <a-form-item label="(1) 主动脉根部内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="cm" autocomplete="off"></a-input>
                 </a-form-item>
@@ -262,6 +265,10 @@ export default {
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           var re = this.form.getFieldsValue()
+          re = {
+            ...re,
+            't1': typeof re['t1'] !== 'undefined' ? re['t1'].join(',') : ''
+          }
           var that = this
           this.patientBasis.status = 2
           var params = new URLSearchParams()
@@ -320,6 +327,10 @@ export default {
     },
     save() {
       var re = this.form.getFieldsValue()
+      re = {
+        ...re,
+        't1': typeof re['t1'] !== 'undefined' ? re['t1'].join(',') : ''
+      }
       var that = this
       console.log(re)
       this.patientBasis.status = 1
@@ -375,6 +386,10 @@ export default {
     },
     handleChange({ fileList }) {
       this.fileList = fileList
+    },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current > moment().endOf('day');
     },
     withdraw() {
       var that = this
