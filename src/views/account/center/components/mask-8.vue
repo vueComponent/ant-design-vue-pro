@@ -36,6 +36,9 @@
                 <a style="float: right;font-size:12px;margin-right: 12px;" @click="showOcr = !showOcr">OCR</a>
                 <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /> -->
               </div>
+              <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-date-picker placeholder="请选择" v-decorator="['t1', {...dateRequire, initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+              </a-form-item>
               <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="showOcr">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" class="images1" v-viewer listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
@@ -57,7 +60,7 @@
                 </a-row>
               </a-form-item>
               <a-form-item label="FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input>
+                <!-- <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" addonAfter="L" autocomplete="off"></a-input>
                 </a-form-item>
@@ -66,7 +69,7 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="FEV1::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input>
+                <!-- <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['a31', {...inputRequired, initialValue: initValue('a31')}]" addonAfter="L" autocomplete="off"></a-input>
                 </a-form-item>
@@ -75,7 +78,7 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="FEV1%FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input>
+                <!-- <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
@@ -145,7 +148,7 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="MVV::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input>
+                <!-- <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['b81', {initialValue: initValue('b81')}]" addonAfter="L/min" autocomplete="off"></a-input>
                 </a-form-item>
@@ -162,7 +165,7 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="RV::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input>
+                <!-- <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['b101', {initialValue: initValue('b101')}]" addonAfter="L" autocomplete="off"></a-input>
                 </a-form-item>
@@ -171,7 +174,7 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="TLC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input>
+                <!-- <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['b111', {initialValue: initValue('b111')}]" addonAfter="L" autocomplete="off"></a-input>
                 </a-form-item>
@@ -180,7 +183,7 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="RV%TLC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input>
+                <!-- <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['b121', {initialValue: initValue('b121')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
@@ -658,6 +661,10 @@ export default {
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           var re = this.form.getFieldsValue()
+          re = {
+            ...re,
+            't1': typeof re['t1'] !== 'undefined' ? re['t1'].join(',') : ''
+          }
           var that = this
           this.patientBasis.status = 2
           var params = new URLSearchParams()
@@ -781,6 +788,10 @@ export default {
       this.submitInfo = v
       this.$refs.submitBtn.$el.click()
     },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current > moment().endOf('day');
+    },
     getFormData() {
       this.spinning = true
       var that = this
@@ -828,6 +839,10 @@ export default {
     },
     save() {
       var re = this.form.getFieldsValue()
+      re = {
+        ...re,
+        't1': typeof re['t1'] !== 'undefined' ? re['t1'].join(',') : ''
+      }
       var that = this
       console.log(re)
       this.patientBasis.status = 1

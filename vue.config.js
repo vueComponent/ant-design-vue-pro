@@ -104,8 +104,9 @@ module.exports = {
     port: 8000,
     proxy: {
       '/api': {
-        target: 'http://172.16.1.11:9997/',//测试
+        // target: 'http://172.16.1.11:9997/',//测试
         // target: 'http://172.16.2.147:9997/',//宋建文
+        target: 'http://172.16.2.135:9997/',//赵翔
         // target: 'http://localhost:9997/',
         ws: false,
         changeOrigin: true,

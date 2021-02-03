@@ -31,7 +31,6 @@
             <div class="btn-array" v-if="executeStatus === 2 && canEdit">
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
-
             <div class="baselineForm" :style="baselineFormStyle">
               <div class="title">1.病因学相关检查</div>
               <a-form-item class="border-dotted" label="(1) 胃食管反流病量表评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -50,7 +49,7 @@
                   <a-radio value="4">4-7天/周</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="感觉到有胃内容物(液体或食物)上返到您的喉咙或口腔(反流)的频率？:" :labelCol="wrapper18">
+              <a-form-item label="感觉到有胃内容物(液体或食物)上返到您的喉咙或口腔(反流)的频率？:" :labelCol="labelCol10" :wrapperCol="wrapperHor14">
                 <a-radio-group v-decorator="['z2', {...selectRequired, initialValue: initValue('z2')}]" @change="computeGerd">
                   <a-radio value="1">0天/周</a-radio>
                   <a-radio value="2">1天/周</a-radio>
@@ -74,7 +73,7 @@
                   <a-radio value="4">4-7天/周</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="由于您的烧心和/或反流而难以获得良好夜间睡眠的频率？:" :labelCol="wrapper18" class="border-dotted">
+              <a-form-item label="由于您的烧心和/或反流而难以获得良好夜间睡眠的频率？:" :labelCol="labelCol10" :wrapperCol="wrapperHor14" class="border-dotted">
                 <a-radio-group v-decorator="['z5', {...selectRequired, initialValue: initValue('z5')}]" @change="computeGerd">
                   <a-radio value="1">0天/周</a-radio>
                   <a-radio value="2">1天/周</a-radio>
@@ -82,7 +81,7 @@
                   <a-radio value="4">4-7天/周</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="除以上告知服用的药物外，您额外服用药物来缓解烧心和/或反流的频率？(如碳酸钙、氢氧化铝等抗酸剂):" :labelCol="wrapper18">
+              <a-form-item label="除以上告知服用的药物外，您额外服用药物来缓解烧心和/或反流的频率？(如碳酸钙、氢氧化铝等抗酸剂):" :labelCol="labelCol14" :wrapperCol="wrapperHor10">
                 <a-radio-group v-decorator="['z6', {...selectRequired, initialValue: initValue('z6')}]" @change="computeGerd">
                   <a-radio value="1">0天/周</a-radio>
                   <a-radio value="2">1天/周</a-radio>
@@ -98,6 +97,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla1">
+                <a-form-item label="ABPA检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" v-decorator="['b1', {...dateRequire, initialValue: initValue('b1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                </a-form-item>
                 <a-form-item label="外周血嗜酸细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-form-item :style="{ display: 'inline-block'}">
                     <a-input addonAfter="*10^9/L" style="width: 240px; margin-right: 20px;" v-decorator="['a11', {initialValue: initValue('a11')}]" autocomplete="off"></a-input>
@@ -164,6 +166,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla2">
+                <a-form-item label="自身免疫抗体检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" v-decorator="['b2', {...dateRequire, initialValue: initValue('b2', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                </a-form-item>
                 <a-form-item label="ANA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a22', {...selectRequired, initialValue: initValue('a22')}]">
                     <a-radio value="1">阳性</a-radio>
@@ -198,6 +203,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla3">
+                <a-form-item label="球蛋白缺乏检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" v-decorator="['b3', {...dateRequire, initialValue: initValue('b3', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                </a-form-item>
                 <a-form-item label="IgM:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-form-item :style="{ display: 'inline-block'}">
                     <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a31', {...inputRequired, initialValue: initValue('a31')}]" autocomplete="off" addonAfter="g/L"></a-input>
@@ -246,6 +254,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla4">
+                <a-form-item label="补体缺乏检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" v-decorator="['b4', {...dateRequire, initialValue: initValue('b4', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                </a-form-item>
                 <a-form-item label="C3:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-form-item :style="{ display: 'inline-block'}">
                     <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" autocomplete="off" addonAfter="g/L"></a-input>
@@ -281,6 +292,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla5">
+                <a-form-item label=" α-1抗蛋白酶缺乏检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" v-decorator="['b5', {...dateRequire, initialValue: initValue('b5', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                </a-form-item>
                 <a-form-item label="基因:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a52', {...selectRequired, initialValue: initValue('a52')}]" @change="changeRadio($event, 'controla52')">
                     <a-radio value="1">阳性</a-radio>
@@ -299,6 +313,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla6">
+                <a-form-item label="囊性纤维化检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" v-decorator="['b6', {...dateRequire, initialValue: initValue('b6', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                </a-form-item>
                 <a-form-item label="汗液实验:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a61', { ...selectRequired, initialValue: initValue('a61')}]">
                     <a-radio value="1">阳性</a-radio>
@@ -323,6 +340,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla7">
+                <a-form-item label="纤毛功能检测时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" v-decorator="['b7', {...dateRequire, initialValue: initValue('b7', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                </a-form-item>
                 <a-form-item label="FeNOppd:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a71', { ...selectRequired, initialValue: initValue('a71')}]">
                     <a-radio value="1">阳性</a-radio>
@@ -429,8 +449,18 @@ export default {
         sm: { span: 6 },
         md: { span: 6 }
       },
+      labelCol10: {
+        xs: { span: 24 },
+        sm: { span: 10 },
+        md: { span: 10 }
+      },
+      labelCol14: {
+        xs: { span: 24 },
+        sm: { span: 14 },
+        md: { span: 14 }
+      },
       wrapper18: {
-        md: { span: 18 }
+        md: { span: 20 }
       },
       labelColVer: {
         xs: { span: 24 },
@@ -441,6 +471,16 @@ export default {
         xs: { span: 24 },
         sm: { span: 18 },
         md: { span: 18 }
+      },
+      wrapperHor14: {
+        xs: { span: 14 },
+        sm: { span: 14 },
+        md: { span: 14 }
+      },
+      wrapperHor10: {
+        xs: { span: 10 },
+        sm: { span: 10 },
+        md: { span: 10 }
       },
       wrapperVer: {
         xs: { span: 24 },
@@ -539,7 +579,14 @@ export default {
           var that = this
           re = {
             ...re,
-            'a9': typeof re['a9'] !== 'undefined' ? re['a9'].join(',') : ''
+            'a9': typeof re['a9'] !== 'undefined' ? re['a9'].join(',') : '',
+            'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
+            'b2': typeof re['b1'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
+            'b3': typeof re['b1'] !== 'undefined' ? re['b3'].format('YYYY-MM-DD') : '',
+            'b4': typeof re['b1'] !== 'undefined' ? re['b4'].format('YYYY-MM-DD') : '',
+            'b5': typeof re['b1'] !== 'undefined' ? re['b5'].format('YYYY-MM-DD') : '',
+            'b6': typeof re['b1'] !== 'undefined' ? re['b6'].format('YYYY-MM-DD') : '',
+            'b7': typeof re['b1'] !== 'undefined' ? re['b7'].format('YYYY-MM-DD') : ''
           }
           console.log(re)
           this.patientBasis.status = 2
@@ -613,7 +660,7 @@ export default {
         if (answer.a7 === 1) {
           this.controla7 = true
         }
-        if (answer.a9){
+        if (answer.a9) {
           var splitArr = answer.a9.split(',')
           if (splitArr.indexOf('20') > -1) {
             this.controla920 = true
@@ -650,7 +697,14 @@ export default {
       var that = this
       re = {
         ...re,
-        'a9': typeof re['a9'] !== 'undefined' ? re['a9'].join(',') : ''
+        'a9': typeof re['a9'] !== 'undefined' ? re['a9'].join(',') : '',
+        'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
+        'b2': typeof re['b1'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
+        'b3': typeof re['b1'] !== 'undefined' ? re['b3'].format('YYYY-MM-DD') : '',
+        'b4': typeof re['b1'] !== 'undefined' ? re['b4'].format('YYYY-MM-DD') : '',
+        'b5': typeof re['b1'] !== 'undefined' ? re['b5'].format('YYYY-MM-DD') : '',
+        'b6': typeof re['b1'] !== 'undefined' ? re['b6'].format('YYYY-MM-DD') : '',
+        'b7': typeof re['b1'] !== 'undefined' ? re['b7'].format('YYYY-MM-DD') : ''
       }
       console.log(re)
       this.patientBasis.status = 1
@@ -701,7 +755,11 @@ export default {
           })
       })
     },
-    withdraw(){
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current > moment().endOf('day');
+    },
+    withdraw() {
       var that = this
       this.$confirm({
         title: '确认撤销？',
@@ -717,7 +775,7 @@ export default {
               params.append('patientBasisId', that.patientBasisId)
               getPatientBasis(params)
                 .then(res => {
-                  
+
                   that.orgTree = res.data.list
                   that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
@@ -882,9 +940,11 @@ export default {
     .ant-menu.ant-menu-inline.ant-menu-sub {
       background-color: rgba(245, 251, 255);
       padding-left: 20px;
-      .treeSubTitle{
+
+      .treeSubTitle {
         font-size: 14px;
       }
+
       li {
         border-bottom: none;
         height: 40px;
