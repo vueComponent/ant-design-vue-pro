@@ -28,6 +28,7 @@
               <a-row type="flex" style="flex:1">
                 <span class="head-icon"></span>
                 <div v-if="question.name && question.name" class="question-title">{{question.name}}</div>
+                <span class="time-span" v-if="questionTask.realExecuteTime">问卷调查时间：{{questionTask.realExecuteTime | moment }}</span>
                 <span v-if="score" class="question-score">{{`（得分：${score}分）`}}</span>
                 <a-row v-if="(questionId === 32 || questionId === 38 || questionId === 46 || questionId === 58) && (questionTask.status === 1 || questionTask.status === 5) && typeof questionTask.score1 !== 'undefined'" type="flex" style="flex:1;margin-left:40px">
                   <a-col :span="6"><strong>身体功能性维度（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
@@ -40,16 +41,16 @@
                   <a-col :span="6"><strong>呼吸症状性维度（<span style="color: #3398dc">{{ questionTask.score8 }}分</span>）</strong></a-col>
                 </a-row>
                 <a-row v-if="(questionId === 33 || questionId === 59) && questionTask.status === 1 && typeof questionTask.score1 !== 'undefined'" type="flex" align="middle" style="flex:1;margin-left:40px;">
-                    <a-col :span="6"><strong>症状symptom（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>活动activity（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>影响impact（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>合计（<span style="color: #3398dc">{{ questionTask.score }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>症状symptom（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>活动activity（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>影响impact（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>合计（<span style="color: #3398dc">{{ questionTask.score }}分</span>）</strong></a-col>
                 </a-row>
                 <a-row v-if="(questionId === 35 || questionId === 41 || questionId === 61) && questionTask.status === 1 && typeof questionTask.score1 !== 'undefined'" type="flex" align="middle" style="flex:1;margin-left:40px;">
-                    <a-col :span="6"><strong>生理（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>心理（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>社会（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
-                    <a-col :span="6"><strong>合计（<span style="color: #3398dc">{{ questionTask.score }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>生理（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>心理（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>社会（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>合计（<span style="color: #3398dc">{{ questionTask.score }}分</span>）</strong></a-col>
                 </a-row>
               </a-row>
               <a-row type="flex" align="middle" class="btn-group" v-if="executeStatus !== 2 && questionTask.status !== 5 && canEdit">
@@ -190,7 +191,7 @@ export default {
     }
   },
   activated() {
-    console.log(document.querySelector('.baselineForm').scrollTop)
+    // console.log(document.querySelector('.baselineForm').scrollTop)
   },
   mounted() {
     console.log(document.querySelector('.baselineForm').scrollTop)
@@ -593,9 +594,11 @@ export default {
     .ant-menu.ant-menu-inline.ant-menu-sub {
       background-color: rgba(245, 251, 255);
       padding-left: 20px;
-      .treeSubTitle{
+
+      .treeSubTitle {
         font-size: 14px;
       }
+
       li {
         border-bottom: none;
         height: 40px;
@@ -819,5 +822,12 @@ export default {
   height: 100%;
   -ms-overflow-x: hidden;
   overflow: hidden auto;
+
+  .time-span {
+    line-height: 50px;
+    color: #3398dc;
+    margin-left: 10px;
+    font-weight: 500;
+  }
 }
 </style>

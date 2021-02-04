@@ -282,6 +282,9 @@ export default {
       // Can not select days before today and today
       return current && current > moment().endOf('day');
     },
+    dateRequire: {
+      rules: [{ type: 'object', required: true, message: '请选择时间！' }]
+    },
     handleSubmit(e) {
       var _this = this
       e.preventDefault()
