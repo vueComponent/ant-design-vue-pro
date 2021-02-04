@@ -51,6 +51,9 @@
                     <a-button style="position: absolute;top: 74px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import(fileList1,1)" v-if="fileList1.length === 1">OCR识别</a-button>
                   </div>
                 </a-form-item>
+                <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" v-decorator="['t1', {...dateRequire, initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                </a-form-item>
                 <a-form-item label="(1) 血红蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['b1', {...inputRequired, initialValue: initValue('b1')}]" addonAfter="g/L" autocomplete="off"></a-input>
                 </a-form-item>
@@ -328,6 +331,10 @@ export default {
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           var re = this.form.getFieldsValue()
+          re = {
+            ...re,
+            't1': typeof re['t1'] !== 'undefined' ? re['t1'].join(',') : ''
+          }
           var that = this
           this.patientBasis.status = 2
           var params = new URLSearchParams()
@@ -406,8 +413,16 @@ export default {
       this.submitInfo = v
       this.$refs.submitBtn.$el.click()
     },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current > moment().endOf('day');
+    },
     save() {
       var re = this.form.getFieldsValue()
+      re = {
+        ...re,
+        't1': typeof re['t1'] !== 'undefined' ? re['t1'].join(',') : ''
+      }
       var that = this
       console.log(re)
       this.patientBasis.status = 1
