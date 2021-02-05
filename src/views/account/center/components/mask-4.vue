@@ -198,6 +198,26 @@
                   <a-radio value="-1">否</a-radio>
                 </a-radio-group>
               </a-form-item>
+              <a-form-item label="(8) 患者是否曾接收免疫调节治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b8', {...require1, initialValue: initValue('b8')}]" @change="changeRadio($event, 'controlb8')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <div v-if="controlb8">
+                <a-form-item label="治疗方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b81', {...selectRequired, initialValue: initValue('b81', 'array')}]">
+                    <a-checkbox value="1">细菌溶解产物胶囊</a-checkbox>
+                    <a-checkbox value="2">匹多莫德</a-checkbox>
+                    <a-checkbox value="3">胸腺肽</a-checkbox>
+                    <a-checkbox value="4">脾氨肽</a-checkbox>
+                    <a-checkbox value="5" :checked="controlb81" @change="changeSelect($event, 'controlb81')">其他</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="其他治疗::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb8 && controlb81">
+                  <a-input style="width: 240px;" v-decorator="['b82', {...inputRequired, initialValue: initValue('b82')}]" autocomplete="off"></a-input>
+                </a-form-item>
+              </div>
             </div>
           </a-form>
         </a-col>
@@ -296,6 +316,8 @@ export default {
       controlb5: false,
       controlb52: false,
       controlb6: false,
+      controlb8: false,
+      controlb81: false,
       spinning: false,
       executeStatus: false,
       controlb43: false,
@@ -367,7 +389,8 @@ export default {
             'b431': typeof re['b431'] !== 'undefined' ? re['b431'].join(',') : '',
             'b433': typeof re['b433'] !== 'undefined' ? re['b433'].join(',') : '',
             'b44': typeof re['b44'] !== 'undefined' ? re['b44'].join(',') : '',
-            'b52': typeof re['b52'] !== 'undefined' ? re['b52'].join(',') : ''
+            'b52': typeof re['b52'] !== 'undefined' ? re['b52'].join(',') : '',
+            'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : ''
           }
           var that = this
           console.log(re)
@@ -431,6 +454,9 @@ export default {
         if (answer.b6 === 1) {
           this.controlb6 = true
         }
+        if (answer.b8 === 1) {
+          this.controlb8 = true
+        }
         if (answer.b52) {
           splitArr = answer.b52.split(',')
           if (splitArr.indexOf('3') > -1) {
@@ -485,6 +511,12 @@ export default {
             this.controlb52 = true
           }
         }
+        if (answer.b81) {
+          splitArr = answer.b81.split(',')
+          if (splitArr.indexOf('5') > -1) {
+            this.controlb81 = true
+          }
+        }
       }
       return answer
     },
@@ -499,7 +531,8 @@ export default {
         'b431': typeof re['b431'] !== 'undefined' ? re['b431'].join(',') : '',
         'b433': typeof re['b433'] !== 'undefined' ? re['b433'].join(',') : '',
         'b44': typeof re['b44'] !== 'undefined' ? re['b44'].join(',') : '',
-        'b52': typeof re['b52'] !== 'undefined' ? re['b52'].join(',') : ''
+        'b52': typeof re['b52'] !== 'undefined' ? re['b52'].join(',') : '',
+        'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : ''
       }
       var that = this
       console.log(re)
@@ -856,7 +889,7 @@ export default {
       line-height: 40px;
     }
 
-    padding: 40px 20px;
+    padding: 20px 20px 60px;
 
     .ant-form-item {
       // padding-bottom: 10px;
