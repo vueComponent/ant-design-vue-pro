@@ -105,7 +105,12 @@ module.exports = {
     proxy: {
       '/api': {
         // target: 'http://172.16.1.11:9997/',//测试
+<<<<<<< HEAD
         target: 'http://172.16.2.147:9997/',//宋建文
+=======
+        // target: 'http://172.16.2.147:9997/',//宋建文
+        target: 'http://172.16.2.135:9997/',//赵翔
+>>>>>>> 50456ffcc12b1dc83c821e886108ab5fec92c760
         // target: 'http://localhost:9997/',
         ws: false,
         changeOrigin: true,
