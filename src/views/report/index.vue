@@ -154,6 +154,26 @@ export default {
           title: '痰检',
           dataIndex: 'type11Num',
           width: '120px'
+        },
+        {
+          title: '病史',
+          dataIndex: 'type12Num',
+          width: '120px'
+        },
+        {
+          title: '影像学资料',
+          dataIndex: 'type13Num',
+          width: '120px'
+        },
+        {
+          title: '病原微生物',
+          dataIndex: 'type14Num',
+          width: '120px'
+        },
+        {
+          title: '肺功能',
+          dataIndex: 'type15Num',
+          width: '120px'
         }
       ],
       createArr: [],
