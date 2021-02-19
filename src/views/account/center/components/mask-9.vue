@@ -236,7 +236,7 @@ export default {
           var re = this.form.getFieldsValue()
           re = {
             ...re,
-            't1': typeof re['t1'] !== 'undefined' ? re['t1'].join(',') : ''
+            't1': typeof re['t1'] !== 'undefined' ? re['t1'].format('YYYY-MM-DD') : ''
           }
           var that = this
           this.patientBasis.status = 2
@@ -317,7 +317,7 @@ export default {
       var re = this.form.getFieldsValue()
       re = {
         ...re,
-        't1': typeof re['t1'] !== 'undefined' ? re['t1'].join(',') : ''
+        't1': typeof re['t1'] !== 'undefined' ? re['t1'].format('YYYY-MM-DD') : ''
       }
       var that = this
       console.log(re)

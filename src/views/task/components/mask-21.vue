@@ -596,12 +596,12 @@ export default {
             ...re,
             'a9': typeof re['a9'] !== 'undefined' ? re['a9'].join(',') : '',
             'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
-            'b2': typeof re['b1'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
-            'b3': typeof re['b1'] !== 'undefined' ? re['b3'].format('YYYY-MM-DD') : '',
-            'b4': typeof re['b1'] !== 'undefined' ? re['b4'].format('YYYY-MM-DD') : '',
-            'b5': typeof re['b1'] !== 'undefined' ? re['b5'].format('YYYY-MM-DD') : '',
-            'b6': typeof re['b1'] !== 'undefined' ? re['b6'].format('YYYY-MM-DD') : '',
-            'b7': typeof re['b1'] !== 'undefined' ? re['b7'].format('YYYY-MM-DD') : ''
+            'b2': typeof re['b2'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
+            'b3': typeof re['b3'] !== 'undefined' ? re['b3'].format('YYYY-MM-DD') : '',
+            'b4': typeof re['b4'] !== 'undefined' ? re['b4'].format('YYYY-MM-DD') : '',
+            'b5': typeof re['b5'] !== 'undefined' ? re['b5'].format('YYYY-MM-DD') : '',
+            'b6': typeof re['b6'] !== 'undefined' ? re['b6'].format('YYYY-MM-DD') : '',
+            'b7': typeof re['b7'] !== 'undefined' ? re['b7'].format('YYYY-MM-DD') : ''
           }
           console.log(re)
           this.patientBasis.status = 2
@@ -699,12 +699,12 @@ export default {
         ...re,
         'a9': typeof re['a9'] !== 'undefined' ? re['a9'].join(',') : '',
         'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
-        'b2': typeof re['b1'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
-        'b3': typeof re['b1'] !== 'undefined' ? re['b3'].format('YYYY-MM-DD') : '',
-        'b4': typeof re['b1'] !== 'undefined' ? re['b4'].format('YYYY-MM-DD') : '',
-        'b5': typeof re['b1'] !== 'undefined' ? re['b5'].format('YYYY-MM-DD') : '',
-        'b6': typeof re['b1'] !== 'undefined' ? re['b6'].format('YYYY-MM-DD') : '',
-        'b7': typeof re['b1'] !== 'undefined' ? re['b7'].format('YYYY-MM-DD') : ''
+        'b2': typeof re['b2'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
+        'b3': typeof re['b3'] !== 'undefined' ? re['b3'].format('YYYY-MM-DD') : '',
+        'b4': typeof re['b4'] !== 'undefined' ? re['b4'].format('YYYY-MM-DD') : '',
+        'b5': typeof re['b5'] !== 'undefined' ? re['b5'].format('YYYY-MM-DD') : '',
+        'b6': typeof re['b6'] !== 'undefined' ? re['b6'].format('YYYY-MM-DD') : '',
+        'b7': typeof re['b7'] !== 'undefined' ? re['b7'].format('YYYY-MM-DD') : ''
       }
       console.log(re)
       this.patientBasis.status = 1

@@ -28,7 +28,6 @@
               <a-row type="flex" style="flex:1">
                 <span class="head-icon"></span>
                 <div v-if="question.name && question.name" class="question-title">{{question.name}}</div>
-                <span class="time-span" v-if="questionTask.realExecuteTime">问卷调查时间：{{questionTask.realExecuteTime | moment }}</span>
                 <span v-if="score" class="question-score">{{`（得分：${score}分）`}}</span>
                 <a-row v-if="(questionId === 32 || questionId === 38 || questionId === 46 || questionId === 58) && (questionTask.status === 1 || questionTask.status === 5) && typeof questionTask.score1 !== 'undefined'" type="flex" style="flex:1;margin-left:40px">
                   <a-col :span="6"><strong>身体功能性维度（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
@@ -58,6 +57,9 @@
                 <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               </a-row>
             </div>
+            <a-form-item class="ques-box date" :colon="false" label="问卷调查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-date-picker placeholder="请选择" v-decorator="['taskTime', {...dateRequire, initialValue: questionTask.taskTime ? moment(questionTask.taskTime): ''}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+            </a-form-item>
             <div class="baselineForm" :style="baselineFormStyle">
               <!-- 调查问卷 -->
               <div v-if="question.remark && question.remark" class="question-des"><span style="color:#3398dc">说明：</span>{{question.remark}}</div>
@@ -120,7 +122,17 @@ export default {
       baselineFormStyle: {
         overflow: 'auto',
         padding: '20px 20px 80px',
-        height: 'calc(100% - 70px)'
+        height: 'calc(100% - 150px)'
+      },
+      labelColHor: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+        md: { span: 6 }
+      },
+      wrapperHor: {
+        xs: { span: 24 },
+        sm: { span: 18 },
+        md: { span: 18 }
       },
       title: '',
       openKeys: [],
@@ -144,7 +156,10 @@ export default {
       showFlag: true,
       selectedKeys: [],
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
-      canEdit: false
+      canEdit: false,
+      dateRequire: {
+        rules: [{ type: 'object', required: true, message: '请选择时间！' }]
+      }
     }
   },
   created() {
@@ -293,6 +308,7 @@ export default {
           params.append('questionId', this.questionId)
           params.append('patientId', this.patient.patientId)
           params.append('type', 2)
+          params.append('taskTime', typeof values.taskTime !== 'undefined' ? values.taskTime.format('YYYY-MM-DD'): '')
           saveQuestion(params)
             .then(res => {
               that.spinning = false
@@ -394,6 +410,7 @@ export default {
       params.append('questionId', this.questionId)
       params.append('patientId', this.patient.patientId)
       params.append('type', 1)
+      params.append('taskTime', typeof values.taskTime !== 'undefined' ? values.taskTime.format('YYYY-MM-DD') : '')
       this.spinning = true
       saveQuestion(params)
         .then(res => {
@@ -547,6 +564,16 @@ export default {
 /deep/ .ant-row {
   clear: both;
   height: 100%;
+
+  &.date {
+    height: auto;
+    margin-top: 20px;
+
+    .ant-form-item-label {
+      background-color: transparent;
+      border-top: none;
+    }
+  }
 }
 
 .page-header-index-wide {
