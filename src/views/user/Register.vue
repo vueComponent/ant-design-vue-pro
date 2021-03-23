@@ -172,6 +172,8 @@ export default {
       }
       this.state.passwordLevel = this.state.level
       this.state.percent = this.state.level * 33
+
+      callback()
     },
 
     handlePasswordCheck (rule, value, callback) {
