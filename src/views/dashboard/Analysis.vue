@@ -221,7 +221,7 @@ export default {
       headers: {
         authorization: 'authorization-text',
       },
-      uploadUrl:'../ethics/uploadFile',
+      uploadUrl: process.env.VUE_APP_API_BASE_URL + 'ethics/uploadFile',
       showFile:true,
       showList:false,
       fileName:'',

@@ -97,9 +97,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla1">
-                <a-form-item label="ABPA检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <!-- <a-form-item label="ABPA检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-date-picker placeholder="请选择" v-decorator="['b1', {...dateRequire, initialValue: initValue('b1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-                </a-form-item>
+                </a-form-item> -->
                 <a-form-item label="外周血嗜酸细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-form-item :style="{ display: 'inline-block'}">
                     <a-input addonAfter="*10^9/L" style="width: 240px; margin-right: 20px;" v-decorator="['a11', {initialValue: initValue('a11')}]" autocomplete="off"></a-input>
@@ -166,9 +166,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla2">
-                <a-form-item label="自身免疫抗体检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <!-- <a-form-item label="自身免疫抗体检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-date-picker placeholder="请选择" v-decorator="['b2', {...dateRequire, initialValue: initValue('b2', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-                </a-form-item>
+                </a-form-item> -->
                 <a-form-item label="ANA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a22', {...selectRequired, initialValue: initValue('a22')}]">
                     <a-radio value="1">阳性</a-radio>
@@ -203,9 +203,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla3">
-                <a-form-item label="球蛋白缺乏检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <!-- <a-form-item label="球蛋白缺乏检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-date-picker placeholder="请选择" v-decorator="['b3', {...dateRequire, initialValue: initValue('b3', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-                </a-form-item>
+                </a-form-item> -->
                 <a-form-item label="IgM:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-form-item :style="{ display: 'inline-block'}">
                     <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a31', {...inputRequired, initialValue: initValue('a31')}]" autocomplete="off" addonAfter="g/L"></a-input>
@@ -254,9 +254,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla4">
-                <a-form-item label="补体缺乏检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <!-- <a-form-item label="补体缺乏检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-date-picker placeholder="请选择" v-decorator="['b4', {...dateRequire, initialValue: initValue('b4', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-                </a-form-item>
+                </a-form-item> -->
                 <a-form-item label="C3:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-form-item :style="{ display: 'inline-block'}">
                     <a-input style="width: 240px; margin-right: 20px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" autocomplete="off" addonAfter="g/L"></a-input>
@@ -292,9 +292,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla5">
-                <a-form-item label=" α-1抗蛋白酶缺乏检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <!-- <a-form-item label=" α-1抗蛋白酶缺乏检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-date-picker placeholder="请选择" v-decorator="['b5', {...dateRequire, initialValue: initValue('b5', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-                </a-form-item>
+                </a-form-item> -->
                 <a-form-item label="基因:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a52', {...selectRequired, initialValue: initValue('a52')}]" @change="changeRadio($event, 'controla52')">
                     <a-radio value="1">阳性</a-radio>
@@ -313,9 +313,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla6">
-                <a-form-item label="囊性纤维化检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <!-- <a-form-item label="囊性纤维化检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-date-picker placeholder="请选择" v-decorator="['b6', {...dateRequire, initialValue: initValue('b6', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-                </a-form-item>
+                </a-form-item> -->
                 <a-form-item label="汗液实验:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a61', { ...selectRequired, initialValue: initValue('a61')}]">
                     <a-radio value="1">阳性</a-radio>
@@ -340,9 +340,9 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controla7">
-                <a-form-item label="纤毛功能检测时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <!-- <a-form-item label="纤毛功能检测时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-date-picker placeholder="请选择" v-decorator="['b7', {...dateRequire, initialValue: initValue('b7', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-                </a-form-item>
+                </a-form-item> -->
                 <a-form-item label="FeNOppd:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a71', { ...selectRequired, initialValue: initValue('a71')}]">
                     <a-radio value="1">阳性</a-radio>

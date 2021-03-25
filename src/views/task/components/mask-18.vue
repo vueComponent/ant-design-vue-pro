@@ -204,7 +204,7 @@
                     <a-radio value="-1">否</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="(8) 患者是否曾接收免疫调节治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <!-- <a-form-item label="(8) 患者是否曾接收免疫调节治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['b8', {...require1, initialValue: initValue('b8')}]" @change="changeRadio($event, 'controlb8')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
@@ -223,7 +223,7 @@
                   <a-form-item label="其他治疗::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb8 && controlb81">
                     <a-input style="width: 240px;" v-decorator="['b82', {...inputRequired, initialValue: initValue('b82')}]" autocomplete="off"></a-input>
                   </a-form-item>
-                </div>
+                </div> -->
               </div>
             </div>
           </a-form>

@@ -128,17 +128,21 @@
               honor: res.data.doctorDetail.honor,
               isUser: String(res.data.doctorDetail.isUser)
             });
+            // if (res.data.doctorDetail.url) {
             if (res.data.annexList[0].annexAddress) {
               this.form.setFieldsValue({
                 url: [{
                   uid: '1',
+                  // name: res.data.doctorDetail.url,
                   name: res.data.annexList[0].annexAddress,
                   status: 'done',
+                  // url: this.attachsPrefix + res.data.doctorDetail.url
                   url: this.attachsPrefix + res.data.annexList[0].annexAddress
                 }],
               })
+              // this.fileName = res.data.doctorDetail.url
+              this.fileName = res.data.annexList[0].annexAddress
             }
-            this.fileName = res.data.annexList[0].annexAddress
           })
         } else {
           this.title = '新增医生信息'

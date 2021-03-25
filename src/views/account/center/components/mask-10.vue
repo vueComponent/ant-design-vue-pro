@@ -50,9 +50,9 @@
                   </a-modal> -->
                 </div>
               </a-form-item>
-              <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <!-- <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" v-decorator="['t1', {...dateRequire, initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-              </a-form-item>
+              </a-form-item> -->
               <a-form-item label="(1) 血红蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['b1', {...inputRequired, initialValue: initValue('b1')}]" addonAfter="g/L" autocomplete="off"></a-input>
               </a-form-item>

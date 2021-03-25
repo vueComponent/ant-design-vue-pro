@@ -51,9 +51,9 @@
                   </div>
                 </a-form-item>
                 <!-- <div class="title">1.M型主要测值</div> -->
-                <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <!-- <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-date-picker placeholder="请选择" v-decorator="['t1', {...dateRequire, initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-                </a-form-item>
+                </a-form-item> -->
                 <a-form-item label="(1) 主动脉根部内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="cm" autocomplete="off"></a-input>
                 </a-form-item>

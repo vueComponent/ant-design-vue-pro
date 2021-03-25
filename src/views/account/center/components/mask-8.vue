@@ -36,9 +36,9 @@
                 <a style="float: right;font-size:12px;margin-right: 12px;" @click="showOcr = !showOcr">OCR</a>
                 <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /> -->
               </div>
-              <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <!-- <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" v-decorator="['t1', {...dateRequire, initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-              </a-form-item>
+              </a-form-item> -->
               <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="showOcr">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" class="images1" v-viewer listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
@@ -213,6 +213,22 @@
                 </a-form-item>
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['b152', {initialValue: initValue('b152')}]" addonAfter="%" autocomplete="off"></a-input>
+                </a-form-item>
+              </a-form-item>
+              <a-form-item label="DLCO SB::" :labelCol="labelXs" :wrapperCol="wrapperMx">
+                <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
+                  <a-input style="width: 240px;" v-decorator="['b161', {initialValue: initValue('b161')}]" addonAfter="ml/min/mmHg" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
+                  <a-input style="width: 240px;" v-decorator="['b162', {initialValue: initValue('b162')}]" addonAfter="%" autocomplete="off"></a-input>
+                </a-form-item>
+              </a-form-item>
+              <a-form-item label="DLCO/VA::" :labelCol="labelXs" :wrapperCol="wrapperMx">
+                <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
+                  <a-input style="width: 240px;" v-decorator="['b171', {initialValue: initValue('b171')}]" addonAfter="ml/min/mmHg" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
+                  <a-input style="width: 240px;" v-decorator="['b172', {initialValue: initValue('b172')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
               </a-form-item>
               <a-form-item label="(2) 是否做过其他舒张试验:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">

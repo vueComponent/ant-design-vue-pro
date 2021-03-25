@@ -23,6 +23,7 @@ export default {
         padding: '10px',
         paddingBottom: '0px'
       },
+      queryParam: {},
       loadData: parameter => {
         return getEthicsList(Object.assign(parameter, this.queryParam)).then(res => {
           return res

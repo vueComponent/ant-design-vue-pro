@@ -57,9 +57,9 @@
                 <a-button class="btn fr" type="primary" html-type="submit">提交</a-button>
               </a-row>
             </div>
-            <a-form-item class="ques-box date" :colon="false" label="问卷调查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+            <!-- <a-form-item class="ques-box date" :colon="false" label="问卷调查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
               <a-date-picker placeholder="请选择" v-decorator="['taskTime', {...dateRequire, initialValue: questionTask.taskTime ? moment(questionTask.taskTime): ''}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-            </a-form-item>
+            </a-form-item> -->
             <div class="baselineForm" :style="baselineFormStyle">
               <!-- 调查问卷 -->
               <div v-if="question.remark && question.remark" class="question-des"><span style="color:#3398dc">说明：</span>{{question.remark}}</div>
