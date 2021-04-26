@@ -47,7 +47,7 @@
               </a-form-item>
               <a-form-item label="上传图像:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <div class="clearfix" style="margin-top: 10px;">
-                  <a-upload :action="uploadUrl" class="images" v-viewer listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
+                  <a-upload :action="uploadUrl" class="images" v-viewer listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange" :before-upload="beforeUpload">
                     <div v-if="fileList.length < 10">
                       <a-icon type="plus" />
                       <div class="ant-upload-text">Upload</div>
@@ -315,7 +315,8 @@ export default {
       controla8: false,
       controla9: false,
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
-      submitInfo: undefined
+      submitInfo: undefined,
+      canEdit: false
     }
   },
   created() {
@@ -362,7 +363,7 @@ export default {
       }
     },
     handleSubmit(e) {
-     var _this = this
+      var _this = this
       e.preventDefault()
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
@@ -416,6 +417,9 @@ export default {
           this.spinning = false
         }
       })
+    },
+    beforeUpload() {
+      this.spinning = true
     },
     getFormData() {
       this.spinning = true
@@ -583,6 +587,9 @@ export default {
     },
     handleChange({ fileList }) {
       this.fileList = fileList;
+      if (fileList.every(function(v) { return v.status === 'done' && v.response })) {
+        this.spinning = false
+      }
     },
     disabledDate(current) {
       // Can not select days before today and today
