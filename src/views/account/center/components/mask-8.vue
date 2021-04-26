@@ -53,6 +53,12 @@
                     </a-modal> -->
                 </div>
               </a-form-item>
+              <a-form-item label="简易肺功能仪:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-radio-group v-decorator="['g1', {...require1, initialValue: initValue('g1')}]">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
               <a-form-item label="肺功能测试名称" :labelCol="labelXs" :wrapperCol="wrapperMx">
                 <a-row type="flex">
                   <a-col :span="12">实际值</a-col>
@@ -479,7 +485,7 @@
                 <a-input style="width: 240px;" v-decorator="['f2', {...inputRequired, initialValue: initValue('f2')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="肺动脉氧分压差:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input style="width: 240px;" v-decorator="['f3', {...inputRequired, initialValue: initValue('f3')}]" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['f3', {initialValue: initValue('f3')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="氧饱和度:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
                 <a-input style="width: 240px;" v-decorator="['f4', {...inputRequired, initialValue: initValue('f4')}]" autocomplete="off"></a-input>
