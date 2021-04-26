@@ -54,9 +54,9 @@
                 </div>
               </a-form-item>
               <a-form-item label="简易肺功能仪:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-radio-group v-decorator="['g1', {...require1, initialValue: initValue('g1')}]">
+                <a-radio-group v-decorator="['g1', {initialValue: initValue('g1')}]">
                   <a-radio value="1">是</a-radio>
-                  <a-radio value="-1">否</a-radio>
+                  <a-radio value="0">否</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="肺功能测试名称" :labelCol="labelXs" :wrapperCol="wrapperMx">
