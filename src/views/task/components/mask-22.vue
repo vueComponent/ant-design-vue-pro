@@ -32,6 +32,7 @@
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
+              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
               <div class="title">1.肺功能相关检查</div>
               <!-- <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" v-decorator="['t1', {...dateRequire, initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>

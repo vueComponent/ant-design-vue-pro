@@ -24,6 +24,7 @@
         </a-col>
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" :layout="formLayout" class="base-form">
+
             <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
               <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
@@ -32,6 +33,7 @@
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
+              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
               <div class="title">1.基本病史</div>
               <a-form-item label="(1) 采集标本类型" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a1', {...selectRequired, initialValue: initValue('a1', 'array')}]" @change="handleChange">

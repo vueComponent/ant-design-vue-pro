@@ -33,6 +33,7 @@
             </div>
 
             <div class="baselineForm" :style="baselineFormStyle">
+              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
               <div class="title">1.基本病史</div>
               <a-form-item label="(1) 采集标本类型" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a1', {...selectRequired, initialValue: initValue('a1', 'array')}]">

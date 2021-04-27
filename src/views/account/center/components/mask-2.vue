@@ -33,6 +33,7 @@
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
+              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
               <div class="title">1.体格检查</div>
               <a-form-item label="(1) SpO2:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input v-decorator="['a5', {...inputRequired, initialValue: initValue('a5')}]" style="width: 240px;" autocomplete="off"></a-input>

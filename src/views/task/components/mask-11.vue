@@ -33,6 +33,7 @@
             </div>
 
             <div class="baselineForm" :style="baselineFormStyle">
+              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
               <div class="title">1.呼吸系统相关治疗</div>
               <a-form-item label="(1) 长期氧疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b1', {...require1, initialValue: initValue('b1')}]">

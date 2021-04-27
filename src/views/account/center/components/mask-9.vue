@@ -32,6 +32,7 @@
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
+              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
               <div style="background-color:#f7f8f8;overflow:hidden">
                 <a style="float: right;font-size:12px;line-height:40px;margin-right: 12px;font-weight: bold;" @click="showOcr = !showOcr">OCR</a>
               </div>

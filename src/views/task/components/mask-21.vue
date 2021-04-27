@@ -32,6 +32,7 @@
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
+              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
               <div class="title">1.病因学相关检查</div>
               <a-form-item label="有无新增病因学相关检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a', {...require2, initialValue: initValue('a')}]" @change="changeRadio($event, 'controla')">

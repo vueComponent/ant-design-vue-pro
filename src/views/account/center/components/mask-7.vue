@@ -32,6 +32,7 @@
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
+              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
               <div class="title">1.病因学相关检查</div>
               <a-form-item class="border-dotted" label="(1) 胃食管反流病量表评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-popover>
