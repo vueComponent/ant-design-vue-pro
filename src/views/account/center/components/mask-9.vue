@@ -69,7 +69,7 @@
                 <a-input style="width: 240px;" v-decorator="['b6', { initialValue: initValue('b6')}]" addonAfter="cm" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(7) 肺动脉收缩压:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b8', { initialValue: initValue('b8')}]" addonAfter="mmHg" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b8', { ...inputRequired, initialValue: initValue('b8')}]" addonAfter="mmHg" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(8) 主肺动脉内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['b7', { initialValue: initValue('b7')}]" addonAfter="cm" autocomplete="off"></a-input>
