@@ -36,7 +36,7 @@
       </div>
     </template>
 
-    <setting-drawer :settings="settings" @change="handleSettingChange">
+    <setting-drawer v-if="isDev" :settings="settings" @change="handleSettingChange">
       <div style="margin: 12px 0;">
         This is SettingDrawer custom footer content.
       </div>
@@ -78,6 +78,7 @@ export default {
       // preview.pro.antdv.com only use.
       isProPreviewSite: process.env.VUE_APP_PREVIEW === 'true' && process.env.NODE_ENV !== 'development',
       // end
+      isDev: process.env.NODE_ENV === 'development',
 
       // base
       menus: [],
