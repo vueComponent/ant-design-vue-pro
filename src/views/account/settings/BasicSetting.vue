@@ -1,7 +1,7 @@
 <template>
   <div class="account-settings-info-view">
-    <a-row :gutter="16">
-      <a-col :md="24" :lg="16">
+    <a-row :gutter="16" type="flex" justify="center">
+      <a-col :order="isMobile ? 2 : 1" :md="24" :lg="16">
 
         <a-form layout="vertical">
           <a-form-item
@@ -28,7 +28,7 @@
         </a-form>
 
       </a-col>
-      <a-col :md="24" :lg="8" :style="{ minHeight: '180px' }">
+      <a-col :order="1" :md="24" :lg="8" :style="{ minHeight: '180px' }">
         <div class="ant-upload-preview" @click="$refs.modal.edit(1)" >
           <a-icon type="cloud-upload-o" class="upload-icon"/>
           <div class="mask">
@@ -47,8 +47,10 @@
 
 <script>
 import AvatarModal from './AvatarModal'
+import { baseMixin } from '@/store/app-mixin'
 
 export default {
+  mixins: [baseMixin],
   components: {
     AvatarModal
   },
