@@ -1,6 +1,6 @@
 {
   "name": "vue-antd-pro",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -11,9 +11,9 @@
     "lint:nofix": "vue-cli-service lint --no-fix"
   },
   "dependencies": {
-    "@ant-design-vue/pro-layout": "^1.0.7",
+    "@ant-design-vue/pro-layout": "^1.0.8",
     "@antv/data-set": "^0.10.2",
-    "ant-design-vue": "^1.7.2",
+    "ant-design-vue": "^1.7.5",
     "axios": "^0.19.0",
     "core-js": "^3.1.2",
     "enquire.js": "^2.1.6",
@@ -55,8 +55,6 @@
     "git-revision-webpack-plugin": "^3.0.6",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
-    "opencollective": "^1.0.3",
-    "opencollective-postinstall": "^2.0.2",
     "vue-svg-icon-loader": "^2.1.1",
     "vue-template-compiler": "^2.6.10",
     "webpack-theme-color-replacer": "^1.3.12"
