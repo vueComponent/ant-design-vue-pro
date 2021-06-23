@@ -22,6 +22,29 @@ function hasPermission (permission, route) {
 }
 
 /**
+ * 深拷贝
+ * @param obj 待拷贝的对象
+ * @returns
+ */
+function deepClone (obj) {
+  function isObject (o) {
+    return (typeof o === 'object' || typeof o === 'function') && o !== null
+  }
+
+  if (!isObject(obj)) {
+    throw new Error('Not object')
+  }
+
+  const isArray = Array.isArray(obj)
+  const newObj = isArray ? [...obj] : { ...obj }
+  Reflect.ownKeys(newObj).forEach(key => {
+    newObj[key] = isObject(obj[key]) ? deepClone(obj[key]) : obj[key]
+  })
+
+  return newObj
+}
+
+/**
  * 单账户多角色时，使用该方法可过滤角色不存在的菜单
  *
  * @param roles
@@ -65,7 +88,9 @@ const permission = {
     GenerateRoutes ({ commit }, data) {
       return new Promise(resolve => {
         const { roles } = data
-        const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+        // 深拷贝 防止router.addRoutes() 后重新动态生成路由时 路由不完整
+        const routerMap = deepClone(asyncRouterMap)
+        const accessedRouters = filterAsyncRouter(routerMap, roles)
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })
