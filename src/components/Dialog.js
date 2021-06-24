@@ -67,6 +67,7 @@ export default (Vue) => {
           delete modalProps.model
         }
         const ModalProps = Object.assign({}, modalModel && { model: modalModel } || {}, {
+          directives: modalProps.drag ? [{ name: 'drag-model' }] : [],
           attrs: Object.assign({}, {
             ...(modalProps.attrs || modalProps)
           }, {

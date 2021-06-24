@@ -56,6 +56,7 @@ import MultiTab from '@/components/MultiTab'
 import PageLoading from '@/components/PageLoading'
 import PermissionHelper from '@/core/permission/permission'
 import './directives/action'
+import Drags from 'vue-drags'
 
 Vue.use(ConfigProvider)
 Vue.use(Layout)
@@ -114,5 +115,6 @@ Vue.use(MultiTab)
 Vue.use(PageLoading)
 Vue.use(PermissionHelper)
 Vue.use(VueCropper)
+Vue.use(Drags)
 
 process.env.NODE_ENV !== 'production' && console.warn('[antd-pro] NOTICE: Antd use lazy-load.')
