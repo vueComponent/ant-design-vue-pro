@@ -37,6 +37,35 @@ function hasRole(roles, route) {
   }
 }
 
+/**
+ * 简易深拷贝
+ * @param  target
+ * @returns {Object}
+ */
+function deepClone (target) {
+  let result
+  if (typeof target === 'object') {
+    if (Array.isArray(target)) {
+      result = []
+      for (const i in target) {
+        result.push(deepClone(target[i]))
+      }
+    } else if (target === null) {
+      result = null
+    } else if (target.constructor === RegExp) {
+      result = target
+    } else {
+      result = {}
+      for (const i in target) {
+        result[i] = deepClone(target[i])
+      }
+    }
+  } else {
+    result = target
+  }
+  return result
+}
+
 function filterAsyncRouter (routerMap, roles) {
   const accessedRouters = routerMap.filter(route => {
     if (hasPermission(roles.permissionList, route)) {
@@ -65,7 +94,8 @@ const permission = {
     GenerateRoutes ({ commit }, data) {
       return new Promise(resolve => {
         const { roles } = data
-        const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+        const routerMap = deepClone(asyncRouterMap)
+        const accessedRouters = filterAsyncRouter(routerMap, roles)
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })
