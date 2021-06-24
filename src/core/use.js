@@ -12,6 +12,7 @@ import MultiTab from '@/components/MultiTab'
 import PageLoading from '@/components/PageLoading'
 import PermissionHelper from '@/core/permission/permission'
 // import '@/components/use'
+import Drags from 'vue-drags'
 import './directives/action'
 
 VueClipboard.config.autoSetContainer = true
@@ -23,5 +24,6 @@ Vue.use(PageLoading)
 Vue.use(VueClipboard)
 Vue.use(PermissionHelper)
 Vue.use(VueCropper)
+Vue.use(Drags)
 
 process.env.NODE_ENV !== 'production' && console.warn('[antd-pro] WARNING: Antd now use fulled imported.')
