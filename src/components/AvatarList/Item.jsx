@@ -16,7 +16,7 @@ const Item = {
     warning(getSlotOptions(this.$parent).__ANT_AVATAR_LIST, 'AvatarListItem must be a subcomponent of AvatarList')
   },
   render () {
-    const AvatarDom = <Avatar size={this.$parent.size} src={this.src} />
+    const AvatarDom = <Avatar size={this.$parent.size === 'mini' ? 'small' : this.$parent.size} src={this.src} />
     return this.tips && <Tooltip title={this.tips}>{AvatarDom}</Tooltip> || <AvatarDom />
   }
 }
