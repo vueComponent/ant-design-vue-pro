@@ -162,8 +162,7 @@ export default {
           title: '新增',
           width: 700,
           centered: true,
-          maskClosable: false,
-          drag: true
+          maskClosable: false
         })
     },
     edit (record) {
@@ -189,8 +188,7 @@ export default {
           title: '操作',
           width: 700,
           centered: true,
-          maskClosable: false,
-          drag: true
+          maskClosable: false
         })
     }
   }
