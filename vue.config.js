@@ -30,10 +30,10 @@ const assetsCDN = {
   css: [],
   // https://unpkg.com/browse/vue@2.6.10/
   js: [
-    '//cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js',
+    '//cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
     '//cdn.jsdelivr.net/npm/vue-router@3.1.3/dist/vue-router.min.js',
     '//cdn.jsdelivr.net/npm/vuex@3.1.1/dist/vuex.min.js',
-    '//cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js'
+    '//cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js'
   ]
 }
 
@@ -54,9 +54,8 @@ const vueConfig = {
     externals: isProd ? assetsCDN.externals : {}
   },
 
-  chainWebpack: (config) => {
-    config.resolve.alias
-      .set('@$', resolve('src'))
+  chainWebpack: config => {
+    config.resolve.alias.set('@$', resolve('src'))
 
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()

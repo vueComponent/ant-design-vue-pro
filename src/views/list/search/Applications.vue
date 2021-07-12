@@ -36,11 +36,7 @@
             </a-col>
             <a-col :lg="8" :md="10" :sm="10" :xs="24">
               <a-form-item :wrapper-col="{ sm: { span: 16 }, xs: { span: 24 } }" label="好评度">
-                <a-select
-                  style="max-width: 200px; width: 100%;"
-                  placeholder="不限"
-                  v-decorator="['rate']"
-                >
+                <a-select style="max-width: 200px; width: 100%;" placeholder="不限" v-decorator="['rate']">
                   <a-select-option value="good">优秀</a-select-option>
                   <a-select-option value="normal">普通</a-select-option>
                 </a-select>
@@ -52,12 +48,17 @@
     </a-card>
 
     <div class="ant-pro-pages-list-applications-filterCardList">
-      <a-list :loading="loading" :data-source="data" :grid="{ gutter: 24, xl: 4, lg: 3, md: 3, sm: 2, xs: 1 }" style="margin-top: 24px;">
+      <a-list
+        :loading="loading"
+        :data-source="data"
+        :grid="{ gutter: 24, xl: 4, lg: 3, md: 3, sm: 2, xs: 1 }"
+        style="margin-top: 24px;"
+      >
         <a-list-item slot="renderItem" slot-scope="item">
           <a-card :body-style="{ paddingBottom: 20 }" hoverable>
             <a-card-meta :title="item.title">
               <template slot="avatar">
-                <a-avatar size="small" :src="item.avatar"/>
+                <a-avatar size="small" :src="item.avatar" />
               </template>
             </a-card-meta>
             <template slot="actions">
@@ -102,7 +103,7 @@ import moment from 'moment'
 import { TagSelect, StandardFormRow, Ellipsis, AvatarList } from '@/components'
 import CardInfo from './components/CardInfo'
 const TagSelectOption = TagSelect.Option
-const AvatarListItem = AvatarList.AvatarItem
+const AvatarListItem = AvatarList.Item
 
 export default {
   components: {
@@ -174,7 +175,7 @@ export default {
 
     > span {
       flex: 1 1;
-      color: rgba(0,0,0,.45);
+      color: rgba(0, 0, 0, 0.45);
       font-size: 12px;
     }
 

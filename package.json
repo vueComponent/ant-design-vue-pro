@@ -14,7 +14,7 @@
     "@ant-design-vue/pro-layout": "^1.0.8",
     "@antv/data-set": "^0.10.2",
     "ant-design-vue": "^1.7.6",
-    "axios": "^0.19.0",
+    "axios": ">=0.21.1",
     "core-js": "^3.1.2",
     "enquire.js": "^2.1.6",
     "lodash.clonedeep": "^4.5.0",
@@ -31,7 +31,7 @@
     "vue-cropper": "0.4.9",
     "vue-i18n": "^8.17.4",
     "vue-quill-editor": "^3.0.6",
-    "vue-router": "^3.1.2",
+    "vue-router": "^3.5.2",
     "vue-svg-component-runtime": "^1.0.1",
     "vuex": "^3.1.1",
     "wangeditor": "^3.1.1"
