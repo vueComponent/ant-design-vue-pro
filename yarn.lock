@@ -11204,13 +11204,6 @@ vue-cropper@0.4.9:
   resolved "https://registry.npm.taobao.org/vue-cropper/download/vue-cropper-0.4.9.tgz#fe650f32516ecf29014bbd4a9079191c8dc5a5ae"
   integrity sha1-/mUPMlFuzykBS71KkHkZHI3Fpa4=
 
-vue-drags@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/vue-drags/-/vue-drags-1.0.0.tgz#199999ca8734270e24d4b44631c67b9b193e300f"
-  integrity sha512-Cys+Inz1s4emb8zKQg77CTZlMcn24AhOPO4vfbTHcuJ4bOwQ8kMhO3WgSkPc2Qb8jVXSKZ36CafDVp4blsqrjA==
-  dependencies:
-    vue "^2.6.14"
-
 vue-eslint-parser@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npm.taobao.org/vue-eslint-parser/download/vue-eslint-parser-5.0.0.tgz?cache=0&sync_timestamp=1573306368916&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-eslint-parser%2Fdownload%2Fvue-eslint-parser-5.0.0.tgz#00f4e4da94ec974b821a26ff0ed0f7a78402b8a1"
@@ -11338,11 +11331,6 @@ vue@^2.5.3:
   version "2.6.11"
   resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha1-dllNh31LEiNEBuhONSdcbVFBJcU=
-
-vue@^2.6.14:
-  version "2.6.14"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
-  integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
 
 vuex@^3.1.1:
   version "3.6.2"
