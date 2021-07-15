@@ -14,6 +14,7 @@
       rowKey="id"
       :grid="{gutter: 24, lg: 3, md: 2, sm: 1, xs: 1}"
       :dataSource="dataSource"
+      class="card-list"
     >
       <a-list-item slot="renderItem" slot-scope="item">
         <template v-if="!item || item.id === undefined">
