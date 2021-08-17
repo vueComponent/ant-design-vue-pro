@@ -52,7 +52,7 @@
                     </div>
                   </a-card-meta>
                   <div class="project-item">
-                    <a href="/#/">科学搬砖组</a>
+                    <a href='/#/'>科学搬砖组</a>
                     <span class="datetime">9小时前</span>
                   </div>
                 </a-card>
@@ -271,7 +271,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import './Workplace.less';
+@import 'Workplace.less';
 
 .project-list {
   .card-title {

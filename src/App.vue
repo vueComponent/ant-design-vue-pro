@@ -1,3 +1,4 @@
+<script src='components/index.js'></script>
 <template>
   <a-config-provider :locale="locale">
     <div id="app">

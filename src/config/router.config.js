@@ -26,7 +26,7 @@ export const asyncRouterMap = [
           {
             path: '/dashboard/analysis/:pageNo([1-9]\\d*)?',
             name: 'Analysis',
-            component: () => import('@/views/dashboard/Analysis'),
+            component: () => import('@/viewsOfOld/dashboard/Analysis'),
             meta: { title: 'menu.dashboard.analysis', keepAlive: false, permission: ['dashboard'] }
           },
           // 外部链接
@@ -38,7 +38,7 @@ export const asyncRouterMap = [
           {
             path: '/dashboard/workplace',
             name: 'Workplace',
-            component: () => import('@/views/dashboard/Workplace'),
+            component: () => import('@/viewsOfOld/dashboard/Workplace'),
             meta: { title: 'menu.dashboard.workplace', keepAlive: true, permission: ['dashboard'] }
           }
         ]
@@ -53,19 +53,19 @@ export const asyncRouterMap = [
           {
             path: '/form/base-form',
             name: 'BaseForm',
-            component: () => import('@/views/form/basicForm'),
+            component: () => import('@/viewsOfOld/form/basicForm'),
             meta: { title: 'menu.form.basic-form', keepAlive: true, permission: ['form'] }
           },
           {
             path: '/form/step-form',
             name: 'StepForm',
-            component: () => import('@/views/form/stepForm/StepForm'),
+            component: () => import('@/viewsOfOld/form/stepForm/StepForm'),
             meta: { title: 'menu.form.step-form', keepAlive: true, permission: ['form'] }
           },
           {
             path: '/form/advanced-form',
             name: 'AdvanceForm',
-            component: () => import('@/views/form/advancedForm/AdvancedForm'),
+            component: () => import('@/viewsOfOld/form/advancedForm/AdvancedForm'),
             meta: { title: 'menu.form.advanced-form', keepAlive: true, permission: ['form'] }
           }
         ]
@@ -138,13 +138,13 @@ export const asyncRouterMap = [
           {
             path: '/profile/basic',
             name: 'ProfileBasic',
-            component: () => import('@/views/profile/basic'),
+            component: () => import('@/viewsOfOld/profile/basic'),
             meta: { title: 'menu.profile.basic', permission: ['profile'] }
           },
           {
             path: '/profile/advanced',
             name: 'ProfileAdvanced',
-            component: () => import('@/views/profile/advanced/Advanced'),
+            component: () => import('@/viewsOfOld/profile/advanced/Advanced'),
             meta: { title: 'menu.profile.advanced', permission: ['profile'] }
           }
         ]
@@ -161,13 +161,13 @@ export const asyncRouterMap = [
           {
             path: '/result/success',
             name: 'ResultSuccess',
-            component: () => import(/* webpackChunkName: "result" */ '@/views/result/Success'),
+            component: () => import(/* webpackChunkName: "result" */ '@/viewsOfOld/result/Success'),
             meta: { title: 'menu.result.success', keepAlive: false, hiddenHeaderContent: true, permission: ['result'] }
           },
           {
             path: '/result/fail',
             name: 'ResultFail',
-            component: () => import(/* webpackChunkName: "result" */ '@/views/result/Error'),
+            component: () => import(/* webpackChunkName: "result" */ '@/viewsOfOld/result/Error'),
             meta: { title: 'menu.result.fail', keepAlive: false, hiddenHeaderContent: true, permission: ['result'] }
           }
         ]
@@ -213,13 +213,13 @@ export const asyncRouterMap = [
           {
             path: '/account/center',
             name: 'center',
-            component: () => import('@/views/account/center'),
+            component: () => import('@/viewsOfOld/account/center'),
             meta: { title: 'menu.account.center', keepAlive: true, permission: ['user'] }
           },
           {
             path: '/account/settings',
             name: 'settings',
-            component: () => import('@/views/account/settings/Index'),
+            component: () => import('@/viewsOfOld/account/settings/Index'),
             meta: { title: 'menu.account.settings', hideHeader: true, permission: ['user'] },
             redirect: '/account/settings/basic',
             hideChildrenInMenu: true,
@@ -227,13 +227,13 @@ export const asyncRouterMap = [
               {
                 path: '/account/settings/basic',
                 name: 'BasicSettings',
-                component: () => import('@/views/account/settings/BasicSetting'),
+                component: () => import('@/viewsOfOld/account/settings/BasicSetting'),
                 meta: { title: 'account.settings.menuMap.basic', hidden: true, permission: ['user'] }
               },
               {
                 path: '/account/settings/security',
                 name: 'SecuritySettings',
-                component: () => import('@/views/account/settings/Security'),
+                component: () => import('@/viewsOfOld/account/settings/Security'),
                 meta: {
                   title: 'account.settings.menuMap.security',
                   hidden: true,
@@ -244,19 +244,19 @@ export const asyncRouterMap = [
               {
                 path: '/account/settings/custom',
                 name: 'CustomSettings',
-                component: () => import('@/views/account/settings/Custom'),
+                component: () => import('@/viewsOfOld/account/settings/Custom'),
                 meta: { title: 'account.settings.menuMap.custom', hidden: true, keepAlive: true, permission: ['user'] }
               },
               {
                 path: '/account/settings/binding',
                 name: 'BindingSettings',
-                component: () => import('@/views/account/settings/Binding'),
+                component: () => import('@/viewsOfOld/account/settings/Binding'),
                 meta: { title: 'account.settings.menuMap.binding', hidden: true, keepAlive: true, permission: ['user'] }
               },
               {
                 path: '/account/settings/notification',
                 name: 'NotificationSettings',
-                component: () => import('@/views/account/settings/Notification'),
+                component: () => import('@/viewsOfOld/account/settings/Notification'),
                 meta: {
                   title: 'account.settings.menuMap.notification',
                   hidden: true,
@@ -354,17 +354,17 @@ export const constantRouterMap = [
       {
         path: 'login',
         name: 'login',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login')
+        component: () => import(/* webpackChunkName: "user" */ '@/viewsOfOld/user/Login')
       },
       {
         path: 'register',
         name: 'register',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Register')
+        component: () => import(/* webpackChunkName: "user" */ '@/viewsOfOld/user/Register')
       },
       {
         path: 'register-result',
         name: 'registerResult',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/RegisterResult')
+        component: () => import(/* webpackChunkName: "user" */ '@/viewsOfOld/user/RegisterResult')
       },
       {
         path: 'recover',

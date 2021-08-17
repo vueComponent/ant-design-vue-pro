@@ -467,9 +467,9 @@ const info = options => {
 
 const userNav = options => {
   const nav = [
-    // dashboard
+    // accountManagement
     {
-      name: 'dashboard',
+      name: 'accountManagement',
       parentId: 0,
       id: 1,
       meta: {
@@ -477,188 +477,217 @@ const userNav = options => {
         title: '账号管理',
         show: true
       },
-      component: 'RouteView',
-      redirect: '/dashboard/workplace'
+      component: 'RouteView'
+      // redirect: '/dashboard/workplace'
     },
     {
-      name: 'workplace',
+      name: 'Planet',
       parentId: 1,
-      id: 7,
+      id: 11,
       meta: {
         title: '行星号',
         show: true
       },
-      component: 'Workplace'
+      component: 'Planet'
+      // path: '/accountManagement/Planet/:pageNo([1-9]\\d*)?'
     },
     {
-      name: 'monitor',
-      path: 'https://www.baidu.com/',
+      name: 'Star',
       parentId: 1,
-      id: 3,
+      id: 12,
       meta: {
         title: '恒星号',
-        target: '_blank',
         show: true
-      }
+      },
+      component: 'Star'
     },
     {
-      name: 'Analysis',
+      name: 'Create',
       parentId: 1,
-      id: 2,
+      id: 13,
       meta: {
         title: '恒星号创建',
         show: true
       },
-      component: 'Analysis',
-      path: '/dashboard/analysis'
+      component: 'Create'
     },
 
-    // form
+    // articleManagement
     {
-      name: 'form',
+      name: 'articleManagement',
       parentId: 0,
-      id: 10,
+      id: 2,
       meta: {
         icon: 'form',
         title: '动态管理'
       },
-      redirect: '/form/base-form',
+      // redirect: '/form/base-form',
       component: 'RouteView'
     },
     {
-      name: 'basic-form',
-      parentId: 10,
-      id: 6,
+      name: 'jishi',
+      parentId: 2,
+      id: 21,
       meta: {
         title: '济事动态'
       },
-      component: 'BasicForm'
+      component: 'Jishi'
     },
     {
-      name: 'step-form',
-      parentId: 10,
-      id: 5,
+      name: 'jiren',
+      parentId: 2,
+      id: 22,
       meta: {
         title: '济人动态'
       },
-      component: 'StepForm'
+      component: 'Jiren'
+    },
+    {
+      name: 'tongde',
+      parentId: 2,
+      id: 23,
+      meta: {
+        title: '同德动态'
+      },
+      component: 'Tongde'
+    },
+    {
+      name: 'audit',
+      parentId: 2,
+      id: 24,
+      meta: {
+        title: '审核管理'
+      },
+      component: 'Audit'
     },
 
-    // list
+    // // list
+    // {
+    //   name: 'list',
+    //   parentId: 0,
+    //   id: 10010,
+    //   meta: {
+    //     icon: 'table',
+    //     title: '济人动态发布',
+    //     show: true
+    //   },
+    //   redirect: '/list/table-list',
+    //   component: 'RouteView'
+    // },
     {
-      name: 'list',
+      name: 'publish',
       parentId: 0,
-      id: 10010,
+      id: 3,
       meta: {
         icon: 'table',
         title: '济人动态发布',
         show: true
       },
-      redirect: '/list/table-list',
-      component: 'RouteView'
+      component: 'PublishArticle'
     },
-    // profile
+    // feedback
     {
-      name: 'profile',
+      name: 'feedback',
       parentId: 0,
-      id: 10018,
+      id: 4,
       meta: {
         title: '用户反馈',
         icon: 'profile',
         show: true
       },
-      redirect: '/profile/basic',
-      component: 'RouteView'
+      // redirect: '/profile/basic',
+      component: 'Feedback'
     },
-    // result
+    // dataRequirement
     {
-      name: 'result',
+      name: 'dateRequirement',
       parentId: 0,
-      id: 10021,
+      id: 5,
       meta: {
         title: '数据需求',
         icon: 'check-circle-o',
         show: true
       },
-      redirect: '/result/success',
-      component: 'PageView'
+      // redirect: '/result/success',
+      component: 'DataRequirement'
     },
-    // Exception
+    // auditJishi
     {
-      name: 'exception',
+      name: 'auditJishi',
       parentId: 0,
-      id: 10024,
+      id: 6,
       meta: {
         title: '审核济事',
-        icon: 'warning',
+        icon: 'auditJishi',
         show: true
       },
-      redirect: '/exception/403',
+      // redirect: '/exception/403',
       component: 'RouteView'
     },
     {
-      name: '403',
-      parentId: 10024,
-      id: 10025,
+      name: 'JishiMessage',
+      parentId: 6,
+      id: 61,
       meta: {
         title: '审核信息',
         show: true
       },
-      component: 'Exception403'
+      component: 'JishiMessage'
     },
     {
-      name: '404',
-      parentId: 10024,
-      id: 10026,
+      name: 'JishiScreening',
+      parentId: 6,
+      id: 62,
       meta: {
         title: '帖子筛选',
         show: true
       },
-      component: 'Exception404'
+      component: 'JishiScreening'
     },
-    // account
+    // auditJiren
     {
-      name: 'account',
+      name: 'auditJiren',
       parentId: 0,
-      id: 10028,
+      id: 7,
       meta: {
         title: '审核组队',
         icon: 'user',
         show: true
       },
-      redirect: '/account/center',
+      // redirect: '/account/center',
       component: 'RouteView'
     },
     {
-      name: 'center',
-      parentId: 10028,
-      id: 10029,
+      name: 'JirenMessage',
+      parentId: 7,
+      id: 71,
       meta: {
         title: '审核信息',
         show: true
       },
-      component: 'AccountCenter'
+      component: 'JirenMessage'
     },
     {
-      name: 'center',
-      parentId: 10028,
-      id: 10029,
+      name: 'JirenScreening',
+      parentId: 7,
+      id: 72,
       meta: {
         title: '帖子筛选',
         show: true
       },
-      component: 'AccountCenter'
+      component: 'JirenScreening'
     },
+    // auditManagement
     {
-      name: 'center',
+      name: 'auditManagement',
       parentId: 0,
-      id: 10029,
+      id: 8,
       meta: {
         title: '审核管理(进度查看)',
         show: true,
         icon: 'branches'
       },
-      component: 'AccountCenter'
+      component: 'AuditManagement'
     }
   ]
   const json = builder(nav)
