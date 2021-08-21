@@ -3,16 +3,16 @@
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
-          <a-row :gutter="24">
-            <a-col :md="5" :sm="24">
-                <a-button style="margin-left: 8px;background-color: RGB(70,154,208);color: white;" @click="refresh">刷新</a-button>
+          <a-row :gutter="4">
+            <a-col :span="4">
+              <a-button type='primary' style="margin-left: 8px;" @click="refresh">刷新</a-button>
             </a-col>
-            <a-col :md="4" :sm="24">
+            <a-col :span="3">
               <a-form-item label="uid">
                 <a-input v-model="queryParam.id" placeholder=""/>
               </a-form-item>
             </a-col>
-            <a-col :md="5" :sm="24">
+            <a-col :span="5">
               <a-form-item label="账号状态">
                 <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
                   <a-select-option value="0">已删除账号</a-select-option>
@@ -22,77 +22,41 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :md="4" :sm="24">
+            <a-col :span="4">
               <a-form-item>
                 <a-date-picker v-model="queryParam.date" style="width: 100%" placeholder="请输入更新日期"/>
               </a-form-item>
             </a-col>
-            <a-col :md="4" :sm="24">
+            <a-col :span="4">
               <a-form-item>
                 <a-date-picker v-model="queryParam.date" style="width: 100%" placeholder="请输入更新日期"/>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
+            <a-col :span="4">
               <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
-                <a-button style='background-color:RGB(70,154,208);color: white; ' @click="$refs.table.refresh(true)">筛选</a-button>
-                <a-button style="margin-left: 8px;background-color:RGB(70,154,208);color: white;" @click="() => this.queryParam = {}">重置</a-button>
+                <a-button type='primary' @click="$refs.table.refresh(true)">筛选</a-button>
+                <a-button type='primary' style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
               </span>
             </a-col>
           </a-row>
         </a-form>
       </div>
 
-<!--      <div class="table-operator">-->
-<!--        <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>-->
-<!--        <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">-->
-<!--          <a-menu slot="overlay">-->
-<!--            <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>-->
-<!--            &lt;!&ndash; lock | unlock &ndash;&gt;-->
-<!--            <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>-->
-<!--          </a-menu>-->
-<!--          <a-button style="margin-left: 8px">-->
-<!--            批量操作 <a-icon type="down" />-->
-<!--          </a-button>-->
-<!--        </a-dropdown>-->
-<!--      </div>-->
+      <a-table :columns='columns' :data-source='data'>
+        <span slot='personalTags' slot-scope='tags'>
+          <a-tag v-for='tag in tags' :key='tag'>{{tag}}</a-tag>
+        </span>
+        <span slot='interestTags' slot-scope='tags'>
+          <a-tag v-for='tag in tags' :key='tag'>{{tag}}</a-tag>
+        </span>
+        <span slot='historicalTeam' slot-scope='text'>
+          <a>{{text}}</a>
+        </span>
+        <span slot='operations' slot-scope='operations'>
+          <a v-for='operation in operations' :key='operation'>{{operation}} </a>
+        </span>
+      </a-table>
 
-      <s-table
-        ref="table"
-        size="default"
-        rowKey="key"
-        :columns="columns"
-        :data="loadData"
-        :alert="true"
-        :rowSelection="rowSelection"
-        showPagination="auto"
-      >
-        <span slot="serial" slot-scope="text, record, index">
-          {{ index + 1 }}
-        </span>
-        <span slot="status" slot-scope="text">
-          <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
-        </span>
-        <span slot="description" slot-scope="text">
-          <ellipsis :length="4" tooltip>{{ text }}</ellipsis>
-        </span>
-
-        <span slot="action" slot-scope="text, record">
-          <template>
-            <a @click="handleEdit(record)">配置</a>
-            <a-divider type="vertical" />
-            <a @click="handleSub(record)">订阅报警</a>
-          </template>
-        </span>
-      </s-table>
-
-      <create-form
-        ref="createModal"
-        :visible="visible"
-        :loading="confirmLoading"
-        :model="mdl"
-        @cancel="handleCancel"
-        @ok="handleOk"
-      />
       <step-by-step-modal ref="modal" @ok="handleOk"/>
     </a-card>
   </page-header-wrapper>
@@ -108,64 +72,87 @@ import CreateForm from '../list/modules/CreateForm'
 
 const columns = [
   {
-    title: '#',
-    scopedSlots: { customRender: 'serial' }
-  },
-  {
-    title: '规则编号',
-    dataIndex: 'no'
-  },
-  {
-    title: '描述',
-    dataIndex: 'description',
-    scopedSlots: { customRender: 'description' }
-  },
-  {
-    title: '服务调用次数',
-    dataIndex: 'callNo',
-    sorter: true,
-    needTotal: true,
-    customRender: (text) => text + ' 次'
-  },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    scopedSlots: { customRender: 'status' }
-  },
-  {
-    title: '更新时间',
-    dataIndex: 'updatedAt',
-    sorter: true
-  },
-  {
+    title: 'uid',
+    dataIndex: 'uid',
+    key: 'uid'
+  }, {
+    title: '昵称',
+    dataIndex: 'nickName',
+    key: 'nickName'
+  }, {
+    title: '年级',
+    dataIndex: 'grade',
+    key: 'grade'
+  }, {
+    title: '学历',
+    dataIndex: 'background',
+    key: 'background'
+  }, {
+    title: '个人标签',
+    dataIndex: 'personalTags',
+    key: 'personalTags',
+    scopedSlots: { customRender: 'personalTags' }
+  }, {
+    title: '兴趣标签',
+    dataIndex: 'interestTags',
+    key: 'interestTags',
+    scopedSlots: { customRender: 'interestTags' }
+  }, {
+    title: '创建时间',
+    dataIndex: 'createTime',
+    key: 'createTime'
+  }, {
+    title: '历史组队',
+    dataIndex: 'historicalTeam',
+    key: 'historicalTeam',
+    scopedSlots: { customRender: 'historicalTeam' }
+  }, {
     title: '操作',
-    dataIndex: 'action',
-    width: '150px',
-    scopedSlots: { customRender: 'action' }
+    dataIndex: 'operation',
+    key: 'operation',
+    scopedSlots: { customRender: 'operations' }
   }
 ]
 
-const statusMap = {
-  0: {
-    status: 'default',
-    text: '关闭'
-  },
-  1: {
-    status: 'processing',
-    text: '运行中'
-  },
-  2: {
-    status: 'success',
-    text: '已上线'
-  },
-  3: {
-    status: 'error',
-    text: '异常'
+const data = [
+  {
+    key: '1',
+    uid: '10086',
+    nickName: '中国移动',
+    grade: '大五',
+    background: '本科',
+    personalTags: ['好学小白', '领导者'],
+    interestTags: ['口才', '设计', '才艺'],
+    createTime: '1202-01-01 10:24',
+    historicalTeam: '查看',
+    operation: ['禁言', '操作记录']
+  }, {
+    key: '2',
+    uid: '10086',
+    nickName: '中国移动',
+    grade: '大五',
+    background: '本科',
+    personalTags: ['好学小白', '领导者'],
+    interestTags: ['口才', '设计', '才艺'],
+    createTime: '1202-01-01 10:24',
+    historicalTeam: '查看',
+    operation: ['解除禁言', '操作记录']
+  }, {
+    key: '3',
+    uid: '10086',
+    nickName: '中国移动',
+    grade: '大五',
+    background: '本科',
+    personalTags: ['好学小白', '领导者'],
+    interestTags: ['口才', '设计', '才艺'],
+    createTime: '1202-01-01 10:24',
+    historicalTeam: '查看',
+    operation: ['操作记录']
   }
-}
+]
 
 export default {
-  name: 'TableList',
+  name: 'Planet',
   components: {
     STable,
     Ellipsis,
@@ -175,6 +162,8 @@ export default {
   data () {
     this.columns = columns
     return {
+      columns,
+      data,
       // create model
       visible: false,
       confirmLoading: false,
@@ -196,14 +185,14 @@ export default {
       selectedRows: []
     }
   },
-  filters: {
-    statusFilter (type) {
-      return statusMap[type].text
-    },
-    statusTypeFilter (type) {
-      return statusMap[type].status
-    }
-  },
+  // filters: {
+  //   statusFilter (type) {
+  //     return statusMap[type].text
+  //   },
+  //   statusTypeFilter (type) {
+  //     return statusMap[type].status
+  //   }
+  // },
   created () {
     getRoleList({ t: new Date() })
   },

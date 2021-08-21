@@ -1,5 +1,5 @@
 <template>
-  <h1>济人动态发布</h1>
+  <h1>发布动态</h1>
 </template>
 
 <script>

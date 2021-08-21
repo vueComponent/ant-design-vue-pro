@@ -477,8 +477,8 @@ const userNav = options => {
         title: '账号管理',
         show: true
       },
-      component: 'RouteView'
-      // redirect: '/dashboard/workplace'
+      component: 'RouteView',
+      redirect: '/accountManagement/Planet'
     },
     {
       name: 'Planet',
@@ -580,10 +580,30 @@ const userNav = options => {
       id: 3,
       meta: {
         icon: 'table',
-        title: '济人动态发布',
+        title: '运营动态',
+        show: true
+      },
+      component: 'RouteView'
+    },
+    {
+      name: 'publishArticle',
+      parentId: 3,
+      id: 31,
+      meta: {
+        title: '发布动态',
         show: true
       },
       component: 'PublishArticle'
+    },
+    {
+      name: 'publishManagement',
+      parentId: 3,
+      id: 32,
+      meta: {
+        title: '发布管理',
+        show: true
+      },
+      component: 'PublishManagement'
     },
     // feedback
     {
@@ -604,90 +624,12 @@ const userNav = options => {
       parentId: 0,
       id: 5,
       meta: {
-        title: '数据需求',
+        title: '数据看板',
         icon: 'check-circle-o',
         show: true
       },
       // redirect: '/result/success',
       component: 'DataRequirement'
-    },
-    // auditJishi
-    {
-      name: 'auditJishi',
-      parentId: 0,
-      id: 6,
-      meta: {
-        title: '审核济事',
-        icon: 'auditJishi',
-        show: true
-      },
-      // redirect: '/exception/403',
-      component: 'RouteView'
-    },
-    {
-      name: 'JishiMessage',
-      parentId: 6,
-      id: 61,
-      meta: {
-        title: '审核信息',
-        show: true
-      },
-      component: 'JishiMessage'
-    },
-    {
-      name: 'JishiScreening',
-      parentId: 6,
-      id: 62,
-      meta: {
-        title: '帖子筛选',
-        show: true
-      },
-      component: 'JishiScreening'
-    },
-    // auditJiren
-    {
-      name: 'auditJiren',
-      parentId: 0,
-      id: 7,
-      meta: {
-        title: '审核组队',
-        icon: 'user',
-        show: true
-      },
-      // redirect: '/account/center',
-      component: 'RouteView'
-    },
-    {
-      name: 'JirenMessage',
-      parentId: 7,
-      id: 71,
-      meta: {
-        title: '审核信息',
-        show: true
-      },
-      component: 'JirenMessage'
-    },
-    {
-      name: 'JirenScreening',
-      parentId: 7,
-      id: 72,
-      meta: {
-        title: '帖子筛选',
-        show: true
-      },
-      component: 'JirenScreening'
-    },
-    // auditManagement
-    {
-      name: 'auditManagement',
-      parentId: 0,
-      id: 8,
-      meta: {
-        title: '审核管理(进度查看)',
-        show: true,
-        icon: 'branches'
-      },
-      component: 'AuditManagement'
     }
   ]
   const json = builder(nav)

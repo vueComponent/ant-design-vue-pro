@@ -39,18 +39,11 @@ const constantRouterComponents = {
 
   // publish
   PublishArticle: () => import('@/views/publish/PublishArticle'),
+  PublishManagement: () => import('@/views/publish/PublishManagement'),
   // feedback
   Feedback: () => import('@/views/feedback/Feedback'),
   // dataRequirement
   DataRequirement: () => import('@/views/dataRequirement/DataRequirement'),
-  // auditJishi
-  JishiMessage: () => import('@/views/auditJishi/Message'),
-  JishiScreening: () => import('@/views/auditJishi/Screening'),
-  // auditJiren
-  JirenMessage: () => import('@/views/auditJiren/Message'),
-  JirenScreening: () => import('@/views/auditJiren/Screening'),
-  // auditManagement
-  AuditManagement: () => import('@/views/auditManagement/AuditManagement'),
   // exception
   Exception403: () => import(/* webpackChunkName: "fail" */ '@/views/exception/403'),
   Exception404: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404'),
@@ -72,7 +65,7 @@ const rootRouter = {
   name: 'index',
   path: '',
   component: 'BasicLayout',
-  redirect: '/dashboard',
+  redirect: '/accountManagement',
   meta: {
     title: '首页'
   },
