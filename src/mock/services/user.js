@@ -511,6 +511,16 @@ const userNav = options => {
       },
       component: 'Create'
     },
+    {
+      name: 'GroupDetail',
+      parentId: 1,
+      id: 14,
+      meta: {
+        title: '组队详情',
+        show: true
+      },
+      component: 'GroupDetail'
+    },
 
     // articleManagement
     {

@@ -19,6 +19,7 @@ const constantRouterComponents = {
   Planet: () => import('@/views/accountManagement/Planet'),
   Star: () => import('@/views/accountManagement/Star'),
   Create: () => import('@/views/accountManagement/Create'),
+  GroupDetail: () => import('@/views/accountManagement/GroupDetail'),
 
   // articleManagement
   Jiren: () => import('@/views/articleManagement/Jiren'),
