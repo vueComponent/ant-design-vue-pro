@@ -82,11 +82,17 @@ const columns = [
   }, {
     title: '年级',
     dataIndex: 'grade',
-    key: 'grade'
+    key: 'grade',
+    sorter: true
   }, {
     title: '学历',
     dataIndex: 'background',
-    key: 'background'
+    key: 'background',
+    filters: [
+      { text: '本科', value: 'undergraduate' },
+      { text: '硕士', value: 'master' },
+      { text: '博士', value: 'doctor' }
+    ]
   }, {
     title: '个人标签',
     dataIndex: 'personalTags',

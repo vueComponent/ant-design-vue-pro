@@ -22,13 +22,11 @@
             </a-col>
             <a-col :span="8">
               <div>
-                <span>所属板块</span>
+                <span>招领类型</span>
                 <a-form-item>
                   <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
-                    <a-select-option value="0">已删除账号</a-select-option>
-                    <a-select-option value="1">禁言账号</a-select-option>
-                    <a-select-option value="2">已注销账号</a-select-option>
-                    <a-select-option value="3">普通账号</a-select-option>
+                    <a-select-option value="0">物品遗失</a-select-option>
+                    <a-select-option value="1">失物寻主</a-select-option>
                   </a-select>
                 </a-form-item>
               </div>
@@ -62,9 +60,22 @@
             </a-col>
             <a-col :span='8'>
               <div>
-                <span>组队状态</span>
+                <span>标签</span>
                 <a-form-item>
-                  <a-input placeholder='请选择'/>
+                  <a-select placeholder='请选择'>
+                    <a-select-option value='0'>水杯</a-select-option>
+                    <a-select-option value='1'>雨伞</a-select-option>
+                    <a-select-option value='2'>证件</a-select-option>
+                    <a-select-option value='3'>耳机</a-select-option>
+                    <a-select-option value='4'>钥匙</a-select-option>
+                    <a-select-option value='5'>钱包</a-select-option>
+                    <a-select-option value='6'>数码</a-select-option>
+                    <a-select-option value='7'>衣物</a-select-option>
+                    <a-select-option value='8'>眼镜</a-select-option>
+                    <a-select-option value='9'>文具</a-select-option>
+                    <a-select-option value='10'>书籍</a-select-option>
+                    <a-select-option value='11'>其他</a-select-option>
+                  </a-select>
                 </a-form-item>
               </div>
             </a-col>
@@ -113,7 +124,8 @@ const columns = [
   }, {
     title: '发布时间',
     dataIndex: 'createTime',
-    key: 'createTime'
+    key: 'createTime',
+    sorter: true
   }, {
     title: '失物名称',
     dataIndex: 'name',

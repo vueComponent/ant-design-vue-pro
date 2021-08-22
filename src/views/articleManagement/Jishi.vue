@@ -25,10 +25,11 @@
                 <span>所属板块</span>
                 <a-form-item>
                   <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
-                    <a-select-option value="0">已删除账号</a-select-option>
-                    <a-select-option value="1">禁言账号</a-select-option>
-                    <a-select-option value="2">已注销账号</a-select-option>
-                    <a-select-option value="3">普通账号</a-select-option>
+                    <a-select-option value="0">求职信息</a-select-option>
+                    <a-select-option value="1">学习天地</a-select-option>
+                    <a-select-option value="2">校园活动</a-select-option>
+                    <a-select-option value="3">生活指南</a-select-option>
+                    <a-select-option value='4'>其他</a-select-option>
                   </a-select>
                 </a-form-item>
               </div>
@@ -100,7 +101,8 @@ const columns = [
   }, {
     title: '发布时间',
     dataIndex: 'createTime',
-    key: 'createTime'
+    key: 'createTime',
+    sorter: true
   }, {
     title: '文章标题',
     dataIndex: 'title',

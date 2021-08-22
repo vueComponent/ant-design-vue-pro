@@ -25,10 +25,10 @@
                 <span>所属板块</span>
                 <a-form-item>
                   <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
-                    <a-select-option value="0">已删除账号</a-select-option>
-                    <a-select-option value="1">禁言账号</a-select-option>
-                    <a-select-option value="2">已注销账号</a-select-option>
-                    <a-select-option value="3">普通账号</a-select-option>
+                    <a-select-option value="0">竞赛</a-select-option>
+                    <a-select-option value="1">学术科研</a-select-option>
+                    <a-select-option value="2">一起造梦</a-select-option>
+                    <a-select-option value="3">其他</a-select-option>
                   </a-select>
                 </a-form-item>
               </div>
@@ -64,7 +64,10 @@
               <div>
                 <span>组队状态</span>
                 <a-form-item>
-                  <a-input placeholder='请选择'/>
+                  <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
+                    <a-select-option value="0">进行中</a-select-option>
+                    <a-select-option value="1">已关闭</a-select-option>
+                  </a-select>
                 </a-form-item>
               </div>
             </a-col>
@@ -110,7 +113,8 @@ const columns = [
   }, {
     title: '发布时间',
     dataIndex: 'createTime',
-    key: 'createTime'
+    key: 'createTime',
+    sorter: true
   }, {
     title: '文章标题',
     dataIndex: 'title',
@@ -120,6 +124,9 @@ const columns = [
     dataIndex: 'content',
     key: 'content',
     ellipsis: true
+  }, {
+    title: '组队状态',
+    dataIndex: 'teamStatus'
   }, {
     title: '帖子状态',
     dataIndex: 'status',
@@ -149,6 +156,7 @@ const data = [
     createTime: '2017-10-01 12:00',
     title: '断章',
     content: '你站在桥上看风景，看风景的人在楼上看你',
+    teamStatus: '进行中',
     status: '未审核',
     operator: '卞之琳',
     plate: '新生板块',
@@ -161,6 +169,7 @@ const data = [
     createTime: '2017-10-01 12:00',
     title: '稻香',
     content: '还记得你说家是唯一的城堡。',
+    teamStatus: '已关闭',
     status: '已审核',
     operator: '周杰伦',
     plate: '新生板块',
@@ -172,6 +181,7 @@ const data = [
     createTime: '2017-10-01 12:00',
     title: '琵琶行',
     content: '同是天涯沦落人，相逢何必曾相识。',
+    teamStatus: '进行中',
     status: '已删除',
     operator: '白居易',
     plate: '新生板块',
