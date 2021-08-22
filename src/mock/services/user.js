@@ -512,14 +512,13 @@ const userNav = options => {
       component: 'Create'
     },
     {
-      name: 'GroupDetail',
+      name: 'HistoricalTeam',
       parentId: 1,
-      id: 14,
+      id: 111,
       meta: {
-        title: '组队详情',
-        show: true
+        title: '历史组队'
       },
-      component: 'GroupDetail'
+      component: 'HistoricalTeam'
     },
 
     // articleManagement
@@ -562,6 +561,16 @@ const userNav = options => {
       component: 'Tongde'
     },
     {
+      name: 'tongDetail',
+      parentId: 2,
+      id: 231,
+      meta: {
+        title: '动态详情'
+        // show: false
+      },
+      component: 'TongdeDetail'
+    },
+    {
       name: 'audit',
       parentId: 2,
       id: 24,
@@ -569,6 +578,16 @@ const userNav = options => {
         title: '审核管理'
       },
       component: 'Audit'
+    },
+    {
+      name: 'GroupDetail',
+      parentId: 2,
+      id: 221,
+      meta: {
+        title: '组队详情',
+        show: true
+      },
+      component: 'GroupDetail'
     },
 
     // // list

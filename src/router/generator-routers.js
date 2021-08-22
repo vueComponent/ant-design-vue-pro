@@ -19,13 +19,15 @@ const constantRouterComponents = {
   Planet: () => import('@/views/accountManagement/Planet'),
   Star: () => import('@/views/accountManagement/Star'),
   Create: () => import('@/views/accountManagement/Create'),
-  GroupDetail: () => import('@/views/accountManagement/GroupDetail'),
+  HistoricalTeam: () => import('@/views/accountManagement/HistoricalTeam'),
 
   // articleManagement
   Jiren: () => import('@/views/articleManagement/Jiren'),
   Jishi: () => import('@/views/articleManagement/Jishi'),
   Tongde: () => import('@/views/articleManagement/Tongde'),
   Audit: () => import('@/views/articleManagement/Audit'),
+  GroupDetail: () => import('@/views/articleManagement/GroupDetail'),
+  TongdeDetail: () => import('@/views/articleManagement/TongdeDetail'),
 
   // list
   TableList: () => import('@/views/list/TableList'),
