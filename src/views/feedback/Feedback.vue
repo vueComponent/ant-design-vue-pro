@@ -2,29 +2,29 @@
   <page-header-wrapper>
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
-        <a-form layout='inline'>
+        <a-form layout='inline' :form='form' @submit='handleSubmit'>
           <a-row :gutter='24'>
             <a-col :span='2'>
               <a-button type='primary'>刷新</a-button>
             </a-col>
             <a-col :span='3'>
               <a-form-item label='反馈ID'>
-                <a-input/>
+                <a-input v-decorator='["id"]'/>
               </a-form-item>
             </a-col>
             <a-col :span='3'>
               <a-form-item label='UID'>
-                <a-input/>
+                <a-input v-decorator='["uid"]'/>
               </a-form-item>
             </a-col>
             <a-col :span='3'>
               <a-form-item label='处理人'>
-                <a-input/>
+                <a-input v-decorator='["handler"]'/>
               </a-form-item>
             </a-col>
             <a-col :span='3'>
               <a-form-item label='状态'>
-                <a-select>
+                <a-select v-decorator='["status"]'>
                   <a-select-option value='0'>已处理</a-select-option>
                   <a-select-option value='1'>待处理</a-select-option>
                 </a-select>
@@ -32,18 +32,18 @@
             </a-col>
             <a-col :span='3'>
               <a-form-item>
-                <a-date-picker/>
+                <a-date-picker v-decorator='["beginTime"]'/>
               </a-form-item>
             </a-col>
             <a-col :span='3'>
               <a-form-item>
-                <a-date-picker/>
+                <a-date-picker v-decorator='["endTime"]'/>
               </a-form-item>
             </a-col>
             <a-col :span='1'>
-              <a-button type='primary'>筛选</a-button>
+              <a-button type='primary' html-type='submit'>筛选</a-button>
             </a-col>
-            <a-col :span='1'>
+            <a-col :span='1' :offset='1'>
               <a-button type='primary'>重置</a-button>
             </a-col>
           </a-row>
@@ -178,6 +178,18 @@ export default {
     return {
       columns,
       data
+    }
+  },
+  beforeCreate () {
+    this.form = this.$form.createForm(this, { name: 'search' })
+  },
+  methods: {
+    handleSubmit (e) {
+      e.preventDefault()
+      this.form.validateFields((err, value) => {
+        console.log(err)
+        console.log(value)
+      })
     }
   }
 }

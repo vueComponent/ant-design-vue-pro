@@ -2,19 +2,19 @@
   <page-header-wrapper>
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
-        <a-form layout="inline">
+        <a-form layout="inline" :form='form' @submit='handleSubmit'>
           <a-row :gutter="4">
             <a-col :span="4">
               <a-button type='primary' style="margin-left: 8px;" @click="refresh">刷新</a-button>
             </a-col>
             <a-col :span="3">
               <a-form-item label="uid">
-                <a-input v-model="queryParam.id" placeholder=""/>
+                <a-input placeholder="" v-decorator='["uid"]'/>
               </a-form-item>
             </a-col>
             <a-col :span="5">
               <a-form-item label="账号状态">
-                <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
+                <a-select placeholder="请选择" v-decorator='["accountStatus",{initialValue:"0"}]'>
                   <a-select-option value="0">已删除账号</a-select-option>
                   <a-select-option value="1">禁言账号</a-select-option>
                   <a-select-option value="2">已注销账号</a-select-option>
@@ -24,18 +24,18 @@
             </a-col>
             <a-col :span="4">
               <a-form-item>
-                <a-date-picker v-model="queryParam.date" style="width: 100%" placeholder="请输入更新日期"/>
+                <a-date-picker style="width: 100%" v-decorator='["beginTime"]'/>
               </a-form-item>
             </a-col>
             <a-col :span="4">
               <a-form-item>
-                <a-date-picker v-model="queryParam.date" style="width: 100%" placeholder="请输入更新日期"/>
+                <a-date-picker style="width: 100%" v-decorator='["endTime"]'/>
               </a-form-item>
             </a-col>
             <a-col :span="4">
-              <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
-                <a-button type='primary' @click="$refs.table.refresh(true)">筛选</a-button>
-                <a-button type='primary' style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
+              <span class="table-page-search-submitButtons">
+                <a-button type='primary' html-type='submit'>筛选</a-button>
+                <a-button type='primary' style="margin-left: 8px">重置</a-button>
               </span>
             </a-col>
           </a-row>

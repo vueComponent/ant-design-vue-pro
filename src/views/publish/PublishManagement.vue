@@ -8,25 +8,25 @@
           <a-col :span='1'><a-button>垃圾箱</a-button></a-col>
         </a-row>
         <div style='height: 20px'/>
-        <a-form layout='inline'>
+        <a-form layout='inline' :form='form' @submit='handleSubmit'>
           <a-row :gutter='24'>
             <a-col :span='2'>
               <a-button type='primary'>刷新</a-button>
             </a-col>
             <a-col :span='3'>
               <a-form-item label='动态ID'>
-                <a-input/>
+                <a-input v-decorator='["id"]'/>
               </a-form-item>
             </a-col>
             <a-col :span='3'>
               <a-form-item label='发布人'>
-                <a-select>
+                <a-select v-decorator='["publisher"]'>
                 </a-select>
               </a-form-item>
             </a-col>
             <a-col :span='3'>
               <a-form-item label='板块'>
-                <a-select>
+                <a-select v-decorator='["plate"]'>
                   <a-select-option value='0'>济事</a-select-option>
                   <a-select-option value='1'>济人</a-select-option>
                   <a-select-option value='2'>同德</a-select-option>
@@ -35,7 +35,7 @@
             </a-col>
             <a-col :span='3'>
               <a-form-item label='主题'>
-                <a-select>
+                <a-select v-decorator='["theme"]'>
                   <a-select-option value='0'>求职信息</a-select-option>
                   <a-select-option value='1'>学习天地</a-select-option>
                   <a-select-option value='2'>校园活动</a-select-option>
@@ -49,18 +49,18 @@
             </a-col>
             <a-col :span='3'>
               <a-form-item>
-                <a-date-picker/>
+                <a-date-picker v-decorator='["beginTime"]'/>
               </a-form-item>
             </a-col>
             <a-col :span='3'>
               <a-form-item>
-                <a-date-picker/>
+                <a-date-picker v-decorator='["endTime"]'/>
               </a-form-item>
             </a-col>
             <a-col :span='1'>
-              <a-button type='primary'>筛选</a-button>
+              <a-button type='primary' html-type='submit'>筛选</a-button>
             </a-col>
-            <a-col :span='1'>
+            <a-col :span='1' :offset='1'>
               <a-button type='primary'>重置</a-button>
             </a-col>
           </a-row>
@@ -191,7 +191,19 @@ export default {
       columns,
       data
     }
-}
+  },
+  beforeCreate () {
+    this.form = this.$form.createForm(this, { name: 'search' })
+  },
+  methods: {
+    handleSubmit (e) {
+      e.preventDefault()
+      this.form.validateFields((err, value) => {
+        console.log(err)
+        console.log(value)
+      })
+    }
+  }
 }
 </script>
 
