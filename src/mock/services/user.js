@@ -513,6 +513,7 @@ const userNav = options => {
     },
     {
       name: 'HistoricalTeam',
+      path: '/accountManagement/HistoricalTeam',
       parentId: 1,
       id: 111,
       meta: {
@@ -589,20 +590,6 @@ const userNav = options => {
       },
       component: 'GroupDetail'
     },
-
-    // // list
-    // {
-    //   name: 'list',
-    //   parentId: 0,
-    //   id: 10010,
-    //   meta: {
-    //     icon: 'table',
-    //     title: '济人动态发布',
-    //     show: true
-    //   },
-    //   redirect: '/list/table-list',
-    //   component: 'RouteView'
-    // },
     {
       name: 'publish',
       parentId: 0,
@@ -659,6 +646,49 @@ const userNav = options => {
       },
       // redirect: '/result/success',
       component: 'DataRequirement'
+    },
+    // {
+    //   name: 'test',
+    //   parentId: 0,
+    //   id: 6,
+    //   meta: {
+    //     title: '测试',
+    //     show: true
+    //   },
+    //   component: 'Test'
+    // },
+    // postingManagement
+    {
+      name: 'postingManagement',
+      parentId: 0,
+      id: 7,
+      meta: {
+        title: '帖子管理（恒星号）',
+        show: true
+      },
+      component: 'PostingManagement'
+    },
+    // dataBoard
+    {
+      name: 'dataBoard',
+      parentId: 0,
+      id: 8,
+      meta: {
+        title: '数据看板（恒星号）',
+        show: true
+      },
+      component: 'DataBoard'
+    },
+    // accountSetting
+    {
+      name: 'accountSetting',
+      parentId: 0,
+      id: 9,
+      meta: {
+        title: '账号设置（恒星号）',
+        show: true
+      },
+      component: 'AccountSetting'
     }
   ]
   const json = builder(nav)
