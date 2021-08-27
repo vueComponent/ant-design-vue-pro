@@ -57,11 +57,13 @@ const constantRouterComponents = {
 
   // postingManagement
   PostingManagement: () => import('@/views/postingManagement/PostingManagement'),
-
+  PostingLibrary: () => import('@/views/postingManagement/PostingLibrary'),
+  NewPosting: () => import('@/views/postingManagement/NewPosting'),
+  // DataBoard
   DataBoard: () => import('@/views/dataBoard/DataBoard'),
 
   // accountManagement
-  AccountManagement: () => import('@/views/accountSetting/AccountSetting')
+  AccountSetting: () => import('@/views/accountSetting/AccountSetting')
 }
 
 // 前端未找到页面路由（固定不用改）
