@@ -1,5 +1,5 @@
 <template>
-  <a-card :loading="loading" :body-style="{ padding: '20px 24px 8px' }" :bordered="false">
+  <a-card :loading="loading" :body-style="{ padding: '20px 24px 8px' }" :bordered="bordered">
     <div class="chart-card-header">
       <div class="meta">
         <span class="chart-card-title">
@@ -46,6 +46,10 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    bordered: {
+      type: Boolean,
+      default: false
     }
   }
 }
@@ -75,7 +79,7 @@ export default {
   }
 
   .chart-card-footer {
-    border-top: 1px solid #e8e8e8;
+    //border-top: 1px solid #e8e8e8;
     padding-top: 9px;
     margin-top: 8px;
 

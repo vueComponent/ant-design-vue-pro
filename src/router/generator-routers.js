@@ -53,7 +53,7 @@ const constantRouterComponents = {
   Exception500: () => import(/* webpackChunkName: "fail" */ '@/views/exception/500'),
 
   // 'TestWork': () => import(/* webpackChunkName: "TestWork" */ '@/views/dashboard/TestWork')
-  Test: () => import('@/views/test/Test'),
+  // Test: () => import('@/views/test/Test'),
 
   // postingManagement
   PostingManagement: () => import('@/views/postingManagement/PostingManagement'),
