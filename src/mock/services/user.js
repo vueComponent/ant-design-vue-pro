@@ -562,7 +562,7 @@ const userNav = options => {
       component: 'Tongde'
     },
     {
-      name: 'tongDetail',
+      name: 'tongdeDetail',
       parentId: 2,
       id: 231,
       meta: {
