@@ -2,33 +2,33 @@
   <page-header-wrapper>
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
-        <a-form layout="inline" :form='form' @submit='handleSubmit'>
+        <a-form layout="inline" :form="form" @submit="handleSubmit">
           <a-row :gutter="4">
             <a-col :span="4">
-              <a-button type='primary' style="margin-left: 8px;" @click="refresh">刷新</a-button>
+              <a-button type="primary" style="margin-left: 8px;" @click="refresh">刷新</a-button>
             </a-col>
-            <a-col :span="4" :offset='8'>
+            <a-col :span="4" :offset="8">
               <a-form-item>
-                <a-date-picker style="width: 100%" v-decorator='["beginTime"]'/>
+                <a-date-picker style="width: 100%" v-decorator="['beginTime']"/>
               </a-form-item>
             </a-col>
             <a-col :span="4">
               <a-form-item>
-                <a-date-picker style="width: 100%" v-decorator='["endTime"]'/>
+                <a-date-picker style="width: 100%" v-decorator="['endTime']"/>
               </a-form-item>
             </a-col>
             <a-col :span="4">
               <span class="table-page-search-submitButtons">
-                <a-button type='primary' html-type='submit'>筛选</a-button>
-                <a-button type='primary' style="margin-left: 8px">重置</a-button>
+                <a-button type="primary" html-type="submit">筛选</a-button>
+                <a-button type="primary" style="margin-left: 8px">重置</a-button>
               </span>
             </a-col>
           </a-row>
         </a-form>
       </div>
 
-      <a-table :columns='columns' :data-source='data'>
-        <span slot='operations'>
+      <a-table :columns="columns" :data-source="data">
+        <span slot="operations">
           <a>组队详情</a>
         </span>
       </a-table>

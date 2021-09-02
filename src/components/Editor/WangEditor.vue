@@ -38,10 +38,10 @@ export default {
     initEditor () {
       this.editor = new WEditor(this.$refs.editor)
       // this.editor.onchangeTimeout = 200
-      this.editor.customConfig.onchange = (html) => {
-        this.editorContent = html
-        this.$emit('change', this.editorContent)
-      }
+      // this.editor.customConfig.onchange = (html) => {
+      //   this.editorContent = html
+      //   this.$emit('change', this.editorContent)
+      // }
       this.editor.create()
     }
   }

@@ -37,7 +37,7 @@
           </a-row>
           <a-row>
             <a-col>
-              <div id='editor'/>
+              <wang-editor/>
             </a-col>
           </a-row>
           <a-row>
@@ -108,6 +108,7 @@
 <!--<script src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>-->
 
 <script>
+import WangEditor from '@/components/Editor/WangEditor'
 function getBase64 (img, callback) {
   const reader = new FileReader()
   reader.addEventListener('load', () => callback(reader.result))
@@ -116,6 +117,7 @@ function getBase64 (img, callback) {
 
 export default {
   name: 'PublishArticle',
+  components: { WangEditor },
   data () {
     return {
       loading: false,
