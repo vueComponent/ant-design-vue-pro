@@ -91,7 +91,7 @@
         </a-row>
         <a-row :gutter='96'>
           <a-col :span='18'>
-            <a-checkbox style='height: 30px;line-height: 30px'>我已阅读并同意遵循</a-checkbox>
+            <a-checkbox style='height: 30px;line-height: 30px;margin-left: 20px'>我已阅读并同意遵循</a-checkbox>
             <a style='text-decoration: underline'>《济星云社区管理规范》</a>
           </a-col>
           <a-col :span='1'>
