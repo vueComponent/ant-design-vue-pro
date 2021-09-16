@@ -18,7 +18,7 @@
             <a-input
               size="large"
               type="text"
-              :placeholder="$t('user.login.username.placeholder')"
+              placeholder="账号"
               v-decorator="[
                 'username',
                 {rules: [{ required: true, message: $t('user.userName.required') }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
@@ -31,7 +31,7 @@
           <a-form-item>
             <a-input-password
               size="large"
-              :placeholder="$t('user.login.password.placeholder')"
+              placeholder="密码"
               v-decorator="[
                 'password',
                 {rules: [{ required: true, message: $t('user.password.required') }], validateTrigger: 'blur'}
@@ -70,12 +70,12 @@
       </a-tabs>
 
       <a-form-item>
-        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">{{ $t('user.login.remember-me') }}</a-checkbox>
+        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">自动登入</a-checkbox>
         <router-link
           :to="{ name: 'recover', params: { user: 'aaa'} }"
           class="forge-password"
           style="float: right;"
-        >{{ $t('user.login.forgot-password') }}</router-link>
+        >忘记密码</router-link>
       </a-form-item>
 
       <a-form-item style="margin-top:24px">
@@ -86,21 +86,11 @@
           class="login-button"
           :loading="state.loginBtn"
           :disabled="state.loginBtn"
-        >{{ $t('user.login.login') }}</a-button>
+        >登入</a-button>
       </a-form-item>
 
       <div class="user-login-other">
-        <span>{{ $t('user.login.sign-in-with') }}</span>
-        <a>
-          <a-icon class="item-icon" type="alipay-circle"></a-icon>
-        </a>
-        <a>
-          <a-icon class="item-icon" type="taobao-circle"></a-icon>
-        </a>
-        <a>
-          <a-icon class="item-icon" type="weibo-circle"></a-icon>
-        </a>
-        <router-link class="register" :to="{ name: 'register' }">{{ $t('user.login.signup') }}</router-link>
+        <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
       </div>
     </a-form>
 
@@ -114,7 +104,7 @@
 </template>
 
 <script>
-import md5 from 'md5'
+// import md5 from 'md5'
 import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
@@ -188,8 +178,8 @@ export default {
           console.log('login form', values)
           const loginParams = { ...values }
           delete loginParams.username
-          loginParams[!state.loginType ? 'email' : 'username'] = values.username
-          loginParams.password = md5(values.password)
+          loginParams.nickName = values.username
+          loginParams.password = values.password
           Login(loginParams)
             .then((res) => this.loginSuccess(res))
             .catch(err => this.requestFailed(err))
@@ -247,7 +237,6 @@ export default {
       })
     },
     loginSuccess (res) {
-      console.log(res)
       // check res.homePage define, set $router.push name res.homePage
       // Why not enter onComplete
       /*
