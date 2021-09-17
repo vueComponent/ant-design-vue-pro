@@ -45,7 +45,7 @@ export function getInfo () {
     url: userApi.UserInfo,
     method: 'get',
     headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
+      'Content-Type': 'application/x-www-form-urlencoded'
     }
   })
 }
