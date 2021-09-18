@@ -89,9 +89,9 @@
         >登入</a-button>
       </a-form-item>
 
-      <div class="user-login-other">
-        <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
-      </div>
+<!--      <div class="user-login-other">-->
+<!--        <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>-->
+<!--      </div>-->
     </a-form>
 
     <two-step-captcha
@@ -108,7 +108,8 @@
 import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
-import { getSmsCaptcha, get2step } from '@/api/login'
+// import { getSmsCaptcha, get2step } from '@/api/login'
+import { getSmsCaptcha } from '@/api/login'
 
 export default {
   components: {
@@ -134,13 +135,14 @@ export default {
     }
   },
   created () {
-    get2step({ })
-      .then(res => {
-        this.requiredTwoStepCaptcha = res.result.stepCode
-      })
-      .catch(() => {
-        this.requiredTwoStepCaptcha = false
-      })
+    // get2step({ })
+    //   .then(res => {
+    //     this.requiredTwoStepCaptcha = res.result.stepCode
+    //   })
+    //   .catch(() => {
+    //     this.requiredTwoStepCaptcha = false
+    //   })
+    // 👆commented out on 2021.09.18 by Brine
     // this.requiredTwoStepCaptcha = true
   },
   methods: {
@@ -244,7 +246,7 @@ export default {
         console.log('onComplete')
         this.$notification.success({
           message: '欢迎',
-          description: `${timeFix()}，欢迎回来`
+          description: `${timeFix()}`
         })
       })
       */
@@ -253,7 +255,7 @@ export default {
       setTimeout(() => {
         this.$notification.success({
           message: '欢迎',
-          description: `${timeFix()}，欢迎回来`
+          description: `${timeFix()}赶紧给👴干活`
         })
       }, 1000)
       this.isLoginError = false

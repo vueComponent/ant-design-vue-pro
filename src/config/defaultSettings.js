@@ -24,7 +24,7 @@ export default {
   menu: {
     locale: true
   },
-  title: '恒星号运营中台',
+  title: '济星云中台',
   pwa: false,
   iconfontUrl: '',
   production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'

@@ -96,13 +96,26 @@ export const generatorDynamicRouter = token => {
     loginService
       .getCurrentUserNav(token)
       .then(res => {
-        console.log('generatorDynamicRouter response:', res)
-        const { result } = res
+        console.log('generatorDynamicRouter response:')
+        const result = JSON.parse(res.data)
+        console.log(result)
         const menuNav = []
         const childrenNav = []
         //      后端数据, 根级树数组,  根级 PID
         listToTree(result, childrenNav, 0)
         rootRouter.children = childrenNav
+        // 重定向到传来的路由表的第一个非空页
+        let item
+        let _redirect = '/'
+        for (item in result) {
+            if (result[item].component === 'RouteView') {
+              _redirect += result[item].name
+            } else if (result[item].component !== 'RouteView') {
+              _redirect += ('/' + result[item].name)
+              rootRouter.redirect = _redirect
+              break
+            }
+        }
         menuNav.push(rootRouter)
         console.log('menuNav', menuNav)
         const routers = generator(menuNav)

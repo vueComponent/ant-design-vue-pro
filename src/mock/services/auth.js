@@ -1,4 +1,4 @@
-import Mock from 'mockjs2'
+// import Mock from 'mockjs2'
 import { builder, getBody } from '../util'
 
 const username = ['admin', 'super']
@@ -14,8 +14,8 @@ const login = (options) => {
   }
 
   return builder({
-    'id': Mock.mock('@guid'),
-    'name': Mock.mock('@name'),
+    // 'id': Mock.mock('@guid'),
+    // 'name': Mock.mock('@name'),
     'username': 'admin',
     'password': '',
     'avatar': 'https://gw.alipayobjects.com/zos/rmsportal/jZUIxmJycoymBprLOUbT.png',
@@ -29,22 +29,25 @@ const login = (options) => {
     'roleId': 'admin',
     'lang': 'zh-CN',
     'token': '4291d7da9005377ec9aec4a71ea837f'
-  }, '', 200, { 'Custom-Header': Mock.mock('@guid') })
+  }, '', 200, {
+    // 'Custom-Header': Mock.mock('@guid')
+    })
 }
 
 const logout = () => {
-  return builder({}, '[测试接口] 注销成功')
+  console.log('logout')
+  // return builder({}, '[测试接口] 注销成功')
 }
 
 const smsCaptcha = () => {
-  return builder({ captcha: Mock.mock('@integer(10000, 99999)') })
+  // return builder({ captcha: Mock.mock('@integer(10000, 99999)') })
 }
 
 const twofactor = () => {
-  return builder({ stepCode: Mock.mock('@integer(0, 1)') })
+  // return builder({ stepCode: Mock.mock('@integer(0, 1)') })
 }
 
-Mock.mock(/\/auth\/login/, 'post', login)
-Mock.mock(/\/auth\/logout/, 'post', logout)
-Mock.mock(/\/account\/sms/, 'post', smsCaptcha)
-Mock.mock(/\/auth\/2step-code/, 'post', twofactor)
+// Mock.mock(/\/auth\/login/, 'post', login)
+// Mock.mock(/\/auth\/logout/, 'post', logout)
+// Mock.mock(/\/account\/sms/, 'post', smsCaptcha)
+// Mock.mock(/\/auth\/2step-code/, 'post', twofactor)

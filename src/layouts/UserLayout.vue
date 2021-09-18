@@ -9,8 +9,8 @@
         <div class="top">
           <div class="header">
             <a href="/">
-              <img src="~@/assets/logo.svg" class="logo" alt="logo">
-              <span class="title">Ant Design</span>
+              <img src="~@/assets/logo2.png" class="logo" alt="logo">
+              <span class="title">济星云中台</span>
             </a>
           </div>
           <div class="desc">
@@ -27,7 +27,7 @@
             <a href="_self">条款</a>
           </div>
           <div class="copyright">
-            Copyright &copy; 2018 vueComponent
+            Copyright &copy; 2021 Tongji University
           </div>
         </div>
       </div>

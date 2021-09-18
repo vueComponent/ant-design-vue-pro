@@ -18,6 +18,8 @@ router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
   to.meta && typeof to.meta.title !== 'undefined' && setDocumentTitle(`${i18nRender(to.meta.title)} - ${domTitle}`)
   /* has token */
+  // console.log('checkToken')
+  // console.log(storage)
   if (storage.get(ACCESS_TOKEN)) {
     if (to.path === loginRoutePath) {
       next({ path: defaultRoutePath })
@@ -26,9 +28,12 @@ router.beforeEach((to, from, next) => {
       // check login user.roles is null
       if (store.getters.roles.length === 0) {
         // request login userInfo
+        console.log('here')
         store
           .dispatch('GetInfo')
           .then(res => {
+            console.log('getInfo')
+            console.log(res)
             const roles = res.result && res.result.role
             // generate dynamic router
             store.dispatch('GenerateRoutes', { roles }).then(() => {

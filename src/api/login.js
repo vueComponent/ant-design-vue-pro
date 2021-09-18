@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 const userApi = {
   Login: '/organization/login',
-  Logout: '/auth/logout',
+  Logout: '/organization/logout',
   ForgePassword: '/auth/forge-password',
   Register: '/auth/register',
   twoStepCode: '/auth/2step-code',
@@ -41,12 +41,10 @@ export function getSmsCaptcha (parameter) {
 }
 
 export function getInfo () {
+  console.log('GETINFO')
   return request({
     url: userApi.UserInfo,
-    method: 'get',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
+    method: 'get'
   })
 }
 
@@ -60,9 +58,9 @@ export function getCurrentUserNav () {
 export function logout () {
   return request({
     url: userApi.Logout,
-    method: 'post',
+    method: 'get',
     headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
+      'Content-Type': 'application/x-www-form-urlencoded'
     }
   })
 }

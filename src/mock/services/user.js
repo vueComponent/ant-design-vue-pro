@@ -1,4 +1,4 @@
-import Mock from 'mockjs2'
+// import Mock from 'mockjs2'
 import { builder } from '../util'
 
 const info = options => {
@@ -20,7 +20,6 @@ const info = options => {
     roleId: 'admin',
     role: {}
   }
-  // role
   const roleObj = {
     id: 'admin',
     name: '管理员',
@@ -467,7 +466,6 @@ const info = options => {
 
 const userNav = options => {
   const nav = [
-    // accountManagement
     {
       name: 'accountManagement',
       parentId: 0,
@@ -489,7 +487,6 @@ const userNav = options => {
         show: true
       },
       component: 'Planet'
-      // path: '/accountManagement/Planet/:pageNo([1-9]\\d*)?'
     },
     {
       name: 'Star',
@@ -521,8 +518,6 @@ const userNav = options => {
       },
       component: 'HistoricalTeam'
     },
-
-    // articleManagement
     {
       name: 'articleManagement',
       parentId: 0,
@@ -531,7 +526,6 @@ const userNav = options => {
         icon: 'form',
         title: '动态管理'
       },
-      // redirect: '/form/base-form',
       component: 'RouteView'
     },
     {
@@ -567,7 +561,6 @@ const userNav = options => {
       id: 231,
       meta: {
         title: '动态详情'
-        // show: false
       },
       component: 'TongdeDetail'
     },
@@ -621,7 +614,6 @@ const userNav = options => {
       },
       component: 'PublishManagement'
     },
-    // feedback
     {
       name: 'feedback',
       parentId: 0,
@@ -631,10 +623,8 @@ const userNav = options => {
         icon: 'profile',
         show: true
       },
-      // redirect: '/profile/basic',
       component: 'Feedback'
     },
-    // dataRequirement
     {
       name: 'dateRequirement',
       parentId: 0,
@@ -644,20 +634,8 @@ const userNav = options => {
         icon: 'check-circle-o',
         show: true
       },
-      // redirect: '/result/success',
       component: 'DataRequirement'
     },
-    // {
-    //   name: 'test',
-    //   parentId: 0,
-    //   id: 6,
-    //   meta: {
-    //     title: '测试',
-    //     show: true
-    //   },
-    //   component: 'Test'
-    // },
-    // postingManagement
     {
       name: 'posting',
       parentId: 0,
@@ -697,7 +675,6 @@ const userNav = options => {
       },
       component: 'NewPosting'
     },
-    // dataBoard
     {
       name: 'dataBoard',
       parentId: 0,
@@ -708,7 +685,6 @@ const userNav = options => {
       },
       component: 'DataBoard'
     },
-    // accountSetting
     {
       name: 'accountSetting',
       parentId: 0,
@@ -724,6 +700,5 @@ const userNav = options => {
   console.log('json', json)
   return json
 }
-
-Mock.mock(/\/api\/user\/info/, 'get', info)
-Mock.mock(/\/api\/user\/nav/, 'get', userNav)
+// Mock.mock(/\/api\/user\/info/, 'get', info)
+// Mock.mock(/\/api\/user\/nav/, 'get', userNav)
