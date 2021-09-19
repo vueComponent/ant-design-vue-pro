@@ -79,7 +79,7 @@ const rootRouter = {
   name: 'index',
   path: '',
   component: 'BasicLayout',
-  redirect: '/accountManagement',
+  redirect: '/',
   meta: {
     title: '首页'
   },
@@ -112,6 +112,7 @@ export const generatorDynamicRouter = token => {
               _redirect += result[item].name
             } else if (result[item].component !== 'RouteView') {
               _redirect += ('/' + result[item].name)
+              console.log(_redirect)
               rootRouter.redirect = _redirect
               break
             }

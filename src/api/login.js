@@ -1,7 +1,8 @@
 import request from '@/utils/request'
 
 const userApi = {
-  Login: '/organization/login',
+  LoginOrg: '/organization/login',
+  LoginAdmin: '/admin/login',
   Logout: '/organization/logout',
   ForgePassword: '/auth/forge-password',
   Register: '/auth/register',
@@ -24,9 +25,17 @@ const userApi = {
  * @param parameter
  * @returns {*}
  */
-export function login (parameter) {
+export function loginOrg (parameter) {
   return request({
-    url: userApi.Login,
+    url: userApi.LoginOrg,
+    method: 'post',
+    data: parameter
+  })
+}
+
+export function loginAdmin (parameter) {
+  return request({
+    url: userApi.LoginAdmin,
     method: 'post',
     data: parameter
   })

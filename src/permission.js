@@ -27,8 +27,7 @@ router.beforeEach((to, from, next) => {
     } else {
       // check login user.roles is null
       if (store.getters.roles.length === 0) {
-        // request login userInfo
-        console.log('here')
+        // request userInfo
         store
           .dispatch('GetInfo')
           .then(res => {

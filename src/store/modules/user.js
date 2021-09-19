@@ -1,5 +1,5 @@
 import storage from 'store'
-import { login, getInfo, logout } from '@/api/login'
+import { loginAdmin, loginOrg, getInfo, logout } from '@/api/login'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { welcome } from '@/utils/util'
 
@@ -33,10 +33,32 @@ const user = {
   },
 
   actions: {
-    // 登录
-    Login ({ commit }, userInfo) {
+    // 管理员登录
+    LoginAdmin ({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
-        login(userInfo).then(response => {
+        loginAdmin(userInfo).then(response => {
+          console.log('response')
+          console.log(response)
+          if (response.success === false) {
+            console.log('test3')
+          }
+          const result = response.data
+          console.log('login')
+          storage.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000)
+          console.log('token in storage:')
+          console.log(storage.get(ACCESS_TOKEN))
+          commit('SET_TOKEN', result.token)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    // 学生组织登录
+    LoginOrg ({ commit }, userInfo) {
+      return new Promise((resolve, reject) => {
+        loginOrg(userInfo).then(response => {
           const result = response.data
           console.log('login')
           storage.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000)

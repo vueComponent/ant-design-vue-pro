@@ -2,26 +2,26 @@
   <page-header-wrapper>
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
-        <a-row :gutter='[0,16]'>
-          <span style='font-weight: bold;height: 30px;line-height: 30px'>最近编辑</span>
-          <a-button style='float: right'>全部帖子素材</a-button>
+        <a-row :gutter="[0,16]">
+          <span style="font-weight: bold;height: 30px;line-height: 30px">最近编辑</span>
+          <a-button style="float: right">全部帖子素材</a-button>
         </a-row>
         <a-list
           rowKey="id"
           :grid="{gutter: 24, column:3}"
           :dataSource="nearlyData"
           class="card-list"
-          style='margin-top: 15px'
+          style="margin-top: 15px"
         >
           <a-list-item slot="renderItem" slot-scope="item">
             <template>
-              <a-card :hoverable="true" size='small'>
+              <a-card :hoverable="true" size="small">
                 <a-card-meta>
                   <span slot="title">{{ item.title }}</span>
-                  <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large" shape='square'/>
+                  <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large" shape="square"/>
                   <div class="meta-content" slot="description">
-                    <p style='display: -webkit-box;-webkit-line-clamp:2;overflow: hidden;text-overflow: ellipsis;-webkit-box-orient: vertical;'>{{ item.content }}</p>
-                    <span style='float: right'>更新于{{item.updateTime}}  <a-icon type='form'/></span>
+                    <p style="display: -webkit-box;-webkit-line-clamp:2;overflow: hidden;text-overflow: ellipsis;-webkit-box-orient: vertical;">{{ item.content }}</p>
+                    <span style="float: right">更新于{{item.updateTime}}  <a-icon type="form"/></span>
                   </div>
                 </a-card-meta>
               </a-card>
@@ -30,21 +30,21 @@
         </a-list>
       </div>
     </a-card>
-    <a-card style='margin-top: 24px'>
+    <a-card style="margin-top: 24px">
       <div class="table-page-search-wrapper">
-        <a-row :gutter='[0,0]' style='font-weight: bold;margin-bottom: 10px'>已发布</a-row>
-        <a-row :gutter='[0,0]'>
-          <a-col :span='6'>
-            <a-radio-group v-model='radio'>
-              <a-radio-button value='all'>全部</a-radio-button>
-              <a-radio-button value='notDeleted'>未删除</a-radio-button>
+        <a-row :gutter="[0,0]" style="font-weight: bold;margin-bottom: 10px">已发布</a-row>
+        <a-row :gutter="[0,0]">
+          <a-col :span="6">
+            <a-radio-group v-model="radio">
+              <a-radio-button value="all">全部</a-radio-button>
+              <a-radio-button value="notDeleted">未删除</a-radio-button>
             </a-radio-group>
           </a-col>
-          <a-col :span='6'>
-            <a-input-search placeholder='请输入'/>
+          <a-col :span="6">
+            <a-input-search placeholder="请输入"/>
           </a-col>
-          <a-col :span='4' :offset='8'>
-            <a-button type='primary'>新建帖子</a-button>
+          <a-col :span="4" :offset="8">
+            <a-button type="primary">新建帖子</a-button>
           </a-col>
         </a-row>
         <a-row>
@@ -69,11 +69,11 @@
                   <span>开始时间</span>
                   <p>{{ item.startAt }}</p>
                 </div>
-                <div class='list-content-item'>
-                  <span><a-icon type='eye'/>{{ item.views }}</span>
+                <div class="list-content-item">
+                  <span><a-icon type="eye"/>{{ item.views }}</span>
                 </div>
-                <div class='list-content-item'>
-                  <span><a-icon type='star'/>{{item.favorite}}</span>
+                <div class="list-content-item">
+                  <span><a-icon type="star"/>{{ item.favorite }}</span>
                 </div>
               </div>
             </a-list-item>
