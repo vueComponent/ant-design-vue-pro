@@ -145,23 +145,23 @@
                   <a-date-picker placeholder="请选择" v-decorator="['b11', { ...dateRequire, initialValue: initValue('b11', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="白细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b12', {...inputRequired, initialValue: initValue('b12')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b12', {...inputNumRequired, initialValue: initValue('b12')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="中性粒细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b13', {...inputRequired, initialValue: initValue('b13')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b13', {...inputNumRequired, initialValue: initValue('b13')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="淋巴细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b14', {...inputRequired, initialValue: initValue('b14')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b14', {...inputNumRequired, initialValue: initValue('b14')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="C反应蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b15', {...inputRequired, initialValue: initValue('b15')}]" addonAfter="mg/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b15', {...inputNumRequired, initialValue: initValue('b15')}]" addonAfter="mg/L" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
               <a-form-item label="(6) 本次支气管扩张急性加重的住院日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-input style="width: 240px;margin-right: 10px;" autocomplete="off" v-decorator="['b21', {...inputRequired, initialValue: initValue('b21')}]"></a-input>
+                <a-date-picker placeholder="请选择" v-decorator="['b21', { ...dateRequire, initialValue: initValue('b21', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
               </a-form-item>
               <a-form-item label="本次支气管扩张急性加重的出院日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;margin-right: 10px;" autocomplete="off" v-decorator="['b22', {...inputRequired, initialValue: initValue('b22')}]"></a-input>
+                <a-date-picker placeholder="请选择" v-decorator="['b22', { ...dateRequire, initialValue: initValue('b22', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
               </a-form-item>
               <a-form-item label="(7) 本次支气管扩张急性加重时的抗生素治疗" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-checkbox-group v-decorator="['b3', {...selectRequired, initialValue: initValue('b3', 'array')}]" class="control-m-line">
@@ -441,6 +441,9 @@ export default {
       },
       inputRequired: {
         rules: [{ required: true, message: '请填写！' }]
+      },
+      inputNumRequired: {
+        rules: [{ type: 'number', required: true, message: '请填写数字！' }]
       },
       form: this.$form.createForm(this),
       patientBasisId: this.$route.params.id,

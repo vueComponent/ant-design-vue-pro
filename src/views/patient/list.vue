@@ -23,10 +23,10 @@
                 <a-tab-pane tab="自定义检索" key="1" forceRender>
                   <a-card :bordered="false">
                     <a-form>
-                      <a-form-item label="是否ICON患者" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                      <a-form-item label="研究类型">
                         <a-radio-group v-model="queryParam.isIcon">
-                          <a-radio value="1">是</a-radio>
-                          <a-radio value="-1">否</a-radio>
+                          <a-radio value="-1">支扩</a-radio>
+                          <a-radio value="1">ICON</a-radio>
                         </a-radio-group>
                       </a-form-item>
                       <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
@@ -148,8 +148,11 @@ export default {
           dataIndex: 'name',
           width: 100,
           scopedSlots: { customRender: 'name' }
-        },
-        {
+        },{
+          title: '研究类型',
+          dataIndex: 'research',
+          width: 80,
+        },{
           title: '分支中心',
           dataIndex: 'centerName',
           width: 200

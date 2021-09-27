@@ -103,10 +103,10 @@
               <a-form-item label="(3) 过去一年的急性加重次数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input addonAfter="次" style="width: 240px;" v-decorator="['b1', {...inputRequired, initialValue: initValue('b1')}]" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(4) 最后一次因急性加重住院的时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(4) 最后一次因急性加重住院的时间" class="tipTxt" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['b4', { initialValue: initValue('b4', 'time')}]"></a-date-picker>
               </a-form-item>
-              <a-form-item label="(5) 有无以下疾病及事件（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <a-form-item label="(5) 有无以下疾病及事件（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted tipTxt">
                 <a-checkbox-group v-decorator="['b5', {...selectRequired, initialValue: initValue('b5', 'array')}]">
                   <a-checkbox value="1">麻疹</a-checkbox>
                   <a-checkbox value="2">百日咳</a-checkbox>
@@ -1445,5 +1445,8 @@ export default {
   height: 100%;
   -ms-overflow-x: hidden;
   overflow: hidden auto;
+}
+.tipTxt::before {
+
 }
 </style>

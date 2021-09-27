@@ -102,10 +102,12 @@
               <a-form-item label="(3) 过去一年的急性加重次数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input addonAfter="次" style="width: 240px;" v-decorator="['b3', {...inputRequired, initialValue: initValue('b3')}]" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(4) 最后一次因急性加重住院的时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <span slot="label"><span>(4) 最后一次因急性加重住院的时间</span><span style="color: red;"> (yyyy-mm-dd)</span></span>
                 <a-input style="width: 240px;" v-decorator="['b4', {rules: [{ required: isIcon, message: '请填写！' }], initialValue: initValue('b4')}]" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item class="no-border" label="最后一次急性加重出院的时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item class="no-border" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <span slot="label"><span>最后一次急性加重出院的时间</span><span style="color: red;"> (yyyy-mm-dd)</span></span>
                 <a-input style="width: 240px;" v-decorator="['b41', {initialValue: initValue('b41')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(5) 有无以下疾病及事件（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">

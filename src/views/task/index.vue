@@ -33,6 +33,12 @@
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
                   <a-card :bordered="false">
                     <a-form>
+                      <a-form-item label="研究类型">
+                        <a-radio-group v-model="queryParam.isIcon">
+                          <a-radio value="-1">支扩</a-radio>
+                          <a-radio value="1">ICON</a-radio>
+                        </a-radio-group>
+                      </a-form-item>
                       <a-form-item label="入组编号">
                         <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
                       </a-form-item>
@@ -158,6 +164,10 @@ export default {
           dataIndex: 'warnStatus',
           scopedSlots: { customRender: 'warnStatus' },
           width: 70
+        },{
+          title: '研究类型',
+          dataIndex: 'research',
+          width: 80,
         },
         {
           title: '提交状态',
