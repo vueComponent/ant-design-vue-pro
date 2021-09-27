@@ -122,6 +122,30 @@ export const asyncRouterMap = [{
             name: 'statistics',
             component: () => import('@/views/reportApply/statistics'),
             meta: { title: '患者录入统计', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
+          },
+          {
+            path: '/reportApply/iconJx',
+            name: 'iconJx',
+            component: () => import('@/views/reportApply/iconJx'),
+            meta: { title: 'ICON基线统计', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
+          },
+          {
+            path: '/reportApply/iconCg',
+            name: 'iconCg',
+            component: () => import('@/views/reportApply/iconCg'),
+            meta: { title: 'ICON常规统计', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
+          },
+          {
+            path: '/reportApply/iconJxjzq',
+            name: 'iconJxjzq',
+            component: () => import('@/views/reportApply/iconJxjzq'),
+            meta: { title: 'ICON加重统计', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
+          },
+          {
+            path: '/reportApply/iconData',
+            name: 'iconData',
+            component: () => import('@/views/reportApply/iconData'),
+            meta: { title: 'ICON数据统计', keepAlive: true, icon: blzysh, isBack: false, permission: ['center', 'group'] }
           }
         ]
       },
@@ -139,6 +163,22 @@ export const asyncRouterMap = [{
         hidden: true,
         hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
         component: () => import('@/views/account/center/jxjzq'),
+        meta: { permission: ['center', 'group'] }
+      },
+      {
+        path: '/icon/jxjzq/:id(\\d*)',
+        name: 'iconJxjzq',
+        hidden: true,
+        hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+        component: () => import('@/views/icon/jxjzq'),
+        meta: { permission: ['center', 'group'] }
+      },
+      {
+        path: '/icon/task/:id(\\d*)',
+        name: 'iconTask',
+        hidden: true,
+        hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+        component: () => import('@/views/icon/task'),
         meta: { permission: ['center', 'group'] }
       },
       {

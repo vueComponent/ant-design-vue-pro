@@ -484,13 +484,41 @@ export default {
       this.previewVisible1 = false;
     },
     handleChange1({ fileList }) {
+      var that = this
       this.fileList1 = fileList;
+      if (fileList.every(function(v) { return v.status === 'done'})) {
+        this.spinning = false
+        this.fileList1.forEach((f,i) => {
+          if(f.response){
+              that.$set(that.fileList1,i,{
+                name: f.name,
+                status: 'done',
+                uid: f.uid,
+                url: f.response.data.src
+              })
+          }
+        })
+      }
     },
     handleCancel2() {
       this.previewVisible2 = false;
     },
     handleChange2({ fileList }) {
+      var that = this
       this.fileList2 = fileList;
+      if (fileList.every(function(v) { return v.status === 'done'})) {
+        this.spinning = false
+        this.fileList2.forEach((f,i) => {
+          if(f.response){
+              that.$set(that.fileList2,i,{
+                name: f.name,
+                status: 'done',
+                uid: f.uid,
+                url: f.response.data.src
+              })
+          }
+        })
+      }
     },
     _import(fileList, type) {
       var that = this

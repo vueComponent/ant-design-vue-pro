@@ -574,7 +574,21 @@ export default {
       this.previewVisible = true;
     },
     handleChange({ fileList }) {
+      var that = this
       this.fileList = fileList;
+      if (fileList.every(function(v) { return v.status === 'done'})) {
+        this.spinning = false
+        this.fileList.forEach((f,i) => {
+          if(f.response){
+              that.$set(that.fileList,i,{
+                name: f.name,
+                status: 'done',
+                uid: f.uid,
+                url: f.response.data.src
+              })
+          }
+        })
+      }
     },
     disabledDate(current) {
       // Can not select days before today and today

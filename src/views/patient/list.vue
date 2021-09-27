@@ -11,7 +11,33 @@
           <a-col :md="6" :sm="24">
             <a-form-item>
               <a-button type="primary" @click="refreshTable">查询</a-button>
+              <a @click="toggleAdvanced" style="margin-left: 8px" class="toggleAdvanced">
+                {{ advanced ? '更多筛选' : '更多筛选' }}
+                <a-icon :type="advanced ? 'up' : 'down'" />
+              </a>
             </a-form-item>
+          </a-col>
+          <a-col v-if="advanced" class="tableSearch" :md="8">
+            <div>
+              <a-tabs defaultActiveKey="1">
+                <a-tab-pane tab="自定义检索" key="1" forceRender>
+                  <a-card :bordered="false">
+                    <a-form>
+                      <a-form-item label="是否ICON患者" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                        <a-radio-group v-model="queryParam.isIcon">
+                          <a-radio value="1">是</a-radio>
+                          <a-radio value="-1">否</a-radio>
+                        </a-radio-group>
+                      </a-form-item>
+                      <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
+                        <a-button type="primary" @click="clearForm()">清空</a-button>
+                        <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
+                      </a-form-item>
+                    </a-form>
+                  </a-card>
+                </a-tab-pane>
+              </a-tabs>
+            </div>
           </a-col>
           <a-col :md="13" style="text-align:right" :sm="24">
             <a-button type="primary" @click="$refs.createModal.add()">新建</a-button>
@@ -91,6 +117,16 @@ export default {
       },
       // 高级搜索 展开/关闭
       advanced: false,
+      labelColHor: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+        md: { span: 6 }
+      },
+      wrapperHor: {
+        xs: { span: 24 },
+        sm: { span: 18 },
+        md: { span: 18 }
+      },
       // 查询参数
       queryParam: {},
       // 表头

@@ -29,7 +29,7 @@
                 <span class="head-icon"></span>
                 <div v-if="question.name && question.name" class="question-title">{{question.name}}</div>
                 <span v-if="score" class="question-score">{{`（得分：${score}分）`}}</span>
-                <a-row v-if="(questionId === 32 || questionId === 38 || questionId === 46 || questionId === 58) && (questionTask.status === 1 || questionTask.status === 5) && typeof questionTask.score1 !== 'undefined'" type="flex" style="flex:1;margin-left:40px">
+                <a-row v-if="(questionId === 32 || questionId === 38 || questionId === 46 || questionId === 58 || questionId === 66) && (questionTask.status === 1 || questionTask.status === 5) && typeof questionTask.score1 !== 'undefined'" type="flex" style="flex:1;margin-left:40px">
                   <a-col :span="6"><strong>身体功能性维度（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
                   <a-col :span="6"><strong>角色功能性维度（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>
                   <a-col :span="6"><strong>活力性维度（<span style="color: #3398dc">{{ questionTask.score3 }}分</span>）</strong></a-col>
@@ -190,6 +190,10 @@ export default {
           that.title = '急性加重期'
           that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
         }
+        if (that.patientBasis.type === 7) {
+          that.title = '急性加重期'
+          that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+        }
       })
   },
   watch: {
@@ -240,14 +244,20 @@ export default {
             that.title = '急性加重期'
             that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
           }
+          if (that.patientBasis.type === 7) {
+            that.title = '急性加重期'
+            that.executeStatus = _.find(res.data.list[1].childList, function(v) { return v.basisMarkId === that.questionId }).executeStatus
+          }
         })
-      if (e.key >= 31 && e.key <= 42 || (e.key >= 57 && e.key <= 62) || (e.key >= 45 && e.key <= 50)) {
+      if (e.key >= 31 && e.key <= 42 || (e.key >= 57 && e.key <= 62) || (e.key >= 45 && e.key <= 50) || (e.key > 64)) {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 1) {
         this.$router.replace('/list/basis/' + this.patientBasisId + '/' + e.key)
       } else if (this.patientBasis.type === 4) {
         this.$router.replace('/jxjzq/' + this.patientBasisId)
-      } else {
+      } else if(this.patientBasis.type === 7){
+        this.$router.replace('/icon/jxjzq/' + this.patientBasisId)
+      }else {
         this.$router.replace('/list/task/' + this.patientBasisId + '/' + e.key)
       }
     },
@@ -410,7 +420,6 @@ export default {
       params.append('questionId', this.questionId)
       params.append('patientId', this.patient.patientId)
       params.append('type', 1)
-      params.append('taskTime', typeof values.taskTime !== 'undefined' ? values.taskTime.format('YYYY-MM-DD') : '')
       this.spinning = true
       saveQuestion(params)
         .then(res => {

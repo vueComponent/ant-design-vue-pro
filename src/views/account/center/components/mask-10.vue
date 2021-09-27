@@ -51,9 +51,9 @@
                   </a-modal> -->
                 </div>
               </a-form-item>
-              <!-- <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" v-decorator="['t1', {...dateRequire, initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-              </a-form-item> -->
+              <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-date-picker placeholder="请选择" v-decorator="['f5', { initialValue: initValue('f5', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+              </a-form-item>
               <a-form-item label="(1) 血红蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['b1', {...inputRequired, initialValue: initValue('b1')}]" addonAfter="g/L" autocomplete="off"></a-input>
               </a-form-item>
@@ -86,6 +86,9 @@
                     <img alt="example" style="width: 100%" :src="previewImage2" />
                   </a-modal> -->
                 </div>
+              </a-form-item>
+              <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-date-picker placeholder="请选择" v-decorator="['f6', { initialValue: initValue('f6', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
               </a-form-item>
               <a-form-item label="(1) 血糖:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['c1', {...inputRequired, initialValue: initValue('c1')}]" addonAfter="mmol/L" autocomplete="off"></a-input>
@@ -296,7 +299,8 @@ export default {
           var re = this.form.getFieldsValue()
           re = {
             ...re,
-            't1': typeof re['t1'] !== 'undefined' ? re['t1'].format('YYYY-MM-DD') : ''
+            'f5': typeof re['f5'] !== 'undefined' ? re['f5'].format('YYYY-MM-DD') : '',
+            'f6': typeof re['f6'] !== 'undefined' ? re['f6'].format('YYYY-MM-DD') : ''
           }
           var that = this
           this.patientBasis.status = 2
@@ -412,7 +416,8 @@ export default {
       var re = this.form.getFieldsValue()
       re = {
         ...re,
-        't1': typeof re['t1'] !== 'undefined' ? re['t1'].format('YYYY-MM-DD') : ''
+        'f5': typeof re['f5'] !== 'undefined' ? re['f5'].format('YYYY-MM-DD') : '',
+        'f6': typeof re['f6'] !== 'undefined' ? re['f6'].format('YYYY-MM-DD') : ''
       }
       var that = this
       console.log(re)
@@ -467,7 +472,21 @@ export default {
       //   this.previewVisible1 = true;
     },
     handleChange1({ fileList }) {
+      var that = this
       this.fileList1 = fileList;
+      if (fileList.every(function(v) { return v.status === 'done'})) {
+        this.spinning = false
+        this.fileList1.forEach((f,i) => {
+          if(f.response){
+              that.$set(that.fileList1,i,{
+                name: f.name,
+                status: 'done',
+                uid: f.uid,
+                url: f.response.data.src
+              })
+          }
+        })
+      }
     },
     // handleCancel2() {
     //   this.previewVisible2 = false;
@@ -479,7 +498,21 @@ export default {
       //   this.previewVisible2 = true;
     },
     handleChange2({ fileList }) {
+      var that = this
       this.fileList2 = fileList;
+      if (fileList.every(function(v) { return v.status === 'done'})) {
+        this.spinning = false
+        this.fileList2.forEach((f,i) => {
+          if(f.response){
+              that.$set(that.fileList2,i,{
+                name: f.name,
+                status: 'done',
+                uid: f.uid,
+                url: f.response.data.src
+              })
+          }
+        })
+      }
     },
     _import(fileList, type) {
       // console.log(fileList[0].response.data.src);

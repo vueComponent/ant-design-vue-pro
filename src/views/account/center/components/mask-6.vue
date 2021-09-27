@@ -39,6 +39,7 @@
                   <a-checkbox value="1" @change="changeSelect($event, 'control1')">细菌</a-checkbox>
                   <a-checkbox value="2" @change="changeSelect($event, 'control2')">真菌</a-checkbox>
                   <a-checkbox value="3" @change="changeSelect($event, 'control3')">分枝杆菌</a-checkbox>
+                  <a-checkbox value="5" @change="changeSelect($event, 'control5')">其他</a-checkbox>
                   <a-checkbox value="4" @change="changeSelect($event, 'control4')">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
@@ -117,7 +118,7 @@
                     <a-radio value="1">痰液</a-radio>
                     <a-radio value="2">诱导痰</a-radio>
                     <a-radio value="3">支气管肺泡灌洗液</a-radio>
-                     <a-radio value="4">血标本</a-radio>
+                    <a-radio value="4">血标本</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="是否分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -155,7 +156,7 @@
                     <a-radio value="1">痰液</a-radio>
                     <a-radio value="2">诱导痰</a-radio>
                     <a-radio value="3">支气管肺泡灌洗液</a-radio>
-                     <a-radio value="4">血标本</a-radio>
+                    <a-radio value="4">血标本</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="(4) 分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -176,9 +177,18 @@
                     </a-checkbox-group>
                   </a-form-item>
                   <a-form-item label="其他非结核分枝杆菌名称:" :labelCol="labelColOffset2" :wrapperCol="wrapperOffset2" v-if="controlc415">
-                    <a-input style="width: 240px;margin-right: 10px;" autocomplete="off"></a-input>
+                    <a-input style="width: 240px;margin-right: 10px;" autocomplete="off" v-decorator="['c43', {...inputRequired, initialValue: initValue('c43')}]"></a-input>
                   </a-form-item>
                 </div>
+              </div>
+              <div v-if="control5">
+                <div class="title">4.其他病原</div>
+                <a-form-item label="(1) 取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['d1', {...dateRequire, initialValue: initValue('d1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                </a-form-item>
+                <a-form-item label="(2) 其他病原种类:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['d2', {...inputRequired, initialValue: initValue('d2')}]" autocomplete="off"></a-input>
+                </a-form-item>
               </div>
             </div>
           </a-form>
@@ -299,6 +309,7 @@ export default {
       control2: false,
       control3: false,
       control4: false,
+      control5: false,
       type1: '',
       otherName1: '',
       otherName2: '',
@@ -350,6 +361,7 @@ export default {
         this.control1 = false
         this.control2 = false
         this.control3 = false
+        this.control5 = false
         //赋值必须要延时
         setTimeout(function() {
           that.form.setFieldsValue({ a: ['4'] })
@@ -435,6 +447,7 @@ export default {
             'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
             'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
             'c1': typeof re['c1'] !== 'undefined' ? re['c1'].format('YYYY-MM-DD') : '',
+            'd1': typeof re['d1'] !== 'undefined' ? re['d1'].format('YYYY-MM-DD') : '',
             'a42': typeof re['a42'] !== 'undefined' ? re['a42'].join(',') : '',
             'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : '',
             'c4': typeof re['c4'] !== 'undefined' ? re['c4'].join(',') : '',
@@ -517,6 +530,7 @@ export default {
         'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
         'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
         'c1': typeof re['c1'] !== 'undefined' ? re['c1'].format('YYYY-MM-DD') : '',
+        'd1': typeof re['d1'] !== 'undefined' ? re['d1'].format('YYYY-MM-DD') : '',
         'a42': typeof re['a42'] !== 'undefined' ? re['a42'].join(',') : '',
         'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : '',
         'c4': typeof re['c4'] !== 'undefined' ? re['c4'].join(',') : '',
@@ -580,6 +594,15 @@ export default {
           }
           if (splitArr.indexOf('2') > -1) {
             this.control2 = true
+          }
+          if (splitArr.indexOf('3') > -1) {
+            this.control3 = true
+          }
+          if (splitArr.indexOf('4') > -1) {
+            this.control4 = true
+          }
+          if (splitArr.indexOf('5') > -1) {
+            this.control5 = true
           }
         }
         if (answer.a2 && answer.a2 === -1) {
@@ -750,7 +773,7 @@ export default {
     changePic1(e, index) {
       this.picList1[index] = e
     },
-    withdraw(){
+    withdraw() {
       var that = this
       this.$confirm({
         title: '确认撤销？',
@@ -766,7 +789,7 @@ export default {
               params.append('patientBasisId', that.patientBasisId)
               getPatientBasis(params)
                 .then(res => {
-                  
+
                   that.orgTree = res.data.list
                   that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
@@ -931,9 +954,11 @@ export default {
     .ant-menu.ant-menu-inline.ant-menu-sub {
       background-color: rgba(245, 251, 255);
       padding-left: 20px;
-      .treeSubTitle{
+
+      .treeSubTitle {
         font-size: 14px;
       }
+
       li {
         border-bottom: none;
         height: 40px;

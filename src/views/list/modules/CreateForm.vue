@@ -12,6 +12,19 @@
         <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['name', requiredRule]" />
         </a-form-item>
+        <a-form-item label="是否ICON患者" :labelCol="labelCol" :wrapperCol="wrapperCol" class="aaa">
+          <a-popover>
+            <template slot="content">
+              入选标准：1、临床诊断为支气管扩张症（根据中国2021年《成人支气管扩张症诊治专家共识》，患者既往胸部CT检查必须存在影像学上支气管扩张的表现）。2、年龄≥18岁的患者。<br>
+              排除标准：1、囊性纤维化引起的支气管扩张症。2、入组前4周内曾发生支气管扩张症急性加重*。3、入组前6个月内参与了任何干预性临床试验。4、无法或不愿提供知情同意书的患者。
+            </template>
+            <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
+          </a-popover>
+          <a-radio-group v-decorator="['isIcon', requiredRule]">
+            <a-radio value="1">是</a-radio>
+            <a-radio value="-1">否</a-radio>
+          </a-radio-group>
+        </a-form-item>
         <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['sex', requiredRule]">
             <a-radio value="1">男</a-radio>
@@ -66,7 +79,10 @@
             </template>
             <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
           </a-popover>
-          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['startDate', requiredRule]" />
+          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['startDate', requiredRule]" :disabledDate="disabledDate" />
+        </a-form-item>
+        <a-form-item label="推荐医生" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['doctorName', requiredRule]" />
         </a-form-item>
         <a-form-item :wrapperCol="agrWrapperCol">
           <a-checkbox v-decorator="['agreeMent', { rules: [ { required: true, validator: agrValidator }], valuePropName: 'checked' }]" :disabled="options.title == '编辑患者'">
@@ -215,7 +231,9 @@ export default {
           telephone1: value.telephone1,
           telephone2: value.telephone2,
           telephone3: value.telephone3,
-          agreeMent: JSON.parse(value.agreeMent)
+          agreeMent: JSON.parse(value.agreeMent),
+          doctorName: value.doctorName,
+          isIcon: String(value.isIcon)
         })
         if (value.startDate)
           this.form.setFieldsValue({
@@ -382,7 +400,7 @@ export default {
     },
     disabledDate(current) {
       // Can not select days before today and today
-      return current && current > moment().endOf('day');
+      return current && (current > moment().endOf('day') || current.get('year') < 2020);
     },
     download() {
       window.open(this.baseUrl + '/patient/downLoad')

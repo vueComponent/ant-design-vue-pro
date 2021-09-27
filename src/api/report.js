@@ -123,3 +123,36 @@ export function getPatientEntry(params) {
     params: params
   })
 }
+
+export function getIconJxDataList(params) {
+  return axios({
+    url: '/patientReport/getIconJxDataList',
+    method: 'post',
+    params: params
+  })
+}
+
+export function getIconCgsfDataList(params) {
+  return axios({
+    url: '/patientReport/getIconCgsfDataList',
+    method: 'post',
+    params: params
+  })
+}
+
+export function getIconJxjzDataList(params) {
+  return axios({
+    url: '/patientReport/getIconJxjzDataList',
+    method: 'post',
+    params: params
+  })
+}
+
+export function getIconJxNumList(params) {
+  return axios({
+    url: '/patientReport/getIconJxNumList',
+    method: 'post',
+    params: params
+  })
+}
+

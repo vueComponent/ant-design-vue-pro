@@ -15,7 +15,7 @@
 </template>
 <script>
 import moment from 'moment'
-import { getPatientEntry } from '@/api/report'
+import { getIconCgsfDataList } from '@/api/report'
 import { STable } from '@/components'
 export default {
   components: {
@@ -30,11 +30,15 @@ export default {
       },
       scroll: false,
       loadData: parameter => {
-        return getPatientEntry(Object.assign(parameter, this.queryParam)).then(res => {
+        return getIconCgsfDataList(Object.assign(parameter, this.queryParam)).then(res => {
           return res
         })
       },
       columns: [{
+          title: '患者编号',
+          dataIndex: 'fileCode',
+          width: '120px'
+        },{
           title: '患者姓名',
           dataIndex: 'patientName',
           width: '90px'
@@ -43,104 +47,72 @@ export default {
           dataIndex: 'sexName',
           width: '90px'
         },{
-          title: '入组编号',
-          dataIndex: 'fileCode',
-          width: '120px'
-        },{
           title: '患者年龄',
           dataIndex: 'age',
           width: '90px'
         },{
-          title: '联系电话1',
-          dataIndex: 'telephone1',
+          title: '随访期间有无长期氧疗',
+          dataIndex: 'a1',
+          width: '180px'
+        },{
+          title: '随访期间有否无创辅助通气',
+          dataIndex: 'a2',
+          width: '220px'
+        },{
+          title: '随访期间有无进行各类物理治疗',
+          dataIndex: 'a3',
+          width: '260px'
+        },{
+          title: '物理治疗方式',
+          dataIndex: 'a4',
+          width: '120px'
+        },{
+          title: '随访期间有无进行各类呼吸疾病药物治疗',
+          dataIndex: 'a5',
+          width: '300px'
+        },{
+          title: '规律抗生素治疗',
+          dataIndex: 'a6',
+          width: '120px'
+        },{
+          title: '祛痰药物治疗',
+          dataIndex: 'a7',
           width: '100px'
         },{
-          title: '联系电话2',
-          dataIndex: 'telephone2',
-          width: '100px'
-        },{
-          title: '联系电话3',
-          dataIndex: 'telephone3',
-          width: '100px'
-        },{
-          title: '患者同意注册日期',
-          dataIndex: 'registerDate',
+          title: '支气管扩张剂',
+          dataIndex: 'a8',
           width: '160px'
         },{
-          title: '推荐医生',
-          dataIndex: 'doctorName',
-          width: '90px'
+          title: '支气管扩张剂其他内容输入',
+          dataIndex: 'a9',
+          width: '180px'
         },{
-          title: '提交人姓名',
-          dataIndex: 'submitName',
-          width: '110px'
+          title: '吸入激素',
+          dataIndex: 'a10',
+          width: '130px'
         },{
-          title: '提交人手机号',
-          dataIndex: 'submitTelephone',
+          title: '其他治疗',
+          dataIndex: 'a11',
           width: '120px'
         },{
-          title: '支扩病史资料',
-          dataIndex: 'pbm1Status',
-          width: '120px'
+          title: '各类免疫调节剂治疗',
+          dataIndex: 'a12',
+          width: '160px'
         },{
-          title: '体格检查',
-          dataIndex: 'pbm2Status',
-          width: '90px'
+          title: '免疫调节剂治疗方式',
+          dataIndex: 'a13',
+          width: '160px'
         },{
-          title: '胸部影像学',
-          dataIndex: 'pbm4Status',
-          width: '110px'
-        },{
-          title: '病原',
-          dataIndex: 'pbm5Status',
-          width: '70px'
-        },{
-          title: '病因学',
-          dataIndex: 'pbm6Status',
-          width: '70px'
-        },{
-          title: '肺功能',
-          dataIndex: 'pbm7Status',
-          width: '70px'
-        },{
-          title: '心超',
-          dataIndex: 'pbm8Status',
-          width: '80px'
-        },{
-          title: '其他',
-          dataIndex: 'pbm9Status',
-          width: '80px'
-        },{
-          title: '呼吸系统相关治疗',
-          dataIndex: 'pbm10Status',
-          width: '150px'
-        },{
-          title: 'BHO',
-          dataIndex: 'qt1Status',
-          width: '70px'
-        },{
-          title: 'QOL-B',
-          dataIndex: 'qt2Status',
-          width: '70px'
-        },{
-          title: 'MMRC',
-          dataIndex: 'qt4Status',
-          width: '70px'
-        },{
-          title: 'LCQ',
-          dataIndex: 'qt5Status',
-          width: '70px'
-        },{
-          title: 'HAD',
-          dataIndex: 'qt6Status',
-          width: '70px'
-        }],
+          title: '免疫调节剂治疗方式其他输入',
+          dataIndex: 'a14',
+          width: '220px'
+        }]
         
     }
   },
   created() {
     this.scroll = {
-      x: '2600px',
+      x: '3000px',
       y: window.screen.height - 420 + 'px'
     }
    
@@ -152,7 +124,7 @@ export default {
   methods: {
     // 导出
       _export() {
-      window.open(this.baseUrl + 'patient/exportPatientEntry')
+      window.open(this.baseUrl + 'patientReport/exportIconCgsf')
     }
   }
 }

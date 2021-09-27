@@ -83,7 +83,7 @@
       <template slot="operation" slot-scope="text, record">
         <a @click="implement(record)">执行</a>
         <a-divider type="vertical" />
-        <a @click="ignore(record)" >忽略</a>
+        <a @click="ignore(record)">忽略</a>
       </template>
     </s-table>
     <user-detail ref="detailModal" />
@@ -130,7 +130,7 @@ export default {
   },
   data() {
     return {
-      visible: false, 
+      visible: false,
       form: this.$form.createForm(this),
       labelCol: {
         xs: { span: 24 },
@@ -211,14 +211,14 @@ export default {
           title: '分支中心',
           dataIndex: 'centerName',
           width: 200
-        },{
+        }, {
           title: '问卷状态',
           width: 80,
           dataIndex: 'questionStatus',
           scopedSlots: {
             customRender: 'questionStatus'
           }
-        },{
+        }, {
           title: '未提交问卷',
           width: 200,
           dataIndex: ' unSubmitquestion',
@@ -267,9 +267,15 @@ export default {
   },
   filters: {
     visitFilter(type) {
+      if (typeof type === 'undefined') {
+        type = '忽略'
+      }
       return visitMap[type].text;
     },
     visitTypeFilter(type) {
+      if (typeof type === 'undefined') {
+        type = '忽略'
+      }
       return visitMap[type].status;
     }
   },
@@ -288,7 +294,7 @@ export default {
     modifyName(name) {
       return name.replace(/(.)(.*)/, (_, $1, $2) => $1 + '*'.repeat($2.length))
     },
-    handleClose(){
+    handleClose() {
       this.visible = false
     },
     clearForm() {
@@ -314,7 +320,11 @@ export default {
     },
     implement(record) {
       //执行
-      this.$router.push('/list/task/' + record.patientBasisId)
+      if (record.type === 6) {
+        this.$router.push('/icon/task/' + record.patientBasisId)
+      } else {
+        this.$router.push('/list/task/' + record.patientBasisId)
+      }
     },
     onSelectChange(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys;
@@ -326,11 +336,11 @@ export default {
       //   this.$message.warning('只能忽略未执行的任务！');
       //   return false;
       // }
-      if(record.submitStatus == 2){
+      if (record.submitStatus == 2) {
         this.$message.warning('只能忽略未忽略的任务！');
         return false;
       }
-      if(record.type != 2){
+      if (record.type != 2) {
         this.visible = true;
         this.outPatientBasisId = record.patientBasisId
         return false;
@@ -348,7 +358,7 @@ export default {
         }
       });
     },
-    outSubmit(){
+    outSubmit() {
       var that = this
       this.form.validateFieldsAndScroll((errors, fieldsValue) => {
         if (errors) {

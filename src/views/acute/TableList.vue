@@ -240,7 +240,11 @@ export default {
     },
     exec(record) {
       console.log(record)
-      this.$router.push('/jxjzq/' + record.patientBasisId)
+      if(record.isIcon === 1){
+        this.$router.push('/icon/jxjzq/' + record.patientBasisId)
+      }else{
+        this.$router.push('/jxjzq/' + record.patientBasisId)
+      }
     },
     handleOk() {
       this.$refs.table.refresh();

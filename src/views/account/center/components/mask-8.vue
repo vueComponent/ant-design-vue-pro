@@ -37,9 +37,9 @@
                 <a style="float: right;font-size:12px;margin-right: 12px;" @click="showOcr = !showOcr">OCR</a>
                 <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /> -->
               </div>
-              <!-- <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="检查日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" v-decorator="['t1', {...dateRequire, initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-              </a-form-item> -->
+              </a-form-item> 
               <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="showOcr">
                 <div class="clearfix" style="margin-top: 10px;">
                   <a-upload :action="uploadUrl" class="images1" v-viewer listType="picture-card" :fileList="fileList1" @preview="handlePreview1" @change="handleChange1">
@@ -67,7 +67,6 @@
                 </a-row>
               </a-form-item>
               <a-form-item label="FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <!-- <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" addonAfter="L" autocomplete="off"></a-input>
                 </a-form-item>
@@ -76,7 +75,6 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="FEV1::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <!-- <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['a31', {...inputRequired, initialValue: initValue('a31')}]" addonAfter="L" autocomplete="off"></a-input>
                 </a-form-item>
@@ -85,7 +83,6 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="FEV1%FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <!-- <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
@@ -155,7 +152,6 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="MVV::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <!-- <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['b81', {initialValue: initValue('b81')}]" addonAfter="L/min" autocomplete="off"></a-input>
                 </a-form-item>
@@ -181,7 +177,6 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="TLC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <!-- <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['b111', {initialValue: initValue('b111')}]" addonAfter="L" autocomplete="off"></a-input>
                 </a-form-item>
@@ -190,7 +185,6 @@
                 </a-form-item>
               </a-form-item>
               <a-form-item label="RV%TLC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <!-- <a-input v-decorator="['t1', {initialValue: '1'}]" style="display: none;"></a-input> -->
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['b121', {initialValue: initValue('b121')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
@@ -476,6 +470,9 @@
               </a-form-item>
               <a-form-item label="(6) 血气分析:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
               </a-form-item>
+              <a-form-item label="检查日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-date-picker placeholder="请选择" v-decorator="['f5', {initialValue: initValue('f5', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+              </a-form-item> 
               <a-form-item label="PH:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
                 <a-input style="width: 240px;" v-decorator="['f', {...inputRequired, initialValue: initValue('f')}]" autocomplete="off"></a-input>
               </a-form-item>
@@ -686,7 +683,8 @@ export default {
           var re = this.form.getFieldsValue()
           re = {
             ...re,
-            't1': typeof re['t1'] !== 'undefined' ? re['t1'].format('YYYY-MM-DD') : ''
+            't1': typeof re['t1'] !== 'undefined' ? re['t1'].format('YYYY-MM-DD') : '',
+            'f5': typeof re['f5'] !== 'undefined' ? re['f5'].format('YYYY-MM-DD') : ''
           }
           var that = this
           this.patientBasis.status = 2
@@ -864,7 +862,8 @@ export default {
       var re = this.form.getFieldsValue()
       re = {
         ...re,
-        't1': typeof re['t1'] !== 'undefined' ? re['t1'].format('YYYY-MM-DD') : ''
+        't1': typeof re['t1'] !== 'undefined' ? re['t1'].format('YYYY-MM-DD') : '',
+        'f5': typeof re['f5'] !== 'undefined' ? re['f5'].format('YYYY-MM-DD') : ''
       }
       var that = this
       console.log(re)
@@ -929,7 +928,21 @@ export default {
       //   this.previewVisible1 = true;
     },
     handleChange1({ fileList }) {
+      var that = this
       this.fileList1 = fileList;
+      if (fileList.every(function(v) { return v.status === 'done'})) {
+        this.spinning = false
+        this.fileList1.forEach((f,i) => {
+          if(f.response){
+              that.$set(that.fileList1,i,{
+                name: f.name,
+                status: 'done',
+                uid: f.uid,
+                url: f.response.data.src
+              })
+          }
+        })
+      }
     },
     // handleCancel2() {
     //   this.previewVisible2 = false;
@@ -941,7 +954,21 @@ export default {
       //   this.previewVisible2 = true;
     },
     handleChange2({ fileList }) {
+      var that = this
       this.fileList2 = fileList;
+      if (fileList.every(function(v) { return v.status === 'done'})) {
+        this.spinning = false
+        this.fileList2.forEach((f,i) => {
+          if(f.response){
+              that.$set(that.fileList2,i,{
+                name: f.name,
+                status: 'done',
+                uid: f.uid,
+                url: f.response.data.src
+              })
+          }
+        })
+      }
     },
     _importF() {
       this.spinning = true

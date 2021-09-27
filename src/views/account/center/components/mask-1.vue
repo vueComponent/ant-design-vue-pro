@@ -24,7 +24,6 @@
         </a-col>
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" :layout="formLayout" class="base-form">
-
             <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
               <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
               <a-button class="btn fr" @click="save">保存</a-button>
@@ -104,7 +103,10 @@
                 <a-input addonAfter="次" style="width: 240px;" v-decorator="['b3', {...inputRequired, initialValue: initValue('b3')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(4) 最后一次因急性加重住院的时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['b4', { initialValue: initValue('b4', 'time')}]"></a-date-picker>
+                <a-input style="width: 240px;" v-decorator="['b4', {rules: [{ required: isIcon, message: '请填写！' }], initialValue: initValue('b4')}]" autocomplete="off"></a-input>
+              </a-form-item>
+              <a-form-item class="no-border" label="最后一次急性加重出院的时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-input style="width: 240px;" v-decorator="['b41', {initialValue: initValue('b41')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(5) 有无以下疾病及事件（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-checkbox-group v-decorator="['b5', {...selectRequired, initialValue: initValue('b5', 'array')}]">
@@ -127,6 +129,7 @@
                   <a-checkbox value="3" :checked="controlb63" @change="changeSelect($event, 'controlb63')">鼻息肉</a-checkbox>
                   <a-checkbox value="4" :checked="controlb64" @change="changeSelect($event, 'controlb64')">哮喘</a-checkbox>
                   <a-checkbox value="5" :checked="controlb65" @change="changeSelect($event, 'controlb65')">慢阻肺</a-checkbox>
+                  <a-checkbox value="7" :checked="controlb67" @change="changeSelect($event, 'controlb67')">其他</a-checkbox>
                   <a-checkbox value="6" :checked="controlb66" @change="changeSelect($event, 'controlb66')">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
@@ -412,7 +415,7 @@
               </a-form-item>
               <a-form-item label="(10) 吸烟史(单选)" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b19', {...selectRequired, initialValue: initValue('b19')}]" @change="changeRadio($event, 'controlb191')">
-                  <a-radio value="1">既往吸烟</a-radio>
+                  <a-radio value="1">目前吸烟</a-radio>
                   <a-radio value="2">已戒烟</a-radio>
                   <a-radio value="3">无吸烟</a-radio>
                 </a-radio-group>
@@ -553,6 +556,7 @@ export default {
       inputRequired: {
         rules: [{ required: true, message: '请填写！' }]
       },
+      isIcon: false,
       form: this.$form.createForm(this),
       maskId: this.$route.meta.maskId,
       patientBasisId: this.$route.params.id,
@@ -567,6 +571,7 @@ export default {
       controlb64: false,
       controlb65: false,
       controlb66: false,
+      controlb67: false,
       controlb7: false,
       controlb72: false,
       controlb8: false,
@@ -618,6 +623,8 @@ export default {
         that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
         that.canEdit = that.$ls.get(ACCESS_TOKEN).centerId === that.patient.targetCenterId
         that.totalStatus = res.data.patientBasis.submitStatus
+        // that.form.$forceUpdate()
+        that.isIcon = that.patient.isIcon === 1
       })
       .catch(error => {
         console.log(error)
@@ -727,6 +734,9 @@ export default {
           }
           if (splitArr.indexOf('6') > -1) {
             that.controlb66 = true
+          }
+          if (splitArr.indexOf('7') > -1) {
+            that.controlb67 = true
           }
         }
 
@@ -915,7 +925,6 @@ export default {
             'a1': typeof re['a1'] !== 'undefined' ? re['a1'].join(',') : '',
             'a3': typeof re['a3'] !== 'undefined' ? re['a3'].format('YYYY-MM-DD') : '',
             'a4': typeof re['a4'] !== 'undefined' ? re['a4'].join(',') : '',
-            'b4': typeof re['b4'] !== 'undefined' ? re['b4'].format('YYYY-MM-DD') : '',
             'b5': typeof re['b5'] !== 'undefined' ? re['b5'].join(',') : '',
             'b6': typeof re['b6'] !== 'undefined' ? re['b6'].join(',') : '',
             'b61': typeof re['b61'] !== 'undefined' ? re['b61'].format('YYYY-MM') : '',
@@ -983,7 +992,6 @@ export default {
         'a1': typeof re['a1'] !== 'undefined' ? re['a1'].join(',') : '',
         'a3': typeof re['a3'] !== 'undefined' ? re['a3'].format('YYYY-MM-DD') : '',
         'a4': typeof re['a4'] !== 'undefined' ? re['a4'].join(',') : '',
-        'b4': typeof re['b4'] !== 'undefined' ? re['b4'].format('YYYY-MM-DD') : '',
         'b5': typeof re['b5'] !== 'undefined' ? re['b5'].join(',') : '',
         'b6': typeof re['b6'] !== 'undefined' ? re['b6'].join(',') : '',
         'b61': typeof re['b61'] !== 'undefined' ? re['b61'].format('YYYY-MM') : '',

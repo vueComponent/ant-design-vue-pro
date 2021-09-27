@@ -33,73 +33,94 @@
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
-              <a-form-item label="有无新增心脏彩超:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['a1', {...require2, initialValue: initValue('a1')}]" @change="changeRadio($event, 'controla1')">
+              <div class="title">1.呼吸系统相关治疗</div>
+              <a-form-item label="(1) 随访期间有否长期氧疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b1', {...require1, initialValue: initValue('b1')}]">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <div v-if="controla1">
-                <a-form-item label="报告上传:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <div class="clearfix" style="margin-top: 10px;">
-                    <a-upload :action="uploadUrl" listType="picture-card" :fileList="fileList" @change="handleChange">
-                      <div v-if="fileList.length < 1">
-                        <a-icon type="plus" />
-                        <div class="ant-upload-text">Upload</div>
-                      </div>
-                    </a-upload>
-                    <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1">OCR识别</a-button>
-                  </div>
+              <a-form-item label="(2) 随访期间有否无创辅助通气:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b2', {...require1, initialValue: initValue('b2')}]">
+                  <a-radio value="1">有</a-radio>
+                  <a-radio value="-1">无</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="(3) 随访期间有否进行各类物理治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b3', {...require1, initialValue: initValue('b3')}]" @change="changeRadio($event, 'controlb3')">
+                  <a-radio value="1">有</a-radio>
+                  <a-radio value="-1">无</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item label="治疗方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb3">
+                <a-checkbox-group v-decorator="['b31', {...selectRequired, initialValue: initValue('b31', 'array')}]">
+                  <a-checkbox value="1">手动拍击背部排痰</a-checkbox>
+                  <a-checkbox value="2">体位引流</a-checkbox>
+                  <a-checkbox value="3">规律锻炼身体</a-checkbox>
+                  <a-checkbox value="4">借助排痰仪器</a-checkbox>
+                </a-checkbox-group>
+              </a-form-item>
+              <a-form-item label="(4) 随访期间有否进行各类呼吸疾病药物治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b4', {...require1, initialValue: initValue('b4')}]" @change="changeRadio($event, 'controlb4')">
+                  <a-radio value="1">有</a-radio>
+                  <a-radio value="-1">无</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <div v-if="controlb4">
+                <a-form-item label="4-1 规律抗生素治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41', 'array')}]">
+                    <a-checkbox value="0">无</a-checkbox>
+                    <a-checkbox value="1">口服</a-checkbox>
+                    <a-checkbox value="2">吸入/雾化</a-checkbox>
+                  </a-checkbox-group>
                 </a-form-item>
-                <!-- <div class="title">1.M型主要测值</div> -->
-                <!-- <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" v-decorator="['t1', {...dateRequire, initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-                </a-form-item> -->
-                <a-form-item label="(1) 主动脉根部内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="cm" autocomplete="off"></a-input>
+                <a-form-item label="4-2 祛痰药物治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b42', {...selectRequired, initialValue: initValue('b42', 'array')}]">
+                    <a-checkbox value="0">无</a-checkbox>
+                    <a-checkbox value="1">口服</a-checkbox>
+                    <a-checkbox value="2">雾化</a-checkbox>
+                  </a-checkbox-group>
                 </a-form-item>
-                <a-form-item label="(2) 左房收缩末期内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b2', { initialValue: initValue('b2')}]" addonAfter="cm" autocomplete="off"></a-input>
+                <a-form-item label="4-3 支气管扩张剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b43', {...selectRequired, initialValue: initValue('b43', 'array')}]" class="control-m-line">
+                    <a-checkbox value="0">无</a-checkbox>
+                    <a-checkbox value="1">长效抗胆碱能药物</a-checkbox>
+                    <a-checkbox value="2">长效β受体激动剂</a-checkbox>
+                    <a-checkbox value="3">长效抗胆碱能药物/长效β受体激动剂</a-checkbox>
+                    <a-checkbox value="4" :checked="controlb43" @change="changeSelect($event, 'controlb43')">其他</a-checkbox>
+                  </a-checkbox-group>
                 </a-form-item>
-                <a-form-item label="(3) 左室舒张末期内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b3', { initialValue: initValue('b3')}]" addonAfter="cm" autocomplete="off"></a-input>
+                <a-form-item label="其他支气管扩张剂::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb43">
+                  <a-input style="width: 240px;" v-decorator="['b431', {...inputRequired, initialValue: initValue('b431')}]" autocomplete="off"></a-input>
                 </a-form-item>
-                <a-form-item label="(4) 左室收缩末期内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b4', { initialValue: initValue('b4')}]" addonAfter="cm" autocomplete="off"></a-input>
-                </a-form-item>
-                <a-form-item label="(5) 室间隔厚度:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b5', { initialValue: initValue('b5')}]" addonAfter="cm" autocomplete="off"></a-input>
-                </a-form-item>
-                <a-form-item label="(6) 左室后壁厚度:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b6', { initialValue: initValue('b6')}]" addonAfter="cm" autocomplete="off"></a-input>
-                </a-form-item>
-                <a-form-item label="(7) 肺动脉收缩压:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b8', { initialValue: initValue('b8')}]" addonAfter="mmHg" autocomplete="off"></a-input>
-                </a-form-item>
-                <a-form-item label="(8) 主肺动脉内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b7', { initialValue: initValue('b7')}]" addonAfter="cm" autocomplete="off"></a-input>
-                </a-form-item>
-                <a-form-item label="(9) 右房内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['e1', { initialValue: initValue('e1')}]" addonAfter="cm" autocomplete="off"></a-input>
-                </a-form-item>
-                <a-form-item label="(10) 右室内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['e2', { initialValue: initValue('e2')}]" addonAfter="cm" autocomplete="off"></a-input>
-                </a-form-item>
-                <a-form-item label="(11) 右室流出道:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['e3', { initialValue: initValue('e3')}]" addonAfter="cm" autocomplete="off"></a-input>
-                </a-form-item>
-                <a-form-item label="(12) 左室射血分数:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['c1', { initialValue: initValue('c1')}]" addonAfter="%" autocomplete="off"></a-input>
-                </a-form-item>
-                <a-form-item label="(13) 左室短轴缩短率:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['c2', { initialValue: initValue('c2')}]" addonAfter="%" autocomplete="off"></a-input>
-                </a-form-item>
-                <a-form-item label="小结:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['d1', {...selectRequired, initialValue: initValue('d1')}]">
-                    <a-radio value="1">肺动脉高压</a-radio>
-                    <a-radio value="2">肺源性心脏病</a-radio>
-                    <a-radio value="3">无</a-radio>
+                <a-form-item label="4-4 吸入激素:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['b44', {...require1, initialValue: initValue('b44')}]">
+                    <a-radio value="1">有</a-radio>
+                    <a-radio value="-1">无</a-radio>
                   </a-radio-group>
+                </a-form-item>
+                <a-form-item label="4-5 其他治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['b45', { initialValue: initValue('b45')}]" autocomplete="off"></a-input>
+                </a-form-item>
+              </div>
+              <a-form-item label="(5) 随访期间有否进行各类免疫调节剂治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['b5', {...require1, initialValue: initValue('b5')}]" @change="changeRadio($event, 'controlb5')">
+                  <a-radio value="1">有</a-radio>
+                  <a-radio value="-1">无</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <div v-if="controlb5">
+                <a-form-item label="治疗方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b51', {...selectRequired, initialValue: initValue('b51', 'array')}]">
+                    <a-checkbox value="1">细菌溶解产物胶囊</a-checkbox>
+                    <a-checkbox value="2">匹多莫德</a-checkbox>
+                    <a-checkbox value="3">胸腺肽</a-checkbox>
+                    <a-checkbox value="4">脾氨肽</a-checkbox>
+                    <a-checkbox value="5" :checked="controlb51" @change="changeSelect($event, 'controlb51')">其他</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="其他治疗::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb5 && controlb51">
+                  <a-input style="width: 240px;" v-decorator="['b52', {...inputRequired, initialValue: initValue('b52')}]" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
             </div>
@@ -116,34 +137,30 @@ import moment from 'moment'
 import { mapActions } from 'vuex'
 import { getPatientBasis, saveBasis, getBasisForm, recoverSubmit } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
-import { getOcrResult } from '@/api/basis'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
-import ContactForm from '@/views/account/ContactForm'
 export default {
-  name: 'task23',
+  name: 'iconTask',
   components: {
     STree,
-    MyIcon,
-    ContactForm
+    MyIcon
   },
   data() {
     return {
-      markName: 'xzcc',
-      title: '',
+      markName: 'iconcgsf',
+      title: '基线',
       openKeys: [],
-      defaultSelectedKeys: [23],
+      defaultSelectedKeys: [4],
       orgTree: [],
       patient: {},
       patientBasis: {},
       baselineInfoStyle: {
         overflow: "auto",
-        height: "100%",
+        height: '100%',
         "padding-right": "0px",
-        boxShadow: 'rgba(204, 204, 204,0.8) 1px 0px 20px'
+        "border-right": "1px solid #ddd"
       },
       baselineFormStyle: {
         // height: '444px',
-        'padding-top': '52px'
       },
       labelColHor: {
         xs: { span: 24 },
@@ -190,22 +207,24 @@ export default {
         rules: [{ required: true, message: '请填写！' }]
       },
       form: this.$form.createForm(this),
-      maskId: this.$route.meta.maskId,
+      maskId: undefined,
       patientBasisId: this.$route.params.id,
-      xzcc: undefined,
-      controla1: false,
+      controlb3: false,
+      controlb4: false,
+      controlb43: false,
+      controlb5: false,
+      controlb51: false,
       spinning: false,
       executeStatus: false,
-      uploadUrl: process.env.VUE_APP_API_UPLOAD_URL,
-      viewPicUrl: process.env.VUE_APP_API_VIEW_PIC_URL,
-      fileList: [],
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
       canEdit: false,
-      submitInfo: undefined
+      submitInfo: undefined,
+      iconcgsf: undefined
     }
   },
   created() {
     var that = this
+    this.defaultSelectedKeys = [4]
     this.CloseSidebar()
     var params = new URLSearchParams()
     params.append('patientBasisId', this.patientBasisId)
@@ -214,29 +233,19 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        that.title = '年访视'
-        that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+        that.maskId = res.data.list[0].basisMarkId
+        that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
         that.canEdit = that.$ls.get(ACCESS_TOKEN).centerId === that.patient.targetCenterId
+        that.getFormData()
       })
-    this.getFormData()
+
+  },
+  activated() {
+    // this.getFormData()
   },
   methods: {
     ...mapActions(['CloseSidebar']),
     moment,
-    getFormData() {
-      var that = this
-      var params = new URLSearchParams()
-      params.append('patientBasisId', this.patientBasisId)
-      params.append('basisMarkId', this.maskId)
-      getBasisForm(params)
-        .then(res => {
-          if (res.data && res.data.xzcc)
-            that.xzcc = that.dealAnswers(res.data.xzcc)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
     changeSelect(e, t) {
       this[t] = e.target.checked
     },
@@ -248,12 +257,12 @@ export default {
       }
     },
     handleClick(e) {
-      this.maskId = e.key
-      if ((e.key >= 37 && e.key <= 42) || (e.key >= 45 && e.key <= 50)) {
-        this.$router.replace('/basis/question/' + this.patientBasisId + '/' + this.maskId)
-      } else {
-        this.$router.replace('/list/task/' + this.patientBasisId + '/' + this.maskId)
+      if (e.key >= 31 && e.key <= 36) {
+        this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
+      } else if(e.key < 63){
+        this.$router.replace('/list/basis/' + this.patientBasisId + '/' + e.key)
       }
+      return false;
     },
     handleOk(v) {
       this.submitInfo = v
@@ -266,62 +275,85 @@ export default {
       validateFieldsAndScroll((errors, values) => {
         if (!errors) {
           var re = this.form.getFieldsValue()
+          var that = this
           re = {
             ...re,
-            't1': typeof re['t1'] !== 'undefined' ? re['t1'].format('YYYY-MM-DD') : ''
+            'b31': typeof re['b31'] !== 'undefined' ? re['b31'].join(',') : '',
+            'b41': typeof re['b41'] !== 'undefined' ? re['b41'].join(',') : '',
+            'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : '',
+            'b43': typeof re['b43'] !== 'undefined' ? re['b43'].join(',') : '',
+            'b51': typeof re['b51'] !== 'undefined' ? re['b51'].join(',') : ''
           }
           var that = this
+          console.log(re)
           this.patientBasis.status = 2
           var params = new URLSearchParams()
-          if (this.xzcc && this.xzcc.xzccId) {
-            re.xzccId = this.xzcc.xzccId
+          if (this.iconcgsf && this.iconcgsf.iconCgfsId) {
+            re.iconCgfsId = this.iconcgsf.iconCgfsId
           }
           params.append('formData', JSON.stringify(re))
           params.append('patientBasis', JSON.stringify(this.patientBasis))
           params.append('basisMarkId', this.maskId)
           params.append('markName', this.markName)
-          this.spinning = true
+          that.spinning = true
           saveBasis(params)
             .then(res => {
               console.log(res)
-              that.$message.success(res.msg)
               that.spinning = false
               that.getFormData()
+              that.$message.success(res.msg)
               params = new URLSearchParams()
-              params.append('patientBasisId', that.patientBasisId)
+              params.append('patientBasisId', this.patientBasisId)
               getPatientBasis(params)
                 .then(res => {
                   that.orgTree = res.data.list
-                  that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
-                })
-                .catch(error => {
-                  console.log(error)
+                  that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
             })
             .catch(error => {
               that.spinning = false
               console.log(error)
             })
+          return false
         } else {
           this.spinning = false
         }
       })
     },
     initValue(key, type = 'normal') {
-      if (!this.xzcc) return type === 'array' ? [] : type === 'time' ? undefined : ''
-      if (!this.xzcc[key]) return type === 'array' ? [] : type === 'time' ? undefined : ''
+      if (!this.iconcgsf) return type === 'array' ? [] : type === 'time' ? undefined : ''
+      if (!this.iconcgsf[key]) return type === 'array' ? [] : type === 'time' ? undefined : ''
       if (type === 'time') {
-        return moment(this.xzcc[key])
+        return moment(this.iconcgsf[key])
       } else if (type === 'array') {
-        return this.xzcc[key].split(',')
+        return this.iconcgsf[key].split(',')
       } else {
-        return this.xzcc[key] + ''
+        return this.iconcgsf[key] + ''
       }
     },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
-        if (answer.a1 === '1') {
-          this.controla1 = true
+        var splitArr = []
+        if (answer.b3 === 1) {
+          this.controlb3 = true
+        }
+        if (answer.b4 === 1) {
+          this.controlb4 = true
+        }
+        if (answer.b5 === 1) {
+          this.controlb5 = true
+        }
+        if (answer.b43) {
+          splitArr = answer.b43.split(',')
+          if (splitArr.indexOf('4') > -1) {
+            this.controlb43 = true
+          }
+        }
+        if (answer.b51) {
+          splitArr = answer.b51.split(',')
+          if (splitArr.indexOf('5') > -1) {
+            this.controlb51 = true
+          }
         }
       }
       return answer
@@ -330,36 +362,30 @@ export default {
       var re = this.form.getFieldsValue()
       re = {
         ...re,
-        't1': typeof re['t1'] !== 'undefined' ? re['t1'].format('YYYY-MM-DD') : ''
+        'b31': typeof re['b31'] !== 'undefined' ? re['b31'].join(',') : '',
+        'b41': typeof re['b41'] !== 'undefined' ? re['b41'].join(',') : '',
+        'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : '',
+        'b43': typeof re['b43'] !== 'undefined' ? re['b43'].join(',') : '',
+        'b51': typeof re['b51'] !== 'undefined' ? re['b51'].join(',') : ''
       }
       var that = this
       console.log(re)
       this.patientBasis.status = 1
       var params = new URLSearchParams()
-      if (this.xzcc && this.xzcc.xzccId) {
-        re.xzccId = this.xzcc.xzccId
+      if (this.iconcgsf && this.iconcgsf.iconCgfsId) {
+        re.iconCgfsId = this.iconcgsf.iconCgfsId
       }
       params.append('formData', JSON.stringify(re))
       params.append('patientBasis', JSON.stringify(this.patientBasis))
       params.append('basisMarkId', this.maskId)
       params.append('markName', this.markName)
-      this.spinning = true
+      that.spinning = true
       saveBasis(params)
         .then(res => {
           console.log(res)
-          that.$message.success(res.msg)
           that.spinning = false
           that.getFormData()
-          params = new URLSearchParams()
-          params.append('patientBasisId', that.patientBasisId)
-          getPatientBasis(params)
-            .then(res => {
-              that.orgTree = res.data.list
-              that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
-            })
-            .catch(error => {
-              console.log(error)
-            })
+          that.$message.success(res.msg)
         })
         .catch(error => {
           that.spinning = false
@@ -367,44 +393,25 @@ export default {
         })
       return false
     },
-    _import() {
+    getFormData() {
       this.spinning = true
-      var params = new URLSearchParams()
-      params.append('type', 5)
-      params.append('url', this.fileList[0].response.data.src)
       var that = this
-      getOcrResult(params)
+      var params = new URLSearchParams()
+      params.append('patientBasisId', this.patientBasisId)
+      params.append('basisMarkId', this.maskId)
+      getBasisForm(params)
         .then(res => {
-          console.log(res.data)
+          if (res.data && res.data.iconcgsf) {
+            that.iconcgsf = that.dealAnswers(res.data.iconcgsf)
+          } else {
+            that.form.resetFields()
+          }
           this.spinning = false
-          this.$message.success(res.data.info)
-          this.xzcc = _.extend(this.xzcc || {}, this.dealAnswers(res.data))
-          that.form.setFieldsValue(that.xzcc)
         })
         .catch(error => {
-          this.confirmLoading = false
+          this.spinning = false
+          console.log(error)
         })
-    },
-    handleChange({ fileList }) {
-      var that = this
-      this.fileList = fileList;
-      if (fileList.every(function(v) { return v.status === 'done'})) {
-        this.spinning = false
-        this.fileList.forEach((f,i) => {
-          if(f.response){
-              that.$set(that.fileList,i,{
-                name: f.name,
-                status: 'done',
-                uid: f.uid,
-                url: f.response.data.src
-              })
-          }
-        })
-      }
-    },
-    disabledDate(current) {
-      // Can not select days before today and today
-      return current && current > moment().endOf('day');
     },
     withdraw() {
       var that = this
@@ -413,7 +420,7 @@ export default {
         onOk() {
           that.spinning = true
           var params = new URLSearchParams()
-          params.append('patientBasisMarkId', that.xzcc.patientBasisMarkId)
+          params.append('patientBasisMarkId', that.iconcgsf.patientBasisMarkId)
           recoverSubmit(params)
             .then(res => {
               that.spinning = false
@@ -424,7 +431,7 @@ export default {
                 .then(res => {
 
                   that.orgTree = res.data.list
-                  that.executeStatus = _.find(res.data.list[2].childList, function(v) { return v.basisMarkId === that.maskId }).executeStatus
+                  that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
                 })
                 .catch(error => {
                   console.log(error)
@@ -539,7 +546,7 @@ export default {
 }
 
 .page-header-index-wide {
-  /deep/ .ant-card-wider-padding .ant-card-body {
+  /deep/ .ant-card-body {
     padding: 0;
     height: 100%;
   }
@@ -550,7 +557,7 @@ export default {
     padding-left: 70px;
     padding-top: 18px;
     padding-bottom: 10px;
-    background-image: url(../../../assets/treeTop.png);
+    background-image: url(../../assets/treeTop.png);
     background-repeat: no-repeat;
     border-bottom: 1px solid #eee;
     background-position: 8px 10px;
@@ -703,7 +710,7 @@ export default {
   }
 
   .baselineForm {
-
+    margin-top: 42px;
     overflow: auto;
 
     .title {
@@ -718,7 +725,7 @@ export default {
       line-height: 40px;
     }
 
-    padding: 40px 20px;
+    padding: 20px 20px 60px;
 
     .ant-form-item {
       // padding-bottom: 10px;
@@ -806,6 +813,13 @@ export default {
 
 /deep/.ant-menu-inline .ant-menu-submenu-title {
   padding-right: 0px;
+}
+
+@media screen and (max-width: 1366px) {
+  .control-m-line.ant-checkbox-group {
+    top: 10px;
+    position: relative;
+  }
 }
 
 .base-form {
