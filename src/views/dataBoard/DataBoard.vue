@@ -3,21 +3,21 @@
     <a-card :bordered="false">
       <a-row :gutter="24">
         <a-col :span='7' :style="{ marginBottom: '24px' }">
-          <chart-card :loading="loading" title="帖子总数" :total="postingNumber" :bordered='true'>
+          <chart-card :loading="loading" title="帖子总数" :total="data.postingNumber" :bordered='true'>
             <a-tooltip title="帖子总数" slot="action">
               <a-icon type="info-circle-o" />
             </a-tooltip>
           </chart-card>
         </a-col>
         <a-col :span='7' :style="{ marginBottom: '24px' }">
-          <chart-card :loading="loading" title="总浏览量" :total="totalViews" :bordered='true'>
+          <chart-card :loading="loading" title="总浏览量" :total="data.totalViews" :bordered='true'>
             <a-tooltip title="总浏览量" slot="action">
               <a-icon type="info-circle-o" />
             </a-tooltip>
           </chart-card>
         </a-col>
         <a-col :span='7' :style="{ marginBottom: '24px' }">
-          <chart-card :loading="loading" title="被收藏量" :total="beCollectedNumber" :bordered='true'>
+          <chart-card :loading="loading" title="被收藏量" :total="data.beCollectedNumber" :bordered='true'>
             <a-tooltip title="被收藏量" slot="action">
               <a-icon type="info-circle-o" />
             </a-tooltip>
@@ -59,9 +59,11 @@ import {
   NumberInfo,
   MiniSmoothArea
 } from '@/components'
+import request from '@/utils/request'
 
 const barData = []
 const barData2 = []
+const data = []
 for (let i = 0; i < 12; i += 1) {
   barData.push({
     x: `${i + 1}月`,
@@ -77,11 +79,33 @@ export default {
   name: 'DataBoard',
   data () {
     return {
-      postingNumber: 56,
-      totalViews: 126560,
-      beCollectedNumber: 126560,
+      loading: true,
+      data,
       barData,
       barData2
+    }
+  },
+  created () {
+    this.updatePostingCount()
+    setTimeout(() => {
+      this.loading = !this.loading
+    }, 1000)
+  },
+  methods: {
+    updatePostingCount () {
+      request({
+        url: '/posting/organizationPostingCount',
+        method: 'get'
+      })
+        .then(res => {
+          console.log(res)
+          const data = res.data
+          this.data = {
+            postingNumber: data.publishedCount,
+            totalViews: data.viewCount,
+            beCollectedNumber: data.likeCount
+          }
+        })
     }
   },
   components: {

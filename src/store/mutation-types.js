@@ -1,6 +1,7 @@
 export const ACCESS_TOKEN = 'Access-Token'
 export const SHOW_NAME = 'show-name'
 export const SHOW_AVATAR = 'show-avatar'
+export const DETAIL = {}
 
 export const SIDEBAR_TYPE = 'sidebar_type'
 export const TOGGLE_MOBILE_TYPE = 'is_mobile'

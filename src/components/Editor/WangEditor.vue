@@ -42,6 +42,9 @@ export default {
       //   this.editorContent = html
       //   this.$emit('change', this.editorContent)
       // }
+      this.editor.customConfig.onchange = function (newHtml) {
+        console.log('change 之后最新的 html', newHtml)
+      }
       this.editor.create()
     }
   }

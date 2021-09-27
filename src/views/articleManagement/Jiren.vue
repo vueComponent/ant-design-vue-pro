@@ -53,7 +53,7 @@
             </a-col>
             <a-col :span='8'>
               <br/><br/>
-              <a-button type='primary'>刷新</a-button>
+              <a-button type='primary' v-bind="updateData">刷新</a-button>
             </a-col>
             <a-col :span='8'>
               <div>
@@ -92,6 +92,7 @@
 import { STable, Ellipsis } from '@/components'
 import StepByStepModal from '../list/modules/StepByStepModal'
 import CreateForm from '../list/modules/CreateForm'
+import request from '@/utils/request'
 
 const columns = [
   {
@@ -198,6 +199,9 @@ export default {
   beforeCreate () {
     this.form = this.$form.createForm(this, { name: 'search' })
   },
+  created () {
+    this.updateData()
+  },
   methods: {
     handleSubmit (e) {
       e.preventDefault()
@@ -205,6 +209,38 @@ export default {
         console.log(err)
         console.log(value)
       })
+    },
+    updateData () {
+      request({
+        url: '/team/adminGetTeamList',
+        method: 'get'
+      })
+      .then(res => {
+        console.log(res)
+      })
+      // this.$axios.get('http://101.132.130.199:8080/team/adminGetTeamList')
+      //   .then(res => {
+      //     console.log(res)
+      //     const records = res.data.data.records
+      //     const data = []
+      //     for (const key in records) {
+      //       const record = records[key]
+      //       console.log(record)
+      //       data.push({
+      //         key: key,
+      //         pid: record.id,
+      //         uid: record.initiatorId,
+      //         createTime: record.createTime,
+      //         title: record.title,
+      //         content: record.content,
+      //         teamStatus: record.status,
+      //         status: '审核中',
+      //         operator: '卞之琳',
+      //         plate: record.labelId
+      //       })
+      //     }
+      //     this.data = data
+      //   })
     }
   }
 }
