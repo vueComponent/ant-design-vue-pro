@@ -20,11 +20,43 @@
             </template>
             <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
           </a-popover>
-          <a-radio-group v-decorator="['isIcon', requiredRule]">
+          <a-radio-group v-decorator="['isIcon', requiredRule]" @change="changeRadio($event, 'isShowPat')">
             <a-radio value="1">是</a-radio>
             <a-radio value="-1">否</a-radio>
           </a-radio-group>
         </a-form-item>
+        <div v-if="isShowPat">
+          <a-form-item label="既往胸部CT是否存在影像学上支气管扩张的表现" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-radio-group v-decorator="['isbiaoxian', { rules: [ { validator: isbiaoxianRule }] }]">
+              <a-radio value="1">是</a-radio>
+              <a-radio value="-1">否</a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item label="是否有囊性纤维化引起的支气管扩张症" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-radio-group v-decorator="['iskuozhang', { rules: [ { validator: iskuozhangRule }] }]">
+              <a-radio value="1">是</a-radio>
+              <a-radio value="-1">否</a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item label="入组前4周是否发生支气管扩张症急性加重" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-radio-group v-decorator="['isjiazhong', { rules: [ { validator: isjiazhongRule }] }]">
+              <a-radio value="1">是</a-radio>
+              <a-radio value="-1">否</a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item label="入组前6个月是否参加任何干预性临床试验" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-radio-group v-decorator="['isshiyan', { rules: [ { validator: isshiyanRule }] }]">
+              <a-radio value="1">是</a-radio>
+              <a-radio value="-1">否</a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item label="患者是否无法或不愿意提供知情同意书" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-radio-group v-decorator="['istongyi', { rules: [ { validator: istongyiRule }] }]">
+              <a-radio value="1">是</a-radio>
+              <a-radio value="-1">否</a-radio>
+            </a-radio-group>
+          </a-form-item>
+        </div>
         <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['sex', requiredRule]">
             <a-radio value="1">男</a-radio>
@@ -109,13 +141,14 @@ export default {
       baseUrl: process.env.VUE_APP_API_BASE_URL,
       maskClosable: false,
       payTypeList: [],
+      isShowPat: false,
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 7 }
+        sm: { span: 10 }
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 15 }
+        sm: { span: 13 }
       },
       agrWrapperCol: {
         xs: {
@@ -209,8 +242,22 @@ export default {
       this.patientId = undefined
       this.visible = true;
     },
+    changeRadio(e, t) {
+      if (e.target.value === '1') {
+        this[t] = true
+      } else {
+        this[t] = false
+      }
+    },
+    dealAnswers(answer) {
+      if (answer && !_.isEmpty(answer)) {
+        if (answer.isIcon === 1) {
+          this.isShowPat = true
+        }
+      }
+      return answer
+    },
     edit(value) {
-      console.log('value', value);
       this.options.title = '编辑患者';
       this.patientId = value.patientId
       value.residence = [value.addressP, value.addressC]
@@ -246,6 +293,11 @@ export default {
       if (!this.confirmLoading) {
         this.confirmLoading = true;
         this.form.validateFieldsAndScroll((errors, fieldsValue) => {
+          if (this.form.getFieldValue('birthDate') && new Date().getFullYear() - this.form.getFieldValue('birthDate')._d.getFullYear() < 18) {
+            this.$message.warning('患者不满18岁，不符合ICON患者条件');
+            this.confirmLoading = false;
+            return false
+          }
           const that = this;
           if (errors) {
             this.confirmLoading = false;
@@ -288,7 +340,66 @@ export default {
       }
       callback()
     },
+    isbiaoxianRule (rule, value, callback) {
+      if (!value) {
+        callback('该选项必填！')
+        return
+      }
+      if (this.form.getFieldValue('isbiaoxian') == -1) {
+        callback('患者ICON研究必须符合入选标准，请仔细核对入选标准后再选择。')
+        return
+      }
+      callback()
+    },
+    iskuozhangRule (rule, value, callback) {
+      if (!value) {
+        callback('该选项必填！')
+        return
+      }
+      if (this.form.getFieldValue('iskuozhang') == 1) {
+        callback('患者ICON研究必须符合入选标准，请仔细核对入选标准后再选择。')
+        return
+      }
+      callback()
+    },
+    isjiazhongRule (rule, value, callback) {
+      if (!value) {
+        callback('该选项必填！')
+        return
+      }
+      if (this.form.getFieldValue('isjiazhong') == 1) {
+        callback('患者ICON研究必须符合入选标准，请仔细核对入选标准后再选择。')
+        return
+      }
+      callback()
+    },
+    isshiyanRule (rule, value, callback) {
+      if (!value) {
+        callback('该选项必填！')
+        return
+      }
+      if (this.form.getFieldValue('isshiyan') == 1) {
+        callback('患者ICON研究必须符合入选标准，请仔细核对入选标准后再选择。')
+        return
+      }
+      callback()
+    },
+    istongyiRule (rule, value, callback) {
+      if (!value) {
+        callback('该选项必填！')
+        return
+      }
+      if (this.form.getFieldValue('istongyi') == 1) {
+        callback('患者ICON研究必须符合入选标准，请仔细核对入选标准后再选择。')
+        return
+      }
+      callback()
+    },
     isIdCardNo(rule, value, callback) {
+      if (!value) {
+        callback('该选项必填！')
+        return
+      }
       if (this.form.getFieldValue('work') === 4 && !value) {
         callback();
         return;
