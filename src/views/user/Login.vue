@@ -18,7 +18,7 @@
             <a-input
               size="large"
               type="text"
-              placeholder="账号或学生组织名称"
+              :placeholder="$t('user.login.acc.placeholder.org')"
               v-decorator="[
                 'username_org',
                 {rules: [{ required: true, message: $t('user.org.userName.required') }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
@@ -31,7 +31,7 @@
           <a-form-item>
             <a-input-password
               size="large"
-              placeholder="密码"
+              :placeholder="$t('user.login.psw.placeholder.org')"
               v-decorator="[
                 'password_org',
                 {rules: [{ required: true, message: $t('user.password.required') }], validateTrigger: 'blur'}
@@ -47,7 +47,7 @@
             <a-input
               size="large"
               type="text"
-              placeholder="账号"
+              :placeholder="$t('user.login.acc.placeholder.admin')"
               v-decorator="[
                 'username_admin',
                 {rules: [{ required: true, message: $t('user.admin.userName.required') }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
@@ -60,7 +60,7 @@
           <a-form-item>
             <a-input-password
               size="large"
-              placeholder="密码"
+              :placeholder="$t('user.login.psw.placeholder.admin')"
               v-decorator="[
                 'password_admin',
                 {rules: [{ required: true, message: $t('user.password.required') }], validateTrigger: 'blur'}
@@ -97,12 +97,13 @@
       </a-tabs>
 
       <a-form-item>
-        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">自动登入</a-checkbox>
+        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">{{ $t('user.login.remember.me') }}</a-checkbox>
         <router-link
+          :hidden="customActiveKey !== 'tab1'"
           :to="{ name: 'recover', params: { user: 'aaa'} }"
           class="forge-password"
           style="float: right;"
-        >忘记密码</router-link>
+        >{{ $t('user.login.forget.password') }}</router-link>
       </a-form-item>
 
       <a-form-item style="margin-top:24px">
@@ -113,7 +114,7 @@
           class="login-button"
           :loading="state.loginBtn"
           :disabled="state.loginBtn"
-        >登 录</a-button>
+        >{{ $t('user.login.main.button') }}</a-button>
       </a-form-item>
 
 <!--      <div class="user-login-other">-->
@@ -164,6 +165,10 @@ export default {
     }
   },
   created () {
+    console.log('created')
+    storage.clearAll()
+    console.log('加载页面时清空storage')
+      // store.replaceState({})
     // get2step({ })
     //   .then(res => {
     //     this.requiredTwoStepCaptcha = res.result.stepCode
