@@ -1,5 +1,11 @@
 <template>
   <div class="page-header-index-wide">
+    <div class="menuSty">
+      <a-menu mode="horizontal" style="">
+        <a-menu-item key="zk" @click="zkData"> 支扩</a-menu-item>
+        <a-menu-item key="icon" @click="iconData"> ICON</a-menu-item>
+      </a-menu>
+    </div>
     <a-row :gutter="10">
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
         <chart-card :loading="loading" title="本月患者数" :total="indexData.currMonthPatients">
@@ -177,7 +183,6 @@
             
         </a-card>
       </a-col>
-      </a-col>
     </a-row>
   </div>
 </template>
@@ -225,6 +230,7 @@ export default {
       showFile:true,
       showList:false,
       fileName:'',
+      current: '',
       file:"text-align: center; padding: 10px 0 10px 25px;"
     };
   },
@@ -238,35 +244,13 @@ export default {
       }
       this.fileName = res.fileName;
     });
-    getAllNumbers().then(res => {
+    getAllNumbers('').then(res => {
       this.indexData = res.data.allNumbers;
     });
     getMyWork().then(res => {
       this.myWork = res.data.myWork;
     });
-    getPatientsAndBasiss().then(res => {
-      const keyMap = { monthDate: 'x', monthPatients: 'y' };
-      const keyMap1 = { monthDate: 'x', monthBasis: 'y' }
-      _.each(res.data.eachMonthPatients, function(item, index) {
-        //  console.log(item)
-        item.monthDate = item.monthDate + "月"
-        // item.monthPatients=item.monthPatients;
-        that.eachMonthPatients[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap[key] || key
-          newData[newKey] = item[key]
-          return newData
-        }, {})
-      })
-      _.each(res.data.eachMonthBasiss, function(item, index) {
-        //  console.log(item)
-        item.monthDate = item.monthDate + "月";
-        that.eachMonthBasiss[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap1[key] || key;
-          newData[newKey] = item[key];
-          return newData;
-        }, {})
-      })
-    })
+    this.getAllPatientData('')
     manualList().then(res => {
       that.rankList = res.data
     })
@@ -276,10 +260,48 @@ export default {
     // this.loadComments()
   },
   methods: {
+    getAllPatientData (data) {
+      var that = this
+      getPatientsAndBasiss(data).then(res => {
+        const keyMap = { monthDate: 'x', monthPatients: 'y' };
+        const keyMap1 = { monthDate: 'x', monthBasis: 'y' }
+        _.each(res.data.eachMonthPatients, function(item, index) {
+          //  console.log(item)
+          item.monthDate = item.monthDate + "月"
+          // item.monthPatients=item.monthPatients;
+          that.eachMonthPatients[index] = Object.keys(item).reduce((newData, key) => {
+            let newKey = keyMap[key] || key
+            newData[newKey] = item[key]
+            return newData
+          }, {})
+        })
+        _.each(res.data.eachMonthBasiss, function(item, index) {
+          //  console.log(item)
+          item.monthDate = item.monthDate + "月";
+          that.eachMonthBasiss[index] = Object.keys(item).reduce((newData, key) => {
+            let newKey = keyMap1[key] || key;
+            newData[newKey] = item[key];
+            return newData;
+          }, {})
+        })
+      })
+    },
     // loadComments() {
     //   var list = JSON.parse(localStorage.getItem("pro__Access-Token"));
     //   this.uploadUrl = list.value.uploadPicURL;
     // },
+    zkData () {
+      getAllNumbers(-1).then(res => {
+        this.indexData = res.data.allNumbers;
+      });
+      this.getAllPatientData(-1)
+    },
+    iconData () {
+      getAllNumbers(1).then(res => {
+        this.indexData = res.data.allNumbers;
+      });
+      this.getAllPatientData(1)
+    },
     handleChange(info) {
        
         var url = info.file.response.fileName
@@ -443,6 +465,19 @@ export default {
   padding: 2px 10px;
   font-size: 14px;
   line-height: 22px;
+}
+
+.sxDataBox{
+  position: absolute;
+  left: 100px;
+  top: 100px;
+}
+
+.menuSty {
+  position: fixed;
+  top: 17px;
+  z-index: 999;
+  left: 276px;
 }
 
 </style>

@@ -249,18 +249,15 @@ export default {
         this[t] = false
       }
     },
-    dealAnswers(answer) {
-      if (answer && !_.isEmpty(answer)) {
-        if (answer.isIcon === 1) {
-          this.isShowPat = true
-        }
-      }
-      return answer
-    },
     edit(value) {
       this.options.title = '编辑患者';
       this.patientId = value.patientId
       value.residence = [value.addressP, value.addressC]
+      if (value.isIcon === 1) {
+        this.isShowPat = true
+      } else {
+        this.isShowPat = false
+      }
       setTimeout(() => {
         this.form.setFieldsValue({
           card: value.card,
@@ -282,6 +279,17 @@ export default {
           doctorName: value.doctorName,
           isIcon: String(value.isIcon)
         })
+        if (value.isIcon == 1) {
+          console.log(value.isIcon)
+          this.form.setFieldsValue({
+            isbiaoxian: String(value.isIcon),
+            iskuozhang: '-1',
+            isjiazhong: '-1',
+            isshiyan: '-1',
+            istongyi: '-1'
+          })
+          
+        }
         if (value.startDate)
           this.form.setFieldsValue({
             startDate: moment(value.startDate, 'YYYY-MM-DD')

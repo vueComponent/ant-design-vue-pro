@@ -38,7 +38,7 @@
                 <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /> -->
               </div>
               <a-form-item label="检查日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" v-decorator="['t1', {...dateRequire, initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                <a-date-picker placeholder="请选择" v-decorator="['t1', {initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
               </a-form-item> 
               <a-form-item label="报告上传 :" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="showOcr">
                 <div class="clearfix" style="margin-top: 10px;">

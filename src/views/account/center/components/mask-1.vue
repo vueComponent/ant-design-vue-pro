@@ -919,6 +919,10 @@ export default {
       e.preventDefault()
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
+        if (this.form.getFieldValue('b3') >= this.form.getFieldValue('b2')) {
+          this.$message.warning('过去一年的急性加重次数必须大于等于过去一年的住院急性加重次数');
+          return false
+        }
         if (!errors) {
           var re = this.form.getFieldsValue()
           var that = this
@@ -948,7 +952,6 @@ export default {
             'b201': typeof re['b201'] !== 'undefined' ? re['b201'].join(',') : '',
             'b211': typeof re['b211'] !== 'undefined' ? re['b211'].format('YYYY-MM-DD') : ''
           }
-          console.log(re)
           this.patientBasis.status = 2
           var params = new URLSearchParams()
           if (this.zkbszl && this.zkbszl.zkbszlId) {

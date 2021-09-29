@@ -3,9 +3,10 @@ import {
   axios
 } from '@/utils/request'
 
-export function getAllNumbers() {
+export function getAllNumbers(params) {
   return axios({
     url: '/index/getAllNumbers',
+    params: {isIcon: params},
     method: 'post'
   })
 }
@@ -15,9 +16,10 @@ export function getMyWork() {
     method: 'post',
   })
 }
-export function getPatientsAndBasiss() {
+export function getPatientsAndBasiss(params) {
   return axios({
     url: '/index/getPatientsAndBasiss',
+    params: {isIcon: params},
     method: 'post',
   })
 }

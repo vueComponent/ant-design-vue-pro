@@ -35,7 +35,7 @@
             <div class="baselineForm" :style="baselineFormStyle">
               <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
               <div class="title">1.体格检查</div>
-              <a-form-item label="(1) SpO2:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(1) 经皮血氧饱和度SpO2:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input v-decorator="['a5', {...inputRequired, initialValue: initValue('a5')}]" style="width: 240px;" addonAfter="%" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(2) 身高:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
