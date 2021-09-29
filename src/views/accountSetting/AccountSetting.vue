@@ -6,7 +6,7 @@
           <a-col :span='18'>
             <a-row>
               <a-col :span='4' :offset='5'>
-                <a-avatar src='http://st.so.com/stu?a=siftview&imgkey=t024632b9b804821bd9.jpg&cut=0&fromurl=http://www.yhd.com/S-theme/22432/&cut=0#sn=13&id=847f8c63d328480ca7fc15be3d66d59a' style='width: 128px;height: 128px'/>
+                <a-avatar :src="avatarUrl" style='width: 128px;height: 128px'/>
               </a-col>
               <a-col :span='2' :offset='1'>
                 <div style='height: 128px;position: relative'>
@@ -17,7 +17,7 @@
             <a-row :gutter='24'>
               <a-col :span='17'>
                 <a-form-item label='恒星号名称' :colon='false'>
-                  <a-input/>
+                  <a-input v-model="nickName"/>
                 </a-form-item>
               </a-col>
               <a-col :span='6'>
@@ -30,8 +30,8 @@
             <a-row :gutter='24'>
               <a-col :span='17'>
                 <a-form-item>
-                  <a-textarea placeholder='这个人很懒，什么都没留下' :autoSize='{minRows: 5, maxRows:5}' style='position: relative'/>
-                  <span style='position: absolute;bottom: 0;right:3px;height: 25px'>0/140</span>
+                  <a-textarea placeholder='这个人很懒，什么都没留下' :autoSize='{minRows: 5, maxRows:5}' style='position: relative' @change="limitNumber" v-model="description"/>
+                  <span style='position: absolute;bottom: 0;right:3px;height: 25px'>{{ number }}/140</span>
                 </a-form-item>
               </a-col>
             </a-row>
@@ -46,12 +46,12 @@
             <a-row :gutter='24'>
               <a-col :span='4'>
                 <a-form-item>
-                  <a-input/>
+                  <a-input v-model="teacherName"/>
                 </a-form-item>
               </a-col>
               <a-col :span='13'>
                 <a-form-item>
-                  <a-input/>
+                  <a-input v-model="teacherContact"/>
                 </a-form-item>
               </a-col>
               <a-col>
@@ -75,8 +75,30 @@
 </template>
 
 <script>
+import storage from 'store'
+import { DETAIL } from '@/store/mutation-types'
+
 export default {
-  name: 'AccountSetting'
+  name: 'AccountSetting',
+  data () {
+    const detail = storage.get(DETAIL)
+    return {
+      description: '',
+      ...detail
+    }
+  },
+  computed: {
+    number: function () {
+      return this.description.length
+    }
+  },
+  methods: {
+   limitNumber (e) {
+     if (this.description.length >= 140) {
+       this.description = this.description.slice(0, 140)
+     }
+   }
+  }
 }
 </script>
 

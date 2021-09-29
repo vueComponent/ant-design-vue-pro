@@ -97,7 +97,7 @@
           <a-col :span='1'>
             <a-button type='primary'>保存</a-button>
           </a-col>
-          <a-col :span='1' :offset='1'>
+          <a-col :span='1'>
             <a-button type='primary'>保存并发布</a-button>
           </a-col>
         </a-row>

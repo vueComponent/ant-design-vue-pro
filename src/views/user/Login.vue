@@ -139,7 +139,7 @@ import { timeFix } from '@/utils/util'
 // import { getSmsCaptcha, get2step } from '@/api/login'
 import { getSmsCaptcha, loginAdmin, loginOrg } from '@/api/login'
 import storage from 'store'
-import { ACCESS_TOKEN, SHOW_NAME, SHOW_AVATAR } from '@/store/mutation-types'
+import { ACCESS_TOKEN, SHOW_NAME, SHOW_AVATAR, DETAIL } from '@/store/mutation-types'
 
 export default {
   components: {
@@ -212,7 +212,6 @@ export default {
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         if (!err) {
-          console.log('login form', values)
           const loginParams = { ...values }
           delete loginParams.username
           if (customActiveKey === 'tab1') {
@@ -232,6 +231,13 @@ export default {
                   storage.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000)
                   storage.set(SHOW_NAME, result.nickName + ' (' + result.organizationName + ')')
                   storage.set(SHOW_AVATAR, result.avatarUrl === undefined ? 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' : result.avatarUrl)
+                  storage.set(DETAIL, {
+                    nickName: result.nickName,
+                    avatarUrl: result.avatarUrl,
+                    description: result.description,
+                    teacherName: result.teacherName,
+                    teacherContact: result.teacherContact
+                  })
                   console.log('token in storage:')
                   console.log(storage.get(ACCESS_TOKEN))
                   this.loginSuccess()
