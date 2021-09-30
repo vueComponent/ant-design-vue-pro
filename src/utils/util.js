@@ -1,7 +1,7 @@
 export function timeFix () {
   const time = new Date()
   const hour = time.getHours()
-  return hour < 9 ? '😅起这么早？' : hour <= 11 ? '到点了，上号！' : hour <= 13 ? '中饭吃完了没？，' : hour < 20 ? '😅还没下班？' : '😅还加班呢？'
+  return hour < 9 ? '😅起这么早？' : hour <= 11 ? '到点了，上号！' : hour <= 13 ? '中饭吃完了没？' : hour < 20 ? '😅还没下班？' : '😅还加班呢？'
 }
 
 export function welcome () {

@@ -10,7 +10,7 @@
           <div class="header">
             <a href="/">
               <img src="~@/assets/logo2.png" class="logo" alt="logo">
-              <span class="title">济星云中台</span>
+              <span class="title">{{ $t('layouts.userLayout.name') }}</span>
             </a>
           </div>
           <div class="desc">
@@ -22,9 +22,9 @@
 
         <div class="footer">
           <div class="links">
-            <a href="_self">帮助</a>
-            <a href="_self">隐私</a>
-            <a href="_self">条款</a>
+            <a href="_self">{{ $t('layouts.userLayout.footer.help') }}</a>
+            <a href="_self">{{ $t('layouts.userLayout.footer.privacy') }}</a>
+            <a href="_self">{{ $t('layouts.userLayout.footer.agreements') }}</a>
           </div>
           <div class="copyright">
             Copyright &copy; 2021 Tongji University
@@ -70,7 +70,7 @@ export default {
   .container {
     width: 100%;
     min-height: 100%;
-    background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
+    background: #f0f2f5 url('../assets/background.svg') no-repeat 50%;
     background-size: 100%;
     //padding: 50px 0 84px;
     position: relative;
