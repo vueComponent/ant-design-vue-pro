@@ -59,6 +59,8 @@ const constantRouterComponents = {
   PostingManagement: () => import('@/views/postingManagement/PostingManagement'),
   PostingLibrary: () => import('@/views/postingManagement/PostingLibrary'),
   NewPosting: () => import('@/views/postingManagement/NewPosting'),
+  EditPosting: () => import('@/views/postingManagement/EditPosting'),
+  PostingDetail: () => import('@/views/postingManagement/PostingDetail'),
   // DataBoard
   DataBoard: () => import('@/views/dataBoard/DataBoard'),
 

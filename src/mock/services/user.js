@@ -676,6 +676,26 @@ const userNav = options => {
       component: 'NewPosting'
     },
     {
+      name: 'editPosting',
+      parentId: 7,
+      id: 74,
+      meta: {
+        title: '编辑帖子',
+        show: true
+      },
+      component: 'EditPosting'
+    },
+    {
+      name: 'postingDetail',
+      parentId: 7,
+      id: 75,
+      meta: {
+        title: '帖子详情',
+        show: true
+      },
+      component: 'PostingDetail'
+    },
+    {
       name: 'dataBoard',
       parentId: 0,
       id: 8,

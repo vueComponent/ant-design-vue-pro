@@ -65,6 +65,7 @@
 import { STable, Ellipsis } from '@/components'
 import StepByStepModal from '../list/modules/StepByStepModal'
 import CreateForm from '../list/modules/CreateForm'
+import request from '@/utils/request'
 
 const columns = [
   {
@@ -176,6 +177,12 @@ export default {
       this.form.validateFields((err, value) => {
         console.log(err)
         console.log(value)
+      })
+    },
+    updateData () {
+      request({
+        url: '/team/adminGetTeamList',
+        method: 'post'
       })
     }
   }
