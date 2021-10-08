@@ -263,6 +263,8 @@ export default {
     getAllPatientData (data) {
       var that = this
       getPatientsAndBasiss(data).then(res => {
+        that.eachMonthPatients = []
+        that.eachMonthBasiss = []
         const keyMap = { monthDate: 'x', monthPatients: 'y' };
         const keyMap1 = { monthDate: 'x', monthBasis: 'y' }
         _.each(res.data.eachMonthPatients, function(item, index) {

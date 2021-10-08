@@ -32,7 +32,7 @@
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <a-form-item label="(1) 急性加重发作日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(1) 急性加重日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['t', {...dateRequire, initialValue: initValue('t', 'time')}]"></a-date-picker>
               </a-form-item>
               <a-form-item label="(2) 急性加重的症状(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">

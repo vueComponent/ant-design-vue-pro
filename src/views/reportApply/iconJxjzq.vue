@@ -51,7 +51,7 @@ export default {
           dataIndex: 'age',
           width: '90px'
         },{
-          title: '本次急性加重发作日期',
+          title: '本次急性加重日期',
           dataIndex: 't',
           width: '180px'
         },{
