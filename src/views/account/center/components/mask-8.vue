@@ -799,7 +799,7 @@ export default {
         if (answer.c41 === 1) {
           this.controlc41 = true
         }
-        if (answer.d === -1) {
+        if (answer.d === '-1') {
           this.controld = true
         }
       }
