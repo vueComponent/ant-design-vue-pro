@@ -41,7 +41,7 @@ export default {
   padding: 0 32px 32px 72px;
 
   .list {
-    margin: 25px 0 0;
+    margin: 16px 0 0;
     padding: 0;
     list-style: none;
 

@@ -153,14 +153,27 @@
         </a-card>
       </a-col>
       <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '10px' }">
-          <a-card :loading="loading" title="资料下载" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '180px' }">
-            <div class="salesCard">
-              <rank-list :list="rankList" />
+          <a-card :loading="loading" title="资料下载" :tab-list="tabList" :active-tab-key="key"
+      @tabChange="key => onTabChange(key, 'key')" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '208px' }">
+            <div class="salesCard" v-if="key === '1'">
+              <rank-list :list="rankList1" />
+            </div>
+            <div class="salesCard" v-if="key === '2'">
+              <rank-list :list="rankList2" />
+            </div>
+            <div class="salesCard" v-if="key === '3'">
+              <rank-list :list="rankList3" />
+            </div>
+            <div class="salesCard" v-if="key === '4'">
+              <rank-list :list="rankList4" />
+            </div>
+            <div class="salesCard" v-if="key === '5'">
+              <rank-list :list="rankList5" />
             </div>
         </a-card>
       </a-col>
       <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '10px' }">
-          <a-card :loading="loading" title="伦理批件上传" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '170px' }">
+          <a-card :loading="loading" title="伦理批件上传" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '140px' }">
             <div class="uploadFile" :style="file" >
               <p v-if="showFile">
                   <img src="../../assets/pdf.png"/>
@@ -216,7 +229,11 @@ export default {
       indexData: {},
       myWork: {},
       loading: true,
-      rankList: [],
+      rankList1: [],
+      rankList2: [],
+      rankList3: [],
+      rankList4: [],
+      rankList5: [],
       eachMonthPatients: [],
       eachMonthBasiss: [],
       pieStyle: {
@@ -231,7 +248,9 @@ export default {
       showList:false,
       fileName:'',
       current: '',
-      file:"text-align: center; padding: 10px 0 10px 25px;"
+      file:"text-align: center; padding: 10px 0 10px 25px;",
+      tabList: [{key: '1', tab: '支扩'},{key: '2', tab: 'ICON'},{key: '3', tab: '伦理'},{key: '4', tab: '操作手册'},{key: '5', tab: '其他'}],
+      key: '1'
     };
   },
   created() {
@@ -252,7 +271,11 @@ export default {
     });
     this.getAllPatientData('')
     manualList().then(res => {
-      that.rankList = res.data
+      that.rankList1 = _.filter(res.data,function(v){return v.type === 1})
+      that.rankList2 = _.filter(res.data,function(v){return v.type === 2})
+      that.rankList3 = _.filter(res.data,function(v){return v.type === 3})
+      that.rankList4 = _.filter(res.data,function(v){return v.type === 4})
+      that.rankList5 = _.filter(res.data,function(v){return v.type === 5})
     })
     setTimeout(() => {
       this.loading = !this.loading;
@@ -332,6 +355,10 @@ export default {
           return
         }
         
+    },
+    onTabChange(key, type) {
+      console.log(key, type);
+      this[type] = key;
     },
   },
 };
@@ -480,6 +507,19 @@ export default {
   top: 17px;
   z-index: 999;
   left: 276px;
+}
+
+/deep/ .ant-card-head-wrapper{
+  float: left;
+}
+
+/deep/ .ant-card-head .ant-tabs{
+  float: right;
+  clear: none;
+}
+.salesCard{
+  height: calc(180px - 48px);
+  overflow: auto;
 }
 
 </style>
