@@ -1,5 +1,11 @@
 <template>
   <div class="page-header-index-wide">
+    <div class="menuSty">
+      <a-menu mode="horizontal" style="">
+        <a-menu-item key="zk" @click="zkData"> 支扩</a-menu-item>
+        <a-menu-item key="icon" @click="iconData"> ICON</a-menu-item>
+      </a-menu>
+    </div>
     <a-row :gutter="10">
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
         <chart-card :loading="loading" title="本月患者数" :total="indexData.currMonthPatients">
@@ -147,14 +153,27 @@
         </a-card>
       </a-col>
       <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '10px' }">
-          <a-card :loading="loading" title="资料下载" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '180px' }">
-            <div class="salesCard">
-              <rank-list :list="rankList" />
+          <a-card :loading="loading" title="资料下载" :tab-list="tabList" :active-tab-key="key"
+      @tabChange="key => onTabChange(key, 'key')" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '208px' }">
+            <div class="salesCard" v-if="key === '1'">
+              <rank-list :list="rankList1" />
+            </div>
+            <div class="salesCard" v-if="key === '2'">
+              <rank-list :list="rankList2" />
+            </div>
+            <div class="salesCard" v-if="key === '3'">
+              <rank-list :list="rankList3" />
+            </div>
+            <div class="salesCard" v-if="key === '4'">
+              <rank-list :list="rankList4" />
+            </div>
+            <div class="salesCard" v-if="key === '5'">
+              <rank-list :list="rankList5" />
             </div>
         </a-card>
       </a-col>
       <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '10px' }">
-          <a-card :loading="loading" title="伦理批件上传" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '170px' }">
+          <a-card :loading="loading" title="伦理批件上传" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '140px' }">
             <div class="uploadFile" :style="file" >
               <p v-if="showFile">
                   <img src="../../assets/pdf.png"/>
@@ -176,7 +195,6 @@
             </div>
             
         </a-card>
-      </a-col>
       </a-col>
     </a-row>
   </div>
@@ -211,7 +229,11 @@ export default {
       indexData: {},
       myWork: {},
       loading: true,
-      rankList: [],
+      rankList1: [],
+      rankList2: [],
+      rankList3: [],
+      rankList4: [],
+      rankList5: [],
       eachMonthPatients: [],
       eachMonthBasiss: [],
       pieStyle: {
@@ -225,7 +247,10 @@ export default {
       showFile:true,
       showList:false,
       fileName:'',
-      file:"text-align: center; padding: 10px 0 10px 25px;"
+      current: '',
+      file:"text-align: center; padding: 10px 0 10px 25px;",
+      tabList: [{key: '1', tab: '支扩'},{key: '2', tab: 'ICON'},{key: '3', tab: '伦理'},{key: '4', tab: '操作手册'},{key: '5', tab: '其他'}],
+      key: '1'
     };
   },
   created() {
@@ -238,37 +263,19 @@ export default {
       }
       this.fileName = res.fileName;
     });
-    getAllNumbers().then(res => {
+    getAllNumbers('').then(res => {
       this.indexData = res.data.allNumbers;
     });
     getMyWork().then(res => {
       this.myWork = res.data.myWork;
     });
-    getPatientsAndBasiss().then(res => {
-      const keyMap = { monthDate: 'x', monthPatients: 'y' };
-      const keyMap1 = { monthDate: 'x', monthBasis: 'y' }
-      _.each(res.data.eachMonthPatients, function(item, index) {
-        //  console.log(item)
-        item.monthDate = item.monthDate + "月"
-        // item.monthPatients=item.monthPatients;
-        that.eachMonthPatients[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap[key] || key
-          newData[newKey] = item[key]
-          return newData
-        }, {})
-      })
-      _.each(res.data.eachMonthBasiss, function(item, index) {
-        //  console.log(item)
-        item.monthDate = item.monthDate + "月";
-        that.eachMonthBasiss[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap1[key] || key;
-          newData[newKey] = item[key];
-          return newData;
-        }, {})
-      })
-    })
+    this.getAllPatientData('')
     manualList().then(res => {
-      that.rankList = res.data
+      that.rankList1 = _.filter(res.data,function(v){return v.type === 1})
+      that.rankList2 = _.filter(res.data,function(v){return v.type === 2})
+      that.rankList3 = _.filter(res.data,function(v){return v.type === 3})
+      that.rankList4 = _.filter(res.data,function(v){return v.type === 4})
+      that.rankList5 = _.filter(res.data,function(v){return v.type === 5})
     })
     setTimeout(() => {
       this.loading = !this.loading;
@@ -276,10 +283,50 @@ export default {
     // this.loadComments()
   },
   methods: {
+    getAllPatientData (data) {
+      var that = this
+      getPatientsAndBasiss(data).then(res => {
+        that.eachMonthPatients = []
+        that.eachMonthBasiss = []
+        const keyMap = { monthDate: 'x', monthPatients: 'y' };
+        const keyMap1 = { monthDate: 'x', monthBasis: 'y' }
+        _.each(res.data.eachMonthPatients, function(item, index) {
+          //  console.log(item)
+          item.monthDate = item.monthDate + "月"
+          // item.monthPatients=item.monthPatients;
+          that.eachMonthPatients[index] = Object.keys(item).reduce((newData, key) => {
+            let newKey = keyMap[key] || key
+            newData[newKey] = item[key]
+            return newData
+          }, {})
+        })
+        _.each(res.data.eachMonthBasiss, function(item, index) {
+          //  console.log(item)
+          item.monthDate = item.monthDate + "月";
+          that.eachMonthBasiss[index] = Object.keys(item).reduce((newData, key) => {
+            let newKey = keyMap1[key] || key;
+            newData[newKey] = item[key];
+            return newData;
+          }, {})
+        })
+      })
+    },
     // loadComments() {
     //   var list = JSON.parse(localStorage.getItem("pro__Access-Token"));
     //   this.uploadUrl = list.value.uploadPicURL;
     // },
+    zkData () {
+      getAllNumbers(-1).then(res => {
+        this.indexData = res.data.allNumbers;
+      });
+      this.getAllPatientData(-1)
+    },
+    iconData () {
+      getAllNumbers(1).then(res => {
+        this.indexData = res.data.allNumbers;
+      });
+      this.getAllPatientData(1)
+    },
     handleChange(info) {
        
         var url = info.file.response.fileName
@@ -308,6 +355,10 @@ export default {
           return
         }
         
+    },
+    onTabChange(key, type) {
+      console.log(key, type);
+      this[type] = key;
     },
   },
 };
@@ -443,6 +494,32 @@ export default {
   padding: 2px 10px;
   font-size: 14px;
   line-height: 22px;
+}
+
+.sxDataBox{
+  position: absolute;
+  left: 100px;
+  top: 100px;
+}
+
+.menuSty {
+  position: fixed;
+  top: 17px;
+  z-index: 999;
+  left: 276px;
+}
+
+/deep/ .ant-card-head-wrapper{
+  float: left;
+}
+
+/deep/ .ant-card-head .ant-tabs{
+  float: right;
+  clear: none;
+}
+.salesCard{
+  height: calc(180px - 48px);
+  overflow: auto;
 }
 
 </style>
