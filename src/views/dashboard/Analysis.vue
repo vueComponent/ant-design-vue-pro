@@ -155,19 +155,19 @@
       <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '10px' }">
           <a-card :loading="loading" title="资料下载" :tab-list="tabList" :active-tab-key="key"
       @tabChange="key => onTabChange(key, 'key')" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '208px' }">
-            <div class="salesCard" v-if="key === '1'">
+            <div class="card-wrap" v-if="key === '1'">
               <rank-list :list="rankList1" />
             </div>
-            <div class="salesCard" v-if="key === '2'">
+            <div class="card-wrap" v-if="key === '2'">
               <rank-list :list="rankList2" />
             </div>
-            <div class="salesCard" v-if="key === '3'">
+            <div class="card-wrap" v-if="key === '3'">
               <rank-list :list="rankList3" />
             </div>
-            <div class="salesCard" v-if="key === '4'">
+            <div class="card-wrap" v-if="key === '4'">
               <rank-list :list="rankList4" />
             </div>
-            <div class="salesCard" v-if="key === '5'">
+            <div class="card-wrap" v-if="key === '5'">
               <rank-list :list="rankList5" />
             </div>
         </a-card>
@@ -517,8 +517,8 @@ export default {
   float: right;
   clear: none;
 }
-.salesCard{
-  height: calc(180px - 48px);
+/deep/ .card-wrap{
+  height: calc(208px - 48px);
   overflow: auto;
 }
 
