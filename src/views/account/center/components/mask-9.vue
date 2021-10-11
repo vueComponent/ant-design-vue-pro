@@ -32,7 +32,7 @@
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
+              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!（ICON患者，必须填写实际检测值。基线访视辅助检查可使用入组前6个月内的检查结果，但要求从检查日期到入组日期之间未发生急性加重，否则需要在基线数据收集时重新辅助检查）</p>
               <div style="background-color:#f7f8f8;overflow:hidden">
                 <a style="float: right;font-size:12px;line-height:40px;margin-right: 12px;font-weight: bold;" @click="showOcr = !showOcr">OCR</a>
               </div>
@@ -389,7 +389,7 @@ export default {
         this.fileList.forEach((f,i) => {
           if(f.response){
               that.$set(that.fileList,i,{
-                name: f.name,
+                name: f.response.fileName,
                 status: 'done',
                 uid: f.uid,
                 url: f.response.data.src

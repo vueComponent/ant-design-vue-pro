@@ -491,7 +491,7 @@ export default {
         this.fileList1.forEach((f,i) => {
           if(f.response){
               that.$set(that.fileList1,i,{
-                name: f.name,
+                name: f.response.fileName,
                 status: 'done',
                 uid: f.uid,
                 url: f.response.data.src
@@ -511,7 +511,7 @@ export default {
         this.fileList2.forEach((f,i) => {
           if(f.response){
               that.$set(that.fileList2,i,{
-                name: f.name,
+                name: f.response.fileName,
                 status: 'done',
                 uid: f.uid,
                 url: f.response.data.src

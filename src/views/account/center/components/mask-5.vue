@@ -33,14 +33,14 @@
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
+              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!（ICON患者，必须填写实际检测值。基线访视辅助检查可使用入组前6个月内的检查结果，但要求从检查日期到入组日期之间未发生急性加重，否则需要在基线数据收集时重新辅助检查）</p>
               <div class="title">1.CT基本信息
                 <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /> -->
               </div>
               <a-form-item label="(1) CT检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
-              <a-form-item label="(2) 图像类型:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(2) 图像类型(建议HRCT或者1mm薄层CT):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a2', { initialValue: initValue('a2')}]">
                   <a-radio value="1">HRCT</a-radio>
                   <a-radio value="2">CT</a-radio>
@@ -462,7 +462,6 @@ export default {
         'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
         'b': typeof re['b'] !== 'undefined' ? re['b'].join(',') : ''
       }
-      console.log(re)
       this.patientBasis.status = 1
       var params = new URLSearchParams()
       if (this.xbyxx && this.xbyxx.xbyxxId) {
@@ -593,8 +592,9 @@ export default {
         this.spinning = false
         this.fileList.forEach((f,i) => {
           if(f.response){
+            console.log(f)
               that.$set(that.fileList,i,{
-                name: f.name,
+                name: f.response.fileName,
                 status: 'done',
                 uid: f.uid,
                 url: f.response.data.src

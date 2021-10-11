@@ -59,6 +59,12 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controlt2">
+                <a-form-item label="标本类型" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                  <a-radio-group v-decorator="['t3', {...require3, initialValue: initValue('t3')}]">
+                    <a-radio value="1">痰液</a-radio>
+                    <a-radio value="2">肺泡灌洗液</a-radio>
+                  </a-radio-group>
+                </a-form-item>
                 <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['a', {...selectRequired, initialValue: initValue('a', 'array')}]">
                     <a-checkbox value="1" @change="changeSelect($event, 'control1')">细菌</a-checkbox>
@@ -435,6 +441,9 @@ export default {
       },
       require2: {
         rules: [{ required: true, message: '请选择有或无！' }]
+      },
+      require3: {
+        rules: [{ required: true, message: '请选择！' }]
       },
       selectRequired: {
         rules: [{ required: true, message: '请选择！' }]
