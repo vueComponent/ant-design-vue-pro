@@ -25,7 +25,7 @@
                   <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large" shape='square'/>
                   <div class="meta-content" slot="description">
                     <p style='display: -webkit-box;-webkit-line-clamp:2;overflow: hidden;text-overflow: ellipsis;-webkit-box-orient: vertical;'>{{ item.content }}</p>
-                    <span style='float: right'>更新于{{item.updateTime}}   <a-icon type='delete' @click="showDeleteModal(item.id)" style='font-size: 20px'/>   <a-icon type='form' style='font-size: 20px'/></span>
+                    <span style='float: right'>更新于{{item.updateTime}}   <a-icon type='delete' @click="showDeleteModal(item.id)" style='font-size: 20px'/>   <a-icon type='form' @click="goToEditorPosting(item.id)" style='font-size: 20px'/></span>
                   </div>
                 </a-card-meta>
               </a-card>
@@ -97,6 +97,9 @@ export default {
     goToNewPosting (e) {
       console.log('go')
       this.$router.push({ path: '/posting/newPosting' })
+    },
+    goToEditorPosting (e) {
+      this.$router.push({ name: 'editPosting', params: { postingId: e } })
     },
     transferTime (time) {
       const day = time.split(' ')

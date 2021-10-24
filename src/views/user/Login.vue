@@ -139,7 +139,7 @@ import { timeFix } from '@/utils/util'
 // import { getSmsCaptcha, get2step } from '@/api/login'
 import { getSmsCaptcha, loginAdmin, loginOrg } from '@/api/login'
 import storage from 'store'
-import { ACCESS_TOKEN, SHOW_NAME, SHOW_AVATAR, DETAIL } from '@/store/mutation-types'
+import { ACCESS_TOKEN, SHOW_NAME, SHOW_AVATAR, DETAIL, ROLE_ID } from '@/store/mutation-types'
 
 export default {
   components: {
@@ -238,6 +238,7 @@ export default {
                     teacherName: result.teacherName,
                     teacherContact: result.teacherContact
                   })
+                  storage.set(ROLE_ID, 'organization')
                   console.log('token in storage:')
                   console.log(storage.get(ACCESS_TOKEN))
                   this.loginSuccess()
@@ -266,6 +267,7 @@ export default {
                 storage.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000)
                 storage.set(SHOW_NAME, result.name)
                 storage.set(SHOW_AVATAR, result.avatarUrl === undefined ? 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' : result.avatarUrl)
+                storage.set(ROLE_ID, 'admin')
                 console.log('token in storage:')
                 console.log(storage.get(ACCESS_TOKEN))
                 this.loginSuccess()

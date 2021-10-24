@@ -21,7 +21,7 @@
                   <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large" shape="square"/>
                   <div class="meta-content" slot="description">
                     <p style="display: -webkit-box;-webkit-line-clamp:2;overflow: hidden;text-overflow: ellipsis;-webkit-box-orient: vertical;">{{ item.content }}</p>
-                    <span style="float: right">更新于{{item.updateTime}}  <a-icon type="form"/></span>
+                    <span style="float: right">更新于{{item.updateTime}}  <a-icon type="form" @click="goToEditorPosting(item.postingId)"/></span>
                   </div>
                 </a-card-meta>
               </a-card>
@@ -56,7 +56,7 @@
                 <a slot="title">{{ item.title }}</a>
               </a-list-item-meta>
               <div slot="actions">
-                <router-link :to="{name: 'posting/posting', params: {postingId: item.id}}">查看</router-link>
+                <router-link :to="{name: 'postingDetail', params: {postingId: item.postingId}}">查看</router-link>
               </div>
               <div slot="actions">
                 <a @click="showDeleteModal(item.id)">删除</a>
@@ -127,6 +127,7 @@ export default {
           for (const key in data) {
             nearData.push({
               id: key,
+              postingId: data[key].id,
               title: data[key].title,
               avatar: data[key].firstPicUrl,
               content: data[key].content,
@@ -149,6 +150,7 @@ export default {
           for (const key in records) {
             publishedData.push({
               id: key,
+              postingId: records[key].id,
               title: records[key].title,
               avatar: records[key].firstPicUrl,
               description: records[key].content,
@@ -172,6 +174,9 @@ export default {
     goToPostingLibrary (e) {
       console.log('go')
       this.$router.push({ path: '/posting/postingLibrary' })
+    },
+    goToEditorPosting (e) {
+      this.$router.push({ name: 'editPosting', params: { postingId: e } })
     },
     transferTime (time) {
       const day = time.split(' ')

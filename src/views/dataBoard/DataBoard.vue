@@ -30,7 +30,7 @@
           <div class="extra-wrapper" slot="tabBarExtraContent">
             <div class="extra-item">
               <a>今日</a>
-              <a>本周</a>
+              <a @click="changeViewsOfThisWeek">本周</a>
               <a>本月</a>
             </div>
             <a-range-picker :style="{width: '256px'}" />
@@ -82,7 +82,9 @@ export default {
       loading: true,
       data,
       barData,
-      barData2
+      barData2,
+      viewsOfThisWeek: [],
+      viewsOfThisMonth: []
     }
   },
   created () {
@@ -90,6 +92,7 @@ export default {
     setTimeout(() => {
       this.loading = !this.loading
     }, 1000)
+    this.testFunction()
   },
   methods: {
     updatePostingCount () {
@@ -105,6 +108,53 @@ export default {
             totalViews: data.viewCount,
             beCollectedNumber: data.likeCount
           }
+        })
+    },
+    testFunction () {
+        request({
+          url: '/posting/organizationQueryYesterday24hUV',
+          method: 'get',
+          data: {
+            // id: this.$route.params.postingId,
+            // ...value,
+            // content: this.content
+          }
+        })
+          .then(res => {
+            console.log(res)
+            const data = []
+            for (let i = 0; i < 24; i += 1) {
+              data.push({
+                x: `${i }时`,
+                y: res.data.value[i]
+              })
+            }
+            this.barData = data
+          })
+    },
+    changeViewsOfThisWeek () {
+      if (!this.viewsOfThisWeek.length) {
+        this.requestViewsOfDailyOffset(7)
+      }
+    },
+    requestViewsOfDailyOffset (offset) {
+      request({
+        url: '/posting/organizationQueryTodayOffsetUV',
+        method: 'get',
+        data: {
+          offset
+        }
+      })
+        .then(res => {
+          console.log(res)
+        //   const data = []
+        //   for (let i = 0; i < offset; i += 1) {
+        //     data.push({
+        //       x: `${i }时`,
+        //       y: res.data.value[i]
+        //     })
+        //   }
+        //   this.barData = data
         })
     }
   },

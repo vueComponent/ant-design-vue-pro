@@ -1,10 +1,10 @@
 <template>
   <page-header-wrapper>
     <a-card :bordered="false">
-      <wang-editor/>
+      <wang-editor v-on:editorChange="setEditorContent"/>
     </a-card>
     <a-card :bordered='false'>
-      <a-form layout='inline' :colon='false' labelAlign='left'>
+      <a-form :form="form" layout='inline' :colon='false' labelAlign='left'>
         <a-row>
           <a-col :span='6'>
             <a-form-item :labelCol='{span: 12}' :wrapperCol='{span: 12}'>
@@ -13,9 +13,10 @@
                 <span style='margin: 0 auto;font-size: 12px;width: 50px;white-space: pre-line;line-height: 20px;color: #90939999'>点击右侧上传封面</span>
               </div>
               <a-upload
+                action="https://www.wallbreaker.top/posting/jishiUploadPhoto"
                 name="cover"
                 list-type="picture-card"
-                @change="handleChange"
+                @change="handleChangeImage"
               >
                 <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
                 <div v-else>
@@ -35,7 +36,7 @@
                     <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'>标题</span>
                     <span style='margin: 0 auto;font-size: 12px;width: 50px;white-space: pre-line;line-height: 20px;color: #90939999'>20字以内</span>
                   </div>
-                  <a-input placeholder='请输入标题' style='width: 100%'/>
+                  <a-input placeholder='请输入标题' style='width: 100%' v-decorator="['title']"/>
                 </a-form-item>
               </a-col>
             </a-row>
@@ -46,7 +47,13 @@
                     <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'>帖子主题</span>
                     <span style='margin: 0 auto;font-size: 12px;width: 60px;white-space: pre-line;line-height: 20px;color: #90939999'>可作为用户的筛选条件</span>
                   </div>
-                  <a-select placeholder='请选择' style='width: 100%'/>
+                  <a-select placeholder='请选择' style='width: 100%' v-decorator="['labelId']">
+                    <a-select-option value="21">求职信息</a-select-option>
+                    <a-select-option value="22">学习天地</a-select-option>
+                    <a-select-option value="23">校园活动</a-select-option>
+                    <a-select-option value="24">生活指南</a-select-option>
+                    <a-select-option value="25">其他</a-select-option>
+                  </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span='12'>
@@ -55,20 +62,22 @@
                     <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'>owner/作者</span>
                     <span style='margin: 0 auto;font-size: 12px;width: 100px;white-space: pre-line;line-height: 20px;color: #90939999'>对用户不显示，便于进行推文管理</span>
                   </div>
-                  <a-input placeholder='请输入作者名称/昵称'/>
+                  <a-input placeholder='请输入作者名称/昵称' v-decorator="['owner']"/>
                 </a-form-item>
               </a-col>
             </a-row>
           </a-col>
         </a-row>
         <a-row>
-          <div style='height: 50px;margin-left: 20px'>
-            <a-checkbox style='color: rgba(0, 0, 0, 0.85);' :v-decorator='["hasLink"]'>
-              <span style='font-weight: bold;font-size: 16px'>跳转链接   </span>
-              <span style='color: #90939999'>用户在帖子底部点击可跳转对应页面  </span>
-            </a-checkbox>
-            <a style='text-decoration: underline'>查看效果图</a>
-          </div>
+          <a-form-item>
+            <div style='height: 50px;margin-left: 20px'>
+              <a-checkbox style='color: rgba(0, 0, 0, 0.85);' v-decorator='["hasLink"]'>
+                <span style='font-weight: bold;font-size: 16px'>跳转链接   </span>
+                <span style='color: #90939999'>用户在帖子底部点击可跳转对应页面  </span>
+              </a-checkbox>
+              <a style='text-decoration: underline'>查看效果图</a>
+            </div>
+          </a-form-item>
         </a-row>
         <a-row>
           <a-col :span='6'>
@@ -77,7 +86,7 @@
                 <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'>链接标题</span>
                 <span style='margin: 0 auto;font-size: 12px;width: 70px;white-space: pre-line;line-height: 20px;color: #90939999'>15个字以内</span>
               </div>
-              <a-input placeholder='请输入标签链接'/>
+              <a-input placeholder='请输入标签链接' v-decorator="['linkTitle']"/>
             </a-form-item>
           </a-col>
           <a-col :span='18'>
@@ -85,7 +94,7 @@
               <div slot='label' style='display: flex;flex-direction: column'>
                 <span style='text-align: center;font-weight: bold'>链接</span>
               </div>
-              <a-input placeholder='仅支持微信公众号推文和问卷星链接'/>
+              <a-input placeholder='仅支持微信公众号推文和问卷星链接' v-decorator="['linkUrl']"/>
             </a-form-item>
           </a-col>
         </a-row>
@@ -95,10 +104,10 @@
             <a style='text-decoration: underline'>《济星云社区管理规范》</a>
           </a-col>
           <a-col :span='1'>
-            <a-button type='primary'>保存</a-button>
+            <a-button @click="save" type='primary'>保存</a-button>
           </a-col>
           <a-col :span='1'>
-            <a-button type='primary'>保存并发布</a-button>
+            <a-button @click="saveAndPublish" type='primary'>保存并发布</a-button>
           </a-col>
         </a-row>
       </a-form>
@@ -118,20 +127,112 @@ export default {
 // const editor = new E('#editor')
 // editor.create()
 import WangEditor from '@/components/Editor/WangEditor'
+import request from '@/utils/request'
+import storage from 'store'
+import { ROLE_ID } from '@/store/mutation-types'
 
 export default {
   name: 'newPosting',
+  components: {
+    WangEditor
+  },
   data () {
     return {
       imageUrl: ''
     }
   },
-  components: {
-    WangEditor
+  beforeCreate () {
+    this.form = this.$form.createForm(this, { name: 'search' })
   },
   methods: {
     change () {
       console.log('test')
+    },
+    save () {
+      this.form.validateFields((err, value) => {
+        if(err){
+          console.log(err)
+        }
+        if(storage.get(ROLE_ID)=='organization'){
+          request({
+            url: '/posting/organizationCreatePosting',
+            method: 'post',
+            data: {
+              ...value,
+              content: this.content
+            }
+          })
+            .then(res => {
+              console.log(res)
+            })
+        } else if(storage.get(ROLE_ID)=='admin') {
+          request({
+            url: '/posting/adminCreatePosting',
+            method: 'post',
+            data: {
+              ...value,
+              content: this.content
+            }
+          })
+            .then(res => {
+              console.log(res)
+            })
+        }
+      })
+    },
+    saveAndPublish () {
+      console.log('')
+      this.form.validateFields((err, value) => {
+        if(err){
+          console.log(err)
+        }
+        if(storage.get(ROLE_ID)=='organization'){
+          request({
+            url: '/posting/organizationCreatePosting',
+            method: 'post',
+            data: {
+              ...value,
+              content: this.content
+            }
+          })
+            .then(res => {
+              console.log(res)
+              request({
+                url: '/posting/organizationPublishPosting/' + res.data.id,
+                method: 'get',
+              })
+                .then(res2 =>{
+                  console.log(res2)
+                })
+            })
+        } else if(storage.get(ROLE_ID)=='admin') {
+          request({
+            url: '/posting/adminCreatePosting',
+            method: 'post',
+            data: {
+              ...value,
+              content: this.content
+            }
+          })
+            .then(res => {
+              console.log(res)
+              request({
+                url: '/posting/adminPublishPosting/' +res.data.id,
+                method: 'get',
+              })
+                .then(res2 =>{
+                  console.log(res2)
+                })
+            })
+        }
+      })
+    },
+    setEditorContent (data) {
+      // console.log('success')
+      this.content=data
+    },
+    handleChangeImage (e) {
+      console.log(e)
     }
   }
 }
