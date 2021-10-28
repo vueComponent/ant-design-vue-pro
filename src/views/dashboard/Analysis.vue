@@ -176,7 +176,7 @@
           <a-card :loading="loading" title="伦理批件上传" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '140px' }">
             <div class="uploadFile" :style="file" >
               <p v-if="showFile">
-                  <img src="../../assets/pdf.png"/>
+                  <img style="height: 30px;" src="../../assets/pdf.png"/>
               </p>
               <div v-if="showList" style="margin-bottom: 10px;">
                 <img src="../../assets/file.png" style="margin: -1px 10px 0 0;"/>

@@ -908,7 +908,7 @@ export default {
       }
     },
     handleClick(e) {
-      if (e.key >= 31 && e.key <= 36) {
+      if ((e.key >= 31 && e.key <= 36) || (e.key >= 78 && e.key <= 83)) {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else {
         this.$router.replace('/list/basis/' + this.patientBasisId + '/' + e.key)

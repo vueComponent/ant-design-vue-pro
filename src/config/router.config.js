@@ -254,6 +254,78 @@ export const asyncRouterMap = [{
         meta: { maskId: 4, permission: ['center', 'group'] }
       },
       {
+        path: '/list/basis/:id(\\d+)/67',
+        name: 'mask1',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/account/center/components/mask-1'),
+        meta: { maskId: 67, permission: ['center', 'group'] }
+      },
+      {
+        path: '/list/basis/:id(\\d+)/68',
+        name: 'mask2',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/account/center/components/mask-2'),
+        meta: { maskId: 68, permission: ['center', 'group'] }
+      },
+      {
+        path: '/list/basis/:id(\\d+)/71',
+        name: 'mask5',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/account/center/components/mask-5'),
+        meta: { maskId: 71, permission: ['center', 'group'] }
+      },
+      {
+        path: '/list/basis/:id(\\d+)/72',
+        name: 'mask6',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/account/center/components/mask-6'),
+        meta: { maskId: 72, permission: ['center', 'group'] }
+      },
+      {
+        path: '/list/basis/:id(\\d+)/73',
+        name: 'mask7',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/account/center/components/mask-7'),
+        meta: { maskId: 73, permission: ['center', 'group'] }
+      },
+      {
+        path: '/list/basis/:id(\\d+)/74',
+        name: 'mask8',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/account/center/components/mask-8'),
+        meta: { maskId: 74, permission: ['center', 'group'] }
+      },
+      {
+        path: '/list/basis/:id(\\d+)/75',
+        name: 'mask9',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/account/center/components/mask-9'),
+        meta: { maskId: 75, permission: ['center', 'group'] }
+      },
+      {
+        path: '/list/basis/:id(\\d+)/76',
+        name: 'mask10',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/account/center/components/mask-10'),
+        meta: { maskId: 76, permission: ['center', 'group'] }
+      },
+      {
+        path: '/list/basis/:id(\\d+)/70',
+        name: 'mask4',
+        hidden: true,
+        hideChildrenInMenu: true,
+        component: () => import('@/views/account/center/components/mask-4'),
+        meta: { maskId: 70, permission: ['center', 'group'] }
+      },
+      {
         path: '/basis/question/:id(\\d+)/:qid(\\d+)',
         name: 'BasisQuestion',
         hidden: true,

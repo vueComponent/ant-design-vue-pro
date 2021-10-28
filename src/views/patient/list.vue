@@ -70,7 +70,7 @@
 import moment from 'moment';
 import { STable, Ellipsis } from '@/components'
 import UserDetail from '@/views/list/modules/UserDetail'
-import { getPatientList, deletePatient } from '@/api/patient'
+import { getPatientDataList, deletePatient } from '@/api/patient'
 import CreateForm from '@/views/list/modules/CreateForm'
 import $ from 'jquery'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
@@ -179,7 +179,7 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        return getPatientList(Object.assign(parameter, this.queryParam)).then(res => {
+        return getPatientDataList(Object.assign(parameter, this.queryParam)).then(res => {
           return res;
         });
       },
