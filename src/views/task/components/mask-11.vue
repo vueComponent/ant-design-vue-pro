@@ -237,6 +237,7 @@
                   <a-checkbox value="1">肺炎链球菌多糖疫苗（如：PSV23）</a-checkbox>
                   <a-checkbox value="2">肺炎链球菌辅助疫苗（如：PCV13）</a-checkbox>
                   <a-checkbox value="3">过去1年内患者接受过流感疫苗</a-checkbox>
+                  <a-checkbox value="4">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
               <div class="title">2.非呼吸系统相关治疗</div>

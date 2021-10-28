@@ -23,10 +23,10 @@
                 <a-tab-pane tab="自定义检索" key="1" forceRender>
                   <a-card :bordered="false">
                     <a-form>
-                      <a-form-item label="是否ICON患者" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                      <a-form-item label="是否ICON">
                         <a-radio-group v-model="queryParam.isIcon">
-                          <a-radio value="1">是</a-radio>
                           <a-radio value="-1">否</a-radio>
+                          <a-radio value="1">是</a-radio>
                         </a-radio-group>
                       </a-form-item>
                       <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
@@ -70,7 +70,7 @@
 import moment from 'moment';
 import { STable, Ellipsis } from '@/components'
 import UserDetail from '@/views/list/modules/UserDetail'
-import { getPatientList, deletePatient } from '@/api/patient'
+import { getPatientDataList, deletePatient } from '@/api/patient'
 import CreateForm from '@/views/list/modules/CreateForm'
 import $ from 'jquery'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
@@ -148,8 +148,11 @@ export default {
           dataIndex: 'name',
           width: 100,
           scopedSlots: { customRender: 'name' }
-        },
-        {
+        },{
+          title: '是否ICON',
+          dataIndex: 'research',
+          width: 80,
+        },{
           title: '分支中心',
           dataIndex: 'centerName',
           width: 200
@@ -176,7 +179,7 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        return getPatientList(Object.assign(parameter, this.queryParam)).then(res => {
+        return getPatientDataList(Object.assign(parameter, this.queryParam)).then(res => {
           return res;
         });
       },

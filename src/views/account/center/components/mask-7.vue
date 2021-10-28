@@ -206,7 +206,8 @@
                   <a-radio value="-2">未做</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(4-2) 血清免疫球蛋白检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item  :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <span slot="label">(4-2) 血清免疫球蛋白检查<span style="color: red;">(ICON)：</span></span>
                 <a-radio-group v-decorator="['e2', {...selectRequired, initialValue: initValue('e2')}]" @change="changeRadio($event, 'controle2')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
@@ -265,7 +266,8 @@
                   <a-radio value="-2">未做</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(5-2) 血清补体检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <span slot="label">(5-2) 血清补体检查<span style="color: red;">(ICON)：</span></span>
                 <a-radio-group v-decorator="['e3', {...selectRequired, initialValue: initValue('e3')}]" @change="changeRadio($event, 'controle3')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
@@ -311,7 +313,8 @@
                   <a-radio value="3">未做</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item label="(6-2) α-1 抗蛋白酶基因检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <span slot="label">(6-2) α-1 抗蛋白酶基因检查<span style="color: red;">(ICON)：</span></span>
                 <a-radio-group v-decorator="['e4', {...selectRequired, initialValue: initValue('e4')}]" @change="changeRadio($event, 'controle4')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>

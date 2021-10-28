@@ -85,6 +85,38 @@ export default {
         title: '患者年龄',
         dataIndex: 'age',
         width: 80
+      },{
+        title: '文化程度',
+        dataIndex: 'census',
+        width: 120
+      },{
+        title: '过去两年急性加重住院次数',
+        dataIndex: 'a71',
+        width: 190
+      },{
+        title: '过去一年急性加重住院次数',
+        dataIndex: 'a81',
+        width: 190
+      },{
+        title: '过去1年急性加重次数',
+        dataIndex: 'a91',
+        width: 150
+      },{
+        title: '胸部影像学支扩类型',
+        dataIndex: 'a101',
+        width: 150
+      },{
+        title: '心超小结',
+        dataIndex: 'a111',
+        width: 80
+      },{
+        title: '肺功能结论',
+        dataIndex: 'a121',
+        width: 100
+      },{
+        title: '通气功能减退类型',
+        dataIndex: 'a131',
+        width: 150
       }, {
         title: '入组编号',
         dataIndex: 'fileCode',
@@ -113,11 +145,19 @@ export default {
         title: 'FVC',
         dataIndex: 'a21',
         width: 150
+      },{
+        title: 'FVC%',
+        dataIndex: 'a61',
+        width: 80
       }, {
         title: 'FEV1',
         dataIndex: 'a31',
         width: 150
       }, {
+        title: 'FEV1% ',
+        dataIndex: 'a51',
+        width: 80
+      },{
         title: 'FEV1%FVC',
         dataIndex: 'a41',
         width: 150

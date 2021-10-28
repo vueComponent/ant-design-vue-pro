@@ -102,10 +102,12 @@
               <a-form-item label="(3) 过去一年的急性加重次数" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input addonAfter="次" style="width: 240px;" v-decorator="['b3', {...inputRequired, initialValue: initValue('b3')}]" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(4) 最后一次因急性加重住院的时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <span slot="label"><span>(4) 最后一次因急性加重住院的时间</span><span style="color: red;"> (yyyy-mm-dd)</span></span>
                 <a-input style="width: 240px;" v-decorator="['b4', {rules: [{ required: isIcon, message: '请填写！' }], initialValue: initValue('b4')}]" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item class="no-border" label="最后一次急性加重出院的时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item class="no-border" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <span slot="label"><span>最后一次急性加重出院的时间</span><span style="color: red;"> (yyyy-mm-dd)</span></span>
                 <a-input style="width: 240px;" v-decorator="['b41', {initialValue: initValue('b41')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(5) 有无以下疾病及事件（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
@@ -906,7 +908,7 @@ export default {
       }
     },
     handleClick(e) {
-      if (e.key >= 31 && e.key <= 36) {
+      if ((e.key >= 31 && e.key <= 36) || (e.key >= 78 && e.key <= 83)) {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       } else {
         this.$router.replace('/list/basis/' + this.patientBasisId + '/' + e.key)
@@ -917,6 +919,10 @@ export default {
       e.preventDefault()
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
+        if (this.form.getFieldValue('b2') >= this.form.getFieldValue('b3')) {
+          this.$message.warning('过去一年的急性加重次数必须大于等于过去一年的住院急性加重次数');
+          return false
+        }
         if (!errors) {
           var re = this.form.getFieldsValue()
           var that = this
@@ -946,7 +952,6 @@ export default {
             'b201': typeof re['b201'] !== 'undefined' ? re['b201'].join(',') : '',
             'b211': typeof re['b211'] !== 'undefined' ? re['b211'].format('YYYY-MM-DD') : ''
           }
-          console.log(re)
           this.patientBasis.status = 2
           var params = new URLSearchParams()
           if (this.zkbszl && this.zkbszl.zkbszlId) {

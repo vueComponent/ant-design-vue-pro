@@ -34,6 +34,12 @@
                 <a-tab-pane tab="自定义检索" key="2" forceRender>
                   <a-card :bordered="false">
                     <a-form>
+                      <a-form-item label="是否ICON">
+                        <a-radio-group v-model="queryParam.isIcon">
+                          <a-radio value="-1">否</a-radio>
+                          <a-radio value="1">是</a-radio>
+                        </a-radio-group>
+                      </a-form-item>
                       <a-form-item label="姓名">
                         <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
                       </a-form-item>
@@ -123,6 +129,10 @@ export default {
           dataIndex: 'patientName',
           width: 100,
           scopedSlots: { customRender: 'patientName' }
+        },{
+          title: '是否ICON',
+          dataIndex: 'research',
+          width: 80,
         },
         {
           title: '提交状态',

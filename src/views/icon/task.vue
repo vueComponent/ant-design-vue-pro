@@ -123,6 +123,110 @@
                   <a-input style="width: 240px;" v-decorator="['b52', {...inputRequired, initialValue: initValue('b52')}]" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
+              <a-form-item label="(6) 胸部CT检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['d', {...require1, initialValue: initValue('d')}]" @change="changeRadio($event, 'controld')">
+                  <a-radio value="1">有</a-radio>
+                  <a-radio value="-1">无</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <div v-if="controld">
+                <a-form-item label="6-1 CT检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['d1', {...dateRequire, initialValue: initValue('d1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                </a-form-item>
+                <a-form-item label="支扩位于CT图像上：" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['d2', {...selectRequired, initialValue: initValue('d2', 'array')}]">
+                    <a-checkbox value="1" @change="changeSelect($event, 'controld3')">右上叶</a-checkbox>
+                    <a-checkbox value="2" @change="changeSelect($event, 'controld4')">左上叶</a-checkbox>
+                    <a-checkbox value="3" @change="changeSelect($event, 'controld5')">右中叶</a-checkbox>
+                    <a-checkbox value="4" @change="changeSelect($event, 'controld6')">左舌叶</a-checkbox>
+                    <a-checkbox value="5" @change="changeSelect($event, 'controld7')">右下叶</a-checkbox>
+                    <a-checkbox value="6" @change="changeSelect($event, 'controld8')">左下叶</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="右上叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controld3">
+                  <a-radio-group v-decorator="['d3', {...selectRequired, initialValue: initValue('d3')}]" @change="computeReiff">
+                    <a-radio value="1">柱状</a-radio>
+                    <a-radio value="2">静脉曲张型(混合型)</a-radio>
+                    <a-radio value="3">囊状</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="左上叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controld4">
+                  <a-radio-group v-decorator="['d4', {...selectRequired, initialValue: initValue('d4')}]" @change="computeReiff">
+                    <a-radio value="1">柱状</a-radio>
+                    <a-radio value="2">静脉曲张型(混合型)</a-radio>
+                    <a-radio value="3">囊状</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="右中叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controld5">
+                  <a-radio-group v-decorator="['d5', {...selectRequired, initialValue: initValue('d5')}]" @change="computeReiff">
+                    <a-radio value="1">柱状</a-radio>
+                    <a-radio value="2">静脉曲张型(混合型)</a-radio>
+                    <a-radio value="3">囊状</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="左舌叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controld6">
+                  <a-radio-group v-decorator="['d6', {...selectRequired, initialValue: initValue('d6')}]" @change="computeReiff">
+                    <a-radio value="1">柱状</a-radio>
+                    <a-radio value="2">静脉曲张型(混合型)</a-radio>
+                    <a-radio value="3">囊状</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="右下叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controld7">
+                  <a-radio-group v-decorator="['d7', {...selectRequired, initialValue: initValue('d7')}]" @change="computeReiff">
+                    <a-radio value="1">柱状</a-radio>
+                    <a-radio value="2">静脉曲张型(混合型)</a-radio>
+                    <a-radio value="3">囊状</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="左下叶：" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controld8">
+                  <a-radio-group v-decorator="['d8', {...selectRequired, initialValue: initValue('d8')}]" @change="computeReiff">
+                    <a-radio value="1">柱状</a-radio>
+                    <a-radio value="2">静脉曲张型(混合型)</a-radio>
+                    <a-radio value="3">囊状</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item label="影像Reiff评分:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['d9', {initialValue: initValue('d9')}]" :readOnly="true" autocomplete="off"></a-input>
+                </a-form-item>
+              </div>
+              <a-form-item label="(7) 各类肺功能测试:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['e', {...require1, initialValue: initValue('e')}]" @change="changeRadio($event, 'controle')">
+                  <a-radio value="1">有</a-radio>
+                  <a-radio value="-1">无</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <div v-if="controle">
+                <a-form-item label="7-1 CT检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['e1', {...dateRequire, initialValue: initValue('e1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                </a-form-item>
+                <a-form-item label="7-2 FVC:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input addonAfter="L" style="width: 240px;" v-decorator="['e2', {...inputRequired, initialValue: initValue('e2')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="7-3 FVC pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input addonAfter="%" style="width: 240px;" v-decorator="['e3', {...inputRequired, initialValue: initValue('e3')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="7-4 FEV1:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input addonAfter="L" style="width: 240px;" v-decorator="['e4', {...inputRequired, initialValue: initValue('e4')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="7-5 FEV1 pred:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input addonAfter="L" style="width: 240px;" v-decorator="['e5', {...inputRequired, initialValue: initValue('e5')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="7-6 FEV1/FVC:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input addonAfter="L" style="width: 240px;" v-decorator="['e6', {...inputRequired, initialValue: initValue('e6')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="7-7 DLCO SB:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input addonAfter="ml/min/mmHg" style="width: 240px;" v-decorator="['e7', {...inputRequired, initialValue: initValue('e7')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="7-8 DLCO/VA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input addonAfter="ml/min/mmHg" style="width: 240px;" v-decorator="['e8', {...inputRequired, initialValue: initValue('e8')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="7-9 DLCO SB:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input addonAfter="mmol/min/kPa" style="width: 240px;" v-decorator="['e9', {...inputRequired, initialValue: initValue('e9')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="7-10 DLCO/VA:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input addonAfter="mmol/min/kPa/L" style="width: 240px;" v-decorator="['e10', {...inputRequired, initialValue: initValue('e10')}]" autocomplete="off"></a-input>
+                </a-form-item>
+              </div>
             </div>
           </a-form>
         </a-col>
@@ -135,7 +239,7 @@
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm, recoverSubmit } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, recoverSubmit, computeScore } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 export default {
@@ -219,7 +323,15 @@ export default {
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
       canEdit: false,
       submitInfo: undefined,
-      iconcgsf: undefined
+      iconcgsf: undefined,
+      controld3: false,
+      controld4: false,
+      controld5: false,
+      controld6: false,
+      controld7: false,
+      controld8: false,
+      controld: false,
+      controle: false
     }
   },
   created() {
@@ -247,6 +359,10 @@ export default {
     ...mapActions(['CloseSidebar']),
     moment,
     changeSelect(e, t) {
+      var arr = ['controld3', 'controld4', 'controld5', 'controld6', 'controld7', 'controld8']
+      if (arr.indexOf(t) > -1 && !e.target.checked) {
+        this.computeReiff()
+      }
       this[t] = e.target.checked
     },
     changeRadio(e, t) {
@@ -259,7 +375,7 @@ export default {
     handleClick(e) {
       if (e.key >= 31 && e.key <= 36) {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
-      } else if(e.key < 63){
+      } else if (e.key < 63) {
         this.$router.replace('/list/basis/' + this.patientBasisId + '/' + e.key)
       }
       return false;
@@ -282,7 +398,10 @@ export default {
             'b41': typeof re['b41'] !== 'undefined' ? re['b41'].join(',') : '',
             'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : '',
             'b43': typeof re['b43'] !== 'undefined' ? re['b43'].join(',') : '',
-            'b51': typeof re['b51'] !== 'undefined' ? re['b51'].join(',') : ''
+            'b51': typeof re['b51'] !== 'undefined' ? re['b51'].join(',') : '',
+            'd2': typeof re['d2'] !== 'undefined' ? re['d2'].join(',') : '',
+            'd1': typeof re['d1'] !== 'undefined' ? re['d1'].format('YYYY-MM-DD') : '',
+            'e1': typeof re['e1'] !== 'undefined' ? re['e1'].format('YYYY-MM-DD') : ''
           }
           var that = this
           console.log(re)
@@ -331,6 +450,28 @@ export default {
         return this.iconcgsf[key] + ''
       }
     },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current > moment().endOf('day');
+    },
+    computeReiff() {
+      var that = this
+      this.$nextTick(() => {
+        var params = new URLSearchParams()
+        params.append('scoreType', 'iconReiff')
+        params.append('iconcgfsStr', JSON.stringify(that.form.getFieldsValue()))
+        computeScore(params)
+          .then(res => {
+            console.log(res.data.d9)
+            that.form.setFieldsValue({
+              d9: res.data.d9
+            })
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      })
+    },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
         var splitArr = []
@@ -355,6 +496,33 @@ export default {
             this.controlb51 = true
           }
         }
+        if (answer.d === 1) {
+          this.controld = true
+        }
+        if (answer.e === 1) {
+          this.controle = true
+        }
+        if (answer.d2) {
+          splitArr = answer.d2.split(',')
+          if (splitArr.indexOf('1') > -1) {
+            this.controld3 = true
+          }
+          if (splitArr.indexOf('2') > -1) {
+            this.controld4 = true
+          }
+          if (splitArr.indexOf('3') > -1) {
+            this.controld5 = true
+          }
+          if (splitArr.indexOf('4') > -1) {
+            this.controld6 = true
+          }
+          if (splitArr.indexOf('5') > -1) {
+            this.controld7 = true
+          }
+          if (splitArr.indexOf('6') > -1) {
+            this.controld8 = true
+          }
+        }
       }
       return answer
     },
@@ -366,7 +534,10 @@ export default {
         'b41': typeof re['b41'] !== 'undefined' ? re['b41'].join(',') : '',
         'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : '',
         'b43': typeof re['b43'] !== 'undefined' ? re['b43'].join(',') : '',
-        'b51': typeof re['b51'] !== 'undefined' ? re['b51'].join(',') : ''
+        'b51': typeof re['b51'] !== 'undefined' ? re['b51'].join(',') : '',
+        'd2': typeof re['d2'] !== 'undefined' ? re['d2'].join(',') : '',
+        'd1': typeof re['d1'] !== 'undefined' ? re['d1'].format('YYYY-MM-DD') : '',
+        'e1': typeof re['e1'] !== 'undefined' ? re['e1'].format('YYYY-MM-DD') : ''
       }
       var that = this
       console.log(re)

@@ -1,6 +1,7 @@
 <template>
   <a-modal :title="options.title" :width="400" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :destroyOnClose="destroyOnClose" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
+      <div style="color: red; margin-bottom: 10px; text-align: center; font-size: 17px;">请务必确保填写数据的真实性和准确性</div>
       <a-form :form="form">
         <a-form-item label="提交人" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['submitName', requiredRule]" />
