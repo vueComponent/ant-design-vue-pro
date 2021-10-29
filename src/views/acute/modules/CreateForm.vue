@@ -12,7 +12,7 @@
   </a-modal>
 </template>
 <script>
-import { getPatientList } from '@/api/patient'
+import { getPatientDataList } from '@/api/patient'
 import { createSFJx } from '@/api/basis'
 import moment from 'moment'
 const columns = [{
@@ -121,7 +121,7 @@ export default {
       Params.append('pageNumber', pageNumber);
       Params.append('pageSize', pageSize);
       Params.append('keyWord', this.keyword);
-      getPatientList(Params).then(res => {
+      getPatientDataList(Params).then(res => {
         this.data = res.data;
         const pagination = { ...this.pagination };
         pagination.total = res.total;
