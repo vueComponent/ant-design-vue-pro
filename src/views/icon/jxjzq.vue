@@ -167,10 +167,12 @@
                 <a-checkbox-group v-decorator="['b3', {...selectRequired, initialValue: initValue('b3', 'array')}]" class="control-m-line">
                   <a-checkbox value="1" @change="changeSelect($event, 'controlb31')">哌拉西林</a-checkbox>
                   <a-checkbox value="2" @change="changeSelect($event, 'controlb32')">哌拉西林/他唑巴坦</a-checkbox>
+                  <a-checkbox value="19" @change="changeSelect($event, 'controlb319')">头孢曲松</a-checkbox>
                   <a-checkbox value="3" @change="changeSelect($event, 'controlb33')">头孢他啶</a-checkbox>
                   <a-checkbox value="4" @change="changeSelect($event, 'controlb34')">头孢哌酮</a-checkbox>
                   <a-checkbox value="5" @change="changeSelect($event, 'controlb35')">头孢哌酮/舒巴坦</a-checkbox>
                   <a-checkbox value="6" @change="changeSelect($event, 'controlb36')">头孢吡肟</a-checkbox>
+                  <a-checkbox value="20" @change="changeSelect($event, 'controlb320')">头孢类抗生素（头孢呋辛、头孢西丁等）</a-checkbox>
                   <a-checkbox value="7" @change="changeSelect($event, 'controlb37')">亚胺培南</a-checkbox>
                   <a-checkbox value="8" @change="changeSelect($event, 'controlb38')">美罗培南</a-checkbox>
                   <a-checkbox value="9" @change="changeSelect($event, 'controlb39')">氨曲南</a-checkbox>
@@ -199,6 +201,14 @@
                 </a-form-item>
                 <a-form-item label="哌拉西林/他唑巴坦停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b42', {...dateRequire, initialValue: initValue('b42', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                </a-form-item>
+              </div>
+              <div v-if="controlb319">
+                <a-form-item label="头孢曲松起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b231', {...dateRequire, initialValue: initValue('b231', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                </a-form-item>
+                <a-form-item label="头孢曲松停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b232', {...dateRequire, initialValue: initValue('b232', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb33">
@@ -231,6 +241,14 @@
                 </a-form-item>
                 <a-form-item label="头孢吡肟停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b82', {...dateRequire, initialValue: initValue('b82', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                </a-form-item>
+              </div>
+              <div v-if="controlb320">
+                <a-form-item label="头孢类抗生素（头孢呋辛、头孢西丁等）起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b241', {...dateRequire, initialValue: initValue('b241', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                </a-form-item>
+                <a-form-item label="头孢类抗生素（头孢呋辛、头孢西丁等）停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b242', {...dateRequire, initialValue: initValue('b242', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb37">
@@ -482,7 +500,9 @@ export default {
       controlb315: false,
       controlb316: false,
       controlb317: false,
-      controlb318: false
+      controlb318: false,
+      controlb319: false,
+      controlb320: false
     }
   },
   created() {
@@ -528,7 +548,7 @@ export default {
       }
     },
     handleClick(e) {
-      if(e.key > 64){
+      if (e.key > 64) {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
       }
       return false
@@ -595,7 +615,11 @@ export default {
             'b211': typeof re['b211'] !== 'undefined' ? re['b211'].format('YYYY-MM-DD') : '',
             'b212': typeof re['b212'] !== 'undefined' ? re['b212'].format('YYYY-MM-DD') : '',
             'b221': typeof re['b221'] !== 'undefined' ? re['b221'].format('YYYY-MM-DD') : '',
-            'b222': typeof re['b222'] !== 'undefined' ? re['b222'].format('YYYY-MM-DD') : ''
+            'b222': typeof re['b222'] !== 'undefined' ? re['b222'].format('YYYY-MM-DD') : '',
+            'b231': typeof re['b231'] !== 'undefined' ? re['b231'].format('YYYY-MM-DD') : '',
+            'b232': typeof re['b232'] !== 'undefined' ? re['b232'].format('YYYY-MM-DD') : '',
+            'b241': typeof re['b241'] !== 'undefined' ? re['b241'].format('YYYY-MM-DD') : '',
+            'b242': typeof re['b242'] !== 'undefined' ? re['b242'].format('YYYY-MM-DD') : ''
           }
           var that = this
           this.patientBasis.status = 2
@@ -764,7 +788,11 @@ export default {
         'b211': typeof re['b211'] !== 'undefined' ? re['b211'].format('YYYY-MM-DD') : '',
         'b212': typeof re['b212'] !== 'undefined' ? re['b212'].format('YYYY-MM-DD') : '',
         'b221': typeof re['b221'] !== 'undefined' ? re['b221'].format('YYYY-MM-DD') : '',
-        'b222': typeof re['b222'] !== 'undefined' ? re['b222'].format('YYYY-MM-DD') : ''
+        'b222': typeof re['b222'] !== 'undefined' ? re['b222'].format('YYYY-MM-DD') : '',
+        'b231': typeof re['b231'] !== 'undefined' ? re['b231'].format('YYYY-MM-DD') : '',
+        'b232': typeof re['b232'] !== 'undefined' ? re['b232'].format('YYYY-MM-DD') : '',
+        'b241': typeof re['b241'] !== 'undefined' ? re['b241'].format('YYYY-MM-DD') : '',
+        'b242': typeof re['b242'] !== 'undefined' ? re['b242'].format('YYYY-MM-DD') : ''
       }
       var that = this
       this.patientBasis.status = 1
