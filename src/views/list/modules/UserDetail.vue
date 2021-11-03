@@ -225,7 +225,7 @@
             </div>
           </a-col>
         </a-row>
-        <a-row>
+        <a-row v-if="scoreData.QOLB">
           <a-col :sm="24" :md="24" :xl="24" :style="{ marginBottom: '10px' }">
             <div class="block clearfix">
               <div class="name">QoL-B评分</div>
