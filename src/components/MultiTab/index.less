@@ -1,25 +1,60 @@
-@import '../index';
+@import "~ant-design-vue/es/style/themes/default";
 
-@multi-tab-prefix-cls: ~"@{ant-pro-prefix}-multi-tab";
-@multi-tab-wrapper-prefix-cls: ~"@{ant-pro-prefix}-multi-tab-wrapper";
+@multi-tab-prefix-cls: ~"ant-pro-multi-tab";
+@multi-tab-wrapper-prefix-cls: ~"ant-pro-multi-tab-wrapper";
 
-/*
-.topmenu .@{multi-tab-prefix-cls} {
-  max-width: 1200px;
-  margin: -23px auto 24px auto;
-}
-*/
 .@{multi-tab-prefix-cls} {
-  margin: -23px -24px 24px -24px;
   background: #fff;
+  padding-top: 10px;
+  margin: -24px;
+  margin-bottom: 24px;
+
+  .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active {
+    padding-bottom: 0;
+  }
+  .ant-tabs-nav .ant-tabs-tab .anticon {
+    margin-right: 4px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  .ant-pro-multi-tab-title {
+    user-select: none;
+    margin-right: 6px;
+    font-weight: 500;
+  }
+  .ant-pro-multi-tab-icon {
+    height: @font-size-base;
+    overflow: hidden;
+    color: @text-color-secondary;
+    font-size: @font-size-sm;
+    vertical-align: middle;
+    transition: all 0.3s;
+    &:hover {
+      color: @heading-color;
+    }
+  }
 }
 
-.topmenu .@{multi-tab-wrapper-prefix-cls} {
-  max-width: 1200px;
-  margin: 0 auto;
-}
+.topmenu {
+  .@{multi-tab-prefix-cls} {
+    border-bottom: 1px solid #e8e8e8;
 
-.topmenu.content-width-Fluid .@{multi-tab-wrapper-prefix-cls} {
-  max-width: 100%;
-  margin: 0 auto;
+    .@{multi-tab-wrapper-prefix-cls} {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    &.wide .@{multi-tab-wrapper-prefix-cls} {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .ant-tabs {
+      height: 39px;
+    }
+    .ant-tabs-bar {
+      border-bottom: 0;
+    }
+  }
 }

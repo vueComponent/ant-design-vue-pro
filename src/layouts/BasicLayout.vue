@@ -48,7 +48,9 @@
     <template v-slot:footerRender>
       <global-footer />
     </template>
-    <router-view />
+    <multi-tab />
+    <!-- <router-view /> -->
+    <route-content />
   </pro-layout>
 </template>
 
@@ -57,7 +59,6 @@ import { SettingDrawer, updateTheme } from '@ant-design-vue/pro-layout'
 import { i18nRender } from '@/locales'
 import { mapState } from 'vuex'
 import { CONTENT_WIDTH_TYPE, SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mutation-types'
-
 import defaultSettings from '@/config/defaultSettings'
 import RightContent from '@/components/GlobalHeader/RightContent'
 import GlobalFooter from '@/components/GlobalFooter'
@@ -72,7 +73,7 @@ export default {
     GlobalFooter,
     LogoSvg,
     Ads
-  },
+},
   data () {
     return {
       // preview.pro.antdv.com only use.

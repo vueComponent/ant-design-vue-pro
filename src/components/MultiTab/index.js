@@ -1,40 +1,15 @@
-import events from './events'
+import AppEvent from './events'
+import RouteAPI from './RouteAPI'
 import MultiTab from './MultiTab'
-import './index.less'
+import * as APIEnums from './APIEnums'
+import RouteKeepAlive from './RouteKeepAlive'
+import RouteContent from './RouteContent'
 
-const api = {
-  /**
-   * open new tab on route fullPath
-   * @param config
-   */
-  open: function (config) {
-    events.$emit('open', config)
-  },
-  rename: function (key, name) {
-    events.$emit('rename', { key: key, name: name })
-  },
-  /**
-   * close current page
-   */
-  closeCurrentPage: function () {
-    this.close()
-  },
-  /**
-   * close route fullPath tab
-   * @param config
-   */
-  close: function (config) {
-    events.$emit('close', config)
-  }
+export {
+  AppEvent,
+  RouteAPI,
+  MultiTab,
+  RouteKeepAlive,
+  APIEnums
 }
-
-MultiTab.install = function (Vue) {
-  if (Vue.prototype.$multiTab) {
-    return
-  }
-  api.instance = events
-  Vue.prototype.$multiTab = api
-  Vue.component('multi-tab', MultiTab)
-}
-
-export default MultiTab
+export default RouteContent

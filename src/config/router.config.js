@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import { UserLayout, BasicLayout, BlankLayout } from '@/layouts'
 import { bxAnaalyse } from '@/core/icons'
+// import RouteContent from '@/components/MultiTab'
 
 const RouteView = {
   name: 'RouteView',
