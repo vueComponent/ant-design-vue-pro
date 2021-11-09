@@ -10,6 +10,8 @@ import i18n from './locales'
 import { VueAxios } from './utils/request'
 import ProLayout, { PageHeaderWrapper } from '@ant-design-vue/pro-layout'
 import themePluginConfig from '../config/themePluginConfig'
+import moment from 'moment'
+import 'moment/locale/zh-cn'
 
 // mock
 // WARNING: `mockjs` NOT SUPPORT `IE` PLEASE DO NOT USE IN `production` ENV.
@@ -20,6 +22,9 @@ import './core/lazy_use' // use lazy load components
 import './permission' // permission control
 import './utils/filter' // global filter
 import './global.less' // global style
+
+moment.locale('zh-cn')
+Vue.prototype.$moment = moment
 
 Vue.config.productionTip = false
 
