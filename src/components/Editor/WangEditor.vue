@@ -54,6 +54,8 @@ export default {
         // console.log('change 之后最新的 html', newHtml)
         that.$emit('editorChange', newHtml)
       }
+      // editor.config.uploadImgServer = '/upload-img'
+      this.editor.customConfig.uploadImgServer = 'https://www.wallbreaker.top/posting/jishiUploadPhotosNew'
       this.editor.create()
       console.log(this.content)
       // if (this.content) {

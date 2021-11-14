@@ -236,7 +236,8 @@ export default {
                     avatarUrl: result.avatarUrl,
                     description: result.description,
                     teacherName: result.teacherName,
-                    teacherContact: result.teacherContact
+                    teacherContact: result.teacherContact,
+                    changeNameCount: result.changeNameCount
                   })
                   storage.set(ROLE_ID, 'organization')
                   console.log('token in storage:')

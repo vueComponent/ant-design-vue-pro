@@ -16,10 +16,11 @@
                 action="https://www.wallbreaker.top/posting/jishiUploadPhoto"
                 name="cover"
                 list-type="picture-card"
-                @change="handleChangeImage"
+                :file-list="fileList"
+                :customRequest="uploadCover"
+                :remove="removeCover"
               >
-                <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
-                <div v-else>
+                <div v-if="!fileList.length">
                   <a-icon :type="loading ? 'loading' : 'plus'" />
                   <div class="ant-upload-text">
                     Upload
@@ -112,11 +113,13 @@
         </a-row>
       </a-form>
     </a-card>
+    <AvatarModal/>
   </page-header-wrapper>
 </template>
 
 <script>
 import WangEditor from '@/components/Editor/WangEditor'
+
 export default {
   components: { WangEditor }
 }
@@ -127,6 +130,8 @@ export default {
 // const editor = new E('#editor')
 // editor.create()
 import WangEditor from '@/components/Editor/WangEditor'
+import AvatarModal from '@/viewsOfOld/account/settings/AvatarModal'
+
 import request from '@/utils/request'
 import storage from 'store'
 import { ROLE_ID } from '@/store/mutation-types'
@@ -134,11 +139,14 @@ import { ROLE_ID } from '@/store/mutation-types'
 export default {
   name: 'newPosting',
   components: {
-    WangEditor
+    WangEditor,
+    AvatarModal
   },
   data () {
     return {
-      imageUrl: ''
+      imageUrl: '',
+      loading: false,
+      fileList: [],
     }
   },
   beforeCreate () {
@@ -231,8 +239,36 @@ export default {
       // console.log('success')
       this.content=data
     },
-    handleChangeImage (e) {
+    uploadCover (event) {
+      console.log(event)
+      this.loading = true
+      var file = event.file
+      console.log(file)
+      let formData = new FormData();
+      formData.append('file', file);
+      request({
+        url: '/posting/jishiUploadPhoto',
+        method: 'post',
+        headers: { "Content-Type": "multipart/form-data" },
+        data: formData
+      })
+        .then(res => {
+          console.log(res)
+          this.fileList = [
+            {
+              uid: '-1',
+              name: 'xxx.png',
+              status: 'done',
+              url: res.data
+            },
+          ]
+          this.loading = false
+        })
+    },
+    removeCover (e) {
       console.log(e)
+      this.fileList.shift()
+      return true
     }
   }
 }
