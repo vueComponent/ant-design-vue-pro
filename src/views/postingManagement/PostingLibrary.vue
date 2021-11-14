@@ -36,7 +36,7 @@
     </a-card>
     <a-modal
       v-model="modal.visible"
-      title="Modal"
+      title="操作确认"
       ok-text="确认"
       cancel-text="取消"
       @ok="tapOkForModal"
@@ -110,7 +110,7 @@ export default {
       this.modal = {
         id,
         visible: true,
-        message: '你确定删除这篇帖子吗？',
+        message: '确定要删除这个帖子素材吗？',
         type: 'deleteModal'
       }
     },
