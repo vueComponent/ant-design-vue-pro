@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>富文本编辑器测试</title>
+</head>
+<body>
+    <h1>富文本编辑器demo</h1>
+    <div id="div1">
+        <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+    </div>
+    <button>显示富文本内容</button>
+    
+    <!-- 引入 wangEditor.min.js -->
+    <script src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>
+    
+    <script type="text/javascript">
+        const E = window.wangEditor
+        const editor = new E('#div1')
+        // 或者 const editor = new E( document.getElementById('div1') )
+        editor.create()
+        
+        let btn = document.querySelector('button');
+        btn.addEventListener('click',()=>{
+            let text = editor.txt.html()
+            alert(text);
+        })
+
+
+    </script>
+</body>
+</html>
