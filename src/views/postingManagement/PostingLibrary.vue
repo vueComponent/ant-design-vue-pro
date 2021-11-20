@@ -83,6 +83,7 @@ export default {
               updateTime: this.transferTime(records[key].updateTime)
             })
           }
+          console.log('data:' + data)
           this.data = data
           this.pagination = {
             showQuickJumper: true,

@@ -39,6 +39,7 @@ const assetsCDN = {
 
 // vue.config.js
 const vueConfig = {
+  publicPath: '/platform',
   configureWebpack: {
     // webpack plugins
     plugins: [
