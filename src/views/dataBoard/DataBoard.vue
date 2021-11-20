@@ -30,8 +30,8 @@
           <div class="extra-wrapper" slot="tabBarExtraContent">
             <div class="extra-item">
               <a>今日</a>
-              <a @click="changeViewsOfThisWeek">本周</a>
-              <a>本月</a>
+              <a @click="showViewsOfThisWeek">本周</a>
+              <a @click="showViewsOfThisMonth">本月</a>
             </div>
             <a-range-picker :style="{width: '256px'}" />
           </div>
@@ -101,7 +101,6 @@ export default {
         method: 'get'
       })
         .then(res => {
-          console.log(res)
           const data = res.data
           this.data = {
             postingNumber: data.publishedCount,
@@ -121,7 +120,6 @@ export default {
           }
         })
           .then(res => {
-            console.log(res)
             const data = []
             for (let i = 0; i < 24; i += 1) {
               data.push({
@@ -132,30 +130,57 @@ export default {
             this.barData = data
           })
     },
-    changeViewsOfThisWeek () {
+    showViewsOfThisWeek () {
       if (!this.viewsOfThisWeek.length) {
+        // this.requestViewsOfDailyOffset(7)
         this.requestViewsOfDailyOffset(7)
+        .then(resData => {
+          const data = []
+          for (let i = 0; i < 7; i++) {
+            data.push({
+              x: resData.time[i],
+              y: resData.value[i]
+            })
+          }
+          this.viewsOfThisWeek = data
+          this.barData = data
+        })
+      } else {
+        this.barData = this.viewsOfThisWeek
+      }
+    },
+    showViewsOfThisMonth () {
+      if (!this.viewsOfThisMonth.length) {
+        this.requestViewsOfDailyOffset(31)
+          .then(resData => {
+            const data = []
+            for (let i = 0; i < 31; i++) {
+              data.push({
+                x: resData.time[i],
+                y: resData.value[i]
+              })
+            }
+            this.viewsOfThisMonth = data
+            this.barData = data
+          })
+      } else {
+        this.barData = this.viewsOfThisMonth
       }
     },
     requestViewsOfDailyOffset (offset) {
-      request({
-        url: '/posting/organizationQueryTodayOffsetUV',
-        method: 'get',
-        data: {
-          offset
-        }
-      })
-        .then(res => {
-          console.log(res)
-        //   const data = []
-        //   for (let i = 0; i < offset; i += 1) {
-        //     data.push({
-        //       x: `${i }时`,
-        //       y: res.data.value[i]
-        //     })
-        //   }
-        //   this.barData = data
+      return new Promise(resolve => {
+        request({
+          url: '/posting/organizationQueryTodayOffsetPVNew',
+          method: 'get',
+          params: {
+            offset: offset
+          }
         })
+          .then(res => {
+            console.log(res)
+            resolve(res.data)
+          })
+      })
     }
   },
   components: {

@@ -15,15 +15,15 @@
         >
           <a-list-item slot="renderItem" slot-scope="item">
             <template>
-              <a-card :hoverable="true" size="small">
+              <a-card :hoverable="false" size="small" >
                 <a-card-meta>
                   <span slot="title">{{ item.title }}</span>
                   <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large" shape="square"/>
                   <div class="meta-content" slot="description">
                     <p style="display: -webkit-box;-webkit-line-clamp:2;overflow: hidden;text-overflow: ellipsis;-webkit-box-orient: vertical;">{{ item.content }}</p>
-                    <span style="float: right">更新于{{item.updateTime}}  <a-icon type="form" @click="goToEditorPosting(item.postingId)"/></span>
                   </div>
                 </a-card-meta>
+                <span slot="actions" style="float: right;font-size: 12px;">更新于{{item.updateTime}}  <a-icon style="font-size: 15px;color: #314659;" type="form" @click="goToEditorPosting(item.postingId)"/></span>
               </a-card>
             </template>
           </a-list-item>
@@ -156,11 +156,12 @@ export default {
               description: records[key].content,
               owner: records[key].owner,
               startAt: this.transferTime(records[key].updateTime),
-              views: records[key].viewCount,
-              favoriete: records[key].likeCount
+              views: records[key].viewCount.toString().padStart(2),
+              favorite: records[key].likeCount.toString().padStart(3)
             })
           }
           this.publishedData = publishedData
+          console.log(publishedData)
           this.pagination = {
             showSizeChanger: true,
             showQuickJumper: true,
@@ -168,7 +169,7 @@ export default {
             total: data.total,
             current: data.current
           }
-          console.log(res)
+          // console.log(res)
         })
     },
     goToPostingLibrary (e) {
