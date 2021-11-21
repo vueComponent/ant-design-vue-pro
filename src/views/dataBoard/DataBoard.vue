@@ -318,11 +318,9 @@ export default {
 .extra-wrapper {
   line-height: 55px;
   padding-right: 24px;
-
 .extra-item {
   display: inline-block;
   margin-right: 24px;
-
 a {
   margin-left: 24px;
 }

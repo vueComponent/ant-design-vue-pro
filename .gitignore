@@ -21,3 +21,5 @@ yarn-error.log*
 *.sw*
 package-lock.json
 yarn.lock
+vue.config.js
+src/utils/request.js
