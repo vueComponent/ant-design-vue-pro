@@ -11,7 +11,8 @@ const userApi = {
   SendSmsErr: '/account/sms_err',
   // get my info
   UserInfo: '/user/info',
-  UserMenu: '/user/nav'
+  UserMenu: '/user/nav',
+  Forget: '/organization/organizationResetPassword'
 }
 
 /**
@@ -38,6 +39,14 @@ export function loginAdmin (parameter) {
     url: userApi.LoginAdmin,
     method: 'post',
     data: parameter
+  })
+}
+
+export function forgetOrg (parameter) {
+  return request({
+    url: userApi.Forget,
+    method: 'get',
+    params: parameter
   })
 }
 

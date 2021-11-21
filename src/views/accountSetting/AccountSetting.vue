@@ -71,8 +71,11 @@
                   <a-input v-model="operator.phone"/>
                 </a-form-item>
               </a-col>
-              <a-col v-if="index==operatorListAddIndex">
+              <a-col :span="1" v-if="index==operatorListAddIndex">
                 <a-icon type='plus-circle' style='font-size: 30px'/>
+              </a-col>
+              <a-col :span="1">
+                <a-icon type="minus-circle" style='font-size: 30px'/>
               </a-col>
             </a-row>
             <a-row>

@@ -142,7 +142,7 @@ export default {
     if (this.$route.params.postingId) {
       request({
         url: '/posting/organizationGetPostingDetail/' + this.$route.params.postingId,
-        method: 'patch'
+        method: 'get'
       })
         .then(res => {
           console.log(res)

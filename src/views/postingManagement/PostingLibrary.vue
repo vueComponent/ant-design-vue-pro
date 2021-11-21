@@ -24,7 +24,7 @@
                   <span slot="title">{{ item.title }}</span>
                   <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large" shape='square'/>
                   <div class="meta-content" slot="description">
-                    <p style='display: -webkit-box;-webkit-line-clamp:2;overflow: hidden;text-overflow: ellipsis;-webkit-box-orient: vertical;'>{{ item.content }}</p>
+                    <p style='display: -webkit-box;-webkit-line-clamp:1;overflow: hidden;text-overflow: ellipsis;-webkit-box-orient: vertical;'>{{ item.brief }}</p>
                     <span style='float: right'>更新于{{item.updateTime}}   <a-icon type='delete' @click="showDeleteModal(item.id)" style='font-size: 20px'/>   <a-icon type='form' @click="goToEditorPosting(item.id)" style='font-size: 20px'/></span>
                   </div>
                 </a-card-meta>
@@ -79,7 +79,7 @@ export default {
               id: records[key].id,
               title: records[key].title,
               avatar: records[key].firstPicUrl,
-              content: records[key].content,
+              brief: records[key].brief || '什么都没有',
               updateTime: this.transferTime(records[key].updateTime)
             })
           }

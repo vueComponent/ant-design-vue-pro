@@ -26,12 +26,12 @@
       </a-row>
 
       <div class="salesCard">
-        <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
+        <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}" @change="changeBarData">
           <div class="extra-wrapper" slot="tabBarExtraContent">
             <div class="extra-item">
-              <a>今日</a>
-              <a @click="showViewsOfThisWeek">本周</a>
-              <a @click="showViewsOfThisMonth">本月</a>
+              <a @click="barIndex==1?showViewsOfToday():showFavoriteOfToday()">今日</a>
+              <a @click="barIndex==1?showViewsOfThisWeek():showFavoriteOfThisWeek()">本周</a>
+              <a @click="barIndex==1?showViewsOfThisMonth():showFavoriteOfThisMonth()">本月</a>
             </div>
             <a-range-picker :style="{width: '256px'}" />
           </div>
@@ -60,31 +60,37 @@ import {
   MiniSmoothArea
 } from '@/components'
 import request from '@/utils/request'
-
-const barData = []
-const barData2 = []
-const data = []
-for (let i = 0; i < 12; i += 1) {
-  barData.push({
-    x: `${i + 1}月`,
-    y: Math.floor(Math.random() * 1000) + 200
-  })
-  barData2.push({
-    x: `${i + 1}月`,
-    y: Math.floor(Math.random() * 1000) + 200
-  })
-}
+//
+// const barData = []
+// const barData2 = []
+// const data = []
+// for (let i = 0; i < 12; i += 1) {
+//   barData.push({
+//     x: `${i + 1}月`,
+//     y: Math.floor(Math.random() * 1000) + 200
+//   })
+//   barData2.push({
+//     x: `${i + 1}月`,
+//     y: Math.floor(Math.random() * 1000) + 200
+//   })
+// }
 
 export default {
   name: 'DataBoard',
   data () {
     return {
       loading: true,
-      data,
-      barData,
-      barData2,
+      barIndex: 1,
+      timeIndex: 1,
+      data: [],
+      barData: [],
+      barData2: [],
+      viewsOfToday: [],
       viewsOfThisWeek: [],
-      viewsOfThisMonth: []
+      viewsOfThisMonth: [],
+      favoriteOfToday: [],
+      favoriteOfThisWeek: [],
+      favoriteOfThisMonth: []
     }
   },
   created () {
@@ -92,7 +98,7 @@ export default {
     setTimeout(() => {
       this.loading = !this.loading
     }, 1000)
-    this.testFunction()
+    this.showViewsOfToday()
   },
   methods: {
     updatePostingCount () {
@@ -109,15 +115,41 @@ export default {
           }
         })
     },
-    testFunction () {
+    changeBarData (index) {
+      this.barIndex = index
+      if (index === '1') {
+        switch (this.timeIndex) {
+          case 1:
+            this.showViewsOfToday()
+            break
+          case 2:
+            this.showViewsOfThisWeek()
+            break
+          case 3:
+            this.showViewsOfThisMonth()
+            break
+        }
+      } else {
+        switch (this.timeIndex) {
+          case 1:
+            this.showFavoriteOfToday()
+            break
+          case 2:
+            this.showFavoriteOfThisWeek()
+            break
+          case 3:
+            this.showFavoriteOfThisMonth()
+            break
+        }
+      }
+    },
+    showViewsOfToday () {
+      console.log('viewsToday')
+      this.timeIndex = 1
+      if (!this.viewsOfToday.length) {
         request({
-          url: '/posting/organizationQueryYesterday24hUV',
-          method: 'get',
-          data: {
-            // id: this.$route.params.postingId,
-            // ...value,
-            // content: this.content
-          }
+          url: '/posting/organizationQueryYesterdayPV',
+          method: 'get'
         })
           .then(res => {
             const data = []
@@ -127,12 +159,17 @@ export default {
                 y: res.data.value[i]
               })
             }
+            this.viewsOfToday = data
             this.barData = data
           })
+      } else {
+        this.barData = this.viewsOfToday
+      }
     },
     showViewsOfThisWeek () {
+      console.log('viewsThisWeek')
+      this.timeIndex = 2
       if (!this.viewsOfThisWeek.length) {
-        // this.requestViewsOfDailyOffset(7)
         this.requestViewsOfDailyOffset(7)
         .then(resData => {
           const data = []
@@ -150,6 +187,8 @@ export default {
       }
     },
     showViewsOfThisMonth () {
+      console.log('viewsThisMonth')
+      this.timeIndex = 3
       if (!this.viewsOfThisMonth.length) {
         this.requestViewsOfDailyOffset(31)
           .then(resData => {
@@ -167,10 +206,88 @@ export default {
         this.barData = this.viewsOfThisMonth
       }
     },
+    showFavoriteOfToday () {
+      console.log('favoriteToday')
+      this.timeIndex = 1
+      if (!this.favoriteOfToday.length) {
+        request({
+          url: '/posting/organizationQueryYesterdayFavorite',
+          method: 'get'
+        })
+          .then(res => {
+            const data = []
+            for (let i = 0; i < 24; i += 1) {
+              data.push({
+                x: `${i }时`,
+                y: res.data.value[i]
+              })
+            }
+            this.favoriteOfToday = data
+            this.barData2 = data
+          })
+      } else {
+        this.barData2 = this.favoriteOfToday
+      }
+    },
+    showFavoriteOfThisWeek () {
+      console.log('favoriteThisWeek')
+      this.timeIndex = 2
+      if (!this.favoriteOfThisWeek.length) {
+        this.requestFavoriteOfDailyOffset(7)
+          .then(resData => {
+            const data = []
+            for (let i = 0; i < 7; i++) {
+              data.push({
+                x: resData.time[i],
+                y: resData.value[i]
+              })
+            }
+            this.favoriteOfThisWeek = data
+            this.barData2 = data
+          })
+      } else {
+        this.barData2 = this.favoriteOfThisWeek
+      }
+    },
+    showFavoriteOfThisMonth () {
+      console.log('favoriteThisMonth')
+      this.timeIndex = 3
+      if (!this.favoriteOfThisMonth.length) {
+        this.requestFavoriteOfDailyOffset(31)
+          .then(resData => {
+            const data = []
+            for (let i = 0; i < 31; i++) {
+              data.push({
+                x: resData.time[i],
+                y: resData.value[i]
+              })
+            }
+            this.favoriteOfThisMonth = data
+            this.barData2 = data
+          })
+      } else {
+        this.barData2 = this.favoriteOfThisMonth
+      }
+    },
     requestViewsOfDailyOffset (offset) {
       return new Promise(resolve => {
         request({
           url: '/posting/organizationQueryTodayOffsetPVNew',
+          method: 'get',
+          params: {
+            offset: offset
+          }
+        })
+          .then(res => {
+            console.log(res)
+            resolve(res.data)
+          })
+      })
+    },
+    requestFavoriteOfDailyOffset (offset) {
+      return new Promise(resolve => {
+        request({
+          url: '/posting/organizationQueryTodayOffsetFavorite',
           method: 'get',
           params: {
             offset: offset
