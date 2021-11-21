@@ -10,15 +10,15 @@
             <a-col :span="3">
               <a-form-item label="uid">
                 <a-input
-                  placeholder=""
-                  v-decorator="['uid']"/>
+                  v-model="queryParam.userId"
+                  placeholder=""/>
               </a-form-item>
             </a-col>
             <a-col :span="5">
               <a-form-item label="账号状态">
                 <a-select
                   placeholder="请选择"
-                  v-decorator="['accountStatus',{initialValue:'-1'}]">
+                  v-model="queryParam.blockType">
                   <a-select-option value="-1">所有账号</a-select-option>
                   <a-select-option value="0">正常账号</a-select-option>
                   <a-select-option value="1">已禁言账号</a-select-option>
@@ -28,18 +28,18 @@
             </a-col>
             <a-col :span="4">
               <a-form-item>
-                <a-date-picker style="width: 100%" v-decorator="['beginTime']"/>
+                <a-date-picker style="width: 100%" @change="onStartTimeChange" v-model="queryParam.startTime"/>
               </a-form-item>
             </a-col>
             <a-col :span="4">
               <a-form-item>
-                <a-date-picker style="width: 100%" v-decorator="['endTime']"/>
+                <a-date-picker style="width: 100%" @change="onEndTimeChange" v-model="queryParam.endTime"/>
               </a-form-item>
             </a-col>
             <a-col :span="4">
               <span class="table-page-search-submitButtons">
                 <a-button type="primary" html-type="submit" @click="doQuery" style="margin-left: 8px">查询</a-button>
-                <a-button type="primary" style="margin-left: 8px">重置</a-button>
+                <a-button type="primary" style="margin-left: 8px" @click="doReset">重置</a-button>
               </span>
             </a-col>
           </a-row>
@@ -60,7 +60,8 @@
           <a-tag v-for="tag in tags" :key="tag">{{ tag.content }}</a-tag>
         </span>
         <span slot="historicalTeam" slot-scope="id">
-          <router-link :to="{path:'/请把这里的路由跳转实现一下/'+id}">查看</router-link>
+          <!-- 点击查看跳转路由到历史组队页，传递参数id -->
+          <router-link :to="{path:'HistoricalTeam',query: {uid: id }}">查看</router-link>
         </span>
         <span slot="operations" slot-scope="record">
           <a-button :hidden="record.blockType===0" @click="recoverAccount(record.id, record.nickName);modalParam.show=true;">恢复</a-button>
@@ -89,7 +90,6 @@ import { STable, Ellipsis } from '@/components'
 import StepByStepModal from '../list/modules/StepByStepModal'
 import CreateForm from '../list/modules/CreateForm'
 import request from '@/utils/request'
-
 const columns = [
   {
     title: 'uid',
@@ -133,7 +133,6 @@ const columns = [
     scopedSlots: { customRender: 'operations' }
   }
 ]
-
 const tableData = [
   // {
   //   key: '1',
@@ -170,7 +169,6 @@ const tableData = [
   //   operation: ['操作记录']
   // }
 ]
-
 export default {
   name: 'Planet',
   components: {
@@ -194,8 +192,10 @@ export default {
         pageSize: 10,
         pageNo: 1,
         total: 0,
-        stripe: true,
-        tableSize: 'default',
+        userId: '',
+        blockType: '-1',
+        startTime: '',
+        endTime: '',
         loading: false
       },
       modalParam: {
@@ -214,6 +214,15 @@ export default {
     this.doQuery()
   },
   methods: {
+    onStartTimeChange (date, dateString) {
+      console.log(date, dateString, '日期')
+      this.queryParam.startTime = dateString
+    },
+    onEndTimeChange (date, dateString) {
+      console.log(date, dateString, '日期')
+      this.queryParam.endTime = dateString
+    },
+
     handleSubmit (e) {
       e.preventDefault()
       this.form.validateFields((err, value) => {
@@ -228,31 +237,43 @@ export default {
       this.queryParam.pageSize = pagination.pageSize
       this.doQuery()
     },
+    doReset () {
+      this.queryParam = {
+        pageSize: 10,
+        pageNo: 1,
+        total: 0,
+        userId: '',
+        blockType: '-1',
+        startTime: '',
+        endTime: '',
+        loading: false
+      }
+      this.doQuery()
+    },
     doQuery: function () {
       const that = this
       that.queryParam.loading = true
-      that.form.validateFields((err, formValues) => {
-        console.log(formValues, err)
-        let startTime, endTime
-        if (formValues.beginTime !== undefined && formValues.beginTime !== null) {
-          startTime = that.$moment(formValues.beginTime).format('yyyy-MM-DD HH:mm:ss')
-        } else {
-          startTime = undefined
-        }
-        if (formValues.endTime !== undefined && formValues.endTime !== null) {
-          endTime = that.$moment(formValues.endTime).format('yyyy-MM-DD HH:mm:ss')
-        } else {
-          endTime = undefined
-        }
-        const params = {
-          pageSize: that.queryParam.pageSize,
-          pageNo: that.queryParam.pageNo,
-          userId: formValues.uid,
-          blockType: formValues.accountStatus,
-          startTime: startTime,
-          endTime: endTime
-        }
-        console.log(params)
+      // that.form.validateFields((err, formValues) => {
+      // let startTime, endTime
+      // if (formValues.beginTime !== undefined && formValues.beginTime !== null) {
+      //   startTime = that.$moment(formValues.beginTime).format('yyyy-MM-DD HH:mm:ss')
+      // } else {
+      //   startTime = undefined
+      // }
+      // if (formValues.endTime !== undefined && formValues.endTime !== null) {
+      //   endTime = that.$moment(formValues.endTime).format('yyyy-MM-DD HH:mm:ss')
+      // } else {
+      //   endTime = undefined
+      // }
+      // const params = {
+      //   pageSize:that.queryParam.pageSize
+      //   pageNo:that.queryParam.pageNo
+      //   userId: !this.isReset ? formValues.uid : '',
+      //   blockType: !this.isReset ? formValues.accountStatus : '',
+      //   startTime: !this.isReset ? startTime : '',
+      //   endTime: !this.isReset ? endTime : ''
+      // }
+        const params = this.queryParam
         const promise = new Promise(function (resolve, reject) {
           request({
             url: '/user/adminQueryUserInfo',
@@ -270,7 +291,7 @@ export default {
             that.queryParam.loading = false
           }
         )
-      })
+      // })
     },
     updateData () {
       request({

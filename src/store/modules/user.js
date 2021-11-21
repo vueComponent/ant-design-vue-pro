@@ -80,6 +80,13 @@ const user = {
         getInfo().then(response => {
           console.log('getUserInfo')
           console.log(response)
+        // const response = {
+        //     result: {
+        //       role: 1,
+        //       name: 'admin',
+        //       avatar: 2
+        //     }
+        // }
           const result = response.result
 
           // if (result.role && result.role.permissions.length > 0) {

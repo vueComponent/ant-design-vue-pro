@@ -60,7 +60,6 @@ import {
   MiniSmoothArea
 } from '@/components'
 import request from '@/utils/request'
-
 const barData = []
 const barData2 = []
 const data = []
@@ -74,7 +73,6 @@ for (let i = 0; i < 12; i += 1) {
     y: Math.floor(Math.random() * 1000) + 200
   })
 }
-
 export default {
   name: 'DataBoard',
   data () {
@@ -201,11 +199,9 @@ export default {
 .extra-wrapper {
   line-height: 55px;
   padding-right: 24px;
-
 .extra-item {
   display: inline-block;
   margin-right: 24px;
-
 a {
   margin-left: 24px;
 }
