@@ -105,7 +105,7 @@ const vueConfig = {
     // If you want to turn on the proxy, please remove the mockjs /src/main.js
     proxy: {
       '/api': {
-        target: 'https://www.wallbreaker.top/',
+        target: 'http://101.132.130.199:8080/',
         // target: 'http://localhost:8080/',
         ws: false,
         changeOrigin: true,
@@ -118,7 +118,7 @@ const vueConfig = {
 
   // disable source map in production
   productionSourceMap: false,
-  lintOnSave: undefined,
+  lintOnSave: false,
   // babel-loader no-ignore node_modules/*
   transpileDependencies: []
 }

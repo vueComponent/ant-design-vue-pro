@@ -52,7 +52,11 @@
                     </div>
                   </a-card-meta>
                   <div class="project-item">
+<<<<<<< HEAD
                     <a href='/#/'>科学搬砖组</a>
+=======
+                    <a href="/#/">科学搬砖组</a>
+>>>>>>> c78b5c4 (xx)
                     <span class="datetime">9小时前</span>
                   </div>
                 </a-card>

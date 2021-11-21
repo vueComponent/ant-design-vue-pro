@@ -4,7 +4,7 @@
       <wang-editor v-on:editorChange="setEditorContent"/>
     </a-card>
     <a-card :bordered='false'>
-      <a-form :form="form" layout='inline' :colon='false' labelAlign='left'>
+      <a-form :form="form" layout='inline' :colon='false' labelAlign='left' hideRequiredMark>
         <a-row>
           <a-col :span='6'>
             <a-form-item :labelCol='{span: 12}' :wrapperCol='{span: 12}'>
@@ -34,10 +34,10 @@
               <a-col :span='24'>
                 <a-form-item :labelCol='{span: 4}' :wrapperCol='{span: 20}' style='width: 100%'>
                   <div slot='label' style='display: flex;flex-direction: column'>
-                    <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'>标题</span>
+                    <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'><span class='required'>*</span>标题</span>
                     <span style='margin: 0 auto;font-size: 12px;width: 50px;white-space: pre-line;line-height: 20px;color: #90939999'>20字以内</span>
                   </div>
-                  <a-input placeholder='请输入标题' style='width: 100%' v-decorator="['title']"/>
+                  <a-input placeholder='请输入标题' style='width: 100%' v-decorator="['title',{ rules: [{ required: true, message: '请输入标题' },{max: 20, message: '标题不能超过20个字'}] }]"/>
                 </a-form-item>
               </a-col>
             </a-row>
@@ -101,8 +101,9 @@
         </a-row>
         <a-row :gutter='96'>
           <a-col :span='18'>
-            <a-checkbox style='height: 30px;line-height: 30px;margin-left: 20px'>我已阅读并同意遵循</a-checkbox>
+            <a-checkbox v-model='agreeCb' style='height: 30px;line-height: 30px;margin-left: 20px'>我已阅读并同意遵循</a-checkbox>
             <a style='text-decoration: underline'>《济星云社区管理规范》</a>
+            <div v-show='!agreeCb && agreeTip' style='margin-left: 40px;color: #f5222d;'>请阅读并同意</div>
           </a-col>
           <a-col :span='1'>
             <a-button @click="save" type='primary'>保存</a-button>
@@ -119,7 +120,6 @@
 
 <script>
 import WangEditor from '@/components/Editor/WangEditor'
-
 export default {
   components: { WangEditor }
 }
@@ -147,6 +147,8 @@ export default {
       imageUrl: '',
       loading: false,
       fileList: [],
+      agreeCb: false,
+      agreeTip: false
     }
   },
   beforeCreate () {
@@ -157,9 +159,15 @@ export default {
       console.log('test')
     },
     save () {
+      this.agreeTip = true
       this.form.validateFields((err, value) => {
-        if(err){
+        if(err || !this.agreeCb){
           console.log(err)
+          return
+        }
+        let firstPicUrl = null
+        if(this.fileList && this.fileList.length){
+          firstPicUrl = this.fileList[0].url
         }
         if(storage.get(ROLE_ID)=='organization'){
           request({
@@ -167,11 +175,18 @@ export default {
             method: 'post',
             data: {
               ...value,
+              released: false,
+              firstPicUrl,
               content: this.content
             }
           })
             .then(res => {
               console.log(res)
+              if(res.success) {
+                this.$message.success(res.msg || '保存成功')
+              }else {
+                this.$message.error(res.msg || '保存失败')
+              }
             })
         } else if(storage.get(ROLE_ID)=='admin') {
           request({
@@ -179,20 +194,32 @@ export default {
             method: 'post',
             data: {
               ...value,
+              released: false,
+              firstPicUrl,
               content: this.content
             }
           })
             .then(res => {
               console.log(res)
+              if(res.success) {
+                this.$message.success(res.msg || '保存成功')
+              }else {
+                this.$message.error(res.msg || '保存失败')
+              }
             })
         }
       })
     },
     saveAndPublish () {
-      console.log('')
+      this.agreeTip = true
       this.form.validateFields((err, value) => {
-        if(err){
+        if(err || !this.agreeCb){
           console.log(err)
+          return
+        }
+        let firstPicUrl = null
+        if(this.fileList && this.fileList.length){
+          firstPicUrl = this.fileList[0].url
         }
         if(storage.get(ROLE_ID)=='organization'){
           request({
@@ -200,18 +227,31 @@ export default {
             method: 'post',
             data: {
               ...value,
+              released: true,
+              firstPicUrl,
               content: this.content
             }
           })
             .then(res => {
               console.log(res)
-              request({
-                url: '/posting/organizationPublishPosting/' + res.data.id,
-                method: 'get',
-              })
-                .then(res2 =>{
-                  console.log(res2)
-                })
+              if(res.success) {
+                this.$message.success(res.msg || '保存并发布成功')
+              }else {
+                this.$message.error(res.msg || '保存并发布失败')
+              }
+              // released: true包含了发布
+              // request({
+              //   url: '/posting/organizationPublishPosting/' + res.data.id,
+              //   method: 'get',
+              // })
+              //   .then(res2 =>{
+              //     console.log(res2)
+              //     if(res2.success) {
+              //       this.$message.success(res2.msg || '保存并发布成功')
+              //     }else {
+              //       this.$message.error(res2.msg || '保存并发布失败')
+              //     }
+              //   })
             })
         } else if(storage.get(ROLE_ID)=='admin') {
           request({
@@ -219,18 +259,31 @@ export default {
             method: 'post',
             data: {
               ...value,
+              released: true,
+              firstPicUrl,
               content: this.content
             }
           })
             .then(res => {
               console.log(res)
-              request({
-                url: '/posting/adminPublishPosting/' +res.data.id,
-                method: 'get',
-              })
-                .then(res2 =>{
-                  console.log(res2)
-                })
+              if(res.success) {
+                this.$message.success(res.msg || '保存并发布成功')
+              }else {
+                this.$message.error(res.msg || '保存并发布失败')
+              }
+              // released: true包含了发布
+              // request({
+              //   url: '/posting/adminPublishPosting/' +res.data.id,
+              //   method: 'get',
+              // })
+              //   .then(res2 =>{
+              //     console.log(res2)
+              //     if(res2.success) {
+              //       this.$message.success(res2.msg || '保存并发布成功')
+              //     }else {
+              //       this.$message.error(res2.msg || '保存并发布失败')
+              //     }
+              //   })
             })
         }
       })
@@ -275,5 +328,8 @@ export default {
 </script>
 
 <style scoped>
-
+.required {
+  color: #f5222d;
+  font-family: SimSun,sans-serif;
+}
 </style>
