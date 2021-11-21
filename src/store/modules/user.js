@@ -2,6 +2,7 @@ import storage from 'store'
 import { loginAdmin, loginOrg, getInfo, logout } from '@/api/login'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { welcome } from '@/utils/util'
+import bootstrap from '../../core/bootstrap'
 
 const user = {
   state: {
@@ -103,6 +104,7 @@ const user = {
           commit('SET_AVATAR', result.avatar)
           resolve(response)
         }).catch(error => {
+          console.log('error on getInfo')
           reject(error)
         })
       })
@@ -114,11 +116,12 @@ const user = {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
-          storage.remove(ACCESS_TOKEN)
+          storage.clearAll()
           resolve()
         }).catch(() => {
           resolve()
         }).finally(() => {
+          bootstrap()
         })
       })
     }

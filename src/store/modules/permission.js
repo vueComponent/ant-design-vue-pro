@@ -38,7 +38,23 @@ function hasRole(roles, route) {
   }
 }
 
-function filterAsyncRouter (routerMap, roles) {
+function deepCopy (obj) {
+  var objClone = Array.isArray(obj) ? [] : {}
+  if (obj && typeof obj === 'object') {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        if (obj[key] && typeof obj[key] === 'object') {
+          objClone[key] = deepCopy(obj[key])
+        } else {
+          objClone[key] = obj[key]
+        }
+      }
+    }
+    return objClone
+  }
+}
+function filterAsyncRouter (routerMaps, roles) {
+  const routerMap = deepCopy(routerMaps)
   const accessedRouters = routerMap.filter(route => {
     if (hasPermission(roles.permissionList, route)) {
       if (route.children && route.children.length) {
@@ -50,6 +66,19 @@ function filterAsyncRouter (routerMap, roles) {
   })
   return accessedRouters
 }
+
+// function filterAsyncRouter (routerMap, roles) {
+//   const accessedRouters = routerMap.filter(route => {
+//     if (hasPermission(roles.permissionList, route)) {
+//       if (route.children && route.children.length) {
+//         route.children = filterAsyncRouter(route.children, roles)
+//       }
+//       return true
+//     }
+//     return false
+//   })
+//   return accessedRouters
+// }
 
 const permission = {
   state: {

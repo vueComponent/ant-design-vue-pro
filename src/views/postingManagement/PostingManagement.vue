@@ -43,7 +43,7 @@
           <a-col :span="6">
             <a-input-search placeholder="请输入"/>
           </a-col>
-          <a-col :span="4" :offset="8">
+          <a-col :span="4" :push="10">
             <a-button type="primary" @click="() => this.$router.push({ path:'/posting/NewPosting' })">新建帖子</a-button>
           </a-col>
         </a-row>

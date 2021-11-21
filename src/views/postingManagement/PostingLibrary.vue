@@ -5,8 +5,8 @@
         <a-col :span='6'>
           <a-input-search placeholder='请输入' v-model='search'/>
         </a-col>
-        <a-col :span='4' :offset='14'>
-          <a-button type='primary' @click='goToNewPosting'>新建帖子</a-button>
+        <a-col :span='4' :offset="14">
+          <a-button type="primary" @click="goToNewPosting">新建帖子</a-button>
         </a-col>
       </a-row>
       <a-row>

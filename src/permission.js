@@ -47,7 +47,10 @@ router.beforeEach((to, from, next) => {
               const redirect = decodeURIComponent(from.query.redirect || to.path)
               if (to.path === redirect) {
                 // set the replace: true so the navigation will not leave a history record
+                console.log(redirect)
+                console.log(to)
                 next({ ...to, replace: true })
+                // next({ path: '/' })
               } else {
                 // 跳转到目的路由
                 next({ path: redirect })
