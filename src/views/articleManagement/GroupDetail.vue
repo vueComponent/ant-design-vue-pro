@@ -43,16 +43,12 @@ export default {
     }
   },
   methods: {
-    /**
-     * 打开弹框
-     * 
-     */
-    open(item) {
+    open (item) {
       this.item = item || {}
       this.visible = true
       this.getData()
     },
-    getData() {
+    getData () {
       adminGetTeam(this.item.id).then(res => {
         if (res.success) {
           this.item = res.data

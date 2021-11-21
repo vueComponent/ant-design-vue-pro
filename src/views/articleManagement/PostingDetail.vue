@@ -1,15 +1,10 @@
-<!--
-* @Description:
-* 
-* @Date: 2021/11/12
--->
 <template>
   <a-modal
     v-model="visible"
     title="帖子详情"
     width="80%"
-    :dialogStyle="{
-      top: &quot;10px&quot;
+    dialogStyle="{
+      top: '10px'
     }"
   >
     <a-card>
@@ -36,10 +31,6 @@ export default {
     }
   },
   methods: {
-    /**
-     * 打开弹框
-     * 
-     */
     open (item) {
       this.item = item || {}
       this.visible = true
