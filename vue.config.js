@@ -106,8 +106,8 @@ const vueConfig = {
     // If you want to turn on the proxy, please remove the mockjs /src/main.js
     proxy: {
       '/api': {
-        target: 'https://www.wallbreaker.top/',
-        // target: 'http://localhost:8080/',
+        // target: 'https://www.wallbreaker.top/',
+        target: 'http://localhost:8080/',
         ws: false,
         changeOrigin: true,
         pathRewrite: {
