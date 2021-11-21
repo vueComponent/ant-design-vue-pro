@@ -65,6 +65,8 @@ export function getCurrentUserNav () {
 }
 
 export function logout () {
+  localStorage.clear()
+  sessionStorage.clear()
   return request({
     url: userApi.Logout,
     method: 'get',
