@@ -20,6 +20,7 @@ const constantRouterComponents = {
   Star: () => import('@/views/accountManagement/Star'),
   Create: () => import('@/views/accountManagement/Create'),
   HistoricalTeam: () => import('@/views/accountManagement/HistoricalTeam'),
+  HistoricalPosting: () => import('@/views/accountManagement/HistoricalPosting'),
 
   // articleManagement
   Jiren: () => import('@/views/articleManagement/Jiren'),

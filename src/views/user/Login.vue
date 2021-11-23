@@ -100,7 +100,7 @@
         <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">{{ $t('user.login.remember.me') }}</a-checkbox>
         <router-link
           :hidden="customActiveKey !== 'tab1'"
-          :to="{ name: 'recover', params: { user: 'aaa'} }"
+          :to="{ name: 'forget', params: { user: 'aaa'} }"
           class="forge-password"
           style="float: right;"
         >{{ $t('user.login.forget.password') }}</router-link>
