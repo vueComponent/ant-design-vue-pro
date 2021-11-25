@@ -465,6 +465,13 @@ const info = options => {
   return builder(userInfo)
 }
 
+/**
+ * 使用 用户登录的 token 获取用户有权限的菜单
+ * 返回结构必须按照这个结构体形式处理，或根据
+ * /src/router/generator-routers.js  文件的菜单结构处理函数对应即可
+ * @param {*} options
+ * @returns
+ */
 const userNav = options => {
   const nav = [
     // dashboard
@@ -787,12 +794,12 @@ const userNav = options => {
         hideChildren: true,
         show: true
       },
-      redirect: '/account/settings/base',
+      redirect: '/account/settings/basic',
       component: 'AccountSettings'
     },
     {
-      name: 'BasicSetting',
-      path: '/account/settings/base',
+      name: 'BasicSettings',
+      path: '/account/settings/basic',
       parentId: 10030,
       id: 10031,
       meta: {
@@ -832,7 +839,7 @@ const userNav = options => {
         title: '账户绑定',
         show: false
       },
-      component: 'BindingSetting'
+      component: 'BindingSettings'
     },
     {
       name: 'NotificationSettings',

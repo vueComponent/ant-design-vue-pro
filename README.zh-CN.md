@@ -19,7 +19,7 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 - 文档: https://pro.antdv.com/docs/getting-started
 - 更新日志: https://pro.antdv.com/docs/changelog
 - 常见问题: https://pro.antdv.com/docs/faq
-
+- Vue3 ProLayout: https://github.com/vueComponent/pro-layout
 
 Overview
 ----

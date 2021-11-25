@@ -19,6 +19,7 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 - Documentation: https://pro.antdv.com/docs/getting-started
 - ChangeLog: https://pro.antdv.com/docs/changelog
 - FAQ: https://pro.antdv.com/docs/faq
+- Vue3 ProLayout: https://github.com/vueComponent/pro-layout
 
 Overview
 ----
@@ -71,7 +72,7 @@ yarn run lint
 
 ### Other
 
-- **IMPORTANT : About Issue feedback !! when opening Issue read [Issue / PR Contributing](https://github.com/vueComponent/ant-design-vue-pro/issues/90)**
+- **IMPORTANT : Issue feedback !! when opening Issue read [Issue / PR Contributing](https://github.com/vueComponent/ant-design-vue-pro/issues/90)**
 
 - [Vue-cli3](https://cli.vuejs.org/guide/) used by the project.
 
