@@ -35,38 +35,40 @@
         <a-row :gutter="[0,0]" style="font-weight: bold;margin-bottom: 10px">已发布</a-row>
         <a-row :gutter="[0,0]">
           <a-col :span="6">
-            <a-radio-group v-model="radio">
-              <a-radio-button value="all">全部</a-radio-button>
-              <a-radio-button value="notDeleted">未删除</a-radio-button>
+            <a-radio-group v-model="radio" @change="changePublishedDataType">
+              <a-radio-button value="1">全部</a-radio-button>
+              <a-radio-button value="0">未删除</a-radio-button>
             </a-radio-group>
           </a-col>
           <a-col :span="6">
-            <a-input-search placeholder="请输入"/>
+            <a-input-search placeholder="请输入" v-model="keyword" @search="searchPublishedData"/>
           </a-col>
           <a-col :span="4" :push="10">
             <a-button type="primary" @click="() => this.$router.push({ path:'/posting/NewPosting' })">新建帖子</a-button>
           </a-col>
         </a-row>
         <a-row>
-          <a-list size="large" :pagination="pagination">
-            <a-list-item :key="index" v-for="(item, index) in publishedData">
+          <a-list size="large" :pagination="pagination" :loading="loading">
+            <a-list-item :key="index" v-for="(item, index) in publishedData" :class="item.deleted?'deleted':''">
               <a-list-item-meta>
-                <span slot="description" style="overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{ item.description }}</span>
+                <span slot="description"  style="overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{ item.description }}</span>
                 <a-avatar slot="avatar" size="large" shape="square" :src="item.avatar"/>
-                <a slot="title">{{ item.title }}</a>
+                <a slot="title" >{{ item.title }}<span v-if="item.censored" style="color: red;">（因疑似违规已被屏蔽）</span></a>
               </a-list-item-meta>
               <div slot="actions">
-                <router-link :to="{name: 'postingDetail', params: {postingId: item.postingId}}">查看</router-link>
+                <router-link v-if="!item.deleted" :to="{name: 'postingDetail', params: {postingId: item.postingId}}">查看</router-link>
+                <span v-else>&#12288;&#12288;</span>
               </div>
               <div slot="actions">
-                <a @click="showDeleteModal(item.id)">删除</a>
+                <a v-if="!item.deleted" @click="showDeleteModal(item.postingId)">删除</a>
+                <span v-else>&#12288;&#12288;</span>
               </div>
               <div class="list-content">
-                <div class="list-content-item">
+                <div class="list-content-item" :class="item.deleted?'deleted':''">
                   <span>Owner</span>
                   <p>{{ item.owner }}</p>
                 </div>
-                <div class="list-content-item">
+                <div class="list-content-item" :class="item.deleted?'deleted':''">
                   <span>开始时间</span>
                   <p>{{ item.startAt }}</p>
                 </div>
@@ -107,13 +109,25 @@ export default {
       modal: { visible: false },
       nearlyData,
       publishedData,
-      pagination,
-      radio: 'all'
+      pagination: {
+        showSizeChanger: true,
+        showQuickJumper: true,
+        pageSize: 10,
+        // total: data.total,
+        current: 1,
+        onChange: this.updatePublishedDataPage,
+        onShowSizeChange: this.updatePublishedDataPage
+      },
+      radio: '1',
+      loading: true,
+      keyword: '',
+      pageNo: 1,
+      pageSize: 10
     }
   },
   created () {
     this.updateNearAuditData()
-    this.updatePublishedData()
+    this.getPublishedData()
   },
   methods: {
     updateNearAuditData () {
@@ -138,12 +152,33 @@ export default {
           console.log(res)
         })
       },
-    updatePublishedData () {
+    changePublishedDataType () {
+      this.publishedDataType=this.radio
+      this.getPublishedData()
+    },
+    searchPublishedData (keyword) {
+      this.keyword=keyword
+      this.getPublishedData()
+    },
+    updatePublishedDataPage (pageNo,pageSize) {
+      this.pageNo=pageNo
+      this.pageSize=pageSize
+      this.getPublishedData()
+    },
+    getPublishedData () {
+      this.loading=false
       request({
         url: '/posting/organizationGetPublishedPostingList',
-        method: 'get'
+        method: 'get',
+        params: {
+          keyword:this.keyword,
+          pageNo:this.pageNo,
+          pageSize:this.pageSize,
+          hidden: this.publishedDataType
+        }
       })
         .then(res => {
+          console.log(res)
           const publishedData = []
           const data = res.data
           const records = data.records
@@ -157,18 +192,24 @@ export default {
               owner: records[key].owner,
               startAt: this.transferTime(records[key].updateTime),
               views: records[key].viewCount.toString().padStart(2),
-              favorite: records[key].likeCount.toString().padStart(3)
+              favorite: records[key].likeCount.toString().padStart(3),
+              deleted: records[key].hidden,
+              censored: records[key].censored
             })
           }
           this.publishedData = publishedData
-          console.log(publishedData)
-          this.pagination = {
-            showSizeChanger: true,
-            showQuickJumper: true,
-            pageSize: data.size,
-            total: data.total,
-            current: data.current
-          }
+          this.pagination.total=data.total
+          this.pagination.pagesize=data.size
+          this.pagination.current=data.current
+          this.loading=false
+          // console.log(publishedData)
+          // this.pagination = {
+          //   showSizeChanger: true,
+          //   showQuickJumper: true,
+          //   pageSize: data.size,
+          //   total: data.total,
+          //   current: data.current
+          // }
           // console.log(res)
         })
     },
@@ -194,11 +235,14 @@ export default {
     },
     tapOkForModal () {
       request({
-        url: '/posting/organizationDeletePosting/' + this.modal.id,
+        url: '/posting/organizationLogicDeletePosting/' + this.modal.id,
         method: 'delete'
       })
-      this.modal.visible = false
-      this.updatePublishedData()
+      .then(res => {
+        console.log(res)
+        this.modal.visible = false
+        this.getPublishedData()
+      })
     }
   }
 }
@@ -222,5 +266,9 @@ export default {
       margin-bottom: 0;
       line-height: 22px;
     }
+}
+.deleted {
+  text-decoration: line-through;
+  color: #909399;
 }
 </style>

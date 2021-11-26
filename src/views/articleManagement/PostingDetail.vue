@@ -15,7 +15,7 @@
         <a-col :span="6">用户id：{{ item.adminId }}</a-col>
         <a-col :span="6">用户昵称：{{ item.adminName }}</a-col>
         <a-col :span="6">发帖时间：{{ item.createTime }}</a-col>
-        <a-col :span="24">文章详情：{{ item.brief }}</a-col>
+        <a-col :span="24">文章详情：{{ item.content }}</a-col>
       </a-row>
     </a-card>
   </a-modal>
