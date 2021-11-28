@@ -1,7 +1,7 @@
 <template>
   <page-header-wrapper>
     <a-card :bordered="false">
-      <wang-editor v-on:editorChange="setEditorContent"/>
+      <wang-editor v-on:editorChange="setEditorContent" :value="content"/>
     </a-card>
     <a-card :bordered='false'>
       <a-form :form="form" layout='inline' :colon='false' labelAlign='left' hideRequiredMark>
@@ -37,7 +37,7 @@
                     <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'><span class='required'>*</span>标题</span>
                     <span style='margin: 0 auto;font-size: 12px;width: 50px;white-space: pre-line;line-height: 20px;color: #90939999'>20字以内</span>
                   </div>
-                  <a-input placeholder='请输入标题' style='width: 100%' v-decorator="['title',{ rules: [{ required: true, message: '请输入标题' },{max: 20, message: '标题不能超过20个字'}] }]"/>
+                  <a-input placeholder='请输入标题' style='width: 100%' maxLength="20" v-decorator="['title',{initialValue:data.title, rules: [{ required: true, message: '请输入标题' , whitespace: true},{max: 20, message: '标题不能超过20个字'}] }]"/>
                 </a-form-item>
               </a-col>
             </a-row>
@@ -45,10 +45,10 @@
               <a-col :span='12'>
                 <a-form-item :labelCol='{span: 8}' :wrapperCol='{span: 16}' style='width: 100%'>
                   <div slot='label' style='display: flex;flex-direction: column'>
-                    <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'>帖子主题</span>
+                    <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'><span class='required'>*</span>帖子主题</span>
                     <span style='margin: 0 auto;font-size: 12px;width: 60px;white-space: pre-line;line-height: 20px;color: #90939999'>可作为用户的筛选条件</span>
                   </div>
-                  <a-select placeholder='请选择' style='width: 100%' v-decorator="['labelId']">
+                  <a-select placeholder='请选择' style='width: 100%' v-decorator="['labelId',{initialValue:data.labelId, rules: [{ required: true, message: '请选择板块' , whitespace: true}] }]">
                     <a-select-option value="21">求职信息</a-select-option>
                     <a-select-option value="22">学习天地</a-select-option>
                     <a-select-option value="23">校园活动</a-select-option>
@@ -63,31 +63,40 @@
                     <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'>owner/作者</span>
                     <span style='margin: 0 auto;font-size: 12px;width: 100px;white-space: pre-line;line-height: 20px;color: #90939999'>对用户不显示，便于进行推文管理</span>
                   </div>
-                  <a-input placeholder='请输入作者名称/昵称' v-decorator="['owner']"/>
+                  <a-input placeholder='请输入作者名称/昵称' v-decorator="['owner',{initialValue:data.owner}]"/>
                 </a-form-item>
               </a-col>
             </a-row>
           </a-col>
         </a-row>
         <a-row>
-          <a-form-item>
-            <div style='height: 50px;margin-left: 20px'>
-              <a-checkbox style='color: rgba(0, 0, 0, 0.85);' v-decorator='["hasLink"]'>
-                <span style='font-weight: bold;font-size: 16px'>跳转链接   </span>
-                <span style='color: #90939999'>用户在帖子底部点击可跳转对应页面  </span>
-              </a-checkbox>
-              <a style='text-decoration: underline'>查看效果图</a>
+          <a-form-item :labelCol='{span: 2}' :wrapperCol='{span: 22}' style='width: 100%'>
+            <div slot='label' style='display: flex;flex-direction: column'>
+              <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'><span class='required'>*</span>摘要</span>
+              <span style='margin: 0 auto;font-size: 12px;width: 50px;white-space: pre-line;line-height: 20px;color: #90939999'>40字以内</span>
             </div>
+            <a-input placeholder='请输入摘要' style='width: 100%' maxLength="40" v-decorator="['brief',{initialValue:data.brief, rules: [{ required: true, message: '请输入摘要' }] }]"/>
           </a-form-item>
         </a-row>
         <a-row>
+          <a-form-item>
+            <div style='height: 50px;margin-left: 20px'>
+              <a-checkbox style='color: rgba(0, 0, 0, 0.85);' v-model="hasLink" v-decorator='["hasLink"]'>
+                <span style='font-weight: bold;font-size: 16px'>跳转链接   </span>
+                <span style='color: #90939999'>用户在帖子底部点击可跳转对应页面  </span>
+              </a-checkbox>
+              <a style='text-decoration: underline' @click="() => this.linkCardPreviewShow=true">效果示意图</a>
+            </div>
+          </a-form-item>
+        </a-row>
+        <a-row v-if="hasLink">
           <a-col :span='6'>
             <a-form-item :labelCol='{span: 8}' :wrapperCol='{span: 16}' style='width: 100%'>
               <div slot='label' style='display: flex;flex-direction: column'>
                 <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'>链接标题</span>
                 <span style='margin: 0 auto;font-size: 12px;width: 70px;white-space: pre-line;line-height: 20px;color: #90939999'>15个字以内</span>
               </div>
-              <a-input placeholder='请输入标签链接' v-decorator="['linkTitle']"/>
+              <a-input placeholder='请输入标签链接' v-decorator="['linkTitle',{initialValue:data.linkTitle}]"/>
             </a-form-item>
           </a-col>
           <a-col :span='18'>
@@ -95,14 +104,14 @@
               <div slot='label' style='display: flex;flex-direction: column'>
                 <span style='text-align: center;font-weight: bold'>链接</span>
               </div>
-              <a-input placeholder='仅支持微信公众号推文和问卷星链接' v-decorator="['linkUrl']"/>
+              <a-input placeholder='仅支持微信公众号推文和问卷星链接' v-decorator="['linkUrl',{initialValue:data.linkUrl}]"/>
             </a-form-item>
           </a-col>
         </a-row>
         <a-row :gutter='96'>
           <a-col :span='18'>
             <a-checkbox v-model='agreeCb' style='height: 30px;line-height: 30px;margin-left: 20px'>我已阅读并同意遵循</a-checkbox>
-            <a style='text-decoration: underline'>《济星云社区管理规范》</a>
+            <a target="_blank" href="https://jixingyun.tongji.edu.cn/%E6%B5%8E%E6%98%9F%E4%BA%91%E7%A4%BE%E5%8C%BA%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83.html" style='text-decoration: underline'>《济星云社区管理规范》</a>
             <div v-show='!agreeCb && agreeTip' style='margin-left: 40px;color: #f5222d;'>请阅读并同意</div>
           </a-col>
           <a-col :span='1'>
@@ -115,6 +124,12 @@
       </a-form>
     </a-card>
     <AvatarModal/>
+    <a-modal
+      v-model="linkCardPreviewShow"
+      @ok="() => this.linkCardPreviewShow=false"
+      width="300px">
+      <img src="./linkCard.png" style="width: 250px;"/>
+    </a-modal>
   </page-header-wrapper>
 </template>
 
@@ -147,12 +162,51 @@ export default {
       imageUrl: '',
       loading: false,
       fileList: [],
+      data: {},
+      hasLink: false,
       agreeCb: false,
-      agreeTip: false
+      agreeTip: false,
+      linkCardPreviewShow: false
     }
   },
   beforeCreate () {
     this.form = this.$form.createForm(this, { name: 'search' })
+  },
+  created () {
+    if (this.$route.params.postingId) {
+      request({
+        url: '/posting/adminGetPostingDetail/' + this.$route.params.postingId,
+        method: 'get'
+      })
+        .then(res => {
+          console.log(res)
+          const data = res.data
+          const neededData = {
+            content: data.content,
+            title: data.title,
+            labelId: data.labelId.toString(),
+            owner: data.owner,
+            brief: data.brief,
+            hasLink: Boolean(data.linkUrl),
+            linkTitle: data.linkTitle,
+            linkUrl: data.linkUrl
+          }
+          this.data = neededData
+          this.hadLink = data.hasLink
+          this.content = data.content
+          console.log(data.content)
+          if(data.firstPicUrl) {
+            this.fileList = [
+              {
+                uid: '-1',
+                name: 'xxx.png',
+                status: 'done',
+                url: data.firstPicUrl
+              }
+            ]
+          }
+        })
+    }
   },
   methods: {
     change () {

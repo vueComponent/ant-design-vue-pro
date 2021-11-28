@@ -3,7 +3,7 @@
     <a-card :bordered="false">
       <a-row>
         <a-col :span='6'>
-          <a-input-search placeholder='请输入' v-model='search'/>
+          <a-input-search placeholder='请输入' v-model='keyword' @search="updateData"/>
         </a-col>
         <a-col :span='4' :offset="14">
           <a-button type="primary" @click="goToNewPosting">新建帖子</a-button>
@@ -16,7 +16,8 @@
           class="card-list"
           style='margin-top: 15px'
           size="large"
-          :pagination="pagination">
+          :pagination="pagination"
+          :loading="loading">
           <a-list-item slot="renderItem" slot-scope="item">
             <template>
               <a-card :hoverable="true" size='small'>
@@ -50,7 +51,7 @@
 import request from '@/utils/request'
 
 const data = []
-const pagination = {}
+// const pagination = {}
 
 export default {
   name: 'postingLibrary',
@@ -58,8 +59,20 @@ export default {
     return {
       modal: { visible: false },
       data,
-      search: '',
-      pagination
+      loading: false,
+      // search: '',
+      pagination: {
+        showSizeChanger: true,
+        showQuickJumper: true,
+        pageSize: 12,
+        // total: data.total,
+        current: 1,
+        onChange: this.updatePublishedDataPage,
+        onShowSizeChange: this.updatePublishedDataPage
+      },
+      keyword: '',
+      pageNo: 1,
+      pageSize: 12
     }
   },
   created () {
@@ -67,9 +80,15 @@ export default {
   },
   methods: {
     updateData () {
+      this.loading = true
       request({
         url: '/posting/organizationGetUnpublishedPostingList',
-        method: 'get'
+        method: 'get',
+        params: {
+          keyword:this.keyword,
+          pageNo:this.pageNo,
+          pageSize:this.pageSize
+        }
       })
         .then(res => {
           const data = []
@@ -85,18 +104,15 @@ export default {
           }
           console.log('data:' + data)
           this.data = data
-          this.pagination = {
-            showQuickJumper: true,
-            total: res.data.total,
-            pageSize: res.data.size,
-            current: res.data.current,
-            showTotal: total => `总共${total}个项目`
-          }
+          this.pagination.total=data.total
+          this.pagination.pagesize=data.size
+          this.pagination.current=data.current
           console.log(res)
+          this.loading = false
         })
     },
     goToNewPosting (e) {
-      console.log('go')
+      // console.log('go')
       this.$router.push({ path: '/posting/newPosting' })
     },
     goToEditorPosting (e) {
