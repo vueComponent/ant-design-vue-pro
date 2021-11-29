@@ -25,6 +25,7 @@
         </a-col>
       </a-row>
 
+
       <div class="salesCard">
         <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}" @change="changeBarData">
           <div class="extra-wrapper" slot="tabBarExtraContent">
@@ -33,7 +34,7 @@
               <a @click="barIndex==1?showViewsOfThisWeek():showFavoriteOfThisWeek()">本周</a>
               <a @click="barIndex==1?showViewsOfThisMonth():showFavoriteOfThisMonth()">本月</a>
             </div>
-            <a-range-picker :style="{width: '256px'}" />
+            <a-range-picker :style="{width: '256px'}" @change="datePickerChange"/>
           </div>
           <a-tab-pane loading="true" tab="浏览量" key="1">
             <bar :data="barData" title="浏览量趋势" style='font-size: 16px;font-weight: bold'/>
@@ -90,7 +91,8 @@ export default {
       viewsOfThisMonth: [],
       favoriteOfToday: [],
       favoriteOfThisWeek: [],
-      favoriteOfThisMonth: []
+      favoriteOfThisMonth: [],
+      datePickerData: {}
     }
   },
   created () {
@@ -128,6 +130,9 @@ export default {
           case 3:
             this.showViewsOfThisMonth()
             break
+          case 4:
+            this.getDataOfDatePicker()
+            break
         }
       } else {
         switch (this.timeIndex) {
@@ -140,8 +145,40 @@ export default {
           case 3:
             this.showFavoriteOfThisMonth()
             break
+          case 4:
+            this.getDataOfDatePicker()
+            break
         }
       }
+    },
+    datePickerChange(event, time) {
+      // console.log(event, time)
+      this.datePickerData = {
+        startTime: time[0] + ' 00:00:00',
+        endTime: time[1] + ' 00:00:00'
+      }
+      this.getDataOfDatePicker()
+    },
+    getDataOfDatePicker () {
+      this.timeIndex = 4
+      const urlSuffix = this.barIndex==1?'PVNew':'Favorite'
+      request({
+        url: '/posting/organizationQueryStartEnd' + urlSuffix,
+        method: 'get',
+        params: this.datePickerData
+      })
+        .then(res => {
+          const resData = res.data
+          console.log(resData)
+          const data = []
+          for (let i in resData.time) {
+            data.push({
+              x: resData.time[i],
+              y: resData.value[i]
+            })
+          }
+          this.barIndex==1?this.barData = data:this.barData2 = data
+        })
     },
     showViewsOfToday () {
       console.log('viewsToday')
@@ -171,7 +208,8 @@ export default {
       this.timeIndex = 2
       if (!this.viewsOfThisWeek.length) {
         this.requestViewsOfDailyOffset(7)
-        .then(resData => {
+        .then(res => {
+          const resData =res.data
           const data = []
           for (let i = 0; i < 7; i++) {
             data.push({
@@ -191,7 +229,8 @@ export default {
       this.timeIndex = 3
       if (!this.viewsOfThisMonth.length) {
         this.requestViewsOfDailyOffset(31)
-          .then(resData => {
+          .then(res => {
+            const resData = res.data
             const data = []
             for (let i = 0; i < 31; i++) {
               data.push({
@@ -234,7 +273,8 @@ export default {
       this.timeIndex = 2
       if (!this.favoriteOfThisWeek.length) {
         this.requestFavoriteOfDailyOffset(7)
-          .then(resData => {
+          .then(res => {
+            const resData = res.data
             const data = []
             for (let i = 0; i < 7; i++) {
               data.push({
@@ -254,7 +294,8 @@ export default {
       this.timeIndex = 3
       if (!this.favoriteOfThisMonth.length) {
         this.requestFavoriteOfDailyOffset(31)
-          .then(resData => {
+          .then(res => {
+            const resData = res.data
             const data = []
             for (let i = 0; i < 31; i++) {
               data.push({
@@ -270,33 +311,21 @@ export default {
       }
     },
     requestViewsOfDailyOffset (offset) {
-      return new Promise(resolve => {
-        request({
-          url: '/posting/organizationQueryTodayOffsetPVNew',
-          method: 'get',
-          params: {
-            offset: offset
-          }
-        })
-          .then(res => {
-            console.log(res)
-            resolve(res.data)
-          })
+      return request({
+        url: '/posting/organizationQueryTodayOffsetPVNew',
+        method: 'get',
+        params: {
+          offset: offset
+        }
       })
     },
     requestFavoriteOfDailyOffset (offset) {
-      return new Promise(resolve => {
-        request({
-          url: '/posting/organizationQueryTodayOffsetFavorite',
-          method: 'get',
-          params: {
-            offset: offset
-          }
-        })
-          .then(res => {
-            console.log(res)
-            resolve(res.data)
-          })
+      return request({
+        url: '/posting/organizationQueryTodayOffsetFavorite',
+        method: 'get',
+        params: {
+          offset: offset
+        }
       })
     }
   },
