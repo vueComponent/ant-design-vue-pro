@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@ant-design-vue/pro-layout': ^1.0.10
+  '@ant-design-vue/pro-layout': ^1.0.11
   '@ant-design/colors': ^3.2.1
   '@antv/data-set': ^0.10.2
   '@vue/babel-helper-vue-jsx-merge-props': ^1.2.1
@@ -51,7 +51,7 @@ specifiers:
   webpack-theme-color-replacer: ^1.3.12
 
 dependencies:
-  '@ant-design-vue/pro-layout': 1.0.10_9065e7474e033a8e4b95615fc8e6c36c
+  '@ant-design-vue/pro-layout': 1.0.11_9065e7474e033a8e4b95615fc8e6c36c
   '@antv/data-set': 0.10.2
   ant-design-vue: 1.7.8_9065e7474e033a8e4b95615fc8e6c36c
   axios: 0.24.0
@@ -104,8 +104,8 @@ devDependencies:
 
 packages:
 
-  /@ant-design-vue/pro-layout/1.0.10_9065e7474e033a8e4b95615fc8e6c36c:
-    resolution: {integrity: sha512-G30F9G8dOjMw+LaNfzkHuOPOqdlnpqWDEi3CXv+Zw5GLpyVAYFNkSb2J2/3GgIKCIsBOE62S0DxRvh1nQk3FsQ==}
+  /@ant-design-vue/pro-layout/1.0.11_9065e7474e033a8e4b95615fc8e6c36c:
+    resolution: {integrity: sha512-8rn5eC2XC6DhialrGTVltxY/FgmHoRLJzVaPxPWlMV+RMNRH/Ppy8be9K1SsvH8stta5OQiF4Eu1GHnedeFhhA==}
     peerDependencies:
       vue: '>=2.6.0'
       vue-template-compiler: '>=2.6.0'

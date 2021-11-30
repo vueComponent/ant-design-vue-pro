@@ -142,7 +142,7 @@ export default {
     loadData (pagination, filters = this.filters, sorter = this.sorter) {
       this.filters = filters
       this.sorter = sorter
-      
+
       this.localLoading = true
       const parameter = Object.assign({
         pageNo: (pagination && pagination.current) ||
