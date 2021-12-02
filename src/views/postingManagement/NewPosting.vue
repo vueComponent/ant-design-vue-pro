@@ -37,7 +37,7 @@
                     <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'><span class='required'>*</span>标题</span>
                     <span style='margin: 0 auto;font-size: 12px;width: 50px;white-space: pre-line;line-height: 20px;color: #90939999'>20字以内</span>
                   </div>
-                  <a-input placeholder='请输入标题' style='width: 100%' maxLength="20" v-decorator="['title',{initialValue:data.title, rules: [{ required: true, message: '请输入标题' , whitespace: true},{max: 20, message: '标题不能超过20个字'}] }]"/>
+                  <a-input placeholder='请输入标题' style='width: 100%' :maxLength="20" v-decorator="['title',{initialValue:data.title, rules: [{ required: true, message: '请输入标题' , whitespace: true},{max: 20, message: '标题不能超过20个字'}] }]"/>
                 </a-form-item>
               </a-col>
             </a-row>
@@ -75,7 +75,7 @@
               <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'><span class='required'>*</span>摘要</span>
               <span style='margin: 0 auto;font-size: 12px;width: 50px;white-space: pre-line;line-height: 20px;color: #90939999'>40字以内</span>
             </div>
-            <a-input placeholder='请输入摘要' style='width: 100%' maxLength="40" v-decorator="['brief',{initialValue:data.brief, rules: [{ required: true, message: '请输入摘要' }] }]"/>
+            <a-input placeholder='请输入摘要' style='width: 100%' :maxLength="40" v-decorator="['brief',{initialValue:data.brief, rules: [{ required: true, message: '请输入摘要' }] }]"/>
           </a-form-item>
         </a-row>
         <a-row>
@@ -164,9 +164,10 @@ export default {
       fileList: [],
       data: {},
       hasLink: false,
-      agreeCb: false,
+      agreeCb: true,
       agreeTip: false,
-      linkCardPreviewShow: false
+      linkCardPreviewShow: false,
+      content: ''
     }
   },
   beforeCreate () {
@@ -192,9 +193,9 @@ export default {
             linkUrl: data.linkUrl
           }
           this.data = neededData
-          this.hadLink = data.hasLink
+          this.hasLink = neededData.hasLink
           this.content = data.content
-          console.log(data.content)
+          // console.log(data.content)
           if(data.firstPicUrl) {
             this.fileList = [
               {

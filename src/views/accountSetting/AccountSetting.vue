@@ -54,28 +54,29 @@
             </a-row>
             <a-row :gutter='24'>
               <a-col :span='4'>
-                <span>联系人手机号</span>
+                <span>联系人</span>
               </a-col>
               <a-col :span='13'>
+                <span>手机号&#12288;&#12288;</span>
                 <span style='color: #90939999'><a-icon type="exclamation-circle" theme='filled'/> 不对外展示，仅用于破壁工作室对接</span>
               </a-col>
             </a-row>
-            <a-row :gutter='24' v-for="(operator, index) in operatorList" :key="index">
+            <a-row :gutter='24' v-for="(operator, index) in operatorList" :key="index" v-if="operator.status != 'delete' && operator.status != 'ignore'">
               <a-col :span='4'>
                 <a-form-item>
-                  <a-input v-model="operator.operatorName"/>
+                  <a-input v-model="operator.operatorName" @change="updateOperator(operator)"/>
                 </a-form-item>
               </a-col>
               <a-col :span='13'>
                 <a-form-item>
-                  <a-input v-model="operator.phone"/>
+                  <a-input v-model="operator.phone" @change="updateOperator(operator)"/>
                 </a-form-item>
               </a-col>
               <a-col :span="1" v-if="index==operatorListAddIndex">
-                <a-icon type='plus-circle' style='font-size: 30px'/>
+                <a-icon type='plus-circle' style='font-size: 30px' @click="addNewOperator"/>
               </a-col>
               <a-col :span="1">
-                <a-icon type="minus-circle" style='font-size: 30px'/>
+                <a-icon type="minus-circle" style='font-size: 30px' @click="deleteOperator(operator)"/>
               </a-col>
             </a-row>
             <a-row>
@@ -156,26 +157,29 @@ export default {
       editPasswordModal: { visible: false, first: '', second: '', message: '' },
       confirmModal: { visible: false },
       operatorList: [],
-      operatorListAddIndex: 0,
+      // operatorListAddIndex: 0,
       loading: false
     }
   },
   beforeCreate () {
     // console.log(storage.get(DETAIL))
     this.form = this.$form.createForm(this, { name: 'search' })
-    request({
-      url: '/organizationOperator/getOperatorList',
-      method: 'get'
-    })
-      .then(res => {
-        console.log(res)
-        this.operatorList = res.data
-        this.operatorListAddIndex = res.data.length - 1
-      })
+  },
+  created() {
+    this.getOperatorList()
   },
   computed: {
     number: function () {
       return this.description.length
+    },
+    operatorListAddIndex: function() {
+      console.log('trigger')
+      for (let i = this.operatorList.length-1; i >=0 ; i--) {
+        let operator = this.operatorList[i]
+        if (operator.status != 'delete' && operator.status != 'ignore') {
+          return i
+        }
+      }
     }
   },
   methods: {
@@ -300,6 +304,78 @@ export default {
             this.$message.success('修改个人信息成功！')
           })
       })
+      this.updateOperatorList()
+    },
+    getOperatorList () {
+      request({
+        url: '/organizationOperator/getOperatorList',
+        method: 'get'
+      })
+        .then(res => {
+          console.log(res)
+          this.operatorList = res.data.map(item => {
+            return {
+              ...item,
+              status: 'original'
+            }
+          })
+          // this.operatorListAddIndex = res.data.length - 1
+        })
+    },
+    updateOperatorList () {
+      for (const operator of this.operatorList) {
+        let status = operator.status
+        console.log(status)
+        delete operator.status
+        switch (status) {
+          case 'new':
+            request({
+              url: '/organizationOperator/addOperator',
+              method: 'post',
+              data: operator
+            })
+            .then(res => {
+              console.log(res)
+            })
+            break
+          case 'update':
+            request({
+              url: '/organizationOperator/editOperator',
+              method: 'patch',
+              data: operator
+            })
+            .then(res => {
+              console.log(res)
+            })
+            break
+          case 'delete':
+            request({
+              url: '/organizationOperator/deleteOperator/' + operator.id,
+              method: 'delete',
+            })
+              .then(res => {
+                console.log(res)
+              })
+            break
+        }
+      }
+      setTimeout(this.getOperatorList,500)
+      // this.getOperatorList()
+    },
+    updateOperator (operator) {
+      if (operator.status == 'new') return
+      operator.status = 'update'
+    },
+    addNewOperator () {
+      this.operatorList.push({
+        operatorName: '',
+        phone: '',
+        status: 'new'
+      })
+      // this.operatorListAddIndex++
+    },
+    deleteOperator (operator) {
+      operator.status = operator.status == 'new' ? 'ignore' : 'delete'
     }
   }
 }
