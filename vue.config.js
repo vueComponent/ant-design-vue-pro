@@ -57,6 +57,10 @@ const vueConfig = {
   chainWebpack: config => {
     config.resolve.alias.set('@$', resolve('src'))
 
+    config.performance
+      .maxEntrypointSize(40000000)
+      .maxAssetSize(40000000)
+
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
     svgRule
@@ -119,10 +123,10 @@ const vueConfig = {
   transpileDependencies: []
 }
 
-// preview.pro.loacg.com only do not use in your production;
-if (process.env.VUE_APP_PREVIEW === 'true') {
-  // add `ThemeColorReplacer` plugin to webpack plugins
-  vueConfig.configureWebpack.plugins.push(createThemeColorReplacerPlugin())
-}
+// // preview.pro.loacg.com only do not use in your production;
+// if (process.env.VUE_APP_PREVIEW === 'true') {
+//   // add `ThemeColorReplacer` plugin to webpack plugins
+//   vueConfig.configureWebpack.plugins.push(createThemeColorReplacerPlugin())
+// }
 
 module.exports = vueConfig
