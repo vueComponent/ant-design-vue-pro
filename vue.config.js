@@ -99,21 +99,6 @@ const vueConfig = {
     }
   },
 
-  configureWebpack: {
-    // Set up all the aliases we use in our app.
-    resolve: {
-      alias: { 
-        src: resolveSrc('src'),
-        'chart.js': 'chart.js/dist/Chart.js'
-      }
-    },
-    plugins: [
-      new webpack.optimize.LimitChunkCountPlugin({
-        maxChunks: 6
-      })
-    ]
-  },
-
   devServer: {
     // development server port 8000
     port: 8000
@@ -132,6 +117,12 @@ const vueConfig = {
   lintOnSave: false,
   // babel-loader no-ignore node_modules/*
   transpileDependencies: []
+}
+
+// preview.pro.loacg.com only do not use in your production;
+if (process.env.VUE_APP_PREVIEW === 'true') {
+  // add `ThemeColorReplacer` plugin to webpack plugins
+  vueConfig.configureWebpack.plugins.push(createThemeColorReplacerPlugin())
 }
 
 module.exports = vueConfig
