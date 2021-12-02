@@ -485,17 +485,17 @@ const userNav = options => {
         show: true
       },
       component: 'RouteView',
-      redirect: '/dashboard/workplace'
+      redirect: '/dashboard/account'
     },
     {
-      name: 'workplace',
+      name: 'account',
       parentId: 1,
       id: 7,
       meta: {
-        title: '工作台',
+        title: 'Account',
         show: true
       },
-      component: 'Workplace'
+      component: 'Account'
     },
     {
       name: 'monitor',

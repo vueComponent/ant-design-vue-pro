@@ -15,7 +15,7 @@
           {{ $t('menu.account.settings') }}
         </a-menu-item>
         <a-menu-divider v-if="menu" />
-        <a-menu-item key="logout" @click="handleLogout">
+        <a-menu-item key="logout" @click="handleSignOut">
           <a-icon type="logout" />
           {{ $t('menu.account.logout') }}
         </a-menu-item>
@@ -49,7 +49,7 @@ export default {
     handleToSettings () {
       this.$router.push({ path: '/account/settings' })
     },
-    handleLogout (e) {
+    handleSignOut (e) {
       Modal.confirm({
         title: this.$t('layouts.usermenu.dialog.title'),
         content: this.$t('layouts.usermenu.dialog.content'),

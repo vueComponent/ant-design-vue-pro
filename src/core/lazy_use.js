@@ -24,7 +24,7 @@ import {
   Dropdown,
   List,
   Avatar,
-  Breadcrumb,
+  // Breadcrumb,
   Steps,
   Spin,
   Menu,
@@ -79,7 +79,7 @@ Vue.use(Popover)
 Vue.use(Dropdown)
 Vue.use(List)
 Vue.use(Avatar)
-Vue.use(Breadcrumb)
+// Vue.use(Breadcrumb)
 Vue.use(Steps)
 Vue.use(Spin)
 Vue.use(Menu)
