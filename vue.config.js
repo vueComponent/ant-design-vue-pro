@@ -115,6 +115,7 @@ const vueConfig = {
       }
     }
   },
+  assetsDir: 'platform-assets',
 
   // disable source map in production
   productionSourceMap: false,

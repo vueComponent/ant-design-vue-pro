@@ -12,6 +12,7 @@
           :dataSource="nearlyData"
           class="card-list"
           style="margin-top: 15px"
+          :loading="nearlyDataLoading"
         >
           <a-list-item slot="renderItem" slot-scope="item">
             <template>
@@ -119,6 +120,7 @@ export default {
         onShowSizeChange: this.updatePublishedDataPage
       },
       radio: '1',
+      nearlyDataLoading: true,
       loading: true,
       keyword: '',
       pageNo: 1,
@@ -131,6 +133,7 @@ export default {
   },
   methods: {
     updateNearAuditData () {
+      this.nearlyDataLoading = true
       request({
         url: '/posting/organizationGetRecentlyEditPostings',
         method: 'get'
@@ -150,6 +153,7 @@ export default {
           }
           this.nearlyData = nearData
           console.log(res)
+          this.nearlyDataLoading = false
         })
       },
     changePublishedDataType () {
@@ -166,7 +170,7 @@ export default {
       this.getPublishedData()
     },
     getPublishedData () {
-      this.loading=false
+      this.loading=true
       request({
         url: '/posting/organizationGetPublishedPostingList',
         method: 'get',

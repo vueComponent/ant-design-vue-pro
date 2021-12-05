@@ -136,8 +136,11 @@ export default {
         url: '/posting/organizationDeletePosting/' + this.modal.id,
         method: 'delete'
       })
-      this.modal.visible = false
-      this.updateData()
+      .then(res => {
+        this.modal.visible = false
+        this.updateData()
+      }
+      )
     }
   }
 }

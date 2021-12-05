@@ -99,22 +99,21 @@
       @ok="tapOkForEditPassword"
       width="30%">
       <a-form-item>
-        <span>请输入新密码</span>
-        <a-input-password v-model="editPasswordModal.first" @change="() => this.editPasswordModal.message = ''"/>
-        <span>请再次输入新密码</span>
-        <a-input-password v-model="editPasswordModal.second" @change="() => this.editPasswordModal.message = ''"/>
+        <span>密码应不小于8位，且包含数字和字母的组合</span>
+        <a-input-password v-model="editPasswordModal.first" @change="() => this.editPasswordModal.message = ''" placeholder="请输入新名称"/>
+        <a-input-password v-model="editPasswordModal.second" @change="() => this.editPasswordModal.message = ''" placeholder="请再次输入新密码"/>
         <span v-if="this.editPasswordModal.message" slot="help" style="color: red" >{{editPasswordModal.message}}</span>
       </a-form-item>
     </a-modal>
     <a-modal
       v-model="editNameModal.visible"
-      title="修改名称"
       ok-text="确认"
       cancel-text="取消"
       @ok="tapOkForEditName"
       width="30%">
       <a-form-item>
-        <a-input v-model="editNameModal.newName" @change="changeMessageOfNameModal"/>
+        <span>请输入新名称(限15字)</span>
+        <a-input v-model="editNameModal.newName" @change="changeMessageOfNameModal" placeholder="请输入新名称"/>
         <span v-if="editNameModal.message" slot="help" style="color: red" >{{editNameModal.message}}</span>
       </a-form-item>
     </a-modal>
@@ -125,7 +124,8 @@
       cancel-text="取消"
       @ok="tapOkForConfirmEditName"
       width="30%">
-      <p>确认将名字修改成“{{editNameModal.newName}}”吗</p>
+      <p>新名称:“{{editNameModal.newName}}”</p>
+      <p>每年仅可修改一次恒星号名称，确定修改？</p>
     </a-modal>
     <AvatarModal/>
   </page-header-wrapper>
@@ -237,17 +237,25 @@ export default {
        return
      }
       if (this.editPasswordModal.first === this.editPasswordModal.second) {
-          request({
-            url: '/organization/editPersonalInfo',
-            method: 'patch',
-            data: {
-              password: this.editPasswordModal.first
-            }
-          })
-            .then(res => {
-              this.editPasswordModal.visible = false
-              this.$message.success('密码修改成功！')
+        let that = this
+        this.$confirm({
+          content: '确定修改密码？',
+          onOk() {
+            request({
+              url: '/organization/editPersonalInfo',
+              method: 'patch',
+              data: {
+                password: that.editPasswordModal.first
+              }
             })
+              .then(res => {
+                console.log(this)
+                console.log(that)
+                that.editPasswordModal.visible = false
+                that.$message.success('密码修改成功！')
+              })
+          }
+        })
       } else {
         this.editPasswordModal.message = '两次输入密码不一致！'
         console.log('no')
@@ -258,7 +266,6 @@ export default {
        this.editNameModal.message = '名字不能为空！'
        return
      }
-     console.log('ok')
       this.editNameModal.visible = false
       this.confirmModal.visible = true
     },

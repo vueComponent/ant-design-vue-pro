@@ -36,10 +36,10 @@
             </div>
             <a-range-picker :style="{width: '256px'}" @change="datePickerChange"/>
           </div>
-          <a-tab-pane loading="true" tab="浏览量" key="1">
+          <a-tab-pane :loading="loading" tab="浏览量" key="1">
             <bar :data="barData" title="浏览量趋势" style='font-size: 16px;font-weight: bold'/>
           </a-tab-pane>
-          <a-tab-pane tab="被收藏" key="2">
+          <a-tab-pane :loading="loading" tab="被收藏" key="2">
             <bar :data="barData2" title="收藏量趋势" style='font-size: 16px;font-weight: bold'/>
           </a-tab-pane>
         </a-tabs>
@@ -118,6 +118,7 @@ export default {
         })
     },
     changeBarData (index) {
+      this.loading = true
       this.barIndex = index
       if (index === '1') {
         switch (this.timeIndex) {
@@ -150,6 +151,7 @@ export default {
             break
         }
       }
+      this.loading = false
     },
     datePickerChange(event, time) {
       // console.log(event, time)
