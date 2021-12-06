@@ -1,52 +1,10 @@
 <template>
   <page-header-wrapper>
     <a-card :bordered="false">
-      <div class="table-page-search-wrapper">
-        <a-form layout="inline" :form="form" @submit="handleSubmit">
-          <a-row :gutter="4">
-            <a-col :span="4">
-              <a-button type="primary" style="margin-left: 8px;" @click="refresh">刷新</a-button>
-            </a-col>
-            <a-col :span="3">
-              <a-form-item label="uid">
-                <a-input placeholder="" v-model="queryParams.id"/>
-              </a-form-item>
-            </a-col>
-            <a-col :span="5">
-              <a-form-item label="账号状态">
-                <a-select
-                  placeholder="请选择"
-                  v-model="queryParams.blockType">
-                  <a-select-option value="-1">所有账号</a-select-option>
-                  <a-select-option value="0">正常账号</a-select-option>
-                  <a-select-option value="1">已禁言账号</a-select-option>
-                  <a-select-option value="2">已封禁账号</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :span="4">
-              <a-form-item>
-                <a-date-picker style="width: 100%" @change="onCreateTimeChange" v-model="queryParams.createTime"/>
-              </a-form-item>
-            </a-col>
-            <a-col :span="4">
-              <a-form-item>
-                <a-date-picker style="width: 100%" @change="onUpdateTimeChange" v-model="queryParams.updateTime"/>
-              </a-form-item>
-            </a-col>
-            <a-col :span="4">
-              <span class="table-page-search-submitButtons">
-                <a-button type="primary" html-type="submit" @click="doQuery">筛选</a-button>
-                <a-button type="primary" style="margin-left: 8px" @click="reset">重置</a-button>
-              </span>
-            </a-col>
-          </a-row>
-        </a-form>
-      </div>
       <a-modal v-model="detailsVisible" title="详细信息" ok-text="确认" cancel-text="取消" @ok="hideModal">
         <a-row style="margin-bottom:15px;">
           <a-col :md="12" :lg="12">
-            恒星号名称：{{detailsCurrentRow.organizationName}}
+            恒星号名称：{{}}
           </a-col>
           <a-col :md="12" :lg="12">
             恒星号属性：{{ detailsCurrentRow.property }}
@@ -54,60 +12,42 @@
         </a-row>
         <a-row style="margin-bottom:15px;">
           <a-col :md="12" :lg="12">
-            恒星号类型：{{ detailsCurrentRow.type }}
+            <!-- 恒星号类型：{{ detailsCurrentRow.type }} -->
           </a-col>
           <a-col :md="12" :lg="12">
-            人数规模：{{ detailsCurrentRow.memberCount }}
-          </a-col>
-        </a-row>
-        <a-row style="margin-bottom:15px;">
-          <a-col :md="12" :lg="12">
-            负责人姓名：{{detailsCurrentRow.operatorName}}
-          </a-col>
-          <a-col :md="12" :lg="12">
-            负责人学号：{{detailsCurrentRow.operatorStudentId}}
+            <!-- 人数规模：{{ detailsCurrentRow.memberCount }} -->
           </a-col>
         </a-row>
         <a-row style="margin-bottom:15px;">
           <a-col :md="12" :lg="12">
-            负责人手机号：{{detailsCurrentRow.operatorPhone}}
+            负责人姓名：{{}}
           </a-col>
           <a-col :md="12" :lg="12">
-            负责人微信号：{{detailsCurrentRow.operatorWxId}}
-          </a-col>
-        </a-row>
-        <a-row style="margin-bottom:15px;">
-          <a-col :md="12" :lg="12">
-            负责人邮箱：{{detailsCurrentRow.operatorMail}}
-          </a-col>
-          <a-col :md="12" :lg="12">
-            指导老师姓名：{{detailsCurrentRow.teacherName}}
+            负责人学号：{{}}
           </a-col>
         </a-row>
         <a-row style="margin-bottom:15px;">
           <a-col :md="12" :lg="12">
-            指导老师联系方式：{{detailsCurrentRow.teacherContact}}
+            负责人手机号：{{}}
+          </a-col>
+          <a-col :md="12" :lg="12">
+            负责人微信号：{{}}
+          </a-col>
+        </a-row>
+        <a-row style="margin-bottom:15px;">
+          <a-col :md="12" :lg="12">
+            负责人邮箱：{{}}
+          </a-col>
+          <a-col :md="12" :lg="12">
+            指导老师姓名：{{}}
+          </a-col>
+        </a-row>
+        <a-row style="margin-bottom:15px;">
+          <a-col :md="12" :lg="12">
+            指导老师联系方式：{{}}
           </a-col>
         </a-row>
       </a-modal>
-      <a-table :columns="columns" :data-source="tableData">
-        <span slot="historicalPosting" slot-scope="tedxt, record" >
-          <router-link :to="{path:'HistoricalPosting',query: {id: record.id }}">查看</router-link>
-        </span>
-        <span slot="detail" slot-scope="tedxt, record">
-          <a @click="lookDetails(record)">查看</a>
-        </span>
-        <span slot="operations" slot-scope="operations">
-          <!-- <a v-for="operation in operations" :key="operation">{{ operation }} </a> -->
-          <span slot="operations" slot-scope="record">
-          <a-button :hidden="record.blockType===0" @click="recoverAccount(record.id, record.nickName);modalParam.show=true;">恢复</a-button>
-          <a-button :hidden="record.blockType!==0" @click="muteAccount(record.id, record.nickName);modalParam.show=true;">禁言</a-button>
-          <a-button :hidden="record.blockType===2" @click="blockAccount(record.id, record.nickName);modalParam.show=true;">封禁</a-button>
-        </span>
-        </span>
-      </a-table>
-
-      <step-by-step-modal ref="modal" @ok="handleOk"/>
     </a-card>
   </page-header-wrapper>
 </template>
@@ -116,7 +56,7 @@
 import moment from 'moment'
 import { STable, Ellipsis } from '@/components'
 import { getRoleList, getServiceList } from '@/api/manage'
-import { queryOrganizationWithPage,getLabel } from '@/api/planet' // 引入后台接口
+import { queryOrganizationWithPage } from '@/api/planet' // 引入后台接口
 import StepByStepModal from '../list/modules/StepByStepModal'
 import CreateForm from '../list/modules/CreateForm'
 
@@ -249,15 +189,12 @@ export default {
     },
     // 查看详细信息
     lookDetails (row) {
-      getLabel({type: 'organization'}).then(res => {
-        console.log(res.data, '号')
-      })
       this.detailsVisible = true
       this.detailsCurrentRow = row
     },
     // 查看历史发帖
     goHistoricalPost (record) {
-      alert('2')
+
     },
     handleAdd () {
       this.mdl = null
@@ -273,6 +210,7 @@ export default {
       })
     },
     onCreateTimeChange (date, dateString) {
+      console.log(dateString, '哈哈')
       this.queryParams.createTime = dateString
     },
     onUpdateTimeChange (date, dateString) {

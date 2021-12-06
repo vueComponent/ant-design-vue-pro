@@ -105,7 +105,7 @@ const columns = [
   },
     {
     title: '反馈内容',
-    dataIndex: 'content', // 反馈时间取得是createTime，如果接口不是请替换字段  待确认
+    dataIndex: 'content', 
     key: 'content'
   },
   {

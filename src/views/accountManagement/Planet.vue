@@ -215,12 +215,12 @@ export default {
   },
   methods: {
     onStartTimeChange (date, dateString) {
-      console.log(date, dateString, '日期')
-      this.queryParam.startTime = dateString
+      console.log(dateString, '日期')
+     this.queryParam.startTime = dateString + ' '+ '00:00:00'
     },
     onEndTimeChange (date, dateString) {
-      console.log(date, dateString, '日期')
-      this.queryParam.endTime = dateString
+      console.log(dateString, '日期')
+      this.queryParam.endTime = dateString + ' ' + '00:00:00'
     },
 
     handleSubmit (e) {
