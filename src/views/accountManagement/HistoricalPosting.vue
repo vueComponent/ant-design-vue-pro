@@ -1,13 +1,13 @@
 <template>
   <page-header-wrapper>
     <a-card :bordered="false">
-      <div class="table-page-search-wrapper">
+  <div class="table-page-search-wrapper">
         <a-form layout="inline" :form="form" @submit="handleSubmit">
           <a-row :gutter="24">
-            <a-col :span="6">
+            <a-col :span="6" style="margin-bottom:20px;">
               <a-button type="primary" @click="getListData">刷新</a-button>
             </a-col>
-            <a-col :span="6">
+            <!-- <a-col :span="6">
               <a-form-item label="反馈ID">
                 <a-input v-model="search.id"/>
               </a-form-item>
@@ -21,7 +21,7 @@
               <a-form-item label="处理人">
                 <a-input v-model="search.handler"/>
               </a-form-item>
-            </a-col>
+            </a-col> -->
           </a-row>
           <a-row :gutter="24">
             <a-col :span="6">
@@ -34,12 +34,12 @@
             </a-col>
             <a-col :span="6">
               <a-form-item>
-                <a-date-picker v-decorator="[&quot;beginTime&quot;]" v-model="search.createTime" @change="createTimeChanged"/>
+                <a-date-picker style="width: 100%" @change="createTimeChanged" v-model="search.createTime"/>
               </a-form-item>
             </a-col>
             <a-col :span="6">
               <a-form-item>
-                <a-date-picker v-decorator="[&quot;endTime&quot;]" v-model="search.updateTime" @change="updateTimeChanged"/>
+                <a-date-picker style="width: 100%" @change="updateTimeChanged" v-model="search.updateTime"/>
               </a-form-item>
             </a-col>
             <a-col :span="3">
@@ -50,8 +50,7 @@
             </a-col>
           </a-row>
         </a-form>
-      </div>
-
+      </div>    
       <a-table :columns="columns" :data-source="tableData">
         <span slot="status" slot-scope="status">
           <a-tag v-if="status == 0">
@@ -61,148 +60,73 @@
             未处理
           </a-tag>
         </span>
+        <template slot="labelId" slot-scope="labelId">
+          <span v-if="labelId == 21">求职信息</span>
+          <span v-if="labelId == 22">学习天地</span>
+          <span v-if="labelId == 23">校园活动</span>
+          <span v-if="labelId == 24">生活指南</span>
+          <span v-if="labelId == 25">其他</span>
+        </template>
         <span slot="star" slot-scope="star,record">
-          <a @click="look(record)">查看</a>
-          <a-divider type="vertical" />
-          <a @click="deleteFeedBack(record.id)">删除  </a>
-          <!-- <a-icon v-if="star" type="star" theme="filled" style="color: gold"/> -->
-          <a-icon v-if="record.status == 1" style="color:gold;" type="star" theme="outlined"/>
+          <a @click="look(record)">查看详情</a>
         </span>
       </a-table>
-      <a-modal
-        title="用户反馈："
-        :visible="isVisible"
-        @ok="handleOk"
-        :confirm-loading="confirmLoading"
-        @cancel="handleCancel"
-        cancelText="返回"
-        okText="已处理"
-      >
-        <p>{{ modalData.content }}</p>
-      </a-modal>
+      <group-detail ref='groupDetail'></group-detail>
     </a-card>
 
   </page-header-wrapper>
 </template>
 
 <script>
-import { getFeedBack, deleteFeedBack, updateFeedBack } from '@/api/planet' // 引入后台接口
+import { getOrganizationPostingList } from '@/api/planet' // 引入后台接口
+import GroupDetail from '@/views/articleManagement/GroupDetail'
 const columns = [
   {
-    title: '反馈ID',
+    title: '帖子ID',
     dataIndex: 'id',
+    width: 90,
     key: 'id'
   },
   {
-    title: 'UID',
-    dataIndex: 'userId',
-    key: 'userId'
-  },
-  {
-    title: '昵称',
-    dataIndex: 'nickName',
-    key: 'nickName' // 接口返回的不知道是个字段 待确认
-  },
-    {
-    title: '反馈内容',
-    dataIndex: 'content', 
-    key: 'content'
-  },
-  {
-    title: '反馈时间',
-    dataIndex: 'createTime', // 反馈时间取得是createTime，如果接口不是请替换字段  待确认
+    title: '发布时间',
+    dataIndex: 'createTime',
     key: 'createTime'
   },
+    {
+    title: '文章标题',
+    dataIndex: 'title',
+    key: 'title'
+  },
   {
-    title: '状态',
+    title: '所属板块',
+    dataIndex: 'labelId', 
+    scopedSlots: { customRender: 'labelId' }
+  },
+  {
+    title: '帖子状态',
     dataIndex: 'status',
     key: 'status',
     scopedSlots: { customRender: 'status' }
   },
   {
-    title: '处理人',
-    dataIndex: 'handler',
-    key: 'handler' // 处理人怎么显示？后台接口没有返回 待确认
-  },
-  {
-    title: '处理时间',
-    dataIndex: 'updateTime',
-    key: 'updateTime' // 处理时间取的是updateTime，如果接口不是请替换该字段  待确认
+    title: '审核人员',
+     width:120,
+    dataIndex: 'adminId',
+    key: 'adminId' 
   },
   {
     title: '操作',
     dataIndex: 'operations',
+    width:90,
     key: 'operations',
     scopedSlots: { customRender: 'star' }
   }
 ]
-
-// const data = [
-//   {
-//     key: '1',
-//     id: '000',
-//     uid: 'ABC',
-//     nickName: '胡彦斌',
-//     feedbackTime: '2017-10-01 12:00',
-//     status: '已处理',
-//     handler: '胡彦斌',
-//     handleTime: '2017-10-01 12:00',
-//     operations: false
-//   }, {
-//     key: '2',
-//     id: '000',
-//     uid: 'ABC',
-//     nickName: '胡彦斌',
-//     feedbackTime: '2017-10-01 12:00',
-//     status: '已处理',
-//     handler: '胡彦斌',
-//     handleTime: '2017-10-01 12:00',
-//     operations: false
-//   }, {
-//     key: '3',
-//     id: '000',
-//     uid: 'ABC',
-//     nickName: '胡彦斌',
-//     feedbackTime: '2017-10-01 12:00',
-//     status: '已处理',
-//     handler: '胡彦斌',
-//     handleTime: '2017-10-01 12:00',
-//     operations: false
-//   }, {
-//     key: '4',
-//     id: '000',
-//     uid: 'ABC',
-//     nickName: '胡彦斌',
-//     feedbackTime: '2017-10-01 12:00',
-//     status: '已处理',
-//     handler: '胡彦斌',
-//     handleTime: '2017-10-01 12:00',
-//     operations: false
-//   }, {
-//     key: '5',
-//     id: '000',
-//     uid: 'ABC',
-//     nickName: '胡彦斌',
-//     feedbackTime: '2017-10-01 12:00',
-//     status: '未处理',
-//     handler: '',
-//     handleTime: '',
-//     operations: true
-//   }, {
-//     key: '6',
-//     id: '000',
-//     uid: 'ABC',
-//     nickName: '胡彦斌',
-//     feedbackTime: '2017-10-01 12:00',
-//     status: '未处理',
-//     handler: '',
-//     handleTime: '',
-//     operations: false
-//   }
-// ]
-
 export default {
-  name: 'Feedback',
+  name: 'HistoricalPosting',
+  components: {
+    GroupDetail
+  },
   data () {
     return {
       columns,
@@ -254,8 +178,8 @@ export default {
     },
     getListData () {
       // 获取从planet传来的用户id参数值
-      getFeedBack(this.search).then(res => {
-        this.tableData = res.data // 把从接口拿到的数据赋给表格数据变量
+      getOrganizationPostingList(this.$route.query.id,this.search).then(res => {
+        this.tableData = res.data.records // 把从接口拿到的数据赋给表格数据变量
       })
     },
     reset () {
@@ -269,14 +193,15 @@ export default {
       }
     },
     updateTimeChanged (data, dateString) {
-      this.search.createTime = dateString
+      this.search.updateTime = dateString + ' '+ '00:00:00'
     },
     createTimeChanged (data, dateString) {
-      this.search.updateTime = dateString
+      // this.search.updateTime = dateString
+      this.search.createTime = dateString + ' '+ '00:00:00'
     },
     look (record) {
       this.modalData = record
-      this.isVisible = true
+      this.$refs.groupDetail.open(record)
     },
     handleOk () {
         // 待确认  接口文档写的put，返回错误信息不支持put
@@ -288,7 +213,7 @@ export default {
           }
         })
     },
-    // 点击cancelr
+    // 点击cancel
     handleCancel (e) {
       this.isVisible = false
       this.modalData = ''

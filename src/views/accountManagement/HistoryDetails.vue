@@ -5,8 +5,18 @@
         <a-form layout="inline" :form="form" @submit="handleSubmit">
           <a-row :gutter="4">
             <a-col :span="6">
-              <a-button type="primary" style="margin-left: 8px;" @click="getListData">刷新90</a-button>
+              <a-button type="primary" style="margin-left: 8px;" @click="getListData">刷新</a-button>
             </a-col>
+            <!-- <a-col :span="6">
+              <a-form-item label="创建日期">
+                <a-date-picker v-decorator="['createTime']" @change="onCreateTimeChange" v-model="queryParams.createTime"/>
+              </a-form-item>
+            </a-col>
+            <a-col :span="6">
+              <a-form-item label="截止日期">
+                <a-date-picker v-decorator="['dueTime']" @change="onDueTimeChange" v-model="queryParams.dueTime"/>
+              </a-form-item>
+            </a-col> -->
             <a-col :span="4">
               <a-form-item>
                 <a-date-picker style="width: 100%" @change="onCreateTimeChange" v-model="queryParams.createTime"/>
@@ -44,7 +54,6 @@
         </span>
       </a-table>
       <!--      <step-by-step-modal ref="modal" @ok="handleOk"/>-->
-      <group-detail ref='groupDetail'></group-detail>
     </a-card>
   </page-header-wrapper>
 </template>
@@ -54,8 +63,6 @@ import { STable, Ellipsis } from '@/components'
 import StepByStepModal from '../list/modules/StepByStepModal'
 import CreateForm from '../list/modules/CreateForm'
 import { adminGetTeamList ,getTeamByUserIdWithPage} from '@/api/planet' // 引入后台接口
-import GroupDetail from '@/views/articleManagement/GroupDetail'
-
 const columns = [
   {
     title: '组队id',
@@ -104,13 +111,51 @@ const columns = [
     scopedSlots: { customRender: 'operations' }
   }
 ]
+
+// const data = [
+//   {
+//     key: '1',
+//     tid: '20010408',
+//     createTime: '2017-10-01 12:00',
+//     title: '断章',
+//     teamStatus: '啥呀',
+//     status: '未审核',
+//     teamProgress: '1/5',
+//     plate: '新生板块',
+//     operator: '卞之琳',
+//     // operation: ['详情', '审核', '删除']
+//     operation: '组队详情'
+//   }, {
+//     key: '2',
+//     tid: '20010408',
+//     createTime: '2017-10-01 12:00',
+//     title: '稻香',
+//     teamStatus: '已关闭',
+//     status: '已审核',
+//     teamProgress: '5/5',
+//     plate: '新生板块',
+//     operator: '周杰伦',
+//     operation: '已审核'
+//   }, {
+//     key: '3',
+//     tid: '20010408',
+//     createTime: '2017-10-01 12:00',
+//     title: '琵琶行',
+//     teamStatus: '啥呀',
+//     status: '已删除',
+//     teamProgress: '0/100',
+//     plate: '新生板块',
+//     operator: '白居易',
+//     operation: '已删除'
+//   }
+// ]
+
 export default {
   name: 'HistoricalTeam',
   components: {
     STable,
     Ellipsis,
     CreateForm,
-    GroupDetail, // 组队详情弹框
     StepByStepModal
   },
   data () {
@@ -155,12 +200,11 @@ export default {
       this.getListData()
     },
     adminGetTeam (row) {
-      this.$refs.groupDetail.open(row)
-     // this.$refs.groupDetail.dataItem = row
+      console.log(row, '哈哈')
       // 获取组队详情
-      // getTeamByUserId(row.id).then(res => {
-      //   console.log(res, '结果')
-      // })
+      getTeamByUserId(row.id).then(res => {
+        console.log(res, '结果')
+      })
     },
     // 方法：获取历史组队信息列表
     getListData () {

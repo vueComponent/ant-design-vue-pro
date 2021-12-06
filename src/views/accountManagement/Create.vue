@@ -1,28 +1,31 @@
 <template>
   <page-header-wrapper>
     <a-card :bordered="false">
-      <a-steps :current="current" style="font-weight: bold">
+      <a-steps :current="current" style="font-weight: bold;margin-bottom:60px;">
         <a-step title="恒星号基本信息"/>
         <a-step title="确认基本信息"/>
         <a-step title="完成"/>
       </a-steps>
-      <a-row>
-        <a-col :span="16" :offset="2">
-          <div style="padding: 30px 0;" v-if="current===0">
-            <a-row :gutter="[0,24]">
-              <a-col :span="6">
-                <span class="label">恒星号名称：</span>
-              </a-col>
-              <a-col :span="14">
-                <a-input v-model="accountDetail.organizationName"/>
-              </a-col>
-            </a-row>
-            <a-row :gutter="[0,24]">
-              <a-col :span="6">
-                <span class="label">恒星号属性：</span>
-              </a-col>
-              <a-col :span="6">
-              <a-select v-model="accountDetail.property" style="width: 100%;">
+       <a-form :form="form" :label-col="{ span: 10 }" :wrapper-col="{ span: 12 }" @submit="handleSubmit" v-if="current===0">
+          <a-row type="flex" justify="center">
+            <a-col :span="8">
+              <a-form-item label="恒星号名称">
+                <a-input
+                placeholder="请输入"
+                  v-decorator="['organizationName', { rules: [{ required: true, message: '请输入' }] }]"
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item label="恒星号属性">
+                <a-select
+                  v-model="accountDetail.property"
+                  v-decorator="[
+                    'property',
+                    { rules: [{ required: true, message: '请选择' }] },
+                  ]"
+                  placeholder="请选择"
+                >
                   <a-select-option
                     v-for="item in propertyOptions"
                     :value="item.label"
@@ -30,82 +33,118 @@
                   > {{ item.title }}
                   </a-select-option>
                 </a-select>
-              </a-col>
-              <a-col :span="6">
-                <span class="label">恒星号类型：</span>
-              </a-col>
-              <a-col :span="6">
-                <!-- <a-select style="width: 100%" v-model="accountDetail.type">
-                  <option value="1">校园组织</option>
-                </a-select> -->
-                <a-select v-model="accountDetail.type" style="width: 120px">
-                  <a-select-option
+              </a-form-item>
+            </a-col>
+          </a-row>
+          <a-row type="flex" justify="center">
+            <a-col :span="8">
+              <a-form-item label="恒星号类型">
+                <a-select
+                v-model="accountDetail.type"
+                  v-decorator="[
+                    'type',
+                    { rules: [{ required: true, message: '请选择' }] },
+                  ]"
+                  placeholder="请选择"
+                >
+                <a-select-option
                     v-for="item in typeOptions"
                     :value="item.label"
                     :key="item.label"
                   > {{ item.title }}
                   </a-select-option>
                 </a-select>
-              </a-col>
-              <a-col :span="6">
-                <span class="label">人数规模：</span>
-              </a-col>
-              <a-col :span="6">
-                <a-input placeholder="请输入" v-model="accountDetail.memberCount"/>
-              </a-col>
-            </a-row>
-            <a-row :gutter="[0,24]">
-              <a-col :span="6">
-                <span class="label">负责人姓名：</span>
-              </a-col>
-              <a-col :span="6">
-                <a-input placeholder="请输入" v-model="accountDetail.operatorName"/>
-              </a-col>
-              <a-col :span="6">
-                <span class="label">负责人学号：</span>
-              </a-col>
-              <a-col :span="6">
-                <a-input placeholder="请输入" v-model="accountDetail.operatorStudentId"/>
-              </a-col>
-              <a-col :span="6">
-                <span class="label">负责人手机号：</span>
-              </a-col>
-              <a-col :span="6">
-                <a-input placeholder="请输入" v-model="accountDetail.operatorPhone"/>
-              </a-col>
-              <a-col :span="6">
-                <span class="label">负责人微信号：</span>
-              </a-col>
-              <a-col :span="6">
-                <a-input placeholder="请输入" v-model="accountDetail.operatorWxId"/>
-              </a-col>
-              <a-col :span="6">
-                <span class="label">负责人邮箱：</span>
-              </a-col>
-              <a-col :span="6">
-                <a-input placeholder="请输入" v-model="accountDetail.operatorMail"/>
-              </a-col>
-            </a-row>
-            <a-row :gutter="[0,24]">
-              <a-col :span="6">
-                <span class="label">指导老师姓名：</span>
-              </a-col>
-              <a-col :span="6">
-                <a-input placeholder="请输入" v-model="accountDetail.teacherName"/>
-              </a-col>
-              <a-col :span="6">
-                <span class="label">指导老师联系方式：</span>
-              </a-col>
-              <a-col :span="6">
-                <a-input placeholder="请输入" v-model="accountDetail.teacherContact"/>
-              </a-col>
-            </a-row>
-            <a-row :gutter="[0,24]">
-              <a-col offset="11">
-                <a-button type="primary" @click="() => this.current++">下一步</a-button>
-              </a-col>
-            </a-row>
-          </div>
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item label="人数规模">
+                <a-input
+                placeholder="请输入"
+                  v-decorator="['memberCount', { rules: [{ required: true, message: '请输入' }] }]"
+                />
+              </a-form-item>
+            </a-col>
+          </a-row>
+          <a-row type="flex" justify="center">
+            <a-col :span="8">
+              <a-form-item label="负责人姓名:">
+                <a-input
+                placeholder="请输入"
+                  v-decorator="['operatorName', { rules: [{ required: true, message: '请输入' }] }]"
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item label="负责人学号:">
+                <a-input
+                placeholder="请输入"
+                  v-decorator="['operatorStudentId', { rules: [{ required: true, message: '请输入' }] }]"
+                />
+              </a-form-item>
+            </a-col>
+          </a-row>
+          <a-row type="flex" justify="center">
+            <a-col :span="8">
+              <a-form-item label="负责人手机号:">
+                <a-input
+                placeholder="请输入"
+                  v-decorator="['operatorPhone', { rules: [{ required: true, message: '请输入' }] }]"
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item label="负责人微信号:">
+                <a-input
+                placeholder="请输入"
+                  v-decorator="['operatorWxId', { rules: [{ required: true, message: '请输入' }] }]"
+                />
+              </a-form-item>
+            </a-col>
+          </a-row>
+          <a-row type="flex" justify="center">
+            <a-col :span="8">
+              <a-form-item label="负责人邮箱:">
+                <a-input
+                placeholder="请输入"
+                  v-decorator="['operatorMail', { rules: [{ required: true, message: '请输入' }] }]"
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item label="指导老师姓名:">
+                <a-input
+                placeholder="请输入"
+                  v-decorator="['teacherName', { rules: [{ required: true, message: '请输入' }] }]"
+                />
+              </a-form-item>
+            </a-col>
+          </a-row>
+           <a-row type="flex" justify="center">
+            <a-col :span="8">
+              <a-form-item label="指导老师联系方式:">
+                <a-input
+                placeholder="请输入"
+                  v-decorator="['teacherContact', { rules: [{ required: true, message: '请输入' }] }]"
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+             
+            </a-col>
+          </a-row>
+          <a-row type="flex" justify="center">
+            <a-col :span="8">
+              <a-form-item :wrapper-col="{ span: 10, offset: 5 }">
+                <a-button type="primary" html-type="submit">
+                  下一步
+                </a-button>
+              </a-form-item>
+            </a-col>
+          </a-row>
+
+      </a-form>
+      <a-row>
+        <a-col :span="16" :offset="2">
           <div style="padding: 30px 0;" v-if="current===1">
             <a-row>
               <a-col :span="20" offset="2">
@@ -120,7 +159,7 @@
                 <span class="label">恒星号名称：</span>
               </a-col>
               <a-col :span="14">
-                <span class="content">{{ accountDetail.name }} </span>
+                <span class="content">{{ accountDetail.organizationName }} </span>
               </a-col>
             </a-row>
             <a-row :gutter="[0,24]">
@@ -128,13 +167,15 @@
                 <span class="label">恒星号属性：</span>
               </a-col>
               <a-col :span="6">
-                <span class="content">{{ accountDetail.property }} </span>
+                 <span class="content" v-if="accountDetail.property == '0'">其他</span>
               </a-col>
               <a-col :span="6">
                 <span class="label">恒星号类型：</span>
               </a-col>
               <a-col :span="6">
-                <span class="content">{{ accountDetail.type }} </span>
+                <span class="content" v-if="accountDetail.type==52">社团</span>
+                <span class="content" v-if="accountDetail.type==53">学生组织</span>
+                <span class="content" v-if="accountDetail.type==54">官方组织</span>
               </a-col>
               <a-col :span="6">
                 <span class="label">人数规模：</span>
@@ -264,20 +305,22 @@ export default {
   name: 'Create',
   data () {
     return {
+      formLayout: 'horizontal',
+      form: this.$form.createForm(this, { name: 'coordinated' }),
       currentUser: {},
       current: 0,
       accountDetail: {
-        organizationName: '破壁',
+        organizationName: '',
         property: 1, // 属性
         type: 1,
-        memberCount: '60', 
-        operatorName: '达芬奇',
-        operatorStudentId: '1234567', // 负责人学号
-        operatorPhone: '1234567890', // 负责人手机号
-        operatorWxId: '1234567', // 负责人微信
-        operatorMail: '1234567@tongji.edu.cn', // 负责人邮箱
-        teacherName: '达达', // 指导老师姓名
-        teacherContact: '1234567', // 指导老师电话
+        memberCount: '', 
+        operatorName: '',
+        operatorStudentId: '', // 负责人学号
+        operatorPhone: '', // 负责人手机号
+        operatorWxId: '', // 负责人微信
+        operatorMail: '', // 负责人邮箱
+        teacherName: '', // 指导老师姓名
+        teacherContact: '', // 指导老师电话
         // account: '1234567',
         // password: '1234567'
       },
@@ -287,11 +330,15 @@ export default {
     }
   },
   created () {
+        // 类型
         this.typeOptions = [
-          { label: 1, title: '创新企业' }
+          { label: 53, title: '学生组织' },
+          { label: 52, title: '社团' },
+          { label: 54, title: '官方组织' }
         ]
+        // 属性
         this.propertyOptions = [
-          { label: 1, title: '校园组织' }
+          { label: 0, title: '其他' }
         ]
   },
   mounted () {
@@ -303,6 +350,19 @@ export default {
   //   this.form = this.$form.createForm(this, { name: 'search' })
   // },
   methods: {
+    handleSelectChange() {
+
+    },
+    handleSubmit(e) {
+      e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values);
+          this.accountDetail = {...values}
+          this.current ++
+        }
+      });
+    },
    submitForm () {
     // 提交
     adminCreateOrganization(this.accountDetail)
@@ -339,5 +399,8 @@ export default {
   font-weight: 550;
   height: 30px;
   line-height: 30px;
+}
+/deep/ .ant-form-item-control-wrapper {
+  margin-left: 10px;
 }
 </style>

@@ -676,7 +676,6 @@ const userNav = options => {
       component: 'NewPosting'
     },
     {
-<<<<<<< HEAD
       name: 'editPosting',
       parentId: 7,
       id: 74,
@@ -697,8 +696,6 @@ const userNav = options => {
       component: 'PostingDetail'
     },
     {
-=======
->>>>>>> c78b5c4 (xx)
       name: 'dataBoard',
       parentId: 0,
       id: 8,
