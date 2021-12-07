@@ -1,5 +1,5 @@
 <template>
- <div class="card-body nav2Styles">
+  <div class="card-body nav2Styles">
     <div class="col-sm-12 text-center">
       <h1 class="card-title kanitFonts3 textColerHeader">ยินดีต้อนรับ</h1>
     </div>
@@ -9,31 +9,17 @@
           <div class="col-sm-6">
             <label class="kanitFonts2 labelStyleInput">ชื่อเข้าระบบ</label>
           </div>
-          <input
-            type="search"
-            class="form-control kanitFonts1 inputStyle"
-            placeholder="User Id"
-            v-model="username"
-          />
+          <input type="search" class="form-control kanitFonts1 inputStyle" placeholder="User Id" v-model="username" />
         </div>
         <div class="form-group">
           <div class="col-sm-6">
             <label class="kanitFonts2 labelStyleInput">รหัสผ่าน</label>
           </div>
-          <input
-            type="search"
-            class="form-control kanitFonts1 inputStyle"
-            placeholder="Password"
-            v-model="password"
-          />
+          <input type="search" class="form-control kanitFonts1 inputStyle" placeholder="Password" v-model="password" />
         </div>
         <div class="itemTextCenter">
           <a class="navbar-brand" @click="handleSubmit">
-            <img
-              class="img-responsive imageGotoMainmenu"
-              src="/img/newImage/BT_Login.png"
-              alt="..."
-            />
+            <img class="img-responsive imageGotoMainmenu" src="/img/newImage/BT_Login.png" alt="..." />
           </a>
         </div>
       </div>
@@ -41,16 +27,12 @@
 
     <div class="row justify-content-md-center">
       <div class="col-12 text-center">
-        <a class="navbar-brand" href="#/admin/forgot-password">
-          <label class="card-title kanitFonts1 textFooterBoxLogin">
-            ลืมรหัสผ่าน
-          </label>
-        </a>
-        <a class="navbar-brand" href="#">
-          <label class="card-title kanitFonts1 textFooterBoxLogin">
-            / ติดต่อเจ้าหน้าที่
-          </label>
-        </a>
+        <router-link class="navbar-brand" to="/user/forgotpassword">
+          <label class="card-title kanitFonts1 textFooterBoxLogin"> ลืมรหัสผ่าน </label>
+        </router-link>
+        <router-link class="navbar-brand" to="/user/contact">
+          <label class="card-title kanitFonts1 textFooterBoxLogin"> / ติดต่อเจ้าหน้าที่ </label>
+        </router-link>
       </div>
     </div>
     <br /><br />
@@ -61,9 +43,7 @@
           <hr class="new5" />
         </div>
         <div class="col-4 text-center">
-          <label class="card-title kanitFonts1 textFooterNoAccount">
-            ยังไม่มีบัญชี
-          </label>
+          <label class="card-title kanitFonts1 textFooterNoAccount"> ยังไม่มีบัญชี </label>
         </div>
         <div class="col-4">
           <hr class="new5" />
@@ -73,12 +53,9 @@
     <br /><br />
 
     <div class="text-center">
-      <a class="navbar-brand" href="#/admin/register">
-        <img
-          class="img-responsive imgRegister"
-          src="/img/newImage/BT_Register.png"
-        />
-      </a>
+      <router-link class="navbar-brand" to="/user/register">
+        <img class="img-responsive imgRegister" src="/img/newImage/BT_Register.png" />
+      </router-link>
     </div>
     <br />
   </div>
@@ -88,13 +65,12 @@
 import md5 from 'md5'
 import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
-import { timeFix } from '@/utils/util'
 
 export default {
   components: {
-    TwoStepCaptcha
+    TwoStepCaptcha,
   },
-  data () {
+  data() {
     return {
       username: 'admin',
       password: 'admin',
@@ -111,21 +87,16 @@ export default {
         loginBtn: false,
         // login type: 0 email, 1 username, 2 telephone
         loginType: 0,
-        smsSendBtn: false
-      }
+        smsSendBtn: false,
+      },
     }
   },
   methods: {
     ...mapActions(['Login', 'Logout']),
 
-    handleSubmit (e) {
+    handleSubmit(e) {
       e.preventDefault()
-      const {
-        username,
-        password,
-        state,
-        Login
-      } = this
+      const { username, password, state, Login } = this
 
       state.loginBtn = true
       const loginParams = { username }
@@ -134,31 +105,31 @@ export default {
       loginParams.password = md5(password)
       Login(loginParams)
         .then((res) => this.loginSuccess(res))
-        .catch(err => this.requestFailed(err))
+        .catch((err) => this.requestFailed(err))
         .finally(() => {
           state.loginBtn = false
         })
     },
-    loginSuccess (res) {
+    loginSuccess(res) {
       // console.log(res)
       this.$router.push({ path: '/' })
       setTimeout(() => {
         this.$notification.success({
-          message: '欢迎',
-          description: `${timeFix()}，欢迎回来`
+          message: 'Login Successfully',
+          description: `You Have Successfully Logged in to AutoEasy168`,
         })
       }, 1000)
       this.isLoginError = false
     },
-    requestFailed (err) {
+    requestFailed(err) {
       this.isLoginError = true
       this.$notification['error']({
         message: '错误',
         description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
-        duration: 4
+        duration: 4,
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -211,6 +182,13 @@ export default {
 
 .nav2Styles {
   background-color: black;
+  margin-top: 20%;
+  height: 740px;
+
+  @media (max-width: 420px) {
+    margin-top: 30%;
+    height: 640px;
+  }
 }
 
 .textColerHeader {
@@ -309,7 +287,7 @@ hr.new5 {
   width: 35%;
 
   @media (max-width: 420px) {
-    width: 40%;
+    width: 50%;
   }
 }
 </style>

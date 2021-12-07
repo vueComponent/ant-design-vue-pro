@@ -2,7 +2,7 @@ import Mock from 'mockjs2'
 import { builder } from '../util'
 
 const info = options => {
-  console.log('options', options)
+  // console.log('options', options)
   const userInfo = {
     id: '4291d7da9005377ec9aec4a71ea837f',
     name: '天野远子',
@@ -466,8 +466,6 @@ const info = options => {
 }
 
 /**
- * 使用 用户登录的 token 获取用户有权限的菜单
- * 返回结构必须按照这个结构体形式处理，或根据
  * /src/router/generator-routers.js  文件的菜单结构处理函数对应即可
  * @param {*} options
  * @returns
@@ -481,7 +479,7 @@ const userNav = options => {
       id: 1,
       meta: {
         icon: 'dashboard',
-        title: '仪表盘',
+        title: 'Dashboard',
         show: true
       },
       component: 'RouteView',
@@ -498,223 +496,295 @@ const userNav = options => {
       component: 'Account'
     },
     {
-      name: 'monitor',
-      path: 'https://www.baidu.com/',
+      name: 'deposit',
       parentId: 1,
-      id: 3,
+      id: 71,
       meta: {
-        title: '监控页（外部）',
-        target: '_blank',
+        title: 'Deposit',
         show: true
-      }
+      },
+      component: 'Deposit'
     },
     {
-      name: 'Analysis',
+      name: 'withdraw',
       parentId: 1,
-      id: 2,
+      id: 72,
       meta: {
-        title: '分析页',
+        title: 'Withdraw',
         show: true
       },
-      component: 'Analysis',
-      path: '/dashboard/analysis'
+      component: 'Withdraw'
+    },
+    {
+      name: 'promotion',
+      parentId: 1,
+      id: 72,
+      meta: {
+        title: 'Promotion',
+        show: true
+      },
+      component: 'Promotion'
+    },
+    {
+      name: 'payback',
+      parentId: 1,
+      id: 72,
+      meta: {
+        title: 'Payback',
+        show: true
+      },
+      component: 'Payback'
+    },
+    {
+      name: 'recommendfriend',
+      parentId: 1,
+      id: 72,
+      meta: {
+        title: 'RecommendFriend',
+        show: true
+      },
+      component: 'RecommendFriend'
+    },
+    {
+      name: 'recommendfriendincome',
+      parentId: 1,
+      id: 72,
+      meta: {
+        title: 'RecommendFriendIncome',
+        show: true
+      },
+      component: 'RecommendFriendIncome'
+    },
+    {
+      name: 'history',
+      parentId: 1,
+      id: 72,
+      meta: {
+        title: 'History',
+        show: true
+      },
+      component: 'History'
+    },
+    {
+      name: 'contact',
+      parentId: 1,
+      id: 72,
+      meta: {
+        title: 'Contact',
+        show: true
+      },
+      component: 'Contact'
+    },
+    {
+      name: 'other',
+      parentId: 1,
+      id: 72,
+      meta: {
+        title: 'Other',
+        show: true
+      },
+      component: 'Other'
     },
 
-    // form
-    {
-      name: 'form',
-      parentId: 0,
-      id: 10,
-      meta: {
-        icon: 'form',
-        title: '表单页'
-      },
-      redirect: '/form/base-form',
-      component: 'RouteView'
-    },
-    {
-      name: 'basic-form',
-      parentId: 10,
-      id: 6,
-      meta: {
-        title: '基础表单'
-      },
-      component: 'BasicForm'
-    },
-    {
-      name: 'step-form',
-      parentId: 10,
-      id: 5,
-      meta: {
-        title: '分步表单'
-      },
-      component: 'StepForm'
-    },
-    {
-      name: 'advanced-form',
-      parentId: 10,
-      id: 4,
-      meta: {
-        title: '高级表单'
-      },
-      component: 'AdvanceForm'
-    },
+    //#region original route 
 
-    // list
-    {
-      name: 'list',
-      parentId: 0,
-      id: 10010,
-      meta: {
-        icon: 'table',
-        title: '列表页',
-        show: true
-      },
-      redirect: '/list/table-list',
-      component: 'RouteView'
-    },
-    {
-      name: 'table-list',
-      parentId: 10010,
-      id: 10011,
-      path: '/list/table-list/:pageNo([1-9]\\d*)?',
-      meta: {
-        title: '查询表格',
-        show: true
-      },
-      component: 'TableList'
-    },
-    {
-      name: 'basic-list',
-      parentId: 10010,
-      id: 10012,
-      meta: {
-        title: '标准列表',
-        show: true
-      },
-      component: 'StandardList'
-    },
-    {
-      name: 'card',
-      parentId: 10010,
-      id: 10013,
-      meta: {
-        title: '卡片列表',
-        show: true
-      },
-      component: 'CardList'
-    },
-    {
-      name: 'search',
-      parentId: 10010,
-      id: 10014,
-      meta: {
-        title: '搜索列表',
-        show: true
-      },
-      redirect: '/list/search/article',
-      component: 'SearchLayout'
-    },
-    {
-      name: 'article',
-      parentId: 10014,
-      id: 10015,
-      meta: {
-        title: '搜索列表（文章）',
-        show: true
-      },
-      component: 'SearchArticles'
-    },
-    {
-      name: 'project',
-      parentId: 10014,
-      id: 10016,
-      meta: {
-        title: '搜索列表（项目）',
-        show: true
-      },
-      component: 'SearchProjects'
-    },
-    {
-      name: 'application',
-      parentId: 10014,
-      id: 10017,
-      meta: {
-        title: '搜索列表（应用）',
-        show: true
-      },
-      component: 'SearchApplications'
-    },
+    // // form
+    // {
+    //   name: 'form',
+    //   parentId: 0,
+    //   id: 10,
+    //   meta: {
+    //     icon: 'form',
+    //     title: '表单页'
+    //   },
+    //   redirect: '/form/base-form',
+    //   component: 'RouteView'
+    // },
+    // {
+    //   name: 'basic-form',
+    //   parentId: 10,
+    //   id: 6,
+    //   meta: {
+    //     title: '基础表单'
+    //   },
+    //   component: 'BasicForm'
+    // },
+    // {
+    //   name: 'step-form',
+    //   parentId: 10,
+    //   id: 5,
+    //   meta: {
+    //     title: '分步表单'
+    //   },
+    //   component: 'StepForm'
+    // },
+    // {
+    //   name: 'advanced-form',
+    //   parentId: 10,
+    //   id: 4,
+    //   meta: {
+    //     title: '高级表单'
+    //   },
+    //   component: 'AdvanceForm'
+    // },
 
-    // profile
-    {
-      name: 'profile',
-      parentId: 0,
-      id: 10018,
-      meta: {
-        title: '详情页',
-        icon: 'profile',
-        show: true
-      },
-      redirect: '/profile/basic',
-      component: 'RouteView'
-    },
-    {
-      name: 'basic',
-      parentId: 10018,
-      id: 10019,
-      meta: {
-        title: '基础详情页',
-        show: true
-      },
-      component: 'ProfileBasic'
-    },
-    {
-      name: 'advanced',
-      parentId: 10018,
-      id: 10020,
-      meta: {
-        title: '高级详情页',
-        show: true
-      },
-      component: 'ProfileAdvanced'
-    },
+    // // list
+    // {
+    //   name: 'list',
+    //   parentId: 0,
+    //   id: 10010,
+    //   meta: {
+    //     icon: 'table',
+    //     title: '列表页',
+    //     show: true
+    //   },
+    //   redirect: '/list/table-list',
+    //   component: 'RouteView'
+    // },
+    // {
+    //   name: 'table-list',
+    //   parentId: 10010,
+    //   id: 10011,
+    //   path: '/list/table-list/:pageNo([1-9]\\d*)?',
+    //   meta: {
+    //     title: '查询表格',
+    //     show: true
+    //   },
+    //   component: 'TableList'
+    // },
+    // {
+    //   name: 'basic-list',
+    //   parentId: 10010,
+    //   id: 10012,
+    //   meta: {
+    //     title: '标准列表',
+    //     show: true
+    //   },
+    //   component: 'StandardList'
+    // },
+    // {
+    //   name: 'card',
+    //   parentId: 10010,
+    //   id: 10013,
+    //   meta: {
+    //     title: '卡片列表',
+    //     show: true
+    //   },
+    //   component: 'CardList'
+    // },
+    // {
+    //   name: 'search',
+    //   parentId: 10010,
+    //   id: 10014,
+    //   meta: {
+    //     title: '搜索列表',
+    //     show: true
+    //   },
+    //   redirect: '/list/search/article',
+    //   component: 'SearchLayout'
+    // },
+    // {
+    //   name: 'article',
+    //   parentId: 10014,
+    //   id: 10015,
+    //   meta: {
+    //     title: '搜索列表（文章）',
+    //     show: true
+    //   },
+    //   component: 'SearchArticles'
+    // },
+    // {
+    //   name: 'project',
+    //   parentId: 10014,
+    //   id: 10016,
+    //   meta: {
+    //     title: '搜索列表（项目）',
+    //     show: true
+    //   },
+    //   component: 'SearchProjects'
+    // },
+    // {
+    //   name: 'application',
+    //   parentId: 10014,
+    //   id: 10017,
+    //   meta: {
+    //     title: '搜索列表（应用）',
+    //     show: true
+    //   },
+    //   component: 'SearchApplications'
+    // },
 
-    // result
-    {
-      name: 'result',
-      parentId: 0,
-      id: 10021,
-      meta: {
-        title: '结果页',
-        icon: 'check-circle-o',
-        show: true
-      },
-      redirect: '/result/success',
-      component: 'PageView'
-    },
-    {
-      name: 'success',
-      parentId: 10021,
-      id: 10022,
-      meta: {
-        title: '成功',
-        hiddenHeaderContent: true,
-        show: true
-      },
-      component: 'ResultSuccess'
-    },
-    {
-      name: 'fail',
-      parentId: 10021,
-      id: 10023,
-      meta: {
-        title: '失败',
-        hiddenHeaderContent: true,
-        show: true
-      },
-      component: 'ResultFail'
-    },
+    // // profile
+    // {
+    //   name: 'profile',
+    //   parentId: 0,
+    //   id: 10018,
+    //   meta: {
+    //     title: '详情页',
+    //     icon: 'profile',
+    //     show: true
+    //   },
+    //   redirect: '/profile/basic',
+    //   component: 'RouteView'
+    // },
+    // {
+    //   name: 'basic',
+    //   parentId: 10018,
+    //   id: 10019,
+    //   meta: {
+    //     title: '基础详情页',
+    //     show: true
+    //   },
+    //   component: 'ProfileBasic'
+    // },
+    // {
+    //   name: 'advanced',
+    //   parentId: 10018,
+    //   id: 10020,
+    //   meta: {
+    //     title: '高级详情页',
+    //     show: true
+    //   },
+    //   component: 'ProfileAdvanced'
+    // },
+
+    // // result
+    // {
+    //   name: 'result',
+    //   parentId: 0,
+    //   id: 10021,
+    //   meta: {
+    //     title: '结果页',
+    //     icon: 'check-circle-o',
+    //     show: true
+    //   },
+    //   redirect: '/result/success',
+    //   component: 'PageView'
+    // },
+    // {
+    //   name: 'success',
+    //   parentId: 10021,
+    //   id: 10022,
+    //   meta: {
+    //     title: '成功',
+    //     hiddenHeaderContent: true,
+    //     show: true
+    //   },
+    //   component: 'ResultSuccess'
+    // },
+    // {
+    //   name: 'fail',
+    //   parentId: 10021,
+    //   id: 10023,
+    //   meta: {
+    //     title: '失败',
+    //     hiddenHeaderContent: true,
+    //     show: true
+    //   },
+    //   component: 'ResultFail'
+    // },
+
+    //#endregion
 
     // Exception
     {
@@ -760,101 +830,101 @@ const userNav = options => {
       component: 'Exception500'
     },
 
-    // account
-    {
-      name: 'account',
-      parentId: 0,
-      id: 10028,
-      meta: {
-        title: '个人页',
-        icon: 'user',
-        show: true
-      },
-      redirect: '/account/center',
-      component: 'RouteView'
-    },
-    {
-      name: 'center',
-      parentId: 10028,
-      id: 10029,
-      meta: {
-        title: '个人中心',
-        show: true
-      },
-      component: 'AccountCenter'
-    },
-    // 特殊三级菜单
-    {
-      name: 'settings',
-      parentId: 10028,
-      id: 10030,
-      meta: {
-        title: '个人设置',
-        hideHeader: true,
-        hideChildren: true,
-        show: true
-      },
-      redirect: '/account/settings/basic',
-      component: 'AccountSettings'
-    },
-    {
-      name: 'BasicSettings',
-      path: '/account/settings/basic',
-      parentId: 10030,
-      id: 10031,
-      meta: {
-        title: '基本设置',
-        show: false
-      },
-      component: 'BasicSetting'
-    },
-    {
-      name: 'SecuritySettings',
-      path: '/account/settings/security',
-      parentId: 10030,
-      id: 10032,
-      meta: {
-        title: '安全设置',
-        show: false
-      },
-      component: 'SecuritySettings'
-    },
-    {
-      name: 'CustomSettings',
-      path: '/account/settings/custom',
-      parentId: 10030,
-      id: 10033,
-      meta: {
-        title: '个性化设置',
-        show: false
-      },
-      component: 'CustomSettings'
-    },
-    {
-      name: 'BindingSettings',
-      path: '/account/settings/binding',
-      parentId: 10030,
-      id: 10034,
-      meta: {
-        title: '账户绑定',
-        show: false
-      },
-      component: 'BindingSettings'
-    },
-    {
-      name: 'NotificationSettings',
-      path: '/account/settings/notification',
-      parentId: 10030,
-      id: 10034,
-      meta: {
-        title: '新消息通知',
-        show: false
-      },
-      component: 'NotificationSettings'
-    }
+    // // account
+    // {
+    //   name: 'account',
+    //   parentId: 0,
+    //   id: 10028,
+    //   meta: {
+    //     title: '个人页',
+    //     icon: 'user',
+    //     show: true
+    //   },
+    //   redirect: '/account/center',
+    //   component: 'RouteView'
+    // },
+    // {
+    //   name: 'center',
+    //   parentId: 10028,
+    //   id: 10029,
+    //   meta: {
+    //     title: '个人中心',
+    //     show: true
+    //   },
+    //   component: 'AccountCenter'
+    // },
+    // // 特殊三级菜单
+    // {
+    //   name: 'settings',
+    //   parentId: 10028,
+    //   id: 10030,
+    //   meta: {
+    //     title: '个人设置',
+    //     hideHeader: true,
+    //     hideChildren: true,
+    //     show: true
+    //   },
+    //   redirect: '/account/settings/basic',
+    //   component: 'AccountSettings'
+    // },
+    // {
+    //   name: 'BasicSettings',
+    //   path: '/account/settings/basic',
+    //   parentId: 10030,
+    //   id: 10031,
+    //   meta: {
+    //     title: '基本设置',
+    //     show: false
+    //   },
+    //   component: 'BasicSetting'
+    // },
+    // {
+    //   name: 'SecuritySettings',
+    //   path: '/account/settings/security',
+    //   parentId: 10030,
+    //   id: 10032,
+    //   meta: {
+    //     title: '安全设置',
+    //     show: false
+    //   },
+    //   component: 'SecuritySettings'
+    // },
+    // {
+    //   name: 'CustomSettings',
+    //   path: '/account/settings/custom',
+    //   parentId: 10030,
+    //   id: 10033,
+    //   meta: {
+    //     title: '个性化设置',
+    //     show: false
+    //   },
+    //   component: 'CustomSettings'
+    // },
+    // {
+    //   name: 'BindingSettings',
+    //   path: '/account/settings/binding',
+    //   parentId: 10030,
+    //   id: 10034,
+    //   meta: {
+    //     title: '账户绑定',
+    //     show: false
+    //   },
+    //   component: 'BindingSettings'
+    // },
+    // {
+    //   name: 'NotificationSettings',
+    //   path: '/account/settings/notification',
+    //   parentId: 10030,
+    //   id: 10034,
+    //   meta: {
+    //     title: '新消息通知',
+    //     show: false
+    //   },
+    //   component: 'NotificationSettings'
+    // }
   ]
   const json = builder(nav)
-  console.log('json', json)
+  // console.log('json', json)
   return json
 }
 

@@ -2,36 +2,36 @@
   <footer class="navbar mr-auto backgrondFooter">
     <div class="container-fluid row align-items-center">
       <div class="col-2">
-        <a class="navbar-brand" href="#/admin/account">
+        <router-link class="navbar-brand" to="/dashboard/account">
           <img class="imgFooterBarSize" src="/img/newImage/BT_Account.png" alt="..."
-        /></a>
+        /></router-link>
       </div>
       <div class="col-3">
-        <a class="navbar-brand" href="#/admin/deposit-money"
-          ><img class="imgFooterBarSize2" src="/img/newImage/BT_Deposit.png" alt="..."
-        /></a>
+        <router-link class="navbar-brand" to="/dashboard/deposit">
+          <img class="imgFooterBarSize2" src="/img/newImage/BT_Deposit.png" alt="..."
+        /></router-link>
       </div>
       <div class="col-3">
-        <a class="navbar-brand" href="#/admin/withdraw-money"
-          ><img class="imgFooterBarSize2" src="/img/newImage/BT_Withdraw.png" alt="..."
-        /></a>
+        <router-link class="navbar-brand" to="/dashboard/withdraw">
+          <img class="imgFooterBarSize2" src="/img/newImage/BT_Withdraw.png" alt="..."
+        /></router-link>
       </div>
       <div class="col-2">
-        <a class="navbar-brand" href="#/admin/history-view"
-          ><img class="imgFooterBarSize3" src="/img/newImage/BT_History.png" alt="..."
-        /></a>
+        <router-link class="navbar-brand" to="/dashboard/history">
+          <img class="imgFooterBarSize3" src="/img/newImage/BT_History.png" alt="..."
+        /></router-link>
       </div>
       <div class="col-2">
-        <a class="navbar-brand menuList" href="#/admin/contact"
-          ><img class="imgFooterBarSize4" src="/img/newImage/BT_Contact.png" alt="..."
-        /></a>
+        <router-link class="navbar-brand" to="/dashboard/contact">
+          <img class="imgFooterBarSize4" src="/img/newImage/BT_Contact.png" alt="..."
+        /></router-link>
       </div>
     </div>
   </footer>
 </template>
 <script>
 export default {
-  name: 'contcontent-footerent'
+  name: 'contcontent-footerent',
 }
 </script>
 <style lang="less">
@@ -40,19 +40,20 @@ export default {
   background-size: contain;
   background-size: no-repeat;
   width: 100%;
+  // margin: 0px auto;
 }
 
 .menuList {
   color: #828282;
 }
 .imgFooterBarSize {
-  width: 50%;
+  width: 45%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
 
   @media (max-width: 420px) {
-    width: 100%;
+    width: 85%;
   }
 }
 .imgFooterBarSize2 {

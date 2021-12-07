@@ -3,43 +3,42 @@
     <!-- menu-list1 -->
     <div class="row justify-content-md-center">
       <div class="col-3">
-        <a class="navbar-brand" href="#/admin/deposit-money">
+        <router-link class="navbar-brand" to="/dashboard/deposit">
           <img
             class="img-responsive center-block d-block mx-auto imgMenuList1"
             src="/img/newImage/icon_01.png"
             alt="..."
           />
-        </a>
+        </router-link>
       </div>
       <div class="col-3">
-        <a class="navbar-brand" href="#/admin/withdraw-money">
+        <router-link class="navbar-brand" to="/dashboard/withdraw">
           <img
             class="img-responsive center-block d-block mx-auto imgMenuList1"
             src="/img/newImage/icon_02.png"
             alt="..."
           />
-        </a>
+        </router-link>
       </div>
       <div class="col-3">
-        <a class="navbar-brand" href="#/admin/promotion">
+        <router-link class="navbar-brand" to="/dashboard/promotion">
           <img
             class="img-responsive center-block d-block mx-auto imgMenuList1"
             src="/img/newImage/icon_03.png"
             alt="..."
           />
-        </a>
+        </router-link>
       </div>
       <div class="col-3">
-        <a class="navbar-brand" href="#/admin/payback-money">
+        <router-link class="navbar-brand" to="/dashboard/payback">
           <img
             class="img-responsive center-block d-block mx-auto imgMenuList1"
             src="/img/newImage/icon_04.png"
             alt="..."
           />
-        </a>
+        </router-link>
       </div>
     </div>
-    <br />
 
     <!-- card-price -->
     <div class="container imageCardBG">
@@ -62,60 +61,60 @@
     <br />
     <div class="row justify-content-md-center">
       <div class="col-4">
-        <a class="navbar-brand" href="#/admin/recommend-friend">
+        <router-link class="navbar-brand" to="/dashboard/recommendfriend">
           <img
             class="img-responsive center-block d-block mx-auto imgMenuList2"
             src="/img/newImage/icon_05.png"
             alt="..."
           />
-        </a>
+        </router-link>
       </div>
       <div class="col-4">
-        <a class="navbar-brand" href="#/admin/recommend-friend-income">
+        <router-link class="navbar-brand" to="/dashboard/recommendfriendincome">
           <img
             class="img-responsive center-block d-block mx-auto imgMenuList2x"
             src="/img/newImage/icon_06.png"
             alt="..."
           />
-        </a>
+        </router-link>
       </div>
       <div class="col-4">
-        <a class="navbar-brand" href="#/admin/history-view">
+        <router-link class="navbar-brand" to="/dashboard/history">
           <img
             class="img-responsive center-block d-block mx-auto imgMenuList3x"
             src="/img/newImage/icon_07.png"
             alt="..."
           />
-        </a>
+        </router-link>
       </div>
     </div>
     <div class="row justify-content-md-center">
       <div class="col-4">
-        <a class="navbar-brand" href="#">
+        <router-link class="navbar-brand" to="/dashboard/account">
           <img
             class="img-responsive center-block d-block mx-auto imgMenuList2"
             src="/img/newImage/icon_08.png"
             alt="..."
           />
-        </a>
+        </router-link>
       </div>
       <div class="col-4">
-        <a class="navbar-brand" href="#">
+        <router-link class="navbar-brand" to="/dashboard/account">
           <img
             class="img-responsive center-block d-block mx-auto imgMenuList2"
             src="/img/newImage/icon_09.png"
             alt="..."
           />
-        </a>
+        </router-link>
       </div>
       <div class="col-4">
-        <a class="navbar-brand" href="#/admin/other-view">
+        <router-link class="navbar-brand" to="/dashboard/other">
           <img
             class="img-responsive center-block d-block mx-auto imgMenuList2"
             src="/img/newImage/icon_010.png"
             alt="..."
           />
-        </a>
+        </router-link>
       </div>
     </div>
     <br />
@@ -128,21 +127,20 @@
         </a>
       </div>
     </div>
-    <br />
   </div>
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       user: {
-        userId: 'VIP:0908566930'
+        userId: 'VIP:0908566930',
       },
       nav2Styles: {
-        backgroundColor: 'black'
-      }
+        backgroundColor: 'black',
+      },
     }
-  }
+  },
 }
 </script>
 <style lang="less">

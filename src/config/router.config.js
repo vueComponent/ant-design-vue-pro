@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import { UserLayout, BasicLayout, BlankLayout } from '@/layouts'
+import { UserLayout, BasicLayout } from '@/layouts'
 import { bxAnaalyse } from '@/core/icons'
 
 const RouteView = {
@@ -16,21 +16,14 @@ export const asyncRouterMap = [
     redirect: '/dashboard/account',
     children: [
       // dashboard
-      {
-        path: '/dashboard',
-        name: 'dashboard',
-        redirect: '/dashboard/account',
-        component: RouteView,
-        meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: ['dashboard'] },
-        children: [
-          {
-            path: '/dashboard/account',
-            name: 'Account',
-            component: () => import('@/views/dashboard/Account'),
-            meta: { title: 'menu.dashboard.account', keepAlive: true, permission: ['dashboard'] }
-          }
-        ]
-      },
+      // {
+      //   path: '/dashboard',
+      //   name: 'dashboard',
+      //   // redirect: '/dashboard/account',
+      //   component: RouteView,
+      //   meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: ['dashboard'] },
+      // },
+      
       // forms
       {
         path: '/form',
@@ -114,7 +107,6 @@ export const asyncRouterMap = [
           }
         ]
       },
-
       // profile
       {
         path: '/profile',
@@ -137,7 +129,6 @@ export const asyncRouterMap = [
           }
         ]
       },
-
       // result
       {
         path: '/result',
@@ -160,7 +151,6 @@ export const asyncRouterMap = [
           }
         ]
       },
-
       // Exception
       {
         path: '/exception',
@@ -189,7 +179,6 @@ export const asyncRouterMap = [
           }
         ]
       },
-
       // account
       {
         path: '/account',
@@ -256,69 +245,6 @@ export const asyncRouterMap = [
           }
         ]
       }
-
-      // other
-      /*
-      {
-        path: '/other',
-        name: 'otherPage',
-        component: PageView,
-        meta: { title: '其他组件', icon: 'slack', permission: [ 'dashboard' ] },
-        redirect: '/other/icon-selector',
-        children: [
-          {
-            path: '/other/icon-selector',
-            name: 'TestIconSelect',
-            component: () => import('@/views/other/IconSelectorView'),
-            meta: { title: 'IconSelector', icon: 'tool', keepAlive: true, permission: [ 'dashboard' ] }
-          },
-          {
-            path: '/other/list',
-            component: RouteView,
-            meta: { title: '业务布局', icon: 'layout', permission: [ 'support' ] },
-            redirect: '/other/list/tree-list',
-            children: [
-              {
-                path: '/other/list/tree-list',
-                name: 'TreeList',
-                component: () => import('@/views/other/TreeList'),
-                meta: { title: '树目录表格', keepAlive: true }
-              },
-              {
-                path: '/other/list/edit-table',
-                name: 'EditList',
-                component: () => import('@/views/other/TableInnerEditList'),
-                meta: { title: '内联编辑表格', keepAlive: true }
-              },
-              {
-                path: '/other/list/user-list',
-                name: 'UserList',
-                component: () => import('@/views/other/UserList'),
-                meta: { title: '用户列表', keepAlive: true }
-              },
-              {
-                path: '/other/list/role-list',
-                name: 'RoleList',
-                component: () => import('@/views/other/RoleList'),
-                meta: { title: '角色列表', keepAlive: true }
-              },
-              {
-                path: '/other/list/system-role',
-                name: 'SystemRole',
-                component: () => import('@/views/role/RoleList'),
-                meta: { title: '角色列表2', keepAlive: true }
-              },
-              {
-                path: '/other/list/permission-list',
-                name: 'PermissionList',
-                component: () => import('@/views/other/PermissionList'),
-                meta: { title: '权限列表', keepAlive: true }
-              }
-            ]
-          }
-        ]
-      }
-      */
     ]
   },
   {
@@ -329,7 +255,6 @@ export const asyncRouterMap = [
 ]
 
 /**
- * 基础路由
  * @type { *[] }
  */
 export const constantRouterMap = [
@@ -350,9 +275,14 @@ export const constantRouterMap = [
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/Register')
       },
       {
-        path: 'register-result',
-        name: 'registerResult',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/RegisterResult')
+        path: 'registerconfirm',
+        name: 'registerconfirm',
+        component: () => import(/* webpackChunkName: "user" */ '@/views/user/RegisterConfirm')
+      },
+      {
+        path: 'forgotpassword',
+        name: 'forgotpassword',
+        component: () => import(/* webpackChunkName: "user" */ '@/views/user/ForgotPassword')
       },
       {
         path: 'recover',

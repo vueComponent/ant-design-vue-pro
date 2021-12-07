@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :style="backgrondTopNav">
+  <div class="container backgrondTopNav">
     <br />
     <!-- Top Navbar -->
     <div class="row">
@@ -11,31 +11,19 @@
       <div class="col-5">
         <div class="row">
           <div class="col-4">
-            <a class="navbar-brand" href="#/admin/account">
-              <img
-                class="img-responsive navIconRight"
-                src="/img/newImage/home.png"
-                alt="..."
-              />
-            </a>
+            <router-link class="navbar-brand" to="/dashboard/account">
+              <img class="img-responsive navIconRight" src="/img/newImage/home.png" alt="..." />
+            </router-link>
           </div>
           <div class="col-4">
-            <a class="navbar-brand" href="#">
-              <img
-                class="img-responsive navIconRight"
-                src="/img/newImage/BT_PlayGame.png"
-                alt="..."
-              />
-            </a>
+            <router-link class="navbar-brand" to="/dashboard/account">
+              <img class="img-responsive navIconRight" src="/img/newImage/BT_PlayGame.png" alt="..." />
+            </router-link>
           </div>
           <div class="col-4">
-          <a class="navbar-brand" v-on:click="getValue">
-              <img
-                class="img-responsive navIconRight"
-                src="/img/newImage/logout.png"
-                alt="..."
-              />
-          </a>
+            <a class="navbar-brand" v-on:click="getValue">
+              <img class="img-responsive navIconRight" src="/img/newImage/logout.png" alt="..." />
+            </a>
           </div>
         </div>
       </div>
@@ -53,38 +41,37 @@
         />
       </div>
       <div class="col-9">
-        <input
-          type="text"
-          id="userId"
-          class="kanitFonts2 inputUserId"
-          v-model="user.userId"
-          disabled
-        />
+        <input type="text" id="userId" class="kanitFonts2 inputUserId" v-model="user.userId" disabled />
       </div>
     </div>
     <br />
   </div>
 </template>
 <script>
-
 // import { Modal } from 'ant-design-vue'
 
 export default {
   name: 'top-navbar',
-  computed: {
-  },
-  data () {
+  computed: {},
+  data() {
     return {
       user: {
-        userId: 'VIP:0908566930'
-      }
+        userId: 'VIP:0908566930',
+      },
     }
   },
   methods: {
-    getValue (e) {
+    getValue(e) {
+      setTimeout(() => {
+        this.$notification.success({
+          message: 'Logout Successfully',
+        description: ` See you soon with AutoEasy168`,
+        })
+      }, 1000)
+      
       return this.$store.dispatch('Logout').then(() => {
-            this.$router.push({ name: 'login' })
-          })
+        this.$router.push({ name: 'login' })
+      })
       // Modal.confirm({
       //   title: this.$t('layouts.usermenu.dialog.title'),
       //   content: this.$t('layouts.usermenu.dialog.content'),
@@ -95,13 +82,13 @@ export default {
       //   },
       //   onCancel () {}
       // })
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="less">
-.backgrondTopNav{
-  background-color: "black"
+.backgrondTopNav {
+  background-color: 'black';
 }
 .textSlide {
   font-size: 24px;
@@ -126,10 +113,11 @@ export default {
 }
 
 .navIconRight {
-  width: 70%;
+  width: 65%;
   justify-content: center;
+
   @media (max-width: 420px) {
-    width: 100%;
+    width: 110%;
   }
 }
 

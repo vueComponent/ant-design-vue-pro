@@ -1,316 +1,289 @@
 <template>
-  <div class="main user-layout-register">
-    <h3><span>{{ $t('user.register.register') }}</span></h3>
-    <a-form ref="formRegister" :form="form" id="formRegister">
-      <a-form-item>
-        <a-input
-          size="large"
-          type="text"
-          :placeholder="$t('user.register.email.placeholder')"
-          v-decorator="['email', {rules: [{ required: true, type: 'email', message: $t('user.email.required') }], validateTrigger: ['change', 'blur']}]"
-        ></a-input>
-      </a-form-item>
-
-      <a-popover
-        placement="rightTop"
-        :trigger="['focus']"
-        :getPopupContainer="(trigger) => trigger.parentElement"
-        v-model="state.passwordLevelChecked">
-        <template slot="content">
-          <div :style="{ width: '240px' }" >
-            <div :class="['user-register', passwordLevelClass]">{{ $t(passwordLevelName) }}</div>
-            <a-progress :percent="state.percent" :showInfo="false" :strokeColor=" passwordLevelColor " />
-            <div style="margin-top: 10px;">
-              <span>{{ $t('user.register.password.popover-message') }}
-              </span>
+  <div class="card-body nav2Styles">
+    <br />
+    <div class="container-fluid text-center">
+      <h2 slot="header" class="card-title kanitFonts3 textCenter">ยินดีต้อนรับ</h2>
+      <h4 slot="header" class="card-title kanitFonts3 textCenter">ข้อมูลการสมัครสมาชิกใหม่</h4>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="col-lg-12">
+          <div class="form-group-lg boxPDStyles">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="inputGroupStyle">
+                  <div class="custom-select kanitFonts1">
+                    <select class="custom-select kanitFonts1 selectTextColor" v-model="user.accbank">
+                      <option disabled value="1">ธนาคารที่ใช้</option>
+                      <option value="2">Bank A</option>
+                      <option value="3">Bank B</option>
+                      <option value="4">Bank C</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
+            <img class="img-responsive center-block d-block mx-auto listInputStyle" src="/img/newImage/lineInput.jpg" />
           </div>
-        </template>
-        <a-form-item>
-          <a-input-password
-            size="large"
-            @click="handlePasswordInputClick"
-            :placeholder="$t('user.register.password.placeholder')"
-            v-decorator="['password', {rules: [{ required: true, message: $t('user.password.required') }, { validator: this.handlePasswordLevel }], validateTrigger: ['change', 'blur']}]"
-          ></a-input-password>
-        </a-form-item>
-      </a-popover>
 
-      <a-form-item>
-        <a-input-password
-          size="large"
-          :placeholder="$t('user.register.confirm-password.placeholder')"
-          v-decorator="['password2', {rules: [{ required: true, message: $t('user.password.required') }, { validator: this.handlePasswordCheck }], validateTrigger: ['change', 'blur']}]"
-        ></a-input-password>
-      </a-form-item>
+          <div class="form-group boxPDStyles">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="inputGroupStyle">
+                  <input
+                    type="search"
+                    class="kanitFonts2 inputBlackBoxStyle"
+                    placeholder=" เลขที่บัญชี.."
+                    maxlength="16"
+                    v-model="user.banknumber"
+                  />
+                </div>
+              </div>
+            </div>
+            <img class="img-responsive center-block d-block mx-auto listInputStyle" src="/img/newImage/lineInput.jpg" />
+          </div>
 
-      <a-form-item>
-        <a-input size="large" :placeholder="$t('user.login.mobile.placeholder')" v-decorator="['mobile', {rules: [{ required: true, message: $t('user.phone-number.required'), pattern: /^1[3456789]\d{9}$/ }, { validator: this.handlePhoneCheck } ], validateTrigger: ['change', 'blur'] }]">
-          <a-select slot="addonBefore" size="large" defaultValue="+86">
-            <a-select-option value="+86">+86</a-select-option>
-            <a-select-option value="+87">+87</a-select-option>
-          </a-select>
-        </a-input>
-      </a-form-item>
-      <!--<a-input-group size="large" compact>
-            <a-select style="width: 20%" size="large" defaultValue="+86">
-              <a-select-option value="+86">+86</a-select-option>
-              <a-select-option value="+87">+87</a-select-option>
-            </a-select>
-            <a-input style="width: 80%" size="large" placeholder="11 位手机号"></a-input>
-          </a-input-group>-->
+          <div class="form-group boxPDStyles">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="inputGroupStyle">
+                  <input
+                    type="search"
+                    class="kanitFonts2 inputBlackBoxStyle"
+                    placeholder=" ชื่อ - นามสกุล (ชื่อบัญชีธนาคาร)"
+                    v-model="user.fullname"
+                  />
+                </div>
+              </div>
+            </div>
+            <img class="img-responsive center-block d-block mx-auto listInputStyle" src="/img/newImage/lineInput.jpg" />
+          </div>
 
-      <a-row :gutter="16">
-        <a-col class="gutter-row" :span="16">
-          <a-form-item>
-            <a-input size="large" type="text" :placeholder="$t('user.login.mobile.verification-code.placeholder')" v-decorator="['captcha', {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}]">
-              <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-            </a-input>
-          </a-form-item>
-        </a-col>
-        <a-col class="gutter-row" :span="8">
-          <a-button
-            class="getCaptcha"
-            size="large"
-            :disabled="state.smsSendBtn"
-            @click.stop.prevent="getCaptcha"
-            v-text="!state.smsSendBtn && $t('user.register.get-verification-code')||(state.time+' s')"></a-button>
-        </a-col>
-      </a-row>
+          <div class="form-group boxPDStyles">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="inputGroupStyle">
+                  <input
+                    type="search"
+                    class="kanitFonts2 inputBlackBoxStyle"
+                    placeholder=" เบอร์โทรศัพท์"
+                    maxlength="10"
+                    pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                    v-model="user.telephone"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <img class="img-responsive center-block d-block mx-auto listInputStyle" src="/img/newImage/lineInput.jpg" />
+          </div>
 
-      <a-form-item>
-        <a-button
-          size="large"
-          type="primary"
-          htmlType="submit"
-          class="register-button"
-          :loading="registerBtn"
-          @click.stop.prevent="handleSubmit"
-          :disabled="registerBtn">{{ $t('user.register.register') }}
-        </a-button>
-        <router-link class="login" :to="{ name: 'login' }">{{ $t('user.register.sign-in') }}</router-link>
-      </a-form-item>
+          <div class="form-group boxPDStyles">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="inputGroupStyle">
+                  <input
+                    type="search"
+                    class="kanitFonts2 inputBlackBoxStyle"
+                    placeholder=" รหัสเข้าเล่น (ล็อกอินเข้าสู่ระบบ)"
+                    v-model="user.password"
+                  />
+                </div>
+              </div>
+            </div>
+            <img class="img-responsive center-block d-block mx-auto listInputStyle" src="/img/newImage/lineInput.jpg" />
+          </div>
 
-    </a-form>
+          <div class="form-group-lg boxPDStyles">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="inputGroupStyle">
+                  <div class="custom-select kanitFonts1">
+                    <select class="custom-select kanitFonts1 selectTextColor" v-model="user.knowus">
+                      <option disabled value="1">รู้จักเราที่ไหน ?</option>
+                      <option>A</option>
+                      <option>B</option>
+                      <option>C</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <img class="img-responsive center-block d-block mx-auto listInputStyle" src="/img/newImage/lineInput.jpg" />
+          </div>
+
+          <div class="form-group-lg boxPDStyles">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="inputGroupStyle">
+                  <div class="custom-select kanitFonts1">
+                    <select class="custom-select kanitFonts1 selectTextColor" v-model="user.promotion">
+                      <option disabled value="1">โปรโมชั่น ?</option>
+                      <option>A</option>
+                      <option>B</option>
+                      <option>C</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <img class="img-responsive center-block d-block mx-auto listInputStyle" src="/img/newImage/lineInput.jpg" />
+          </div>
+
+          <!-- button register -->
+          <br /><br />
+          <div class="text-center">
+            <router-link class="navbar-brand" to="/user/registerconfirm">
+              <img class="img-responsive imgRegister" src="/img/newImage/register-01.png" />
+              <!-- <img
+                @click.prevent="register"
+                class="img-responsive imgRegister"
+                src="/img/newImage/register-01.png"
+              /> -->
+            </router-link>
+          </div>
+          <br />
+          <div class="row text-center">
+            <label class="control-label kanitFonts1 textMemo">
+              <span class="colorSpan">*</span>
+              กรุณากรอกข้อมูลให้ครบทุกช่อง
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
-
 <script>
-import { getSmsCaptcha } from '@/api/login'
-import { deviceMixin } from '@/store/device-mixin'
-import { scorePassword } from '@/utils/util'
+// import ChartCard from "src/components/Cards/ChartCard.vue";
+// import StatsCard from "src/components/Cards/StatsCard.vue";
+// import LTable from "src/components/Table.vue";
 
-const levelNames = {
-  0: 'user.password.strength.short',
-  1: 'user.password.strength.low',
-  2: 'user.password.strength.medium',
-  3: 'user.password.strength.strong'
-}
-const levelClass = {
-  0: 'error',
-  1: 'error',
-  2: 'warning',
-  3: 'success'
-}
-const levelColor = {
-  0: '#ff0000',
-  1: '#ff0000',
-  2: '#ff7e05',
-  3: '#52c41a'
-}
 export default {
-  name: 'Register',
-  components: {
-  },
-  mixins: [deviceMixin],
-  data () {
+  // components: {
+  //   LTable,
+  //   ChartCard,
+  //   StatsCard,
+  // },
+  data() {
     return {
-      form: this.$form.createForm(this),
-
-      state: {
-        time: 60,
-        level: 0,
-        smsSendBtn: false,
-        passwordLevel: 0,
-        passwordLevelChecked: false,
-        percent: 10,
-        progressColor: '#FF0000'
+      user: {
+        accbank: '1',
+        banknumber: '',
+        fullname: '',
+        telephone: '',
+        password: '',
+        promotion: null,
+        knowus: '1',
+        promotion: '1',
+        aboutMe: '',
       },
-      registerBtn: false
-    }
-  },
-  computed: {
-    passwordLevelClass () {
-      return levelClass[this.state.passwordLevel]
-    },
-    passwordLevelName () {
-      return levelNames[this.state.passwordLevel]
-    },
-    passwordLevelColor () {
-      return levelColor[this.state.passwordLevel]
     }
   },
   methods: {
-    handlePasswordLevel (rule, value, callback) {
-      if (value === '') {
-       return callback()
-      }
-      console.log('scorePassword ; ', scorePassword(value))
-      if (value.length >= 6) {
-        if (scorePassword(value) >= 30) {
-          this.state.level = 1
-        }
-        if (scorePassword(value) >= 60) {
-        this.state.level = 2
-        }
-        if (scorePassword(value) >= 80) {
-        this.state.level = 3
-        }
-      } else {
-        this.state.level = 0
-        callback(new Error(this.$t('user.password.strength.msg')))
-      }
-      this.state.passwordLevel = this.state.level
-      this.state.percent = this.state.level * 33
-
-      callback()
+    register() {
+      alert('register data: ' + JSON.stringify(this.user))
     },
-
-    handlePasswordCheck (rule, value, callback) {
-      const password = this.form.getFieldValue('password')
-      // console.log('value', value)
-      if (value === undefined) {
-        callback(new Error(this.$t('user.password.required')))
-      }
-      if (value && password && value.trim() !== password.trim()) {
-        callback(new Error(this.$t('user.password.twice.msg')))
-      }
-      callback()
-    },
-
-    handlePhoneCheck (rule, value, callback) {
-      console.log('handlePhoneCheck, rule:', rule)
-      console.log('handlePhoneCheck, value', value)
-      console.log('handlePhoneCheck, callback', callback)
-
-      callback()
-    },
-
-    handlePasswordInputClick () {
-      if (!this.isMobile) {
-        this.state.passwordLevelChecked = true
-        return
-      }
-      this.state.passwordLevelChecked = false
-    },
-
-    handleSubmit () {
-      const { form: { validateFields }, state, $router } = this
-      validateFields({ force: true }, (err, values) => {
-        if (!err) {
-          state.passwordLevelChecked = false
-          $router.push({ name: 'registerResult', params: { ...values } })
-        }
-      })
-    },
-
-    getCaptcha (e) {
-      e.preventDefault()
-      const { form: { validateFields }, state, $message, $notification } = this
-
-      validateFields(['mobile'], { force: true },
-        (err, values) => {
-          if (!err) {
-            state.smsSendBtn = true
-
-            const interval = window.setInterval(() => {
-              if (state.time-- <= 0) {
-                state.time = 60
-                state.smsSendBtn = false
-                window.clearInterval(interval)
-              }
-            }, 1000)
-
-            const hide = $message.loading('验证码发送中..', 0)
-
-            getSmsCaptcha({ mobile: values.mobile }).then(res => {
-              setTimeout(hide, 2500)
-              $notification['success']({
-                message: '提示',
-                description: '验证码获取成功，您的验证码为：' + res.result.captcha,
-                duration: 8
-              })
-            }).catch(err => {
-              setTimeout(hide, 1)
-              clearInterval(interval)
-              state.time = 60
-              state.smsSendBtn = false
-              this.requestFailed(err)
-            })
-          }
-        }
-      )
-    },
-    requestFailed (err) {
-      this.$notification['error']({
-        message: '错误',
-        description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
-        duration: 4
-      })
-      this.registerBtn = false
-    }
   },
-  watch: {
-    'state.passwordLevel' (val) {
-      console.log(val)
-    }
-  }
 }
 </script>
-<style lang="less">
-  .user-register {
-
-    &.error {
-      color: #ff0000;
-    }
-
-    &.warning {
-      color: #ff7e05;
-    }
-
-    &.success {
-      color: #52c41a;
-    }
-
-  }
-
-  .user-layout-register {
-    .ant-input-group-addon:first-child {
-      background-color: #fff;
-    }
-  }
-</style>
 <style lang="less" scoped>
-  .user-layout-register {
-
-    & > h3 {
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-
-    .getCaptcha {
-      display: block;
-      width: 100%;
-      height: 40px;
-    }
-
-    .register-button {
-      width: 50%;
-    }
-
-    .login {
-      float: right;
-      line-height: 40px;
-    }
+.custom-select {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  color: white;
+  display: inline-block;
+  appearance: none;
+  @media (max-width: 420px) {
+    font-size: 14px;
   }
+}
+.custom-select select {
+  height: 40px;
+  // color: white !important;
+  font-size: 20px;
+  border-color: black;
+  background-color: black !important;
+  text-transform: uppercase;
+  outline: none;
+  appearance: none;
+  @media (max-width: 420px) {
+    font-size: 14px;
+  }
+}
+.custom-select::after {
+  content: '';
+  position: absolute;
+  right: 10px;
+  top: 17px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid black;
+  border-right: 7px solid black;
+  border-top: 10px solid #fac234;
+  pointer-events: none;
+  appearance: none;
+  color: white;
+  @media (max-width: 420px) {
+    font-size: 14px;
+  }
+}
+
+.nav2Styles {
+  background-color: black;
+}
+.textCenter {
+  text-align: center;
+  color: #ffd373;
+}
+.imgRegister {
+  width: 40%;
+
+  @media (max-width: 420px) {
+    width: 50%;
+  }
+}
+.colorSpan {
+  color: red;
+}
+.textMemo {
+  color: #828282;
+  font-size: 20px;
+
+  @media (max-width: 420px) {
+    font-size: 14px;
+  }
+}
+
+.listInputStyle {
+  width: 100%;
+  max-width: 100%;
+}
+
+.selectTextColor {
+  color: #828282;
+}
+
+//form-StyleInput & StyleSelect
+.boxPDStyles {
+  margin-top: 25px;
+}
+.inputGroupStyle {
+  background-color: black;
+  width: 100%;
+  height: 40px;
+}
+.inputBlackBoxStyle {
+  background-color: black;
+  border-width: 0px;
+  color: white;
+  width: 100%;
+  height: 40px;
+  font-size: 20px;
+
+  @media (max-width: 420px) {
+    font-size: 14px;
+  }
+}
 </style>
