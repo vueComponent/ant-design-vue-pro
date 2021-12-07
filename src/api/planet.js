@@ -9,7 +9,10 @@ const userApi = {
    adminGetTeamList: '/team/adminGetTeamList', // 管理员分页获取济人组队
    getTeamByUserIdWithPage: '/team/getTeamByUserIdWithPage',
    feedBack: '/feedback', // 用户反馈
+   getLabel: '/label',
+   getOrganizationPostingList: '/posting/getOrganizationPostingList', // 查询恒星号历史发帖
    adminOperateFeedBack: '/feedback/adminOperateFeedback',
+   queryOrganizationWithPage: '/organization/queryOrganizationWithPage',
    adminUnblockUser: '/userBlock/adminUnblockUser' // 恢复正常
 }
 
@@ -19,6 +22,13 @@ export function getPlanetList (parameter) {
       method: 'get',
       params: parameter
     })
+}
+export function getLabel (parameter) {
+  return request({
+    url: userApi.getLabel,
+    method: 'get',
+    params: parameter
+  })
 }
 // 管理员封禁用户
 export function adminBlockUser (parameter) {
@@ -91,7 +101,14 @@ export function deleteFeedBack (id) {
 //     method: 'patch'
 //   })
 // }
-
+// 查询恒星号历史发帖
+export function getOrganizationPostingList (id, data) {
+  return request({
+    url: `/posting/getOrganizationPostingList/${id}`,
+    method: 'get',
+    data
+  })
+}
 export function updateFeedBack (parameter) {
   return request({
     url: userApi.adminOperateFeedBack,
@@ -99,7 +116,13 @@ export function updateFeedBack (parameter) {
     data: parameter
   })
 }
-
+export function queryOrganizationWithPage (parameter) {
+  return request({
+    url: userApi.queryOrganizationWithPage,
+    method: 'get',
+    params: parameter
+  })
+}
 export function getTeamByUserIdWithPage (parameter) {
   return request({
     url: userApi.getTeamByUserIdWithPage,
