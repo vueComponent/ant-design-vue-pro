@@ -4,7 +4,7 @@
       <wang-editor v-on:editorChange="setEditorContent" :value="content"/>
     </a-card>
     <a-card :bordered='false'>
-      <a-form :form="form" layout='inline' :colon='false' labelAlign='left' hideRequiredMark>
+      <a-form :form="form" layout='inline' :colon='false' labelAlign='left' hideRequiredMark >
         <a-row>
           <a-col :span='6'>
             <a-form-item :labelCol='{span: 12}' :wrapperCol='{span: 12}'>
@@ -63,7 +63,7 @@
                     <span style='text-align: center;font-weight: bold;height: 20px;line-height: 20px'>owner/作者</span>
                     <span style='margin: 0 auto;font-size: 12px;width: 100px;white-space: pre-line;line-height: 20px;color: #90939999'>对用户不显示，便于进行推文管理</span>
                   </div>
-                  <a-input placeholder='请输入作者名称/昵称' v-decorator="['owner',{initialValue:data.owner}]"/>
+                  <a-input placeholder='请输入作者名称/昵称' v-decorator="['owner',{initialValue:data.owner, rules: [{ max: 10, message: '最多10个字'}]}]"/>
                 </a-form-item>
               </a-col>
             </a-row>
@@ -167,11 +167,12 @@ export default {
       agreeCb: true,
       agreeTip: false,
       linkCardPreviewShow: false,
-      content: ''
+      content: '',
+      saved: true
     }
   },
   beforeCreate () {
-    this.form = this.$form.createForm(this, { name: 'search' })
+    this.form = this.$form.createForm(this, { name: 'search', onValuesChange: () => this.saved = false})
   },
   created () {
     if (this.$route.params.postingId) {
@@ -209,15 +210,41 @@ export default {
         })
     }
   },
+  beforeRouteLeave (to, from, next) {
+    if(!this.saved){
+      this.$confirm({
+        content: "尚未保存，确定离开当前页面？",
+        onOk () {
+          next()
+        },
+        onCancel () {
+          next(false)
+        }
+      })
+    }else{
+      next()
+    }
+  },
   methods: {
     change () {
       console.log('test')
     },
+    haveChanged () {
+      this.form.validateFields((err,value) => {
+        console.log(value)
+        return true
+      })
+    },
     save () {
       this.agreeTip = true
       this.form.validateFields((err, value) => {
-        if(err || !this.agreeCb){
-          console.log(err)
+        if(err){
+          this.$message.error('缺少必填内容，请完善信息')
+          return
+        }
+        if(!this.agreeCb){
+          // console.log(err)
+          this.$message.error('未勾选济星云社区管理规范')
           return
         }
         let firstPicUrl = null
@@ -239,6 +266,7 @@ export default {
               console.log(res)
               if(res.success) {
                 this.$message.success(res.msg || '保存成功')
+                this.saved = true
               }else {
                 this.$message.error(res.msg || '保存失败')
               }
@@ -258,6 +286,7 @@ export default {
               console.log(res)
               if(res.success) {
                 this.$message.success(res.msg || '保存成功')
+                this.saved = true
               }else {
                 this.$message.error(res.msg || '保存失败')
               }
@@ -268,83 +297,96 @@ export default {
     saveAndPublish () {
       this.agreeTip = true
       this.form.validateFields((err, value) => {
-        if(err || !this.agreeCb){
-          console.log(err)
+        if(err){
+          this.$message.error('缺少必填内容，请完善信息')
+          return
+        }
+        if(!this.agreeCb){
+          // console.log(err)
+          this.$message.error('未勾选济星云社区管理规范')
           return
         }
         let firstPicUrl = null
         if(this.fileList && this.fileList.length){
           firstPicUrl = this.fileList[0].url
         }
-        if(storage.get(ROLE_ID)=='organization'){
-          request({
-            url: '/posting/organizationCreatePosting',
-            method: 'post',
-            data: {
-              ...value,
-              released: true,
-              firstPicUrl,
-              content: this.content
+        this.$confirm({
+          content: '确定发布帖子至济事广场？',
+          onOk() {
+            if(storage.get(ROLE_ID)=='organization'){
+              request({
+                url: '/posting/organizationCreatePosting',
+                method: 'post',
+                data: {
+                  ...value,
+                  released: true,
+                  firstPicUrl,
+                  content: this.content
+                }
+              })
+                .then(res => {
+                  console.log(res)
+                  if(res.success) {
+                    this.$message.success(res.msg || '保存并发布成功')
+                    this.saved = true
+                  }else {
+                    this.$message.error(res.msg || '保存并发布失败')
+                  }
+                  // released: true包含了发布
+                  // request({
+                  //   url: '/posting/organizationPublishPosting/' + res.data.id,
+                  //   method: 'get',
+                  // })
+                  //   .then(res2 =>{
+                  //     console.log(res2)
+                  //     if(res2.success) {
+                  //       this.$message.success(res2.msg || '保存并发布成功')
+                  //     }else {
+                  //       this.$message.error(res2.msg || '保存并发布失败')
+                  //     }
+                  //   })
+                })
+            } else if(storage.get(ROLE_ID)=='admin') {
+              request({
+                url: '/posting/adminCreatePosting',
+                method: 'post',
+                data: {
+                  ...value,
+                  released: true,
+                  firstPicUrl,
+                  content: this.content
+                }
+              })
+                .then(res => {
+                  console.log(res)
+                  if(res.success) {
+                    this.$message.success(res.msg || '保存并发布成功')
+                    this.saved = true
+                  }else {
+                    this.$message.error(res.msg || '保存并发布失败')
+                  }
+                  // released: true包含了发布
+                  // request({
+                  //   url: '/posting/adminPublishPosting/' +res.data.id,
+                  //   method: 'get',
+                  // })
+                  //   .then(res2 =>{
+                  //     console.log(res2)
+                  //     if(res2.success) {
+                  //       this.$message.success(res2.msg || '保存并发布成功')
+                  //     }else {
+                  //       this.$message.error(res2.msg || '保存并发布失败')
+                  //     }
+                  //   })
+                })
             }
-          })
-            .then(res => {
-              console.log(res)
-              if(res.success) {
-                this.$message.success(res.msg || '保存并发布成功')
-              }else {
-                this.$message.error(res.msg || '保存并发布失败')
-              }
-              // released: true包含了发布
-              // request({
-              //   url: '/posting/organizationPublishPosting/' + res.data.id,
-              //   method: 'get',
-              // })
-              //   .then(res2 =>{
-              //     console.log(res2)
-              //     if(res2.success) {
-              //       this.$message.success(res2.msg || '保存并发布成功')
-              //     }else {
-              //       this.$message.error(res2.msg || '保存并发布失败')
-              //     }
-              //   })
-            })
-        } else if(storage.get(ROLE_ID)=='admin') {
-          request({
-            url: '/posting/adminCreatePosting',
-            method: 'post',
-            data: {
-              ...value,
-              released: true,
-              firstPicUrl,
-              content: this.content
-            }
-          })
-            .then(res => {
-              console.log(res)
-              if(res.success) {
-                this.$message.success(res.msg || '保存并发布成功')
-              }else {
-                this.$message.error(res.msg || '保存并发布失败')
-              }
-              // released: true包含了发布
-              // request({
-              //   url: '/posting/adminPublishPosting/' +res.data.id,
-              //   method: 'get',
-              // })
-              //   .then(res2 =>{
-              //     console.log(res2)
-              //     if(res2.success) {
-              //       this.$message.success(res2.msg || '保存并发布成功')
-              //     }else {
-              //       this.$message.error(res2.msg || '保存并发布失败')
-              //     }
-              //   })
-            })
-        }
+          }
+        })
       })
     },
     setEditorContent (data) {
       // console.log('success')
+      this.saved = false
       this.content=data
     },
     uploadCover (event) {

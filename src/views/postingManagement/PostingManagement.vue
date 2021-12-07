@@ -243,7 +243,6 @@ export default {
         method: 'delete'
       })
       .then(res => {
-        console.log(res)
         this.modal.visible = false
         this.getPublishedData()
       })

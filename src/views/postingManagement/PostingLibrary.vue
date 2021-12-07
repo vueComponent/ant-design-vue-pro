@@ -113,10 +113,12 @@ export default {
     },
     goToNewPosting (e) {
       // console.log('go')
-      this.$router.push({ path: '/posting/newPosting' })
+      // this.$router.push({ path: '/posting/newPosting' })
+      this.$router.push({ path: '/posting/postingManagement/postingLibrary/newPosting' })
     },
     goToEditorPosting (e) {
-      this.$router.push({ name: 'editPosting', params: { postingId: e } })
+      // this.$router.push({ name: 'editPosting', params: { postingId: e } })
+      this.$router.push({ name: 'editPostingFromLibrary', params: { postingId: e } })
     },
     transferTime (time) {
       const day = time.split(' ')
@@ -133,7 +135,7 @@ export default {
     },
     tapOkForModal () {
       request({
-        url: '/posting/organizationDeletePosting/' + this.modal.id,
+        url: '/posting/organizationLogicDeletePosting/' + this.modal.id,
         method: 'delete'
       })
       .then(res => {

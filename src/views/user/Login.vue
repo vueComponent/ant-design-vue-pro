@@ -117,6 +117,10 @@
         >{{ $t('user.login.main.button') }}</a-button>
       </a-form-item>
 
+      <a-form-item>
+        <a  style="float: right;" @click="showRegisterAccount">注册账户</a>
+      </a-form-item>
+
 <!--      <div class="user-login-other">-->
 <!--        <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>-->
 <!--      </div>-->
@@ -128,16 +132,49 @@
       @success="stepCaptchaSuccess"
       @cancel="stepCaptchaCancel"
     ></two-step-captcha>
+    <a-modal
+      v-model="visible"
+      title="重置密码"
+      ok-text="确认"
+      cancel-text="取消"
+      @ok="resetPassword">
+      <a-form
+        id="formLogin"
+        class="user-layout-login"
+        ref="formLogin"
+        :form="resetForm"
+        @submit="handleSubmit"
+      >
+        <br/><br/><br/>
+        <a-form-item>
+          <a-input
+            size="large"
+            type="text"
+            :placeholder="$t('user.login.acc.placeholder.org.forget')"
+            v-decorator="[
+            'username_org',
+            {rules: [{ required: true, message: $t('user.org.userName.required.forget') }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
+          ]"
+          >
+            <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+          </a-input>
+        </a-form-item>
+
+      </a-form>
+    </a-modal>
   </div>
+<!--  <a-modal v-model="RegisterModalShow">-->
+<!--    <span>请联系破壁工作室<span style="color: red;">（破壁工作室联系方式）</span>。我们将把恒星号开通流程及相关材料发送给您~</span>-->
+<!--  </a-modal>-->
 </template>
 
 <script>
-// import md5 from 'md5'
+import md5 from 'md5'
 import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
 // import { getSmsCaptcha, get2step } from '@/api/login'
-import { getSmsCaptcha, loginAdmin, loginOrg } from '@/api/login'
+import { forgetOrg, getSmsCaptcha, loginAdmin, loginOrg } from '@/api/login'
 import storage from 'store'
 import { ACCESS_TOKEN, SHOW_NAME, SHOW_AVATAR, DETAIL, ROLE_ID } from '@/store/mutation-types'
 
@@ -155,13 +192,15 @@ export default {
       requiredTwoStepCaptcha: false,
       stepCaptchaVisible: false,
       form: this.$form.createForm(this),
+      resetForm: this.$form.createForm(this),
       state: {
         time: 60,
         loginBtn: false,
         // login type: 0 email, 1 username, 2 telephone
         loginType: 0,
         smsSendBtn: false
-      }
+      },
+      visible: false
     }
   },
   created () {
@@ -216,7 +255,7 @@ export default {
           delete loginParams.username
           if (customActiveKey === 'tab1') {
             loginParams.nickName = values.username_org
-            loginParams.password = values.password_org
+            loginParams.password = md5(values.password_org)
             loginOrg(loginParams)
               .then(response => {
                 if (response.success === false) {
@@ -285,6 +324,49 @@ export default {
           setTimeout(() => {
             state.loginBtn = false
           }, 600)
+        }
+      })
+    },
+    showRegisterAccount () {
+      this.$info({
+        content: <span>请联系破壁工作室<span style="color: red;">（破壁工作室联系方式）</span>。我们将把恒星号开通流程及相关材料发送给您~</span>
+      })
+    },
+    resetPassword (e) {
+      e.preventDefault()
+      const {
+        resetForm: { validateFields },
+        state
+      } = this
+
+      state.loginBtn = true
+
+      validateFields((err, values) => {
+        if (!err) {
+          forgetOrg({ nickName: values.username_org })
+            .then(response => {
+              console.log(response)
+              if (response.data === false) {
+                this.$notification['error']({
+                  message: '错误',
+                  description: '未找到对应账户！',
+                  duration: 4
+                })
+              } else {
+                this.$notification['success']({
+                  message: '成功',
+                  description: '发邮件成功，请留意邮箱。',
+                  duration: 4
+                })
+                setTimeout(() => {
+                  this.$router.push({ path: '/user/login' })
+                }, 1000)
+              }
+            })
+            .catch(err => this.requestFailed(err))
+            .finally(() => {
+              state.loginBtn = false
+            })
         }
       })
     },

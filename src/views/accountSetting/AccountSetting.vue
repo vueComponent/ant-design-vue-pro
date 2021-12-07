@@ -61,24 +61,34 @@
                 <span style='color: #90939999'><a-icon type="exclamation-circle" theme='filled'/> 不对外展示，仅用于破壁工作室对接</span>
               </a-col>
             </a-row>
-            <a-row :gutter='24' v-for="(operator, index) in operatorList" :key="index" v-if="operator.status != 'delete' && operator.status != 'ignore'">
-              <a-col :span='4'>
-                <a-form-item>
-                  <a-input v-model="operator.operatorName" @change="updateOperator(operator)"/>
-                </a-form-item>
-              </a-col>
-              <a-col :span='13'>
-                <a-form-item>
-                  <a-input v-model="operator.phone" @change="updateOperator(operator)"/>
-                </a-form-item>
-              </a-col>
-              <a-col :span="1" v-if="index==operatorListAddIndex">
-                <a-icon type='plus-circle' style='font-size: 30px' @click="addNewOperator"/>
-              </a-col>
-              <a-col :span="1">
-                <a-icon type="minus-circle" style='font-size: 30px' @click="deleteOperator(operator)"/>
-              </a-col>
-            </a-row>
+            <div v-for="(operator, index) in operatorList" :key="index" v-if="operator.status != 'delete' && operator.status != 'ignore'">
+              <a-row :gutter='24' >
+                <a-col :span='4'>
+                  <a-form-item >
+                    <span slot="help" style="color: red;">{{operator.nameValidateMessage}}</span>
+                    <a-input v-model="operator.operatorName" @change="updateOperatorName(operator)" />
+                  </a-form-item>
+                </a-col>
+                <a-col :span='13'>
+                  <a-form-item>
+                    <span slot="help" style="color: red;">{{operator.contactValidateMessage}}</span>
+                    <a-input v-model="operator.phone" @change="updateOperatorPhone(operator)" />
+                  </a-form-item>
+                </a-col>
+                <a-col :span="1" v-if="index==operatorListAddIndex">
+                  <a-icon type='plus-circle' style='font-size: 30px' @click="addNewOperator"/>
+                </a-col>
+                <a-col :span="1">
+                  <a-icon type="minus-circle" style='font-size: 30px' @click="deleteOperator(operator)"/>
+                </a-col>
+              </a-row>
+<!--              <a-col :span='4' v-if="operator.nameValidateMessage" >-->
+<!--                <span style="color: red;">{{operator.nameValidateMessage}}</span>-->
+<!--              </a-col>-->
+<!--              <a-col :span='13' v-if="operator.contactValidateMessage" >-->
+<!--                <span style="color: red;">{{operator.contactValidateMessage}}</span>-->
+<!--              </a-col>-->
+            </div>
             <a-row>
               <a-col :span='2' :offset='15'>
                 <a-button type='primary' @click="updateMessage">更新信息</a-button>
@@ -132,6 +142,7 @@
 </template>
 
 <script>
+import md5 from 'md5'
 import storage from 'store'
 import { DETAIL, SHOW_AVATAR, SHOW_NAME } from '@/store/mutation-types'
 import request from '@/utils/request'
@@ -166,6 +177,7 @@ export default {
     this.form = this.$form.createForm(this, { name: 'search' })
   },
   created() {
+    console.log(md5('test'))
     this.getOperatorList()
   },
   computed: {
@@ -236,30 +248,36 @@ export default {
        this.editPasswordModal.message = '密码不能为空！'
        return
      }
-      if (this.editPasswordModal.first === this.editPasswordModal.second) {
-        let that = this
-        this.$confirm({
-          content: '确定修改密码？',
-          onOk() {
-            request({
-              url: '/organization/editPersonalInfo',
-              method: 'patch',
-              data: {
-                password: that.editPasswordModal.first
-              }
-            })
-              .then(res => {
-                console.log(this)
-                console.log(that)
-                that.editPasswordModal.visible = false
-                that.$message.success('密码修改成功！')
-              })
+     if (this.editPasswordModal.first != this.editPasswordModal.second) {
+       this.editPasswordModal.message = '两次输入密码不一致！'
+       return
+     }
+    const password = this.editPasswordModal.first
+    if (password.length <=8) {
+      this.editPasswordModal.message = '请设置不小于8位的密码！'
+      return
+    }
+    if (password.search(/\d/g) == -1  && password.search(/\w/g) == -1) {
+      this.editPasswordModal.message = '密码中缺少数字或字母！'
+      return
+    }
+    let that = this
+    this.$confirm({
+      content: '确定修改密码？',
+      onOk() {
+        request({
+          url: '/organization/editPersonalInfo',
+          method: 'patch',
+          data: {
+            password: md5(password)
           }
         })
-      } else {
-        this.editPasswordModal.message = '两次输入密码不一致！'
-        console.log('no')
+          .then(res => {
+            that.editPasswordModal.visible = false
+            that.$message.success('密码修改成功！')
+          })
       }
+    })
     },
     tapOkForEditName () {
      if (!this.editNameModal.newName) {
@@ -292,26 +310,32 @@ export default {
         })
     },
     updateMessage () {
-      this.form.validateFields((err, value) => {
-        if (err) {
-          console.log(err)
-        }
-        console.log(value)
-        request({
-          url: '/organization/editPersonalInfo',
-          method: 'patch',
-          data: {
-            description: this.description
-          }
-        })
-          .then(res => {
-            const detail = storage.get(DETAIL)
-            detail.description = this.description
-            storage.set(DETAIL, detail)
-            this.$message.success('修改个人信息成功！')
+      if (this.validateOperatorList()) return
+      this.$confirm({
+        content: '确定更新恒星号信息？',
+        onOk() {
+          request({
+            url: '/organization/editPersonalInfo',
+            method: 'patch',
+            data: {
+              description: this.description
+            }
           })
+            .then(res => {
+              const detail = storage.get(DETAIL)
+              detail.description = this.description
+              storage.set(DETAIL, detail)
+              this.$message.success('修改个人信息成功！')
+              this.updateOperatorList()
+            })
+        }
       })
-      this.updateOperatorList()
+      // this.form.validateFields((err, value) => {
+      //   if (err) {
+      //     console.log(err)
+      //   }
+      //   console.log(value)
+      // })
     },
     getOperatorList () {
       request({
@@ -323,7 +347,9 @@ export default {
           this.operatorList = res.data.map(item => {
             return {
               ...item,
-              status: 'original'
+              status: 'original',
+              nameValidateMessage: '',
+              contactValidateMessage: ''
             }
           })
           // this.operatorListAddIndex = res.data.length - 1
@@ -334,6 +360,8 @@ export default {
         let status = operator.status
         console.log(status)
         delete operator.status
+        delete operator.nameValidateMessage
+        delete operator.contactValidateMessage
         switch (status) {
           case 'new':
             request({
@@ -369,7 +397,31 @@ export default {
       setTimeout(this.getOperatorList,500)
       // this.getOperatorList()
     },
-    updateOperator (operator) {
+    validateOperatorList () {
+      let error = false
+      const phonePattern = /^1[3|4|5|8][0-9]\d{4,8}$/g
+      for (const operator of this.operatorList) {
+        if (operator.operatorName.trim() == '') {
+          error = true
+          operator.nameValidateMessage = '请输入名字'
+        }
+        if (operator.phone.trim() == '') {
+          error = true
+          operator.contactValidateMessage = '请输入联系方式'
+        } else if (operator.phone.search(phonePattern) == -1) {
+          error = true
+          operator.contactValidateMessage = '手机号码格式不符合要求！'
+        }
+      }
+      return true
+    },
+    updateOperatorName (operator) {
+      operator.nameValidateMessage = ''
+      if (operator.status == 'new') return
+      operator.status = 'update'
+    },
+    updateOperatorPhone (operator) {
+      operator.contactValidateMessage = ''
       if (operator.status == 'new') return
       operator.status = 'update'
     },
@@ -377,7 +429,9 @@ export default {
       this.operatorList.push({
         operatorName: '',
         phone: '',
-        status: 'new'
+        status: 'new',
+        nameValidateMessage: '',
+        contactValidateMessage: ''
       })
       // this.operatorListAddIndex++
     },
