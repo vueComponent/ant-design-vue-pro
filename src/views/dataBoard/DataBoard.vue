@@ -156,8 +156,10 @@ export default {
     datePickerChange(event, time) {
       // console.log(event, time)
       this.datePickerData = {
-        startTime: time[0] + ' 00:00:00',
-        endTime: time[1] + ' 00:00:00'
+        // startTime: time[0] + ' 00:00:00',
+        // endTime: time[1] + ' 00:00:00'
+        startTime: time[0],
+        endTime: time[1]
       }
       this.getDataOfDatePicker()
     },
