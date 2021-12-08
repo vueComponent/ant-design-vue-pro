@@ -6,7 +6,7 @@
           <a-input-search placeholder='请输入' v-model='keyword' @search="updateData"/>
         </a-col>
         <a-col :span='4' :offset="14">
-          <a-button type="primary" @click="goToNewPosting">新建帖子</a-button>
+          <a-button style="float: right" type="primary" @click="goToNewPosting">新建帖子</a-button>
         </a-col>
       </a-row>
       <a-row>
@@ -20,7 +20,7 @@
           :loading="loading">
           <a-list-item slot="renderItem" slot-scope="item">
             <template>
-              <a-card :hoverable="true" size='small'>
+              <a-card :hoverable="false" size='small'>
                 <a-card-meta>
                   <span slot="title">{{ item.title }}</span>
                   <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large" shape='square'/>
@@ -93,6 +93,7 @@ export default {
         .then(res => {
           const data = []
           const records = res.data.records
+          console.log(res.data)
           for (const key in records) {
             data.push({
               id: records[key].id,
@@ -104,9 +105,10 @@ export default {
           }
           console.log('data:' + data)
           this.data = data
-          this.pagination.total=data.total
-          this.pagination.pagesize=data.size
-          this.pagination.current=data.current
+          const resData = res.data
+          this.pagination.total=resData.total
+          this.pagination.pageSize=resData.size
+          this.pagination.current=resData.current
           console.log(res)
           this.loading = false
         })
