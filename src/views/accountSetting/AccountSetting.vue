@@ -310,7 +310,8 @@ export default {
         })
     },
     updateMessage () {
-      if (this.validateOperatorList()) return
+      // if (this.validateOperatorList()) return
+      var that = this
       this.$confirm({
         content: '确定更新恒星号信息？',
         onOk() {
@@ -318,15 +319,15 @@ export default {
             url: '/organization/editPersonalInfo',
             method: 'patch',
             data: {
-              description: this.description
+              description: that.description
             }
           })
             .then(res => {
               const detail = storage.get(DETAIL)
-              detail.description = this.description
+              detail.description = that.description
               storage.set(DETAIL, detail)
-              this.$message.success('修改个人信息成功！')
-              this.updateOperatorList()
+              that.$message.success('修改个人信息成功！')
+              that.updateOperatorList()
             })
         }
       })
@@ -364,6 +365,7 @@ export default {
         delete operator.contactValidateMessage
         switch (status) {
           case 'new':
+            console.log('new')
             request({
               url: '/organizationOperator/addOperator',
               method: 'post',
@@ -374,6 +376,7 @@ export default {
             })
             break
           case 'update':
+            console.log('update')
             request({
               url: '/organizationOperator/editOperator',
               method: 'patch',
@@ -384,6 +387,7 @@ export default {
             })
             break
           case 'delete':
+            console.log('delete')
             request({
               url: '/organizationOperator/deleteOperator/' + operator.id,
               method: 'delete',
@@ -398,22 +402,22 @@ export default {
       // this.getOperatorList()
     },
     validateOperatorList () {
-      let error = false
-      const phonePattern = /^1[3|4|5|8][0-9]\d{4,8}$/g
+      let change = false
+      const phonePattern = /^1\d{10}$/g
       for (const operator of this.operatorList) {
         if (operator.operatorName.trim() == '') {
-          error = true
+          change = true
           operator.nameValidateMessage = '请输入名字'
         }
         if (operator.phone.trim() == '') {
-          error = true
+          change = true
           operator.contactValidateMessage = '请输入联系方式'
         } else if (operator.phone.search(phonePattern) == -1) {
-          error = true
+          change = true
           operator.contactValidateMessage = '手机号码格式不符合要求！'
         }
       }
-      return true
+      return change
     },
     updateOperatorName (operator) {
       operator.nameValidateMessage = ''

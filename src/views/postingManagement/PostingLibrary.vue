@@ -67,6 +67,7 @@ export default {
         pageSize: 12,
         // total: data.total,
         current: 1,
+        pageSizeOptions: [12,24,36],
         onChange: this.updatePublishedDataPage,
         onShowSizeChange: this.updatePublishedDataPage
       },
@@ -79,6 +80,11 @@ export default {
     this.updateData()
   },
   methods: {
+    updatePublishedDataPage (pageNo,pageSize) {
+      this.pageNo=pageNo
+      this.pageSize=pageSize
+      this.updateData()
+    },
     updateData () {
       this.loading = true
       request({
@@ -137,7 +143,7 @@ export default {
     },
     tapOkForModal () {
       request({
-        url: '/posting/organizationLogicDeletePosting/' + this.modal.id,
+        url: '/posting/organizationDeletePosting/' + this.modal.id,
         method: 'delete'
       })
       .then(res => {

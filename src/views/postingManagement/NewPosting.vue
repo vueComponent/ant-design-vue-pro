@@ -184,7 +184,7 @@ export default {
           console.log(res)
           const data = res.data
           const neededData = {
-            content: data.content,
+            content: data.content || '',
             title: data.title,
             labelId: data.labelId.toString(),
             owner: data.owner,
@@ -195,7 +195,7 @@ export default {
           }
           this.data = neededData
           this.hasLink = neededData.hasLink
-          this.content = data.content
+          this.content = data.content || ''
           // console.log(data.content)
           if(data.firstPicUrl) {
             this.fileList = [
@@ -267,6 +267,7 @@ export default {
               if(res.success) {
                 this.$message.success(res.msg || '保存成功')
                 this.saved = true
+                this.$router.push({ path: '/posting/postingManagement/postingLibrary' })
               }else {
                 this.$message.error(res.msg || '保存失败')
               }
@@ -287,6 +288,7 @@ export default {
               if(res.success) {
                 this.$message.success(res.msg || '保存成功')
                 this.saved = true
+                this.$router.push({ path: '/posting/postingManagement/postingLibrary' })
               }else {
                 this.$message.error(res.msg || '保存失败')
               }
@@ -295,6 +297,7 @@ export default {
       })
     },
     saveAndPublish () {
+      var that = this
       this.agreeTip = true
       this.form.validateFields((err, value) => {
         if(err){
@@ -321,16 +324,18 @@ export default {
                   ...value,
                   released: true,
                   firstPicUrl,
-                  content: this.content
+                  content: that.content
                 }
               })
                 .then(res => {
                   console.log(res)
                   if(res.success) {
-                    this.$message.success(res.msg || '保存并发布成功')
-                    this.saved = true
+                    that.$message.success(res.msg || '保存并发布成功')
+                    that.saved = true
+                    that.$router.push({ path: '/posting/postingManagement' })
+                    // that.$router.go(-1)
                   }else {
-                    this.$message.error(res.msg || '保存并发布失败')
+                    that.$message.error(res.msg || '保存并发布失败')
                   }
                   // released: true包含了发布
                   // request({
@@ -354,16 +359,18 @@ export default {
                   ...value,
                   released: true,
                   firstPicUrl,
-                  content: this.content
+                  content: that.content
                 }
               })
                 .then(res => {
                   console.log(res)
                   if(res.success) {
-                    this.$message.success(res.msg || '保存并发布成功')
-                    this.saved = true
+                    that.$message.success(res.msg || '保存并发布成功')
+                    that.saved = true
+                    that.$router.push({ path: '/posting/postingManagement' })
+                    // that.$router.go(-1)
                   }else {
-                    this.$message.error(res.msg || '保存并发布失败')
+                    that.$message.error(res.msg || '保存并发布失败')
                   }
                   // released: true包含了发布
                   // request({
