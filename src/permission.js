@@ -7,12 +7,14 @@ import notification from 'ant-design-vue/es/notification'
 import { setDocumentTitle, domTitle } from '@/utils/domUtil'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { i18nRender } from '@/locales'
+import { createRouter } from '@/config/router.config'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const allowList = ['login', 'forget', 'register', 'registerResult'] // no redirect allowList
 const loginRoutePath = '/user/login'
-const defaultRoutePath = '/dashboard/workplace'
+// const defaultRoutePath = '/dashboard/workplace'
+const defaultRoutePath = '/'
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
@@ -42,6 +44,8 @@ router.beforeEach((to, from, next) => {
               // store.getters.addRouters.forEach(r => {
               //   router.addRoute(r)
               // })
+              router.matcher = createRouter().matcher;
+              router.options.routes = store.getters.addRouters
               router.addRoutes(store.getters.addRouters)
               // 请求带有 redirect 重定向时，登录自动重定向到该地址
               const redirect = decodeURIComponent(from.query.redirect || to.path)

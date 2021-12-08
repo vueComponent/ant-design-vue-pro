@@ -177,6 +177,10 @@ import { timeFix } from '@/utils/util'
 import { forgetOrg, getSmsCaptcha, loginAdmin, loginOrg } from '@/api/login'
 import storage from 'store'
 import { ACCESS_TOKEN, SHOW_NAME, SHOW_AVATAR, DETAIL, ROLE_ID } from '@/store/mutation-types'
+import store from '@/store'
+import router from '@/router'
+import notification from 'ant-design-vue/lib/notification'
+import { createRouter } from '@/config/router.config'
 
 export default {
   components: {
@@ -414,26 +418,47 @@ export default {
       })
     },
     loginSuccess (res) {
-      // check res.homePage define, set $router.push name res.homePage
-      // Why not enter onComplete
-      /*
-      this.$router.push({ name: 'analysis' }, () => {
-        console.log('onComplete')
-        this.$notification.success({
-          message: '欢迎',
-          description: `${timeFix()}`
+      store
+        .dispatch('GetInfo')
+        .then(res => {
+          console.log('getInfo')
+          console.log(res)
+          const roles = res.result && res.result.role
+          // generate dynamic router
+          store.dispatch('GenerateRoutes', { roles }).then(() => {
+            // 根据roles权限生成可访问的路由表
+            // 动态添加可访问路由表
+            // VueRouter@3.5.0+ New API
+            // store.getters.addRouters.forEach(r => {
+            //   router.addRoute(r)
+            // })
+            router.matcher = createRouter().matcher;
+            router.options.routes = store.getters.addRouters
+            router.addRoutes(store.getters.addRouters)
+
+            this.$router.push({ path: '/' })
+
+            setTimeout(() => {
+              this.$notification.success({
+                message: '欢迎',
+                description: `${timeFix()}赶紧给👴干活！`
+              })
+            }, 1000)
+            this.isLoginError = false
+          })
         })
-      })
-      */
-      this.$router.push({ path: '/' })
-      // 延迟 1 秒显示欢迎信息
-      setTimeout(() => {
-        this.$notification.success({
-          message: '欢迎',
-          description: `${timeFix()}赶紧给👴干活！`
+        .catch(() => {
+          notification.error({
+            message: '错误',
+            description: '请求用户信息失败，请重试'
+          })
+          // 失败时，获取用户信息失败时，调用登出，来清空历史保留信息
+          store.dispatch('Logout').then(() => {
+            next({ path: loginRoutePath, query: { redirect: to.fullPath } })
+          })
         })
-      }, 1000)
-      this.isLoginError = false
+
+
     },
     requestFailed (err) {
       console.log('error at login:')

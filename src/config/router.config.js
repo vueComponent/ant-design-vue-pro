@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import { UserLayout, BasicLayout, BlankLayout } from '@/layouts'
 import { bxAnaalyse } from '@/core/icons'
+import Router from 'vue-router'
 
 const RouteView = {
   name: 'RouteView',
@@ -384,3 +385,7 @@ export const constantRouterMap = [
     component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404')
   }
 ]
+
+export const createRouter = () =>  new Router({
+  routes: constantRouterMap
+})
