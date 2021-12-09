@@ -251,53 +251,22 @@ export default {
         if(this.fileList && this.fileList.length){
           firstPicUrl = this.fileList[0].url
         }
-        if(storage.get(ROLE_ID)=='organization'){
-          request({
-            url: '/posting/organizationCreatePosting',
-            method: 'post',
-            data: {
-              ...value,
-              released: false,
-              firstPicUrl,
-              content: this.content
-            }
-          })
-            .then(res => {
-              console.log(res)
-              if(res.success) {
-                this.$message.success(res.msg || '保存成功')
-                this.saved = true
-                this.$router.push({ path: '/posting/postingManagement/postingLibrary' })
-              }else {
-                this.$message.error(res.msg || '保存失败')
-              }
-            })
-        } else if(storage.get(ROLE_ID)=='admin') {
-          request({
-            url: '/posting/adminCreatePosting',
-            method: 'post',
-            data: {
-              ...value,
-              released: false,
-              firstPicUrl,
-              content: this.content
-            }
-          })
-            .then(res => {
-              console.log(res)
-              if(res.success) {
-                this.$message.success(res.msg || '保存成功')
-                this.saved = true
-                this.$router.push({ path: '/posting/postingManagement/postingLibrary' })
-              }else {
-                this.$message.error(res.msg || '保存失败')
-              }
-            })
+        const data = {
+            ...value,
+            released: false,
+            firstPicUrl,
+            content: this.content
         }
+        if (this.$route.params.postingId) {
+          this.editPosting(storage.get(ROLE_ID), { ...data, id: this.$route.params.postingId })
+        } else {
+          this.createPosting(storage.get(ROLE_ID), data)
+        }
+
       })
     },
     saveAndPublish () {
-      var that = this
+      let that = this
       this.agreeTip = true
       this.form.validateFields((err, value) => {
         if(err){
@@ -305,7 +274,6 @@ export default {
           return
         }
         if(!this.agreeCb){
-          // console.log(err)
           this.$message.error('未勾选济星云社区管理规范')
           return
         }
@@ -316,77 +284,18 @@ export default {
         this.$confirm({
           content: '确定发布帖子至济事广场？',
           onOk() {
-            if(storage.get(ROLE_ID)=='organization'){
-              request({
-                url: '/posting/organizationCreatePosting',
-                method: 'post',
-                data: {
-                  ...value,
-                  released: true,
-                  firstPicUrl,
-                  content: that.content
-                }
-              })
-                .then(res => {
-                  console.log(res)
-                  if(res.success) {
-                    that.$message.success(res.msg || '保存并发布成功')
-                    that.saved = true
-                    that.$router.push({ path: '/posting/postingManagement' })
-                    // that.$router.go(-1)
-                  }else {
-                    that.$message.error(res.msg || '保存并发布失败')
-                  }
-                  // released: true包含了发布
-                  // request({
-                  //   url: '/posting/organizationPublishPosting/' + res.data.id,
-                  //   method: 'get',
-                  // })
-                  //   .then(res2 =>{
-                  //     console.log(res2)
-                  //     if(res2.success) {
-                  //       this.$message.success(res2.msg || '保存并发布成功')
-                  //     }else {
-                  //       this.$message.error(res2.msg || '保存并发布失败')
-                  //     }
-                  //   })
-                })
-            } else if(storage.get(ROLE_ID)=='admin') {
-              request({
-                url: '/posting/adminCreatePosting',
-                method: 'post',
-                data: {
-                  ...value,
-                  released: true,
-                  firstPicUrl,
-                  content: that.content
-                }
-              })
-                .then(res => {
-                  console.log(res)
-                  if(res.success) {
-                    that.$message.success(res.msg || '保存并发布成功')
-                    that.saved = true
-                    that.$router.push({ path: '/posting/postingManagement' })
-                    // that.$router.go(-1)
-                  }else {
-                    that.$message.error(res.msg || '保存并发布失败')
-                  }
-                  // released: true包含了发布
-                  // request({
-                  //   url: '/posting/adminPublishPosting/' +res.data.id,
-                  //   method: 'get',
-                  // })
-                  //   .then(res2 =>{
-                  //     console.log(res2)
-                  //     if(res2.success) {
-                  //       this.$message.success(res2.msg || '保存并发布成功')
-                  //     }else {
-                  //       this.$message.error(res2.msg || '保存并发布失败')
-                  //     }
-                  //   })
-                })
+            const data = {
+            ...value,
+                released: true,
+                firstPicUrl,
+                content: that.content
             }
+            if (that.$route.params.postingId) {
+              that.editAndPublishPosting(storage.get(ROLE_ID), { ...data, id:that.$route.params.postingId })
+            } else {
+              that.createAndPublishPosting(storage.get(ROLE_ID), data)
+            }
+
           }
         })
       })
@@ -426,6 +335,57 @@ export default {
       console.log(e)
       this.fileList.shift()
       return true
+    },
+    createPosting (identity, data) {
+      request({
+        url: '/posting/' + identity + 'CreatePosting',
+        method: 'post',
+        data: data
+      })
+        .then(this.createOrEditPostingCallback)
+    },
+    editPosting (identity, data) {
+      request({
+        url: '/posting/' + identity + 'EditPosting',
+        method: 'patch',
+        data: data
+      })
+        .then(this.createOrEditPostingCallback)
+    },
+    createAndPublishPosting (identity, data) {
+      request({
+        url: '/posting/' + identity + 'CreatePosting',
+        method: 'post',
+        data: data
+      })
+        .then(this.createOrEditThenPublishPostingCallback)
+    },
+    editAndPublishPosting (identity, data) {
+      request({
+        url: '/posting/' + identity + 'EditPosting',
+        method: 'patch',
+        data: data
+      })
+        .then(this.createOrEditThenPublishPostingCallback)
+    },
+    createOrEditPostingCallback (res) {
+      if(res.success) {
+        this.$message.success(res.msg || '保存成功')
+        this.saved = true
+        this.$router.push({ path: '/posting/postingManagement/postingLibrary' })
+      }else {
+        this.$message.error(res.msg || '保存失败')
+      }
+    },
+    createOrEditThenPublishPostingCallback (res) {
+      if (res.success) {
+        this.$message.success(res.msg || '保存并发布成功')
+        this.saved = true
+        this.$router.push({ path: '/posting/postingManagement' })
+        // that.$router.go(-1)
+      } else {
+        this.$message.error(res.msg || '保存并发布失败')
+      }
     }
   }
 }
