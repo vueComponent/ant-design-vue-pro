@@ -55,11 +55,13 @@ export default {
         that.$emit('editorChange', newHtml)
       }
       // editor.config.uploadImgServer = '/upload-img'
-      this.editor.customConfig.uploadImgServer = 'https://www.wallbreaker.top/posting/jishiUploadPhotosNew'
+      this.editor.customConfig.uploadImgServer = ' https://jixingyun.tongji.edu.cn/api2/posting/jishiUploadPhotosNew'
+      // this.editor.customConfig.uploadImgServer = 'http://localhost:8080/posting/jishiUploadPhotosNew'
 
       this.editor.customConfig.uploadFileName = 'files'
-      this.editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024 // 控制图片大小
+      this.editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024 // 控制图片大小
       this.editor.customConfig.onchangeTimeout = this.changeInterval
+      this.editor.customConfig.uploadImgTimeout = 10*1000
       // 可使用监听函数在上传图片的不同阶段做相应处理
       this.editor.customConfig.uploadImgHooks = {
         before: function (xhr, editor, files) {
