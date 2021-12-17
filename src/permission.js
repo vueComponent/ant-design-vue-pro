@@ -1,4 +1,4 @@
-import router from './router'
+import router, { resetRouter } from './router'
 import store from './store'
 import storage from 'store'
 import NProgress from 'nprogress' // progress bar
@@ -35,6 +35,7 @@ router.beforeEach((to, from, next) => {
               // 根据roles权限生成可访问的路由表
               // 动态添加可访问路由表
               // VueRouter@3.5.0+ New API
+              resetRouter() // 重置路由 防止退出重新登录或者token过期后页面未刷新，导致的路由重复添加
               store.getters.addRouters.forEach(r => {
                 router.addRoute(r)
               })
