@@ -98,12 +98,13 @@
 
       <a-form-item>
         <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">{{ $t('user.login.remember.me') }}</a-checkbox>
-        <router-link
-          :hidden="customActiveKey !== 'tab1'"
-          :to="{ name: 'forget', params: { user: 'aaa'} }"
-          class="forge-password"
-          style="float: right;"
-        >{{ $t('user.login.forget.password') }}</router-link>
+<!--        <router-link-->
+<!--          :hidden="customActiveKey !== 'tab1'"-->
+<!--          :to="{ name: 'forget', params: { user: 'aaa'} }"-->
+<!--          class="forge-password"-->
+<!--          style="float: right;"-->
+<!--        >{{ $t('user.login.forget.password') }}</router-link>-->
+        <a style="float: right;" @click="() => this.visible = true">{{ $t('user.login.forget.password') }}</a>
       </a-form-item>
 
       <a-form-item style="margin-top:24px">
@@ -143,7 +144,7 @@
         class="user-layout-login"
         ref="formLogin"
         :form="resetForm"
-        @submit="handleSubmit"
+        @submit="resetPassword"
       >
         <br/><br/><br/>
         <a-form-item>
@@ -157,7 +158,7 @@
           ]"
           >
             <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-          </a-input>
+          </a-input><br/><br/>
         </a-form-item>
 
       </a-form>
@@ -208,7 +209,6 @@ export default {
     }
   },
   created () {
-    console.log('created')
     storage.clearAll()
     console.log('加载页面时清空storage')
       // store.replaceState({})
@@ -333,7 +333,7 @@ export default {
     },
     showRegisterAccount () {
       this.$info({
-        content: <span>请联系破壁工作室<span style="color: red;">（破壁工作室联系方式）</span>。我们将把恒星号开通流程及相关材料发送给您~</span>
+        content: <span>请联系破壁工作室<span style="color: red;">（TongjiPoby@163.com）</span>。我们将把恒星号开通流程及相关材料发送给您~</span>
       })
     },
     resetPassword (e) {
@@ -343,7 +343,7 @@ export default {
         state
       } = this
 
-      state.loginBtn = true
+      // state.loginBtn = true
 
       validateFields((err, values) => {
         if (!err) {
@@ -369,7 +369,7 @@ export default {
             })
             .catch(err => this.requestFailed(err))
             .finally(() => {
-              state.loginBtn = false
+              // state.loginBtn = false
             })
         }
       })
@@ -441,7 +441,8 @@ export default {
             setTimeout(() => {
               this.$notification.success({
                 message: '欢迎',
-                description: `${timeFix()}赶紧给👴干活！`
+                description: `${timeFix()}，欢迎回来`
+                // description: `${timeFix()}赶紧给👴干活！`
               })
             }, 1000)
             this.isLoginError = false

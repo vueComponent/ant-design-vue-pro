@@ -60,6 +60,9 @@
                 <span>手机号&#12288;&#12288;</span>
                 <span style='color: #90939999'><a-icon type="exclamation-circle" theme='filled'/> 不对外展示，仅用于破壁工作室对接</span>
               </a-col>
+              <a-col :span="1" v-if="noOperator">
+                <a-icon type='plus-circle' style='font-size: 30px' @click="addNewOperator"/>
+              </a-col>
             </a-row>
             <div v-for="(operator, index) in operatorList" :key="index" v-if="operator.status != 'delete' && operator.status != 'ignore'">
               <a-row :gutter='24' >
@@ -91,7 +94,7 @@
             </div>
             <a-row>
               <a-col :span='2' :offset='15'>
-                <a-button type='primary' @click="updateMessage">更新信息</a-button>
+                <a-button type='primary' @click="updateMessage" :disabled="submitLock">更新信息</a-button>
               </a-col>
             </a-row>
             <a-row>
@@ -157,10 +160,12 @@ export default {
   },
   data () {
     const detail = storage.get(DETAIL)
+    let description = detail.description
+      delete detail.description
     console.log(detail)
     return {
       changeAvatarButtonShow: false,
-      description: '',
+      description: description || '',
       ...detail,
       canEditName: false,
       descriptionLimit: false,
@@ -169,7 +174,8 @@ export default {
       confirmModal: { visible: false },
       operatorList: [],
       // operatorListAddIndex: 0,
-      loading: false
+      loading: false,
+      submitLock: false,
     }
   },
   beforeCreate () {
@@ -177,15 +183,19 @@ export default {
     this.form = this.$form.createForm(this, { name: 'search' })
   },
   created() {
-    console.log(md5('test'))
     this.getOperatorList()
   },
   computed: {
+    noOperator: function(){
+      if(this.operatorList.length==0)return true
+      for(let operator of this.operatorList)
+        if(operator.status!='ignore'&&operator!='deleted')return false
+      return true
+    },
     number: function () {
       return this.description.length
     },
     operatorListAddIndex: function() {
-      console.log('trigger')
       for (let i = this.operatorList.length-1; i >=0 ; i--) {
         let operator = this.operatorList[i]
         if (operator.status != 'delete' && operator.status != 'ignore') {
@@ -264,7 +274,7 @@ export default {
     let that = this
     this.$confirm({
       content: '确定修改密码？',
-      onOk() {
+        onOk() {
         request({
           url: '/organization/editPersonalInfo',
           method: 'patch',
@@ -310,11 +320,14 @@ export default {
         })
     },
     updateMessage () {
+      if (this.submitLock) return
       // if (this.validateOperatorList()) return
       var that = this
       this.$confirm({
         content: '确定更新恒星号信息？',
         onOk() {
+          that.submitLock = true
+          that.updateOperatorList()
           request({
             url: '/organization/editPersonalInfo',
             method: 'patch',
@@ -327,9 +340,9 @@ export default {
               detail.description = that.description
               storage.set(DETAIL, detail)
               that.$message.success('修改个人信息成功！')
-              that.updateOperatorList()
             })
-        }
+          .finally(() => {that.submitLock = false})
+        },
       })
       // this.form.validateFields((err, value) => {
       //   if (err) {
@@ -359,7 +372,6 @@ export default {
     updateOperatorList () {
       for (const operator of this.operatorList) {
         let status = operator.status
-        console.log(status)
         delete operator.status
         delete operator.nameValidateMessage
         delete operator.contactValidateMessage
@@ -441,6 +453,9 @@ export default {
     },
     deleteOperator (operator) {
       operator.status = operator.status == 'new' ? 'ignore' : 'delete'
+    },
+    testOfGetImage (e) {
+      console.log(e)
     }
   }
 }
