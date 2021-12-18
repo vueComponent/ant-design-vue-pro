@@ -13,7 +13,7 @@
                 <span style='margin: 0 auto;font-size: 12px;width: 50px;white-space: pre-line;line-height: 20px;color: #90939999'>点击右侧上传封面</span>
               </div>
               <a-upload
-                action=" https://jixingyun.tongji.edu.cn/api2/posting/jishiUploadPhoto"
+                action=" https://jixingyun.tongji.edu.cn/api/posting/jishiUploadPhoto"
                 name="cover"
                 list-type="picture-card"
                 :file-list="fileList"
