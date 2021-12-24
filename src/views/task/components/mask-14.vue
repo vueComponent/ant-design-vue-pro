@@ -603,7 +603,8 @@ export default {
       controlb1721: false,
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
       canEdit: false,
-      submitInfo: undefined
+      submitInfo: undefined,
+      a3Init: undefined
     }
   },
   created() {
@@ -625,6 +626,7 @@ export default {
         that.orgTree = res.data.list
         that.executeStatus = _.find(res.data.list, function(v) { return v.basisMarkId === that.maskId }).executeStatus
         that.canEdit = that.$ls.get(ACCESS_TOKEN).centerId === that.patient.targetCenterId
+        that.a3Init = res.data.a3
       })
       .catch(error => {
         console.log(error)
@@ -654,6 +656,7 @@ export default {
         })
     },
     initValue(key, type = 'normal') {
+      if(!this.zkbszl && type === 'time' && key === 'a3' && this.a3Init) return moment(this.a3Init)
       if (!this.zkbszl) return type === 'array' ? [] : type === 'time' ? undefined : ''
       if (!this.zkbszl[key]) return type === 'array' ? [] : type === 'time' ? undefined : ''
       if (type === 'time') {
