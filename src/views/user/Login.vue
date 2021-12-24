@@ -441,7 +441,7 @@ export default {
             setTimeout(() => {
               this.$notification.success({
                 message: '欢迎',
-                description: `${timeFix()}赶紧给👴干活！`
+                description: `${timeFix()}，欢迎回到济星云！`
               })
             }, 1000)
             this.isLoginError = false

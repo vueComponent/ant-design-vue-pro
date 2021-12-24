@@ -104,13 +104,13 @@ const vueConfig = {
     port: 8000,
     // If you want to turn on the proxy, please remove the mockjs /src/main.js
     proxy: {
-      '/api': {
-        target: 'https://jixingyun.tongji.edu.cn/api/',
+      '/api2': {
+        target: 'https://jixingyun.tongji.edu.cn/api2/',
         // target: 'http://localhost:8080/',
         ws: false,
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/'
+          '^/api2': '/'
         }
       }
     }

@@ -55,7 +55,7 @@ export default {
         that.$emit('editorChange', newHtml)
       }
       // editor.config.uploadImgServer = '/upload-img'
-      this.editor.customConfig.uploadImgServer = ' https://jixingyun.tongji.edu.cn/api/posting/jishiUploadPhotosNew'
+      this.editor.customConfig.uploadImgServer = ' https://jixingyun.tongji.edu.cn/api2/posting/jishiUploadPhotosNew'
       // this.editor.customConfig.uploadImgServer = 'http://localhost:8080/posting/jishiUploadPhotosNew'
 
       this.editor.customConfig.uploadFileName = 'files'
