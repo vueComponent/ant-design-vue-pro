@@ -122,7 +122,7 @@
                   </a-form-item>
                   <a-form-item label="血总IgE:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-form-item :style="{ display: 'inline-block'}">
-                      <a-input addonAfter="IU/L" style="width: 240px; margin-right: 20px;" v-decorator="['a13', {initialValue: initValue('a13')}]" autocomplete="off"></a-input>
+                      <a-input addonAfter="IU/mL" style="width: 240px; margin-right: 20px;" v-decorator="['a13', {initialValue: initValue('a13')}]" autocomplete="off"></a-input>
                     </a-form-item>
                     <a-form-item :style="{ display: 'inline-block'}">
                       <a-radio-group v-decorator="['a14', {...selectRequired, initialValue: initValue('a14')}]">
