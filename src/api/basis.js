@@ -261,3 +261,11 @@ export function patientReport(params) {
     params: params
   })
 }
+
+export function exportFormData(params) {
+  return axios({
+    url: '/basis/exportFormData',
+    method: 'post',
+    data: params
+  })
+}

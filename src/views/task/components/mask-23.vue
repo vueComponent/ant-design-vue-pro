@@ -393,7 +393,7 @@ export default {
         this.fileList.forEach((f,i) => {
           if(f.response){
               that.$set(that.fileList,i,{
-                name: f.name,
+                name: f.response.fileName,
                 status: 'done',
                 uid: f.uid,
                 url: f.response.data.src

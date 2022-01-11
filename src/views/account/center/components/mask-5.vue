@@ -24,6 +24,9 @@
         </a-col>
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form">
+            <div class="clearfix" style="position:relative;top: 20px;">
+              <a-button class="btn fr" type="primary" @click="_importData">导入数据</a-button>
+            </div>
             <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
@@ -222,7 +225,7 @@
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm, computeScore, recoverSubmit } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, computeScore, recoverSubmit, exportFormData } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 import { getOcrResult } from '@/api/basis'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
@@ -594,7 +597,7 @@ export default {
         this.fileList.forEach((f,i) => {
           if(f.response){
               that.$set(that.fileList,i,{
-                name: f.name,
+                name: f.response.fileName,
                 status: 'done',
                 uid: f.uid,
                 url: f.response.data.src
@@ -661,6 +664,39 @@ export default {
     handleOk(v) {
       this.submitInfo = v
       this.$refs.submitBtn.$el.click()
+    },
+    _importData() {
+      var that = this
+      this.$confirm({
+        title: '是否确定导入数据？',
+        onOk() {
+          that.spinning = true
+          var params = new URLSearchParams()
+          params.append('basisMarkId', that.maskId)
+          params.append('patientBasisId', that.patientBasisId)
+          exportFormData(params)
+            .then(res => {
+              that.spinning = false
+              that.$message.success(res.msg)
+              that.xbyxx = _.extend(that.xbyxx || {}, that.dealAnswers(res.data.data.xbyxx))
+              if (res.data.data && res.data.data.annexListXbyxx) {
+                that.fileList = _.map(res.data.data.annexListXbyxx, function(v) {
+                  return {
+                    uid: v.annexId,
+                    url: that.viewPicUrl + v.annexAddress,
+                    name: v.annexAddress,
+                    status: 'done'
+                  }
+                })
+              } else {
+                that.fileList = []
+              }
+            }).catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
+        }
+      })
     }
   }
 }
@@ -944,7 +980,7 @@ export default {
       line-height: 40px;
     }
 
-    padding: 40px 20px;
+    padding: 20px 20px 40px;
 
     .ant-form-item {
       // padding-bottom: 10px;
