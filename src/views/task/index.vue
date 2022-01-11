@@ -17,6 +17,9 @@
               </a>
             </a-form-item>
           </a-col>
+          <a-col :md="15" style="text-align:right" :sm="24">
+            <a-button type="primary" @click="$refs.createModal.add()">新建</a-button>
+          </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
             <div>
               <a-tabs defaultActiveKey="1">
@@ -92,6 +95,7 @@
         <a @click="ignore(record)">忽略</a>
       </template>
     </s-table>
+    <create-form ref="createModal" @ok="handleOk" />
     <user-detail ref="detailModal" />
     <a-modal :visible="visible" title="退组" @ok="outSubmit" :confirmLoading="confirmLoading" :centered="centered" :destroyOnClose="destroyOnClose" @cancel="handleClose">
       <a-form :form="form">
@@ -111,6 +115,7 @@
 import moment from 'moment'
 import { getVisitTask, ignoreBNTask } from '@/api/task'
 import { STable } from '@/components'
+import CreateForm from './components/taskCreateForm'
 import UserDetail from '../list/modules/UserDetail'
 import $ from 'jquery'
 const visitMap = {
@@ -132,6 +137,7 @@ export default {
   name: 'Task',
   components: {
     STable,
+    CreateForm,
     UserDetail
   },
   data() {
@@ -151,6 +157,7 @@ export default {
       centered: true,
       destroyOnClose: true,
       outPatientBasisId: undefined,
+      form: this.$form.createForm(this),
       bodyStyle: {
         padding: "10px",
         paddingBottom: "0px"
@@ -306,6 +313,9 @@ export default {
     },
     handleClose() {
       this.visible = false
+    },
+    handleOk() {
+      this.$refs.table.refresh();
     },
     clearForm() {
       this.queryParam = {}

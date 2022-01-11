@@ -175,6 +175,14 @@ export function createSFJx(params) {
   })
 }
 
+export function createNfs(params) {
+  return axios({
+    url: '/basis/createNfs',
+    method: 'post',
+    data: params
+  })
+}
+
 export function getQuestionDetail(params) {
   return axios({
     url: '/question/detail',
