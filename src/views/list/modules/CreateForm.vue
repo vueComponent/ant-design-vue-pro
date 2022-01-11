@@ -111,7 +111,7 @@
             </template>
             <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
           </a-popover>
-          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['startDate', requiredRule]" :disabledDate="disabledDate" />
+          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['startDate', requiredRule]" />
         </a-form-item>
         <a-form-item label="推荐医生" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['doctorName', requiredRule]" />

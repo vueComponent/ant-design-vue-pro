@@ -24,6 +24,9 @@
         </a-col>
         <a-col :span="19" style="height:100%;">
           <a-form :form="form" @submit="handleSubmit" class="base-form">
+            <div class="clearfix" style="position:relative;top: 20px;">
+              <a-button class="btn fr" type="primary" @click="_importData">导入数据</a-button>
+            </div>
             <div class="btn-array" v-if="executeStatus !== 2 && canEdit">
               <!-- <a-button class="btn fr" v-if="patientBasis.type === 3" @click="import">导入</a-button> -->
               <a-button class="btn fr" type="primary" html-type="submit" ref="submitBtn">提交</a-button>
@@ -90,7 +93,7 @@
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm, computeScore, recoverSubmit } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, computeScore, recoverSubmit, exportFormData } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import ContactForm from '@/views/account/ContactForm'
@@ -422,6 +425,27 @@ export default {
             })
         }
       })
+    },
+    _importData() {
+      var that = this
+      this.$confirm({
+        title: '是否确定导入数据？',
+        onOk() {
+          that.spinning = true
+          var params = new URLSearchParams()
+          params.append('basisMarkId', that.maskId)
+          params.append('patientBasisId', that.patientBasisId)
+          exportFormData(params)
+            .then(res => {
+              that.spinning = false
+              that.$message.success(res.msg)
+              that.tgjc = _.extend(that.tgjc || {}, that.dealAnswers(res.data.data.tgjc))
+            }).catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
+        }
+      })
     }
   }
 }
@@ -704,7 +728,7 @@ export default {
       line-height: 40px;
     }
 
-    padding: 40px 20px;
+    padding: 20px 20px 40px;
 
     .ant-form-item {
       // padding-bottom: 10px;
