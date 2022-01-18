@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 
-Mock.mock('/api/user/info','get',{
+Mock.mock('/api2/user/info','get',{
   status: 200,
   message: '获取用户信息成功',
   result: {
@@ -10,7 +10,7 @@ Mock.mock('/api/user/info','get',{
   }
 })
 
-Mock.mock('/api/user/nav','get',{
+Mock.mock('/api2/user/nav','get',{
   status: 200,
   message: '获取用户信息成功',
   data: JSON.stringify([

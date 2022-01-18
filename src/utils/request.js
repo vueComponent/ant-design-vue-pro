@@ -8,7 +8,7 @@ import { ACCESS_TOKEN } from '@/store/mutation-types'
 // 创建 axios 实例
 const request = axios.create({
   // API 请求的默认前缀
-  baseURL: '/api',
+  baseURL: '/api2',
   // baseURL: 'http://localhost:8080',
   timeout: 6000, // 请求超时时间
   withCredentials: true
