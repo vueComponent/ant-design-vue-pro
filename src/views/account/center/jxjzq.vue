@@ -269,7 +269,7 @@ export default {
   },
   data() {
     return {
-      markName: 'sf_jxjzq',
+      markName: 'iconjxjz',
       title: '急性加重期',
       openKeys: [],
       orgTree: [],
@@ -536,7 +536,7 @@ export default {
       getBasisForm(params)
         .then(res => {
           this.spinning = false
-          if (res.data && res.data.sf_jxjzq)
+          if (res.data && res.data.iconjxjz)
             that.jxjzq = that.dealAnswers(res.data)
         })
         .catch(error => {
@@ -546,7 +546,7 @@ export default {
     },
     dealAnswers(data) {
       var that = this
-      var answer = data.sf_jxjzq
+      var answer = data.iconjxjz
       var alList = ['铜绿假单胞菌', '阴沟肠杆菌', '肺炎克雷伯菌', '肺炎链球菌', '副流感嗜血杆菌', '鲍曼不动杆菌', '金黄色葡萄球菌']
       if (answer && !_.isEmpty(answer)) {
         var splitArr = []
