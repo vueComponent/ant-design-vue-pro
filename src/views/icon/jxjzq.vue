@@ -470,7 +470,7 @@ export default {
         rules: [{ required: true, message: '请填写！' }]
       },
       inputNumRequired: {
-        rules: [{ type: 'number', required: true, message: '请填写数字！' }]
+        rules: [{ type: 'number', required: true, message: '请填写数字！',transform:(value)=> {return Number(value)} }]
       },
       form: this.$form.createForm(this),
       patientBasisId: this.$route.params.id,
