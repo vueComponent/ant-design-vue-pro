@@ -250,7 +250,7 @@ export default {
     },
     exec(record) {
       console.log(record)
-      if(record.isIcon === 1){
+      if(record.type === 7){
         this.$router.push('/icon/jxjzq/' + record.patientBasisId)
       }else{
         this.$router.push('/jxjzq/' + record.patientBasisId)
