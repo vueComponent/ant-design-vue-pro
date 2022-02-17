@@ -61,7 +61,7 @@
         </a-row>
       </a-form>
     </div>
-    <s-table ref="table" size="small" :scroll="{ x: 1600 }" rowKey="patientId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+    <s-table ref="table" size="small" :scroll="{ x: 1600 }" rowKey="tId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
       <span slot="name" slot-scope="text, record" @click="showUser(record)">
         <p class="userName">{{modifyName(text)}}</p>
       </span>
@@ -490,10 +490,11 @@ export default {
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
         return getPatientList(Object.assign(parameter, this.queryParam)).then(res => {
-          res.data.forEach(item => {
+          res.data.forEach((item, index) => {
             if (item.basisList.length > 0) {
               item.basisList[0].progress = item.basisList[0].executeStatus == 3 ? 100 : item.basisList[0].progress
             }
+            item.tId = index
           })
           return res;
         });
