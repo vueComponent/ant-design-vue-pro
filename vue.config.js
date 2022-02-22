@@ -104,18 +104,34 @@ const vueConfig = {
     port: 8000,
     // If you want to turn on the proxy, please remove the mockjs /src/main.js
     proxy: {
-      '/api2': {
-        target: 'https://jixingyun.tongji.edu.cn/api2/',
+      '/api-local':{
+        target: 'https://localhost:9000/',
+        ws:false,
+        changeOrigin:false,
+        pathRewrite: {
+          '^/api-local':'/'
+        }
+      },
+      '/api-dev':{
+        target: 'https://tongji-poby.sparkxyf.com/api-dev',
+        ws: false,
+        changeOrigin:true,
+        pathRewrite:{
+          '^/api-dev':'/'
+        }
+      },
+      '/api': {
+        target: 'https://tongji-poby.sparkxyf.com/api/',
         // target: 'http://localhost:8080/',
         ws: false,
         changeOrigin: true,
         pathRewrite: {
-          '^/api2': '/'
+          '^/api': '/'
         }
       }
     }
   },
-  assetsDir: 'platform-assets',
+  assetsDir: process.env.ASSETS_DIR,
 
   // disable source map in production
   productionSourceMap: false,
