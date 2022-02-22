@@ -1,4 +1,4 @@
-const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV)
+const IS_PROD = ['production', 'prod','pro'].includes(process.env.NODE_ENV)
 const IS_PREVIEW = process.env.VUE_APP_PREVIEW === 'true'
 
 const plugins = []
