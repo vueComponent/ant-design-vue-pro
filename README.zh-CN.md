@@ -61,8 +61,9 @@ yarn install
 
 - 开发模式运行
 ```
-yarn run serve
+yarn serve:dev
 ```
+这里需要看云效的开发提示！
 
 - 编译项目
 ```
