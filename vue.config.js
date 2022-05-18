@@ -50,8 +50,9 @@ const vueConfig = {
         BUILD_DATE: buildDate
       })
     ],
-    // if prod, add externals
-    externals: isProd ? assetsCDN.externals : {}
+    // en_US: `if prod, add externals`
+    // zh_CN: `这里是用来控制编译忽略外部依赖的，与 config.plugin('html') 配合可以编译时引入外部CDN文件依赖`
+    // externals: isProd ? assetsCDN.externals : {}
   },
 
   chainWebpack: config => {
@@ -74,14 +75,15 @@ const vueConfig = {
         esModule: false
       })
 
-    // if prod is on
-    // assets require on cdn
-    if (isProd) {
-      config.plugin('html').tap(args => {
-        args[0].cdn = assetsCDN
-        return args
-      })
-    }
+    // en_US: If prod is on assets require on cdn
+    // zh_CN: 如果是 prod 模式，则引入 CDN 依赖文件，有需要减少包大小请自行解除依赖
+    //
+    // if (isProd) {
+    //   config.plugin('html').tap(args => {
+    //     args[0].cdn = assetsCDN
+    //     return args
+    //   })
+    // }
   },
 
   css: {
