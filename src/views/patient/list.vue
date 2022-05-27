@@ -156,9 +156,11 @@ export default {
           title: '分支中心',
           dataIndex: 'centerName',
           width: 200
-        },
-
-        {
+        },{
+          title: 'ICON入组时间',
+          dataIndex: 'iconJoinDate',
+          width: 200,
+        },{
           title: '创建日期',
           dataIndex: 'createDate',
           width: 120,

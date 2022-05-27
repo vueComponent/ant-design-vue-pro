@@ -1,13 +1,29 @@
 <template>
-  <a-modal :title="options.title" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :destroyOnClose="destroyOnClose" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
+  <a-modal
+    :title="options.title"
+    :width="800"
+    :bodyStyle="bodyStyle"
+    :maskClosable="maskClosable"
+    :destroyOnClose="destroyOnClose"
+    :centered="centered"
+    :visible="visible"
+    :confirmLoading="confirmLoading"
+    @ok="handleSubmit"
+    @cancel="handleCancel"
+  >
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="病例识别号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input placeholder="请输入身份证号" v-decorator="['card', { rules: [ { validator: isIdCardNo }] }]" />
+          <a-input placeholder="请输入身份证号" v-decorator="['card', { rules: [{ validator: isIdCardNo }] }]" />
         </a-form-item>
         <!-- <a-form-item label="病例入组编号" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['card', { rules: [{ required: true }] }]" /></a-form-item> -->
         <a-form-item label="患者同意注册日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['registerDate', requiredRule]" :disabledDate="disabledDate" />
+          <a-date-picker
+            style="width: 100%"
+            format="YYYY-MM-DD"
+            v-decorator="['registerDate', requiredRule]"
+            :disabledDate="disabledDate"
+          />
         </a-form-item>
         <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['name', requiredRule]" />
@@ -15,10 +31,13 @@
         <a-form-item label="是否ICON患者" :labelCol="labelCol" :wrapperCol="wrapperCol" class="aaa">
           <a-popover>
             <template slot="content">
-              入选标准：1、临床诊断为支气管扩张症（根据中国2021年《成人支气管扩张症诊治专家共识》，患者既往胸部CT检查必须存在影像学上支气管扩张的表现）。2、年龄≥18岁的患者。<br>
+              入选标准：1、临床诊断为支气管扩张症（根据中国2021年《成人支气管扩张症诊治专家共识》，患者既往胸部CT检查必须存在影像学上支气管扩张的表现）。2、年龄≥18岁的患者。<br />
               排除标准：1、囊性纤维化引起的支气管扩张症。2、入组前4周内曾发生支气管扩张症急性加重*。3、入组前6个月内参与了任何干预性临床试验。4、无法或不愿提供知情同意书的患者。
             </template>
-            <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
+            <a-icon
+              type="exclamation-circle"
+              style="position: relative; left: -20px; color: #0399ec; cursor: pointer"
+            />
           </a-popover>
           <a-radio-group v-decorator="['isIcon', requiredRule]" @change="changeRadio($event, 'isShowPat')">
             <a-radio value="1">是</a-radio>
@@ -26,32 +45,40 @@
           </a-radio-group>
         </a-form-item>
         <div v-if="isShowPat">
+          <a-form-item label="ICON入组时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-date-picker
+              style="width: 100%"
+              format="YYYY-MM-DD"
+              v-decorator="['iconJoinDate', requiredRule]"
+              :disabledDate="disabledDate"
+            />
+          </a-form-item>
           <a-form-item label="既往胸部CT是否存在影像学上支气管扩张的表现" :labelCol="labelCol" :wrapperCol="wrapperCol">
-            <a-radio-group v-decorator="['isbiaoxian', { rules: [ { validator: isbiaoxianRule }] }]">
+            <a-radio-group v-decorator="['isbiaoxian', { rules: [{ validator: isbiaoxianRule }] }]">
               <a-radio value="1">是</a-radio>
               <a-radio value="-1">否</a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item label="是否有囊性纤维化引起的支气管扩张症" :labelCol="labelCol" :wrapperCol="wrapperCol">
-            <a-radio-group v-decorator="['iskuozhang', { rules: [ { validator: iskuozhangRule }] }]">
+            <a-radio-group v-decorator="['iskuozhang', { rules: [{ validator: iskuozhangRule }] }]">
               <a-radio value="1">是</a-radio>
               <a-radio value="-1">否</a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item label="入组前4周是否发生支气管扩张症急性加重" :labelCol="labelCol" :wrapperCol="wrapperCol">
-            <a-radio-group v-decorator="['isjiazhong', { rules: [ { validator: isjiazhongRule }] }]">
+            <a-radio-group v-decorator="['isjiazhong', { rules: [{ validator: isjiazhongRule }] }]">
               <a-radio value="1">是</a-radio>
               <a-radio value="-1">否</a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item label="入组前6个月是否参加任何干预性临床试验" :labelCol="labelCol" :wrapperCol="wrapperCol">
-            <a-radio-group v-decorator="['isshiyan', { rules: [ { validator: isshiyanRule }] }]">
+            <a-radio-group v-decorator="['isshiyan', { rules: [{ validator: isshiyanRule }] }]">
               <a-radio value="1">是</a-radio>
               <a-radio value="-1">否</a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item label="患者是否无法或不愿意提供知情同意书" :labelCol="labelCol" :wrapperCol="wrapperCol">
-            <a-radio-group v-decorator="['istongyi', { rules: [ { validator: istongyiRule }] }]">
+            <a-radio-group v-decorator="['istongyi', { rules: [{ validator: istongyiRule }] }]">
               <a-radio value="1">是</a-radio>
               <a-radio value="-1">否</a-radio>
             </a-radio-group>
@@ -70,7 +97,12 @@
           <a-row :gutter="8">
             <a-col :span="12">
               <a-form-item>
-                <a-cascader v-decorator="['residence', requiredRule]" :options="residences" :fieldNames="{ label: 'city', value: 'cityId', children: 'children' }" placeholder="选择省/市" />
+                <a-cascader
+                  v-decorator="['residence', requiredRule]"
+                  :options="residences"
+                  :fieldNames="{ label: 'city', value: 'cityId', children: 'children' }"
+                  placeholder="选择省/市"
+                />
               </a-form-item>
             </a-col>
             <a-col :span="12">
@@ -106,10 +138,11 @@
         </a-form-item>
         <a-form-item label="随访开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol" class="aaa">
           <a-popover>
-            <template slot="content">
-              第一次半年随访根据此时间生成
-            </template>
-            <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
+            <template slot="content"> 第一次半年随访根据此时间生成 </template>
+            <a-icon
+              type="exclamation-circle"
+              style="position: relative; left: -20px; color: #0399ec; cursor: pointer"
+            />
           </a-popover>
           <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['startDate', requiredRule]" />
         </a-form-item>
@@ -117,7 +150,13 @@
           <a-input v-decorator="['doctorName', requiredRule]" />
         </a-form-item>
         <a-form-item :wrapperCol="agrWrapperCol">
-          <a-checkbox v-decorator="['agreeMent', { rules: [ { required: true, validator: agrValidator }], valuePropName: 'checked' }]" :disabled="options.title == '编辑患者'">
+          <a-checkbox
+            v-decorator="[
+              'agreeMent',
+              { rules: [{ required: true, validator: agrValidator }], valuePropName: 'checked' },
+            ]"
+            :disabled="options.title == '编辑患者'"
+          >
             患者是否已签署
             <a href="javascript:;" @click="download">知情同意书</a>
           </a-checkbox>
@@ -127,9 +166,15 @@
   </a-modal>
 </template>
 <script>
-import { getProvinceAndCity, getNation, getDictionaryAttributeByDictionaryId, addOrUpdate, validateCard } from '@/api/basis';
-import moment from 'moment';
-import _ from 'lodash';
+import {
+  getProvinceAndCity,
+  getNation,
+  getDictionaryAttributeByDictionaryId,
+  addOrUpdate,
+  validateCard,
+} from '@/api/basis'
+import moment from 'moment'
+import _ from 'lodash'
 export default {
   data() {
     return {
@@ -144,21 +189,21 @@ export default {
       isShowPat: false,
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 10 }
+        sm: { span: 10 },
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 13 }
+        sm: { span: 13 },
       },
       agrWrapperCol: {
         xs: {
           span: 24,
-          offset: 0
+          offset: 0,
         },
         sm: {
           span: 18,
-          offset: 6
-        }
+          offset: 6,
+        },
       },
       visible: false,
       confirmLoading: false,
@@ -166,81 +211,81 @@ export default {
       destroyOnClose: true,
       bodyStyle: {
         height: '500px',
-        overflow: 'auto'
+        overflow: 'auto',
       },
       form: this.$form.createForm(this),
       requiredRule: { rules: [{ required: true, message: '该选项必填！' }] },
-      patientId: undefined
-    };
+      patientId: undefined,
+    }
   },
   created() {
-    const that = this;
-    getProvinceAndCity().then(res => {
-      const keyMap = { province: 'city', provinceId: 'cityId' };
-      _.each(res.data, function(item, index) {
+    const that = this
+    getProvinceAndCity().then((res) => {
+      const keyMap = { province: 'city', provinceId: 'cityId' }
+      _.each(res.data, function (item, index) {
         that.residences[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap[key] || key;
-          newData[newKey] = item[key];
-          return newData;
-        }, {});
-      });
-    });
-    getNation().then(res => {
-      const keyMap = { name: 'title', nationId: 'value' };
-      _.each(res.data, function(item, index) {
+          let newKey = keyMap[key] || key
+          newData[newKey] = item[key]
+          return newData
+        }, {})
+      })
+    })
+    getNation().then((res) => {
+      const keyMap = { name: 'title', nationId: 'value' }
+      _.each(res.data, function (item, index) {
         that.nationList[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap[key] || key;
-          newData[newKey] = item[key];
-          return newData;
-        }, {});
-      });
-    });
-    const dictionary1 = new URLSearchParams();
-    dictionary1.append('dictionaryId', 1);
-    dictionary1.append('status', 1);
-    getDictionaryAttributeByDictionaryId(dictionary1).then(res => {
-      const keyMap = { name: 'label', dictionaryAttributeId: 'value' };
-      _.each(res.data, function(item, index) {
+          let newKey = keyMap[key] || key
+          newData[newKey] = item[key]
+          return newData
+        }, {})
+      })
+    })
+    const dictionary1 = new URLSearchParams()
+    dictionary1.append('dictionaryId', 1)
+    dictionary1.append('status', 1)
+    getDictionaryAttributeByDictionaryId(dictionary1).then((res) => {
+      const keyMap = { name: 'label', dictionaryAttributeId: 'value' }
+      _.each(res.data, function (item, index) {
         that.professionList[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap[key] || key;
-          newData[newKey] = item[key];
-          return newData;
-        }, {});
-      });
-    });
-    const dictionary2 = new URLSearchParams();
-    dictionary2.append('dictionaryId', 2);
-    dictionary2.append('status', 1);
-    getDictionaryAttributeByDictionaryId(dictionary2).then(res => {
-      const keyMap = { name: 'label', dictionaryAttributeId: 'value' };
-      _.each(res.data, function(item, index) {
+          let newKey = keyMap[key] || key
+          newData[newKey] = item[key]
+          return newData
+        }, {})
+      })
+    })
+    const dictionary2 = new URLSearchParams()
+    dictionary2.append('dictionaryId', 2)
+    dictionary2.append('status', 1)
+    getDictionaryAttributeByDictionaryId(dictionary2).then((res) => {
+      const keyMap = { name: 'label', dictionaryAttributeId: 'value' }
+      _.each(res.data, function (item, index) {
         that.censusList[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap[key] || key;
-          newData[newKey] = item[key];
-          return newData;
-        }, {});
-      });
-    });
+          let newKey = keyMap[key] || key
+          newData[newKey] = item[key]
+          return newData
+        }, {})
+      })
+    })
 
-    const dictionary3 = new URLSearchParams();
-    dictionary3.append('dictionaryId', 3);
-    dictionary3.append('status', 1);
-    getDictionaryAttributeByDictionaryId(dictionary3).then(res => {
-      const keyMap = { name: 'label', dictionaryAttributeId: 'value' };
-      _.each(res.data, function(item, index) {
+    const dictionary3 = new URLSearchParams()
+    dictionary3.append('dictionaryId', 3)
+    dictionary3.append('status', 1)
+    getDictionaryAttributeByDictionaryId(dictionary3).then((res) => {
+      const keyMap = { name: 'label', dictionaryAttributeId: 'value' }
+      _.each(res.data, function (item, index) {
         that.payTypeList[index] = Object.keys(item).reduce((newData, key) => {
-          let newKey = keyMap[key] || key;
-          newData[newKey] = item[key];
-          return newData;
-        }, {});
-      });
-    });
+          let newKey = keyMap[key] || key
+          newData[newKey] = item[key]
+          return newData
+        }, {})
+      })
+    })
   },
   methods: {
     add() {
-      this.options.title = '新建患者';
+      this.options.title = '新建患者'
       this.patientId = undefined
-      this.visible = true;
+      this.visible = true
     },
     changeRadio(e, t) {
       if (e.target.value === '1') {
@@ -250,7 +295,7 @@ export default {
       }
     },
     edit(value) {
-      this.options.title = '编辑患者';
+      this.options.title = '编辑患者'
       this.patientId = value.patientId
       value.residence = [value.addressP, value.addressC]
       if (value.isIcon === 1) {
@@ -277,41 +322,44 @@ export default {
           telephone3: value.telephone3,
           agreeMent: JSON.parse(value.agreeMent),
           doctorName: value.doctorName,
-          isIcon: String(value.isIcon)
+          isIcon: String(value.isIcon),
         })
         if (value.isIcon == 1) {
-          console.log(value.isIcon)
           this.form.setFieldsValue({
             isbiaoxian: String(value.isIcon),
             iskuozhang: '-1',
             isjiazhong: '-1',
             isshiyan: '-1',
-            istongyi: '-1'
+            istongyi: '-1',
+            iconJoinDate: value.iconJoinDate ? moment(value.iconJoinDate, 'YYYY-MM-DD') : null,
           })
-          
         }
         if (value.startDate)
           this.form.setFieldsValue({
-            startDate: moment(value.startDate, 'YYYY-MM-DD')
+            startDate: moment(value.startDate, 'YYYY-MM-DD'),
           })
-      }, 0);
+      }, 0)
       this.visible = true
     },
     handleSubmit() {
       if (!this.confirmLoading) {
-        this.confirmLoading = true;
+        this.confirmLoading = true
         this.form.validateFieldsAndScroll((errors, fieldsValue) => {
-          if (this.form.getFieldValue('birthDate') && new Date().getFullYear() - this.form.getFieldValue('birthDate')._d.getFullYear() < 18) {
-            this.$message.warning('患者不满18岁，不符合ICON患者条件');
-            this.confirmLoading = false;
+          if (
+            this.form.getFieldValue('birthDate') &&
+            new Date().getFullYear() - this.form.getFieldValue('birthDate')._d.getFullYear() < 18 &&
+            this.form.getFieldValue('isIcon') == 1
+          ) {
+            this.$message.warning('患者不满18岁，不符合ICON患者条件')
+            this.confirmLoading = false
             return false
           }
-          const that = this;
+          const that = this
           if (errors) {
-            this.confirmLoading = false;
-            return;
+            this.confirmLoading = false
+            return
           }
-          const residence = fieldsValue['residence'];
+          const residence = fieldsValue['residence']
           const values = {
             ...fieldsValue,
             birthDate: fieldsValue['birthDate'].format('YYYY-MM-DD'),
@@ -319,23 +367,26 @@ export default {
             startDate: fieldsValue['startDate'].format('YYYY-MM-DD'),
             addressP: residence[0],
             addressC: residence[1],
-            patientId: this.patientId
-          };
-          const params = new URLSearchParams();
-          params.append('patientStr', JSON.stringify(values));
-          params.append('changeCenter', '');
-          params.append('centerId', '');
-          addOrUpdate(params).then(res => {
-            that.visible = false;
-            that.confirmLoading = false;
+            patientId: this.patientId,
+          }
+          if (fieldsValue['iconJoinDate']) {
+            values.iconJoinDate = fieldsValue['iconJoinDate'].format('YYYY-MM-DD')
+          }
+          const params = new URLSearchParams()
+          params.append('patientStr', JSON.stringify(values))
+          params.append('changeCenter', '')
+          params.append('centerId', '')
+          addOrUpdate(params).then((res) => {
+            that.visible = false
+            that.confirmLoading = false
             that.$message.success(res.msg)
-            that.$emit('ok', values);
-          });
-        });
+            that.$emit('ok', values)
+          })
+        })
       }
     },
     handleCancel() {
-      this.visible = false;
+      this.visible = false
     },
     agrValidator(rule, value, callback) {
       if (this.options.title == '编辑患者') {
@@ -348,7 +399,7 @@ export default {
       }
       callback()
     },
-    isbiaoxianRule (rule, value, callback) {
+    isiconRule(rule, value, callback) {
       if (!value) {
         callback('该选项必填！')
         return
@@ -359,7 +410,18 @@ export default {
       }
       callback()
     },
-    iskuozhangRule (rule, value, callback) {
+    isbiaoxianRule(rule, value, callback) {
+      if (!value) {
+        callback('该选项必填！')
+        return
+      }
+      if (this.form.getFieldValue('isbiaoxian') == -1) {
+        callback('患者ICON研究必须符合入选标准，请仔细核对入选标准后再选择。')
+        return
+      }
+      callback()
+    },
+    iskuozhangRule(rule, value, callback) {
       if (!value) {
         callback('该选项必填！')
         return
@@ -370,7 +432,7 @@ export default {
       }
       callback()
     },
-    isjiazhongRule (rule, value, callback) {
+    isjiazhongRule(rule, value, callback) {
       if (!value) {
         callback('该选项必填！')
         return
@@ -381,7 +443,7 @@ export default {
       }
       callback()
     },
-    isshiyanRule (rule, value, callback) {
+    isshiyanRule(rule, value, callback) {
       if (!value) {
         callback('该选项必填！')
         return
@@ -392,7 +454,7 @@ export default {
       }
       callback()
     },
-    istongyiRule (rule, value, callback) {
+    istongyiRule(rule, value, callback) {
       if (!value) {
         callback('该选项必填！')
         return
@@ -409,14 +471,14 @@ export default {
         return
       }
       if (this.form.getFieldValue('work') === 4 && !value) {
-        callback();
-        return;
+        callback()
+        return
       }
       if (!value) {
         callback('该选项必填！')
         return
       }
-      let num = value.toUpperCase();
+      let num = value.toUpperCase()
       if (num.length === 18) {
         //验证城市
         let aCity = {
@@ -454,78 +516,81 @@ export default {
           71: '台湾',
           81: '香港',
           82: '澳门',
-          91: '国外'
-        };
+          91: '国外',
+        }
         if (aCity[parseInt(num.substr(0, 2))] == null) {
-          callback('身份证号不正确或不符合规定！');
-          return;
+          callback('身份证号不正确或不符合规定！')
+          return
         }
         // 验证生日
-        let reg = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/);
-        let arrSplit = num.match(reg);
-        let dtmBirth = new Date(arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]);
-        let bGoodDay;
-        bGoodDay = dtmBirth.getFullYear() == Number(arrSplit[2]) && dtmBirth.getMonth() + 1 == Number(arrSplit[3]) && dtmBirth.getDate() == Number(arrSplit[4]);
+        let reg = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/)
+        let arrSplit = num.match(reg)
+        let dtmBirth = new Date(arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4])
+        let bGoodDay
+        bGoodDay =
+          dtmBirth.getFullYear() == Number(arrSplit[2]) &&
+          dtmBirth.getMonth() + 1 == Number(arrSplit[3]) &&
+          dtmBirth.getDate() == Number(arrSplit[4])
         if (!bGoodDay) {
-          callback('身份证号不正确或不符合规定！');
+          callback('身份证号不正确或不符合规定！')
           return
         }
         // 验证格式
-        var valnum;
-        var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
-        var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+        var valnum
+        var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2)
+        var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2')
         var nTemp = 0,
-          i;
+          i
         for (i = 0; i < 17; i++) {
-          nTemp += num.substr(i, 1) * arrInt[i];
+          nTemp += num.substr(i, 1) * arrInt[i]
         }
-        valnum = arrCh[nTemp % 11];
+        valnum = arrCh[nTemp % 11]
         if (valnum != num.substr(17, 1)) {
-          callback('身份证号不正确或不符合规定！');
+          callback('身份证号不正确或不符合规定！')
           return
         }
         // 回显性别、生日
         if (!this.patientId) {
           this.form.resetFields(['birthDate', 'sex'])
           this.confirmLoading = true
-          const params = new FormData();
-          params.append('card', num);
-          validateCard(params).then(res => {
+          const params = new FormData()
+          params.append('card', num)
+          validateCard(params).then((res) => {
             this.confirmLoading = false
             switch (res.code) {
               case 2:
-                callback(res.msg);
+                callback(res.msg)
                 break
               case 3:
-                let birthDate = new Date(num.substr(6, 8).replace(/(.{4})(.{2})/, "$1-$2-")).getTime();
-                let sex = parseInt(num.charAt(16) / 2) * 2 != num.charAt(16) ? '1' : '0';
+                let birthDate = new Date(num.substr(6, 8).replace(/(.{4})(.{2})/, '$1-$2-')).getTime()
+                let sex = parseInt(num.charAt(16) / 2) * 2 != num.charAt(16) ? '1' : '0'
                 this.form.setFieldsValue({
                   birthDate: moment(birthDate, 'x'),
-                  sex
+                  sex,
                 })
-                callback();
+                callback()
                 break
               case 4:
-                callback('该患者已存在，请在列表内搜索！');
+                callback('该患者已存在，请在列表内搜索！')
                 break
               default:
-                callback();
+                callback()
             }
           })
         }
       }
-      callback();
-      return;
+      callback()
+      return
     },
     disabledDate(current) {
       // Can not select days before today and today
-      return current && (current > moment().endOf('day') || current.get('year') < 2020);
+      return current && (current > moment().endOf('day') || current.get('year') < 2020)
     },
     download() {
       window.open(this.baseUrl + '/patient/downLoad')
-    }
-  }
-};
+    },
+  },
+}
 </script>
 <style lang="less" scoped>
 /deep/ .ant-form-item:last-child {
@@ -537,7 +602,7 @@ export default {
   left: -18px;
 }
 
-.aaa .ant-form-item-children>i {
+.aaa .ant-form-item-children > i {
   position: absolute !important;
   left: -22px !important;
   top: 4px;
