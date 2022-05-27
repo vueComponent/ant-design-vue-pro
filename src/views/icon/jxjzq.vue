@@ -33,7 +33,7 @@
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <a-form-item label="(1) 急性加重日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['t', {...dateRequire, initialValue: initValue('t', 'time')}]"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['t', {initialValue: initValue('t', 'time')}]"></a-date-picker>
               </a-form-item>
               <a-form-item label="(2) 急性加重的症状(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['t1', {...selectRequired, initialValue: initValue('t1', 'array')}]" class="control-m-line">
@@ -129,7 +129,7 @@
               <a-form-item label="(4) 其他方法获得的病原学信息" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
               </a-form-item>
               <a-form-item label="取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a5', {...dateRequire, initialValue: initValue('a5', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a5', {initialValue: initValue('a5', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item label="种类:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['a51', {...inputRequired, initialValue: initValue('a51')}]" autocomplete="off"></a-input>
@@ -158,10 +158,10 @@
                 </a-form-item>
               </div>
               <a-form-item label="(6) 本次支气管扩张急性加重的住院日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-date-picker placeholder="请选择" v-decorator="['b21', { ...dateRequire, initialValue: initValue('b21', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                <a-date-picker placeholder="请选择" v-decorator="['b21', {initialValue: initValue('b21', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
               </a-form-item>
               <a-form-item label="本次支气管扩张急性加重的出院日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" v-decorator="['b22', { ...dateRequire, initialValue: initValue('b22', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                <a-date-picker placeholder="请选择" v-decorator="['b22', {initialValue: initValue('b22', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
               </a-form-item>
               <a-form-item label="(7) 本次支气管扩张急性加重时的抗生素治疗" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-checkbox-group v-decorator="['b3', {...selectRequired, initialValue: initValue('b3', 'array')}]" class="control-m-line">
@@ -1224,12 +1224,10 @@ export default {
   padding-right: 0px;
 }
 
-
 .control-m-line.ant-checkbox-group {
   top: 10px;
   position: relative;
 }
-
 
 .base-form {
   height: 100%;
