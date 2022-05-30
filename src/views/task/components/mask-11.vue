@@ -233,13 +233,24 @@
                 </a-form-item>
               </div>
               <a-form-item label="(7) 患者是否曾接收疫苗治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-checkbox-group v-decorator="['b7', {...selectRequired, initialValue: initValue('b7', 'array')}]" class="control-m-line">
-                  <a-checkbox value="1">肺炎链球菌多糖疫苗（如：PSV23）</a-checkbox>
-                  <a-checkbox value="2">肺炎链球菌辅助疫苗（如：PCV13）</a-checkbox>
-                  <a-checkbox value="3">过去1年内患者接受过流感疫苗</a-checkbox>
-                  <a-checkbox value="4">无</a-checkbox>
-                </a-checkbox-group>
+                <a-radio-group v-decorator="['b71', {...require1, initialValue: initValue('b71')}]" @change="changeRadio($event, 'controlb7')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
               </a-form-item>
+              <div v-if="controlb7">
+                <a-form-item label="疫苗治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-checkbox-group v-decorator="['b7', {...selectRequired, initialValue: initValue('b7', 'array')}]" class="control-m-line">
+                    <a-checkbox value="1">肺炎链球菌多糖疫苗（如：PSV23）</a-checkbox>
+                    <a-checkbox value="2">肺炎链球菌辅助疫苗（如：PCV13）</a-checkbox>
+                    <a-checkbox value="3">过去1年内患者接受过流感疫苗</a-checkbox>
+                    <a-checkbox value="4" @change="changeSelect($event, 'controlb72')">其他</a-checkbox>
+                  </a-checkbox-group>
+                </a-form-item>
+                <a-form-item label="其他疫苗:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb72">
+                  <a-input style="width: 240px;" v-decorator="['b72', {...inputRequired, initialValue: initValue('b72')}]" autocomplete="off"></a-input>
+                </a-form-item>
+              </div>
               <div class="title">2.非呼吸系统相关治疗</div>
               <a-form-item label="(1) 调脂" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-radio-group v-decorator="['b171', {...require1, initialValue: initValue('b171')}]">
@@ -355,6 +366,8 @@ export default {
       controlb4111: false,
       controlb5: false,
       controlb6: false,
+      controlb7: false,
+      controlb72: false,
       controlb01: false,
       controlb02: false,
       controlb03: false,
@@ -415,6 +428,7 @@ export default {
       }
     },
     dealAnswers(answer) {
+        console.log(answer)
       if (answer && !_.isEmpty(answer)) {
         var splitArr = []
         if (answer.b3 === 1) {
@@ -428,6 +442,16 @@ export default {
         }
         if (answer.b6 === 1) {
           this.controlb6 = true
+        }
+        if (answer.b71 === 1) {
+        console.log(answer.b71)
+          this.controlb7 = true
+        }
+        if (answer.b7) {
+          splitArr = answer.b7.split(',')
+          if (splitArr.indexOf('4') > -1) {
+            this.controlb72 = true
+          }
         }
         if (answer.b41) {
           splitArr = answer.b41.split(',')
@@ -498,6 +522,15 @@ export default {
       } else {
         this[t] = false
       }
+    },
+    changeRadios(e, t) {
+      e.forEach(element => {
+        if (element === '4') {
+          this[t] = true
+        } else {
+          this[t] = false
+        }
+      });
     },
     handleClick(e) {
       this.maskId = e.key
@@ -597,7 +630,6 @@ export default {
         'b7': typeof re['b7'] !== 'undefined' ? re['b7'].join(',') : '',
         'b172': typeof re['b172'] !== 'undefined' ? re['b172'].join(',') : ''
       }
-      console.log(re)
       this.patientBasis.status = 1
       var params = new URLSearchParams()
       if (this.bnsf && this.bnsf.bnsfId) {

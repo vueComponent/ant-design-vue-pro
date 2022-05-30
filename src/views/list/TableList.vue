@@ -32,8 +32,8 @@
                     <a-form>
                       <a-form-item label="是否ICON">
                         <a-radio-group v-model="queryParam.isIcon">
-                          <a-radio value="-1">是</a-radio>
-                          <a-radio value="1">否</a-radio>
+                          <a-radio value="-1">否</a-radio>
+                          <a-radio value="1">是</a-radio>
                         </a-radio-group>
                       </a-form-item>
                       <a-form-item label="入组编号">

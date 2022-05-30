@@ -922,7 +922,7 @@ export default {
       e.preventDefault()
       const { form: { validateFieldsAndScroll } } = this
       validateFieldsAndScroll((errors, values) => {
-        if (this.form.getFieldValue('b2') >= this.form.getFieldValue('b3')) {
+        if (this.form.getFieldValue('b2') > this.form.getFieldValue('b3')) {
           this.$message.warning('过去一年的急性加重次数必须大于等于过去一年的住院急性加重次数');
           return false
         }

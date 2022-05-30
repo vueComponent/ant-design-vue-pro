@@ -35,7 +35,7 @@
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
-              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!（如果为ICON患者，必须填写实际检测值）</p>
+              <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!（ICON患者，必须填写实际检测值。基线访视辅助检查可使用入组前6个月内的检查结果，但要求从检查日期到入组日期之间未发生急性加重，否则需要在基线数据收集时重新辅助检查）</p>
               <div class="title">1.肺功能相关检查
                 <a style="float: right;font-size:12px;margin-right: 12px;" @click="showOcr = !showOcr">OCR</a>
                 <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /> -->
@@ -233,6 +233,16 @@
                 </a-form-item>
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['b172', {initialValue: initValue('b172')}]" addonAfter="%" autocomplete="off"></a-input>
+                </a-form-item>
+              </a-form-item>
+              <a-form-item label="DLCO SB::" :labelCol="labelXs" :wrapperCol="wrapperMx">
+                <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
+                  <a-input style="width: 240px;" v-decorator="['b163', {initialValue: initValue('b163')}]" addonAfter="mmol/min/kPa" autocomplete="off"></a-input>
+                </a-form-item>
+              </a-form-item>
+              <a-form-item label="DLCO/VA::" :labelCol="labelXs" :wrapperCol="wrapperMx">
+                <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
+                  <a-input style="width: 240px;" v-decorator="['b173', {initialValue: initValue('b173')}]" addonAfter="mmol/min/kPa/L" autocomplete="off"></a-input>
                 </a-form-item>
               </a-form-item>
               <a-form-item label="(2) 是否做过其他舒张试验:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">

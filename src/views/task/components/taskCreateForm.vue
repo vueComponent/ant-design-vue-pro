@@ -13,7 +13,7 @@
 </template>
 <script>
 import { getPatientDataList } from '@/api/patient'
-import { createSFJx } from '@/api/basis'
+import { createNfs } from '@/api/basis'
 import moment from 'moment'
 const columns = [{
     title: '患者编号',
@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     add() {
-      this.options.title = '新建急性加重期';
+      this.options.title = '新建访视信息';
       this.visible = true;
       this.data = [];
       this.patientId = null;
@@ -106,11 +106,18 @@ export default {
       this.confirmLoading = true
       const p = new URLSearchParams();
       p.append('patientId', this.patientId)
-      createSFJx(p).then(res => {
-        this.$emit('ok')
-        this.visible = false
-        this.$message.success(res.msg);
-        this.confirmLoading = false
+      createNfs(p).then(res => {
+        if(res.code == 0) {
+          this.$emit('ok')
+          this.visible = false
+          this.$message.success(res.msg);
+          this.confirmLoading = false
+        } else {
+          this.$emit('ok')
+          this.visible = false
+          this.$message.warning(res.msg);
+          this.confirmLoading = false
+        }
       })
     },
     handleCancel() {

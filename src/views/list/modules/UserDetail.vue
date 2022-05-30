@@ -328,7 +328,7 @@ export default {
     //   return visitMap[value];
     // },
     patientBasisType(type) {
-      const patientBasisTypeMap = ['', '基线', '半年随访', '年访视', '急性加重期随访']
+      const patientBasisTypeMap=['','支扩基线','半年随访','年访视','急性加重期随访', '', 'ICON常规随访', '急性加重期随访', 'ICON基线']
       return patientBasisTypeMap[type];
     }
   },
