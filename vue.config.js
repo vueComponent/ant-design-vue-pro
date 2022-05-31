@@ -17,9 +17,11 @@ function getGitHash () {
   return 'unknown'
 }
 
-const isProd = process.env.NODE_ENV === 'production'
+// eslint-disable no-unused-var
+ const isProd = process.env.NODE_ENV === 'production'
 
-const assetsCDN = {
+// eslint-disable no-unused-var
+ const assetsCDN = {
   // webpack build externals
   externals: {
     vue: 'Vue',
