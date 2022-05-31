@@ -2,28 +2,29 @@
 
 .text-overflow() {
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
   word-break: break-all;
+  white-space: nowrap;
 }
 
 // mixins for clearfix
 // ------------------------
 .clearfix() {
   zoom: 1;
+
   &::before,
   &::after {
     display: table;
     content: ' ';
   }
+
   &::after {
-    clear: both;
     height: 0;
+    clear: both;
     font-size: 0;
     visibility: hidden;
   }
 }
-
 
 .page-header-content {
   display: flex;
@@ -42,23 +43,24 @@
   .content {
     position: relative;
     top: 4px;
-    flex: 1 1 auto;
     margin-left: 24px;
-    color: @text-color-secondary;
     line-height: 22px;
+    color: @text-color-secondary;
+    flex: 1 1 auto;
 
     .content-title {
       margin-bottom: 12px;
-      color: @heading-color;
-      font-weight: 500;
       font-size: 20px;
+      font-weight: 500;
       line-height: 28px;
+      color: @heading-color;
     }
   }
 }
 
 .extra-content {
   .clearfix();
+
   float: right;
   white-space: nowrap;
 
@@ -69,20 +71,20 @@
 
     > p:first-child {
       margin-bottom: 4px;
-      color: @text-color-secondary;
       font-size: @font-size-base;
       line-height: 22px;
+      color: @text-color-secondary;
     }
 
     > p {
       margin: 0;
-      color: @heading-color;
       font-size: 30px;
       line-height: 38px;
+      color: @heading-color;
 
       > span {
-        color: @text-color-secondary;
         font-size: 20px;
+        color: @text-color-secondary;
       }
     }
 
