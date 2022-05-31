@@ -1,4 +1,4 @@
-@import "../index";
+@import '../index';
 
 @avatar-list-prefix-cls: ~"@{ant-pro-prefix}-avatar-list";
 @avatar-list-item-prefix-cls: ~"@{ant-pro-prefix}-avatar-list-item";
@@ -7,25 +7,25 @@
   display: inline-block;
 
   ul {
-    list-style: none;
     display: inline-block;
     padding: 0;
     margin: 0 0 0 8px;
     font-size: 0;
+    list-style: none;
   }
 }
 
 .@{avatar-list-item-prefix-cls} {
   display: inline-block;
-  font-size: @font-size-base;
-  margin-left: -8px;
   width: @avatar-size-base;
   height: @avatar-size-base;
+  margin-left: -8px;
+  font-size: @font-size-base;
 
   :global {
     .ant-avatar {
-      border: 1px solid #fff;
       cursor: pointer;
+      border: 1px solid #fff;
     }
   }
 
@@ -57,4 +57,3 @@
     }
   }
 }
-
