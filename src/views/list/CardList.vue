@@ -65,10 +65,6 @@ export default {
     border-radius: 48px;
   }
 
- .st {
-  color: #000;
- }
-
   .ant-card-actions {
     background: #f7f9fa;
     li {
