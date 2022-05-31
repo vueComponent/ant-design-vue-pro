@@ -10,9 +10,8 @@ console.log(process.env.NODE_ENV)
 console.log(process.env.NODE_ENV === 'production')
 console.log(process.env.NODE_ENV === 'production' ? '' : '/api')
 const service = axios.create({
-  // baseURL: process.env.NODE_ENV === 'production' ? 'http://www.chinabronchiectasis.com/' : '/api', // api base_url
-  // baseURL: process.env.NODE_ENV === 'production' ? 'http://172.16.1.11:9997/' : '/api',
-  baseURL: process.env.NODE_ENV === 'production' ? 'http://61.132.50.162:9997/' : '/api',
+  baseURL: process.env.NODE_ENV === 'production' ? 'http://www.chinabronchiectasis.com/' : '/api', // api base_url
+  // baseURL: process.env.NODE_ENV === 'production' ? 'http://61.132.50.162:9997/' : '/api',
   timeout: 20000 // 请求超时时间
 })
 
