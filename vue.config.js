@@ -17,10 +17,10 @@ function getGitHash () {
   return 'unknown'
 }
 
-// eslint-disable no-unused-var
+// eslint-disable-next-line no-unused-vars
  const isProd = process.env.NODE_ENV === 'production'
 
-// eslint-disable no-unused-var
+// eslint-disable-next-line no-unused-vars
  const assetsCDN = {
   // webpack build externals
   externals: {
@@ -51,7 +51,7 @@ const vueConfig = {
         GIT_HASH: JSON.stringify(getGitHash()),
         BUILD_DATE: buildDate
       })
-    ],
+    ]
     // en_US: `if prod, add externals`
     // zh_CN: `这里是用来控制编译忽略外部依赖的，与 config.plugin('html') 配合可以编译时引入外部CDN文件依赖`
     // externals: isProd ? assetsCDN.externals : {}
