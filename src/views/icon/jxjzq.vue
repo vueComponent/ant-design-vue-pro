@@ -56,7 +56,7 @@
               <a-form-item label="(3) 痰液粘稠Murry评分" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-popover>
                   <template slot="content">
-                    <img src="../../../assets/murry.png" style="height: 260px;" />
+                    <img src="../../assets/murry.png" style="height: 260px;" />
                   </template>
                   <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
                 </a-popover>
@@ -916,7 +916,7 @@ export default {
     padding-left: 70px;
     padding-top: 18px;
     padding-bottom: 10px;
-    background-image: url(../../../assets/treeTop.png);
+    background-image: url(../../assets/treeTop.png);
     background-repeat: no-repeat;
     border-bottom: 1px solid #eee;
     background-position: 8px 10px;
