@@ -33,7 +33,7 @@
             </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <a-form-item label="(1) 急性加重日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['t', {initialValue: initValue('t', 'time')}]"></a-date-picker>
+                <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['t', {...dateRequire, initialValue: initValue('t', 'time')}]"></a-date-picker>
               </a-form-item>
               <a-form-item label="(2) 急性加重的症状(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['t1', {...selectRequired, initialValue: initValue('t1', 'array')}]" class="control-m-line">
@@ -53,14 +53,14 @@
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item label="(3) 气道分泌物微生物培养" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-radio-group v-decorator="['t2', {...require2, initialValue: initValue('t2')}]" @change="changeRadio($event, 'controlt2')">
+                <a-radio-group v-decorator="['t2', {nitialValue: initValue('t2')}]" @change="changeRadio($event, 'controlt2')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
                 </a-radio-group>
               </a-form-item>
               <div v-if="controlt2">
                 <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-checkbox-group v-decorator="['a', {...selectRequired, initialValue: initValue('a', 'array')}]">
+                  <a-checkbox-group v-decorator="['a', { initialValue: initValue('a', 'array')}]">
                     <a-checkbox value="1" @change="changeSelect($event, 'control1')">细菌</a-checkbox>
                     <a-checkbox value="2" @change="changeSelect($event, 'control2')">真菌</a-checkbox>
                     <a-checkbox value="3" @change="changeSelect($event, 'control3')">分枝杆菌</a-checkbox>
@@ -71,10 +71,10 @@
                 <div v-if="control1">
                   <div class="title">1.细菌</div>
                   <a-form-item label="(1) 取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                    <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', { initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                   </a-form-item>
                   <a-form-item label="(2) 种类:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-checkbox-group v-decorator="['a11', {...selectRequired, initialValue: initValue('a11', 'array')}]">
+                    <a-checkbox-group v-decorator="['a11', { initialValue: initValue('a11', 'array')}]">
                       <a-checkbox value="1">铜绿假单胞菌</a-checkbox>
                       <a-checkbox value="2">肺炎链球菌</a-checkbox>
                       <a-checkbox value="3">肺炎克雷伯菌</a-checkbox>
@@ -92,10 +92,10 @@
                 <div v-if="control2">
                   <div class="title">2.真菌</div>
                   <a-form-item label="(1) 取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a2', {...dateRequire, initialValue: initValue('a2', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                    <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a2', { initialValue: initValue('a2', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                   </a-form-item>
                   <a-form-item label="(2) 种类:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-checkbox-group v-decorator="['a21', {...selectRequired, initialValue: initValue('a21', 'array')}]">
+                    <a-checkbox-group v-decorator="['a21', { initialValue: initValue('a21', 'array')}]">
                       <a-checkbox value="1">曲霉</a-checkbox>
                       <a-checkbox value="2" @change="changeSelect($event, 'controla212')">其他</a-checkbox>
                     </a-checkbox-group>
@@ -107,10 +107,10 @@
                 <div v-if="control3">
                   <div class="title">3.分枝杆菌</div>
                   <a-form-item label="(1) 取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                    <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a3', { initialValue: initValue('a3', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                   </a-form-item>
                   <a-form-item label="(2) 种类:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-checkbox-group v-decorator="['a31', {...selectRequired, initialValue: initValue('a31', 'array')}]">
+                    <a-checkbox-group v-decorator="['a31', { initialValue: initValue('a31', 'array')}]">
                       <a-checkbox value="1">结核分枝杆菌</a-checkbox>
                       <a-checkbox value="2">非结核分枝杆菌</a-checkbox>
                     </a-checkbox-group>
@@ -119,7 +119,7 @@
                 <div v-if="control4">
                   <div class="title">4.其他病原</div>
                   <a-form-item label="(1) 取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a4', {...dateRequire, initialValue: initValue('a4', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                    <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a4', { initialValue: initValue('a4', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                   </a-form-item>
                   <a-form-item label="(2) 种类:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-input style="width: 240px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" autocomplete="off"></a-input>
@@ -132,29 +132,29 @@
                 <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a5', {initialValue: initValue('a5', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
               </a-form-item>
               <a-form-item label="种类:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['a51', {...inputRequired, initialValue: initValue('a51')}]" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['a51', {initialValue: initValue('a51')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(5) 血常规检测结果" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-radio-group v-decorator="['b1', {...require2, initialValue: initValue('b1')}]" @change="changeRadio($event, 'controlb1')">
+                <a-radio-group v-decorator="['b1', {initialValue: initValue('b1')}]" @change="changeRadio($event, 'controlb1')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
                 </a-radio-group>
               </a-form-item>
               <div v-if="controlb1">
                 <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" v-decorator="['b11', { ...dateRequire, initialValue: initValue('b11', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                  <a-date-picker placeholder="请选择" v-decorator="['b11', {  initialValue: initValue('b11', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="白细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b12', {...inputNumRequired, initialValue: initValue('b12')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b12', { initialValue: initValue('b12')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="中性粒细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b13', {...inputNumRequired, initialValue: initValue('b13')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b13', { initialValue: initValue('b13')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="淋巴细胞绝对值:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b14', {...inputNumRequired, initialValue: initValue('b14')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b14', { initialValue: initValue('b14')}]" addonAfter="10^9/L" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item label="C反应蛋白:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;" v-decorator="['b15', {...inputNumRequired, initialValue: initValue('b15')}]" addonAfter="mg/L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['b15', { initialValue: initValue('b15')}]" addonAfter="mg/L" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
               <a-form-item label="(6) 本次支气管扩张急性加重的住院日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
@@ -189,183 +189,183 @@
               </a-form-item>
               <div v-if="controlb31">
                 <a-form-item label="哌拉西林起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b31', {...dateRequire, initialValue: initValue('b31', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b31', { initialValue: initValue('b31', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="哌拉西林停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b32', {...dateRequire, initialValue: initValue('b32', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b32', { initialValue: initValue('b32', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb32">
                 <a-form-item label="哌拉西林/他唑巴坦起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b41', {...dateRequire, initialValue: initValue('b41', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b41', { initialValue: initValue('b41', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="哌拉西林/他唑巴坦停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b42', {...dateRequire, initialValue: initValue('b42', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b42', { initialValue: initValue('b42', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb319">
                 <a-form-item label="头孢曲松起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b231', {...dateRequire, initialValue: initValue('b231', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b231', { initialValue: initValue('b231', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="头孢曲松停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b232', {...dateRequire, initialValue: initValue('b232', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b232', { initialValue: initValue('b232', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb33">
                 <a-form-item label="头孢他啶起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b51', {...dateRequire, initialValue: initValue('b51', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b51', { initialValue: initValue('b51', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="头孢他啶停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b52', {...dateRequire, initialValue: initValue('b52', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b52', { initialValue: initValue('b52', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb34">
                 <a-form-item label="头孢哌酮起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b61', {...dateRequire, initialValue: initValue('b61', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b61', { initialValue: initValue('b61', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="头孢哌酮停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b62', {...dateRequire, initialValue: initValue('b62', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b62', { initialValue: initValue('b62', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb35">
                 <a-form-item label="头孢哌酮/舒巴坦起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b71', {...dateRequire, initialValue: initValue('b71', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b71', { initialValue: initValue('b71', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="头孢哌酮/舒巴坦停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b72', {...dateRequire, initialValue: initValue('b72', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b72', { initialValue: initValue('b72', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb36">
                 <a-form-item label="头孢吡肟起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b81', {...dateRequire, initialValue: initValue('b81', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b81', { initialValue: initValue('b81', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="头孢吡肟停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b82', {...dateRequire, initialValue: initValue('b82', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b82', { initialValue: initValue('b82', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb320">
                 <a-form-item label="头孢类抗生素（头孢呋辛、头孢西丁等）起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b241', {...dateRequire, initialValue: initValue('b241', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b241', { initialValue: initValue('b241', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="头孢类抗生素（头孢呋辛、头孢西丁等）停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b242', {...dateRequire, initialValue: initValue('b242', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b242', { initialValue: initValue('b242', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb37">
                 <a-form-item label="亚胺培南起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b91', {...dateRequire, initialValue: initValue('b91', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b91', { initialValue: initValue('b91', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="亚胺培南停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b92', {...dateRequire, initialValue: initValue('b92', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b92', { initialValue: initValue('b92', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb38">
                 <a-form-item label="美罗培南起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b101', {...dateRequire, initialValue: initValue('b101', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b101', { initialValue: initValue('b101', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="美罗培南停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b102', {...dateRequire, initialValue: initValue('b102', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b102', { initialValue: initValue('b102', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb39">
                 <a-form-item label="氨曲南起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b111', {...dateRequire, initialValue: initValue('b111', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b111', { initialValue: initValue('b111', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="氨曲南停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b112', {...dateRequire, initialValue: initValue('b112', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b112', { initialValue: initValue('b112', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb310">
                 <a-form-item label="环丙沙星起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b121', {...dateRequire, initialValue: initValue('b121', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b121', { initialValue: initValue('b121', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="环丙沙星停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b122', {...dateRequire, initialValue: initValue('b122', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b122', { initialValue: initValue('b122', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb311">
                 <a-form-item label="左氧氟沙星起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b131', {...dateRequire, initialValue: initValue('b131', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b131', { initialValue: initValue('b131', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="左氧氟沙星停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b132', {...dateRequire, initialValue: initValue('b132', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b132', { initialValue: initValue('b132', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb312">
                 <a-form-item label="阿米卡星起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b141', {...dateRequire, initialValue: initValue('b141', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b141', { initialValue: initValue('b141', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="阿米卡星停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b142', {...dateRequire, initialValue: initValue('b142', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b142', { initialValue: initValue('b142', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb313">
                 <a-form-item label="妥布霉素起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b151', {...dateRequire, initialValue: initValue('b151', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b151', { initialValue: initValue('b151', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="妥布霉素停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b152', {...dateRequire, initialValue: initValue('b152', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b152', { initialValue: initValue('b152', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb314">
                 <a-form-item label="庆大霉素起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b161', {...dateRequire, initialValue: initValue('b161', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b161', { initialValue: initValue('b161', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="庆大霉素停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b162', {...dateRequire, initialValue: initValue('b162', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b162', { initialValue: initValue('b162', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb315">
                 <a-form-item label="多黏菌素E起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b171', {...dateRequire, initialValue: initValue('b171', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b171', { initialValue: initValue('b171', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="多黏菌素E停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b172', {...dateRequire, initialValue: initValue('b172', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b172', { initialValue: initValue('b172', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb316">
                 <a-form-item label="多黏菌素B起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b181', {...dateRequire, initialValue: initValue('b181', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b181', { initialValue: initValue('b181', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="多黏菌素B停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b182', {...dateRequire, initialValue: initValue('b182', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b182', { initialValue: initValue('b182', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb317">
                 <a-form-item label="磷霉素起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b191', {...dateRequire, initialValue: initValue('b191', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b191', { initialValue: initValue('b191', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="磷霉素停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b192', {...dateRequire, initialValue: initValue('b192', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b192', { initialValue: initValue('b192', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
               <div v-if="controlb318">
                 <a-form-item label="其他抗生素种类" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-input style="width: 240px;margin-right: 10px;" autocomplete="off" v-decorator="['b201', {...inputRequired, initialValue: initValue('b201')}]"></a-input>
+                  <a-input style="width: 240px;margin-right: 10px;" autocomplete="off" v-decorator="['b201', { initialValue: initValue('b201')}]"></a-input>
                 </a-form-item>
                 <a-form-item label="其他抗生素起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b202', {...dateRequire, initialValue: initValue('b202', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b202', {initialValue: initValue('b202', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="其他抗生素停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b203', {...dateRequire, initialValue: initValue('b203', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b203', {initialValue: initValue('b203', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="其他抗生素种类" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;margin-right: 10px;" autocomplete="off" v-decorator="['b211', {...inputRequired, initialValue: initValue('b211')}]"></a-input>
                 </a-form-item>
                 <a-form-item label="其他抗生素起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b212', {...dateRequire, initialValue: initValue('b212', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b212', {initialValue: initValue('b212', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="其他抗生素停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b213', {...dateRequire, initialValue: initValue('b213', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b213', {initialValue: initValue('b213', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="其他抗生素种类" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;margin-right: 10px;" autocomplete="off" v-decorator="['b221', {...inputRequired, initialValue: initValue('b221')}]"></a-input>
                 </a-form-item>
                 <a-form-item label="其他抗生素起始日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b222', {...dateRequire, initialValue: initValue('b222', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b222', {initialValue: initValue('b222', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="其他抗生素停药日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b223', {...dateRequire, initialValue: initValue('b223', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b223', {initialValue: initValue('b223', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
               </div>
             </div>
