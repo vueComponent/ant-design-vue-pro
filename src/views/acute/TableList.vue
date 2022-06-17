@@ -155,7 +155,7 @@ export default {
         },
         {
           title: '创建日期',
-          dataIndex: 'createDate2',
+          dataIndex: 'createDate',
           width: 120,
           customRender: createDate => moment(createDate).format('YYYY-MM-DD')
         },
