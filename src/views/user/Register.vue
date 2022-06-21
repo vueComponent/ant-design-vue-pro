@@ -152,7 +152,7 @@ export default {
   },
   methods: {
     handlePasswordLevel (rule, value, callback) {
-      if (value === '') {
+      if (!value) {
        return callback()
       }
       console.log('scorePassword ; ', scorePassword(value))
