@@ -7,13 +7,13 @@
       </a-menu>
     </div>
     <a-row :gutter="10">
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
-        <chart-card :loading="loading" title="本月患者数" :total="indexData.currMonthPatients">
+      <a-col :sm="20" :md="10" :xl="4" :style="{ marginBottom: '10px' }">
+        <chart-card :loading="loading" title="本月入组数" :total="indexData.currMonthPatients">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <template slot="footer">
-            上月患者数
+            上月入组数
             <span>{{ indexData.lastMonthPatients }}</span>
           </template>
           <div class="page-header-index-img">
@@ -21,7 +21,21 @@
           </div>
         </chart-card>
       </a-col>
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
+      <a-col :sm="20" :md="10" :xl="4" :style="{ marginBottom: '10px' }">
+        <chart-card :loading="loading" title="本月提交数" :total="indexData.currMonthSubmits ">
+          <a-tooltip title="指标说明" slot="action">
+            <a-icon type="info-circle-o" />
+          </a-tooltip>
+          <template slot="footer">
+            上月提交数
+            <span>{{ indexData.lastMonthSubmits }}</span>
+          </template>
+          <div class="page-header-index-img">
+            <img style="width: 64px; height: 64px" src="../../assets/home-5.png">
+          </div>
+        </chart-card>
+      </a-col>
+      <a-col :sm="20" :md="10" :xl="4" :style="{ marginBottom: '10px' }">
         <chart-card :loading="loading" title="本月访视数" :total="indexData.currMonthBasis">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
@@ -35,7 +49,7 @@
           </div>
         </chart-card>
       </a-col>
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
+      <a-col :sm="20" :md="10" :xl="4" :style="{ marginBottom: '10px' }">
         <chart-card :loading="loading" title="本年患者数" :total="indexData.currYearPatients">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
@@ -49,7 +63,7 @@
           </div>
         </chart-card>
       </a-col>
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '10px' }">
+      <a-col :sm="20" :md="10" :xl="4" :style="{ marginBottom: '10px' }">
         <chart-card :loading="loading" title="患者总数" :total="indexData.realNum">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
@@ -364,6 +378,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+/deep/ .ant-col-sm-20 {
+  width: 20%;
+}
 /deep/.ant-pro-trend .up {
   color: #1aa355;
 }

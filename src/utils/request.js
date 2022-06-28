@@ -48,7 +48,6 @@ service.interceptors.request.use(config => {
   const token = Vue.ls.get(ACCESS_TOKEN)
   if (!token) return config
   config.headers.Authorization = token.doctorId
-  
   // config.params ? config.params.append('tokenId', token.doctorId) : config.data.append('tokenId', token.doctorId)
   return config
 }, err)
@@ -60,7 +59,7 @@ service.interceptors.response.use((response) => {
 
 const installer = {
   vm: {},
-  install(Vue) {
+  install (Vue) {
     Vue.use(VueAxios, service)
   }
 }
