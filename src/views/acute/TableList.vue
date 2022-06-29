@@ -115,8 +115,8 @@ export default {
       dateArr: [],
       mdl: {},
       bodyStyle: {
-        padding: "10px",
-        paddingBottom: "0px"
+        padding: '10px',
+        paddingBottom: '0px'
       },
       // 高级搜索 展开/关闭
       advanced: false,
@@ -129,10 +129,10 @@ export default {
           dataIndex: 'patientName',
           width: 100,
           scopedSlots: { customRender: 'patientName' }
-        },{
+        }, {
           title: '是否ICON',
           dataIndex: 'research',
-          width: 80,
+          width: 80
         },
         {
           title: '提交状态',

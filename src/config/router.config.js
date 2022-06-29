@@ -56,14 +56,20 @@ export const asyncRouterMap = [{
       {
         path: '/wx',
         component: RouteView,
-        redirect: '/wx/userBind',
+        redirect: 'wx/userGroup',
         meta: { title: '微信管理', keepAlive: true, icon: wx, permission: ['center', 'group'] },
         children: [{
-            path: '/wx/userBind',
-            name: 'wxUserBind',
-            component: () => import('@/views/wx/userBind'),
-            meta: { title: '微信用户绑定', keepAlive: true, icon: wxyhbd, isBack: false, permission: ['center', 'group'] }
-          },
+              path: '/wx/userGroup',
+              name: 'wxUserGroup',
+              component: () => import('@/views/wx/userGroup'),
+              meta: { title: '患者注册信息', keepAlive: true, icon: wxyhbd, isBack: false, permission: ['center', 'group'] }
+        },
+          // {
+          //   path: '/wx/userBind',
+          //   name: 'wxUserBind',
+          //   component: () => import('@/views/wx/userBind'),
+          //   meta: { title: '微信用户绑定', keepAlive: true, icon: wxyhbd, isBack: false, permission: ['center', 'group'] }
+          // },
           {
             path: '/wx/questionReview',
             name: 'wxQuestionReview',

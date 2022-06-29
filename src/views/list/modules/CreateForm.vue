@@ -172,6 +172,7 @@ import {
   getDictionaryAttributeByDictionaryId,
   addOrUpdate,
   validateCard,
+  updateDataEcho
 } from '@/api/basis'
 import moment from 'moment'
 import _ from 'lodash'
@@ -216,9 +217,11 @@ export default {
       form: this.$form.createForm(this),
       requiredRule: { rules: [{ required: true, message: '该选项必填！' }] },
       patientId: undefined,
+      patientPendingId: undefined,
+      wxPatientId: undefined
     }
   },
-  created() {
+  created () {
     const that = this
     getProvinceAndCity().then((res) => {
       const keyMap = { province: 'city', provinceId: 'cityId' }
@@ -294,7 +297,33 @@ export default {
         this[t] = false
       }
     },
+    dataEcho (value) {
+      this.options.title = '患者入组信息'
+      this.patientPendingId = value.patientPendingId
+      this.wxPatientId = value.wxPatientId
+      value.residence = [value.addressP, value.addressC]
+      setTimeout(() => {
+        this.form.setFieldsValue({
+          card: value.card,
+          name: value.name,
+          sex: String(value.sex),
+          birthDate: moment(value.birthDate, 'x'),
+          residence: value.residence,
+          address: value.address,
+          nation: value.nation,
+          work: value.work,
+          census: value.census,
+          income: value.income,
+          payType: value.payType,
+          telephone1: value.telephone1,
+          telephone2: value.telephone2,
+          telephone3: value.telephone3
+        })
+      }, 0)
+      this.visible = true
+    },
     edit(value) {
+      console.log(value)
       this.options.title = '编辑患者'
       this.patientId = value.patientId
       value.residence = [value.addressP, value.addressC]
@@ -322,7 +351,7 @@ export default {
           telephone3: value.telephone3,
           agreeMent: JSON.parse(value.agreeMent),
           doctorName: value.doctorName,
-          isIcon: String(value.isIcon),
+          isIcon: String(value.isIcon)
         })
         if (value.isIcon == 1) {
           this.form.setFieldsValue({
@@ -344,6 +373,8 @@ export default {
     handleSubmit() {
       if (!this.confirmLoading) {
         this.confirmLoading = true
+        var submitPatientPendingId = this.patientPendingId || ''
+        var submitWxPatientId = this.wxPatientId || ''
         this.form.validateFieldsAndScroll((errors, fieldsValue) => {
           if (
             this.form.getFieldValue('birthDate') &&
@@ -367,7 +398,7 @@ export default {
             startDate: fieldsValue['startDate'].format('YYYY-MM-DD'),
             addressP: residence[0],
             addressC: residence[1],
-            patientId: this.patientId,
+            patientId: this.patientId || ''
           }
           if (fieldsValue['iconJoinDate']) {
             values.iconJoinDate = fieldsValue['iconJoinDate'].format('YYYY-MM-DD')
@@ -376,12 +407,25 @@ export default {
           params.append('patientStr', JSON.stringify(values))
           params.append('changeCenter', '')
           params.append('centerId', '')
-          addOrUpdate(params).then((res) => {
-            that.visible = false
-            that.confirmLoading = false
-            that.$message.success(res.msg)
-            that.$emit('ok', values)
-          })
+          if (submitPatientPendingId && submitWxPatientId) {
+            alert(1)
+            updateDataEcho(submitPatientPendingId, submitWxPatientId, params).then((res) => {
+              console.log(res)
+              that.visible = false
+              that.confirmLoading = false
+              that.$message.success(res.msg)
+              that.$emit('ok', values)
+            })
+          } else {
+            alert(2)
+            addOrUpdate(params).then((res) => {
+              that.visible = false
+              that.confirmLoading = false
+              that.$message.success(res.msg)
+              that.$emit('ok', values)
+            })
+          }
+          
         })
       }
     },
@@ -390,6 +434,10 @@ export default {
     },
     agrValidator(rule, value, callback) {
       if (this.options.title == '编辑患者') {
+        callback()
+        return
+      }
+      if (this.options.title == '患者入组信息') {
         callback()
         return
       }

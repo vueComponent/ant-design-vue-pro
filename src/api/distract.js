@@ -1,11 +1,19 @@
 import { axios } from '@/utils/request'
 
 const api = {
-    distract: '/distract'
+  distract: '/distract'
 }
 
 export default api
 
+// 获取患者注册信息
+export function getZKDataList (parameter) {
+  return axios({
+    url: '/patientPending/getDataList',
+    method: 'get',
+    params: parameter
+  })
+}
 
 export function getZyDataList (parameter) {
   return axios({
@@ -24,12 +32,12 @@ export function addDistract (data) {
 }
 
 export function getSqDataList (parameter) {
-    return axios({
-      url: '/distract/getSqDataList',
-      method: 'post',
-      params: parameter
-    })
-  }
+  return axios({
+    url: '/distract/getSqDataList',
+    method: 'post',
+    params: parameter
+  })
+}
 
 export function verifyDistract (data) {
   return axios({
@@ -86,4 +94,3 @@ export function questionReview (data) {
     data
   })
 }
-

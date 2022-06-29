@@ -277,3 +277,20 @@ export function exportFormData(params) {
     data: params
   })
 }
+
+// 获取入组人员详情
+export function getDataEcho (id) {
+  return axios({
+    url: 'patientPending/' + id + '/view',
+    method: 'get'
+  })
+}
+
+// 入组提交请求
+export function updateDataEcho (patientPendingId, wxPatientId, params) {
+  return axios({
+    url: 'patientPending/' + patientPendingId + '/' + wxPatientId + '/accessPatient',
+    method: 'post',
+    data: params
+  })
+}
