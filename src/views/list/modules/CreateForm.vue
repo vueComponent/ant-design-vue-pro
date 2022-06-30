@@ -323,7 +323,6 @@ export default {
       this.visible = true
     },
     edit(value) {
-      console.log(value)
       this.options.title = '编辑患者'
       this.patientId = value.patientId
       value.residence = [value.addressP, value.addressC]
@@ -408,16 +407,13 @@ export default {
           params.append('changeCenter', '')
           params.append('centerId', '')
           if (submitPatientPendingId && submitWxPatientId) {
-            alert(1)
             updateDataEcho(submitPatientPendingId, submitWxPatientId, params).then((res) => {
-              console.log(res)
               that.visible = false
               that.confirmLoading = false
-              that.$message.success(res.msg)
+              that.$message.warning(res.msg)
               that.$emit('ok', values)
             })
           } else {
-            alert(2)
             addOrUpdate(params).then((res) => {
               that.visible = false
               that.confirmLoading = false

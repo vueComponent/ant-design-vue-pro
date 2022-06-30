@@ -84,11 +84,11 @@
   </a-card>
 </template>
 <script>
-import moment from 'moment'
+// import moment from 'moment'
 import { getZKDataList } from '@/api/distract'
 import { STable } from '@/components'
 import UserDetail from './modules/UserDetail'
-import { getDataEcho } from '@/api/basis'
+// import { getDataEcho } from '@/api/basis'
 import CreatedForm from '@/views/list/modules/CreateForm'
 import $ from 'jquery'
 import CreateForm from '../acute/modules/CreateForm.vue'
@@ -109,7 +109,9 @@ export default {
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
-      queryParam: {},
+      queryParam: {
+        status: 1
+      },
       scroll: false,
       dataEchoInfo: {},
       loadData: (parameter) => {
@@ -235,7 +237,6 @@ export default {
       this.$refs.table.refresh()
     },
     async handleReview (recode) {
-      console.log(recode)
       this.$refs.detailModal.dataEcho(recode)
     },
     handleOk () {
