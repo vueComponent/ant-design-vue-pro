@@ -156,6 +156,19 @@ export const asyncRouterMap = [{
         ]
       },
       {
+        // path: '/',
+        // name: 'index',
+        // component: RouteView,
+        // meta: { title: '消息中心', permission: ['center', 'group'] },
+        // redirect: '/MessageNotification/newsView',
+        // children: [{
+          path: '/MessageNotification/newsView',
+          name: 'newsView',
+          component: () => import('@/views/MessageNotification/newsView'),
+          meta: { title: '消息中心', keepAlive: true, icon: wxyhbd, isBack: false, permission: ['center', 'group'] }
+        // }]
+      },
+      {
         path: '/list/basis/:id(\\d*)',
         name: 'basis',
         hidden: true,
@@ -553,7 +566,7 @@ export const asyncRouterMap = [{
         name: 'userList',
         component: () => import('@/views/user/list'),
         meta: { title: '用户管理', keepAlive: true, icon: wxyhbd, isBack: false, permission: ['center', 'group'] }
-      }
+      },
     ]
   },
   {

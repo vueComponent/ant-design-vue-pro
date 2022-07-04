@@ -232,6 +232,7 @@ export default {
           return newData
         }, {})
       })
+      console.log(that.residences)
     })
     getNation().then((res) => {
       const keyMap = { name: 'title', nationId: 'value' }
