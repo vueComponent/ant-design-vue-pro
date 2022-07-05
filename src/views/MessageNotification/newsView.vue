@@ -46,8 +46,11 @@
               </a-tabs>
             </div>
           </a-col>
-          <a-col :md="12" style="text-align:right" :sm="24">
+          <a-col :md="11" style="text-align:right" :sm="24">
             <a-button type="primary" @click="$refs.createModal.add()">新建</a-button>
+          </a-col>
+          <a-col :md="1" style="text-align:right" :sm="24">
+            <a-button type="primary" @click="$refs.table.refresh()">刷新</a-button>
           </a-col>
         </a-row>
       </a-form>
@@ -64,21 +67,22 @@
       :rowSelection="options.rowSelection"
     >
       <template slot="overFlow" slot-scope="text, record">
-        <div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+        <div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;max-width: 180px">
           {{ record.content }}
         </div>
       </template>
       <span slot="operation" slot-scope="text, record">
         <template>
-          <a v-if="record.status == 0? true : (record.status == 2? true : false)" @click="addorEditMessage(record)">编辑</a>&nbsp;&nbsp;
-          <a v-if="record.status == 1? false : true" @click="handleReview(record)">发布</a>&nbsp;&nbsp;
-          <a v-if="record.status == 1" @click="withdraw(record)">撤回</a>&nbsp;&nbsp;
-          <a>详情</a>&nbsp;&nbsp;
-          <a v-if="record.status == 0? true : (record.status == 2? true : false)" @click="del(record)">删除</a>
+          <a style="margin-right: 5px" v-if="record.status == 0? true : (record.status == 2? true : false)" @click="addorEditMessage(record)">编辑</a>
+          <a style="margin-right: 5px" v-if="record.status == 1? false : true" @click="handleReview(record)">发布</a>
+          <a style="margin-right: 5px" v-if="record.isCreator == 1? (record.status == 1? true : false) : false" @click="withdraw(record)">撤回</a>
+          <a style="margin-right: 5px" @click="newsDetailView(record)">详情</a>
+          <a style="margin-right: 5px" v-if="record.status == 0? true : (record.status == 2? true : false)" @click="del(record)">删除</a>
         </template>
       </span>
     </s-table>
     <created-form ref="createModal" @ok="handleOk"></created-form>
+    <news-detail ref="newsDetail"></news-detail>
   </a-card>
 </template>
 <script>
@@ -86,11 +90,13 @@ import moment from 'moment'
 import { STable } from '@/components'
 import { getMessageList, withdrawData, publishData, deleteData } from '@/api/message'
 import CreatedForm from './component/createdForm.vue'
+import NewsDetail from './component/newsDetail.vue'
 import $ from 'jquery'
 export default {
   components: {
     STable,
-    CreatedForm
+    CreatedForm,
+    NewsDetail
   },
   data () {
     return {
@@ -128,29 +134,34 @@ export default {
       },
       columns: [
         {
+          title: '发布标题',
+          dataIndex: 'title',
+          width: '120px'
+        },
+        {
           title: '发布时间',
           dataIndex: 'updatedDate',
-          width: '100px',
-          customRender: (updatedDate) => moment(updatedDate).format('YYYY-MM-DD')
+          width: '80px',
+          customRender: (updatedDate) => (updatedDate) ? moment(updatedDate).format('YYYY-MM-DD') : ''
         },
         {
           title: '发布人',
-          dataIndex: 'creatorName',
+          dataIndex: 'publisher',
           width: '80px'
         },
         {
           title: '消息内容',
           dataIndex: 'content',
-          width: '200px',
-          render: text => <div dataIndex={text}>{text}</div>
+          width: '180px',
+          // render: text => <div dataIndex={text}>{text}</div>
           //   ellipsis: true
-        //   scopedSlots: { customRender: 'overFlow' }
+          scopedSlots: { customRender: 'overFlow' }
         },
         {
           title: '操作',
           dataIndex: 'operation',
           scopedSlots: { customRender: 'operation' },
-          width: '120px'
+          width: '100px'
         }
       ]
     }
@@ -188,7 +199,7 @@ export default {
     //   this.queryParam = {}
     // },
     tableSearch (type) {
-      this.queryParam = type
+      this.queryParam.status = type
       this.$refs.table.refresh()
       this.advanced = false
     },
@@ -199,6 +210,9 @@ export default {
     // 编辑
     addorEditMessage (record) {
       this.$refs.createModal.edit(record)
+    },
+    newsDetailView (record) {
+      this.$refs.newsDetail.show(record)
     },
     // 发布
     async handleReview (recode) {

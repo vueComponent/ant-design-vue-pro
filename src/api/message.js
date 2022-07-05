@@ -1,4 +1,4 @@
-import api from './index'
+// import api from './index'
 import { axios } from '@/utils/request'
 
 // 查询所有消息
@@ -35,6 +35,21 @@ export function saveOrUpdateData (params) {
 export function deleteData (id) {
   return axios({
     url: '/announcement/' + id + '/cancel',
+    method: 'post'
+  })
+}
+// 详情
+export function detailData (announcementId) {
+  return axios({
+    url: '/announcement/' + announcementId + '/view',
+    method: 'get'
+  })
+}
+
+// 阅读公告
+export function isReadDetail (announcementId) {
+  return axios({
+    url: '/announcement/readAnnouncement/' + announcementId,
     method: 'post'
   })
 }

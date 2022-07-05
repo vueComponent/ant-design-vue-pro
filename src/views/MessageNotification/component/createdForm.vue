@@ -63,7 +63,7 @@ export default {
   methods: {
     add () {
       this.options.title = '新建消息'
-      this.patientId = ''
+      this.announcementId = ''
       this.visible = true
     },
     edit (value) {
@@ -90,9 +90,7 @@ export default {
             ...fieldsValue,
             announcementId: this.announcementId
           }
-          console.log(values)
           saveOrUpdateData(values).then((res) => {
-            console.log(res)
             that.visible = false
             that.confirmLoading = false
             that.$message.success(res.msg)

@@ -5,6 +5,7 @@
         <div v-if="mode === 'sidemenu'" class="header">
           <a-icon v-if="device==='mobile'" class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle" />
           <a-icon v-else class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle" />
+          <header-notice style="position: absolute; right: 165px; top: 3px"></header-notice>
           <user-menu></user-menu>
         </div>
         <div v-else :class="['top-nav-header-index', theme]">
@@ -14,6 +15,7 @@
               <s-menu v-if="device !== 'mobile'" mode="horizontal" :menu="menus" :theme="theme" />
               <a-icon v-else class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle" />
             </div>
+            <!-- <header-notice class="header-index-right"></header-notice> -->
             <user-menu class="header-index-right"></user-menu>
           </div>
         </div>
@@ -23,6 +25,7 @@
 </template>
 <script>
 import UserMenu from '../tools/UserMenu'
+import HeaderNotice from '@/components/newsMessage/DropDownInfo.vue'
 import SMenu from '../Menu/'
 import Logo from '../tools/Logo'
 import { mixin } from '@/utils/mixin'
@@ -33,7 +36,8 @@ export default {
   components: {
     UserMenu,
     SMenu,
-    Logo
+    Logo,
+    HeaderNotice
   },
   mixins: [mixin],
   props: {
