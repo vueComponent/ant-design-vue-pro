@@ -294,3 +294,11 @@ export function updateDataEcho (patientPendingId, wxPatientId, params) {
     data: params
   })
 }
+
+// 查询未读公告
+export function getUnReadAnnouncement () {
+  return axios({
+    url: '/announcementSending/getUnReadAnnouncement',
+    method: 'get'
+  })
+}

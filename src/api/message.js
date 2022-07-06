@@ -2,11 +2,11 @@
 import { axios } from '@/utils/request'
 
 // 查询所有消息
-export function getMessageList (params) {
+export function getMessageList (parameter) {
   return axios({
     url: '/announcement/getDataList',
     method: 'get',
-    data: params
+    params: parameter
   })
 }
 // 撤回消息

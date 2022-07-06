@@ -66,15 +66,8 @@
       <template slot="patientCard" slot-scope="text, record">
         <p>{{ modifyCard(text) }}</p>
       </template>
-      <!-- <span slot="bindStatus" slot-scope="text">
-        <a-badge
-          :status="text == 1 ? 'default' : text == 2 ? 'success' : 'error'"
-          :text="text == 1 ? '未绑定' : text == 2 ? '已绑定' : '忽略'"
-        />
-      </span> -->
       <span slot="operation" slot-scope="text, record">
         <template>
-          <!-- <a v-if="record.bindStatus == 2">入组</a>$refs.createModal.add() handleReview(record) -->
           <a @click="handleReview(record)">入组</a>
         </template>
       </span>
@@ -88,7 +81,6 @@
 import { getZKDataList } from '@/api/distract'
 import { STable } from '@/components'
 import UserDetail from './modules/UserDetail'
-// import { getDataEcho } from '@/api/basis'
 import CreatedForm from '@/views/list/modules/CreateForm'
 import $ from 'jquery'
 import CreateForm from '../acute/modules/CreateForm.vue'
@@ -100,7 +92,7 @@ export default {
     CreateForm,
     CreatedForm
   },
-  data() {
+  data () {
     return {
       bodyStyle: {
         padding: '10px',
@@ -192,12 +184,12 @@ export default {
       ]
     }
   },
-  created() {
+  created () {
     this.scroll = {
       y: window.screen.height - 368 + 'px'
     }
   },
-  mounted() {
+  mounted () {
     var that = this
     $(document).on('click', function (e) {
       if (e.target.className === 'toggleAdvanced') {
@@ -214,25 +206,25 @@ export default {
     })
   },
   methods: {
-    modifyName(name) {
+    modifyName (name) {
       return name.replace(/(.)(.*)/, (_, $1, $2) => $1 + '*'.repeat($2.length))
     },
-    modifyCard(card) {
+    modifyCard (card) {
       return card.replace(/^(.{8})(?:\d+)(.{4})$/, '$1******$2')
     },
-    onSelectChange(selectedRowKeys, selectedRows) {
+    onSelectChange (selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
     },
-    clearForm() {
+    clearForm () {
       this.queryParam = {}
     },
-    tableSearch(type) {
+    tableSearch (type) {
       this.queryParam.status = type
       this.$refs.table.refresh()
       this.advanced = false
     },
-    refreshTable() {
+    refreshTable () {
       this.advanced = false
       this.$refs.table.refresh()
     },

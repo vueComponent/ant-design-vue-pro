@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索姓名" />
+              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索标题" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
@@ -22,19 +22,24 @@
               <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
-                    <p @click="tableSearch()">全部消息</p>
-                    <p @click="tableSearch(1)">已发布消息</p>
-                    <p @click="tableSearch(0)">未发布消息</p>
+                    <p @click="tableSearch(0)">全部消息</p>
+                    <p @click="tableSearch(1)">已创建消息</p>
+                    <p @click="tableSearch(2)">已接收消息</p>
+                    <p @click="tableSearch(3)">待阅读消息</p>
+                    <p @click="tableSearch(4)">已阅读消息</p>
                   </div>
                 </a-tab-pane>
-                <!-- <a-tab-pane tab="自定义检索" key="2" forceRender>
+                <a-tab-pane tab="自定义检索" key="2" forceRender>
                   <a-card :bordered="false">
                     <a-form>
-                      <a-form-item label="姓名">
-                        <a-input v-model.trim="queryParam.name" />
+                      <a-form-item label="标题">
+                        <a-input v-model.trim="queryParam.title" />
                       </a-form-item>
-                      <a-form-item label="身份证号">
-                        <a-input v-model.trim="queryParam.card" />
+                      <a-form-item label="发布人">
+                        <a-input v-model.trim="queryParam.publisher" />
+                      </a-form-item>
+                      <a-form-item label="发布时间" style="margin-bottom:0;">
+                        <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
                       </a-form-item>
                       <a-form-item style="text-align: right; margin-bottom: 0; margin-top: 15px">
                         <a-button type="primary" @click="clearForm()">清空</a-button>
@@ -42,7 +47,7 @@
                       </a-form-item>
                     </a-form>
                   </a-card>
-                </a-tab-pane> -->
+                </a-tab-pane>
               </a-tabs>
             </div>
           </a-col>
@@ -100,6 +105,7 @@ export default {
   },
   data () {
     return {
+      dateArr: [],
       bodyStyle: {
         padding: '10px',
         paddingBottom: '0px'
@@ -107,13 +113,11 @@ export default {
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
-      queryParam: {
-        status: 0
-      },
+      queryParam: {},
       scroll: false,
       dataEchoInfo: {},
       loadData: (parameter) => {
-        return getMessageList(Object.assign(parameter, this.queryParam.status)).then((res) => {
+        return getMessageList(Object.assign(parameter, this.queryParam)).then((res) => {
           return res
         })
       },
@@ -195,17 +199,23 @@ export default {
     handleOk () {
       this.$refs.table.refresh()
     },
-    // clearForm() {
-    //   this.queryParam = {}
-    // },
+    clearForm () {
+      this.queryParam = {}
+      this.dateArr = []
+    },
     tableSearch (type) {
-      this.queryParam.status = type
+      this.queryParam.queryType = type
       this.$refs.table.refresh()
       this.advanced = false
     },
     refreshTable () {
       this.advanced = false
       this.$refs.table.refresh()
+    },
+    changeTime (time) {
+      this.dateArr = time
+      this.queryParam.publishTimeStart = moment(time[0]).format('YYYY-MM-DD')
+      this.queryParam.publishTimeEnd = moment(time[1]).format('YYYY-MM-DD')
     },
     // 编辑
     addorEditMessage (record) {
@@ -285,12 +295,6 @@ export default {
     text-overflow:ellipsis;
     cursor: pointer;
 }
-// /deep/td {
-//   white-space:nowrap;
-// //   whitewhite-space:nowrap;  //强制在一行显示
-//   overflow:hidden;    //溢出的内容切割隐藏
-//   text-overflow:ellipsis; //当内联溢出块容器时，将溢出部分替换为…
-// }
 .tableSearch {
   background: #ffffff;
   position: absolute;

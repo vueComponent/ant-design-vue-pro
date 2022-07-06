@@ -5,7 +5,7 @@
         <div v-if="mode === 'sidemenu'" class="header">
           <a-icon v-if="device==='mobile'" class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle" />
           <a-icon v-else class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle" />
-          <header-notice style="position: absolute; right: 165px; top: 3px"></header-notice>
+          <header-notice ref="headerNotice" style="position: absolute; right: 165px; top: 3px"></header-notice>
           <user-menu></user-menu>
         </div>
         <div v-else :class="['top-nav-header-index', theme]">
@@ -15,7 +15,6 @@
               <s-menu v-if="device !== 'mobile'" mode="horizontal" :menu="menus" :theme="theme" />
               <a-icon v-else class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle" />
             </div>
-            <!-- <header-notice class="header-index-right"></header-notice> -->
             <user-menu class="header-index-right"></user-menu>
           </div>
         </div>
@@ -66,22 +65,22 @@ export default {
       default: 'desktop'
     }
   },
-  data() {
+  data () {
     return {
       visible: true,
       oldScrollTop: 0,
       displayAll: this.$ls.get(ACCESS_TOKEN).purviewType === 1 || false
     }
   },
-  mounted() {
+  mounted () {
     document.addEventListener('scroll', this.handleScroll, { passive: true })
+    // this.$refs.HeaderNotice.fetchNotice()
   },
   methods: {
-    handleScroll() {
+    handleScroll () {
       if (!this.autoHideHeader) {
         return
       }
-
       const scrollTop = document.body.scrollTop + document.documentElement.scrollTop
       if (!this.ticking) {
         this.ticking = true
@@ -98,14 +97,14 @@ export default {
         })
       }
     },
-    toggle() {
+    toggle () {
       this.$emit('toggle')
     },
-    jumpReport() {
+    jumpReport () {
       this.$router.push('/report/index')
     }
   },
-  beforeDestroy() {
+  beforeDestroy () {
     document.body.removeEventListener('scroll', this.handleScroll, true)
   }
 }
