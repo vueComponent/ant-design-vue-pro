@@ -7,6 +7,7 @@ import notification from 'ant-design-vue/es/notification'
 import { setDocumentTitle, domTitle } from '@/utils/domUtil'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { i18nRender } from '@/locales'
+import { generatorDynamicRouter } from '@/router/generator-routers'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -18,7 +19,8 @@ router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
   to.meta && typeof to.meta.title !== 'undefined' && setDocumentTitle(`${i18nRender(to.meta.title)} - ${domTitle}`)
   /* has token */
-  if (storage.get(ACCESS_TOKEN)) {
+  const token = storage.get(ACCESS_TOKEN)
+  if (token) {
     if (to.path === loginRoutePath) {
       next({ path: defaultRoutePath })
       NProgress.done()
@@ -29,9 +31,10 @@ router.beforeEach((to, from, next) => {
         store
           .dispatch('GetInfo')
           .then(res => {
-            const roles = res.result && res.result.role
             // generate dynamic router
-            store.dispatch('GenerateRoutes', { roles }).then(() => {
+            generatorDynamicRouter(token).then(routers => {
+              store.commit('SET_ROUTERS', routers)
+
               // 根据roles权限生成可访问的路由表
               // 动态添加可访问路由表
               // VueRouter@3.5.0+ New API
