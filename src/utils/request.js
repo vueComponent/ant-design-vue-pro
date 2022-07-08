@@ -1,5 +1,4 @@
 import axios from 'axios'
-import store from '@/store'
 import storage from 'store'
 import notification from 'ant-design-vue/es/notification'
 import { VueAxios } from './axios'
@@ -30,7 +29,7 @@ const errorHandler = (error) => {
         description: 'Authorization verification failed'
       })
       if (token) {
-        store.dispatch('Logout').then(() => {
+        this.$store.dispatch('Logout').then(() => {
           setTimeout(() => {
             window.location.reload()
           }, 1500)
