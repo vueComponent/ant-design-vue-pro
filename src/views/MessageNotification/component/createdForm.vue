@@ -120,4 +120,8 @@ export default {
   left: -22px !important;
   top: 4px;
 }
+input,
+textarea {
+    outline: none;
+}
 </style>

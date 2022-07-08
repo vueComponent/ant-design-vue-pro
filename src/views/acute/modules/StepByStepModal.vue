@@ -97,7 +97,6 @@
 
 <script>
 import pick from 'lodash.pick'
-
 const stepForms = [
   ['name', 'desc'],
   ['target', 'template', 'type'],

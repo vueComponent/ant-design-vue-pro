@@ -64,6 +64,12 @@ export const asyncRouterMap = [{
               component: () => import('@/views/wx/userGroup'),
               meta: { title: '患者注册信息', keepAlive: true, icon: wxyhbd, isBack: false, permission: ['center', 'group'] }
         },
+        {
+          path: 'wx/messageReply',
+          name: 'wxMessageReply',
+          component: () => import('@/views/wx/messageReply'),
+          meta: { title: '患者留言管理', keepAlive: true, icon: hzbgsy, isBack: false, permission: ['center', 'group'] }
+        },
           // {
           //   path: '/wx/userBind',
           //   name: 'wxUserBind',
@@ -86,7 +92,7 @@ export const asyncRouterMap = [{
             name: 'wxTicketRegister',
             component: () => import('@/views/wx/ticketRegister'),
             meta: { title: '活动券登记', keepAlive: true, icon: huodongquan, isBack: false, permission: ['center', 'group'] }
-          },
+          }
         ]
       },
       {
