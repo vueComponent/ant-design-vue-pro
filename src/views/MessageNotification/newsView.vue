@@ -87,7 +87,7 @@
       </span>
     </s-table>
     <created-form ref="createModal" @ok="handleOk"></created-form>
-    <news-detail ref="newsDetail"></news-detail>
+    <news-detail ref="newsDetail" @ok="handleOk"></news-detail>
   </a-card>
 </template>
 <script>

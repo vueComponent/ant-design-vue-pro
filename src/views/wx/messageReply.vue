@@ -5,7 +5,7 @@
         <a-row :gutter="16">
           <a-col :md="5" :sm="24">
             <a-form-item>
-              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、身份证号" />
+              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、手机号" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="24">
@@ -19,15 +19,15 @@
           </a-col>
           <a-col v-if="advanced" class="tableSearch" :md="8">
             <div>
-              <a-tabs defaultActiveKey="1">
+              <a-tabs :style="{width: '250px'}" defaultActiveKey="1">
                 <a-tab-pane tab="常用检索" key="1">
                   <div class="commonRetrieval">
-                    <p @click="tableSearch()">全部用户</p>
-                    <p @click="tableSearch(1)">待入组用户</p>
-                    <p @click="tableSearch(0)">已入组用户</p>
+                    <p @click="tableSearch()">全部</p>
+                    <p @click="tableSearch(1)">待答复</p>
+                    <p @click="tableSearch(3)">已答复</p>
                   </div>
                 </a-tab-pane>
-                <a-tab-pane tab="自定义检索" key="2" forceRender>
+                <!-- <a-tab-pane tab="自定义检索" key="2" forceRender>
                   <a-card :bordered="false">
                     <a-form>
                       <a-form-item label="姓名">
@@ -42,7 +42,7 @@
                       </a-form-item>
                     </a-form>
                   </a-card>
-                </a-tab-pane>
+                </a-tab-pane> -->
               </a-tabs>
             </div>
           </a-col>
@@ -66,7 +66,7 @@
         </template>
       </span>
     </s-table>
-    <reply-view ref="replyView"></reply-view>
+    <reply-view ref="replyView" @ok="handleOk"></reply-view>
   </a-card>
 </template>
 <script>
@@ -93,7 +93,7 @@ export default {
       scroll: false,
       dataEchoInfo: {},
       loadData: (parameter) => {
-        return getMessageDataList(Object.assign(parameter)).then((res) => {
+        return getMessageDataList(Object.assign(parameter, this.queryParam)).then((res) => {
           return res
         })
       },
@@ -173,7 +173,7 @@ export default {
       this.queryParam = {}
     },
     tableSearch (type) {
-      this.queryParam.status = type
+      this.queryParam.replyStatus = type
       this.$refs.table.refresh()
       this.advanced = false
     },
@@ -183,7 +183,6 @@ export default {
     },
     async handleReview (recode) {
       const { data } = await getPatientMessageList(recode.patientCenterMessageId)
-      console.log(data)
       this.$refs.replyView.replyMessage(data)
     },
     handleOk () {

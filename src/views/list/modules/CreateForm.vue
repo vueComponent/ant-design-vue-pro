@@ -369,11 +369,12 @@ export default {
       }, 0)
       this.visible = true
     },
-    handleSubmit() {
+    handleSubmit () {
       if (!this.confirmLoading) {
         this.confirmLoading = true
         var submitPatientPendingId = this.patientPendingId || ''
         var submitWxPatientId = this.wxPatientId || ''
+
         this.form.validateFieldsAndScroll((errors, fieldsValue) => {
           if (
             this.form.getFieldValue('birthDate') &&
@@ -410,7 +411,7 @@ export default {
             updateDataEcho(submitPatientPendingId, submitWxPatientId, params).then((res) => {
               that.visible = false
               that.confirmLoading = false
-              that.$message.warning(res.msg)
+              that.$message.success(res.msg)
               that.$emit('ok', values)
             })
           } else {
@@ -421,7 +422,6 @@ export default {
               that.$emit('ok', values)
             })
           }
-          
         })
       }
     },
@@ -430,10 +430,6 @@ export default {
     },
     agrValidator(rule, value, callback) {
       if (this.options.title == '编辑患者') {
-        callback()
-        return
-      }
-      if (this.options.title == '患者入组信息') {
         callback()
         return
       }

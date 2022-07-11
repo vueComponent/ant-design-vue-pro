@@ -10,15 +10,15 @@
     :confirmLoading="confirmLoading"
     @ok="handleSubmit"
     @cancel="handleCancel"
+    ref="modal"
   >
     <a-spin :spinning="confirmLoading">
-      <a-form :form="form" ref="main">
-        <div class="replyList" ref="content">
+      <a-form :form="form">
+        <div class="replyList" ref="content" id="content">
           <div v-for="(item, index) in messageRecords" :key="index">
             <div v-if="item.type == 1" class="patient">
               <p>
                 <span class="name">{{ patientCenterMessage.patientName }}</span>
-                <!-- <span class="identity" style="color: #444; margin-left: 10px; background: #48A760; color: #fff">{{ item.reservationCode }}</span> -->
                 <span class="identity">患者</span>
               </p>
               <p class="time">{{ item.createTime | formDate }}</p>
@@ -70,11 +70,9 @@ export default {
       return moment(date).format('YYYY-MM-DD HH:mm:ss')
     }
   },
-  mounted () {
-    this.$nextTick(() => {
-    //   this.$refs.main.scrollTop = this.$refs.content.scrollHeight
-    console.log(this.$refs.main.scrollTop)
-    })
+  updated () {
+    const msg = document.getElementById('content')
+    msg.scrollTop = msg.scrollHeight
   },
   methods: {
     replyMessage (data) {

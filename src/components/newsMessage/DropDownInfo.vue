@@ -18,7 +18,7 @@
       </a-spin>
     </div>
     <span @click="fetchNotice" class="header-notice">
-      <a-badge class="notice-badge" :count="unReadMessage.length">
+      <a-badge class="notice-badge" :count="messageNum">
         <a-icon :class="['header-notice-icon']" type="bell" />
       </a-badge>
     </span>
@@ -28,19 +28,24 @@
 <script>
 import { getUnReadAnnouncement } from '@/api/basis'
 import moment from 'moment'
+import { mapGetters } from 'vuex'
 export default {
   name: 'HeaderNotice',
   data () {
     return {
       loading: false,
       show: false,
-      unReadMessage: []
+      unReadMessage: [],
+      num: ''
     }
   },
   created () {
     this.fetchNotice()
   },
   computed: {
+    ...mapGetters({
+      messageNum: 'messageNum'
+    })
   },
   filters: {
     formDate (date) {
@@ -57,6 +62,7 @@ export default {
       this.loading = true
       const res = await getUnReadAnnouncement()
       this.unReadMessage = res.data
+      this.$store.commit('TOGGLE_MESSAGE_NUM', res.data.length || '')
       this.loading = false
     },
     homeToInfo () {

@@ -72,15 +72,15 @@
         </template>
       </span>
     </s-table>
-    <user-detail ref="userDetail" @ok="handleOk"></user-detail>
-    <created-form ref="detailModal"></created-form>
+    <!-- <user-detail ref="userDetail" @ok="handleOk"></user-detail> -->
+    <created-form ref="detailModal" @ok="handleOk"></created-form>
   </a-card>
 </template>
 <script>
 // import moment from 'moment'
 import { getZKDataList } from '@/api/distract'
 import { STable } from '@/components'
-import UserDetail from './modules/UserDetail'
+// import UserDetail from './modules/UserDetail'
 import CreatedForm from '@/views/list/modules/CreateForm'
 import $ from 'jquery'
 import CreateForm from '../acute/modules/CreateForm.vue'
@@ -88,7 +88,6 @@ import CreateForm from '../acute/modules/CreateForm.vue'
 export default {
   components: {
     STable,
-    UserDetail,
     CreateForm,
     CreatedForm
   },

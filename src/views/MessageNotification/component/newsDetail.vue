@@ -40,6 +40,7 @@
 </template>
 <script>
 import { detailData, isReadDetail } from '@/api/message'
+import { getUnReadAnnouncement } from '@/api/basis'
 import moment from 'moment'
 export default {
   data () {
@@ -84,10 +85,13 @@ export default {
         this.status = 2
         const res = await isReadDetail(this.announcementId)
         that.$message.success(res.msg)
+        const { data } = await getUnReadAnnouncement()
+        this.$store.commit('TOGGLE_MESSAGE_NUM', data.length || '')
       }
     },
     handleCancel () {
       this.visible = false
+      this.$emit('ok')
     }
   }
 }
