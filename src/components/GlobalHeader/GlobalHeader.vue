@@ -6,8 +6,8 @@
           <a-icon v-if="device==='mobile'" class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle" />
           <a-icon v-else class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle" />
           <span class="right">
-            <header-notice ref="headerNotice" style="position: absolute; right: 165px; top: 3px"></header-notice>
-            <user-menu></user-menu>
+            <user-menu ></user-menu>
+            <header-notice ref="headerNotice" style="float: right; padding-top: 2px"></header-notice>
           </span>
         </div>
         <div v-else :class="['top-nav-header-index', theme]">

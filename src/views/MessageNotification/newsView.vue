@@ -151,7 +151,7 @@ export default {
         {
           title: '发布人',
           dataIndex: 'publisher',
-          width: '80px'
+          width: '100px'
         },
         {
           title: '消息内容',
@@ -214,8 +214,8 @@ export default {
     },
     changeTime (time) {
       this.dateArr = time
-      this.queryParam.publishTimeStart = moment(time[0]).format('YYYY-MM-DD')
-      this.queryParam.publishTimeEnd = moment(time[1]).format('YYYY-MM-DD')
+      this.queryParam.publishTimeStart = moment(time[0]).format('YYYY-MM-DD 00:00:00')
+      this.queryParam.publishTimeEnd = moment(time[1]).format('YYYY-MM-DD 23:59:59')
     },
     // 编辑
     addorEditMessage (record) {

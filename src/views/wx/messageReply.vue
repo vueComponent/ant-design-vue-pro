@@ -60,6 +60,11 @@
       :rowSelection="options.rowSelection"
       showPagination="auto"
     >
+      <template slot="overFlow" slot-scope="text, record">
+        <div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;max-width: 150px">
+          {{ record.lastMessage }}
+        </div>
+      </template>
       <span slot="operation" slot-scope="text, record">
         <template>
           <a @click="handleReview(record)">答复</a>
@@ -116,7 +121,7 @@ export default {
         {
           title: '患者姓名',
           dataIndex: 'patientName',
-          width: '120px'
+          width: '100px'
         },
         {
           title: '手机号码',
@@ -129,16 +134,22 @@ export default {
           width: '100px'
         },
         {
+          title: '最近一条留言',
+          dataIndex: 'lastMessage',
+          width: '150px',
+          scopedSlots: { customRender: 'overFlow' }
+        },
+        {
           title: '最新留言时间',
           dataIndex: 'lastMessageTime',
           customRender: (lastMessageTime) => moment(lastMessageTime).format('YYYY-MM-DD HH:mm:ss'),
-          width: '120px'
+          width: '150px'
         },
         {
           title: '操作',
           dataIndex: 'operation',
           scopedSlots: { customRender: 'operation' },
-          width: '100px'
+          width: '60px'
         }
       ]
     }

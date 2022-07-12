@@ -98,7 +98,7 @@
         wxBind(params).then(res => {
           this.visible = false
           this.confirmLoading = false
-          this.$message.success(res.msg);
+          this.$message.success(res.msg)
           this.$emit('ok')
         })
       },

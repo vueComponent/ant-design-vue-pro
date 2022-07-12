@@ -319,6 +319,10 @@ export default {
           telephone2: value.telephone2,
           telephone3: value.telephone3
         })
+        if (value.startDate)
+          this.form.setFieldsValue({
+            startDate: moment(value.startDate, 'YYYY-MM-DD'),
+          })
       }, 0)
       this.visible = true
     },
@@ -374,7 +378,6 @@ export default {
         this.confirmLoading = true
         var submitPatientPendingId = this.patientPendingId || ''
         var submitWxPatientId = this.wxPatientId || ''
-
         this.form.validateFieldsAndScroll((errors, fieldsValue) => {
           if (
             this.form.getFieldValue('birthDate') &&
@@ -579,9 +582,8 @@ export default {
         var valnum
         var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2)
         var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2')
-        var nTemp = 0,
-          i
-        for (i = 0; i < 17; i++) {
+        var nTemp = 0
+        for (var i = 0; i < 17; i++) {
           nTemp += num.substr(i, 1) * arrInt[i]
         }
         valnum = arrCh[nTemp % 11]
@@ -590,7 +592,7 @@ export default {
           return
         }
         // 回显性别、生日
-        if (!this.patientId) {
+        if (!this.patientId && !this.patientPendingId) {
           this.form.resetFields(['birthDate', 'sex'])
           this.confirmLoading = true
           const params = new FormData()

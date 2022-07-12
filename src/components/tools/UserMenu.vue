@@ -3,7 +3,7 @@
     <div class="content-box">
       <a-dropdown>
         <span class="action ant-dropdown-link user-dropdown-menu">
-          <a-avatar class="avatar" size="small" icon="user" />
+          <a-avatar class="avatar" style="margin-top: 18px" size="small" icon="user" />
           <span>{{userName}}</span>
         </span>
         <a-menu slot="overlay" class="user-dropdown-menu-wrapper">

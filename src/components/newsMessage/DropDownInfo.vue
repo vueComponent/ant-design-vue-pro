@@ -4,7 +4,7 @@
       <a-spin :spinning="loading">
         <a-tabs class="dropdown-tabs" :style="{width: '350px'}">
           <a-tab-pane tab="消息中心">
-            <a-list class="tab-pane" v-for="(item, index) in unReadMessage" :key="index">
+            <a-list class="tab-pane" v-for="(item, index) in (showDisplay? unReadMessage : textList)" :key="index">
               <div class="titleTime">
                 <img src="../../assets/notice.png" />
                 <span>{{ item.updatedDate | formDate }}</span>
@@ -12,6 +12,11 @@
               </div>
             </a-list>
             <div v-if="unReadMessage.length == 0? true : false" class="info">暂无新的消息</div>
+            <!-- <div @click="showDisplay = !showDisplay" class="show" v-if="unReadMessage.length > 3">
+              <span>
+                {{ !showDisplay? '展开' : '收起' }}
+              </span>
+            </div> -->
             <button type="button" @click="homeToInfo()" class="btn">查看所有消息 >>></button>
           </a-tab-pane>
         </a-tabs>
@@ -36,7 +41,7 @@ export default {
       loading: false,
       show: false,
       unReadMessage: [],
-      num: ''
+      showDisplay: false
     }
   },
   created () {
@@ -45,7 +50,22 @@ export default {
   computed: {
     ...mapGetters({
       messageNum: 'messageNum'
-    })
+    }),
+    textList () {
+      if (this.showDisplay == false) {
+        let textList = []
+        if (this.unReadMessage.length > 3) {
+          for (var i = 0; i < 3; i++) {
+            textList.push(this.unReadMessage[i])
+          }
+        } else {
+          textList = this.unReadMessage
+        }
+        return textList
+      } else {
+        return this.unReadMessage
+      }
+    }
   },
   filters: {
     formDate (date) {
@@ -92,6 +112,8 @@ export default {
     background-color: #fff;
     box-shadow: 0 2px 8px #999;
     border-radius: 4px;
+    position: absolute;
+    right: -100px;
     .tab-pane{
       padding: 0 24px 12px;
       max-height: 200px;
@@ -109,15 +131,6 @@ export default {
       display:-webkit-box;
       -webkit-box-orient:vertical;
       -webkit-line-clamp:2;
-    }
-    .btn{
-      width: 100%;
-      height: 42px;
-      border: unset;
-      background: #fff;
-      border-top: 1px solid #ccc;
-      color: #333;
-      cursor: pointer;
     }
     .info{
       width: 100%;
@@ -146,6 +159,21 @@ export default {
       }
     }
   }
+  .btn{
+      width: 100%;
+      height: 42px;
+      border: unset;
+      background: #fff;
+      border-top: 1px solid #ccc;
+      color: #333;
+      cursor: pointer;
+    }
+    .show {
+      height: 20px;
+      text-align: center;
+      color: blue;
+      cursor: pointer;
+    }
   .ant-badge{
         color: #1890ff !important;
     }

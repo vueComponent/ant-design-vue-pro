@@ -26,7 +26,7 @@
             </div>
             <div v-if="item.type == 2" class="reply">
               <p>
-                <span class="replyname">项目办</span>
+                <!-- <span class="replyname">项目办</span> -->
                 <span class="name">{{ patientCenterMessage.centerName }}</span>
               </p>
               <p>{{ item.createTime | formDate }}</p>
@@ -152,7 +152,7 @@ export default {
 }
 .replyContent{
     background-color: #f2f9f7;
-    width: 90%;
+    max-width: 90%;
     border-radius: 3px;
     padding: 12px;
     line-height: 15px;
@@ -170,5 +170,16 @@ export default {
 input,
 textarea {
     outline: none;
+}
+.textAlign{
+  text-align: left;
+  background-color: #f2f9f7;
+  max-width: 90%;
+  border-radius: 3px;
+  padding: 12px;
+  line-height: 15px;
+  margin-left: 70px;
+  word-wrap: break-word;
+  word-break: normal;
 }
 </style>
