@@ -212,7 +212,7 @@ export default {
       destroyOnClose: true,
       bodyStyle: {
         height: '500px',
-        overflow: 'auto',
+        overflow: 'auto'
       },
       form: this.$form.createForm(this),
       requiredRule: { rules: [{ required: true, message: '该选项必填！' }] },
