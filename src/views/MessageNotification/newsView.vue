@@ -72,10 +72,11 @@
       :rowSelection="options.rowSelection"
     >
       <template slot="overFlow" slot-scope="text, record">
-        <div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;max-width: 180px">
+        <div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;max-width: 600px">
           {{ record.content }}
         </div>
       </template>
+      <span slot="status" slot-scope="text">{{ text | statusFilter}}</span>
       <span slot="operation" slot-scope="text, record">
         <template>
           <a style="margin-right: 5px" v-if="record.status == 0? true : (record.status == 2? true : false)" @click="addorEditMessage(record)">编辑</a>
@@ -154,9 +155,22 @@ export default {
           width: '100px'
         },
         {
+          title: '消息来源',
+          dataIndex: 'typeName',
+          width: '100px'
+        },
+        {
+          title: '阅读状态',
+          dataIndex: 'status',
+          width: '100px',
+          scopedSlots: {
+            customRender: 'status'
+          }
+        },
+        {
           title: '消息内容',
           dataIndex: 'content',
-          width: '180px',
+          width: '600px',
           // render: text => <div dataIndex={text}>{text}</div>
           //   ellipsis: true
           scopedSlots: { customRender: 'overFlow' }
@@ -190,6 +204,14 @@ export default {
         that.advanced = false
       }
     })
+  },
+  filters: {
+    statusFilter(status) {
+      if(status === 0)
+        return '未阅'
+      else
+        return '已阅'
+    }
   },
   methods: {
     onSelectChange (selectedRowKeys, selectedRows) {
@@ -226,12 +248,12 @@ export default {
     },
     // 发布
     async handleReview (recode) {
-      let that = this
+      const that = this
       this.$confirm({
         title: '是否要发布这条消息?',
         onOk () {
           publishData(recode.announcementId).then(res => {
-            if (res.code == 0) {
+            if (res.code === 0) {
               that.$message.success('发布成功')
               that.$refs.table.refresh()
             } else {
@@ -244,12 +266,12 @@ export default {
     },
     // 撤回
     withdraw (record) {
-      let that = this
+      const that = this
       this.$confirm({
         title: '是否要撤回这条消息?',
         onOk () {
           withdrawData(record.announcementId).then(res => {
-            if (res && res.code == 0) {
+            if (res && res.code === 0) {
               that.$message.success('撤回成功')
               that.$refs.table.refresh()
             } else {
@@ -262,12 +284,12 @@ export default {
     },
     // 删除
     del (record) {
-      let that = this
+      const that = this
       this.$confirm({
         title: '是否要删除这条消息?',
         onOk () {
           deleteData(record.announcementId).then(res => {
-            if (res.code == 0) {
+            if (res.code === 0) {
               that.$message.success('删除成功')
               that.$refs.table.refresh()
             } else {

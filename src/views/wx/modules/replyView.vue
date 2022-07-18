@@ -1,36 +1,34 @@
 <template>
-  <a-modal
-    title="留言答复"
-    :width="800"
-    :bodyStyle="bodyStyle"
-    :maskClosable="maskClosable"
-    :destroyOnClose="destroyOnClose"
-    :centered="centered"
-    :visible="visible"
-    :confirmLoading="confirmLoading"
-    @ok="handleSubmit"
-    @cancel="handleCancel"
-    ref="modal"
-  >
+  <a-modal title="留言答复" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :destroyOnClose="destroyOnClose" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel" ref="modal">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <div class="replyList" ref="content" id="content">
           <div v-for="(item, index) in messageRecords" :key="index">
             <div v-if="item.type == 1" class="patient">
-              <p>
-                <span class="name">{{ patientCenterMessage.patientName }}</span>
-                <span class="identity">患者</span>
-              </p>
               <p class="time">{{ item.createTime | formDate }}</p>
-              <p class="question">{{ item.content }}</p>
+              <div class="item clearfix">
+                <img src="../../../assets/p-a.png" alt="">
+                <div class="info">
+                  <div class="clearfix">
+                    <p class="code">{{ patientCenterMessage.patientCode }}</p>
+                    <p class="cus">患者</p>
+                  </div>
+                  <p class="question">{{ item.content }}</p>
+                </div>
+              </div>
             </div>
             <div v-if="item.type == 2" class="reply">
-              <p>
-                <!-- <span class="replyname">项目办</span> -->
-                <span class="name">{{ patientCenterMessage.centerName }}</span>
-              </p>
-              <p>{{ item.createTime | formDate }}</p>
-              <p class="replyContent">{{ item.content }}</p>
+              <p class="time">{{ item.createTime | formDate }}</p>
+              <div class="item clearfix">
+                <img src="../../../assets/h-a.png" alt="">
+                <div class="info">
+                  <div class="clearfix">
+                    <p class="name">{{ patientCenterMessage.centerName }}</p>
+                    <p class="cus">医院</p>
+                  </div>
+                  <p class="question">{{ item.content }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -43,15 +41,14 @@
     </a-spin>
   </a-modal>
 </template>
-
 <script>
 import { replyMessageData } from '@/api/messageReply'
 import moment from 'moment'
 export default {
-  data () {
+  data() {
     return {
       bodyStyle: {
-        height: '500px',
+        height: '600px',
         overflow: 'auto'
       },
       maskClosable: false,
@@ -66,22 +63,22 @@ export default {
     }
   },
   filters: {
-    formDate (date) {
+    formDate(date) {
       return moment(date).format('YYYY-MM-DD HH:mm:ss')
     }
   },
-  updated () {
+  updated() {
     const msg = document.getElementById('content')
     msg.scrollTop = msg.scrollHeight
   },
   methods: {
-    replyMessage (data) {
+    replyMessage(data) {
       this.patientCenterMessageId = data.patientCenterMessage.patientCenterMessageId
       this.messageRecords = data.messageRecords
       this.patientCenterMessage = data.patientCenterMessage
       this.visible = true
     },
-    handleSubmit () {
+    handleSubmit() {
       if (!this.confirmLoading) {
         this.confirmLoading = true
         this.form.validateFieldsAndScroll((errors, fieldsValue) => {
@@ -103,7 +100,7 @@ export default {
         })
       }
     },
-    handleCancel () {
+    handleCancel() {
       this.visible = false
       //   this.$parent.refreshTable()
       this.$emit('refreshTable')
@@ -111,75 +108,110 @@ export default {
   }
 }
 </script>
-
 <style lang="less" scoped>
-.replyList{
-    margin: 20px 10px;
-    max-height: 380px;
-    overflow: auto;
-    padding-right: 15px;
-}
-.patient{
-    text-align: left;
-}
-.name{
-    font-size: 14px;
-    color: black;
-}
-.identity{
-    background-color: #ccc;
-    color: white;
-    border-radius: 4px;
-    margin-left: 10px;
-    font-size: 12px;
-    padding: 1px 8px;
-}
-.question{
-    word-wrap: break-word;
-    word-break: normal;
-}
-.reply{
-    text-align: right;
-    position: relative;
-}
-.replyname{
-    background-color: #88d6f2;
-    color: white;
-    border-radius: 3px;
-    margin-right: 10px;
-    font-size: 12px;
-    padding: 2px 6px;
-}
-.replyContent{
-    background-color: #f2f9f7;
-    max-width: 90%;
-    border-radius: 3px;
-    padding: 12px;
-    line-height: 15px;
-    margin-left: 70px;
-    word-wrap: break-word;
-    word-break: normal;
-}
-.textarea{
-    outline:0;
-    -webkit-appearance:none;
-    transition:all .3s;
-    -webkit-transition:all .3s;
-    box-sizing:border-box
-}
-input,
-textarea {
-    outline: none;
-}
-.textAlign{
-  text-align: left;
-  background-color: #f2f9f7;
-  max-width: 90%;
-  border-radius: 3px;
-  padding: 12px;
-  line-height: 15px;
-  margin-left: 70px;
-  word-wrap: break-word;
-  word-break: normal;
+.replyList {
+  margin: 20px 10px;
+  max-height: 380px;
+  overflow: auto;
+  padding-right: 15px;
+
+  .time {
+    text-align: center;
+  }
+
+  .patient {
+    margin-bottom: 30px;
+    .item {
+      img {
+        float: left;
+      }
+
+      .info {
+        float: left;
+        margin-left: 4px;
+        width: calc(100% - 100px);
+        .name{
+          font-size: 16px;
+          color: black;
+          float: left;
+          margin-bottom: 0;
+        }
+        .code{
+          background-color: #1890ff;
+          border-radius: 4px;
+          margin-left: 6px;
+          font-size: 12px;
+          padding: 3px 8px;
+          float: left;
+          color: #fff;
+          margin-bottom: 0;
+        }
+        .cus{
+          background-color: #f6b42d;
+          border-radius: 4px;
+          margin-left: 6px;
+          font-size: 12px;
+          padding: 3px 8px;
+          float: left;
+          color: #fff;
+          margin-bottom: 0;
+        }
+        .question{
+          background-color: #f2f3f4;
+          max-width: 70%;
+          border-radius: 3px;
+          padding: 12px;
+          line-height: 15px;
+          word-wrap: break-word;
+          word-break: normal;
+          margin-bottom: 0;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+  .reply{
+    margin-bottom: 30px;
+    .item {
+      img {
+        float: right;
+      }
+
+      .info {
+        float: right;
+        margin-right: 6px;
+        width: calc(100% - 100px);
+        .name{
+          font-size: 16px;
+          color: black;
+          float: right;
+          margin-bottom: 0;
+        }
+        .cus{
+          background-color: #0fd085;
+          border-radius: 4px;
+          margin-right: 6px;
+          font-size: 12px;
+          padding: 3px 8px;
+          float: right;
+          color: #fff;
+          margin-bottom: 0;
+        }
+        .question{
+          background-color: #1890ff;
+          width: 70%;
+          border-radius: 3px;
+          padding: 12px;
+          line-height: 15px;
+          word-wrap: break-word;
+          word-break: normal;
+          float: right;
+          color: #fff;
+          margin-bottom: 0;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
 }
 </style>

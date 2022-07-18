@@ -53,7 +53,7 @@
       ref="table"
       :scroll="scroll"
       size="small"
-      rowKey="wxPatientId"
+      rowKey="patientPendingId"
       :columns="columns"
       :data="loadData"
       :alert="options.alert"

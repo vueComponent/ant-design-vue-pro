@@ -162,17 +162,21 @@ export const asyncRouterMap = [{
         ]
       },
       {
-        // path: '/',
-        // name: 'index',
-        // component: RouteView,
-        // meta: { title: '消息中心', permission: ['center', 'group'] },
-        // redirect: '/MessageNotification/newsView',
-        // children: [{
-          path: '/MessageNotification/newsView',
-          name: 'newsView',
-          component: () => import('@/views/MessageNotification/newsView'),
-          meta: { title: '消息中心', keepAlive: true, icon: wxyhbd, isBack: false, permission: ['center', 'group'] }
-        // }]
+        path: '/message',
+        component: RouteView,
+        redirect: '/message/base',
+        meta: { title: '消息中心', keepAlive: true, icon: wxyhbd, permission: ['center', 'group'] },
+        children: [{
+          path: '/message/base',
+          name: 'base',
+          component: () => import('@/views/message/base'),
+          meta: { title: '总部消息', keepAlive: true, icon: wxyhbd, permission: ['center', 'group'] }
+        },{
+          path: '/message/branch',
+          name: 'branch',
+          component: () => import('@/views/message/branch'),
+          meta: { title: '分支消息', keepAlive: true, icon: wxyhbd, permission: ['center', 'group'] }
+        }]
       },
       {
         path: '/list/basis/:id(\\d*)',

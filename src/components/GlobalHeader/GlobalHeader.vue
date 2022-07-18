@@ -7,7 +7,7 @@
           <a-icon v-else class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle" />
           <span class="right">
             <user-menu ></user-menu>
-            <header-notice ref="headerNotice" style="float: right; padding-top: 2px"></header-notice>
+            <header-notice ref="headerNotice" style="float: right; padding-top: 2px;margin-right: 16px;cursor: pointer;"></header-notice>
           </span>
         </div>
         <div v-else :class="['top-nav-header-index', theme]">
