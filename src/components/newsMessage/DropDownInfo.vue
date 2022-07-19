@@ -86,7 +86,7 @@ export default {
       this.loading = false
     },
     homeToInfo () {
-      this.$router.push({ name: 'newsView' })
+      this.$router.push({ name: 'base' })
       this.show = false
     }
   }

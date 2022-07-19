@@ -77,12 +77,15 @@
       </template>
       <span slot="status" slot-scope="text">{{ text | statusFilter}}</span>
       <span slot="operation" slot-scope="text, record">
-        <template>
+        <template v-if="record.isCreator == 1">
           <a style="margin-right: 5px" v-if="record.status == 0? true : (record.status == 2? true : false)" @click="addorEditMessage(record)">编辑</a>
           <a style="margin-right: 5px" v-if="record.status == 1? false : true" @click="handleReview(record)">发布</a>
           <a style="margin-right: 5px" v-if="record.isCreator == 1? (record.status == 1? true : false) : false" @click="withdraw(record)">撤回</a>
           <a style="margin-right: 5px" @click="newsDetailView(record)">详情</a>
           <a style="margin-right: 5px" v-if="record.status == 0? true : (record.status == 2? true : false)" @click="del(record)">删除</a>
+        </template>
+        <template v-if="record.isCreator == 0">
+          <a style="margin-right: 5px" @click="newsDetailView(record)">详情</a>
         </template>
       </span>
     </s-table>
@@ -98,6 +101,7 @@ import CreatedForm from './component/createdForm.vue'
 import NewsDetail from './component/newsDetail.vue'
 import $ from 'jquery'
 export default {
+  name: 'base',
   components: {
     STable,
     CreatedForm,
@@ -162,7 +166,7 @@ export default {
         },
         {
           title: '阅读状态',
-          ataIndex: 'readStatusName',
+          dataIndex: 'readStatusName',
           width: '100px'
         },
         {
