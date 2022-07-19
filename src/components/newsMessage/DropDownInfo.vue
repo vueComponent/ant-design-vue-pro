@@ -17,7 +17,7 @@
                 {{ !showDisplay? '展开' : '收起' }}
               </span>
             </div> -->
-            <button type="button" @click="homeToInfo()" class="btn">查看所有消息 >>></button>
+            <button type="button" @click="homeToInfo()" class="btn" v-if="unReadMessage.length > 0">查看所有消息 >>></button>
           </a-tab-pane>
         </a-tabs>
       </a-spin>
@@ -86,7 +86,12 @@ export default {
       this.loading = false
     },
     homeToInfo () {
-      this.$router.push({ name: 'base' })
+      if(this.unReadMessage[0].type == 1){
+        this.$router.push({ name: 'base' })
+      }else{
+        this.$router.push({ name: 'branch' })
+      }
+      
       this.show = false
     }
   }

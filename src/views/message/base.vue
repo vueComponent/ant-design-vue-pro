@@ -198,8 +198,8 @@ export default {
         return
       }
       if (
-        $(e.target).closest('.tableSearch').length == 0 &&
-        $(e.target).closest('.ant-calendar').length == 0 &&
+        $(e.target).closest('.tableSearch').length === 0 &&
+        $(e.target).closest('.ant-calendar').length === 0 &&
         $(e.target).closest('.ant-calendar-year-panel-table').length === 0 &&
         $(e.target).closest('.ant-calendar-month-panel-table').length === 0
       ) {
@@ -208,11 +208,12 @@ export default {
     })
   },
   filters: {
-    statusFilter(status) {
-      if(status === 0)
+    statusFilter (status) {
+      if (status === 0) {
         return '未阅'
-      else
+      } else {
         return '已阅'
+      }
     }
   },
   methods: {
@@ -224,7 +225,9 @@ export default {
       this.$refs.table.refresh()
     },
     clearForm () {
-      this.queryParam = {}
+      this.queryParam = {
+        type: 1
+      }
       this.dateArr = []
     },
     tableSearch (type) {

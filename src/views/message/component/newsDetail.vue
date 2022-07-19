@@ -22,18 +22,19 @@
       </a-form> -->
       <!-- publish.isCreator == 1? (publish.stauts == 1? false : (publish.unReadCount == 0? '已阅读' : '待阅读') ) : publish.unReadCount -->
       <div class="sdd">
-        <span v-if="publish.updatedDate? true : false">发布时间: <span>{{ publish.updatedDate | formDate }}</span></span>
-        <span v-if="publish.publisher? true : false">发布人: <span>{{ publish.publisher }}</span></span>
-        <span v-if="publish.isCreator == 1? true : false" class="publishStatus">
-          <span v-if="publish.unReadCount == 0? false : (publish.status == 1? true : false)" style="margin-right: 5px">待阅读:</span>
-          <span style="margin-right: 0">{{ publish.status == 1? (publish.type == 1? publish.unReadCount : (publish.unReadCount == 0? '已阅读' : '待阅读')) : '未发布' }}</span>
+        <span v-if="publish.updatedDate">发布时间: <span>{{ publish.updatedDate | formDate }}</span></span>
+        <span v-if="publish.publisher">发布人: <span>{{ publish.publisher }}</span></span>
+        <span v-if="publish.isCreator == 1" class="publishStatus">
+          <span v-if="publish.status == 1 && publish.unReadCount > 0" style="margin-right: 5px">待阅读: {{publish.unReadCount}}人</span>
+          <span v-if="publish.status == 1 && publish.unReadCount == 0">全部阅读</span>
+          <span v-if="publish.status != 1">未发布</span>
         </span>
       </div>
       <div class="cdd">
         <p>{{ publish.content }}</p>
       </div>
       <div class="ndd">
-        <a-button v-if="publish.isCreator == 1? false : true" :disabled="status == 2? true : false" type="primary" @click="readStatusBtn()">{{ status == 2? '已阅读' : '确认' }}</a-button>
+        <a-button v-if="publish.isCreator != 1" :disabled="status == 2? true : false" type="primary" @click="readStatusBtn()">{{ status == 2? '已阅读' : '确认' }}</a-button>
       </div>
     </a-spin>
   </a-modal>
