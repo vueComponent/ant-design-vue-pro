@@ -5,10 +5,13 @@ import app from './modules/app'
 import user from './modules/user'
 
 // default router permission control
-// import permission from './modules/permission'
+// 默认路由模式为静态路由 (router.config.js)
+import permission from './modules/permission'
 
 // dynamic router permission control (Experimental)
-import permission from './modules/async-router'
+// 动态路由模式（api请求后端生成）
+// import permission from './modules/async-router'
+
 import getters from './getters'
 
 Vue.use(Vuex)
