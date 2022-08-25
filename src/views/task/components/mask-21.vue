@@ -386,28 +386,29 @@
                   <a-input style="width: 240px;" v-decorator="['a8', {initialValue: initValue('a8')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item class="font-w" label="(10) 小结：根据实验室检查及既往病史判断(多选):" :labelCol="{md: 20}" :wrapperCol="wrapperHor">
-                  <a-checkbox-group v-decorator="['a9', {...selectRequired, initialValue: initValue('a9', 'array')}]">
-                    <a-checkbox value="1">特发性</a-checkbox>
-                    <a-checkbox value="2">感染后性</a-checkbox>
-                    <a-checkbox value="3">结核后性</a-checkbox>
-                    <a-checkbox value="4">原发性纤毛不动症</a-checkbox>
-                    <a-checkbox value="5">弥漫性泛细支气管炎</a-checkbox>
-                    <a-checkbox value="6">ABPA</a-checkbox>
-                    <a-checkbox value="7">炎症性肠病</a-checkbox>
-                    <a-checkbox value="8">结缔组织病（类风湿性关节炎）</a-checkbox>
-                    <a-checkbox value="9">CF</a-checkbox>
-                    <a-checkbox value="10">α1-抗胰蛋白酶缺乏</a-checkbox>
-                    <a-checkbox value="11">误吸</a-checkbox>
-                    <a-checkbox value="12">胃食管返流病</a-checkbox>
-                    <a-checkbox value="13">大气道先天性异常</a-checkbox>
-                    <a-checkbox value="14">NTM</a-checkbox>
-                    <a-checkbox value="15">慢阻肺</a-checkbox>
-                    <a-checkbox value="16">哮喘</a-checkbox>
-                    <a-checkbox value="17">普通变异性免疫缺陷病（CVID）</a-checkbox>
-                    <a-checkbox value="18">血浆抗体缺乏</a-checkbox>
-                    <a-checkbox value="19">特异抗体缺乏性</a-checkbox>
-                    <a-checkbox value="20" @change="changeSelect($event, 'controla920')">其他</a-checkbox>
-                  </a-checkbox-group>
+                  <a-radio-group v-decorator="['a9', {...selectRequired, initialValue: initValue('a9', 'array')}]" @change="changeRadio($event, 'controla920')">
+                    <a-radio value="1">特发性</a-radio>
+                    <a-radio value="2">感染后性</a-radio>
+                    <a-radio value="3">结核后性</a-radio>
+                    <a-radio value="4">原发性纤毛不动症</a-radio>
+                    <a-radio value="5">弥漫性泛细支气管炎</a-radio>
+                    <a-radio value="6">ABPA</a-radio>
+                    <a-radio value="7">炎症性肠病</a-radio>
+                    <a-radio value="8">结缔组织病（类风湿性关节炎）</a-radio>
+                    <a-radio value="21">结缔组织病（非类风湿性关节炎）</a-radio>
+                    <a-radio value="9">CF</a-radio>
+                    <a-radio value="10">α1-抗胰蛋白酶缺乏</a-radio>
+                    <a-radio value="11">误吸</a-radio>
+                    <a-radio value="12">胃食管返流病</a-radio>
+                    <a-radio value="13">大气道先天性异常</a-radio>
+                    <a-radio value="14">NTM</a-radio>
+                    <a-radio value="15">慢阻肺</a-radio>
+                    <a-radio value="16">哮喘</a-radio>
+                    <a-radio value="17">普通变异性免疫缺陷病（CVID）</a-radio>
+                    <a-radio value="18">血浆抗体缺乏</a-radio>
+                    <a-radio value="19">特异抗体缺乏性</a-radio>
+                    <a-radio value="20">其他</a-radio>
+                  </a-radio-group>
                 </a-form-item>
                 <a-form-item label="具体描述::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controla920">
                   <a-input style="width: 240px;" v-decorator="['a91', {...inputRequiredNotEmpty, initialValue: initValue('a91')}]" autocomplete="off"></a-input>
@@ -561,7 +562,13 @@ export default {
       this[t] = e.target.checked
     },
     changeRadio(e, t) {
-      if (t === 'controla52' || t === 'controla75') {
+      if (t === 'controla920') {
+        if (e.target.value === '20') {
+          this[t] = true
+        } else {
+          this[t] = false
+        }
+      } else if (t === 'controla52' || t === 'controla75') {
         if (e.target.value === '3') {
           this[t] = true
         } else {
@@ -595,7 +602,6 @@ export default {
           var that = this
           re = {
             ...re,
-            'a9': typeof re['a9'] !== 'undefined' ? re['a9'].join(',') : '',
             'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
             'b2': typeof re['b2'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
             'b3': typeof re['b3'] !== 'undefined' ? re['b3'].format('YYYY-MM-DD') : '',
@@ -678,11 +684,8 @@ export default {
         if (answer.a7 === 1) {
           this.controla7 = true
         }
-        if (answer.a9) {
-          var splitArr = answer.a9.split(',')
-          if (splitArr.indexOf('20') > -1) {
-            this.controla920 = true
-          }
+        if (answer.a9 === 20) {
+          this.controla920 = true
         }
         if (answer.a52 === 3) {
           this.controla52 = true
@@ -698,7 +701,6 @@ export default {
       var that = this
       re = {
         ...re,
-        'a9': typeof re['a9'] !== 'undefined' ? re['a9'].join(',') : '',
         'b1': typeof re['b1'] !== 'undefined' ? re['b1'].format('YYYY-MM-DD') : '',
         'b2': typeof re['b2'] !== 'undefined' ? re['b2'].format('YYYY-MM-DD') : '',
         'b3': typeof re['b3'] !== 'undefined' ? re['b3'].format('YYYY-MM-DD') : '',
