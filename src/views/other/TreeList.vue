@@ -156,7 +156,7 @@ export default {
 <style lang="less">
   .custom-tree {
 
-    /deep/ .ant-menu-item-group-title {
+    :deep(.ant-menu-item-group-title) {
       position: relative;
       &:hover {
         .btn {
@@ -165,7 +165,7 @@ export default {
       }
     }
 
-    /deep/ .ant-menu-item {
+    :deep(.ant-menu-item) {
       &:hover {
         .btn {
           display: block;
@@ -173,7 +173,7 @@ export default {
       }
     }
 
-    /deep/ .btn {
+    :deep(.btn) {
       display: none;
       position: absolute;
       top: 0;

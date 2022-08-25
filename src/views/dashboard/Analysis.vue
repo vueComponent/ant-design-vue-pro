@@ -398,7 +398,7 @@ export default {
 
   .antd-pro-pages-dashboard-analysis-salesCard {
     height: calc(100% - 24px);
-    /deep/ .ant-card-head {
+    :deep(.ant-card-head) {
       position: relative;
     }
   }

@@ -78,11 +78,11 @@ export default {
   .ant-pro-pages-account-projects-cardList {
     margin-top: 24px;
 
-    /deep/ .ant-card-meta-title {
+    :deep(.ant-card-meta-title) {
       margin-bottom: 4px;
     }
 
-    /deep/ .ant-card-meta-description {
+    :deep(.ant-card-meta-description) {
       height: 44px;
       overflow: hidden;
       line-height: 22px;
@@ -101,7 +101,7 @@ export default {
         font-size: 12px;
       }
 
-      /deep/ .ant-pro-avatar-list {
+      :deep(.ant-pro-avatar-list) {
         flex: 0 1 auto;
       }
     }

@@ -58,7 +58,7 @@ export default {
     color: @text-color-secondary;
     line-height: 22px;
 
-    & /deep/ .ant-avatar {
+    & :deep(.ant-avatar) {
       position: relative;
       top: 1px;
       width: 20px;

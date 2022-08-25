@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const packageJson = require('./package.json')
 const GitRevisionPlugin = require('git-revision-webpack-plugin')
 const GitRevision = new GitRevisionPlugin()
 const buildDate = JSON.stringify(new Date().toLocaleString())
@@ -43,9 +44,12 @@ const vueConfig = {
     // webpack plugins
     plugins: [
       // Ignore all locale files of moment.js
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.IgnorePlugin({
+        contextRegExp: /^\.\/locale$/,
+        resourceRegExp: /moment$/
+      }),
       new webpack.DefinePlugin({
-        APP_VERSION: `"${require('./package.json').version}"`,
+        APP_VERSION: `"${packageJson.version}"`,
         GIT_HASH: JSON.stringify(getGitHash()),
         BUILD_DATE: buildDate
       })
@@ -58,22 +62,22 @@ const vueConfig = {
   chainWebpack: config => {
     config.resolve.alias.set('@$', resolve('src'))
 
-    const svgRule = config.module.rule('svg')
-    svgRule.uses.clear()
-    svgRule
-      .oneOf('inline')
-      .resourceQuery(/inline/)
-      .use('vue-svg-icon-loader')
-      .loader('vue-svg-icon-loader')
-      .end()
-      .end()
-      .oneOf('external')
-      .use('file-loader')
-      .loader('file-loader')
-      .options({
-        name: 'assets/[name].[hash:8].[ext]',
-        esModule: false
-      })
+    // const svgRule = config.module.rule('svg')
+    // svgRule.uses.clear()
+    // svgRule
+    //   .oneOf('inline')
+    //   .resourceQuery(/inline/)
+    //   .use('vue-svg-icon-loader')
+    //   .loader('vue-svg-icon-loader')
+    //   .end()
+    //   .end()
+    //   .oneOf('external')
+    //   .use('file-loader')
+    //   .loader('file-loader')
+    //   .options({
+    //     name: 'assets/[name].[hash:8].[ext]',
+    //     esModule: false
+    //   })
 
     // en_US: If prod is on assets require on cdn
     // zh_CN: 如果是 prod 模式，则引入 CDN 依赖文件，有需要减少包大小请自行解除依赖

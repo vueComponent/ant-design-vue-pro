@@ -59,15 +59,15 @@ export default {
   padding-bottom: 16px;
   border-bottom: 1px dashed @border-color-split;
 
-  /deep/ .ant-form-item {
+  :deep(.ant-form-item ) {
     margin-right: 24px;
   }
-  /deep/ .ant-form-item-label label {
+  :deep(.ant-form-item-label label) {
     margin-right: 0;
     color: @text-color;
   }
-  /deep/ .ant-form-item-label,
-  .ant-form-item-control {
+  :deep(.ant-form-item-label,
+  .ant-form-item-control) {
     padding: 0;
     line-height: 32px;
   }
@@ -90,7 +90,7 @@ export default {
 
   .antd-pro-components-standard-form-row-index-content {
     flex: 1 1 0;
-    /deep/ .ant-form-item:last-child {
+    :deep(.ant-form-item:last-child) {
       margin-right: 0;
     }
   }
@@ -102,18 +102,18 @@ export default {
   }
 
   &.antd-pro-components-standard-form-row-index-standardFormRowBlock {
-    /deep/ .ant-form-item,
-    div.ant-form-item-control-wrapper {
+    :deep(.ant-form-item,
+    div.ant-form-item-control-wrapper) {
       display: block;
     }
   }
 
   &.antd-pro-components-standard-form-row-index-standardFormRowGrid {
-      /deep/ .ant-form-item,
-      div.ant-form-item-control-wrapper {
+      :deep(.ant-form-item,
+      div.ant-form-item-control-wrapper) {
         display: block;
       }
-      /deep/ .ant-form-item-label {
+      :deep(.ant-form-item-label) {
         float: left;
       }
   }

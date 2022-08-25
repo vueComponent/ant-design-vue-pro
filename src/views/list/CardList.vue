@@ -81,13 +81,13 @@ export default {
   @import "~@/components/index.less";
 
   .card-list {
-    /deep/ .ant-card-body:hover {
+    :deep(.ant-card-body:hover) {
       .ant-card-meta-title>a {
         color: @primary-color;
       }
     }
 
-    /deep/ .ant-card-meta-title {
+    :deep(.ant-card-meta-title) {
       margin-bottom: 12px;
 
       &>a {
@@ -97,7 +97,7 @@ export default {
       }
     }
 
-    /deep/ .meta-content {
+    :deep(.meta-content) {
       position: relative;
       overflow: hidden;
       text-overflow: ellipsis;

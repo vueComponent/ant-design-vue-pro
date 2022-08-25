@@ -288,7 +288,7 @@ export default {
     margin-bottom: 24px;
   }
   .popover-wrapper {
-    /deep/ .antd-pro-pages-forms-style-errorPopover .ant-popover-inner-content {
+    :deep(.antd-pro-pages-forms-style-errorPopover .ant-popover-inner-content) {
       min-width: 256px;
       max-height: 290px;
       padding: 0;
