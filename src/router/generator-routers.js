@@ -3,7 +3,7 @@ import * as loginService from '@/api/login'
 // eslint-disable-next-line
 import { BasicLayout, BlankLayout, PageView, RouteView } from '@/layouts'
 
-// 前端路由表
+// 前端路由表 (基于动态)
 const constantRouterComponents = {
   // 基础页面 layout 必须引入
   BasicLayout: BasicLayout,
@@ -74,6 +74,10 @@ const rootRouter = {
   },
   children: []
 }
+
+// export const generatorStaticRouter = () => {
+
+// }
 
 /**
  * 动态生成菜单

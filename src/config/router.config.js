@@ -30,11 +30,11 @@ export const asyncRouterMap = [
             meta: { title: 'menu.dashboard.analysis', keepAlive: false, permission: ['dashboard'] }
           },
           // 外部链接
-          {
-            path: 'https://www.baidu.com/',
-            name: 'Monitor',
-            meta: { title: 'menu.dashboard.monitor', target: '_blank' }
-          },
+          // {
+          //   path: 'https://www.baidu.com/',
+          //   name: 'Monitor',
+          //   meta: { title: 'menu.dashboard.monitor', target: '_blank' }
+          // },
           {
             path: '/dashboard/workplace',
             name: 'Workplace',

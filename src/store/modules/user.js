@@ -52,29 +52,31 @@ const user = {
     // 获取用户信息
     GetInfo ({ commit }) {
       return new Promise((resolve, reject) => {
+        // 请求后端获取用户信息 /api/user/info
         getInfo().then(response => {
-          const result = response.result
-
+          const { result } = response
           if (result.role && result.role.permissions.length > 0) {
-            const role = result.role
-            role.permissions = result.role.permissions
-            role.permissions.map(per => {
-              if (per.actionEntitySet != null && per.actionEntitySet.length > 0) {
-                const action = per.actionEntitySet.map(action => { return action.action })
-                per.actionList = action
-              }
+            const role = { ...result.role }
+            role.permissions = result.role.permissions.map(permission => {
+              const per = {
+                ...permission,
+                actionList: (permission.actionEntitySet || {}).map(item => item.action)
+               }
+              return per
             })
             role.permissionList = role.permissions.map(permission => { return permission.permissionId })
-            commit('SET_ROLES', result.role)
+            // 覆盖响应体的 role, 供下游使用
+            result.role = role
+
+            commit('SET_ROLES', role)
             commit('SET_INFO', result)
+            commit('SET_NAME', { name: result.name, welcome: welcome() })
+            commit('SET_AVATAR', result.avatar)
+            // 下游
+            resolve(result)
           } else {
             reject(new Error('getInfo: roles must be a non-null array !'))
           }
-
-          commit('SET_NAME', { name: result.name, welcome: welcome() })
-          commit('SET_AVATAR', result.avatar)
-
-          resolve(response)
         }).catch(error => {
           reject(error)
         })
