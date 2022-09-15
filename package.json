@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --no-module",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "build:preview": "vue-cli-service build --mode preview",
+    "build:preview": "vue-cli-service build --no-module --mode preview",
     "lint:nofix": "vue-cli-service lint --no-fix",
     "lint:js": "eslint src/**/*.js --fix",
     "lint:css": "stylelint src/**/*.*ss --fix  --custom-syntax postcss-less",
