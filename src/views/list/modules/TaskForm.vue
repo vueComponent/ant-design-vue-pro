@@ -23,7 +23,7 @@
       :labelCol="labelCol"
       :wrapperCol="wrapperCol"
     >
-      <a-select v-decorator="['owner', {rules:[{required: true, message: '请选择开始时间'}]}]">
+      <a-select v-decorator="['owner', {rules:[{required: true, message: '请选择任务负责人'}]}]">
         <a-select-option :value="0">付晓晓</a-select-option>
         <a-select-option :value="1">周毛毛</a-select-option>
       </a-select>
