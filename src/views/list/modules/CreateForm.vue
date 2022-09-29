@@ -84,6 +84,14 @@
             </a-radio-group>
           </a-form-item>
         </div>
+        <a-form-item label="出现咳嗽咳痰等呼吸相关症状时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-date-picker
+            style="width: 100%"
+            format="YYYY-MM-DD"
+            v-decorator="['coughDate']"
+            :disabledDate="disabledDate"
+          />
+        </a-form-item>
         <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['sex', requiredRule]">
             <a-radio value="1">男</a-radio>
@@ -339,6 +347,7 @@ export default {
         this.form.setFieldsValue({
           card: value.card,
           registerDate: moment(value.registerDate, 'x'),
+          coughDate: value.coughDate ? moment(value.registerDate, 'x') : null,
           name: value.name,
           sex: String(value.sex),
           birthDate: moment(value.birthDate, 'x'),
@@ -368,7 +377,7 @@ export default {
         }
         if (value.startDate)
           this.form.setFieldsValue({
-            startDate: moment(value.startDate, 'YYYY-MM-DD'),
+            startDate: moment(value.startDate, 'YYYY-MM-DD')
           })
       }, 0)
       this.visible = true
@@ -405,6 +414,9 @@ export default {
           }
           if (fieldsValue['iconJoinDate']) {
             values.iconJoinDate = fieldsValue['iconJoinDate'].format('YYYY-MM-DD')
+          }
+          if (fieldsValue['coughDate']) {
+            values.coughDate = fieldsValue['coughDate'].format('YYYY-MM-DD')
           }
           const params = new URLSearchParams()
           params.append('patientStr', JSON.stringify(values))
@@ -630,7 +642,7 @@ export default {
     },
     download() {
       window.open(this.baseUrl + '/patient/downLoad')
-    },
+    }
   },
 }
 </script>

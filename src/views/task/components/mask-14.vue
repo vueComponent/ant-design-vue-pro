@@ -53,25 +53,35 @@
               </a-form-item>
               <a-form-item label="(4) 主要临床症状（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4', 'array')}]" class="control-m-line">
-                  <a-checkbox value="1">咳嗽</a-checkbox>
+                  <a-checkbox value="1" :checked="controla44" @change="changeSelect($event, 'controla44')">咳嗽</a-checkbox>
                   <a-checkbox value="2" :checked="controla41" @change="changeSelect($event, 'controla41')">咳痰</a-checkbox>
+                  <a-checkbox value="7">活动后气促</a-checkbox>
                   <a-checkbox value="3" :checked="controla43" @change="changeSelect($event, 'controla43')">痰血</a-checkbox>
                   <a-checkbox value="4" :checked="controla42" @change="changeSelect($event, 'controla42')">咯血</a-checkbox>
+                  <a-checkbox value="10" :checked="controla45" @change="changeSelect($event, 'controla45')">疲劳</a-checkbox>
                   <a-checkbox value="5">胸闷</a-checkbox>
                   <a-checkbox value="6">喘息</a-checkbox>
-                  <a-checkbox value="7">活动后气促</a-checkbox>
                   <a-checkbox value="8">胸痛</a-checkbox>
                   <a-checkbox value="9">发热</a-checkbox>
-                  <a-checkbox value="10">全身疲乏</a-checkbox>
                   <a-checkbox value="11">纳差</a-checkbox>
                   <a-checkbox value="12">消瘦</a-checkbox>
+                  <a-checkbox value="14">中耳炎</a-checkbox>
+                  <a-checkbox value="15">听力丧失</a-checkbox>
                   <a-checkbox value="13" :checked="controla413" @change="changeSelect($event, 'controla413')">其他</a-checkbox>
                 </a-checkbox-group>
+              </a-form-item>
+              <a-form-item label="咳嗽程度" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla44">
+                <a-radio-group v-decorator="['a46', {...selectRequired, initialValue: initValue('a46')}]">
+                  <a-radio value="1">轻度咳嗽</a-radio>
+                  <a-radio value="2">中度咳嗽</a-radio>
+                  <a-radio value="3">重度咳嗽</a-radio>
+                  <a-radio value="4">极重度咳嗽</a-radio>
+                </a-radio-group>
               </a-form-item>
               <a-form-item label="痰量" v-if="controla41" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="痰液粘稠Murry评分（单选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla41">
+              <a-form-item label="痰颜色评分（单选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla41">
                 <a-popover>
                   <template slot="content">
                     <img src="../../../assets/murry.png" style="height: 260px;" />
@@ -79,9 +89,10 @@
                   <a-icon type="exclamation-circle" style="position: relative;left: -20px;color: #0399ec;cursor: pointer;" />
                 </a-popover>
                 <a-radio-group v-decorator="['a43', {...selectRequired, initialValue: initValue('a43')}]">
-                  <a-radio value="1">粘液性</a-radio>
-                  <a-radio value="2">黏脓性</a-radio>
-                  <a-radio value="3">脓性</a-radio>
+                  <a-radio value="1">白色或清亮</a-radio>
+                  <a-radio value="2">黄白色</a-radio>
+                  <a-radio value="3">黄绿色</a-radio>
+                  <a-radio value="4">浅至深褐色</a-radio>
                 </a-radio-group>
               </a-form-item>
               <a-form-item label="痰血量" v-if="controla43" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -89,6 +100,14 @@
               </a-form-item>
               <a-form-item label="咯血量(最多)" v-if="controla42" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input addonAfter="ml/日" style="width: 240px;" v-decorator="['a42', {...inputRequired, initialValue: initValue('a42')}]" autocomplete="off"></a-input>
+              </a-form-item>
+              <a-form-item label="疲劳程度" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla45">
+                <a-radio-group v-decorator="['a47', {...selectRequired, initialValue: initValue('a47')}]">
+                  <a-radio value="1">我感到有点疲劳</a-radio>
+                  <a-radio value="2">我感到疲劳但仍然可以做我想做的事情</a-radio>
+                  <a-radio value="3">我感到疲劳而不能做一些我想做的事情</a-radio>
+                  <a-radio value="4">我感到非常疲劳而无法进行日常活动</a-radio>
+                </a-radio-group>
               </a-form-item>
               <a-form-item label="其他症状" v-if="controla413" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['a45', {...inputRequired, initialValue: initValue('a45')}]" autocomplete="off"></a-input>
@@ -106,13 +125,14 @@
               <a-form-item label="(4) 最后一次因急性加重住院的时间" class="tipTxt" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['b4', { initialValue: initValue('b4', 'time')}]"></a-date-picker>
               </a-form-item>
-              <a-form-item label="(5) 有无以下疾病及事件（多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted tipTxt">
+              <a-form-item label="(5) 有无以下疾病及事件病史（可多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-checkbox-group v-decorator="['b5', {...selectRequired, initialValue: initValue('b5', 'array')}]">
                   <a-checkbox value="1">麻疹</a-checkbox>
                   <a-checkbox value="2">百日咳</a-checkbox>
                   <a-checkbox value="3">肺结核</a-checkbox>
                   <a-checkbox value="4">NTM</a-checkbox>
                   <a-checkbox value="5">溺水</a-checkbox>
+                  <a-checkbox value="8">肺炎</a-checkbox>
                   <a-checkbox value="6" :checked="controlb51" @change="changeSelect($event, 'controlb51')">其他</a-checkbox>
                   <a-checkbox value="7">无</a-checkbox>
                 </a-checkbox-group>
@@ -127,6 +147,7 @@
                   <a-checkbox value="3" :checked="controlb63" @change="changeSelect($event, 'controlb63')">鼻息肉</a-checkbox>
                   <a-checkbox value="4" :checked="controlb64" @change="changeSelect($event, 'controlb64')">哮喘</a-checkbox>
                   <a-checkbox value="5" :checked="controlb65" @change="changeSelect($event, 'controlb65')">慢阻肺</a-checkbox>
+                  <a-checkbox value="8">中耳炎</a-checkbox>
                   <a-checkbox value="6" :checked="controlb66" @change="changeSelect($event, 'controlb66')">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
@@ -363,29 +384,19 @@
                   <a-input style="width: 240px;" v-decorator="['b1611', {...inputRequired, initialValue: initValue('b1611')}]" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
-              <a-form-item label="(8) 其他系统相关治疗（非呼吸系统治疗）" :labelCol="wrapper18" class="border-dotted">
-              </a-form-item>
-              <a-form-item label="调脂" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-checkbox-group v-decorator="['b171', {...selectRequired, initialValue: initValue('b171', 'array')}]">
-                  <a-checkbox value="1">他汀类</a-checkbox>
-                  <a-checkbox value="2" :checked="controlb1711" @change="changeSelect($event, 'controlb1711')">其他</a-checkbox>
-                  <a-checkbox value="3">无</a-checkbox>
+              <a-form-item label="(8) 其他系统相关治疗（非呼吸系统治疗）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-checkbox-group v-decorator="['b17', {...selectRequired, initialValue: initValue('b17', 'array')}]" class="center">
+                  <a-checkbox value="1">他汀类药物</a-checkbox>
+                  <a-checkbox value="2">二甲双胍</a-checkbox>
+                  <a-checkbox value="3">血管紧张素转换酶抑制剂</a-checkbox>
+                  <a-checkbox value="4">血管紧张素受体拮抗剂</a-checkbox>
+                  <a-checkbox value="5">阿司匹林</a-checkbox>
+                  <a-checkbox value="6">非阿司匹林血小板抑制剂，如氯吡格雷</a-checkbox>
+                  <a-checkbox value="7">华法林 /口服抗凝剂</a-checkbox>
+                  <a-checkbox value="8">β-受体阻滞剂</a-checkbox>
+                  <a-checkbox value="9">质子泵抑制剂</a-checkbox>
+                  <a-checkbox value="10">无</a-checkbox>
                 </a-checkbox-group>
-              </a-form-item>
-              <a-form-item class="no-border" label="其他调脂:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb1711">
-                <a-input style="width: 240px;" v-decorator="['b1711', {...inputRequired, initialValue: initValue('b1711')}]" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="抗凝(多选)" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-checkbox-group v-decorator="['b172', {...selectRequired, initialValue: initValue('b172', 'array')}]">
-                  <a-checkbox value="1">阿司匹林</a-checkbox>
-                  <a-checkbox value="2">非阿司匹林抑制剂（如：氯吡格雷）</a-checkbox>
-                  <a-checkbox value="3">华法林/口服抗凝药</a-checkbox>         
-                  <a-checkbox value="4" :checked="controlb1721" @change="changeSelect($event, 'controlb1721')">其他</a-checkbox>
-                  <a-checkbox value="5">无</a-checkbox>
-                </a-checkbox-group>
-              </a-form-item>
-              <a-form-item class="no-border" label="其他抗凝:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb1721">
-                <a-input style="width: 240px;" v-decorator="['b1721', {...inputRequired, initialValue: initValue('b1721')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(9) 家族史" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
               </a-form-item>
@@ -555,6 +566,8 @@ export default {
       maskId: this.$route.meta.maskId,
       patientBasisId: this.$route.params.id,
       zkbszl: undefined,
+      controla44: false,
+      controla45: false,
       controla41: false,
       controla42: false,
       controla43: false,
@@ -568,15 +581,11 @@ export default {
       controlb7: false,
       controlb72: false,
       controlb8: false,
-    //   controlb811: false,
       controlb9: false,
-    //   controlb911: false,
       controlb917: false,
       controlb10: false,
-    //   controlb1011: false,
       controlb1014: false,
       controlb11: false,
-    //   controlb1111: false,
       controlb1113: false,
       controlb12: false,
       controlb14: false,
@@ -584,8 +593,6 @@ export default {
       controlb15: false,
       controlb1538: false,
       controlb1615: false,
-    //   controlb16: false,
-    //   controlb1614: false,
       controlb1831: false,
       controlb191: false,
       controlb20: false,
@@ -599,8 +606,6 @@ export default {
       b2: undefined,
       b3: undefined,
       controlb70: false,
-      controlb1711: false,
-      controlb1721: false,
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
       canEdit: false,
       submitInfo: undefined,
@@ -677,6 +682,9 @@ export default {
         var splitArr = []
         if (answer.a4) {
           splitArr = answer.a4.split(',')
+          if (splitArr.indexOf('1') > -1) {
+            that.controla44 = true
+          }
           if (splitArr.indexOf('2') > -1) {
             that.controla41 = true
           }
@@ -688,6 +696,9 @@ export default {
           }
           if (splitArr.indexOf('13') > -1) {
             that.controla413 = true
+          }
+          if (splitArr.indexOf('10') > -1) {
+            that.controla45 = true
           }
         }
         if (answer.b5) {
@@ -806,18 +817,6 @@ export default {
             that.controlb122 = true
           }
         }
-        if(answer.b171){
-          splitArr = answer.b171.split(',')
-          if (splitArr.indexOf('2') > -1) {
-            that.controlb1711 = true
-          }
-        }
-        if(answer.b172){
-          splitArr = answer.b172.split(',')
-          if (splitArr.indexOf('4') > -1) {
-            that.controlb1721 = true
-          }
-        }
         if (answer.b19 && (answer.b19 === 1 || answer.b19 === 2)) {
           that.controlb191 = true
         }
@@ -906,6 +905,7 @@ export default {
             'b4': typeof re['b4'] !== 'undefined' ? re['b4'].format('YYYY-MM-DD') : '',
             'b5': typeof re['b5'] !== 'undefined' ? re['b5'].join(',') : '',
             'b6': typeof re['b6'] !== 'undefined' ? re['b6'].join(',') : '',
+            'b17': typeof re['b17'] !== 'undefined' ? re['b17'].join(',') : '',
             'b61': typeof re['b61'] !== 'undefined' ? re['b61'].format('YYYY-MM-DD') : '',
             'b62': typeof re['b62'] !== 'undefined' ? re['b62'].format('YYYY-MM-DD') : '',
             'b63': typeof re['b63'] !== 'undefined' ? re['b63'].format('YYYY-MM-DD') : '',
@@ -920,8 +920,6 @@ export default {
             'b143': typeof re['b143'] !== 'undefined' ? re['b143'].join(',') : '',
             'b153': typeof re['b153'] !== 'undefined' ? re['b153'].join(',') : '',
             'b161': typeof re['b161'] !== 'undefined' ? re['b161'].join(',') : '',
-            'b171': typeof re['b171'] !== 'undefined' ? re['b171'].join(',') : '',
-            'b172': typeof re['b172'] !== 'undefined' ? re['b172'].join(',') : '',
             'b201': typeof re['b201'] !== 'undefined' ? re['b201'].join(',') : '',
             'b211': typeof re['b211'] !== 'undefined' ? re['b211'].format('YYYY-MM-DD') : ''
           }
@@ -974,6 +972,7 @@ export default {
         'b4': typeof re['b4'] !== 'undefined' ? re['b4'].format('YYYY-MM-DD') : '',
         'b5': typeof re['b5'] !== 'undefined' ? re['b5'].join(',') : '',
         'b6': typeof re['b6'] !== 'undefined' ? re['b6'].join(',') : '',
+        'b17': typeof re['b17'] !== 'undefined' ? re['b17'].join(',') : '',
         'b61': typeof re['b61'] !== 'undefined' ? re['b61'].format('YYYY-MM-DD') : '',
         'b62': typeof re['b62'] !== 'undefined' ? re['b62'].format('YYYY-MM-DD') : '',
         'b63': typeof re['b63'] !== 'undefined' ? re['b63'].format('YYYY-MM-DD') : '',
@@ -988,8 +987,6 @@ export default {
         'b143': typeof re['b143'] !== 'undefined' ? re['b143'].join(',') : '',
         'b153': typeof re['b153'] !== 'undefined' ? re['b153'].join(',') : '',
         'b161': typeof re['b161'] !== 'undefined' ? re['b161'].join(',') : '',
-        'b171': typeof re['b171'] !== 'undefined' ? re['b171'].join(',') : '',
-        'b172': typeof re['b172'] !== 'undefined' ? re['b172'].join(',') : '',
         'b201': typeof re['b201'] !== 'undefined' ? re['b201'].join(',') : '',
         'b211': typeof re['b211'] !== 'undefined' ? re['b211'].format('YYYY-MM-DD') : ''
       }
@@ -1357,6 +1354,11 @@ export default {
 
       &.border-dotted {
         border-bottom: 1px dotted #eee;
+      }
+
+      .center.ant-checkbox-group{
+        position: relative;
+        top: 10px;
       }
     }
 

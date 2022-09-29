@@ -60,6 +60,12 @@
                   {{ patient.creatorName }}
                 </p>
               </a-col>
+              <a-col :sm="16">
+                <p class="userInfoItem">
+                  <span>出现咳嗽咳痰等呼吸相关症状时间：</span>
+                  {{ patient.coughDate | formDate }}
+                </p>
+              </a-col>
             </a-row>
           </div>
         </a-tab-pane>
