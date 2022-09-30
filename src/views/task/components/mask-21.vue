@@ -386,7 +386,7 @@
                   <a-input style="width: 240px;" v-decorator="['a8', {initialValue: initValue('a8')}]" autocomplete="off"></a-input>
                 </a-form-item>
                 <a-form-item class="font-w" label="(10) 小结：根据实验室检查及既往病史判断(多选):" :labelCol="{md: 20}" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['a9', {...selectRequired, initialValue: initValue('a9', 'array')}]" @change="changeRadio($event, 'controla920')">
+                  <a-radio-group v-decorator="['a9', {...selectRequired, initialValue: initValue('a9', 'array')}]" @change="changeRadio($event, 'controla920')" style="line-height: 22px;">
                     <a-radio value="1">特发性</a-radio>
                     <a-radio value="2">感染后性</a-radio>
                     <a-radio value="3">结核后性</a-radio>

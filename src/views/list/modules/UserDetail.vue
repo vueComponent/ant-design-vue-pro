@@ -200,7 +200,7 @@
           </a-col>
           <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }"  v-if="scoreData.HAD">
             <div class="block clearfix">
-              <div class="name">HAD评分</div>
+              <div class="name">HADS评分</div>
               <div class="score" style="color: orange">{{scoreData.HAD.score}}分</div>
               <mini-progress color="orange" :target="scoreData.HAD.score / 42 * 100" :percentage="scoreData.HAD.score / 42 * 100" height="8px" />
             </div>

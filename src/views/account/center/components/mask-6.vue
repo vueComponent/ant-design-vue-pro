@@ -84,18 +84,28 @@
                   <a-checkbox-group v-decorator="['a42', {...selectRequired, initialValue: initValue('a42', 'array')}]" class="control-m-line">
                     <a-checkbox value="0" @change="showList($event, '铜绿假单胞菌', 'controla420', true)">铜绿假单胞菌</a-checkbox>
                     <add-table :dataSource="optionDataSource[0]" v-if="controla420" :type1="type1" @listen="changeType1" :isFirst="true" :picSource="picList1[0]" @changePic1="changePic1($event, 0)"></add-table>
-                    <a-checkbox value="1" @change="showList($event, '肺炎链球菌', 'controla421', true)">肺炎链球菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource[1]" v-if="controla421" :isFirst="true" :picSource="picList1[1]" @changePic1="changePic1($event, 1)"></add-table>
-                    <a-checkbox value="2" @change="showList($event, '肺炎克雷伯菌', 'controla422', true)">肺炎克雷伯菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource[2]" v-if="controla422" :isFirst="true" :picSource="picList1[2]" @changePic1="changePic1($event, 2)"></add-table>
-                    <a-checkbox value="3" @change="showList($event, '阴沟肠杆菌', 'controla423', true)">阴沟肠杆菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource[3]" v-if="controla423" :isFirst="true" :picSource="picList1[3]" @changePic1="changePic1($event, 3)"></add-table>
+                    <a-checkbox value="8" @change="showList($event, '流感嗜血杆菌', 'controla428', true)">流感嗜血杆菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[8]" v-if="controla428" :isFirst="true" :picSource="picList1[8]" @changePic1="changePic1($event, 8)"></add-table>
                     <a-checkbox value="4" @change="showList($event, '副流感嗜血杆菌', 'controla424', true)">副流感嗜血杆菌</a-checkbox>
                     <add-table :dataSource="optionDataSource[4]" v-if="controla424" :isFirst="true" :picSource="picList1[4]" @changePic1="changePic1($event, 4)"></add-table>
-                    <a-checkbox value="5" @change="showList($event, '鲍曼不动杆菌', 'controla425', true)">鲍曼不动杆菌</a-checkbox>
-                    <add-table :dataSource="optionDataSource[5]" v-if="controla425" :isFirst="true" :picSource="picList1[5]" @changePic1="changePic1($event, 5)"></add-table>
+                    <a-checkbox value="1" @change="showList($event, '肺炎链球菌', 'controla421', true)">肺炎链球菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[1]" v-if="controla421" :isFirst="true" :picSource="picList1[1]" @changePic1="changePic1($event, 1)"></add-table>
+                    <a-checkbox value="9" @change="showList($event, '卡他莫拉菌', 'controla429', true)">卡他莫拉菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[9]" v-if="controla429" :isFirst="true" :picSource="picList1[9]" @changePic1="changePic1($event, 9)"></add-table>
+                    <a-checkbox value="10" @change="showList($event, '大肠杆菌', 'controla4210', true)">大肠杆菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[10]" v-if="controla429" :isFirst="true" :picSource="picList1[10]" @changePic1="changePic1($event, 10)"></add-table>
+                    <a-checkbox value="2" @change="showList($event, '肺炎克雷伯菌', 'controla422', true)">肺炎克雷伯菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[2]" v-if="controla422" :isFirst="true" :picSource="picList1[2]" @changePic1="changePic1($event, 2)"></add-table>
                     <a-checkbox value="6" @change="showList($event, '金黄色葡萄球菌', 'controla426', true)">金黄色葡萄球菌</a-checkbox>
                     <add-table :dataSource="optionDataSource[6]" v-if="controla426" :isFirst="true" :picSource="picList1[6]" @changePic1="changePic1($event, 6)"></add-table>
+                    <a-checkbox value="3" @change="showList($event, '阴沟肠杆菌', 'controla423', true)">阴沟肠杆菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[3]" v-if="controla423" :isFirst="true" :picSource="picList1[3]" @changePic1="changePic1($event, 3)"></add-table>
+                    <a-checkbox value="5" @change="showList($event, '鲍曼不动杆菌', 'controla425', true)">鲍曼不动杆菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[5]" v-if="controla425" :isFirst="true" :picSource="picList1[5]" @changePic1="changePic1($event, 5)"></add-table>
+                    <a-checkbox value="11" @change="showList($event, '洋葱霍尔德菌', 'controla4211', true)">洋葱霍尔德菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[11]" v-if="controla4211" :isFirst="true" :picSource="picList1[11]" @changePic1="changePic1($event, 11)"></add-table>
+                    <a-checkbox value="12" @change="showList($event, '嗜麦芽窄食单胞菌', 'controla4212', true)">嗜麦芽窄食单胞菌</a-checkbox>
+                    <add-table :dataSource="optionDataSource[12]" v-if="controla4212" :isFirst="true" :picSource="picList1[12]" @changePic1="changePic1($event, 12)"></add-table>
                     <a-checkbox value="7" @change="showList($event, '其他', 'controla427', true)">其他</a-checkbox>
                     <a-input style="width: 240px;margin-right: 10px;" v-if="controla427" @change="otherChange($event, 7, true)" autocomplete="off" v-decorator="['otherName1', {...inputRequired, initialValue: otherName1}]"></a-input>
                     <add-table :dataSource="optionDataSource[7]" v-if="controla427" :isFirst="true" :picSource="picList1[7]" @changePic1="changePic1($event, 7)"></add-table>
@@ -191,6 +201,14 @@
                 </a-form-item>
                 <a-form-item label="(2) 其他病原种类:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-input style="width: 240px;" v-decorator="['d2', {...inputRequired, initialValue: initValue('d2')}]" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(3) 标本来源（单选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['d3', {...selectRequired, initialValue: initValue('d3')}]">
+                    <a-radio value="1">痰液</a-radio>
+                    <a-radio value="2">诱导痰</a-radio>
+                    <a-radio value="3">支气管肺泡灌洗液</a-radio>
+                    <a-radio value="4">血标本</a-radio>
+                  </a-radio-group>
                 </a-form-item>
               </div>
             </div>
@@ -304,6 +322,11 @@ export default {
       controla425: false,
       controla426: false,
       controla427: false,
+      controla428: false,
+      controla429: false,
+      controla4210: false,
+      controla4211: false,
+      controla4212: false,
       controlb42: false,
       controlc415: false,
       spinning: false,
@@ -388,6 +411,11 @@ export default {
         this.controla425 = false
         this.controla426 = false
         this.controla427 = false
+        this.controla428 = false
+        this.controla429 = false
+        this.controla4210 = false
+        this.controla4211 = false
+        this.controla4212 = false
       } else if (t === 'controlb4' && e.target.value === '-1') {
         this.controlb4 = false
         this.controlb42 = false
@@ -654,6 +682,21 @@ export default {
           }
           if (splitArr.indexOf('7') > -1) {
             this.controla427 = true
+          }
+          if (splitArr.indexOf('8') > -1) {
+            this.controla428 = true
+          }
+          if (splitArr.indexOf('9') > -1) {
+            this.controla429 = true
+          }
+          if (splitArr.indexOf('10') > -1) {
+            this.controla4210 = true
+          }
+          if (splitArr.indexOf('11') > -1) {
+            this.controla4211 = true
+          }
+          if (splitArr.indexOf('12') > -1) {
+            this.controla4212 = true
           }
         }
         if (data[1]) {

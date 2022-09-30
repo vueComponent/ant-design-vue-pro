@@ -87,7 +87,7 @@ export default {
         width: '130px',
         ellipsis: true
       }, {
-        title: 'HAD评分',
+        title: 'HADS评分',
         dataIndex: 'had',
         width: '120px',
         ellipsis: true

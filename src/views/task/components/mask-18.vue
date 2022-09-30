@@ -65,6 +65,7 @@
                     <a-checkbox value="2">体位引流</a-checkbox>
                     <a-checkbox value="3">规律锻炼身体</a-checkbox>
                     <a-checkbox value="4">借助排痰仪器</a-checkbox>
+                    <a-checkbox value="6">主动循环呼吸</a-checkbox>
                     <a-checkbox value="5">无</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
@@ -98,10 +99,15 @@
                   </div>
                   <div v-if="controlb4 && controlb412">
                     <a-form-item label="规律吸入/雾化抗生素药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                      <a-radio-group v-decorator="['b42', {...require2, initialValue: initValue('b42')}]">
-                        <a-radio value="1">有</a-radio>
-                        <a-radio value="-1">无</a-radio>
-                      </a-radio-group>
+                      <a-checkbox-group v-decorator="['b42', {...selectRequired, initialValue: initValue('b42', 'array')}]">
+                        <a-checkbox value="2">妥布霉素</a-checkbox>
+                        <a-checkbox value="3">庆大霉素</a-checkbox>
+                        <a-checkbox value="4">阿米卡星</a-checkbox>
+                        <a-checkbox value="5" @change="changeSelect($event, 'controlb42')">其他</a-checkbox>
+                      </a-checkbox-group>
+                    </a-form-item>
+                    <a-form-item label="其他吸入/雾化抗生素药物:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb42">
+                      <a-input style="width: 240px;" v-decorator="['b421', {...inputRequired, initialValue: initValue('b421')}]" autocomplete="off"></a-input>
                     </a-form-item>
                   </div>
                   <a-form-item label="4-2 祛痰药物治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -131,6 +137,8 @@
                     <a-form-item label="雾化药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                       <a-checkbox-group v-decorator="['b433', {...selectRequired, initialValue: initValue('b433', 'array')}]">
                         <a-checkbox value="1">N-乙酰半胱氨酸</a-checkbox>
+                        <a-checkbox value="3">雾化生理盐水</a-checkbox>
+                        <a-checkbox value="4">雾化吸入高渗盐水</a-checkbox>
                         <a-checkbox value="2" :checked="controlb433" @change="changeSelect($event, 'controlb433')">其他</a-checkbox>
                       </a-checkbox-group>
                     </a-form-item>
@@ -138,25 +146,26 @@
                       <a-input style="width: 240px;" v-decorator="['b434', {...inputRequired, initialValue: initValue('b434')}]" autocomplete="off"></a-input>
                     </a-form-item>
                   </div>
-                  <a-form-item label="4-3 支气管扩张剂:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-checkbox-group v-decorator="['b44', {...selectRequired, initialValue: initValue('b44', 'array')}]" class="control-m-line">
+                  <a-form-item label="4-3 支气管扩张剂/吸入激素:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                    <a-checkbox-group v-decorator="['b48', {...selectRequired, initialValue: initValue('b48', 'array')}]" class="center">
                       <a-checkbox value="0">无</a-checkbox>
-                      <a-checkbox value="1">长效抗胆碱能药物</a-checkbox>
-                      <a-checkbox value="2">长效β受体激动剂</a-checkbox>
-                      <a-checkbox value="3">长效抗胆碱能药物/长效β受体激动剂</a-checkbox>
-                      <a-checkbox value="4" :checked="controlb44" @change="changeSelect($event, 'controlb44')">其他</a-checkbox>
+                      <a-checkbox value="1">LAMA</a-checkbox>
+                      <a-checkbox value="2">LABA</a-checkbox>
+                      <a-checkbox value="3">LABA/LAMA</a-checkbox>
+                      <a-checkbox value="4">ICS/LABA/LAMA</a-checkbox>
+                      <a-checkbox value="5">ICS/LABA</a-checkbox>
+                      <a-checkbox value="6">SABA</a-checkbox>
+                      <a-checkbox value="7">SAMA</a-checkbox>
+                      <a-checkbox value="8">白三烯受体拮抗剂</a-checkbox>
+                      <a-checkbox value="9">口服茶碱</a-checkbox>
+                      <a-checkbox value="10">雾化吸入支气管舒张剂</a-checkbox>
+                      <a-checkbox value="11" @change="changeSelect($event, 'controlb48')">其他</a-checkbox>
                     </a-checkbox-group>
                   </a-form-item>
-                  <a-form-item label="其他支气管扩张剂::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb44">
-                    <a-input style="width: 240px;" v-decorator="['b441', {...inputRequired, initialValue: initValue('b441')}]" autocomplete="off"></a-input>
+                  <a-form-item label="其他支气管扩张剂/吸入激素:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb48">
+                    <a-input style="width: 240px;" v-decorator="['b481', {...inputRequired, initialValue: initValue('b481')}]" autocomplete="off"></a-input>
                   </a-form-item>
-                  <a-form-item label="4-4 吸入激素:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-radio-group v-decorator="['b45', {...require1, initialValue: initValue('b45')}]">
-                      <a-radio value="1">是</a-radio>
-                      <a-radio value="-1">否</a-radio>
-                    </a-radio-group>
-                  </a-form-item>
-                  <a-form-item label="4-5 长期止血治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-form-item label="4-4 长期止血治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-radio-group v-decorator="['b46', {...require1, initialValue: initValue('b46')}]">
                       <a-radio value="1">是</a-radio>
                       <a-radio value="-1">否</a-radio>
@@ -199,32 +208,44 @@
                     <a-input style="width: 240px;" v-decorator="['b61', {...inputRequired, initialValue: initValue('b61')}]" autocomplete="off"></a-input>
                   </a-form-item>
                 </div>
-                <a-form-item label="(7) 患者是否曾接收疫苗治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b7', {...require1, initialValue: initValue('b7')}]">
+                <a-form-item label="(7) 患者是否曾接受疫苗治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['b7', {...require1, initialValue: initValue('b7')}]" @change="changeRadio($event, 'controlb7')">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <!-- <a-form-item label="(8) 患者是否曾接收免疫调节治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                  <a-radio-group v-decorator="['b8', {...require1, initialValue: initValue('b8')}]" @change="changeRadio($event, 'controlb8')">
+                <div v-if="controlb7">
+                  <a-form-item label="肺炎链球菌多糖疫苗（如PSV23）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                    <a-radio-group v-decorator="['b71', {...require1, initialValue: initValue('b71')}]" @change="changeRadio($event, 'controlb71')">
+                      <a-radio value="1">是</a-radio>
+                      <a-radio value="-1">否</a-radio>
+                    </a-radio-group>
+                  </a-form-item>
+                  <a-form-item label="时间::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb7 && controlb71">
+                    <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b711', {...dateRequire, initialValue: initValue('b711', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  </a-form-item>
+                  <a-form-item label="肺炎链球菌结合疫苗（如PVC13）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                    <a-radio-group v-decorator="['b72', {...require1, initialValue: initValue('b72')}]" @change="changeRadio($event, 'controlb72')">
+                      <a-radio value="1">是</a-radio>
+                      <a-radio value="-1">否</a-radio>
+                    </a-radio-group>
+                  </a-form-item>
+                  <a-form-item label="时间::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb7 && controlb72">
+                    <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b721', {...dateRequire, initialValue: initValue('b721', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
+                  </a-form-item>
+                </div>
+                <a-form-item label="(8) 过去1年，患者是否曾接受流感疫苗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['b10', {...require1, initialValue: initValue('b10')}]">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <div v-if="controlb8">
-                  <a-form-item label="治疗方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                    <a-checkbox-group v-decorator="['b81', {...selectRequired, initialValue: initValue('b81', 'array')}]">
-                      <a-checkbox value="1">细菌溶解产物胶囊</a-checkbox>
-                      <a-checkbox value="2">匹多莫德</a-checkbox>
-                      <a-checkbox value="3">胸腺肽</a-checkbox>
-                      <a-checkbox value="4">脾氨肽</a-checkbox>
-                      <a-checkbox value="5" :checked="controlb81" @change="changeSelect($event, 'controlb81')">其他</a-checkbox>
-                    </a-checkbox-group>
-                  </a-form-item>
-                  <a-form-item label="其他治疗::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb8 && controlb81">
-                    <a-input style="width: 240px;" v-decorator="['b82', {...inputRequired, initialValue: initValue('b82')}]" autocomplete="off"></a-input>
-                  </a-form-item>
-                </div> -->
+                <a-form-item label="(9) 患者是否接受肺康复治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['b11', {...require1, initialValue: initValue('b11')}]">
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="-1">否</a-radio>
+                  </a-radio-group>
+                </a-form-item>
               </div>
             </div>
           </a-form>
@@ -344,7 +365,12 @@ export default {
       controlb433: false,
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
       canEdit: false,
-      submitInfo: undefined
+      submitInfo: undefined,
+      controlb42: false,
+      controlb48: false,
+      controlb7: false,
+      controlb71: false,
+      controlb72: false
     }
   },
   created() {
@@ -409,13 +435,17 @@ export default {
             ...re,
             'b31': typeof re['b31'] !== 'undefined' ? re['b31'].join(',') : '',
             'b41': typeof re['b41'] !== 'undefined' ? re['b41'].join(',') : '',
+            'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : '',
             'b414': typeof re['b414'] !== 'undefined' ? re['b414'].join(',') : '',
             'b43': typeof re['b43'] !== 'undefined' ? re['b43'].join(',') : '',
             'b431': typeof re['b431'] !== 'undefined' ? re['b431'].join(',') : '',
             'b433': typeof re['b433'] !== 'undefined' ? re['b433'].join(',') : '',
             'b44': typeof re['b44'] !== 'undefined' ? re['b44'].join(',') : '',
             'b52': typeof re['b52'] !== 'undefined' ? re['b52'].join(',') : '',
-            'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : ''
+            'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : '',
+            'b48': typeof re['b48'] !== 'undefined' ? re['b48'].join(',') : '',
+            'b711': typeof re['b711'] !== 'undefined' ? re['b711'].format('YYYY-MM-DD') : '',
+            'b721': typeof re['b721'] !== 'undefined' ? re['b721'].format('YYYY-MM-DD') : ''
           }
           var that = this
           console.log(re)
@@ -500,6 +530,18 @@ export default {
             this.controlb412 = true
           }
         }
+        if (answer.b42) {
+          splitArr = answer.b42.split(',')
+          if (splitArr.indexOf('5') > -1) {
+            this.controlb42 = true
+          }
+        }
+        if (answer.b48) {
+          splitArr = answer.b48.split(',')
+          if (splitArr.indexOf('12') > -1) {
+            this.controlb48 = true
+          }
+        }
         if (answer.b414) {
           splitArr = answer.b414.split(',')
           if (splitArr.indexOf('4') > -1) {
@@ -558,13 +600,17 @@ export default {
         ...re,
         'b31': typeof re['b31'] !== 'undefined' ? re['b31'].join(',') : '',
         'b41': typeof re['b41'] !== 'undefined' ? re['b41'].join(',') : '',
+        'b42': typeof re['b42'] !== 'undefined' ? re['b42'].join(',') : '',
         'b414': typeof re['b414'] !== 'undefined' ? re['b414'].join(',') : '',
         'b43': typeof re['b43'] !== 'undefined' ? re['b43'].join(',') : '',
         'b431': typeof re['b431'] !== 'undefined' ? re['b431'].join(',') : '',
         'b433': typeof re['b433'] !== 'undefined' ? re['b433'].join(',') : '',
         'b44': typeof re['b44'] !== 'undefined' ? re['b44'].join(',') : '',
         'b52': typeof re['b52'] !== 'undefined' ? re['b52'].join(',') : '',
-        'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : ''
+        'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : '',
+        'b48': typeof re['b48'] !== 'undefined' ? re['b48'].join(',') : '',
+        'b711': typeof re['b711'] !== 'undefined' ? re['b711'].format('YYYY-MM-DD') : '',
+        'b721': typeof re['b721'] !== 'undefined' ? re['b721'].format('YYYY-MM-DD') : ''
       }
       var that = this
       console.log(re)

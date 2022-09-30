@@ -131,7 +131,7 @@ export default {
           dataIndex: 'qt5Status',
           width: '70px'
         },{
-          title: 'HAD',
+          title: 'HADS',
           dataIndex: 'qt6Status',
           width: '70px'
         }],

@@ -6,6 +6,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store/'
 import { VueAxios } from './utils/request'
+import { ArrowsAltOutlined } from '@ant-design/icons'
 
 //在main.js中引入
 import Viewer from 'v-viewer'

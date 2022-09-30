@@ -57,8 +57,7 @@
                   <a-col :span="12">实/预%</a-col>
                 </a-row>
               </a-form-item>
-              <a-form-item label="FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <!-- <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input> -->
+              <a-form-item label="FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx" class="requireIcon">
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" addonAfter="L" autocomplete="off"></a-input>
                 </a-form-item>
@@ -66,8 +65,7 @@
                   <a-input style="width: 240px;" v-decorator="['a22', {...inputRequired, initialValue: initValue('a22')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
               </a-form-item>
-              <a-form-item label="FEV1::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <!-- <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input> -->
+              <a-form-item label="FEV1::" :labelCol="labelXs" :wrapperCol="wrapperMx" class="requireIcon">
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['a31', {...inputRequired, initialValue: initValue('a31')}]" addonAfter="L" autocomplete="off"></a-input>
                 </a-form-item>
@@ -75,8 +73,7 @@
                   <a-input style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
               </a-form-item>
-              <a-form-item label="FEV1%FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx">
-                <!-- <a-input v-decorator="['t1', {...inputRequired, initialValue: '1'}]" style="display: none;"></a-input> -->
+              <a-form-item label="FEV1%FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx" class="requireIcon">
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
                   <a-input style="width: 240px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" addonAfter="%" autocomplete="off"></a-input>
                 </a-form-item>
@@ -463,24 +460,24 @@
                 <a-input addonAfter="ppb" style="width: 240px;" v-decorator="['d1', {initialValue: initValue('d1')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(5) 6分钟步行试验总距离:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-input addonAfter="m" style="width: 240px;" v-decorator="['e', {...inputRequired, initialValue: initValue('e')}]" autocomplete="off"></a-input>
+                <a-input addonAfter="m" style="width: 240px;" v-decorator="['e', { initialValue: initValue('e')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(6) 血气分析:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
               </a-form-item>
               <a-form-item label="PH:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input style="width: 240px;" v-decorator="['f', {...inputRequired, initialValue: initValue('f')}]" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['f', { initialValue: initValue('f')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="氧分压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input style="width: 240px;" v-decorator="['f1', {...inputRequired, initialValue: initValue('f1')}]" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['f1', { initialValue: initValue('f1')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="二氧化碳分压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input style="width: 240px;" v-decorator="['f2', {...inputRequired, initialValue: initValue('f2')}]" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['f2', { initialValue: initValue('f2')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="肺动脉氧分压差:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input style="width: 240px;" v-decorator="['f3', {...inputRequired, initialValue: initValue('f3')}]" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['f3', { initialValue: initValue('f3')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="氧饱和度:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input style="width: 240px;" v-decorator="['f4', {...inputRequired, initialValue: initValue('f4')}]" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['f4', { initialValue: initValue('f4')}]" autocomplete="off"></a-input>
               </a-form-item>
             </div>
           </a-form>
@@ -1399,5 +1396,22 @@ export default {
   height: 100%;
   -ms-overflow-x: hidden;
   overflow: hidden auto;
+}
+.requireIcon {
+  position: relative;
+}
+.requireIcon {
+  padding-left: 10px;
+}
+.requireIcon::before {
+  position: absolute;
+  top: 21px;
+  left: 0;
+  margin-right: 4px;
+  content: '*';
+  font-family: SimSun;
+  line-height: 1;
+  font-size: 14px;
+  color: #f5222d;
 }
 </style>

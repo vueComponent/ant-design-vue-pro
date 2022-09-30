@@ -50,57 +50,61 @@
                   <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1 && showOcr">OCR识别</a-button>
                 </div>
               </a-form-item>
-              <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /> -->
-              <!-- <a-form-item label="检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" v-decorator="['t1', {...dateRequire, initialValue: initValue('t1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-              </a-form-item> -->
-              <a-form-item label="(1) 主动脉根部内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="cm" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(2) 左房收缩末期内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b2', { initialValue: initValue('b2')}]" addonAfter="cm" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(3) 左室舒张末期内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b3', { initialValue: initValue('b3')}]" addonAfter="cm" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(4) 左室收缩末期内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b4', { initialValue: initValue('b4')}]" addonAfter="cm" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(5) 室间隔厚度:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b5', { initialValue: initValue('b5')}]" addonAfter="cm" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(6) 左室后壁厚度:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b6', { initialValue: initValue('b6')}]" addonAfter="cm" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(7) 肺动脉收缩压:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b8', { ...inputRequired, initialValue: initValue('b8')}]" addonAfter="mmHg" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(8) 主肺动脉内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['b7', { initialValue: initValue('b7')}]" addonAfter="cm" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(9) 右房内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['e1', { initialValue: initValue('e1')}]" addonAfter="cm" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(10) 右室内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['e2', { initialValue: initValue('e2')}]" addonAfter="cm" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(11) 右室流出道:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['e3', { initialValue: initValue('e3')}]" addonAfter="cm" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(12) 左室射血分数:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['c1', { ...inputRequired, initialValue: initValue('c1')}]" addonAfter="%" autocomplete="off"></a-input>
-              </a-form-item>
-              <a-form-item label="(13) 左室短轴缩短率:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input style="width: 240px;" v-decorator="['c2', { initialValue: initValue('c2')}]" addonAfter="%" autocomplete="off"></a-input>
-              </a-form-item>
-              <div class="title">3.小结</div>
-              <a-form-item label="小结:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['d1', {...selectRequired, initialValue: initValue('d1')}]">
-                  <a-radio value="1">肺动脉高压</a-radio>
-                  <a-radio value="2">肺源性心脏病</a-radio>
-                  <a-radio value="3">无</a-radio>
+              <a-form-item label="有无心脏彩超" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['a1', {...require2, initialValue: initValue('a1')}]" @change="changeRadio($event, 'controla1')">
+                  <a-radio value="1">有</a-radio>
+                  <a-radio value="-1">无</a-radio>
                 </a-radio-group>
               </a-form-item>
+              <div v-if="controla1">
+                <a-form-item label="(1) 主动脉根部内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['b1', { initialValue: initValue('b1')}]" addonAfter="cm" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(2) 左房收缩末期内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['b2', { initialValue: initValue('b2')}]" addonAfter="cm" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(3) 左室舒张末期内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['b3', { initialValue: initValue('b3')}]" addonAfter="cm" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(4) 左室收缩末期内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['b4', { initialValue: initValue('b4')}]" addonAfter="cm" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(5) 室间隔厚度:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['b5', { initialValue: initValue('b5')}]" addonAfter="cm" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(6) 左室后壁厚度:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['b6', { initialValue: initValue('b6')}]" addonAfter="cm" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(7) 肺动脉收缩压:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['b8', { ...inputRequired, initialValue: initValue('b8')}]" addonAfter="mmHg" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(8) 主肺动脉内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['b7', { initialValue: initValue('b7')}]" addonAfter="cm" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(9) 右房内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['e1', { initialValue: initValue('e1')}]" addonAfter="cm" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(10) 右室内径:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['e2', { initialValue: initValue('e2')}]" addonAfter="cm" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(11) 右室流出道:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['e3', { initialValue: initValue('e3')}]" addonAfter="cm" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(12) 左室射血分数:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['c1', { ...inputRequired, initialValue: initValue('c1')}]" addonAfter="%" autocomplete="off"></a-input>
+                </a-form-item>
+                <a-form-item label="(13) 左室短轴缩短率:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-input style="width: 240px;" v-decorator="['c2', { initialValue: initValue('c2')}]" addonAfter="%" autocomplete="off"></a-input>
+                </a-form-item>
+                <div class="title">3.小结</div>
+                <a-form-item label="小结:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['d1', {...selectRequired, initialValue: initValue('d1')}]">
+                    <a-radio value="1">肺动脉高压</a-radio>
+                    <a-radio value="2">肺源性心脏病</a-radio>
+                    <a-radio value="3">无</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+              </div>
             </div>
           </a-form>
         </a-col>
@@ -127,6 +131,7 @@ export default {
   },
   data() {
     return {
+      controla1: false,
       showOcr: false,
       markName: 'xzcc',
       title: '基线',
@@ -223,7 +228,13 @@ export default {
     changeSelect(e, t) {
       this[t] = e.target.checked
     },
-    changeRadio(e, t) {},
+    changeRadio(e, t) {
+      if (e.target.value === '1') {
+        this[t] = true
+      } else {
+        this[t] = false
+      }
+    },
     handleClick(e) {
       if (e.key >= 31 && e.key <= 36) {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
@@ -296,7 +307,9 @@ export default {
     },
     dealAnswers(answer) {
       if (answer && !_.isEmpty(answer)) {
-
+        if (answer.a1 === 1) {
+          that.controla1 = true
+        }
       }
       return answer
     },

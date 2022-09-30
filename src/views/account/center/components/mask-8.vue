@@ -479,7 +479,7 @@
                 <a-input addonAfter="ppb" style="width: 240px;" v-decorator="['d1', {initialValue: initValue('d1')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(5) 6分钟步行试验总距离:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-input addonAfter="m" style="width: 240px;" v-decorator="['e', {...inputRequired, initialValue: initValue('e')}]" autocomplete="off"></a-input>
+                <a-input addonAfter="m" style="width: 240px;" v-decorator="['e', { initialValue: initValue('e')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(6) 血气分析:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
               </a-form-item>
@@ -487,19 +487,19 @@
                 <a-date-picker placeholder="请选择" v-decorator="['f5', {initialValue: initValue('f5', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
               </a-form-item> 
               <a-form-item label="PH:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input style="width: 240px;" v-decorator="['f', {...inputRequired, initialValue: initValue('f')}]" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['f', { initialValue: initValue('f')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="氧分压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input style="width: 240px;" v-decorator="['f1', {...inputRequired, initialValue: initValue('f1')}]" addonAfter="mmHg" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['f1', { initialValue: initValue('f1')}]" addonAfter="mmHg" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="二氧化碳分压:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input style="width: 240px;" v-decorator="['f2', {...inputRequired, initialValue: initValue('f2')}]" addonAfter="mmHg" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['f2', { initialValue: initValue('f2')}]" addonAfter="mmHg" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="肺动脉氧分压差:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
                 <a-input style="width: 240px;" v-decorator="['f3', {initialValue: initValue('f3')}]" autocomplete="off" addonAfter="mmHg"></a-input>
               </a-form-item>
               <a-form-item label="氧饱和度:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
-                <a-input style="width: 240px;" v-decorator="['f4', {...inputRequired, initialValue: initValue('f4')}]" autocomplete="off" addonAfter="%"></a-input>
+                <a-input style="width: 240px;" v-decorator="['f4', { initialValue: initValue('f4')}]" autocomplete="off" addonAfter="%"></a-input>
               </a-form-item>
             </div>
           </a-form>

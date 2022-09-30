@@ -174,7 +174,7 @@ export default {
         dataIndex: 'mmrc',
         width: 100
       }, {
-        title: 'HAD评分',
+        title: 'HADS评分',
         dataIndex: 'had',
         width: 100
       }, {
