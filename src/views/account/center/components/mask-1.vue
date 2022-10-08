@@ -154,7 +154,7 @@
                   <a-checkbox value="3" :checked="controlb63" @change="changeSelect($event, 'controlb63')">鼻息肉</a-checkbox>
                   <a-checkbox value="4" :checked="controlb64" @change="changeSelect($event, 'controlb64')">哮喘</a-checkbox>
                   <a-checkbox value="5" :checked="controlb65" @change="changeSelect($event, 'controlb65')">慢阻肺</a-checkbox>
-                  <a-checkbox value="8">中耳炎</a-checkbox>
+                  <a-checkbox value="8" :checked="controlb68" @change="changeSelect($event, 'controlb68')">中耳炎</a-checkbox>
                   <a-checkbox value="7" :checked="controlb67" @change="changeSelect($event, 'controlb67')">其他</a-checkbox>
                   <a-checkbox value="6" :checked="controlb66" @change="changeSelect($event, 'controlb66')">无</a-checkbox>
                 </a-checkbox-group>
@@ -173,6 +173,9 @@
               </a-form-item>
               <a-form-item class="no-border" label="慢阻肺具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb65">
                 <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b65', {...dateRequire, initialValue: initValue('b65', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
+              </a-form-item>
+              <a-form-item class="no-border" label="中耳炎具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb68">
+                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b66', {...dateRequire, initialValue: initValue('b66', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
               </a-form-item>
               <a-form-item label="(7) 有无其他疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b70', {...require2, initialValue: initValue('b70')}]" @change="changeRadio($event, 'controlb70')">
@@ -590,6 +593,7 @@ export default {
       controlb65: false,
       controlb66: false,
       controlb67: false,
+      controlb68: false,
       controlb7: false,
       controlb72: false,
       controlb8: false,
@@ -759,6 +763,9 @@ export default {
           }
           if (splitArr.indexOf('7') > -1) {
             that.controlb67 = true
+          }
+          if (splitArr.indexOf('8') > -1) {
+            that.controlb68 = true
           }
         }
 
@@ -947,6 +954,7 @@ export default {
             'b63': typeof re['b63'] !== 'undefined' ? re['b63'].format('YYYY-MM') : '',
             'b64': typeof re['b64'] !== 'undefined' ? re['b64'].format('YYYY-MM') : '',
             'b65': typeof re['b65'] !== 'undefined' ? re['b65'].format('YYYY-MM') : '',
+            'b66': typeof re['b65'] !== 'undefined' ? re['b66'].format('YYYY-MM') : '',
             'b71': typeof re['b71'] !== 'undefined' ? re['b71'].join(',') : '',
             'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : '',
             'b91': typeof re['b91'] !== 'undefined' ? re['b91'].join(',') : '',
@@ -1012,6 +1020,7 @@ export default {
         'b63': typeof re['b63'] !== 'undefined' ? re['b63'].format('YYYY-MM') : '',
         'b64': typeof re['b64'] !== 'undefined' ? re['b64'].format('YYYY-MM') : '',
         'b65': typeof re['b65'] !== 'undefined' ? re['b65'].format('YYYY-MM') : '',
+        'b66': typeof re['b65'] !== 'undefined' ? re['b66'].format('YYYY-MM') : '',
         'b71': typeof re['b71'] !== 'undefined' ? re['b71'].join(',') : '',
         'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : '',
         'b91': typeof re['b91'] !== 'undefined' ? re['b91'].join(',') : '',

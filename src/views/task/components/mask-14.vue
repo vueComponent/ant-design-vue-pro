@@ -147,7 +147,7 @@
                   <a-checkbox value="3" :checked="controlb63" @change="changeSelect($event, 'controlb63')">鼻息肉</a-checkbox>
                   <a-checkbox value="4" :checked="controlb64" @change="changeSelect($event, 'controlb64')">哮喘</a-checkbox>
                   <a-checkbox value="5" :checked="controlb65" @change="changeSelect($event, 'controlb65')">慢阻肺</a-checkbox>
-                  <a-checkbox value="8">中耳炎</a-checkbox>
+                  <a-checkbox value="8" :checked="controlb68" @change="changeSelect($event, 'controlb68')">中耳炎</a-checkbox>
                   <a-checkbox value="6" :checked="controlb66" @change="changeSelect($event, 'controlb66')">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
@@ -579,6 +579,7 @@ export default {
       controlb65: false,
       controlb66: false,
       controlb7: false,
+      controlb68: false,
       controlb72: false,
       controlb8: false,
       controlb9: false,
@@ -726,6 +727,9 @@ export default {
           }
           if (splitArr.indexOf('6') > -1) {
             that.controlb66 = true
+          }
+          if (splitArr.indexOf('8') > -1) {
+            that.controlb68 = true
           }
         }
 
@@ -911,6 +915,7 @@ export default {
             'b63': typeof re['b63'] !== 'undefined' ? re['b63'].format('YYYY-MM-DD') : '',
             'b64': typeof re['b64'] !== 'undefined' ? re['b64'].format('YYYY-MM-DD') : '',
             'b65': typeof re['b65'] !== 'undefined' ? re['b65'].format('YYYY-MM-DD') : '',
+            'b66': typeof re['b66'] !== 'undefined' ? re['b66'].format('YYYY-MM-DD') : '',
             'b71': typeof re['b71'] !== 'undefined' ? re['b71'].join(',') : '',
             'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : '',
             'b91': typeof re['b91'] !== 'undefined' ? re['b91'].join(',') : '',
@@ -923,7 +928,6 @@ export default {
             'b201': typeof re['b201'] !== 'undefined' ? re['b201'].join(',') : '',
             'b211': typeof re['b211'] !== 'undefined' ? re['b211'].format('YYYY-MM-DD') : ''
           }
-          console.log(re)
           this.patientBasis.status = 2
           var params = new URLSearchParams()
           if (this.zkbszl && this.zkbszl.zkbszlId) {
@@ -936,7 +940,6 @@ export default {
           this.spinning = true
           saveBasis(params)
             .then(res => {
-              console.log(res)
               that.spinning = false
               that.getFormData()
               that.$message.success(res.msg)
@@ -978,6 +981,7 @@ export default {
         'b63': typeof re['b63'] !== 'undefined' ? re['b63'].format('YYYY-MM-DD') : '',
         'b64': typeof re['b64'] !== 'undefined' ? re['b64'].format('YYYY-MM-DD') : '',
         'b65': typeof re['b65'] !== 'undefined' ? re['b65'].format('YYYY-MM-DD') : '',
+        'b66': typeof re['b66'] !== 'undefined' ? re['b66'].format('YYYY-MM-DD') : '',
         'b71': typeof re['b71'] !== 'undefined' ? re['b71'].join(',') : '',
         'b81': typeof re['b81'] !== 'undefined' ? re['b81'].join(',') : '',
         'b91': typeof re['b91'] !== 'undefined' ? re['b91'].join(',') : '',

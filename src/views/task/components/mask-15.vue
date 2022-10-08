@@ -81,8 +81,8 @@
               </div>
               <a-form-item label="(6) 右位心:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['a10', {...require1, initialValue: initValue('a10')}]">
-                  <a-radio value="-1">否</a-radio>
                   <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
                 </a-radio-group>
               </a-form-item>
             </div>
