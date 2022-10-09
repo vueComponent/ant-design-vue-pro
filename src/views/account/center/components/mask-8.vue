@@ -756,7 +756,9 @@ export default {
     },
     initValue(key, type = 'normal') {
       if (!this.fgnxgjc) return type === 'array' ? [] : type === 'time' ? undefined : ''
-      if (!this.fgnxgjc[key]) return type === 'array' ? [] : type === 'time' ? undefined : ''
+      if (this.fgnxgjc[key] !== 0) {
+        if (!this.fgnxgjc[key]) return type === 'array' ? [] : type === 'time' ? undefined : ''
+      }
       if (type === 'time') {
         return moment(this.fgnxgjc[key])
       } else if (type === 'array') {

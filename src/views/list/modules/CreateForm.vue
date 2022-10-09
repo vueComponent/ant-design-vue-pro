@@ -347,7 +347,7 @@ export default {
         this.form.setFieldsValue({
           card: value.card,
           registerDate: moment(value.registerDate, 'x'),
-          coughDate: value.coughDate ? moment(value.registerDate, 'x') : null,
+          coughDate: value.coughDate ? moment(value.coughDate, 'x') : null,
           name: value.name,
           sex: String(value.sex),
           birthDate: moment(value.birthDate, 'x'),

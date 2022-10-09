@@ -403,19 +403,19 @@ export default {
         }
       } else if (t === 'controla4' && e.target.value === '-1') {
         this.controla4 = false
-        this.controla420 = false
-        this.controla421 = false
-        this.controla422 = false
-        this.controla423 = false
-        this.controla424 = false
-        this.controla425 = false
-        this.controla426 = false
-        this.controla427 = false
-        this.controla428 = false
-        this.controla429 = false
-        this.controla4210 = false
-        this.controla4211 = false
-        this.controla4212 = false
+        // this.controla420 = false
+        // this.controla421 = false
+        // this.controla422 = false
+        // this.controla423 = false
+        // this.controla424 = false
+        // this.controla425 = false
+        // this.controla426 = false
+        // this.controla427 = false
+        // this.controla428 = false
+        // this.controla429 = false
+        // this.controla4210 = false
+        // this.controla4211 = false
+        // this.controla4212 = false
       } else if (t === 'controlb4' && e.target.value === '-1') {
         this.controlb4 = false
         this.controlb42 = false
