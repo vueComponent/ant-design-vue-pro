@@ -174,8 +174,12 @@ export default {
         dataIndex: 'mmrc',
         width: 100
       }, {
-        title: 'HADS评分',
+        title: 'HADS-A评分',
         dataIndex: 'had',
+        width: 100
+      },{
+        title: 'HADS-D评分',
+        dataIndex: 'hadd',
         width: 100
       }, {
         title: 'lcq总评分',

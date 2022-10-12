@@ -205,6 +205,14 @@
                 </a-popover>
                 <a-input style="width: 240px;" v-decorator="['a19', {initialValue: initValue('a19')}]" :readOnly="true" autocomplete="off"></a-input>
               </a-form-item>
+              <div class="title">4.支扩类型</div>
+              <a-form-item label="支扩类型" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
+                <a-radio-group v-decorator="['a20', {initialValue: initValue('a20')}]" @change="computeBhalla">
+                  <a-radio value="1">囊状</a-radio>
+                  <a-radio value="2">柱状</a-radio>
+                  <a-radio value="3">静脉曲张型(混合型)</a-radio>
+                </a-radio-group>
+              </a-form-item>
             </div>
           </a-form>
         </a-col>

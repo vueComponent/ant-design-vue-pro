@@ -28,7 +28,13 @@
               <a-row type="flex" style="flex:1">
                 <span class="head-icon"></span>
                 <div v-if="question.name && question.name" class="question-title">{{question.name}}</div>
-                <span v-if="score" class="question-score">{{`（得分：${score}分）`}}</span>
+                <span v-if="(score) && (questionTask.questionId !== 36)" class="question-score">{{`（得分：${score}分）`}}</span>
+                <span v-if="(score) && (questionTask.questionId === 36) && (!questionTask.score9)" class="question-score">{{`（得分：${score}分）`}}</span>
+                <span v-if="(score) && (questionTask.questionId === 36) && (questionTask.score9)" class="question-score">{{`（HADS-A得分：${questionTask.score}分；`}}<span v-if="questionTask.score9">{{` HADS-D得分：${questionTask.score9}分`}}</span>）</span>
+                <!-- <a-row v-if="questionId === 36" type="flex" style="flex:1;margin-left:40px">
+                  <a-col :span="6"><strong>HAD-A（<span style="color: #3398dc">{{ questionTask.score }}分</span>）</strong></a-col>
+                  <a-col :span="6"><strong>HAD-D（<span style="color: #3398dc">{{ questionTask.score9 }}分</span>）</strong></a-col>
+                </a-row> -->
                 <a-row v-if="(questionId === 32 || questionId === 38 || questionId === 46 || questionId === 58 || questionId === 66) && (questionTask.status === 1 || questionTask.status === 5) && typeof questionTask.score1 !== 'undefined'" type="flex" style="flex:1;margin-left:40px">
                   <a-col :span="6"><strong>身体功能性维度（<span style="color: #3398dc">{{ questionTask.score1 }}分</span>）</strong></a-col>
                   <a-col :span="6"><strong>角色功能性维度（<span style="color: #3398dc">{{ questionTask.score2 }}分</span>）</strong></a-col>

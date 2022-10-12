@@ -31,7 +31,10 @@
             <div class="head-bar">
               <a-row type="flex">
                 <span class="head-icon"></span>
-                <div v-if="question.name" class="question-title">{{question.name}}<span v-if="score">{{`（得分：${score}分）`}}</span></div>
+                <div v-if="question.name" class="question-title">{{question.name}}</div>
+                <span v-if="(score) && (questionTask.questionId !== 36)" class="question-score">{{`（得分：${score}分）`}}</span>
+                <span v-if="(score) && (questionTask.questionId === 36) && (!questionTask.score9)" class="question-score">{{`（得分：${score}分）`}}</span>
+                <span v-if="(score) && (questionTask.questionId === 36) && (questionTask.score9)" class="question-score">{{`（HADS-A得分：${questionTask.score}分；`}}<span v-if="questionTask.score9">{{` HADS-D得分：${questionTask.score9}分`}}</span>）</span>
               </a-row>
               <span v-if="showBtnState == 3">已驳回</span>
               <span v-else-if="showBtnState == 4">已审批</span>

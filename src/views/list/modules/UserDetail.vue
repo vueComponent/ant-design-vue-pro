@@ -184,25 +184,32 @@
       <div class="scores" v-if="zkScore != 0">
         <p class="title">问卷评分</p>
         <a-row :gutter="10">
-          <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+          <a-col :sm="24" :md="scoreData.HAD.score9 ? 9 : 12" :xl="scoreData.HAD.score9 ? 6 : 8" :style="{ marginBottom: '10px' }">
             <div class="block clearfix">
               <div class="name">BHQ评分</div>
               <div class="score" style="color: mediumpurple">{{scoreData.BHQ.score}}分</div>
               <mini-progress color="mediumpurple" :target="scoreData.BHQ.score" :percentage="scoreData.BHQ.score" height="8px" />
             </div>
           </a-col>
-          <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }">
+          <a-col :sm="24" :md="scoreData.HAD.score9 ? 9 : 12" :xl="scoreData.HAD.score9 ? 6 : 8" :style="{ marginBottom: '10px' }">
             <div class="block clearfix">
               <div class="name">MMRC评分</div>
               <div class="score" style="color: #fd94dc">{{scoreData.MMRC.score}}分</div>
               <mini-progress color="#fd94dc" :target="scoreData.MMRC.score / 4 * 100" :percentage="scoreData.MMRC.score / 4 * 100" height="8px" />
             </div>
           </a-col>
-          <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '10px' }"  v-if="scoreData.HAD">
+          <a-col :sm="24" :md="scoreData.HAD.score9 ? 9 : 12" :xl="scoreData.HAD.score9 ? 6 : 8" :style="{ marginBottom: '10px' }"  v-if="scoreData.HAD">
             <div class="block clearfix">
-              <div class="name">HADS评分</div>
+              <div class="name">HADS<span v-if="scoreData.HAD.score9">-A</span>评分</div>
               <div class="score" style="color: orange">{{scoreData.HAD.score}}分</div>
               <mini-progress color="orange" :target="scoreData.HAD.score / 42 * 100" :percentage="scoreData.HAD.score / 42 * 100" height="8px" />
+            </div>
+          </a-col>
+          <a-col :sm="24" :md="scoreData.HAD.score9 ? 9 : 12" :xl="scoreData.HAD.score9 ? 6 : 8" :style="{ marginBottom: '10px' }"  v-if="scoreData.HAD.score9">
+            <div class="block clearfix">
+              <div class="name">HADS-D评分</div>
+              <div class="score" style="color: #fd94dc">{{scoreData.HAD.score9}}分</div>
+              <mini-progress color="#fd94dc" :target="scoreData.HAD.score9 / 42 * 100" :percentage="scoreData.HAD.score9 / 42 * 100" height="8px" />
             </div>
           </a-col>
         </a-row>
@@ -317,7 +324,13 @@ export default {
         background: "#F8FBFC"
       },
       zkScore: 0,
-      scoreData: {}
+      scoreData: {
+        BHQ: {},
+        MMRC: {},
+        HAD: {},
+        LCQ: {},
+        QOLB: {}
+      }
     }
   },
   filters: {

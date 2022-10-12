@@ -591,7 +591,7 @@ export default {
         }
         if (answer.b48) {
           splitArr = answer.b48.split(',')
-          if (splitArr.indexOf('12') > -1) {
+          if (splitArr.indexOf('11') > -1) {
             this.controlb48 = true
           }
         }
