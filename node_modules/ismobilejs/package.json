@@ -1,0 +1,55 @@
+{
+  "name": "ismobilejs",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "1.1.1",
+  "description": "A simple JS library that detects mobile devices.",
+  "keywords": [
+    "ismobile",
+    "device detection",
+    "mobile devices",
+    "useragent"
+  ],
+  "homepage": "https://github.com/kaimallea/isMobile",
+  "license": "MIT",
+  "author": {
+    "name": "Kai Mallea",
+    "email": "kmallea@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaimallea/isMobile.git"
+  },
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "jsdelivr": "dist/isMobile.min.js",
+  "types": "types",
+  "scripts": {
+    "prebuild": "rm -rf cjs esm dist",
+    "build": "yarn build:library && yarn build:browser",
+    "build:library": "web-scripts build",
+    "build:browser": "parcel build --target browser --experimental-scope-hoisting --global isMobile --out-file isMobile.min.js src/index.browser.ts",
+    "test": "jest",
+    "format": "web-scripts format",
+    "lint": "web-scripts lint",
+    "commit": "web-scripts commit",
+    "release": "web-scripts release",
+    "prepare": "web-scripts audit"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "web-scripts precommit --jest-config ./jest.config.js",
+      "commit-msg": "web-scripts commitmsg"
+    }
+  },
+  "devDependencies": {
+    "@spotify/web-scripts": "^6.2.0",
+    "@types/puppeteer": "^2.0.1",
+    "husky": "^4.2.5",
+    "jest-puppeteer": "^4.4.0",
+    "parcel-bundler": "^1.12.4",
+    "puppeteer": "^2.1.1",
+    "ts-jest": "^25.3.1"
+  }
+}

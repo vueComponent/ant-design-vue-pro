@@ -1,0 +1,73 @@
+{
+	"name": "@csstools/selector-specificity",
+	"description": "Determine selector specificity with postcss-selector-parser",
+	"version": "2.0.2",
+	"contributors": [
+		{
+			"name": "Antonio Laguna",
+			"email": "antonio@laguna.es",
+			"url": "https://antonio.laguna.es"
+		},
+		{
+			"name": "Romain Menke",
+			"email": "romainmenke@gmail.com"
+		}
+	],
+	"license": "CC0-1.0",
+	"funding": {
+		"type": "opencollective",
+		"url": "https://opencollective.com/csstools"
+	},
+	"engines": {
+		"node": "^12 || ^14 || >=16"
+	},
+	"main": "dist/index.cjs",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs",
+			"default": "./dist/index.mjs"
+		}
+	},
+	"files": [
+		"CHANGELOG.md",
+		"LICENSE.md",
+		"README.md",
+		"dist"
+	],
+	"peerDependencies": {
+		"postcss": "^8.2",
+		"postcss-selector-parser": "^6.0.10"
+	},
+	"devDependencies": {
+		"postcss-selector-parser": "^6.0.10"
+	},
+	"scripts": {
+		"build": "rollup -c ../../rollup/default.js",
+		"clean": "node -e \"fs.rmSync('./dist', { recursive: true, force: true });\"",
+		"lint": "npm run lint:eslint && npm run lint:package-json",
+		"lint:eslint": "eslint ./src --ext .js --ext .ts --ext .mjs --no-error-on-unmatched-pattern",
+		"lint:package-json": "node ../../.github/bin/format-package-json.mjs",
+		"prepublishOnly": "npm run clean && npm run build && npm run test",
+		"stryker": "stryker run --logLevel error",
+		"test": "npm run test:exports && node ./test/example.mjs && node ./test/test.mjs && node ./test/tests-from-bramus-specificity.mjs && node ./test/tests-from-keeganstreet-specificity.mjs && node ./test/test-compare.mjs",
+		"test:exports": "node ./test/_import.mjs && node ./test/_require.cjs"
+	},
+	"homepage": "https://github.com/csstools/postcss-plugins/tree/main/packages/selector-specificity#readme",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/csstools/postcss-plugins.git",
+		"directory": "packages/selector-specificity"
+	},
+	"bugs": "https://github.com/csstools/postcss-plugins/issues",
+	"keywords": [
+		"css",
+		"postcss-selector-parser",
+		"specificity"
+	],
+	"volta": {
+		"extends": "../../package.json"
+	}
+}

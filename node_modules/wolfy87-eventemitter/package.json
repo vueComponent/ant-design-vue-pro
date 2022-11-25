@@ -1,0 +1,38 @@
+{
+  "name": "wolfy87-eventemitter",
+  "version": "5.1.0",
+  "description": "Event based JavaScript for the browser",
+  "main": "EventEmitter.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Olical/EventEmitter.git"
+  },
+  "keywords": [
+    "eventemitter",
+    "events",
+    "browser",
+    "amd"
+  ],
+  "author": {
+    "name": "Oliver Caldwell",
+    "email": "olliec87@gmail.com",
+    "url": "http://oli.me.uk/"
+  },
+  "license": "Unlicense",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/Olical/EventEmitter/issues"
+  },
+  "devDependencies": {
+    "uglify-js": "*",
+    "mocha": "*",
+    "chai": "*",
+    "dox": "*",
+    "dustjs-linkedin": "*",
+    "dustjs-helpers": "*"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "name": "lint-staged",
+  "version": "12.5.0",
+  "description": "Lint files staged by git",
+  "license": "MIT",
+  "repository": "https://github.com/okonet/lint-staged",
+  "author": "Andrey Okonetchnikov <andrey@okonet.ru>",
+  "maintainers": [
+    "Lufty Wiranda <lufty.wiranda@gmail.com>",
+    "Suhas Karanth <sudo.suhas@gmail.com>",
+    "Iiro Jäppinen <iiro@jappinen.fi> (https://iiro.fi)"
+  ],
+  "funding": {
+    "url": "https://opencollective.com/lint-staged"
+  },
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  },
+  "type": "module",
+  "bin": "./bin/lint-staged.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bin",
+    "lib"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "cli-truncate": "^3.1.0",
+    "colorette": "^2.0.16",
+    "commander": "^9.3.0",
+    "debug": "^4.3.4",
+    "execa": "^5.1.1",
+    "lilconfig": "2.0.5",
+    "listr2": "^4.0.5",
+    "micromatch": "^4.0.5",
+    "normalize-path": "^3.0.0",
+    "object-inspect": "^1.12.2",
+    "pidtree": "^0.5.0",
+    "string-argv": "^0.3.1",
+    "supports-color": "^9.2.2",
+    "yaml": "^1.10.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.2",
+    "@babel/eslint-parser": "^7.18.2",
+    "@babel/preset-env": "^7.18.2",
+    "babel-jest": "^28.1.0",
+    "babel-plugin-transform-imports": "2.0.0",
+    "consolemock": "^1.1.0",
+    "eslint": "^8.16.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "fs-extra": "^10.1.0",
+    "husky": "^8.0.1",
+    "jest": "^28.1.0",
+    "jest-snapshot-serializer-ansi": "^1.0.0",
+    "prettier": "^2.6.2"
+  },
+  "keywords": [
+    "lint",
+    "git",
+    "staged",
+    "eslint",
+    "prettier",
+    "stylelint",
+    "code",
+    "quality",
+    "check",
+    "format",
+    "validate"
+  ]
+}

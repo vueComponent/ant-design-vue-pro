@@ -1,0 +1,84 @@
+@import '../lib/variables';
+@import '../lib/mixins';
+@import '../base';
+
+.pcr-app[data-theme='monolith'] {
+    width: 14.25em;
+    max-width: 95vw;
+    padding: 0.8em;
+
+    .pcr-selection {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 1;
+
+        .pcr-color-preview {
+            @include transparency-background;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 1em;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 0.5em;
+
+            .pcr-last-color {
+                cursor: pointer;
+                transition: background-color 0.3s, box-shadow 0.3s;
+                border-radius: 0.15em 0 0 0.15em;
+                z-index: 2;
+            }
+
+            .pcr-current-color {
+                border-radius: 0 0.15em 0.15em 0;
+            }
+
+            .pcr-last-color,
+            .pcr-current-color {
+                background: currentColor;
+                width: 50%;
+                height: 100%;
+            }
+        }
+
+        .pcr-color-palette {
+            width: 100%;
+            height: 8em;
+            z-index: 1;
+
+            .pcr-palette {
+                border-radius: $border-radius-mid;
+                @include transparency-background;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .pcr-color-chooser,
+        .pcr-color-opacity {
+            height: 0.5em;
+            margin-top: 0.75em;
+
+            .pcr-picker {
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .pcr-slider {
+                flex-grow: 1;
+                border-radius: 50em;
+            }
+        }
+
+        .pcr-color-chooser .pcr-slider {
+            background: colorRainbow(to right);
+        }
+
+        .pcr-color-opacity .pcr-slider {
+            background: linear-gradient(to right, transparent, black), $icon-transparency;
+            background-size: 100%, 0.25em;
+        }
+    }
+}

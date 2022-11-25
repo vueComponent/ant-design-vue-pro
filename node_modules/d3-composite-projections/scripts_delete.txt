@@ -1,0 +1,16 @@
+"pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -g d3-array:d3 -n d3 -o build/d3-geo.js -- index.js",
+"test": "tape 'test/**/*-test.js' && test/compare-images && eslint index.js src",
+"prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/d3-geo.js -c -m -o build/d3-geo.min.js",
+"postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp build/d3-geo.js ../d3.github.com/d3-geo.v1.js && cp build/d3-geo.min.js ../d3.github.com/d3-geo.v1.min.js && cd ../d3.github.com && git add d3-geo.v1.js d3-geo.v1.min.js && git commit -m \"d3-geo ${VERSION}\" && git push && cd - && zip -j build/d3-geo.zip -- LICENSE README.md build/d3-geo.js build/d3-geo.min.js"
+
+
+
+
+"test": "tape 'test/*-test.js' && mkdir -p test/output && test/compare-images && eslint index.js src"
+
+
+http://stackoverflow.com/questions/2862590/how-to-replace-master-branch-in-git-entirely-from-another-branch
+
+
+
+https://github.com/d3/d3-geo/commit/88489fab2293e0243af800a2d0bfee4619a04255

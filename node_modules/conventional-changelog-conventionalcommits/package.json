@@ -1,0 +1,41 @@
+{
+  "name": "conventional-changelog-conventionalcommits",
+  "version": "4.6.3",
+  "description": "conventional-changelog conventionalcommits.org preset",
+  "main": "index.js",
+  "scripts": {
+    "test-windows": "mocha --timeout 30000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+  },
+  "keywords": [
+    "conventional-changelog",
+    "conventionalcommits.org",
+    "preset"
+  ],
+  "files": [
+    "add-bang-notes.js",
+    "conventional-changelog.js",
+    "conventional-recommended-bump.js",
+    "index.js",
+    "parser-opts.js",
+    "writer-opts.js",
+    "templates"
+  ],
+  "author": "Ben Coe",
+  "engines": {
+    "node": ">=10"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
+  },
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-conventionalcommits#readme",
+  "dependencies": {
+    "compare-func": "^2.0.0",
+    "lodash": "^4.17.15",
+    "q": "^1.5.1"
+  }
+}

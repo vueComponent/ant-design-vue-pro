@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="geometry" content="diagram">
+  <link rel="stylesheet" href="./assets/common.css">
+  <title>Scatter Matrix</title>
+</head>
+
+<body>
+<div id="toolbar">
+  <button id="XY">矩形选择</button>
+  <button id="X">横向选择</button>
+  <button id="Y">纵向选择</button>
+  <button id="POLYGON">圈选</button>
+  <button id="clear">清除选择</button>
+</div>
+<div id="canvas"></div>
+
+<script src="./assets/jquery-3.2.1.min.js"></script>
+<script src="./assets/data-set.min.js"></script>
+<script src="./assets/g2.min.js"></script>
+<script src="../build/g2-brush.js"></script>
+<script>
+  const Util = G2.Util;
+  $.getJSON('./data/iris.json', function(data) {
+    const chart = new G2.Chart({
+      container: 'canvas',
+      forceFit: true,
+      height: window.innerHeight
+    });
+
+    chart.source(data, {
+      Species: {
+        sync: true
+      }
+    });
+    chart.legend({
+      hoverable: false
+    });
+    chart.facet('matrix', {
+      fields: [ 'SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth' ],
+      eachView(view, facet) {
+        view.axis(facet.colField, {
+          label: null,
+          line: {
+            lineWidth: 1,
+            stroke: '#000'
+          },
+          tickLine: {
+            lineWidth: 1,
+            stroke: '#000',
+            length: 4
+          }
+        });
+        view.axis(facet.rowField, {
+          label: null,
+          line: {
+            lineWidth: 1,
+            stroke: '#000'
+          },
+          tickLine: {
+            lineWidth: 1,
+            stroke: '#000',
+            length: 4
+          }
+        });
+        if (facet.rowIndex === facet.colIndex) {
+          view.point()
+            .position(facet.colField + '*' + facet.colField)
+              .color('Species', [ '#880000', '#008800', '#000088' ])
+              .opacity(0.5)
+              .shape('circle')
+              .size(3)
+              .active(false);
+        } else {
+          view.point()
+            .position([ facet.colField, facet.rowField ])
+              .color('Species', [ '#880000', '#008800', '#000088' ])
+              .opacity(0.5)
+              .shape('circle')
+              .size(3)
+              .active(false);
+        }
+        if ([ 0, 1, 2, 3 ].indexOf(facet.rowIndex) > -1 && facet.colIndex === 0) {
+          view.guide().text({
+            position: [ 3.7, 'median' ],
+            content: facet.rowValue,
+            style: {
+              rotate: -90,
+              fontSize: 12,
+              fill: '#999',
+              textAlign: 'center'
+            }
+          });
+        }
+        if ([ 0, 1, 2, 3 ].indexOf(facet.colIndex) > -1 && facet.rowIndex === 3) {
+          view.guide().text({
+            position: [ 'median', 'min' ],
+            content: facet.colValue,
+            style: {
+              fontSize: 12,
+              fill: '#999',
+              textAlign: 'center'
+            },
+            offsetY: 20
+          });
+        }
+      }
+    });
+    chart.render();
+
+    let brush;
+    function setBrushType(type) {
+      if (!brush) {
+        brush = new Brush({
+          canvas: chart.get('canvas'),
+          dragable: true,
+          type,
+          onBrushstart(ev) {
+            chart.hideTooltip();
+            const { x, y } = ev;
+            const views = chart.getViewsByPoint({ x, y });
+            if (views.length > 1) {
+              this.chart = views[1];
+              const coord = views[1].get('coord');
+              this.plot = {
+                start: coord.start,
+                end: coord.end
+              };
+              this.xScale = views[1].getXScale();
+              this.yScale = views[1].getYScales()[0];
+            }
+          },
+          onBrushmove(ev) {
+            chart.hideTooltip();
+
+            const { data } = ev;
+            chart.eachShape((record, shape) => {
+              if (!shape.get('_originAttrs')) {
+                shape.set('_originAttrs', Util.cloneDeep(shape.__attrs)); // 缓存原来的属性
+              }
+              if (data.indexOf(record) === -1) {
+                shape.attr('fill', '#ccc');
+              } else {
+                const originAttrs = shape.get('_originAttrs');
+                shape.__attrs = Util.cloneDeep(originAttrs);
+              }
+            });
+          },
+          onDragmove(ev) {
+            chart.hideTooltip();
+
+            const { data } = ev;
+            chart.eachShape((record, shape) => {
+              if (!shape.get('_originAttrs')) {
+                shape.set('_originAttrs', Util.cloneDeep(shape.__attrs)); // 缓存原来的属性
+              }
+              if (data.indexOf(record) === -1) {
+                shape.attr('fill', '#ccc');
+              } else {
+                const originAttrs = shape.get('_originAttrs');
+                shape.__attrs = Util.cloneDeep(originAttrs);
+              }
+            });
+          }
+        });
+      } else {
+        if (type === 'clear') {
+          brush.container.clear();
+          // brush.canvas.draw();
+        } else {
+          brush.setType(type);
+
+        }
+      }
+    }
+
+    $('#XY').click(() => {
+      setBrushType('XY');
+    });
+    $('#Y').click(() => {
+      setBrushType('Y');
+    });
+    $('#X').click(() => {
+      setBrushType('X');
+    });
+    $('#POLYGON').click(() => {
+      setBrushType('POLYGON');
+    });
+    $('#clear').click(() => {
+      setBrushType('clear');
+
+      chart.eachShape((record, shape) => {
+        if (shape.get('_originAttrs')) {
+          const originAttrs = shape.get('_originAttrs');
+          shape.__attrs = Util.cloneDeep(originAttrs);
+        }
+      });
+    });
+  });
+</script>
+</body>
+
+</html>
+

@@ -1,0 +1,48 @@
+{
+  "name": "omit.js",
+  "version": "1.0.2",
+  "description": "Utility function to create a shallow copy of an object which had dropped some fields.",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "index.d.ts",
+  "files": [
+    "lib",
+    "es",
+    "dist",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "compile": "rc-tools run compile --babel-runtime",
+    "test": "rc-test run test",
+    "coverage": "rc-test run coverage",
+    "lint": "rc-tools run lint",
+    "eslint-fix": "eslint --fix ./index.js ./test",
+    "build": "rc-tools run build",
+    "gh-pages": "rc-tools run gh-pages",
+    "start": "rc-tools run server",
+    "pub": "rc-tools run pub --babel-runtime",
+    "prepublish": "rc-tools run guard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjycui/omit.js.git"
+  },
+  "keywords": [
+    "object",
+    "omit"
+  ],
+  "author": "Benjy Cui<benjytrys@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benjycui/omit.js/issues"
+  },
+  "homepage": "https://github.com/benjycui/omit.js#readme",
+  "dependencies": {
+    "babel-runtime": "^6.23.0"
+  },
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "rc-test": "^6.0.7",
+    "rc-tools": "^6.3.3"
+  }
+}

@@ -1,0 +1,77 @@
+{
+	"name": "stylelint-order",
+	"version": "5.0.0",
+	"description": "A collection of order related linting rules for Stylelint.",
+	"keywords": [
+		"stylelint-plugin",
+		"stylelint",
+		"css",
+		"lint",
+		"order"
+	],
+	"author": "Aleks Hudochenkov <aleks@hudochenkov.com>",
+	"license": "MIT",
+	"repository": "hudochenkov/stylelint-order",
+	"files": [
+		"rules",
+		"utils",
+		"!**/tests",
+		"index.js",
+		"!.DS_Store"
+	],
+	"main": "index.js",
+	"dependencies": {
+		"postcss": "^8.3.11",
+		"postcss-sorting": "^7.0.1"
+	},
+	"peerDependencies": {
+		"stylelint": "^14.0.0"
+	},
+	"devDependencies": {
+		"@stylelint/postcss-css-in-js": "^0.37.2",
+		"eslint": "^7.27.0",
+		"eslint-config-hudochenkov": "^8.0.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-import": "^2.25.2",
+		"eslint-plugin-jest": "^24.3.6",
+		"eslint-plugin-unicorn": "^33.0.1",
+		"husky": "^7.0.2",
+		"jest": "^27.2.5",
+		"jest-preset-stylelint": "^4.1.1",
+		"jest-watch-typeahead": "^1.0.0",
+		"lint-staged": "^11.2.3",
+		"postcss-html": "^0.36.0",
+		"postcss-less": "^5.0.0",
+		"prettier": "~2.4.1",
+		"prettier-config-hudochenkov": "^0.3.0",
+		"stylelint": "^14.0.0"
+	},
+	"scripts": {
+		"pretest": "eslint . --max-warnings=0 && prettier '**/*.js' --check",
+		"test": "jest",
+		"jest": "jest",
+		"watch": "jest --watch",
+		"coverage": "jest --coverage",
+		"fix": "eslint . --fix --max-warnings=0 && prettier '**/*.js' --write",
+		"prepare": "husky install"
+	},
+	"lint-staged": {
+		"*.js": [
+			"eslint --fix --max-warnings=0",
+			"prettier --write"
+		]
+	},
+	"jest": {
+		"preset": "jest-preset-stylelint",
+		"setupFiles": [
+			"./jest-setup.js"
+		],
+		"watchPlugins": [
+			"jest-watch-typeahead/filename",
+			"jest-watch-typeahead/testname"
+		],
+		"testEnvironment": "node",
+		"testRegex": ".*\\.test\\.js$|rules/.*/tests/.*\\.js$"
+	},
+	"prettier": "prettier-config-hudochenkov"
+}

@@ -1,0 +1,69 @@
+{
+  "name": "eslint-plugin-es",
+  "version": "1.4.1",
+  "description": "ESLint plugin about ECMAScript syntactic features.",
+  "engines": {
+    "node": ">=6.5.0"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "eslint": ">=4.19.1"
+  },
+  "dependencies": {
+    "eslint-utils": "^1.4.2",
+    "regexpp": "^2.0.1"
+  },
+  "devDependencies": {
+    "@mysticatea/eslint-plugin": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "codecov": "^3.1.0",
+    "eslint": "^5.8.0",
+    "eslint4b": "^5.8.0",
+    "espree": "^4.1.0",
+    "globals": "^11.8.0",
+    "mocha": "^5.0.5",
+    "npm-run-all": "^4.1.2",
+    "nyc": "^13.1.0",
+    "opener": "^1.5.1",
+    "rimraf": "^2.6.2",
+    "vue-eslint-editor": "^0.1.2",
+    "vuepress": "^0.14.4"
+  },
+  "scripts": {
+    "clean": "rimraf .nyc_output coverage",
+    "codecov": "nyc report -r lcovonly && codecov",
+    "coverage": "nyc report -r lcov && opener ./coverage/lcov-report/index.html",
+    "docs:build": "vuepress build docs",
+    "docs:watch": "vuepress dev docs",
+    "lint": "eslint lib tests scripts",
+    "new": "node scripts/new-rule",
+    "pretest": "npm run -s lint",
+    "test": "nyc mocha tests/**/*.js --reporter dot",
+    "update": "run-s update:*",
+    "update:url": "npm run -s lint -- --fix",
+    "update:ruledocs": "node scripts/update-docs-rules",
+    "update:index": "node scripts/update-index",
+    "preversion": "npm test",
+    "version": "run-s update:* && git add .",
+    "postversion": "git push && git push --tags",
+    "watch": "mocha tests/**/*.js --reporter progress --watch --growl"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mysticatea/eslint-plugin-es.git"
+  },
+  "keywords": [
+    "eslint",
+    "plugin",
+    "eslintplugin"
+  ],
+  "author": "Toru Nagashima (https://github.com/mysticatea)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mysticatea/eslint-plugin-es/issues"
+  },
+  "homepage": "https://github.com/mysticatea/eslint-plugin-es#readme"
+}

@@ -1,0 +1,85 @@
+{
+  "name": "@ant-design-vue/pro-layout",
+  "version": "1.0.13",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vueComponent/pro-layout"
+  },
+  "contributors": [
+    "tangjinzhou <415800467@qq.com>",
+    "Sendya <yladmxa@gmail.com>"
+  ],
+  "license": "MIT",
+  "files": [
+    "es",
+    "lib"
+  ],
+  "peerDependencies": {
+    "ant-design-vue": "^1.6.2",
+    "umi-request": "^1.2.11",
+    "vue": ">=2.6.0",
+    "vue-container-query": "^0.1.0",
+    "vue-template-compiler": ">=2.6.0"
+  },
+  "devDependencies": {
+    "@ant-design-vue/tools": "^1.0.2-beta.2",
+    "@babel/core": "^7.11.1",
+    "@babel/plugin-syntax-jsx": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@types/jest": "^24.0.17",
+    "@types/node": "^10.5.5",
+    "@types/vue": "^2.0.0",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
+    "@vue/server-test-utils": "1.0.0-beta.16",
+    "@vue/test-utils": "1.0.0-beta.16",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-plugin-transform-vue-jsx": "^4.0.1",
+    "babel-runtime": "^6.26.0",
+    "cross-env": "^5.2.0",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-vue": "^5.2.3",
+    "jest": "^26.3.0",
+    "jest-serializer-vue": "^2.0.2",
+    "np": "^5.1.1",
+    "prettier": "^1.18.2",
+    "regenerator-runtime": "^0.13.7",
+    "vue": ">=2.5.0",
+    "vue-jest": "^2.5.0",
+    "vue-template-compiler": ">=2.5.0",
+    "webpack": "^5.4.0"
+  },
+  "dependencies": {
+    "ant-design-vue": "^1.6.2",
+    "classnames": "^2.2.6",
+    "insert-css": "^2.0.0",
+    "lodash": "^4.17.15",
+    "omit.js": "^1.0.2",
+    "umi-request": "^1.2.11",
+    "vue-container-query": "^0.1.0",
+    "vue-copy-to-clipboard": "^1.0.3"
+  },
+  "config": {
+    "port": 9528,
+    "entry": {
+      "@ant-design-vue/pro-layout": [
+        "./src/index.js"
+      ]
+    }
+  },
+  "description": "ant-design-vue-pro layout, easy to use pro scaffolding.",
+  "scripts": {
+    "lint": "eslint -c ./.eslintrc --fix --ext .jsx,.js,.vue ./src",
+    "compile": "vc-tools run compile --babel-runtime",
+    "test": "cross-env NODE_ENV=test jest --config .jest.js"
+  }
+}

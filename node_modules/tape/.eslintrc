@@ -1,0 +1,136 @@
+{
+    "root": true,
+    "extends": "@ljharb",
+    "env": {
+        "browser": true,
+        "node": true,
+    },
+    "parserOptions": {
+        "ecmaVersion": 5,
+        "allowReserved": false,
+    },
+    "rules": {
+        "array-bracket-spacing": "off",
+        "complexity": "off",
+        "func-style": ["error", "declaration"],
+        "max-lines-per-function": "off",
+        "max-statements-per-line": [2, { "max": 2 }],
+        "max-statements": "warn",
+        "multiline-comment-style": "off",
+        "no-negated-condition": "off",
+        "no-param-reassign": "warn",
+        "no-underscore-dangle": "warn",
+        "object-curly-newline": "off",
+        "sort-keys": "off",
+    },
+    "ignorePatterns": [
+        "syntax-error.*",
+    ],
+    "overrides": [
+        {
+            "files": ["*.mjs", "test/import/package_type/*.js"],
+            "extends": "@ljharb/eslint-config/esm",
+        },
+        {
+            "files": ["bin/**"],
+            "rules": {
+                "global-require": "off",
+                "no-process-exit": "off",
+                "quote-props": ["error", "as-needed", {
+                    "keywords": false,
+                }],
+            },
+        },
+        {
+            "files": ["bin/import-or-require.js"],
+            "parserOptions": {
+                "ecmaVersion": 2020,
+            },
+        },
+        {
+            "files": ["index.js"],
+            "rules": {
+                "no-param-reassign": "warn",
+            },
+        },
+        {
+            "files": ["lib/results.js"],
+            "rules": {
+                "no-cond-assign": "warn",
+                "no-param-reassign": "warn",
+                "no-plusplus": "warn",
+            },
+        },
+        {
+            "files": ["lib/test.js"],
+            "rules": {
+                "eqeqeq": "warn",
+                "func-name-matching": "off",
+                "max-params": "off",
+                "no-continue": "off",
+                "no-invalid-this": "off",
+                "no-param-reassign": "warn",
+                "no-plusplus": "warn",
+                "no-multi-assign": "off",
+                "no-restricted-syntax": "off",
+                "operator-linebreak": ["error", "before"],
+            },
+        },
+        {
+            "files": ["test/async-await/*"],
+            "parserOptions": {
+                "ecmaVersion": 2017,
+            },
+        },
+        {
+            "files": ["example/**", "test/**"],
+            "globals": {
+                "g": false,
+            },
+            "rules": {
+                "no-new-func": "off",
+            },
+        },
+        {
+            "files": ["example/**"],
+            "rules": {
+                "array-bracket-newline": "off",
+                "global-require": "off",
+                "no-console": "off",
+            },
+        },
+        {
+            "files": ["test/**"],
+            "rules": {
+                "dot-notation": [2, {
+                    "allowKeywords": true,
+                    "allowPattern": "throws"
+                }],
+                "func-style": "off",
+                "id-length": "off",
+                "max-len": "off",
+                "max-lines-per-function": "off",
+                "no-plusplus": "off",
+                "no-throw-literal": "off",
+            },
+        },
+        {
+            "files": ["test/*/**"],
+            "rules": {
+                "camelcase": "off",
+            },
+        },
+        {
+            "files": ["lib/default_stream.js"],
+            "rules": {
+                "no-use-before-define": "warn",
+            },
+        },
+        {
+            "files": ["lib/test.js"],
+            "rules": {
+                "max-lines": "off",
+            },
+        },
+    ],
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        #aligner {
+            height: 100%;
+            display: flex;
+        }
+
+        .container {
+            width: 20%;
+            background: #FF9800;
+            cursor: pointer;
+            position: relative;
+            border-right: 1px solid black;
+            border-left: 1px solid black;
+        }
+
+        .container.elq-width-under-200 {
+            height: 200px;
+        }
+
+        .container.elq-width-above-200 {
+            height: 400px;
+        }
+
+        #dimensions {
+            font-size: 3em;
+            color: #FFF;
+        }
+
+        #dim-x, #dim-y {
+            color: #263248;
+        }
+
+    </style>
+</head>
+<body>
+    <button onclick="resize()">Resize</button>
+    <div id="aligner">
+    </div>
+
+
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../build/element-resize-detector.js"></script>
+    <script>
+        var alignerWidth = 100;
+        var cnt = 0;
+
+        function resize() {
+            if(alignerWidth === 100) {
+                alignerWidth = 50;
+            } else {
+                alignerWidth = 100;
+            }
+
+            $("#aligner").width(alignerWidth + "%");
+
+            console.time("resize");
+        }
+
+        $(function() {
+            function onElementResize(element) {
+
+                if(++cnt === numElements) {
+                    cnt = 0;
+                    console.timeEnd("resize");
+                }
+            }
+
+            function createDiv(width) {
+                var d = document.createElement("div");
+                d.className = "container";
+                d.style.width = width;
+                return d;
+            }
+
+            function loopCreateAndAppend(numNested, create, target) {
+                for(var i = 0; i < numNested; i++) {
+                    var d = create();
+                    target.appendChild(d);
+                }
+
+                return target;
+            }
+
+            var numElements = 200;
+            loopCreateAndAppend(numElements, createDiv.bind(null, numElements), document.getElementById("aligner"));
+
+            (function listenToResize() {
+                var erd = elementResizeDetectorMaker({
+                    strategy: "scroll"
+                });
+                console.time("install");
+                erd.listenTo({
+                    callOnAdd: false,
+                    onReady: function onReady() {
+                        console.timeEnd("install");
+                        console.log("ready");
+                    }
+                }, $(".container"), onElementResize);
+            })();
+        });
+
+    </script>
+</body>
+</html>

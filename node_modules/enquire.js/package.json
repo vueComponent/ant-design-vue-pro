@@ -1,0 +1,52 @@
+{
+  "name": "enquire.js",
+  "version": "2.1.6",
+  "main": "./src",
+  "description": "Awesome Media Queries in JavaScript",
+  "homepage": "http://wicky.nillia.ms/enquire.js",
+  "author": {
+    "name": "Nick Williams",
+    "url": "http://wicky.nillia.ms"
+  },
+  "keywords": [
+    "media query",
+    "media queries",
+    "matchMedia",
+    "enquire",
+    "enquire.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/WickyNilliams/enquire.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WickyNilliams/enquire.js/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "grunt",
+    "test": "grunt test",
+    "preversion": "npm test",
+    "version": "grunt build && git add .",
+    "postversion": "git push origin master --tags && npm publish"
+  },
+  "devDependencies": {
+    "bundle-collapser": "^1.2.1",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-uglify": "^2.2.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-karma": "^2.0.0",
+    "jasmine-core": "^2.5.2",
+    "jshint-stylish": "^2.2.1",
+    "karma": "^1.5.0",
+    "karma-browserify": "^5.1.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.2"
+  },
+  "files": [
+    "src",
+    "dist"
+  ]
+}

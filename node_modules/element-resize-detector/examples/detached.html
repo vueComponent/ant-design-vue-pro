@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script src="../build/element-resize-detector.js"></script>
+    <style>
+        html, body {
+            box-sizing: border-box;
+        }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+        <button id="add-detached-object">Add detached (object)</button>
+        <button id="add-detached-scroll">Add detached (scroll)</button>
+        <button id="add-unrendered-object">Add unrendered (object)</button>
+        <button id="add-unrendered-scroll">Add unrendered (scroll)</button>
+        <button id="add-detached-unrendered-object">Add detached unrendered (object)</button>
+        <button id="add-detached-unrendered-scroll">Add detached unrendered (scroll)</button>
+    </div>
+
+    <script>
+        var container = document.querySelector('#container');
+        var erdObject = elementResizeDetectorMaker({
+            strategy: "object",
+            debug: true
+        });
+        var erdScroll = elementResizeDetectorMaker({
+            strategy: "scroll",
+            debug: true
+        });
+
+        function addDetached(erd, container, content) {
+            console.log("Creating detached element");
+            var div = document.createElement("div");
+            div.innerHTML = content;
+            div.style.background = "grey";
+            div.style.margin = "10px";
+            erd.listenTo({
+                callOnAdd: false
+            }, div, function (el) {
+                var style = getComputedStyle(el);
+                console.log('el change size: ', style.width, style.height);
+            });
+            setTimeout(function () {
+                console.log('Adding element to DOM');
+                container.appendChild(div);
+            }, 2000);
+        }
+
+        function addUnrendered(erd, container, content, n) {
+            function add(erd, container, content) {
+                console.log("Creating unrendered element");
+                var div = document.createElement("div");
+                div.innerHTML = content;
+                div.style.background = "grey";
+                div.style.margin = "10px";
+                div.style.display = "none";
+                div.style.position = "relative";
+                container.appendChild(div);
+                erd.listenTo({
+                    callOnAdd: false
+                }, div, function (el) {
+                    var style = getComputedStyle(el);
+                    console.log('el change size: ', style.width, style.height);
+                });
+                return div;
+            }
+
+            var divs = [];
+            for (var i = 0; i < n; i++) {
+                divs.push(add(erd, container, content));
+            }
+
+            setTimeout(function () {
+                console.log('rendering elements');
+                divs.forEach(function (div) {
+                    div.style.display = "block";
+                });
+            }, 2000);
+        }
+
+        function addDetachedUnrendered(erd, container, content, n) {
+            function add(erd, container, content) {
+                console.log("Creating detached unrendered element");
+                var div = document.createElement("div");
+                div.innerHTML = content;
+                div.style.background = "grey";
+                div.style.margin = "10px";
+                div.style.display = "none";
+                div.style.position = "relative";
+                erd.listenTo({
+                    callOnAdd: false
+                }, div, function (el) {
+                    var style = getComputedStyle(el);
+                    console.log('el change size: ', style.width, style.height);
+                });
+                return div;
+            }
+
+            var divs = [];
+            for (var i = 0; i < n; i++) {
+                divs.push(add(erd, container, content));
+            }
+
+            setTimeout(function () {
+                console.log('Adding element to DOM');
+                divs.forEach(function (div) {
+                    container.appendChild(div);
+                });
+            }, 1000);
+
+            setTimeout(function () {
+                console.log('rendering elements');
+                divs.forEach(function (div) {
+                    div.style.display = "block";
+                });
+            }, 2000);
+        }
+
+        document.querySelector("#add-detached-object").onclick = addDetached.bind(null, erdObject, container, "detached object");
+        document.querySelector("#add-detached-scroll").onclick = addDetached.bind(null, erdScroll, container, "detached scroll");
+        document.querySelector("#add-unrendered-object").onclick = addUnrendered.bind(null, erdObject, container, "unrendered object", 1);
+        document.querySelector("#add-unrendered-scroll").onclick = addUnrendered.bind(null, erdScroll, container, "unrendered scroll", 1);
+        document.querySelector("#add-detached-unrendered-object").onclick = addDetachedUnrendered.bind(null, erdObject, container, "detached unrendered object", 1);
+        document.querySelector("#add-detached-unrendered-scroll").onclick = addDetachedUnrendered.bind(null, erdScroll, container, "detached unrendered scroll", 1);
+    </script>
+  </body>
+</html>

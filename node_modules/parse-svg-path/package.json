@@ -1,0 +1,17 @@
+{
+  "name": "parse-svg-path",
+  "version": "0.1.2",
+  "description": "svg path parser",
+  "keywords": ["svg","path","parse","parser"],
+  "dependencies": {},
+  "devDependencies": {
+    "serve": "jkroso/serve#1.5.1",
+    "mocha": "*",
+    "chai": "*"
+  },
+  "repository": "git://github.com/jkroso/parse-svg-path.git",
+  "bugs": "https://github.com/jkroso/parse-svg-path/issues",
+  "author": "Jake Rosoman",
+  "files": ["index.js"],
+  "license": "MIT"
+}

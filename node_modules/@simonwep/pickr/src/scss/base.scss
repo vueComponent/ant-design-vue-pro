@@ -1,0 +1,277 @@
+@import 'lib/variables';
+@import 'lib/mixins';
+
+.pickr {
+    position: relative;
+    overflow: visible;
+    transform: translateY(0); // Create local transform space
+
+    * {
+        box-sizing: border-box;
+        outline: none;
+        border: none;
+        -webkit-appearance: none;
+    }
+}
+
+.pickr .pcr-button {
+    @include transparency-background;
+    position: relative;
+    height: 2em;
+    width: 2em;
+    padding: 0.5em;
+    cursor: pointer;
+    font-family: $font-family;
+    border-radius: $border-radius-mid;
+    background: $icon-x no-repeat center;
+    background-size: 0;
+    transition: all 0.3s;
+
+    &::before {
+        z-index: initial;
+    }
+
+    &::after {
+        @include pseudo-reset;
+        height: 100%;
+        width: 100%;
+        transition: background 0.3s;
+        background: currentColor;
+        border-radius: $border-radius-mid;
+    }
+
+    &.clear {
+        background-size: 70%;
+
+        &::before {
+            opacity: 0;
+        }
+
+        &:focus {
+            @include focus(currentColor);
+        }
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+    }
+}
+
+.pickr,
+.pcr-app {
+
+    * {
+        box-sizing: border-box;
+        outline: none;
+        border: none;
+        -webkit-appearance: none;
+    }
+
+    input,
+    button {
+        &:focus,
+        &.pcr-active {
+            @include focus(currentColor);
+        }
+    }
+
+    .pcr-palette,
+    .pcr-slider {
+        transition: box-shadow 0.3s;
+
+        &:focus {
+            @include focus(rgba(black, 0.25));
+        }
+    }
+}
+
+.pcr-app {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    z-index: 10000;
+    border-radius: 0.1em;
+    background: #fff;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0s 0.3s;
+    font-family: $font-family;
+    box-shadow: $box-shadow-app;
+    left: 0;
+    top: 0;
+
+    &.visible {
+        transition: opacity 0.3s;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .pcr-swatches {
+
+        // Flex fallback
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 0.75em;
+
+        &.pcr-last {
+            margin: 0;
+        }
+
+        @supports (display: grid) {
+            display: grid;
+            align-items: center;
+            grid-template-columns: repeat(auto-fit, 1.75em);
+        }
+
+        > button {
+            @include transparency-background(6px);
+            font-size: 1em;
+            position: relative;
+            width: calc(1.75em - 5px);
+            height: calc(1.75em - 5px);
+            border-radius: 0.15em;
+            cursor: pointer;
+            margin: 2.5px;
+            flex-shrink: 0;
+            justify-self: center;
+            transition: all 0.15s;
+            overflow: hidden;
+            background: transparent;
+            z-index: 1;
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: currentColor;
+                border: 1px solid rgba(black, 0.05);
+                border-radius: 0.15em;
+                box-sizing: border-box;
+            }
+
+            &:hover {
+                filter: brightness(1.05);
+            }
+
+            &:not(.pcr-active) {
+                box-shadow: none;
+            }
+        }
+    }
+
+    .pcr-interaction {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: 0 -0.2em 0 -0.2em;
+
+        > * {
+            margin: 0 0.2em;
+        }
+
+        input {
+            letter-spacing: 0.07em;
+            font-size: 0.75em;
+            text-align: center;
+            cursor: pointer;
+            color: $palette-darkgray;
+            background: $palette-snow-white;
+            border-radius: $border-radius-mid;
+            transition: all 0.15s;
+            padding: 0.45em 0.5em;
+            margin-top: 0.75em;
+
+            &:hover {
+                filter: brightness(0.975);
+            }
+
+            &:focus {
+                @include focus();
+            }
+        }
+
+        .pcr-result {
+            color: $palette-darkgray;
+            text-align: left;
+            flex: 1 1 8em;
+            min-width: 8em;
+            transition: all 0.2s;
+            border-radius: $border-radius-mid;
+            background: $palette-snow-white;
+            cursor: text;
+
+            &::selection {
+                background: $palette-cloud-blue;
+                color: #fff;
+            }
+        }
+
+        .pcr-type.active {
+            color: #fff;
+            background: $palette-cloud-blue;
+        }
+
+        .pcr-save,
+        .pcr-cancel,
+        .pcr-clear {
+            color: #fff;
+            width: auto;
+        }
+
+        .pcr-save,
+        .pcr-cancel,
+        .pcr-clear {
+            color: #fff;
+
+            &:hover {
+                filter: brightness(0.925);
+            }
+        }
+
+        .pcr-save {
+            background: $palette-cloud-blue;
+        }
+
+        .pcr-clear,
+        .pcr-cancel {
+            background: $palette-soft-red;
+
+            &:focus {
+                @include focus(rgba($palette-soft-red, 0.75));
+            }
+        }
+    }
+
+    .pcr-selection {
+
+        .pcr-picker {
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            border: 2px solid #fff;
+            border-radius: 100%;
+            user-select: none;
+        }
+
+        .pcr-color-palette,
+        .pcr-color-chooser,
+        .pcr-color-opacity {
+            position: relative;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            cursor: grab;
+            cursor: -moz-grab;
+            cursor: -webkit-grab;
+
+            &:active {
+                cursor: grabbing;
+                cursor: -moz-grabbing;
+                cursor: -webkit-grabbing;
+            }
+        }
+    }
+}

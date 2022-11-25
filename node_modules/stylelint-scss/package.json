@@ -1,0 +1,157 @@
+{
+  "name": "stylelint-scss",
+  "description": "A collection of SCSS specific rules for Stylelint",
+  "version": "4.3.0",
+  "author": "Krister Kari",
+  "babel": {
+    "presets": [
+      "@babel/env"
+    ]
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "postcss-media-query-parser": "^0.2.3",
+    "postcss-resolve-nested-selector": "^0.1.1",
+    "postcss-selector-parser": "^6.0.6",
+    "postcss-value-parser": "^4.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "babel-plugin-istanbul": "^6.1.1",
+    "babel-preset-jest": "^28.1.1",
+    "eslint": "^8.19.0",
+    "eslint-plugin-lodash": "^7.3.0",
+    "github-contributors-list": "^1.2.5",
+    "husky": "^8.0.1",
+    "jest": "^28.1.2",
+    "jest-cli": "^28.1.2",
+    "jest-preset-stylelint": "^5.0.4",
+    "lint-staged": "^13.0.3",
+    "np": "^7.5.0",
+    "postcss": "^8.3.11",
+    "postcss-less": "^6.0.0",
+    "postcss-scss": "^4.0.1",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "stylelint": "^14.5.1"
+  },
+  "peerDependencies": {
+    "stylelint": "^14.5.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 6
+    },
+    "env": {
+      "es6": true,
+      "jest": true,
+      "node": true
+    },
+    "plugins": [
+      "lodash"
+    ],
+    "globals": {
+      "testRule": true
+    },
+    "rules": {
+      "eqeqeq": "error",
+      "no-use-before-define": [
+        "error",
+        "nofunc"
+      ],
+      "strict": [
+        "error",
+        "global"
+      ],
+      "arrow-spacing": "error",
+      "no-var": "error",
+      "object-shorthand": "error",
+      "prefer-const": "error",
+      "template-curly-spacing": "error",
+      "lodash/callback-binding": "error",
+      "lodash/collection-method-value": "error",
+      "lodash/collection-return": "error",
+      "lodash/no-double-unwrap": "error",
+      "lodash/no-extra-args": "error",
+      "lodash/no-unbound-this": "error",
+      "lodash/unwrap": "error",
+      "lodash/preferred-alias": "error"
+    }
+  },
+  "files": [
+    "dist/**/*.js",
+    "!**/__tests__/**"
+  ],
+  "keywords": [
+    "css",
+    "csslint",
+    "lint",
+    "linter",
+    "stylelint",
+    "stylelint-plugin"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": "stylelint-scss/stylelint-scss",
+  "jest": {
+    "preset": "jest-preset-stylelint",
+    "clearMocks": true,
+    "collectCoverage": false,
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageDirectory": "./.coverage/",
+    "coverageReporters": [
+      "lcov",
+      "text"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 75,
+        "functions": 75,
+        "lines": 75,
+        "statements": 75
+      }
+    },
+    "setupFiles": [
+      "./jest-setup.js"
+    ],
+    "testEnvironment": "node",
+    "roots": [
+      "src"
+    ],
+    "testRegex": ".*\\.test\\.js$|src/.*/__tests__/.*\\.js$"
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "babel src --out-dir dist",
+    "lint": "eslint . --ignore-path .gitignore",
+    "prettify": "prettier --write \"src/**/*.js\"",
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run lint",
+    "release": "np",
+    "jest": "jest",
+    "test": "npm run jest -- --coverage",
+    "watch": "npm run jest -- --watch",
+    "test-rule": "npm run jest",
+    "test-util": "npm run jest",
+    "generate-contributors-list": "githubcontrib --owner stylelint-scss --repo stylelint-scss --cols 6 --sortOrder desc --filter greenkeeper[bot],dependabot[bot] --showlogin true --imagesize 80 --format html",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*.{js,json}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}

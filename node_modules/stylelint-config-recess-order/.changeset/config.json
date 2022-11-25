@@ -1,0 +1,13 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@1.6.0/schema.json",
+  "access": "public",
+  "baseBranch": "main",
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "stormwarning/stylelint-config-recess-order" }
+  ],
+  "commit": false,
+  "ignore": [],
+  "linked": [],
+  "updateInternalDependencies": "patch"
+}

@@ -1,0 +1,101 @@
+@import "~ant-design-vue/es/style/themes/default";
+
+@basicLayout-prefix-cls: ~'@{ant-prefix}-pro-basicLayout';
+@sider-menu-prefix-cls: ~'@{ant-prefix}-pro-sider-menu';
+@nav-header-height: @layout-header-height;
+
+.@{basicLayout-prefix-cls} {
+
+  &:not('.ant-pro-basicLayout-mobile') {
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 3px;
+      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.08);
+    }
+    /* 滚动条滑块 */
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.12);
+      border-radius: 3px;
+      -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // BFC
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+
+  .ant-layout-header {
+    &:not(.ant-pro-top-menu) {
+      background: @component-background;
+    }
+
+    &.ant-pro-fixed-header {
+      position: fixed;
+      top: 0;
+    }
+  }
+
+  &-content {
+    position: relative;
+    margin: 24px;
+    transition: all 0.2s;
+    .@{ant-prefix}-pro-page-header-wrap {
+      margin: -24px -24px 0;
+    }
+    &-disable-margin {
+      margin: 0;
+      > div > .@{ant-prefix}-pro-page-header-wrap {
+        margin: 0;
+      }
+    }
+    > .ant-layout {
+      max-height: 100%;
+    }
+  }
+
+  // append hook styles
+
+  .ant-layout-sider-children {
+    height: 100%;
+  }
+
+  .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #1890ff;
+    }
+  }
+
+  &-content {
+    position: relative;
+    margin: 24px;
+    transition: all 0.2s;
+    .@{ant-prefix}-pro-page-header-wrap {
+      margin: -24px -24px 0;
+    }
+    &-disable-margin {
+      margin: 0;
+      > div > .@{ant-prefix}-pro-page-header-wrap {
+        margin: 0;
+      }
+    }
+    > .ant-layout {
+      max-height: 100%;
+    }
+  }
+
+  .color-picker {
+    margin: 10px 0;
+  }
+}

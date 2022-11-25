@@ -1,0 +1,19 @@
+{
+  "name": "abs-svg-path",
+  "version": "0.1.1",
+  "description": "redefine an svg path with absolute coordinates",
+  "keywords": ["absolute","svg","path"],
+  "dependencies": {},
+  "devDependencies": {
+    "serve": "jkroso/serve",
+    "parse-svg-path": "*",
+    "mocha": "*",
+    "chai": "*",
+    "jsmd": "*"
+  },
+  "repository": "git://github.com/jkroso/abs-svg-path.git",
+  "bugs": "https://github.com/jkroso/abs-svg-path/issues",
+  "author": "Jake Rosoman",
+  "files": ["index.js"],
+  "license": "MIT"
+}

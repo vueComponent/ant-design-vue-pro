@@ -1,0 +1,56 @@
+{
+    "name": "nanopop",
+    "version": "2.2.0",
+    "description": "Ultra tiny, opinionated, positioning engine.",
+    "main": "./lib/nanopop.min.js",
+    "module": "./lib/nanopop.min.mjs",
+    "author": "Simon Reinisch <trash@reinisch.io>",
+    "license": "MIT",
+    "types": "./lib/nanopop.min.d.ts",
+    "keywords": [
+        "positioning",
+        "popper",
+        "utility",
+        "positioning engine"
+    ],
+    "files": [
+        "src",
+        "lib"
+    ],
+    "scripts": {
+        "build": "rollup -c rollup.config.prod.js",
+        "dev": "concurrently \"rollup -c rollup.config.dev.js --watch\" \"serve .\"",
+        "serve": "serve . -p 3000",
+        "lint": "eslint './{src,tests}/**/*.ts'",
+        "lint:fix": "npm run lint -- --fix",
+        "test": "playwright test",
+        "test:ci": "npm run lint:fix && npm run build && npm test"
+    },
+    "homepage": "https://github.com/Simonwep/nanopop#readme",
+    "bugs": "https://github.com/Simonwep/nanopop/issues",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Simonwep/nanopop.git"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.25.1",
+        "@rollup/plugin-replace": "^4.0.0",
+        "@types/ws": "^8.5.3",
+        "@typescript-eslint/eslint-plugin": "^5.36.1",
+        "@typescript-eslint/parser": "^5.36.1",
+        "concurrently": "^7.3.0",
+        "eslint": "^8.23.0",
+        "jest": "^28.1.3",
+        "jest-environment-puppeteer": "^6.1.1",
+        "jest-image-snapshot": "^5.2.0",
+        "jest-playwright-preset": "^2.0.0",
+        "playwright-chromium": "^1.25.1",
+        "playwright-firefox": "^1.25.1",
+        "playwright-webkit": "^1.25.1",
+        "rollup": "^2.79.0",
+        "rollup-plugin-terser": "^7.0.2",
+        "rollup-plugin-ts": "^3.0.2",
+        "serve": "^14.0.1",
+        "typescript": "^4.8.2"
+    }
+}

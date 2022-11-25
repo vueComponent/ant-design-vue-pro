@@ -1,0 +1,44 @@
+{
+  "name": "d3-geo",
+  "version": "1.6.4",
+  "description": "Shapes and calculators for spherical coordinates.",
+  "keywords": [
+    "d3",
+    "d3-module",
+    "geo",
+    "maps",
+    "cartography"
+  ],
+  "homepage": "https://d3js.org/d3-geo/",
+  "license": "BSD-3-Clause",
+  "author": {
+    "name": "Mike Bostock",
+    "url": "http://bost.ocks.org/mike"
+  },
+  "main": "build/d3-geo.js",
+  "module": "index",
+  "jsnext:main": "index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d3/d3-geo.git"
+  },
+  "scripts": {
+    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -g d3-array:d3 -n d3 -o build/d3-geo.js -- index.js",
+    "test": "tape 'test/**/*-test.js' && mkdir -p test/output && eslint index.js src",
+    "prepublish": "npm run test && test/compare-images && uglifyjs --preamble \"$(preamble)\" build/d3-geo.js -c negate_iife=false -m -o build/d3-geo.min.js",
+    "postpublish": "git push && git push --tags && cd ../d3.github.com && git pull && cp ../d3-geo/build/d3-geo.js d3-geo.v1.js && cp ../d3-geo/build/d3-geo.min.js d3-geo.v1.min.js && git add d3-geo.v1.js d3-geo.v1.min.js && git commit -m \"d3-geo ${npm_package_version}\" && git push && cd - && zip -j build/d3-geo.zip -- LICENSE README.md build/d3-geo.js build/d3-geo.min.js"
+  },
+  "dependencies": {
+    "d3-array": "1"
+  },
+  "devDependencies": {
+    "canvas": "1",
+    "d3-format": "1",
+    "eslint": "3",
+    "package-preamble": "0.1",
+    "rollup": "0.41",
+    "tape": "4",
+    "topojson-client": "3",
+    "uglify-js": "^2.8.11"
+  }
+}

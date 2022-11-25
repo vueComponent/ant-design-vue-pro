@@ -1,0 +1,30 @@
+{
+  "name": "intersperse",
+  "version": "1.0.0",
+  "description": "Add an object to an array between each element",
+  "main": "lib/intersperse.js",
+  "directories": {
+  	"lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --bail"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/curvedmark/intersperse.git"
+  },
+  "keywords": [
+    "array",
+    "util",
+    "utility"
+  ],
+  "author": "Glen Huang <curvedmark@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/curvedmark/intersperse/issues"
+  },
+  "devDependencies": {
+    "mocha": "1.x"
+  }
+}

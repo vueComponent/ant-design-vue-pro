@@ -1,0 +1,86 @@
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-comment {
+  position: relative;
+}
+.ant-comment-inner {
+  display: flex;
+  padding: 16px 0;
+}
+.ant-comment-avatar {
+  position: relative;
+  flex-shrink: 0;
+  margin-right: 12px;
+  cursor: pointer;
+}
+.ant-comment-avatar img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+.ant-comment-content {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 1px;
+  font-size: 14px;
+  word-wrap: break-word;
+}
+.ant-comment-content-author {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+.ant-comment-content-author > a,
+.ant-comment-content-author > span {
+  padding-right: 8px;
+  font-size: 12px;
+  line-height: 18px;
+}
+.ant-comment-content-author-name {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+  transition: color 0.3s;
+}
+.ant-comment-content-author-name > * {
+  color: rgba(0, 0, 0, 0.45);
+}
+.ant-comment-content-author-name > *:hover {
+  color: rgba(0, 0, 0, 0.45);
+}
+.ant-comment-content-author-time {
+  color: #ccc;
+  white-space: nowrap;
+  cursor: auto;
+}
+.ant-comment-content-detail p {
+  white-space: pre-wrap;
+}
+.ant-comment-actions {
+  margin-top: 12px;
+  padding-left: 0;
+}
+.ant-comment-actions > li {
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.45);
+}
+.ant-comment-actions > li > span {
+  padding-right: 10px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.3s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.ant-comment-actions > li > span:hover {
+  color: #595959;
+}
+.ant-comment-nested {
+  margin-left: 44px;
+}

@@ -1,0 +1,109 @@
+{
+  "name": "commitizen",
+  "version": "4.2.5",
+  "description": "Git commit, but play nice with conventions.",
+  "main": "dist/index.js",
+  "scripts": {
+    "check-coverage": "nyc check-coverage --statements 80 --branches 80 --functions 80 --lines 80 ",
+    "commit": "node bin/git-cz",
+    "build": "babel src --out-dir dist",
+    "build:watch": "babel --watch src --out-dir dist",
+    "prepare": "not-in-install && npm run build || true",
+    "report-coverage": "nyc report --reporter=lcov | codecov",
+    "write-coverage": "nyc report --reporter=lcov --reporter=cobertura --reporter=html",
+    "semantic-release": "npx semantic-release",
+    "start": "npm run test:watch",
+    "test-actual": "mocha --reporter=mocha-multi-reporters --reporter-options configFile=./test/mochareporters.json test/tests/index.js",
+    "test": "nyc --require @babel/register npm run test-actual",
+    "test:watch": "nodemon -q --ignore test/.tmp/ --ignore test/artifacts/ --ignore coverage/ --exec \"npm run test\" --"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "ghooks": {
+      "pre-commit": "npm run test && npm run check-coverage"
+    }
+  },
+  "homepage": "https://github.com/commitizen/cz-cli",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/commitizen/cz-cli.git"
+  },
+  "keywords": [
+    "commit",
+    "pretty",
+    "format",
+    "conventional changelog",
+    "commitizen"
+  ],
+  "bugs": {
+    "url": "https://github.com/commitizen/cz-cli/issues"
+  },
+  "bin": {
+    "cz": "./bin/git-cz",
+    "git-cz": "./bin/git-cz",
+    "commitizen": "./bin/commitizen"
+  },
+  "author": "Jim Cummins <jimthedev@gmail.com> (https://github.com/jimthedev)",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "7.17.10",
+    "@babel/core": "7.18.0",
+    "@babel/plugin-proposal-object-rest-spread": "7.18.0",
+    "@babel/preset-env": "7.18.0",
+    "@babel/register": "7.17.7",
+    "@istanbuljs/nyc-config-babel": "3.0.0",
+    "babel-plugin-istanbul": "6.1.1",
+    "chai": "4.3.6",
+    "codecov": "3.8.3",
+    "conventional-changelog-conventionalcommits": "4.6.3",
+    "cz-conventional-changelog-default-export": "0.0.0-semantically-released.1",
+    "ghooks": "2.0.4",
+    "in-publish": "2.0.1",
+    "mocha": "9.2.2",
+    "mocha-junit-reporter": "1.23.3",
+    "mocha-multi-reporters": "1.5.1",
+    "nodemon": "2.0.16",
+    "nyc": "15.1.0",
+    "proxyquire": "2.1.3",
+    "semantic-release": "18.0.1",
+    "semver": "7.3.7",
+    "sinon": "12.0.1",
+    "uuid": "8.3.2"
+  },
+  "dependencies": {
+    "cachedir": "2.3.0",
+    "cz-conventional-changelog": "3.3.0",
+    "dedent": "0.7.0",
+    "detect-indent": "6.1.0",
+    "find-node-modules": "^2.1.2",
+    "find-root": "1.1.0",
+    "fs-extra": "9.1.0",
+    "glob": "7.2.3",
+    "inquirer": "8.2.4",
+    "is-utf8": "^0.2.1",
+    "lodash": "4.17.21",
+    "minimist": "1.2.6",
+    "strip-bom": "4.0.0",
+    "strip-json-comments": "3.1.1"
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-babel",
+    "exclude": [
+      "src/cli",
+      "test"
+    ]
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": ">= 12"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/commitizen"
+  },
+  "release": {
+    "preset": "conventionalcommits"
+  }
+}

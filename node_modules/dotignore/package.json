@@ -1,0 +1,41 @@
+{
+  "name": "dotignore",
+  "version": "0.1.2",
+  "description": "ignorefile/includefile matching .gitignore spec",
+  "main": "index.js",
+  "bin": {
+    "ignored": "bin/ignored"
+  },
+  "scripts": {
+    "prepublish": "safe-publish-latest",
+    "pretest": "npm run lint",
+    "test": "node test && npm run coverage -- --quiet",
+    "coverage": "covert test/index.js",
+    "lint": "eslint bin/* ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/bmeck/dotignore"
+  },
+  "keywords": [
+    "ignore",
+    "gitignore",
+    "npmignore",
+    "glob",
+    "pattern"
+  ],
+  "author": {
+    "name": "bradleymeck"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "minimatch": "^3.0.4"
+  },
+  "devDependencies": {
+    "@ljharb/eslint-config": "^15.1.0",
+    "covert": "^1.1.1",
+    "eslint": "^6.8.0",
+    "safe-publish-latest": "^1.1.4",
+    "tape": "^4.12.1"
+  }
+}

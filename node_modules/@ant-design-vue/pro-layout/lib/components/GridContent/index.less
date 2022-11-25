@@ -1,0 +1,13 @@
+@import "~ant-design-vue/es/style/themes/default";
+
+@grid-content-prefix-cls: ~'@{ant-prefix}-pro-grid-content';
+
+.@{grid-content-prefix-cls} {
+  width: 100%;
+  min-height: 100%;
+  transition: 0.3s;
+  &.wide {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}

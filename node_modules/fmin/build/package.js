@@ -1,0 +1,15 @@
+export var name = "fmin";
+export var version = "0.0.2";
+export var description = "Unconstrained funcion minimization in Javascript";
+export var keywords = ["fmin","optimization","Nelder-Mead","Conjudate Gradient"];
+export var license = "BSD-3-Clause";
+export var main = "build/fmin.js";
+export var homepage = "https://github.com/benfred/fmin";
+export var repository = {"type":"git","url":"git+https://github.com/benfred/fmin.git"};
+export var jshintConfig = {"esnext":true};
+export var scripts = {"pretest":"rm -rf build && mkdir build && json2module package.json > build/package.js && rollup -f umd -n fmin -o build/fmin.js -- index.js && rollup -f umd -n fmin_vis -o build/fmin_vis.js -- index_vis.js","test":"jshint src/*.js src/visualizations/*.js && tape 'test/**/*-test.js'","prepublish":"npm run test && uglifyjs build/fmin.js -c -m -o build/fmin.min.js","postpublish":"zip -j build/fmin.zip -- LICENSE README.md build/fmin.js build/fmin.min.js"};
+export var devDependencies = {"contour_plot":"0.0.1","json2module":"0.0","rollup":"0.25","tape":"4","uglify-js":"2","jshint":"^2.8.0"};
+export var bugs = {"url":"https://github.com/benfred/fmin/issues"};
+export var directories = {"example":"examples","test":"test"};
+export var dependencies = {"contour_plot":"^0.0.1","json2module":"^0.0.3","rollup":"^0.25.8","tape":"^4.5.1","uglify-js":"^2.6.2"};
+export var author = "Ben Frederickson";

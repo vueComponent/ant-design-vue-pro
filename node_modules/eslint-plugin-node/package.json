@@ -1,0 +1,69 @@
+{
+  "name": "eslint-plugin-node",
+  "version": "8.0.1",
+  "description": "Additional ESLint's rules for Node.js",
+  "engines": {
+    "node": ">=6"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "eslint": ">=4.19.1"
+  },
+  "dependencies": {
+    "eslint-plugin-es": "^1.3.1",
+    "eslint-utils": "^1.3.1",
+    "ignore": "^5.0.2",
+    "minimatch": "^3.0.4",
+    "resolve": "^1.8.1",
+    "semver": "^5.5.0"
+  },
+  "devDependencies": {
+    "@mysticatea/eslint-plugin": "^7.0.0",
+    "codecov": "^3.0.4",
+    "eslint": "^5.8.0",
+    "fast-glob": "^2.2.2",
+    "mocha": "^5.2.0",
+    "nyc": "^12.0.2",
+    "opener": "^1.4.3",
+    "rimraf": "^2.6.1"
+  },
+  "scripts": {
+    "build": "node scripts/update.js",
+    "clean": "rimraf .nyc_output coverage",
+    "codecov": "nyc report -r lcovonly && codecov",
+    "coverage": "nyc report -r lcov && opener ./coverage/lcov-report/index.html",
+    "lint": "eslint lib scripts tests/lib .eslintrc.js",
+    "test": "nyc npm run -s test:_mocha",
+    "test:_mocha": "_mocha tests/lib/**/*.js --reporter progress",
+    "preversion": "npm t && npm run -s build",
+    "version": "eslint lib/rules --fix && git add lib/rules",
+    "postversion": "git push && git push --tags",
+    "watch": "npm run test:_mocha -- --watch --growl"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mysticatea/eslint-plugin-node.git"
+  },
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin",
+    "node",
+    "nodejs",
+    "ecmascript",
+    "shebang",
+    "file",
+    "path",
+    "import",
+    "require"
+  ],
+  "author": "Toru Nagashima",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mysticatea/eslint-plugin-node/issues"
+  },
+  "homepage": "https://github.com/mysticatea/eslint-plugin-node#readme"
+}

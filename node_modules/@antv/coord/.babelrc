@@ -1,0 +1,6 @@
+{
+  "presets": [
+    "@babel/env"
+  ],
+  "sourceMaps": "inline"
+}

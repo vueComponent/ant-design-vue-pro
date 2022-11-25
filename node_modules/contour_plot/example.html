@@ -1,0 +1,72 @@
+<html><head>
+    <meta charset="utf-8">
+    <title>contour test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Ben Frederickson">
+    <style>
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #666;
+}
+.axis {
+  font-family: "helvetica-nueue";
+    font-size: 10px;
+
+}
+</style>
+</head>
+<body>
+
+<div id="contour_graph" style="width:600px"> </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script>
+<script src="./build/contour_plot.js"></script>
+
+<script>
+
+function himmelblau(x, y) {
+    return (x * x + y - 11) * ( x * x + y - 11) + (x + y * y - 7) * (x + y * y - 7);
+}
+function banana(x, y) {
+    return (1 - x) * (1 - x) + 100 * (y - x * x) * ( y - x * x)
+}
+
+function beale(x, y) {
+    return Math.pow(1.5 - x + x*y, 2) + Math.pow(2.25 - x + x*y*y, 2) +
+           Math.pow(2.625 - x + x*y*y*y, 2);
+}
+
+function booth(x, y) {
+    return Math.pow(x + 2 * y - 7, 2) + Math.pow(2 * x + y - 5, 2);
+}
+
+function matyas(x, y) {
+    return .26 * (x * x + y * y)  - .48 * x * y;
+}
+
+function goldsteinPrice(x, y) {
+    return (1. + Math.pow(x + y + 1, 2) *
+    (19 - 14*x + 3*x*x - 14 * y + 6 * x * x + 3 * y * y))
+    * (30 + Math.pow(2*x-3*y, 2)*(18 - 32*x + 12 * x * x + 48*y - 36 * x * y + 27 * y* y));
+}
+
+var plot = contour_plot.ContourPlot()
+    .f(himmelblau)
+    .drawAxis(false)
+    .xDomain([-6, 6])
+    .yDomain([6, -6])
+    .contourCount(12)
+    .minima([{x : 3.584428, y : -1.848126},
+             {x : -2.805118, y : 3.131312},
+             {x : -3.779310, y : -3.283186},
+             {x : 3, y : 2}]);
+
+
+
+var elements = plot(d3.select("#contour_graph"));
+</script>
+</div></div></div>
+</body></html>
+

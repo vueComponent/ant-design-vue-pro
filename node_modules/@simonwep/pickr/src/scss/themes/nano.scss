@@ -1,0 +1,102 @@
+@import '../lib/variables';
+@import '../lib/mixins';
+@import '../base';
+
+$padding: 0.6em;
+$spacing: 0.6em;
+
+.pcr-app[data-theme='nano'] {
+    width: 14.25em;
+    max-width: 95vw;
+
+    .pcr-swatches {
+        margin-top: $spacing;
+        padding: 0 $padding;
+    }
+
+    .pcr-interaction {
+        padding: 0 $padding $padding $padding;
+    }
+
+    .pcr-selection {
+        display: grid;
+        grid-gap: $spacing;
+        grid-template-columns: 1fr 4fr;
+        grid-template-rows: 5fr auto auto;
+        align-items: center;
+        height: 10.5em;
+        width: 100%;
+        align-self: flex-start;
+
+        .pcr-color-preview {
+            grid-area: 2 / 1 / 4 / 1;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-left: $padding;
+
+            .pcr-last-color {
+                display: none;
+            }
+
+            .pcr-current-color {
+                @include transparency-background;
+                position: relative;
+                background: currentColor;
+                width: 2em;
+                height: 2em;
+                border-radius: 50em;
+                overflow: hidden;
+            }
+        }
+
+        .pcr-color-palette {
+            grid-area: 1 / 1 / 2 / 3;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+
+            .pcr-palette {
+                border-radius: $border-radius-mid;
+                @include transparency-background;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .pcr-color-chooser {
+            grid-area: 2 / 2 / 2 / 2;
+        }
+
+        .pcr-color-opacity {
+            grid-area: 3 / 2 / 3 / 2;
+        }
+
+        .pcr-color-chooser,
+        .pcr-color-opacity {
+            height: 0.5em;
+            margin: 0 $padding;
+
+            .pcr-picker {
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .pcr-slider {
+                flex-grow: 1;
+                border-radius: 50em;
+            }
+        }
+
+        .pcr-color-chooser .pcr-slider {
+            background: colorRainbow(to right);
+        }
+
+        .pcr-color-opacity .pcr-slider {
+            background: linear-gradient(to right, transparent, black), $icon-transparency;
+            background-size: 100%, 0.25em;
+        }
+    }
+}

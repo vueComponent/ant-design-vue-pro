@@ -1,0 +1,125 @@
+@import "~ant-design-vue/es/style/themes/default.less";
+
+@sider-menu-prefix-cls: ~'@{ant-prefix}-pro-sider-menu';
+
+@nav-header-height: @layout-header-height;
+.@{sider-menu-prefix-cls} {
+
+  &-logo {
+    position: relative;
+    height: 64px;
+    padding-left: 24px;
+    overflow: hidden;
+    transition: all .3s;
+    line-height: @nav-header-height;
+    background: @layout-sider-background;
+
+    svg, img, h1 {
+      display: inline-block;
+    }
+
+    svg, img {
+      height: 32px;
+      width: 32px;
+      vertical-align: middle;
+    }
+
+    h1 {
+      color: @white;
+      font-size: 20px;
+      margin: 0 0 0 12px;
+      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+      font-weight: 600;
+      vertical-align: middle;
+    }
+  }
+
+  &-sider {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+
+    &.fix-sider-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+
+      .ant-menu-root {
+        height: ~'calc(100vh - @{nav-header-height})';
+        overflow-y: auto;
+      }
+
+      .ant-menu-inline {
+        border-right: 0;
+
+        .ant-menu-item,
+        .ant-menu-submenu-title {
+          width: 100%;
+        }
+      }
+    }
+
+    &.light {
+      background-color: white;
+      box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+
+      .@{sider-menu-prefix-cls}-logo {
+        background: white;
+        box-shadow: 1px 1px 0 0 @border-color-split;
+
+        h1 {
+          color: @primary-color;
+        }
+      }
+
+      .ant-menu-light {
+        border-right-color: transparent;
+      }
+    }
+  }
+
+  &-icon {
+    width: 14px;
+    vertical-align: baseline;
+  }
+
+  .top-nav-menu li.ant-menu-item {
+    height: @nav-header-height;
+    line-height: @nav-header-height;
+  }
+
+  .drawer .drawer-content {
+    background: @layout-sider-background;
+  }
+
+  .ant-menu-inline-collapsed {
+    & > .ant-menu-item .sider-menu-item-img + span,
+    &
+    > .ant-menu-item-group
+    > .ant-menu-item-group-list
+    > .ant-menu-item
+    .sider-menu-item-img
+    + span,
+    &
+    > .ant-menu-submenu
+    > .ant-menu-submenu-title
+    .sider-menu-item-img
+    + span {
+      display: inline-block;
+      max-width: 0;
+      opacity: 0;
+    }
+  }
+
+  .ant-menu-item .sider-menu-item-img + span,
+  .ant-menu-submenu-title .sider-menu-item-img + span {
+    opacity: 1;
+    transition: opacity 0.3s @ease-in-out, width 0.3s @ease-in-out;
+  }
+
+  .ant-drawer-body {
+    padding: 0;
+  }
+}

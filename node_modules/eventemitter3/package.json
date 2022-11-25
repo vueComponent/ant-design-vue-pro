@@ -1,0 +1,51 @@
+{
+  "name": "eventemitter3",
+  "version": "2.0.3",
+  "description": "EventEmitter3 focuses on performance while maintaining a Node.js AND browser compatible interface.",
+  "main": "index.js",
+  "typings": "index.d.ts",
+  "scripts": {
+    "build": "mkdir -p umd && browserify index.js -s EventEmitter3 | uglifyjs -m -o umd/eventemitter3.min.js",
+    "benchmark": "find benchmarks/run -name '*.js' -exec benchmarks/start.sh {} \\;",
+    "test": "nyc --reporter=html --reporter=text mocha",
+    "test-browser": "zuul -- test.js",
+    "prepublish": "npm run build",
+    "sync": "node versions.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/primus/eventemitter3.git"
+  },
+  "keywords": [
+    "EventEmitter",
+    "EventEmitter2",
+    "EventEmitter3",
+    "Events",
+    "addEventListener",
+    "addListener",
+    "emit",
+    "emits",
+    "emitter",
+    "event",
+    "once",
+    "pub/sub",
+    "publish",
+    "reactor",
+    "subscribe"
+  ],
+  "author": "Arnout Kazemier",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/primus/eventemitter3/issues"
+  },
+  "pre-commit": "sync, test",
+  "devDependencies": {
+    "assume": "~1.4.1",
+    "browserify": "~14.1.0",
+    "mocha": "~3.2.0",
+    "nyc": "~10.2.0",
+    "pre-commit": "~1.2.0",
+    "uglify-js": "~2.8.20",
+    "zuul": "~3.11.1"
+  }
+}

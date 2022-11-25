@@ -1,0 +1,113 @@
+{
+  "name": "@ant-design/icons",
+  "version": "2.1.1",
+  "description": "Ant Design Icons",
+  "module": "lib/index.es.js",
+  "main": "lib/index.js",
+  "sideEffects": false,
+  "repository": "https://github.com/ant-design/ant-design-icons",
+  "contributors": [
+    "HeskeyBaozi <hezhiyu233@foxmail.com>"
+  ],
+  "files": [
+    "lib",
+    "svg",
+    "inline-svg"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run build:lib && npm run build:index-es &&  npm run build:umd",
+    "build:lib": "cross-env NODE_ENV=production rimraf lib && tsc --project ./tsconfig.json --outDir lib",
+    "build:index-es": "cross-env NODE_ENV=production rimraf lib/index.es.js && babel --extensions '.ts' --presets @babel/preset-typescript src/index.ts --out-file lib/index.es.js",
+    "generate": "cross-env TS_NODE_PROJECT=build/tsconfig.json node --require ts-node/register build/index.ts",
+    "clean:src": "cross-env TS_NODE_PROJECT=build/tsconfig.json node --require ts-node/register build/scripts/clean.ts",
+    "test": "npm run test:unit",
+    "test:unit": "jest",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}' 'site/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
+    "clean:build": "rimraf .cache es lib",
+    "start": "gatsby develop",
+    "build:umd": "webpack --config umd.webpack.config.js -p",
+    "prepublish": "npm run lint && npm run test && npm run generate && npm run build"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.0.0",
+    "@babel/runtime": "^7.0.0",
+    "@svgr/core": "^2.1.1",
+    "@types/fs-extra": "^5.0.4",
+    "@types/globby": "^8.0.0",
+    "@types/history": "^4.7.0",
+    "@types/jest": "^23.3.1",
+    "@types/lodash": "^4.14.115",
+    "@types/node": "^10.5.5",
+    "@types/parse5": "^5.0.0",
+    "@types/prettier": "^1.13.2",
+    "@types/react": "^16.4.7",
+    "@types/react-router": "3.0.20",
+    "@types/rimraf": "^2.0.2",
+    "@types/svgo": "^1.0.1",
+    "antd": "^3.8.2",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.4.2",
+    "babel-plugin-macros": "^2.4.0",
+    "chalk": "^2.4.1",
+    "cross-env": "^5.2.0",
+    "fs-extra": "^7.0.0",
+    "gatsby": "^2.4.2",
+    "gatsby-plugin-page-creator": "^2.0.12",
+    "gatsby-plugin-typescript": "^2.0.13",
+    "globby": "^8.0.1",
+    "jest": "^23.4.2",
+    "lodash": "^4.17.10",
+    "mobx": "^5.0.4",
+    "mobx-react": "^5.2.5",
+    "parse5": "^5.1.0",
+    "prettier": "1.14.2",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "rimraf": "^2.6.2",
+    "rxjs": "^6.2.2",
+    "styled-components": "^3.4.4",
+    "svgo": "^1.0.5",
+    "ts-jest": "^23.1.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1",
+    "webpack-cli": "^3.1.0",
+    "webpackbar": "^2.6.1"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "./test/tsconfig.json",
+        "skipBabel": true
+      }
+    },
+    "testURL": "http://localhost",
+    "testPathIgnorePatterns": [
+      "<rootDir>/packages/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/.cache/"
+    ]
+  },
+  "gitHead": "225d4d2189720ee3b7e4a4d7a6d80e076fa15cbc"
+}

@@ -1,0 +1,45 @@
+{
+    "name": "resumer",
+    "version": "0.0.0",
+    "description": "a through stream that starts paused and resumes on the next tick",
+    "main": "index.js",
+    "dependencies": {
+        "through": "~2.3.4"
+    },
+    "devDependencies": {
+        "tap": "~0.4.0",
+        "tape": "~1.0.2",
+        "concat-stream": "~0.1.1"
+    },
+    "scripts": {
+        "test": "tap test/*.js"
+    },
+    "testling" : {
+        "files" : "test/*.js",
+        "browsers" : [
+            "ie/6..latest",
+            "chrome/20..latest",
+            "firefox/10..latest",
+            "safari/latest",
+            "opera/11.0..latest",
+            "iphone/6", "ipad/6"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/substack/resumer.git"
+    },
+    "homepage": "https://github.com/substack/resumer",
+    "keywords": [
+        "through",
+        "stream",
+        "pause",
+        "resume"
+    ],
+    "author": {
+        "name": "James Halliday",
+        "email": "mail@substack.net",
+        "url": "http://substack.net"
+    },
+    "license": "MIT"
+}

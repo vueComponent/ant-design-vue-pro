@@ -1,0 +1,40 @@
+{
+  "name": "contour_plot",
+  "version": "0.0.1",
+  "author": "Ben Frederickson <ben@benfrederickson.com> (http:/www.benfrederickson.com)",
+  "url": "https://github.com/benfred/contour_plot/issues",
+  "devDependencies": {
+    "rollup": "0.21.2",
+    "uglify-js": "2",
+    "jshint": "^2.8.0"
+  },
+  "description": "Contour Plots of Mathematical Functions",
+  "main": "build/contour_plot.js",
+  "jsnext:main": "index",
+  "files": [
+    "build",
+    "src",
+    "example.html",
+    "*.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benfred/contour_plot.git"
+  },
+  "keywords": [
+    "Contour Plot"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benfred/contour_plot/issues"
+  },
+  "homepage": "https://github.com/benfred/contour_plot",
+  "jshintConfig": {
+    "esnext": true
+  },
+  "scripts": {
+    "pretest": "mkdir -p build && node -e 'process.stdout.write(\"var version = \\\"\" + require(\"./package.json\").version + \"\\\"; export * from \\\"../index\\\"; export {version};\");' > build/bundle.js && rollup -f umd -u contour_plot -n contour_plot -o build/contour_plot.js -- build/bundle.js && cp build/contour_plot.js .",
+    "test": "jshint src/*.js",
+    "prepublish": "npm run test && uglifyjs build/contour_plot.js -c -m -o build/contour_plot.min.js && rm -f build/contour_plot.zip && zip -j build/contour_plot.zip -- LICENSE README.md build/contour_plot.js build/contour_plot.min.js"
+  }
+}

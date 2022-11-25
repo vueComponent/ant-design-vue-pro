@@ -1,0 +1,105 @@
+{
+    "name": "@types/node",
+    "version": "8.9.5",
+    "description": "TypeScript definitions for Node.js",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Microsoft TypeScript",
+            "url": "http://typescriptlang.org"
+        },
+        {
+            "name": "DefinitelyTyped",
+            "url": "https://github.com/DefinitelyTyped/DefinitelyTyped"
+        },
+        {
+            "name": "Parambir Singh",
+            "url": "https://github.com/parambirs",
+            "githubUsername": "parambirs"
+        },
+        {
+            "name": "Christian Vaagland Tellnes",
+            "url": "https://github.com/tellnes",
+            "githubUsername": "tellnes"
+        },
+        {
+            "name": "Wilco Bakker",
+            "url": "https://github.com/WilcoBakker",
+            "githubUsername": "WilcoBakker"
+        },
+        {
+            "name": "Nicolas Voigt",
+            "url": "https://github.com/octo-sniffle",
+            "githubUsername": "octo-sniffle"
+        },
+        {
+            "name": "Chigozirim C.",
+            "url": "https://github.com/smac89",
+            "githubUsername": "smac89"
+        },
+        {
+            "name": "Flarna",
+            "url": "https://github.com/Flarna",
+            "githubUsername": "Flarna"
+        },
+        {
+            "name": "Mariusz Wiktorczyk",
+            "url": "https://github.com/mwiktorczyk",
+            "githubUsername": "mwiktorczyk"
+        },
+        {
+            "name": "wwwy3y3",
+            "url": "https://github.com/wwwy3y3",
+            "githubUsername": "wwwy3y3"
+        },
+        {
+            "name": "Deividas Bakanas",
+            "url": "https://github.com/DeividasBakanas",
+            "githubUsername": "DeividasBakanas"
+        },
+        {
+            "name": "Kelvin Jin",
+            "url": "https://github.com/kjin",
+            "githubUsername": "kjin"
+        },
+        {
+            "name": "Alvis HT Tang",
+            "url": "https://github.com/alvis",
+            "githubUsername": "alvis"
+        },
+        {
+            "name": "Oliver Joseph Ash",
+            "url": "https://github.com/OliverJAsh",
+            "githubUsername": "OliverJAsh"
+        },
+        {
+            "name": "Sebastian Silbermann",
+            "url": "https://github.com/eps1lon",
+            "githubUsername": "eps1lon"
+        },
+        {
+            "name": "Hannes Magnusson",
+            "url": "https://github.com/Hannes-Magnusson-CK",
+            "githubUsername": "Hannes-Magnusson-CK"
+        },
+        {
+            "name": "Alberto Schiabel",
+            "url": "https://github.com/jkomyno",
+            "githubUsername": "jkomyno"
+        },
+        {
+            "name": "Huw",
+            "url": "https://github.com/hoo29",
+            "githubUsername": "hoo29"
+        }
+    ],
+    "main": "",
+    "repository": {
+        "type": "git",
+        "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "a07078094e2c211481ee1e42c2803623fdd21ba0b36d2344aa09d1d21279c17b",
+    "typeScriptVersion": "2.1"
+}

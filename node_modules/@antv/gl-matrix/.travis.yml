@@ -1,0 +1,8 @@
+language: node_js
+sudo: false
+node_js:
+  - "7.0.0"
+script:
+  - webpack --config utils/webpack.config.js
+  - webpack --config utils/webpack.config.min.js
+  - mocha --compilers js:babel-register --recursive spec

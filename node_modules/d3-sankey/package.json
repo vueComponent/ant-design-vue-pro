@@ -1,0 +1,41 @@
+{
+  "name": "d3-sankey",
+  "version": "0.7.1",
+  "description": "Visualize flow between nodes in a directed acyclic network.",
+  "keywords": [
+    "d3",
+    "d3-module",
+    "sankey"
+  ],
+  "author": {
+    "name": "Mike Bostock",
+    "url": "https://bost.ocks.org/mike/"
+  },
+  "license": "BSD-3-Clause",
+  "main": "build/d3-sankey.js",
+  "module": "index",
+  "jsnext:main": "index",
+  "homepage": "https://github.com/d3/d3-sankey",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d3/d3-sankey.git"
+  },
+  "scripts": {
+    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -g d3-array:d3,d3-collection:d3,d3-shape:d3 -f umd -n d3 -o build/d3-sankey.js -- index.js",
+    "test": "tape 'test/**/*-test.js' && eslint index.js src",
+    "prepublish": "npm run test && uglifyjs -b beautify=false,preamble=\"'$(preamble)'\" build/d3-sankey.js -c -m -o build/d3-sankey.min.js",
+    "postpublish": "git push && git push --tags && zip -j build/d3-sankey.zip -- LICENSE README.md build/d3-sankey.js build/d3-sankey.min.js"
+  },
+  "dependencies": {
+    "d3-array": "1",
+    "d3-collection": "1",
+    "d3-shape": "^1.2.0"
+  },
+  "devDependencies": {
+    "eslint": "4",
+    "package-preamble": "0.1.0",
+    "rollup": "0.43",
+    "tape": "4",
+    "uglify-js": "3"
+  }
+}

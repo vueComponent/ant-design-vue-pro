@@ -1,0 +1,62 @@
+{
+    "name": "@ant-design/icons-vue",
+    "version": "2.0.0",
+    "main": "./lib/index.js",
+    "module": "./es/index.js",
+    "sideEffects": false,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ant-design/ant-design-icons/tree/master/packages/icons-vue"
+    },
+    "contributors": [
+        "tangjinzhou <415800467@qq.com>"
+    ],
+    "license": "MIT",
+    "scripts": {
+        "start": "vc-tools run server",
+        "lint": "eslint -c ./.eslintrc --fix --ext .jsx,.js,.vue ./src",
+        "compile": "vc-tools run compile --babel-runtime",
+        "build": "vc-tools run build",
+        "dist": "vc-tools run dist",
+        "test": "cross-env NODE_ENV=test jest --config .jest.js",
+        "prepublish": "npm run lint && npm run test && npm run compile"
+    },
+    "files": [
+        "es",
+        "lib"
+    ],
+    "peerDependencies": {
+        "@ant-design/icons": "^2.0.0",
+        "vue": ">=2.5.0",
+        "vue-template-compiler": ">=2.5.0"
+    },
+    "devDependencies": {
+        "@ant-design/icons": "^2.0.0",
+        "@types/jest": "^23.3.1",
+        "@types/node": "^10.5.5",
+        "@types/vue": "^2.0.0",
+        "@vue/server-test-utils": "1.0.0-beta.16",
+        "@vue/test-utils": "1.0.0-beta.16",
+        "babel-core": "^6.26.3",
+        "cross-env": "^5.2.0",
+        "jest": "^23.4.2",
+        "jest-serializer-vue": "^2.0.2",
+        "vc-tools": "^1.0.0",
+        "vue": ">=2.5.0",
+        "vue-jest": "^2.5.0",
+        "vue-template-compiler": ">=2.5.0"
+    },
+    "dependencies": {
+        "@ant-design/colors": "^3.1.0",
+        "babel-runtime": "^6.26.0"
+    },
+    "config": {
+        "port": 9528,
+        "entry": {
+            "@ant-design/icons-vue": [
+                "./src/index.jsx"
+            ]
+        }
+    },
+    "description": "<h1 align=\"center\"> Ant Design Icons for Vue </h1>"
+}

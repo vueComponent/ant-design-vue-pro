@@ -1,0 +1,7 @@
++ .ignore
+- a/a/notignored
+- a/ignored
++ a/notignored
++ a/notlisted
++ expected
++ test.js

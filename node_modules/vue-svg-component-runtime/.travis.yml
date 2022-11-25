@@ -1,0 +1,18 @@
+language: node_js
+
+node_js:
+- lts/*
+- node
+
+before_deploy:
+  - npm run build
+
+deploy:
+  provider: npm
+  email: $NPM_EMAIL
+  api_key: $NPM_API_KEY
+  skip_cleanup: true
+  on:
+    tags: true
+    node: node # Only publish with latest node version
+    repo: wadetandy/vue-svg-component-runtime

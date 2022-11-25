@@ -1,0 +1,35 @@
+{
+  "name": "is-mobile",
+  "description": "Check if mobile browser.",
+  "version": "2.2.2",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/juliangruber/is-mobile.git"
+  },
+  "homepage": "https://github.com/juliangruber/is-mobile",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "release": "np",
+    "test": "prettier-standard '**/*.js' && standard && tape test.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "np": "^6.1.0",
+    "prettier-standard": "^8.0.1",
+    "standard": "^12.0.1",
+    "tape": "~1.0.4"
+  },
+  "keywords": [
+    "mobile",
+    "desktop",
+    "check",
+    "browser"
+  ],
+  "author": {
+    "name": "Julian Gruber",
+    "email": "julian@juliangruber.com",
+    "url": "http://juliangruber.com"
+  },
+  "license": "MIT"
+}

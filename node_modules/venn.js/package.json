@@ -1,0 +1,51 @@
+{
+  "name": "venn.js",
+  "version": "0.2.20",
+  "author": "Ben Frederickson <ben@benfrederickson.com> (http:/www.benfrederickson.com)",
+  "url": "https://github.com/benfred/venn.js/issues",
+  "devDependencies": {
+    "rollup": "0.52",
+    "tape": "4",
+    "uglify-js": "3",
+    "jshint": "^2.8.0"
+  },
+  "description": "Area Proportional Venn and Euler Diagrams",
+  "main": "build/venn.js",
+  "jsnext:main": "index",
+  "files": [
+    "build",
+    "src",
+    "*.js"
+  ],
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benfred/venn.js.git"
+  },
+  "keywords": [
+    "Venn",
+    "Euler"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benfred/venn.js/issues"
+  },
+  "homepage": "https://github.com/benfred/venn.js",
+  "jshintConfig": {
+    "esnext": true
+  },
+  "scripts": {
+    "pretest": "rm -rf build && mkdir build && rollup -g d3-selection:d3,d3-transition:d3 -f umd -n venn -o build/venn.js -- index.js && cp build/venn.js .",
+    "test": "jshint src/*.js && tape 'tests/**/*test.js'",
+    "prepublish": "npm run test && uglifyjs build/venn.js -c -m -o build/venn.min.js",
+    "postpublish": "zip -j build/venn.zip -- LICENSE README.md build/venn.js build/venn.min.js"
+  },
+  "dependencies": {
+    "fmin": "0.0.2",
+    "d3-selection": "^1.0.2",
+    "d3-transition": "^1.0.1"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "name": "@ant-design/colors",
+  "version": "3.2.2",
+  "description": "Color palettes calculator of Ant Design",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ant-design/ant-design-colors.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ant-design/ant-design-colors/issues"
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "compile": "gulp",
+    "prepublishOnly": "npm run compile",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "prettier --write '{src,tests}/**/*.ts'",
+    "jest": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "test": "npm run tsc && npm run lint && npm run jest"
+  },
+  "author": "afc163 <afc163@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "tinycolor2": "^1.4.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "@types/tinycolor2": "^1.4.1",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "coveralls": "^3.0.3",
+    "eslint": "^6.0.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^5.0.1",
+    "jest": "^24.7.1",
+    "prettier": "^1.16.4",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.2"
+  },
+  "homepage": "https://github.com/ant-design/ant-design-colors#readme"
+}

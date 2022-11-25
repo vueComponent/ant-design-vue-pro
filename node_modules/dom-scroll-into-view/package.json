@@ -1,0 +1,44 @@
+{
+  "name": "dom-scroll-into-view",
+  "description": "scroll dom node into view automatically",
+  "version": "2.0.1",
+  "license": "MIT",
+  "files": [
+    "dist-*/",
+    "bin/"
+  ],
+  "pika": true,
+  "sideEffects": false,
+  "keywords": [
+    "dom",
+    "scrollIntoView"
+  ],
+  "homepage": "http://github.com/yiminghe/dom-scroll-into-view",
+  "bugs": {
+    "url": "http://github.com/yiminghe/dom-scroll-into-view/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yiminghe/dom-scroll-into-view.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@pika/plugin-build-node": "0.6.x",
+    "@pika/plugin-build-types": "0.6.x",
+    "pika-plugin-build-web-babel": "^0.6.0",
+    "@pika/plugin-standard-pkg": "0.6.x",
+    "@pika/types": "0.6.x",
+    "@storybook/react": "^5.1.9",
+    "@storybook/storybook-deployer": "^2.8.1",
+    "babel-loader": "^8.0.6",
+    "jquery": "^3.4.1",
+    "lint-staged": "^9.2.1",
+    "pre-commit": "1.x",
+    "prettier": "^1.18.2",
+    "react": "16.x",
+    "react-dom": "16.x"
+  },
+  "esnext": "dist-src/index.js",
+  "module": "dist-web/index.js",
+  "main": "dist-node/index.js"
+}

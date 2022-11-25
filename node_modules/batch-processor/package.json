@@ -1,0 +1,22 @@
+{
+  "name": "batch-processor",
+  "version": "1.0.0",
+  "description": "Batch processing in JS",
+  "main": "src/batch-processor.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wnr/batch-processor.git"
+  },
+  "author": "Lucas Wiener",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wnr/batch-processor/issues"
+  },
+  "homepage": "https://github.com/wnr/batch-processor",
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  }
+}

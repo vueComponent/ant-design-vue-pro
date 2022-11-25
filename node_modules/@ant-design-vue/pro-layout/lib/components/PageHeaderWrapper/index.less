@@ -1,0 +1,93 @@
+@import "~ant-design-vue/es/style/themes/default";
+
+@ant-pro-page-header-wrap: ~'@{ant-prefix}-pro-page-header-wrap';
+
+.@{ant-pro-page-header-wrap}-children-content {
+  margin: 24px 24px 0;
+}
+
+.@{ant-pro-page-header-wrap}-page-header-warp {
+  background-color: @component-background;
+}
+
+.@{ant-pro-page-header-wrap}-main {
+  .@{ant-pro-page-header-wrap}-detail {
+    display: flex;
+  }
+
+  .@{ant-pro-page-header-wrap}-row {
+    display: flex;
+    width: 100%;
+  }
+
+  .@{ant-pro-page-header-wrap}-title-content {
+    margin-bottom: 16px;
+  }
+
+  .@{ant-pro-page-header-wrap}-title,
+  .@{ant-pro-page-header-wrap}-content {
+    flex: auto;
+  }
+
+  .@{ant-pro-page-header-wrap}-extraContent,
+  .@{ant-pro-page-header-wrap}-main {
+    flex: 0 1 auto;
+  }
+
+  .@{ant-pro-page-header-wrap}-main {
+    width: 100%;
+  }
+
+  .@{ant-pro-page-header-wrap}-title {
+    margin-bottom: 16px;
+  }
+
+  .@{ant-pro-page-header-wrap}-logo {
+    margin-bottom: 16px;
+  }
+
+  .@{ant-pro-page-header-wrap}-extraContent {
+    min-width: 242px;
+    margin-left: 88px;
+    text-align: right;
+  }
+}
+
+@media screen and (max-width: @screen-xl) {
+  .@{ant-pro-page-header-wrap}-main {
+    .@{ant-pro-page-header-wrap}-extraContent {
+      margin-left: 44px;
+    }
+  }
+}
+
+@media screen and (max-width: @screen-lg) {
+  .@{ant-pro-page-header-wrap}-main {
+    .@{ant-pro-page-header-wrap}-extraContent {
+      margin-left: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: @screen-md) {
+  .@{ant-pro-page-header-wrap}-main {
+    .@{ant-pro-page-header-wrap}-row {
+      display: block;
+    }
+
+    .@{ant-pro-page-header-wrap}-action,
+    .@{ant-pro-page-header-wrap}-extraContent {
+      margin-left: 0;
+      text-align: left;
+    }
+  }
+}
+
+@media screen and (max-width: @screen-sm) {
+  .@{ant-pro-page-header-wrap}-detail {
+    display: block;
+  }
+  .@{ant-pro-page-header-wrap}-extraContent {
+    margin-left: 0;
+  }
+}

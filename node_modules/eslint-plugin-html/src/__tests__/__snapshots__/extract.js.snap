@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`collects bad indentations 1`] = `
+Array [
+  "a;
+a;
+ a;
+",
+]
+`;
+
+exports[`extract empty script tag (#7) 1`] = `
+Array [
+  "",
+]
+`;
+
+exports[`extract indented javascript 1`] = `
+Array [
+  "var foo = 1;
+",
+]
+`;
+
+exports[`extract javascript with first line next to the script tag 1`] = `
+Array [
+  "var foo = 1;
+var baz = 1;
+",
+]
+`;
+
+exports[`extract javascript with last line next to the script tag 1`] = `
+Array [
+  "var foo = 1;
+var baz = 1;",
+]
+`;
+
+exports[`extract multiple script tags 1`] = `
+Array [
+  "var foo = 1;
+",
+  "var bar = 1;
+",
+]
+`;
+
+exports[`extract script containing 'lower than' characters correctly (#1) 1`] = `
+Array [
+  "if (a < b) { doit(); }
+",
+]
+`;
+
+exports[`extract simple javascript 1`] = `
+Array [
+  "var foo = 1;",
+]
+`;
+
+exports[`extracts a script tag with type=application/babel 1`] = `
+Array [
+  "var foo = 1;",
+]
+`;
+
+exports[`extracts a script tag with type=application/javascript 1`] = `
+Array [
+  "var foo = 1;",
+]
+`;
+
+exports[`extracts a script tag with type=application/x-babel 1`] = `
+Array [
+  "var foo = 1;",
+]
+`;
+
+exports[`extracts a script tag with type=application/x-javascript 1`] = `
+Array [
+  "var foo = 1;",
+]
+`;
+
+exports[`extracts a script tag with type=text/babel 1`] = `
+Array [
+  "var foo = 1;",
+]
+`;
+
+exports[`extracts a script tag with type=text/javascript 1`] = `
+Array [
+  "var foo = 1;",
+]
+`;
+
+exports[`extracts a script tag with type=text/x-babel 1`] = `
+Array [
+  "var foo = 1;",
+]
+`;
+
+exports[`extracts a script tag with type=text/x-javascript 1`] = `
+Array [
+  "var foo = 1;",
+]
+`;
+
+exports[`handles empty input 1`] = `Array []`;
+
+exports[`handles self closing script tags in xhtml mode 1`] = `Array []`;
+
+exports[`handles the isJavaScriptMIMEType option 1`] = `
+Array [
+  "a
+",
+  "b
+",
+]
+`;
+
+exports[`indent option absolute indent with spaces 1`] = `
+Array [
+  "
+    a;
+a;
+a;
+",
+]
+`;
+
+exports[`indent option absolute indent with tabs 1`] = `
+Array [
+  "
+		a;
+a;
+a;
+",
+]
+`;
+
+exports[`indent option relative indent with spaces 1`] = `
+Array [
+  "a;
+  a;
+a;
+",
+]
+`;
+
+exports[`indent option relative indent with tabs 1`] = `
+Array [
+  "a;
+	a;
+a;
+",
+]
+`;
+
+exports[`keeps empty lines after the last html tags 1`] = `
+Array [
+  "a
+",
+]
+`;
+
+exports[`skips script with src attributes 1`] = `Array []`;
+
+exports[`trim last line spaces 1`] = `
+Array [
+  "var foo = 1;
+",
+]
+`;
+
+exports[`trim last line spaces ignoring CDATA 1`] = `
+Array [
+  "
+var foo = 1;
+",
+]
+`;
+
+exports[`works with CDATA 1`] = `
+Array [
+  "a;
+
+b;
+
+c;
+",
+]
+`;
+
+exports[`works with crlf new lines 1`] = `
+Array [
+  "foo;
+bar;
+  baz;
+",
+]
+`;

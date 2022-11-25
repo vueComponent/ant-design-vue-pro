@@ -1,0 +1,40 @@
+{
+  "name": "quill-delta",
+  "version": "3.6.3",
+  "description": "Format for representing rich text documents and changes.",
+  "author": "Jason Chen <jhchen7@gmail.com>",
+  "homepage": "https://github.com/quilljs/delta",
+  "main": "lib/delta.js",
+  "dependencies": {
+    "deep-equal": "^1.0.1",
+    "extend": "^3.0.2",
+    "fast-diff": "1.1.2"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.2",
+    "istanbul": "~0.4.5",
+    "jasmine": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "jasmine test/*.js test/**/*.js",
+    "test:coverage": "istanbul cover jasmine test/**/*.js",
+    "test:coverage:report": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quilljs/delta"
+  },
+  "bugs": {
+    "url": "https://github.com/quilljs/delta/issues"
+  },
+  "keywords": [
+    "rich text",
+    "ot",
+    "operational transform",
+    "delta"
+  ]
+}
