@@ -1,0 +1,6 @@
+build/
+coverage/
+dist/
+lib/
+mocks/
+node_modules/

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Multidimensional Scaling Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Ben Frederickson">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+<style>
+.ticks {
+  font: 10px sans-serif;
+}
+
+.track,
+.track-inset,
+.track-overlay {
+  stroke-linecap: round;
+}
+
+.track {
+  stroke: #000;
+  stroke-opacity: 0.3;
+  stroke-width: 10px;
+}
+
+.track-inset {
+  stroke: #ddd;
+  stroke-width: 8px;
+}
+
+.track-overlay {
+  pointer-events: stroke;
+  stroke-width: 50px;
+  cursor: crosshair;
+}
+
+.handle {
+  fill: #fff;
+  stroke: #000;
+  stroke-opacity: 0.5;
+  stroke-width: 1.25px;
+}
+</style>
+
+</head>
+
+<body>
+<div class="container">
+<div class = "row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+<div id = "cities">
+
+<div style="text-align:center"><div style="display:inline-block;">
+<button type="button" class="btn btn-default randomize">
+    <span class="glyphicon glyphicon-refresh"></span> Randomize Initial
+</button>
+
+<div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <span class="algorithm_label">Conjugate Gradient</span> <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a class="algo_neldermead">Nelder-Mead</a></li>
+        <li><a class="algo_gd">Gradient Descent</a></li>
+        <li><a class="algo_gdls">Gradient Descent w/ Line Search</a></li>
+        <li><a class="algo_cg">Conjugate Gradient</a></li>
+    </ul>
+</div>
+
+<div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <span class="count_label">20 Cities</span> <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a class="count5">5 Cities</a></li>
+        <li><a class="count10">10 Cities</a></li>
+        <li><a class="count15">15 Cities</a></li>
+        <li><a class="count20">20 Cities</a></li>
+        <li><a class="count25">25 Cities</a></li>
+    </ul>
+</div>
+
+<div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <span class="speed_label">500ms / Iteration</span> <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a class="speed_500">500ms / Iteration</a></li>
+        <li><a class="speed_100">100ms / Iteration</a></li>
+        <li><a class="speed_50">50ms / Iteration</a></li>
+        <li><a class="speed_25">25ms / Iteration</a></li>
+    </ul>
+</div>
+</div></div>
+<svg></svg>
+
+<div class="row learningrateslider">
+<form class="form-inline" role="form">
+    <div class="form-group col-xs-12 col-md-12">
+        <div style="text-align:center"><div style="display:inline-block;">
+            <label class="r-only" for="learningrate">Learning Rate
+                <span id="learningratevalue">= 0.002</span>
+            </label>
+        </div></div>
+        <div id="learningrate"></div>
+    </div>
+</form>
+</div>
+
+<div style="text-align:center"><div style="display:inline-block;">
+<div class="row">
+    <span class ="iterations"></span>
+    </div>
+</div></div>
+
+</div>
+
+</div>
+</div>
+</div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script>
+<script src="./cities_data.js"></script>
+<script src="../build/fmin.js"></script>
+<script src="../build/fmin_vis.js"></script>
+<script>
+fmin_vis.createCitiesAnimation(d3.select("#cities"));
+</script>
+</html>

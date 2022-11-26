@@ -1,0 +1,22 @@
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-space {
+  display: inline-flex;
+}
+.ant-space-vertical {
+  flex-direction: column;
+}
+.ant-space-align-center {
+  align-items: center;
+}
+.ant-space-align-start {
+  align-items: flex-start;
+}
+.ant-space-align-end {
+  align-items: flex-end;
+}
+.ant-space-align-baseline {
+  align-items: baseline;
+}

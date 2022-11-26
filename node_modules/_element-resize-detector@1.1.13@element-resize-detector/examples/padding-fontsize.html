@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../build/element-resize-detector.js"></script>
+    <style>
+        html, body {
+            box-sizing: border-box;
+        }
+
+        .container {
+            font-family: sans-serif;
+            font-size: 14px;
+            margin: 20px;
+            padding: 20px;
+            border: solid 1px #e0e0e0;
+            background: #e9e9e9;
+        }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+        <p>erd is watching this element</p>
+        <button class="fs">bump font size</button> <button class="pd">bump padding</button>
+    </div>
+
+    <script>
+        var c = document.querySelector('.container');
+        var erd = elementResizeDetectorMaker({
+            strategy: "scroll"
+        });
+        erd.listenTo(c, function(el){
+          console.log('erd detected container resize');
+        });
+
+        $('.fs').on('click', function(e){
+          var target = e.currentTarget.parentElement;
+          var fs = parseInt(document.defaultView.getComputedStyle(target, null).getPropertyValue('font-size'), 10);
+          target.style.fontSize = (fs+=5) + 'px';
+        });
+
+        $('.pd').on('click', function(e){
+          var target = e.currentTarget.parentElement;
+          var pd = parseInt(document.defaultView.getComputedStyle(target, null).getPropertyValue('padding-top'), 10);
+          target.style.padding = (pd+=10) + 'px';
+        });
+    </script>
+  </body>
+</html>

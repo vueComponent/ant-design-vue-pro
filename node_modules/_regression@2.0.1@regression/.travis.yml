@@ -1,0 +1,13 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=1937cd951ca5a26580a65f98a7b627eb92126bdd2b272e3dec71f8396062d210
+    - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
+language: node_js
+node_js:
+  - "6.1"
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+script:
+  - npm test
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi

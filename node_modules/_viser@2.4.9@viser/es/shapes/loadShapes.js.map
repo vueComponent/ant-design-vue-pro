@@ -1,0 +1,1 @@
+{"version":3,"file":"loadShapes.js","sourceRoot":"","sources":["../../src/shapes/loadShapes.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,QAAQ,MAAM,YAAY,CAAC;AACvC,OAAO,KAAK,MAAM,MAAM,UAAU,CAAC;AAEnC,MAAM,CAAC,OAAO;IACZ,MAAM,CAAC,aAAa,EAAE,CAAC;IACvB,QAAQ,CAAC,aAAa,EAAE,CAAC;AAC3B,CAAC"}

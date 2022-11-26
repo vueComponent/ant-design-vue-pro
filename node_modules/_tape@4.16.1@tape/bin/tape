@@ -1,0 +1,68 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var parseOpts = require('minimist');
+
+var opts = parseOpts(process.argv.slice(2), {
+	alias: { r: 'require', i: 'ignore' },
+	string: ['require', 'ignore'],
+	boolean: ['only'],
+	default: { r: [], i: null, only: null }
+});
+
+if (typeof opts.only === 'boolean') {
+	process.env.NODE_TAPE_NO_ONLY_TEST = !opts.only;
+}
+
+var cwd = process.cwd();
+
+if (typeof opts.require === 'string') {
+	opts.require = [opts.require];
+}
+
+var resolveModule;
+opts.require.forEach(function (module) {
+	if (module) {
+		if (!resolveModule) { resolveModule = require('resolve').sync; }
+		// This check ensures we ignore `-r ""`, trailing `-r`, or other silly things the user might (inadvertently) be doing.
+		require(resolveModule(module, { basedir: cwd }));
+	}
+});
+
+var resolvePath = require('path').resolve;
+
+var matcher;
+if (typeof opts.ignore === 'string') {
+	var readFileSync = require('fs').readFileSync;
+	try {
+		var ignoreStr = readFileSync(resolvePath(cwd, opts.ignore || '.gitignore'), 'utf-8');
+	} catch (e) {
+		console.error(e.message);
+		process.exit(2);
+	}
+	var ignore = require('dotignore');
+	matcher = ignore.createMatcher(ignoreStr);
+}
+
+var glob = require('glob');
+
+opts._.reduce(function (result, arg) {
+	if (glob.hasMagic(arg)) {
+		// If glob does not match, `files` will be an empty array. Note: `glob.sync` may throw an error and crash the node process.
+		var files = glob.sync(arg);
+
+		if (!Array.isArray(files)) {
+			throw new TypeError('unknown error: glob.sync did not return an array or throw. Please report this.');
+		}
+
+		return result.concat(files);
+	}
+	return result.concat(arg);
+}, []).filter(function (file) {
+	return !matcher || !matcher.shouldIgnore(file);
+}).forEach(function (file) {
+	require(resolvePath(cwd, file));
+});
+
+// vim: ft=javascript

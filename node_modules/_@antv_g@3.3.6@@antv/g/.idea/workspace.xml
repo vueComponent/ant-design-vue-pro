@@ -1,0 +1,1315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="19f79b05-74e3-4d7f-bffa-7fec1964d21b" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="g" />
+  </component>
+  <component name="FileEditorManager">
+    <splitter split-orientation="horizontal" split-proportion="0.5144972">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="animation.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/core/mixin/animation.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1170">
+                  <caret line="78" column="14" selection-start-line="78" selection-start-column="14" selection-end-line="78" selection-end-column="14" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="canvas.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/canvas.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="3735">
+                  <caret line="249" column="14" selection-start-line="249" selection-start-column="14" selection-end-line="249" selection-end-column="14" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="marker.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/shapes/marker.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1249">
+                  <caret line="110" column="4" selection-start-line="110" selection-start-column="4" selection-end-line="110" selection-end-column="4" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="transform.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/core/mixin/transform.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="329">
+                  <caret line="32" column="32" selection-start-line="32" selection-start-column="32" selection-end-line="32" selection-end-column="32" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="painter.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/renderers/svg/painter.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="605">
+                  <caret line="317" column="14" selection-start-line="317" selection-start-column="14" selection-end-line="317" selection-end-column="14" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="line-spec.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/test/unit/canvas/shape/line-spec.js">
+              <provider selected="true" editor-type-id="text-editor" />
+            </entry>
+          </file>
+          <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/index.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="315">
+                  <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="image-spec.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/test/unit/canvas/shape/image-spec.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="870">
+                  <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/README.md">
+              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+                <state split_layout="SPLIT">
+                  <first_editor />
+                  <second_editor />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="animate-spec.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/test/unit/canvas/core/animate-spec.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1215">
+                  <caret line="81" column="36" selection-start-line="81" selection-start-column="36" selection-end-line="81" selection-end-column="36" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="canvas-spec.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/test/unit/canvas/canvas-spec.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="5250">
+                  <caret line="350" column="7" selection-start-line="350" selection-start-column="7" selection-end-line="350" selection-end-column="7" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ellipse.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/shapes/ellipse.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="420">
+                  <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="dom.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/shapes/dom.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="495">
+                  <caret line="33" selection-start-line="33" selection-end-line="33" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="painter.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/renderers/svg/painter.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="781">
+                  <caret line="345" column="16" selection-start-line="345" selection-start-column="16" selection-end-line="345" selection-end-column="16" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="group.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/core/group.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="6525">
+                  <caret line="435" column="16" selection-start-line="435" selection-start-column="16" selection-end-line="435" selection-end-column="16" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="shape.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/core/shape.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1815">
+                  <caret line="121" column="25" selection-start-line="121" selection-start-column="25" selection-end-line="121" selection-end-column="25" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="element.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/core/element.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1725">
+                  <caret line="115" column="5" selection-start-line="115" selection-start-column="5" selection-end-line="115" selection-end-column="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/package.json">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="495">
+                  <caret line="33" column="30" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>append</find>
+      <find>drag</find>
+      <find>dragstart</find>
+      <find>debugger</find>
+      <find>clone</find>
+      <find>src</find>
+      <find>getEmitter</find>
+      <find>!dragg</find>
+      <find>getB</find>
+      <find>getBou</find>
+      <find>createE</find>
+      <find>c</find>
+      <find>radi</find>
+      <find>event</find>
+      <find>count</find>
+      <find>dragging</find>
+      <find>delayRemove</find>
+      <find>mousedown</find>
+      <find>capture</find>
+      <find>remove</find>
+      <find>lineWidth</find>
+      <find>context</find>
+      <find>dom</find>
+      <find>lineAppend</find>
+      <find>sy</find>
+      <find>A</find>
+      <find>'A</find>
+      <find>mouseleave</find>
+      <find>cursor</find>
+      <find>symbol</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>_tCache</replace>
+      <replace>reset</replace>
+      <replace>.trigger</replace>
+      <replace>canvas</replace>
+      <replace>this</replace>
+      <replace>_getEmitter</replace>
+      <replace>emit</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/src/shapes</dir>
+      <dir>$PROJECT_DIR$/test/unit</dir>
+      <dir>$PROJECT_DIR$/src/core/mixin</dir>
+      <dir>$PROJECT_DIR$/test</dir>
+      <dir>$PROJECT_DIR$/src/core</dir>
+      <dir>$PROJECT_DIR$/src/renderers/svg</dir>
+      <dir>$PROJECT_DIR$/src</dir>
+      <dir>$PROJECT_DIR$</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/test/unit/canvas/core/shape-spec.js" />
+        <option value="$PROJECT_DIR$/src/core/shape.js" />
+        <option value="$PROJECT_DIR$/src/renderers/svg/defs/shadow.js" />
+        <option value="$PROJECT_DIR$/src/renderers/svg/defs/clip.js" />
+        <option value="$PROJECT_DIR$/test/bugs/issue-87-spec.js" />
+        <option value="$PROJECT_DIR$/src/util/path.js" />
+        <option value="$PROJECT_DIR$/test/unit/util/path-spec.js" />
+        <option value="$PROJECT_DIR$/src/util/common.js" />
+        <option value="$PROJECT_DIR$/test/bugs/issue-svg.js" />
+        <option value="$PROJECT_DIR$/test/bugs/issue-dom-get-shape.js" />
+        <option value="$PROJECT_DIR$/src/core/mixin/isPointInPath.js" />
+        <option value="$PROJECT_DIR$/test/bugs/issue-get-shape-spec.js" />
+        <option value="$PROJECT_DIR$/test/bugs/issue-71-spec.js" />
+        <option value="$PROJECT_DIR$/test/bugs/screenshot-spec.js" />
+        <option value="$PROJECT_DIR$/demos/rect.html" />
+        <option value="$PROJECT_DIR$/src/util/event.js" />
+        <option value="$PROJECT_DIR$/src/core/test.html" />
+        <option value="$PROJECT_DIR$/src/renderers/svg/getShape.js" />
+        <option value="$PROJECT_DIR$/src/core/group.js" />
+        <option value="$PROJECT_DIR$/test/unit/canvas/core/element-spec.js" />
+        <option value="$PROJECT_DIR$/test/unit/canvas/core/group-spec.js" />
+        <option value="$PROJECT_DIR$/test/unit/svg/core/element-spec.js" />
+        <option value="$PROJECT_DIR$/test/unit/svg/core/group-spec.js" />
+        <option value="$PROJECT_DIR$/test/unit/svg/canvas-spec.js" />
+        <option value="$PROJECT_DIR$/test/unit/svg/core/event-spec.js" />
+        <option value="$PROJECT_DIR$/src/core/event.js" />
+        <option value="$PROJECT_DIR$/test/unit/svg/shape/circle-spec.js" />
+        <option value="$PROJECT_DIR$/test/unit/index-spec.js" />
+        <option value="$PROJECT_DIR$/src/core/element.js" />
+        <option value="$PROJECT_DIR$/test/unit/svg/shape/rect-spec.js" />
+        <option value="$PROJECT_DIR$/test/unit/canvas/shape/text-spec.js" />
+        <option value="$PROJECT_DIR$/src/core/event-emitter.js" />
+        <option value="$PROJECT_DIR$/src/shapes/arc.js" />
+        <option value="$PROJECT_DIR$/src/core/mixin/transform.js" />
+        <option value="$PROJECT_DIR$/src/canvas.js" />
+        <option value="$PROJECT_DIR$/src/core/advanced-event-emitter.js" />
+        <option value="$PROJECT_DIR$/src/shapes/path.js" />
+        <option value="$PROJECT_DIR$/test/unit/canvas/shape/path-spec.js" />
+        <option value="$PROJECT_DIR$/src/core/mixin/timeline.js" />
+        <option value="$USER_HOME$/Desktop/accountbook.svg" />
+        <option value="$USER_HOME$/Desktop/test.html" />
+        <option value="$PROJECT_DIR$/test/unit/canvas/shape/image-spec.js" />
+        <option value="$PROJECT_DIR$/test/unit/canvas/core/animate-spec.js" />
+        <option value="$PROJECT_DIR$/test/unit/canvas/canvas-spec.js" />
+        <option value="$PROJECT_DIR$/src/core/mixin/animation.js" />
+        <option value="$PROJECT_DIR$/src/renderers/svg/painter.js" />
+        <option value="$PROJECT_DIR$/src/core/mixin/event.js" />
+        <option value="$PROJECT_DIR$/test/unit/canvas/core/event-spec.js" />
+        <option value="$PROJECT_DIR$/src/shapes/marker.js" />
+        <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/package.json" />
+    </packageJsonPaths>
+  </component>
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="x" value="1440" />
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="g" type="b2602c69:ProjectViewProjectNode" />
+              <item name="g" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="g" type="b2602c69:ProjectViewProjectNode" />
+              <item name="g" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="g" type="b2602c69:ProjectViewProjectNode" />
+              <item name="g" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="g" type="b2602c69:ProjectViewProjectNode" />
+              <item name="g" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="mixin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="g" type="b2602c69:ProjectViewProjectNode" />
+              <item name="g" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="shapes" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SearchEverywhereHistoryKey" value="event-spec&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/unit/canvas/core/event-spec.js&#10;animate&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/unit/canvas/core/animate-spec.js&#10;image-spec&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/unit/canvas/shape/image-spec.js&#10;path.js&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/shapes/path.js&#10;path&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/shapes/path.js&#10;shape/path&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/shapes/path.js&#10;rect-spec&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/unit/svg/shape/rect-spec.js&#10;circle-spec&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/unit/svg/shape/circle-spec.js&#10;canvas-spec&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/unit/svg/canvas-spec.js&#10;core/event&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/core/event.js&#10;event&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/core/mixin/event.js&#10;group-spec&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/unit/canvas/core/group-spec.js&#10;group-spe&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/unit/canvas/core/group-spec.js&#10;element-spec&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/unit/canvas/core/element-spec.js&#10;transform&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/core/mixin/transform.js&#10;canvas&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/canvas.js&#10;painter&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/renderers/svg/painter.js&#10;81&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/bugs/issue-81-spec.js&#10;path-spec&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/unit/util/path-spec.js&#10;common&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/util/common.js&#10;element&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/core/element.js&#10;renderer&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/renderers&#10;text&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/shapes/text.js&#10;package&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/package.json&#10;attr&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/core/mixin/attribute.js&#10;shape&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/core/shape.js&#10;group-s&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/unit/canvas/core/group-spec.js&#10;shapes/pa&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/shapes/path.js&#10;group&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/core/group.js&#10;clone&#9;null&#9;null&#10;isPoi&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/core/mixin/isPointInPath.js&#10;canvas-spe&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/test/unit/svg/canvas-spec.js&#10;segment&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/lib/shapes/util/path-segment.js&#10;util&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/util&#10;path.&#9;FILE&#9;file:///Users/Elaine/Documents/githubProjects/stable/g/src/shapes/path.js" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/lib/shapes/util/path-segment.js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="$PROJECT_DIR$/node_modules/eslint" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test/unit/svg/core" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/core" />
+      <recent name="$PROJECT_DIR$/src/core/mixin" />
+      <recent name="$PROJECT_DIR$/test" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="19f79b05-74e3-4d7f-bffa-7fec1964d21b" name="Default" comment="" />
+      <created>1531832383210</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1531832383210</updated>
+      <workItem from="1531832385235" duration="2864000" />
+      <workItem from="1531897872238" duration="13680000" />
+      <workItem from="1531983877797" duration="3226000" />
+      <workItem from="1532316019228" duration="318000" />
+      <workItem from="1532316529454" duration="110000" />
+      <workItem from="1532317333327" duration="15000" />
+      <workItem from="1532330864541" duration="655000" />
+      <workItem from="1532332492581" duration="173000" />
+      <workItem from="1532349085815" duration="1157000" />
+      <workItem from="1533178552238" duration="1020000" />
+      <workItem from="1533184072123" duration="3788000" />
+      <workItem from="1533195404477" duration="3055000" />
+      <workItem from="1533202970625" duration="119000" />
+      <workItem from="1533207653830" duration="1857000" />
+      <workItem from="1533279007694" duration="9296000" />
+      <workItem from="1533523725150" duration="13254000" />
+      <workItem from="1533547748144" duration="8289000" />
+      <workItem from="1533710566235" duration="8847000" />
+      <workItem from="1533726862616" duration="18822000" />
+      <workItem from="1534225974755" duration="3712000" />
+      <workItem from="1534229753701" duration="331000" />
+      <workItem from="1534498443860" duration="986000" />
+      <workItem from="1534520527729" duration="711000" />
+      <workItem from="1534732379293" duration="5365000" />
+      <workItem from="1534922949619" duration="395000" />
+      <workItem from="1535009113719" duration="1125000" />
+      <workItem from="1535096356881" duration="141000" />
+      <workItem from="1536027042454" duration="27000" />
+      <workItem from="1536739509080" duration="8858000" />
+      <workItem from="1536806868250" duration="4120000" />
+      <workItem from="1536823420694" duration="3046000" />
+      <workItem from="1536835566168" duration="1177000" />
+      <workItem from="1537260918177" duration="9506000" />
+      <workItem from="1538964941278" duration="33650000" />
+      <workItem from="1539227811986" duration="643000" />
+      <workItem from="1539240882645" duration="2544000" />
+      <workItem from="1539674456354" duration="8968000" />
+      <workItem from="1539760502883" duration="6653000" />
+      <workItem from="1540348855349" duration="29000" />
+      <workItem from="1540349482911" duration="57000" />
+      <workItem from="1540352635069" duration="4468000" />
+      <workItem from="1540366151590" duration="5161000" />
+      <workItem from="1541038990568" duration="1481000" />
+      <workItem from="1541477056207" duration="126000" />
+      <workItem from="1541489947232" duration="5997000" />
+      <workItem from="1541556026733" duration="990000" />
+      <workItem from="1541593284873" duration="5351000" />
+      <workItem from="1542100824121" duration="2190000" />
+      <workItem from="1542182104651" duration="3262000" />
+      <workItem from="1542201026036" duration="910000" />
+      <workItem from="1543227941807" duration="2321000" />
+      <workItem from="1543815062194" duration="263000" />
+      <workItem from="1543916015300" duration="38967000" />
+      <workItem from="1544429529163" duration="36517000" />
+      <workItem from="1544605336748" duration="9503000" />
+      <workItem from="1545025905145" duration="9032000" />
+      <workItem from="1545132476816" duration="1183000" />
+      <workItem from="1545209353990" duration="1081000" />
+      <workItem from="1545211835553" duration="661000" />
+      <workItem from="1545271804442" duration="2619000" />
+      <workItem from="1545289528200" duration="36000" />
+      <workItem from="1545364116820" duration="719000" />
+      <workItem from="1545365558984" duration="7000" />
+      <workItem from="1545620784717" duration="345000" />
+      <workItem from="1545640358454" duration="69000" />
+      <workItem from="1545653024262" duration="2994000" />
+      <workItem from="1545658604888" duration="212000" />
+      <workItem from="1545882395798" duration="2882000" />
+      <workItem from="1546000184818" duration="113000" />
+      <workItem from="1546051719445" duration="3118000" />
+      <workItem from="1546395934324" duration="25000" />
+      <workItem from="1546412746853" duration="7790000" />
+      <workItem from="1546580353008" duration="126000" />
+      <workItem from="1547368030853" duration="10543000" />
+      <workItem from="1547432265548" duration="2518000" />
+      <workItem from="1547451288388" duration="15338000" />
+      <workItem from="1547536960639" duration="2448000" />
+      <workItem from="1547630159023" duration="419000" />
+      <workItem from="1547801947654" duration="1852000" />
+      <workItem from="1548140662314" duration="4692000" />
+      <workItem from="1548212278474" duration="10914000" />
+      <workItem from="1548319586457" duration="724000" />
+      <workItem from="1548389158029" duration="2671000" />
+      <workItem from="1548835046063" duration="575000" />
+      <workItem from="1548838612866" duration="9919000" />
+      <workItem from="1549002987096" duration="559000" />
+      <workItem from="1549870274428" duration="20492000" />
+      <workItem from="1551182137674" duration="4923000" />
+      <workItem from="1551347163204" duration="9202000" />
+      <workItem from="1551671676294" duration="3035000" />
+      <workItem from="1551838261195" duration="6661000" />
+      <workItem from="1552294286957" duration="646000" />
+      <workItem from="1552379567096" duration="689000" />
+      <workItem from="1552460477848" duration="629000" />
+      <workItem from="1552469910678" duration="62000" />
+      <workItem from="1552470099456" duration="9010000" />
+    </task>
+    <task id="LOCAL-00113" summary="chore(event): add unit tests of events">
+      <created>1544429990719</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1544429990720</updated>
+    </task>
+    <task id="LOCAL-00114" summary="feat(event): add `dragstart` &amp; `dragend` &amp; `dragging` events">
+      <created>1544436529318</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1544436529319</updated>
+    </task>
+    <task id="LOCAL-00115" summary="chore(event): add unit tests of `dragstart` &amp; `dragend` &amp; `dragging` events">
+      <created>1544436628965</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1544436628965</updated>
+    </task>
+    <task id="LOCAL-00116" summary="chore(event): add unit tests of `ondrop`">
+      <created>1544439915116</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1544439915116</updated>
+    </task>
+    <task id="LOCAL-00117" summary="chore(event): modify `drop` for svg occasions">
+      <created>1544508124856</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1544508124856</updated>
+    </task>
+    <task id="LOCAL-00118" summary="feat(event): add `dragover` &amp; `dragout`">
+      <created>1544511191239</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1544511191239</updated>
+    </task>
+    <task id="LOCAL-00119" summary="chore(event): add unit tests of `dragenter` &amp; `dragleave`">
+      <created>1544511258279</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1544511258279</updated>
+    </task>
+    <task id="LOCAL-00120" summary="feat(event): if svg rendered, use getShape before dragover, dragenter etc.. fired">
+      <created>1544513056191</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1544513056191</updated>
+    </task>
+    <task id="LOCAL-00121" summary="feat(event): fix dragenter &amp; dragleave">
+      <created>1544513394520</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1544513394520</updated>
+    </task>
+    <task id="LOCAL-00122" summary="feat(event): remove event emitter dependency">
+      <created>1544534849391</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1544534849391</updated>
+    </task>
+    <task id="LOCAL-00123" summary="feat(svg): add id on svg dom">
+      <created>1544586933650</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1544586933651</updated>
+    </task>
+    <task id="LOCAL-00124" summary="fix(event): when events such as mouseout etc.. triggered, cursor style should be preShape style">
+      <created>1544619101283</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1544619101284</updated>
+    </task>
+    <task id="LOCAL-00125" summary="chore(event): add unit test of cursor style">
+      <created>1544666772543</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1544666772543</updated>
+    </task>
+    <task id="LOCAL-00126" summary="chore: package version to 3.4.0-beta.1">
+      <created>1544668908907</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1544668908907</updated>
+    </task>
+    <task id="LOCAL-00127" summary="chore: exports EventEmitter">
+      <created>1545030544189</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1545030544190</updated>
+    </task>
+    <task id="LOCAL-00128" summary="chore: update package version">
+      <created>1545030599101</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1545030599101</updated>
+    </task>
+    <task id="LOCAL-00129" summary="chore: modify EventEmitter to a function">
+      <created>1545034559699</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1545034559699</updated>
+    </task>
+    <task id="LOCAL-00130" summary="chore: adjust file dirs">
+      <created>1545035424957</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1545035424957</updated>
+    </task>
+    <task id="LOCAL-00131" summary="fix(event): fix dragend &amp; click will trigger at the same time">
+      <created>1547372179205</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1547372179205</updated>
+    </task>
+    <task id="LOCAL-00132" summary="chore: package version to 3.4.0-beta.4">
+      <created>1547433789051</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1547433789051</updated>
+    </task>
+    <task id="LOCAL-00133" summary="fix(event): fix event x, y">
+      <created>1547464235951</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1547464235951</updated>
+    </task>
+    <task id="LOCAL-00134" summary="feat(animate): add onFrame">
+      <created>1547530934142</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1547530934142</updated>
+    </task>
+    <task id="LOCAL-00135" summary="fix(event): revert x, y">
+      <created>1547532449574</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1547532449574</updated>
+    </task>
+    <task id="LOCAL-00136" summary="fix(animate): sort out onFrame">
+      <created>1547532780597</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1547532780597</updated>
+    </task>
+    <task id="LOCAL-00137" summary="fix(event): fix click event on canvas">
+      <created>1547534588013</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1547534588014</updated>
+    </task>
+    <task id="LOCAL-00138" summary="chore(package): update package version to 3.4.0-beta.5">
+      <created>1547538389696</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1547538389697</updated>
+    </task>
+    <task id="LOCAL-00139" summary="fix(event): fix click canvas event">
+      <created>1547539229596</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1547539229596</updated>
+    </task>
+    <task id="LOCAL-00140" summary="chore(package): package version to 3.4.0-beta.6">
+      <created>1547539341526</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1547539341526</updated>
+    </task>
+    <task id="LOCAL-00141" summary="fix(onFrame): fix the last frame of onFrame">
+      <created>1548151116015</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1548151116015</updated>
+    </task>
+    <task id="LOCAL-00142" summary="chore(package): update package version">
+      <created>1548156169608</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1548156169608</updated>
+    </task>
+    <task id="LOCAL-00143" summary="fix(animation): fix onFrame animation">
+      <created>1548218299223</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1548218299223</updated>
+    </task>
+    <task id="LOCAL-00144" summary="feat(path): add method to get total length of a path">
+      <created>1548302775090</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1548302775090</updated>
+    </task>
+    <task id="LOCAL-00145" summary="fix(path): clear path attrs when path is reset">
+      <created>1548317861450</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1548317861450</updated>
+    </task>
+    <task id="LOCAL-00146" summary="chore(package): update package version">
+      <created>1548318613238</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1548318613238</updated>
+    </task>
+    <task id="LOCAL-00147" summary="fix(event): fix when contextmenu is emitted, click will be emitted as well">
+      <created>1548921638858</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1548921638858</updated>
+    </task>
+    <task id="LOCAL-00148" summary="fix(animate): duplicated calculation of fromAttrs">
+      <created>1548923004245</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1548923004245</updated>
+    </task>
+    <task id="LOCAL-00149" summary="chore(package): update package version">
+      <created>1548925389830</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1548925389830</updated>
+    </task>
+    <task id="LOCAL-00150" summary="fix(event): fix mousemove will always trigger dragstart">
+      <created>1550571653553</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1550571653553</updated>
+    </task>
+    <task id="LOCAL-00151" summary="fix(event): fix mousemove will always trigger dragstart">
+      <created>1550572839215</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1550572839215</updated>
+    </task>
+    <task id="LOCAL-00152" summary="chore(package): update package version">
+      <created>1550574057960</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1550574057961</updated>
+    </task>
+    <task id="LOCAL-00153" summary="fix(event): prevent default actions when context menu event is triggered">
+      <created>1550750765484</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1550750765485</updated>
+    </task>
+    <task id="LOCAL-00154" summary="fix(event): revert drag event">
+      <created>1551077869714</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1551077869714</updated>
+    </task>
+    <task id="LOCAL-00155" summary="chore(package): update package version">
+      <created>1551077981902</created>
+      <option name="number" value="00155" />
+      <option name="presentableId" value="LOCAL-00155" />
+      <option name="project" value="LOCAL" />
+      <updated>1551077981903</updated>
+    </task>
+    <task id="LOCAL-00156" summary="fix(event): trigger drag and mousemove at same time">
+      <created>1551411860629</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
+      <option name="project" value="LOCAL" />
+      <updated>1551411860629</updated>
+    </task>
+    <task id="LOCAL-00157" summary="chore(package): update package version">
+      <created>1551415360074</created>
+      <option name="number" value="00157" />
+      <option name="presentableId" value="LOCAL-00157" />
+      <option name="project" value="LOCAL" />
+      <updated>1551415360074</updated>
+    </task>
+    <task id="LOCAL-00158" summary="fix(event): fix cursor style when mouse left a shape and entered canvas">
+      <created>1552617280577</created>
+      <option name="number" value="00158" />
+      <option name="presentableId" value="LOCAL-00158" />
+      <option name="project" value="LOCAL" />
+      <updated>1552617280577</updated>
+    </task>
+    <task id="LOCAL-00159" summary="chore: update package version">
+      <created>1552639282599</created>
+      <option name="number" value="00159" />
+      <option name="presentableId" value="LOCAL-00159" />
+      <option name="project" value="LOCAL" />
+      <updated>1552639282599</updated>
+    </task>
+    <task id="LOCAL-00160" summary="fix(marker): compatible with scenes where symbol does not exist">
+      <created>1552639524663</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1552639524663</updated>
+    </task>
+    <task id="LOCAL-00161" summary="chore: update package version">
+      <created>1552639589115</created>
+      <option name="number" value="00161" />
+      <option name="presentableId" value="LOCAL-00161" />
+      <option name="project" value="LOCAL" />
+      <updated>1552639589116</updated>
+    </task>
+    <option name="localTasksCounter" value="162" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="451629000" />
+  </component>
+  <component name="TodoView" selected-index="4">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1440" y="0" width="1920" height="1080" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49898168" visible="true" weight="0.14639284" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3299389" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5009334" side_tool="true" weight="0.35766423" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3299389" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.24541752" />
+      <window_info id="npm" order="2" sideWeight="0.50101835" side_tool="true" weight="0.16798314" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.4990666" visible="true" weight="0.2413442" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" sideWeight="0.50101835" side_tool="true" weight="0.120589785" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="7" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix(event): fix destroyed shape events will cause problems" />
+    <MESSAGE value="fix(element): fix method to determine if a shape is destroyed" />
+    <MESSAGE value="chore: package version to 3.4.0-beta.4" />
+    <MESSAGE value="fix(event): fix event x, y" />
+    <MESSAGE value="feat(animate): add onFrame" />
+    <MESSAGE value="fix(event): revert x, y" />
+    <MESSAGE value="fix(animate): sort out onFrame" />
+    <MESSAGE value="fix(event): fix click event on canvas" />
+    <MESSAGE value="chore(package): update package version to 3.4.0-beta.5" />
+    <MESSAGE value="fix(event): fix click canvas event" />
+    <MESSAGE value="chore(package): package version to 3.4.0-beta.6" />
+    <MESSAGE value="fix(onFrame): fix the last frame of onFrame" />
+    <MESSAGE value="fix(animation): fix onFrame animation" />
+    <MESSAGE value="feat(path): add method to get total length of a path" />
+    <MESSAGE value="fix(path): clear path attrs when path is reset" />
+    <MESSAGE value="fix(event): fix when contextmenu is emitted, click will be emitted as well" />
+    <MESSAGE value="fix(animate): duplicated calculation of fromAttrs" />
+    <MESSAGE value="fix(event): fix mousemove will always trigger dragstart" />
+    <MESSAGE value="fix(event): prevent default actions when context menu event is triggered" />
+    <MESSAGE value="fix(event): revert drag event" />
+    <MESSAGE value="fix(event): trigger drag and mousemove at same time" />
+    <MESSAGE value="chore(package): update package version" />
+    <MESSAGE value="fix(event): fix cursor style when mouse left a shape and entered canvas" />
+    <MESSAGE value="fix(marker): compatible with scenes where symbol does not exist" />
+    <MESSAGE value="chore: update package version" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: update package version" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="10" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/test/unit/svg/shape/circle-spec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="57" column="39" selection-start-line="57" selection-start-column="38" selection-end-line="57" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/mixin/event.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="42" column="42" lean-forward="true" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/svg/core/event-spec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3195">
+          <caret line="213" column="39" selection-start-line="213" selection-start-column="39" selection-end-line="213" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/svg/shape/rect-spec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="38" column="35" lean-forward="true" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shapes/text.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/format.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shapes/math/cubic.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="129" column="9" selection-start-line="129" selection-start-column="9" selection-end-line="129" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.eslintrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/canvas.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="183" selection-start-line="183" selection-end-line="183" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shapes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/mixin/attribute.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="78" column="4" lean-forward="true" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="43" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shapes/arc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="37" lean-forward="true" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shapes/image.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="885">
+          <caret line="59" column="31" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/index-spec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderers/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/event.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/canvas/shape/text-spec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/path.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6825">
+          <caret line="455" column="25" selection-start-line="455" selection-start-column="25" selection-end-line="455" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/advanced-event-emitter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="14" lean-forward="true" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/mixin/timeline.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1950">
+          <caret line="130" column="28" selection-start-line="130" selection-start-column="28" selection-end-line="130" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/mixin/isPointInPath.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2910">
+          <caret line="194" column="26" selection-start-line="194" selection-start-column="22" selection-end-line="194" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="24" column="26" lean-forward="true" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/event-emitter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/canvas/shape/path-spec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="523">
+          <caret line="535" column="15" lean-forward="true" selection-start-line="535" selection-start-column="15" selection-end-line="535" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shapes/path.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2595">
+          <caret line="173" column="18" selection-start-line="173" selection-start-column="18" selection-end-line="173" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderers/canvas/painter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/canvas/shape/line-spec.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/canvas.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3735">
+          <caret line="249" column="14" selection-start-line="249" selection-start-column="14" selection-end-line="249" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/accountbook.svg" />
+    <entry file="file://$PROJECT_DIR$/src/renderers/svg/getShape.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="541">
+          <caret line="49" column="32" lean-forward="true" selection-start-line="49" selection-start-column="32" selection-end-line="49" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/canvas/shape/image-spec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="870">
+          <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/canvas/core/animate-spec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1215">
+          <caret line="81" column="36" selection-start-line="81" selection-start-column="36" selection-end-line="81" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/group.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6525">
+          <caret line="435" column="16" selection-start-line="435" selection-start-column="16" selection-end-line="435" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/shape.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1815">
+          <caret line="121" column="25" selection-start-line="121" selection-start-column="25" selection-end-line="121" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/element.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1725">
+          <caret line="115" column="5" selection-start-line="115" selection-start-column="5" selection-end-line="115" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/canvas/canvas-spec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5250">
+          <caret line="350" column="7" selection-start-line="350" selection-start-column="7" selection-end-line="350" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shapes/ellipse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/mixin/animation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1170">
+          <caret line="78" column="14" selection-start-line="78" selection-start-column="14" selection-end-line="78" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shapes/dom.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/mixin/transform.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="32" column="32" selection-start-line="32" selection-start-column="32" selection-end-line="32" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shapes/fan.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="85" column="33" lean-forward="true" selection-start-line="85" selection-start-column="33" selection-end-line="85" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderers/svg/painter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="781">
+          <caret line="345" column="16" selection-start-line="345" selection-start-column="16" selection-end-line="345" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/canvas/core/event-spec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="453" column="3" selection-start-line="453" selection-start-column="3" selection-end-line="453" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/mixin/event.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="86" column="5" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shapes/marker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1249">
+          <caret line="110" column="4" selection-start-line="110" selection-start-column="4" selection-end-line="110" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="30" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

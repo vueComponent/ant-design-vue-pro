@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "egg"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-bitwise": [
+      0
+    ],
+    "experimentalDecorators": [
+      0
+    ],
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
+    "linebreak-style": 0
+  }
+}

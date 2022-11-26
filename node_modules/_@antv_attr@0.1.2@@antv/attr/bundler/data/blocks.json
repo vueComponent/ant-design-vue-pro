@@ -1,0 +1,6 @@
+[
+  {
+    "name": "sample",
+    "code": "require('./sample');",
+    "description": "FIXME: replace with actual module"
+  }]

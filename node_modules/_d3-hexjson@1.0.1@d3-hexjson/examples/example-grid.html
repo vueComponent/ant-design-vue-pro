@@ -1,0 +1,90 @@
+<html>
+<head>
+<style>
+#vis {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	font-family: sans-serif;
+	font-size: 10pt;
+}
+</style>
+</head>
+<body>
+<div id="vis"></div>
+<script src="d3.min.js"></script>
+<script src="../build/d3-hexjson.min.js"></script>
+<script>
+
+d3.json("example-grid.hexjson", function(error, hexjson) {
+
+	// Set the size and margins of the svg
+	var margin = {top: 10, right: 10, bottom: 10, left: 10},
+		width = 500 - margin.left - margin.right,
+		height = 420 - margin.top - margin.bottom;
+
+	// Create the svg element
+	var svg = d3
+		.select("#vis")
+		.append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	// Create the grid hexes and render them
+	var grid = d3.getGridForHexJSON(hexjson);
+	var gridHexes = d3.renderHexJSON(grid, width, height);
+
+	// Render the data hexes
+	var hexes = d3.renderHexJSON(hexjson, width, height);
+
+	// Draw the background grid BEFORE the data
+
+	// Bind the grid hexes to g.grid elements of the svg and position them
+	var hexgrid = svg
+		.selectAll("g.grid")
+		.data(gridHexes)
+		.enter()
+		.append("g")
+		.attr("transform", function(hex) {
+			return "translate(" + hex.x + "," + hex.y + ")";
+		});
+
+	// Draw the polygons around each grid hex's centre
+	hexgrid
+		.append("polygon")
+		.attr("points", function(hex) {return hex.points;})
+		.attr("stroke", "#b0b0b0")
+		.attr("stroke-width", "1")
+		.attr("fill", "#f0f0f0");
+
+	// Bind the data hexes to g.data elements of the svg and position them
+	var hexmap = svg
+		.selectAll("g.data")
+		.data(hexes)
+		.enter()
+		.append("g")
+		.attr("transform", function(hex) {
+			return "translate(" + hex.x + "," + hex.y + ")";
+		});
+
+	// Draw the polygons around each data hex's centre
+	hexmap
+		.append("polygon")
+		.attr("points", function(hex) {return hex.points;})
+		.attr("stroke", "white")
+		.attr("stroke-width", "2")
+		.attr("fill", "#b0e8f0");
+
+	// Add the codes for the data hexes as labels
+	hexmap
+		.append("text")
+		.append("tspan")
+		.attr("text-anchor", "middle")
+		.text(function(hex) {return hex.key;});
+});
+
+</script>
+</body>
+</html>

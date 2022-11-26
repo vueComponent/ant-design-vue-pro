@@ -1,0 +1,232 @@
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-fullcalendar {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  border-top: 1px solid #d9d9d9;
+  outline: none;
+}
+.ant-select.ant-fullcalendar-year-select {
+  min-width: 90px;
+}
+.ant-select.ant-fullcalendar-year-select.ant-select-sm {
+  min-width: 70px;
+}
+.ant-select.ant-fullcalendar-month-select {
+  min-width: 80px;
+  margin-left: 8px;
+}
+.ant-select.ant-fullcalendar-month-select.ant-select-sm {
+  min-width: 70px;
+}
+.ant-fullcalendar-header {
+  padding: 11px 16px 11px 0;
+  text-align: right;
+}
+.ant-fullcalendar-header .ant-select-dropdown {
+  text-align: left;
+}
+.ant-fullcalendar-header .ant-radio-group {
+  margin-left: 8px;
+  text-align: left;
+}
+.ant-fullcalendar-header label.ant-radio-button {
+  height: 22px;
+  padding: 0 10px;
+  line-height: 20px;
+}
+.ant-fullcalendar-date-panel {
+  position: relative;
+  outline: none;
+}
+.ant-fullcalendar-calendar-body {
+  padding: 8px 12px;
+}
+.ant-fullcalendar table {
+  width: 100%;
+  max-width: 100%;
+  height: 256px;
+  background-color: transparent;
+  border-collapse: collapse;
+}
+.ant-fullcalendar table,
+.ant-fullcalendar th,
+.ant-fullcalendar td {
+  border: 0;
+}
+.ant-fullcalendar td {
+  position: relative;
+}
+.ant-fullcalendar-calendar-table {
+  margin-bottom: 0;
+  border-spacing: 0;
+}
+.ant-fullcalendar-column-header {
+  width: 33px;
+  padding: 0;
+  line-height: 18px;
+  text-align: center;
+}
+.ant-fullcalendar-column-header .ant-fullcalendar-column-header-inner {
+  display: block;
+  font-weight: normal;
+}
+.ant-fullcalendar-week-number-header .ant-fullcalendar-column-header-inner {
+  display: none;
+}
+.ant-fullcalendar-month,
+.ant-fullcalendar-date {
+  text-align: center;
+  transition: all 0.3s;
+}
+.ant-fullcalendar-value {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 24px;
+  background: transparent;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.ant-fullcalendar-value:hover {
+  background: #e6f7ff;
+  cursor: pointer;
+}
+.ant-fullcalendar-value:active {
+  color: #fff;
+  background: #1890ff;
+}
+.ant-fullcalendar-month-panel-cell .ant-fullcalendar-value {
+  width: 48px;
+}
+.ant-fullcalendar-today .ant-fullcalendar-value,
+.ant-fullcalendar-month-panel-current-cell .ant-fullcalendar-value {
+  box-shadow: 0 0 0 1px #1890ff inset;
+}
+.ant-fullcalendar-selected-day .ant-fullcalendar-value,
+.ant-fullcalendar-month-panel-selected-cell .ant-fullcalendar-value {
+  color: #fff;
+  background: #1890ff;
+}
+.ant-fullcalendar-disabled-cell-first-of-row .ant-fullcalendar-value {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.ant-fullcalendar-disabled-cell-last-of-row .ant-fullcalendar-value {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.ant-fullcalendar-last-month-cell .ant-fullcalendar-value,
+.ant-fullcalendar-next-month-btn-day .ant-fullcalendar-value {
+  color: rgba(0, 0, 0, 0.25);
+}
+.ant-fullcalendar-month-panel-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+}
+.ant-fullcalendar-content {
+  position: absolute;
+  bottom: -9px;
+  left: 0;
+  width: 100%;
+}
+.ant-fullcalendar-fullscreen {
+  border-top: 0;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-table {
+  table-layout: fixed;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-header .ant-radio-group {
+  margin-left: 16px;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-header label.ant-radio-button {
+  height: 32px;
+  line-height: 30px;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-month,
+.ant-fullcalendar-fullscreen .ant-fullcalendar-date {
+  display: block;
+  height: 116px;
+  margin: 0 4px;
+  padding: 4px 8px;
+  color: rgba(0, 0, 0, 0.65);
+  text-align: left;
+  border-top: 2px solid #e8e8e8;
+  transition: background 0.3s;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-month:hover,
+.ant-fullcalendar-fullscreen .ant-fullcalendar-date:hover {
+  background: #e6f7ff;
+  cursor: pointer;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-month:active,
+.ant-fullcalendar-fullscreen .ant-fullcalendar-date:active {
+  background: #bae7ff;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-column-header {
+  padding-right: 12px;
+  padding-bottom: 5px;
+  text-align: right;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-value {
+  width: auto;
+  text-align: right;
+  background: transparent;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-today .ant-fullcalendar-value {
+  color: rgba(0, 0, 0, 0.65);
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-month-panel-current-cell .ant-fullcalendar-month,
+.ant-fullcalendar-fullscreen .ant-fullcalendar-today .ant-fullcalendar-date {
+  background: transparent;
+  border-top-color: #1890ff;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-month-panel-current-cell .ant-fullcalendar-value,
+.ant-fullcalendar-fullscreen .ant-fullcalendar-today .ant-fullcalendar-value {
+  box-shadow: none;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-month-panel-selected-cell .ant-fullcalendar-month,
+.ant-fullcalendar-fullscreen .ant-fullcalendar-selected-day .ant-fullcalendar-date {
+  background: #e6f7ff;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-month-panel-selected-cell .ant-fullcalendar-value,
+.ant-fullcalendar-fullscreen .ant-fullcalendar-selected-day .ant-fullcalendar-value {
+  color: #1890ff;
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-last-month-cell .ant-fullcalendar-date,
+.ant-fullcalendar-fullscreen .ant-fullcalendar-next-month-btn-day .ant-fullcalendar-date {
+  color: rgba(0, 0, 0, 0.25);
+}
+.ant-fullcalendar-fullscreen .ant-fullcalendar-content {
+  position: static;
+  width: auto;
+  height: 88px;
+  overflow-y: auto;
+}
+.ant-fullcalendar-disabled-cell .ant-fullcalendar-date,
+.ant-fullcalendar-disabled-cell .ant-fullcalendar-date:hover {
+  cursor: not-allowed;
+}
+.ant-fullcalendar-disabled-cell:not(.ant-fullcalendar-today) .ant-fullcalendar-date,
+.ant-fullcalendar-disabled-cell:not(.ant-fullcalendar-today) .ant-fullcalendar-date:hover {
+  background: transparent;
+}
+.ant-fullcalendar-disabled-cell .ant-fullcalendar-value {
+  width: auto;
+  color: rgba(0, 0, 0, 0.25);
+  border-radius: 0;
+  cursor: not-allowed;
+}

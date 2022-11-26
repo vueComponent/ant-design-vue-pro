@@ -1,0 +1,23 @@
+{
+    "expr": true,
+    "nonbsp": true,
+    "trailing": true,
+    "indent": 4,
+    "quotmark": "double",
+    "eqeqeq": true,
+    "curly": true,
+    "forin": true,
+    "immed": true,
+    "newcap": true,
+    "noempty": true,
+    "nonew": true,
+    "undef": true,
+    "strict": true,
+    "globalstrict": true,
+    "browser": true,
+    "globals": {
+        "require": false,
+        "module": false,
+        "exports": true
+    }
+}

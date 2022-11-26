@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./assets/codemirror-5.29.0/codemirror-merged.min.css">
+  <link rel="stylesheet" href="./assets/bootstrap-4.0.0-beta/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/bootstrap-4.0.0-beta/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="./assets/index.css">
+  <title>Demos</title>
+</head>
+<body>
+<div id="code-list" style="display: none">
+  
+    <textarea id="code-ds-state"><!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="geometry" content="diagram">
+  <link rel="stylesheet" href="./assets/common.css">
+  <title>DataSet State</title>
+</head>
+
+<body>
+<div id="canvas1"></div>
+<div id="canvas2"></div>
+<script src="./assets/jquery-3.2.1.min.js"></script>
+<script src="./assets/data-set.min.js"></script>
+<script src="./assets/g2.min.js"></script>
+<script src="../build/g2-brush.js"></script>
+<script>
+  $.getJSON('./data/sp500.json', function(data) {
+    const ds = new DataSet({
+      state: {
+        dates: null
+      }
+    });
+    const totalDv = ds.createView().source(data);
+    const dv = ds.createView();
+    dv.source(data)
+      .transform({
+        type: 'filter',
+        callback: obj => {
+          if (ds.state.dates) {
+            return ds.state.dates.indexOf(obj.date) > -1;
+          }
+          return obj;
+        }
+      });
+    const chart1 = new G2.Chart({
+      container: 'canvas1',
+      forceFit: true,
+      height: window.innerHeight * (4 / 5),
+      animate: false,
+      padding: [ 50, 40, 50, 80 ]
+    });
+    chart1.source(dv, {
+      date: {
+        tickCount: 10,
+        type: 'time',
+        mask: 'MMM D YYYY'
+      },
+      price: {
+        min: totalDv.min('price'),
+        max: totalDv.max('price')
+      }
+    });
+    chart1.area()
+      .position('date*price')
+      .shape('smooth')
+      .opacity(0.85);
+    chart1.render();
+
+    // second chart
+    const chart2 = new G2.Chart({
+      container: 'canvas2',
+      forceFit: true,
+      height: window.innerHeight * (1.5 / 5),
+      padding: [ 5, 40, 60, 80 ]
+    });
+    chart2.source(data, {
+      date: {
+        tickCount: 10,
+        type: 'time',
+        mask: 'YYYY'
+      }
+    });
+    chart2.tooltip(false);
+    chart2.axis('price', false);
+    chart2.area()
+      .position('date*price')
+      .active(false)
+      .shape('smooth')
+      .opacity(0.85);
+    chart2.render();
+
+    new Brush({
+      canvas: chart2.get('canvas'),
+      chart: chart2,
+      type: 'X',
+      dragable: true,
+      onBrushmove(ev) {
+        const { date } = ev;
+        ds.setState('dates', date);
+      },
+      onDragmove(ev) {
+        const { date } = ev;
+        ds.setState('dates', date);
+      }
+    });
+  });
+</script>
+</body>
+
+</html>
+
+</textarea>
+  
+    <textarea id="code-filter-shape"><!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="geometry" content="diagram">
+  <link rel="stylesheet" href="./assets/common.css">
+  <title>Filter Shape</title>
+</head>
+
+<body>
+<div id="canvas"></div>
+<script src="./assets/jquery-3.2.1.min.js"></script>
+<script src="./assets/data-set.min.js"></script>
+<script src="./assets/g2.min.js"></script>
+<script src="../build/g2-brush.js"></script>
+<script>
+  $.getJSON('./data/cars.json', function(data) {
+    const chart = new G2.Chart({
+      container: 'canvas',
+      forceFit: true,
+      height: window.innerHeight
+    });
+
+    const view1 = chart.view({
+      end: {
+        x: 0.45,
+        y: 1
+      }
+    });
+    view1.source(data);
+    view1.tooltip(false);
+    view1.point().position('Horsepower*Miles_per_Gallon');
+
+    const view2 = chart.view({
+      start: {
+        x: 0.55,
+        y: 0
+      }
+    });
+
+    view2.source(data);
+    view2.point().position('Acceleration*Displacement');
+
+    chart.render();
+
+    new Brush({
+      canvas: chart.get('canvas'),
+      dragable: true,
+      onBrushstart(ev) {
+        const { x, y } = ev;
+        const views = chart.getViewsByPoint({ x, y });
+        if (views.length > 1) {
+          this.chart = views[1];
+          const coord = views[1].get('coord');
+          this.plot = {
+            start: coord.start,
+            end: coord.end
+          };
+          this.xScale = views[1].getXScale();
+          this.yScale = views[1].getYScales()[0];
+        }
+      },
+      onBrushmove(ev) {
+        const { data } = ev;
+        view2.filterShape(obj => {
+          return data.indexOf(obj) > -1;
+        });
+      },
+      onDragmove(ev) {
+        const { data } = ev;
+        view2.filterShape(obj => {
+          return data.indexOf(obj) > -1;
+        });
+      }
+    });
+  });
+</script>
+</body>
+
+</html>
+
+</textarea>
+  
+    <textarea id="code-highlight"><!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="geometry" content="diagram">
+  <link rel="stylesheet" href="./assets/common.css">
+  <title>Scatter Matrix</title>
+</head>
+
+<body>
+<div id="toolbar">
+  <button id="XY">矩形选择</button>
+  <button id="X">横向选择</button>
+  <button id="Y">纵向选择</button>
+  <button id="POLYGON">圈选</button>
+  <button id="clear">清除选择</button>
+</div>
+<div id="canvas"></div>
+
+<script src="./assets/jquery-3.2.1.min.js"></script>
+<script src="./assets/data-set.min.js"></script>
+<script src="./assets/g2.min.js"></script>
+<script src="../build/g2-brush.js"></script>
+<script>
+  const Util = G2.Util;
+  $.getJSON('./data/iris.json', function(data) {
+    const chart = new G2.Chart({
+      container: 'canvas',
+      forceFit: true,
+      height: window.innerHeight
+    });
+
+    chart.source(data, {
+      Species: {
+        sync: true
+      }
+    });
+    chart.legend({
+      hoverable: false
+    });
+    chart.facet('matrix', {
+      fields: [ 'SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth' ],
+      eachView(view, facet) {
+        view.axis(facet.colField, {
+          label: null,
+          line: {
+            lineWidth: 1,
+            stroke: '#000'
+          },
+          tickLine: {
+            lineWidth: 1,
+            stroke: '#000',
+            length: 4
+          }
+        });
+        view.axis(facet.rowField, {
+          label: null,
+          line: {
+            lineWidth: 1,
+            stroke: '#000'
+          },
+          tickLine: {
+            lineWidth: 1,
+            stroke: '#000',
+            length: 4
+          }
+        });
+        if (facet.rowIndex === facet.colIndex) {
+          view.point()
+            .position(facet.colField + '*' + facet.colField)
+              .color('Species', [ '#880000', '#008800', '#000088' ])
+              .opacity(0.5)
+              .shape('circle')
+              .size(3)
+              .active(false);
+        } else {
+          view.point()
+            .position([ facet.colField, facet.rowField ])
+              .color('Species', [ '#880000', '#008800', '#000088' ])
+              .opacity(0.5)
+              .shape('circle')
+              .size(3)
+              .active(false);
+        }
+        if ([ 0, 1, 2, 3 ].indexOf(facet.rowIndex) > -1 && facet.colIndex === 0) {
+          view.guide().text({
+            position: [ 3.7, 'median' ],
+            content: facet.rowValue,
+            style: {
+              rotate: -90,
+              fontSize: 12,
+              fill: '#999',
+              textAlign: 'center'
+            }
+          });
+        }
+        if ([ 0, 1, 2, 3 ].indexOf(facet.colIndex) > -1 && facet.rowIndex === 3) {
+          view.guide().text({
+            position: [ 'median', 'min' ],
+            content: facet.colValue,
+            style: {
+              fontSize: 12,
+              fill: '#999',
+              textAlign: 'center'
+            },
+            offsetY: 20
+          });
+        }
+      }
+    });
+    chart.render();
+
+    let brush;
+    function setBrushType(type) {
+      if (!brush) {
+        brush = new Brush({
+          canvas: chart.get('canvas'),
+          dragable: true,
+          type,
+          onBrushstart(ev) {
+            chart.hideTooltip();
+            const { x, y } = ev;
+            const views = chart.getViewsByPoint({ x, y });
+            if (views.length > 1) {
+              this.chart = views[1];
+              const coord = views[1].get('coord');
+              this.plot = {
+                start: coord.start,
+                end: coord.end
+              };
+              this.xScale = views[1].getXScale();
+              this.yScale = views[1].getYScales()[0];
+            }
+          },
+          onBrushmove(ev) {
+            chart.hideTooltip();
+
+            const { data } = ev;
+            chart.eachShape((record, shape) => {
+              if (!shape.get('_originAttrs')) {
+                shape.set('_originAttrs', Util.cloneDeep(shape.__attrs)); // 缓存原来的属性
+              }
+              if (data.indexOf(record) === -1) {
+                shape.attr('fill', '#ccc');
+              } else {
+                const originAttrs = shape.get('_originAttrs');
+                shape.__attrs = Util.cloneDeep(originAttrs);
+              }
+            });
+          },
+          onDragmove(ev) {
+            chart.hideTooltip();
+
+            const { data } = ev;
+            chart.eachShape((record, shape) => {
+              if (!shape.get('_originAttrs')) {
+                shape.set('_originAttrs', Util.cloneDeep(shape.__attrs)); // 缓存原来的属性
+              }
+              if (data.indexOf(record) === -1) {
+                shape.attr('fill', '#ccc');
+              } else {
+                const originAttrs = shape.get('_originAttrs');
+                shape.__attrs = Util.cloneDeep(originAttrs);
+              }
+            });
+          }
+        });
+      } else {
+        if (type === 'clear') {
+          brush.container.clear();
+          // brush.canvas.draw();
+        } else {
+          brush.setType(type);
+
+        }
+      }
+    }
+
+    $('#XY').click(() => {
+      setBrushType('XY');
+    });
+    $('#Y').click(() => {
+      setBrushType('Y');
+    });
+    $('#X').click(() => {
+      setBrushType('X');
+    });
+    $('#POLYGON').click(() => {
+      setBrushType('POLYGON');
+    });
+    $('#clear').click(() => {
+      setBrushType('clear');
+
+      chart.eachShape((record, shape) => {
+        if (shape.get('_originAttrs')) {
+          const originAttrs = shape.get('_originAttrs');
+          shape.__attrs = Util.cloneDeep(originAttrs);
+        }
+      });
+    });
+  });
+</script>
+</body>
+
+</html>
+
+</textarea>
+  
+    <textarea id="code-interval"><!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="geometry" content="diagram">
+  <link rel="stylesheet" href="./assets/common.css">
+  <title>Interval Chart(X)</title>
+</head>
+
+<body>
+<div id="canvas"></div>
+<div style="width: 100%;text-align: center;">
+</div>
+<script src="./assets/jquery-3.2.1.min.js"></script>
+<script src="./assets/data-set.min.js"></script>
+<script src="./assets/g2.min.js"></script>
+<script src="../build/g2-brush.js"></script>
+<script>
+  $.getJSON('./data/top2000.json', data => {
+    const ds = new DataSet();
+    const dv = ds.createView('test')
+      .source(data)
+      .transform({
+        as: [ 'count' ],
+        groupBy: [ 'release' ],
+        operations: [ 'count' ],
+        type: 'aggregate'
+      });
+
+    const chart = new G2.Chart({
+      container: 'canvas',
+      forceFit: true,
+      height: window.innerHeight
+    });
+    chart.source(dv);
+    chart.scale({
+      count: {
+        alias: 'top2000 唱片总量'
+      },
+      release: {
+        tickInterval: 5,
+        alias: '唱片发行年份'
+      }
+    });
+    chart.interval()
+      .position('release*count')
+      .color('#e50000');
+
+    chart.render();
+
+    new Brush({
+      canvas: chart.get('canvas'),
+      chart,
+      type: 'X',
+      onBrushstart() {
+        chart.hideTooltip();
+      },
+      onBrushmove() {
+        chart.hideTooltip();
+      }
+    });
+    chart.on('plotdblclick', () => {
+      chart.get('options').filters = {};
+      chart.repaint();
+    });
+  });
+</script>
+</body>
+
+</html>
+
+</textarea>
+  
+    <textarea id="code-line"><!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="geometry" content="diagram">
+  <link rel="stylesheet" href="./assets/common.css">
+  <title>Line Chart(XY)</title>
+</head>
+
+<body>
+<div id="canvas"></div>
+<script src="./assets/jquery-3.2.1.min.js"></script>
+<script src="./assets/data-set.min.js"></script>
+<script src="./assets/g2.min.js"></script>
+<script src="../build/g2-brush.js"></script>
+<script>
+  $.getJSON('./data/avg-temp.json', function(data) {
+    const { DataView } = DataSet;
+    const dv = new DataView();
+    dv.source(data)
+      .transform({
+        type: 'fold',
+        key: 'city',
+        value: 'value',
+        fields: [ 'New York', 'San Francisco', 'Austin' ]
+      });
+    const chart = new G2.Chart({
+      id: 'canvas',
+      forceFit: true,
+      height: 400,
+      padding: [ 60, 30, 30 ]
+    });
+    chart.source(dv, {
+      date: {
+        type: 'time'
+      },
+      value: {
+        alias: 'Temperature, ºF'
+      }
+    });
+    chart.legend({
+      position: 'top'
+    });
+    chart.axis('date', {
+      line: {
+        stroke: '#000'
+      },
+      tickLine: {
+        stroke: '#000',
+        value: 6 // 刻度线长度
+      },
+      label: {
+        textStyle: {
+          textAlign: 'start'
+        }
+      }
+    });
+    chart.axis('value', {
+      tickLine: {
+        stroke: '#000',
+        value: 6 // 刻度线长度
+      },
+      label: {
+        textStyle: {
+          fill: '#000'
+        }
+      },
+      line: {
+        stroke: '#000'
+      },
+      grid: null
+    });
+    chart.line()
+      .position('date*value')
+      .color('city')
+      .shape('spline')
+      .size(2);
+    chart.render();
+
+    new Brush({
+      canvas: chart.get('canvas'),
+      style: {
+        fill: '#ccc',
+        fillOpacity: 0.4
+      },
+      chart
+    });
+    chart.on('plotdblclick', () => {
+      chart.get('options').filters = {};
+      chart.repaint();
+    });
+  });
+</script>
+</body>
+</html>
+
+</textarea>
+  
+    <textarea id="code-polygon"><!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="geometry" content="diagram">
+  <link rel="stylesheet" href="./assets/common.css">
+  <title>Polygon brush</title>
+</head>
+
+<body>
+<div id="canvas"></div>
+<script src="./assets/jquery-3.2.1.min.js"></script>
+<script src="./assets/data-set.min.js"></script>
+<script src="./assets/g2.min.js"></script>
+<script src="../build/g2-brush.js"></script>
+<script>
+  const data = [[ 0, 0, 10 ], [ 0, 1, 19 ], [ 0, 2, 8 ], [ 0, 3, 24 ], [ 0, 4, 67 ], [ 1, 0, 92 ], [ 1, 1, 58 ], [ 1, 2, 78 ], [ 1, 3, 117 ], [ 1, 4, 48 ], [ 2, 0, 35 ], [ 2, 1, 15 ], [ 2, 2, 123 ], [ 2, 3, 64 ], [ 2, 4, 52 ], [ 3, 0, 72 ], [ 3, 1, 132 ], [ 3, 2, 114 ], [ 3, 3, 19 ], [ 3, 4, 16 ], [ 4, 0, 38 ], [ 4, 1, 5 ], [ 4, 2, 8 ], [ 4, 3, 117 ], [ 4, 4, 115 ], [ 5, 0, 88 ], [ 5, 1, 32 ], [ 5, 2, 12 ], [ 5, 3, 6 ], [ 5, 4, 120 ], [ 6, 0, 13 ], [ 6, 1, 44 ], [ 6, 2, 88 ], [ 6, 3, 98 ], [ 6, 4, 96 ], [ 7, 0, 31 ], [ 7, 1, 1 ], [ 7, 2, 82 ], [ 7, 3, 32 ], [ 7, 4, 30 ], [ 8, 0, 85 ], [ 8, 1, 97 ], [ 8, 2, 123 ], [ 8, 3, 64 ], [ 8, 4, 84 ], [ 9, 0, 47 ], [ 9, 1, 114 ], [ 9, 2, 31 ], [ 9, 3, 48 ], [ 9, 4, 91 ]];
+  const source = [];
+  for (let i = 0; i < data.length; i++) {
+    const item = data[i];
+    const obj = {};
+    obj.name = item[0];
+    obj.day = item[1];
+    obj.sales = item[2];
+    source.push(obj);
+  }
+  const chart = new G2.Chart({
+    id: 'canvas',
+    forceFit: true,
+    height: window.innerHeight,
+    padding: 100
+  });
+  chart.source(source, {
+    name: {
+      type: 'cat',
+      values: [ 'Alexander', 'Marie', 'Maximilian', 'Sophia', 'Lukas', 'Maria', 'Leon', 'Anna', 'Tim', 'Laura' ]
+    },
+    day: {
+      type: 'cat',
+      values: [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' ]
+    }
+  });
+  chart.axis('name', {
+    tickLine: null,
+    label: {
+      autoRotate: false,
+      offset: 8,
+      textStyle: {
+        rotate: 90,
+        textAlign: 'start'
+      }
+    },
+    grid: {
+      align: 'center',
+      lineStyle: {
+        lineWidth: 1,
+        lineDash: null,
+        stroke: '#f0f0f0'
+      }
+    }
+  });
+  chart.axis('day', {
+    title: null,
+    grid: {
+      align: 'center',
+      lineStyle: {
+        lineWidth: 1,
+        lineDash: null,
+        stroke: '#f0f0f0'
+      },
+      hideFirstLine: false
+    }
+  });
+  chart.legend(false);
+  chart.polygon()
+    .position('name*day')
+    .color('sales', '#BAE7FF-#1890FF-#0050B3')
+    .label('sales', {
+      offset: -2,
+      textStyle: {
+        fill: '#fff',
+        shadowBlur: 2,
+        shadowColor: 'rgba(0, 0, 0, .45)'
+      }
+    })
+    .style({
+      lineWidth: 1,
+      stroke: '#fff'
+    });
+  chart.render();
+
+  new Brush({
+    chart,
+    canvas: chart.get('canvas'),
+    style: {
+      lineWidth: 1,
+      stroke: '#999',
+      fill: '#999',
+      fillOpacity: 0.3
+    },
+    onBrushmove() {
+      chart.hideTooltip();
+    }
+  });
+  chart.on('plotdblclick', () => {
+    chart.get('options').filters = {};
+    chart.repaint();
+  });
+</script>
+</body>
+
+</html>
+
+</textarea>
+  
+</div>
+<div class="main">
+  <div class="container filter">
+    <input id="query" class="form-control" type="text" placeholder="search">
+  </div>
+  <div class="row demo-thumbnails">
+    
+      <div class="demo-thumbnail col-md-4 col-sm-6 col-xs-12 text-center" data-basename="ds-state">
+        <div class="card">
+          <a href="#/ds-state" class="thumbnail-container">
+            <img src="./assets/screenshots/ds-state.png" alt="">
+          </a>
+          <div class="card-body">
+            <h6>ds-state</h6>
+          </div>
+        </div>
+      </div>
+    
+      <div class="demo-thumbnail col-md-4 col-sm-6 col-xs-12 text-center" data-basename="filter-shape">
+        <div class="card">
+          <a href="#/filter-shape" class="thumbnail-container">
+            <img src="./assets/screenshots/filter-shape.png" alt="">
+          </a>
+          <div class="card-body">
+            <h6>filter-shape</h6>
+          </div>
+        </div>
+      </div>
+    
+      <div class="demo-thumbnail col-md-4 col-sm-6 col-xs-12 text-center" data-basename="highlight">
+        <div class="card">
+          <a href="#/highlight" class="thumbnail-container">
+            <img src="./assets/screenshots/highlight.png" alt="">
+          </a>
+          <div class="card-body">
+            <h6>highlight</h6>
+          </div>
+        </div>
+      </div>
+    
+      <div class="demo-thumbnail col-md-4 col-sm-6 col-xs-12 text-center" data-basename="interval">
+        <div class="card">
+          <a href="#/interval" class="thumbnail-container">
+            <img src="./assets/screenshots/interval.png" alt="">
+          </a>
+          <div class="card-body">
+            <h6>interval</h6>
+          </div>
+        </div>
+      </div>
+    
+      <div class="demo-thumbnail col-md-4 col-sm-6 col-xs-12 text-center" data-basename="line">
+        <div class="card">
+          <a href="#/line" class="thumbnail-container">
+            <img src="./assets/screenshots/line.png" alt="">
+          </a>
+          <div class="card-body">
+            <h6>line</h6>
+          </div>
+        </div>
+      </div>
+    
+      <div class="demo-thumbnail col-md-4 col-sm-6 col-xs-12 text-center" data-basename="polygon">
+        <div class="card">
+          <a href="#/polygon" class="thumbnail-container">
+            <img src="./assets/screenshots/polygon.png" alt="">
+          </a>
+          <div class="card-body">
+            <h6>polygon</h6>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+  <div id="doc-container" style="display:none;">
+    <div class="code-panel" id="code-panel">
+      <div class="code-banner">
+        <a class="btn btn-light" href="#">back</a>
+        <button id="execute" class="btn btn-primary">execute</button>
+        <button id="copy-code" class="btn btn-light">copy</button>
+      </div>
+      <div class="code-editor">
+        <textarea name="code" id="code"></textarea>
+      </div>
+    </div>
+    <div id="resize-handler"></div>
+    <div id="chart-panel" class="preview"></div>
+  </div>
+</div>
+<script src="./assets/codemirror-5.29.0/codemirror-merged.min.js"></script>
+<script src="./assets/lodash-4.17.4.min.js"></script>
+<script src="./assets/jquery-3.2.1.min.js"></script>
+<script src="./assets/jquery.resizable-0.20.0.js"></script>
+<script src="./assets/popper.js-1.12.5/popper.min.js"></script>
+<script src="./assets/bootstrap-4.0.0-beta/bootstrap.min.js"></script>
+<script src="./assets/clipboard-1.7.1.min.js"></script>
+<script src="./assets/routie-0.3.2.min.js"></script>
+<script src="./assets/index.js"></script>
+</body>
+</html>

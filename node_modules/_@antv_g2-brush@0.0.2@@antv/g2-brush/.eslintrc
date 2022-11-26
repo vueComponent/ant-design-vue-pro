@@ -1,0 +1,34 @@
+{
+  "extends": [
+    "egg"
+  ],
+  "globals": {
+    "$": true,
+    "DataSet": true,
+    "G2": true,
+    "Brush": true,
+    "_": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": [
+    "html"
+  ],
+  "rules": {
+    "no-bitwise": [
+      0
+    ],
+    "experimentalDecorators": [
+      0
+    ],
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
+    "linebreak-style": [
+      0
+    ]
+  }
+}

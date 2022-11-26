@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        #aligner {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #container {
+            width: 50%;
+            height: 50%;
+            background: #FF9800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        #dimensions {
+            font-size: 3em;
+            color: #FFF;
+        }
+
+        #dim-x, #dim-y {
+            color: #263248;
+        }
+
+        #watched {
+            box-sizing: border-box;
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            height: 80%;
+            width: 80%;
+            padding: 3em;
+            background: red;
+        }
+
+    </style>
+</head>
+<body>
+<div id="aligner">
+    <div id="container">
+        <div id="dimensions">
+            <span id="dim-x"></span>x<span id="dim-y"></span>
+        </div>
+    </div>
+</div>
+<div id="watched"></div>
+
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../build/element-resize-detector.js"></script>
+<script>
+    $(function onDomReady() {
+//            function updateDimensions(element) {
+//                var style = getComputedStyle(element);
+//                var width = parseInt(style.width);
+//                var height = parseInt(style.height);
+//                $("#dim-x").html(width);
+//                $("#dim-y").html(height);
+//            }
+//
+//            var container = $("#container");
+//
+//            var erd = elementResizeDetectorMaker({
+//                strategy: "scroll",
+//                callOnAdd: true,
+//                debug: true
+//            });
+//            erd.listenTo(container, updateDimensions);
+//
+//            container.click(function onContainerClick() {
+//                function rand(min, max) {
+//                    return Math.floor(Math.random() * (max - min + 1)) + min;
+//                }
+//
+//                var width = rand(30, 90);
+//                var height = rand(30, 90);
+//
+//                $(this).css({
+//                    width: width + "%",
+//                    height: height + "%"
+//                });
+//            });
+        var erd = elementResizeDetectorMaker({
+            strategy: "scroll",
+            debug: true
+        });
+
+        var el = document.getElementById("watched");
+
+        console.log(el);
+
+        erd.listenTo(el, function (element) {
+            var width = element.offsetWidth;
+            var height = element.offsetHeight;
+        });
+    });
+</script>
+</body>
+</html>

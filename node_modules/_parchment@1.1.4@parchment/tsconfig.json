@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "declaration": true,
+    "strict": true
+  },
+  "exclude": ["node_modules", "test"]
+}

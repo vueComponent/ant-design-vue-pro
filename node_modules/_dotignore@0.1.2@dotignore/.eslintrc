@@ -1,0 +1,26 @@
+{
+  "root": true,
+
+  "extends": "@ljharb",
+
+  "rules": {
+    "func-name-matching": [2, "always"],
+    "func-style": 1,
+    "indent": [2, 2],
+    "max-statements": 0,
+    "no-loop-func": 1,
+    "no-param-reassign": 1,
+  },
+
+  "overrides": [
+    {
+      "files": "bin/**",
+      "env": {
+        "node": true,
+      },
+      "rules": {
+        "no-console": 0,
+      },
+    },
+  ],
+}

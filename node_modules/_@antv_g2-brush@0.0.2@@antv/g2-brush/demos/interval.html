@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="geometry" content="diagram">
+  <link rel="stylesheet" href="./assets/common.css">
+  <title>Interval Chart(X)</title>
+</head>
+
+<body>
+<div id="canvas"></div>
+<div style="width: 100%;text-align: center;">
+</div>
+<script src="./assets/jquery-3.2.1.min.js"></script>
+<script src="./assets/data-set.min.js"></script>
+<script src="./assets/g2.min.js"></script>
+<script src="../build/g2-brush.js"></script>
+<script>
+  $.getJSON('./data/top2000.json', data => {
+    const ds = new DataSet();
+    const dv = ds.createView('test')
+      .source(data)
+      .transform({
+        as: [ 'count' ],
+        groupBy: [ 'release' ],
+        operations: [ 'count' ],
+        type: 'aggregate'
+      });
+
+    const chart = new G2.Chart({
+      container: 'canvas',
+      forceFit: true,
+      height: window.innerHeight
+    });
+    chart.source(dv);
+    chart.scale({
+      count: {
+        alias: 'top2000 唱片总量'
+      },
+      release: {
+        tickInterval: 5,
+        alias: '唱片发行年份'
+      }
+    });
+    chart.interval()
+      .position('release*count')
+      .color('#e50000');
+
+    chart.render();
+
+    new Brush({
+      canvas: chart.get('canvas'),
+      chart,
+      type: 'X',
+      onBrushstart() {
+        chart.hideTooltip();
+      },
+      onBrushmove() {
+        chart.hideTooltip();
+      }
+    });
+    chart.on('plotdblclick', () => {
+      chart.get('options').filters = {};
+      chart.repaint();
+    });
+  });
+</script>
+</body>
+
+</html>
+

@@ -1,0 +1,22 @@
+hoistPattern:
+  - '*'
+included:
+  dependencies: true
+  devDependencies: true
+  optionalDependencies: true
+injectedDeps: {}
+layoutVersion: 5
+nodeLinker: hoisted
+packageManager: pnpm@7.16.1
+pendingBuilds:
+  - /node-gyp/9.3.0
+  - /encoding/0.1.13
+prunedAt: Sun, 20 Nov 2022 20:19:26 GMT
+publicHoistPattern:
+  - '*eslint*'
+  - '*prettier*'
+registries:
+  default: https://registry.npmjs.org/
+skipped: []
+storeDir: /home/runner/.local/share/pnpm/store/v3
+virtualStoreDir: .pnpm

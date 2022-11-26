@@ -1,0 +1,267 @@
+[
+  {
+    "name": "api/geo",
+    "code": "require('./api/geo');",
+    "description": "Util APIs for GeoJSON source DataView"
+  },
+  {
+    "name": "api/hierarchy",
+    "code": "require('./api/hierarchy');",
+    "description": "Util APIs for Hierarchical DataView (Tree)"
+  },
+  {
+    "name": "api/partition",
+    "code": "require('./api/partition');",
+    "description": "Util APIs for handling partitions (groups, etc.)"
+  },
+  {
+    "name": "api/statistics",
+    "code": "require('./api/statistics');",
+    "description": "Util APIs for statistics (sum, min, etc.)"
+  },
+  {
+    "name": "connector/default",
+    "code": "require('./connector/default');",
+    "description": "Connector for table rows (an array of objects), the default connector"
+  },
+  {
+    "name": "connector/dsv",
+    "code": "require('./connector/dsv');",
+    "description": "Connector for loading dsv (csv / tsv) string"
+  },
+  {
+    "name": "connector/geo-graticule",
+    "code": "require('./connector/geo-graticule');",
+    "description": "Connector for creating geo graticules"
+  },
+  {
+    "name": "connector/geojson",
+    "code": "require('./connector/geojson');",
+    "description": "Connector for loading GeoJSON"
+  },
+  {
+    "name": "connector/graph",
+    "code": "require('./connector/graph');",
+    "description": "Connector for loading graph data"
+  },
+  {
+    "name": "connector/hexjson",
+    "code": "require('./connector/hexjson');",
+    "description": "Connector for loading HexJSON"
+  },
+  {
+    "name": "connector/hierarchy",
+    "code": "require('./connector/hierarchy');",
+    "description": "Connector for loading hierarchical data (tree)"
+  },
+  {
+    "name": "connector/topojson",
+    "code": "require('./connector/topojson');",
+    "description": "Connector for loading TopoJSON"
+  },
+  {
+    "name": "transform/default",
+    "code": "require('./transform/default');",
+    "description": "Default transform, it does nothing"
+  },
+  {
+    "name": "transform/filter",
+    "code": "require('./transform/filter');",
+    "description": "Filter transform, for filtering rows"
+  },
+  {
+    "name": "transform/fold",
+    "code": "require('./transform/fold');",
+    "description": "Fold transform, for folding fields"
+  },
+  {
+    "name": "transform/map",
+    "code": "require('./transform/map');",
+    "description": "Map transform, for mapping rows"
+  },
+  {
+    "name": "transform/partition",
+    "code": "require('./transform/partition');",
+    "description": "Partition transform, for grouping rows"
+  },
+  {
+    "name": "transform/percent",
+    "code": "require('./transform/percent');",
+    "description": "Percent transform, for calculating percent"
+  },
+  {
+    "name": "transform/pick",
+    "code": "require('./transform/pick');",
+    "description": "Pick transform, for picking fields"
+  },
+  {
+    "name": "transform/proportion",
+    "code": "require('./transform/proportion');",
+    "description": "Proportion transform, for calculating proportion (percent by count)"
+  },
+  {
+    "name": "transform/rename",
+    "code": "require('./transform/rename');",
+    "description": "Rename transform, for renaming fields"
+  },
+  {
+    "name": "transform/reverse",
+    "code": "require('./transform/reverse');",
+    "description": "Reverse transform, for reversing rows"
+  },
+  {
+    "name": "transform/sort",
+    "code": "require('./transform/sort');",
+    "description": "Sort transform, for sorting rows"
+  },
+  {
+    "name": "transform/sort-by",
+    "code": "require('./transform/sort-by');",
+    "description": "Sort transform, for sorting rows by fields"
+  },
+  {
+    "name": "transform/subset",
+    "code": "require('./transform/subset');",
+    "description": "Subset transform, for getting a subset of data (fields and rows)"
+  },
+  {
+    "name": "transform/fill-rows",
+    "code": "require('./transform/fill-rows');",
+    "description": "Fill rows transform, for completing rows"
+  },
+  {
+    "name": "transform/impute",
+    "code": "require('./transform/impute');",
+    "description": "Impute transform, for completing fields"
+  },
+  {
+    "name": "transform/aggregate",
+    "code": "require('./transform/aggregate');",
+    "description": "Aggregate transform, for statistic aggregation (sum, min, etc.)"
+  },
+  {
+    "name": "transform/regression",
+    "code": "require('./transform/regression');",
+    "description": "Regression transform, generating regression curve for two fields"
+  },
+  {
+    "name": "transform/kde",
+    "code": "require('./transform/kde');",
+    "description": "KDE transform, kernel density estimation, can be used to draw violin plot"
+  },
+  {
+    "name": "transform/bin/hexagon",
+    "code": "require('./transform/bin/hexagon');",
+    "description": "Hexagon bin transform, hexagon binning for two fields"
+  },
+  {
+    "name": "transform/bin/histogram",
+    "code": "require('./transform/bin/histogram');",
+    "description": "Histogram bin transform, histogram binning for one field"
+  },
+  {
+    "name": "transform/bin/quantile",
+    "code": "require('./transform/bin/quantile');",
+    "description": "Quantile bin transform, quantile binning for one field"
+  },
+  {
+    "name": "transform/bin/rectangle",
+    "code": "require('./transform/bin/rectangle');",
+    "description": "Rectangle bin transform, rectangle binning for two fields"
+  },
+  {
+    "name": "transform/geo/centroid",
+    "code": "require('./transform/geo/centroid');",
+    "description": "Geo centroid transform, get coordinates by name"
+  },
+  {
+    "name": "transform/geo/projection",
+    "code": "require('./transform/geo/projection');",
+    "description": "Geo projection transform, performing Geo projections"
+  },
+  {
+    "name": "transform/geo/region",
+    "code": "require('./transform/geo/region');",
+    "description": "Geo region transform, get region (path) by name"
+  },
+  {
+    "name": "transform/diagram/arc",
+    "code": "require('./transform/diagram/arc');",
+    "description": "Arc diagram transform, get layouts for Arc Diagram and Chord Diagram"
+  },
+  {
+    "name": "transform/diagram/dagre",
+    "code": "require('./transform/diagram/dagre');",
+    "description": "Dagre transform, get hierarchical layout for DAG"
+  },
+  {
+    "name": "transform/diagram/sankey",
+    "code": "require('./transform/diagram/sankey');",
+    "description": "Sankey diagram transform, get layout for Sankey Diagram"
+  },
+  {
+    "name": "transform/diagram/voronoi",
+    "code": "require('./transform/diagram/voronoi');",
+    "description": "Voronoi diagram transform, get layout for Voronoi Diagram"
+  },
+  {
+    "name": "transform/hierarchy/cluster",
+    "code": "require('./transform/hierarchy/cluster');",
+    "description": "Cluster transform, cluster layout for hierarchical data (tree)"
+  },
+  {
+    "name": "transform/hierarchy/compact-box",
+    "code": "require('./transform/hierarchy/compact-box');",
+    "description": "Compact Box transform, Compact Box (non layered tidy tree) layout for hierarchical data (tree)"
+  },
+  {
+    "name": "transform/hierarchy/dendrogram",
+    "code": "require('./transform/hierarchy/dendrogram');",
+    "description": "Dendrogram transform, dendrogram layout for hierarchical data (tree)"
+  },
+  {
+    "name": "transform/hierarchy/indented",
+    "code": "require('./transform/hierarchy/indented');",
+    "description": "Indented transform, indented tree layout for hierarchical data (tree)"
+  },
+  {
+    "name": "transform/hierarchy/pack",
+    "code": "require('./transform/hierarchy/pack');",
+    "description": "Pack transform, circle packing layout for hierarchical data (tree)"
+  },
+  {
+    "name": "transform/hierarchy/partition",
+    "code": "require('./transform/hierarchy/partition');",
+    "description": "Partition tree transform, partition layout for hierarchical data (tree), aka frame diagram"
+  },
+  {
+    "name": "transform/hierarchy/tree",
+    "code": "require('./transform/hierarchy/tree');",
+    "description": "Tree transform, d3 tree layout for hierarchical data (tree)"
+  },
+  {
+    "name": "transform/hierarchy/treemap",
+    "code": "require('./transform/hierarchy/treemap');",
+    "description": "Treemap transform, d3 treemap layout for hierarchical data (tree)"
+  },
+  {
+    "name": "transform/tag-cloud",
+    "code": "require('./transform/tag-cloud');",
+    "description": "Tag cloud transform, for generating tag clouds"
+  },
+  {
+    "name": "transform/waffle",
+    "code": "require('./transform/waffle');",
+    "description": "Waffle transform, for waffle diagram"
+  },
+  {
+    "name": "kernel-smooth/density",
+    "code": "require('./transform/kernel-smooth/density');",
+    "description": "Density transform, for statistical kernel smooth density distribution, two fields"
+  },
+  {
+    "name": "kernel-smooth/regression",
+    "code": "require('./transform/kernel-smooth/regression');",
+    "description": "Regression transform, for statistical kernel smooth regression, one or two fields"
+  }
+]

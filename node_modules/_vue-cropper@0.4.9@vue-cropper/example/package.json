@@ -1,0 +1,32 @@
+{
+  "name": "vue-cropper-example",
+  "description": "A Vue.js project",
+  "author": "goodboy <463618622@qq.com>",
+  "private": true,
+  "scripts": {
+    "dev": "webpack-dev-server --inline --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
+  "dependencies": {
+    "exif-js": "^2.3.0",
+    "vue": "^2.5.17",
+    "vue-cropper": "^0.4.9",
+    "vue-loader": "^14.2.2",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0.0",
+    "babel-loader": "^6.0.0",
+    "babel-preset-es2015": "^6.13.2",
+    "cross-env": "^1.0.6",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.4",
+    "webpack": "^2.3.2",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "browserify": {
+    "transform": [
+      "vueify"
+    ]
+  }
+}

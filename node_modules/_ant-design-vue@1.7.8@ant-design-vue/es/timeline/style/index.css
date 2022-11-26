@@ -1,0 +1,139 @@
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-timeline {
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  font-feature-settings: 'tnum';
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ant-timeline-item {
+  position: relative;
+  margin: 0;
+  padding: 0 0 20px;
+  font-size: 14px;
+  list-style: none;
+}
+.ant-timeline-item-tail {
+  position: absolute;
+  top: 10px;
+  left: 4px;
+  height: calc(100% - 10px);
+  border-left: 2px solid #e8e8e8;
+}
+.ant-timeline-item-pending .ant-timeline-item-head {
+  font-size: 12px;
+  background-color: transparent;
+}
+.ant-timeline-item-pending .ant-timeline-item-tail {
+  display: none;
+}
+.ant-timeline-item-head {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border: 2px solid transparent;
+  border-radius: 100px;
+}
+.ant-timeline-item-head-blue {
+  color: #1890ff;
+  border-color: #1890ff;
+}
+.ant-timeline-item-head-red {
+  color: #f5222d;
+  border-color: #f5222d;
+}
+.ant-timeline-item-head-green {
+  color: #52c41a;
+  border-color: #52c41a;
+}
+.ant-timeline-item-head-gray {
+  color: rgba(0, 0, 0, 0.25);
+  border-color: rgba(0, 0, 0, 0.25);
+}
+.ant-timeline-item-head-custom {
+  position: absolute;
+  top: 5.5px;
+  left: 5px;
+  width: auto;
+  height: auto;
+  margin-top: 0;
+  padding: 3px 1px;
+  line-height: 1;
+  text-align: center;
+  border: 0;
+  border-radius: 0;
+  transform: translate(-50%, -50%);
+}
+.ant-timeline-item-content {
+  position: relative;
+  top: -6px;
+  margin: 0 0 0 18px;
+  word-break: break-word;
+}
+.ant-timeline-item-last > .ant-timeline-item-tail {
+  display: none;
+}
+.ant-timeline-item-last > .ant-timeline-item-content {
+  min-height: 48px;
+}
+.ant-timeline.ant-timeline-alternate .ant-timeline-item-tail,
+.ant-timeline.ant-timeline-right .ant-timeline-item-tail,
+.ant-timeline.ant-timeline-alternate .ant-timeline-item-head,
+.ant-timeline.ant-timeline-right .ant-timeline-item-head,
+.ant-timeline.ant-timeline-alternate .ant-timeline-item-head-custom,
+.ant-timeline.ant-timeline-right .ant-timeline-item-head-custom {
+  left: 50%;
+}
+.ant-timeline.ant-timeline-alternate .ant-timeline-item-head,
+.ant-timeline.ant-timeline-right .ant-timeline-item-head {
+  margin-left: -4px;
+}
+.ant-timeline.ant-timeline-alternate .ant-timeline-item-head-custom,
+.ant-timeline.ant-timeline-right .ant-timeline-item-head-custom {
+  margin-left: 1px;
+}
+.ant-timeline.ant-timeline-alternate .ant-timeline-item-left .ant-timeline-item-content,
+.ant-timeline.ant-timeline-right .ant-timeline-item-left .ant-timeline-item-content {
+  left: calc(50% - 4px);
+  width: calc(50% - 14px);
+  text-align: left;
+}
+.ant-timeline.ant-timeline-alternate .ant-timeline-item-right .ant-timeline-item-content,
+.ant-timeline.ant-timeline-right .ant-timeline-item-right .ant-timeline-item-content {
+  width: calc(50% - 12px);
+  margin: 0;
+  text-align: right;
+}
+.ant-timeline.ant-timeline-right .ant-timeline-item-right .ant-timeline-item-tail,
+.ant-timeline.ant-timeline-right .ant-timeline-item-right .ant-timeline-item-head,
+.ant-timeline.ant-timeline-right .ant-timeline-item-right .ant-timeline-item-head-custom {
+  left: calc(100% - 4px - 2px);
+}
+.ant-timeline.ant-timeline-right .ant-timeline-item-right .ant-timeline-item-content {
+  width: calc(100% - 18px);
+}
+.ant-timeline.ant-timeline-pending .ant-timeline-item-last .ant-timeline-item-tail {
+  display: block;
+  height: calc(100% - 14px);
+  border-left: 2px dotted #e8e8e8;
+}
+.ant-timeline.ant-timeline-reverse .ant-timeline-item-last .ant-timeline-item-tail {
+  display: none;
+}
+.ant-timeline.ant-timeline-reverse .ant-timeline-item-pending .ant-timeline-item-tail {
+  top: 15px;
+  display: block;
+  height: calc(100% - 15px);
+  border-left: 2px dotted #e8e8e8;
+}
+.ant-timeline.ant-timeline-reverse .ant-timeline-item-pending .ant-timeline-item-content {
+  min-height: 48px;
+}

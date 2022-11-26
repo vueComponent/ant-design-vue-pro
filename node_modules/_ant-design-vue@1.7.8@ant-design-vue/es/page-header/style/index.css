@@ -1,0 +1,120 @@
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-page-header {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  position: relative;
+  padding: 16px 24px;
+  background-color: #fff;
+}
+.ant-page-header-ghost {
+  background-color: inherit;
+}
+.ant-page-header.has-breadcrumb {
+  padding-top: 12px;
+}
+.ant-page-header.has-footer {
+  padding-bottom: 0;
+}
+.ant-page-header-back {
+  float: left;
+  margin: 8px 0;
+  margin-right: 16px;
+  font-size: 16px;
+  line-height: 1;
+}
+.ant-page-header-back-button {
+  color: #1890ff;
+  text-decoration: none;
+  outline: none;
+  transition: color 0.3s;
+  color: #000;
+  cursor: pointer;
+}
+.ant-page-header-back-button:focus,
+.ant-page-header-back-button:hover {
+  color: #40a9ff;
+}
+.ant-page-header-back-button:active {
+  color: #096dd9;
+}
+.ant-page-header .ant-divider-vertical {
+  height: 14px;
+  margin: 0 12px;
+  vertical-align: middle;
+}
+.ant-breadcrumb + .ant-page-header-heading {
+  margin-top: 8px;
+}
+.ant-page-header-heading {
+  width: 100%;
+  overflow: hidden;
+}
+.ant-page-header-heading-title {
+  display: block;
+  float: left;
+  margin-bottom: 0;
+  padding-right: 12px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 32px;
+}
+.ant-page-header-heading .ant-avatar {
+  float: left;
+  margin-right: 12px;
+}
+.ant-page-header-heading-sub-title {
+  float: left;
+  margin: 5px 0;
+  margin-right: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+  line-height: 22px;
+}
+.ant-page-header-heading-tags {
+  float: left;
+  margin: 4px 0;
+}
+.ant-page-header-heading-extra {
+  float: right;
+}
+.ant-page-header-heading-extra > * {
+  margin-left: 8px;
+}
+.ant-page-header-heading-extra > *:first-child {
+  margin-left: 0;
+}
+.ant-page-header-content {
+  padding-top: 12px;
+  overflow: hidden;
+}
+.ant-page-header-footer {
+  margin-top: 16px;
+}
+.ant-page-header-footer .ant-tabs-bar {
+  margin-bottom: 1px;
+  border-bottom: 0;
+}
+.ant-page-header-footer .ant-tabs-bar .ant-tabs-nav .ant-tabs-tab {
+  padding: 8px;
+  font-size: 16px;
+}
+@media (max-width: 576px) {
+  .ant-page-header-heading-extra {
+    display: block;
+    float: unset;
+    width: 100%;
+    padding-top: 12px;
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var fs = require('fs');
+var path = require('path');
+var rules = String(fs.readFileSync(process.argv[2] || '.gitignore'));
+var matcher = require('../').createMatcher(rules);
+
+function checkDir(dir) {
+  fs.readdirSync(dir).forEach(function (filename) {
+    var resolved = path.join(dir, filename);
+    if (matcher.shouldIgnore(resolved)) {
+      console.log('- ' + resolved);
+    } else if (fs.statSync(resolved).isDirectory()) {
+      checkDir(resolved);
+    } else {
+      console.log('+ ' + resolved);
+    }
+  });
+}
+checkDir('.');
+

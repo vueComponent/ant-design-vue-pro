@@ -1,0 +1,5 @@
+{
+  "extends": [
+    "github>commitizen/commitizen-renovate-config"
+  ]
+}

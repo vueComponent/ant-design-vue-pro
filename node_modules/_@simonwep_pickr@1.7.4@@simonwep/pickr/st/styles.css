@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    height: 100%;
+    width: 100%;
+    background: white;
+    font-family: 'Montserrat', serif;
+}
+
+body {
+    background: linear-gradient(to bottom, #f0f8ff, #ffffff);
+}
+
+body header {
+    position: relative;
+    padding: 10vh 0;
+    text-align: center;
+    color: #36425b;
+}
+
+body header h1 {
+    font-size: 3.5em;
+    font-weight: 300;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body header a {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.8em;
+    color: white;
+    margin-top: 5vh;
+    padding: 0.75em 1.25em;
+    transition: 0.3s all;
+    background: #4285f4;
+    border-radius: 50em;
+    box-shadow: 0 0.15em 0.5em rgba(66, 133, 244, 0.75);
+    font-family: 'Montserrat', sans-serif;
+}
+
+body header a:hover {
+    background: #4291f6;
+}
+
+body main {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.theme-container button {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 0.95em;
+    color: #36425b;
+    outline: none;
+    background: #e4f1ff;
+    border: none;
+    border-bottom: 2px solid rgba(80, 139, 234, 0.67);
+    padding: 0.6em 0.8em 0.5em;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 0 0.5em;
+    opacity: 0.45;
+    text-transform: capitalize;
+}
+
+.theme-container button.active {
+    opacity: 1;
+}
+
+.theme-container h3 {
+    font-weight: 500;
+    color: #36425b;
+}
+
+.pickr-container {
+    margin-top: 2em;
+}
+
+main > p {
+    margin-top: 0.35em;
+    font-size: 0.75em;
+    font-weight: 500;
+    color: #42445a;
+}
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    body header {
+        font-size: 0.6em;
+        padding: 7vh 0;
+    }
+
+    body header a {
+        padding: 1em 2em;
+        font-weight: 600;
+        font-size: 1.05em;
+    }
+
+    main > section {
+        min-width: 90%;
+    }
+
+    main > section h2 {
+        font-size: 1em;
+    }
+
+    main > section pre {
+        font-size: 0.9em;
+    }
+
+    main section.demo .hint svg {
+        height: 1.2em;
+    }
+
+    main section.demo .hint span {
+        transform: translate3d(-3em, -1.4em, 0);
+        font-size: 0.6em;
+    }
+}

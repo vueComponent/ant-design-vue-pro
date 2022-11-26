@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    <script src="../build/element-resize-detector.js"></script>
+    </head>
+
+    <body>
+      <div>
+        <span id="resize">
+            <span id="textContent"></span>
+        </span>
+
+    </div>
+    <div style="margin-top: 15px">
+      elementResizeDetector width <span id="erdSize"></span>px
+    </div>
+    <button style="margin-top: 15px" id="resizeBtn">
+      Resize
+    </button>
+        <script>
+            // Code goes here
+            var textContent = document.getElementById('textContent')
+            document.getElementById('resizeBtn').addEventListener('click', function(event) {
+                textContent.textContent = textContent.textContent + '1';
+            });
+
+            var detector = elementResizeDetectorMaker({
+                debug: true,
+                strategy: "scroll"
+            });
+
+            var resizeElement = document.getElementById('resize');
+            detector.listenTo(resizeElement, function(element) {
+                document.getElementById('erdSize').textContent = element.offsetWidth;
+            });
+        </script>
+    </body>
+</html>

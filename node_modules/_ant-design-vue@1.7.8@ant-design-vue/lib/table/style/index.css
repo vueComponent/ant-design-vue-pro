@@ -1,0 +1,823 @@
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-table-wrapper {
+  zoom: 1;
+}
+.ant-table-wrapper::before,
+.ant-table-wrapper::after {
+  display: table;
+  content: '';
+}
+.ant-table-wrapper::after {
+  clear: both;
+}
+.ant-table {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  position: relative;
+  clear: both;
+}
+.ant-table-body {
+  transition: opacity 0.3s;
+}
+.ant-table-empty .ant-table-body {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+.ant-table table {
+  width: 100%;
+  text-align: left;
+  border-radius: 4px 4px 0 0;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.ant-table-layout-fixed table {
+  table-layout: fixed;
+}
+.ant-table-thead > tr > th {
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  text-align: left;
+  background: #fafafa;
+  border-bottom: 1px solid #e8e8e8;
+  transition: background 0.3s ease;
+}
+.ant-table-thead > tr > th[colspan]:not([colspan='1']) {
+  text-align: center;
+}
+.ant-table-thead > tr > th .anticon-filter,
+.ant-table-thead > tr > th .ant-table-filter-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 100%;
+  color: #bfbfbf;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.ant-table-thead > tr > th .anticon-filter > svg,
+.ant-table-thead > tr > th .ant-table-filter-icon > svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -5px;
+  margin-left: -6px;
+}
+.ant-table-thead > tr > th .ant-table-filter-selected.anticon {
+  color: #1890ff;
+}
+.ant-table-thead > tr > th .ant-table-column-sorter {
+  display: table-cell;
+  vertical-align: middle;
+}
+.ant-table-thead > tr > th .ant-table-column-sorter .ant-table-column-sorter-inner {
+  height: 1em;
+  margin-top: 0.35em;
+  margin-left: 0.57142857em;
+  color: #bfbfbf;
+  line-height: 1em;
+  text-align: center;
+  transition: all 0.3s;
+}
+.ant-table-thead > tr > th .ant-table-column-sorter .ant-table-column-sorter-inner .ant-table-column-sorter-up,
+.ant-table-thead > tr > th .ant-table-column-sorter .ant-table-column-sorter-inner .ant-table-column-sorter-down {
+  display: inline-block;
+  font-size: 12px;
+  font-size: 11px \9;
+  transform: scale(0.91666667) rotate(0deg);
+  display: block;
+  height: 1em;
+  line-height: 1em;
+  transition: all 0.3s;
+}
+:root .ant-table-thead > tr > th .ant-table-column-sorter .ant-table-column-sorter-inner .ant-table-column-sorter-up,
+:root .ant-table-thead > tr > th .ant-table-column-sorter .ant-table-column-sorter-inner .ant-table-column-sorter-down {
+  font-size: 12px;
+}
+.ant-table-thead > tr > th .ant-table-column-sorter .ant-table-column-sorter-inner .ant-table-column-sorter-up.on,
+.ant-table-thead > tr > th .ant-table-column-sorter .ant-table-column-sorter-inner .ant-table-column-sorter-down.on {
+  color: #1890ff;
+}
+.ant-table-thead > tr > th .ant-table-column-sorter .ant-table-column-sorter-inner-full {
+  margin-top: -0.15em;
+}
+.ant-table-thead > tr > th .ant-table-column-sorter .ant-table-column-sorter-inner-full .ant-table-column-sorter-up,
+.ant-table-thead > tr > th .ant-table-column-sorter .ant-table-column-sorter-inner-full .ant-table-column-sorter-down {
+  height: 0.5em;
+  line-height: 0.5em;
+}
+.ant-table-thead > tr > th .ant-table-column-sorter .ant-table-column-sorter-inner-full .ant-table-column-sorter-down {
+  margin-top: 0.125em;
+}
+.ant-table-thead > tr > th.ant-table-column-has-actions {
+  position: relative;
+  background-clip: padding-box;
+  /* stylelint-disable-next-line */
+  -webkit-background-clip: border-box;
+}
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters {
+  padding-right: 30px !important;
+}
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters .anticon-filter.ant-table-filter-open,
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters .ant-table-filter-icon.ant-table-filter-open {
+  color: rgba(0, 0, 0, 0.45);
+  background: #e5e5e5;
+}
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters:hover .anticon-filter:hover,
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters:hover .ant-table-filter-icon:hover {
+  color: rgba(0, 0, 0, 0.45);
+  background: #e5e5e5;
+}
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters:hover .anticon-filter:active,
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters:hover .ant-table-filter-icon:active {
+  color: rgba(0, 0, 0, 0.65);
+}
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters {
+  cursor: pointer;
+}
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters:hover {
+  background: #f2f2f2;
+}
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters:hover .anticon-filter,
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters:hover .ant-table-filter-icon {
+  background: #f2f2f2;
+}
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters:active .ant-table-column-sorter-up:not(.on),
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters:active .ant-table-column-sorter-down:not(.on) {
+  color: rgba(0, 0, 0, 0.45);
+}
+.ant-table-thead > tr > th .ant-table-header-column {
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: top;
+}
+.ant-table-thead > tr > th .ant-table-header-column .ant-table-column-sorters {
+  display: table;
+}
+.ant-table-thead > tr > th .ant-table-header-column .ant-table-column-sorters > .ant-table-column-title {
+  display: table-cell;
+  vertical-align: middle;
+}
+.ant-table-thead > tr > th .ant-table-header-column .ant-table-column-sorters > *:not(.ant-table-column-sorter) {
+  position: relative;
+}
+.ant-table-thead > tr > th .ant-table-header-column .ant-table-column-sorters::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent;
+  transition: all 0.3s;
+  content: '';
+}
+.ant-table-thead > tr > th .ant-table-header-column .ant-table-column-sorters:hover::before {
+  background: rgba(0, 0, 0, 0.04);
+}
+.ant-table-thead > tr > th.ant-table-column-has-sorters {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.ant-table-thead > tr:first-child > th:first-child {
+  border-top-left-radius: 4px;
+}
+.ant-table-thead > tr:first-child > th:last-child {
+  border-top-right-radius: 4px;
+}
+.ant-table-thead > tr:not(:last-child) > th[colspan] {
+  border-bottom: 0;
+}
+.ant-table-tbody > tr > td {
+  border-bottom: 1px solid #e8e8e8;
+  transition: background 0.3s;
+}
+.ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+.ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+.ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background: #e6f7ff;
+}
+.ant-table-thead > tr.ant-table-row-selected > td.ant-table-column-sort,
+.ant-table-tbody > tr.ant-table-row-selected > td.ant-table-column-sort {
+  background: #fafafa;
+}
+.ant-table-thead > tr:hover.ant-table-row-selected > td,
+.ant-table-tbody > tr:hover.ant-table-row-selected > td {
+  background: #fafafa;
+}
+.ant-table-thead > tr:hover.ant-table-row-selected > td.ant-table-column-sort,
+.ant-table-tbody > tr:hover.ant-table-row-selected > td.ant-table-column-sort {
+  background: #fafafa;
+}
+.ant-table-thead > tr:hover {
+  background: none;
+}
+.ant-table-footer {
+  position: relative;
+  padding: 16px 16px;
+  color: rgba(0, 0, 0, 0.85);
+  background: #fafafa;
+  border-top: 1px solid #e8e8e8;
+  border-radius: 0 0 4px 4px;
+}
+.ant-table-footer::before {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #fafafa;
+  content: '';
+}
+.ant-table.ant-table-bordered .ant-table-footer {
+  border: 1px solid #e8e8e8;
+}
+.ant-table-title {
+  position: relative;
+  top: 1px;
+  padding: 16px 0;
+  border-radius: 4px 4px 0 0;
+}
+.ant-table.ant-table-bordered .ant-table-title {
+  padding-right: 16px;
+  padding-left: 16px;
+  border: 1px solid #e8e8e8;
+}
+.ant-table-title + .ant-table-content {
+  position: relative;
+  border-radius: 4px 4px 0 0;
+}
+.ant-table-bordered .ant-table-title + .ant-table-content,
+.ant-table-bordered .ant-table-title + .ant-table-content table,
+.ant-table-bordered .ant-table-title + .ant-table-content .ant-table-thead > tr:first-child > th {
+  border-radius: 0;
+}
+.ant-table-without-column-header .ant-table-title + .ant-table-content,
+.ant-table-without-column-header table {
+  border-radius: 0;
+}
+.ant-table-without-column-header.ant-table-bordered.ant-table-empty .ant-table-placeholder {
+  border-top: 1px solid #e8e8e8;
+  border-radius: 4px;
+}
+.ant-table-tbody > tr.ant-table-row-selected td {
+  color: inherit;
+  background: #fafafa;
+}
+.ant-table-thead > tr > th.ant-table-column-sort {
+  background: #f5f5f5;
+}
+.ant-table-tbody > tr > td.ant-table-column-sort {
+  background: rgba(0, 0, 0, 0.01);
+}
+.ant-table-thead > tr > th,
+.ant-table-tbody > tr > td {
+  padding: 16px 16px;
+  overflow-wrap: break-word;
+}
+.ant-table-expand-icon-th,
+.ant-table-row-expand-icon-cell {
+  width: 50px;
+  min-width: 50px;
+  text-align: center;
+}
+.ant-table-header {
+  overflow: hidden;
+  background: #fafafa;
+}
+.ant-table-header table {
+  border-radius: 4px 4px 0 0;
+}
+.ant-table-loading {
+  position: relative;
+}
+.ant-table-loading .ant-table-body {
+  background: #fff;
+  opacity: 0.5;
+}
+.ant-table-loading .ant-table-spin-holder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 20px;
+  margin-left: -30px;
+  line-height: 20px;
+}
+.ant-table-loading .ant-table-with-pagination {
+  margin-top: -20px;
+}
+.ant-table-loading .ant-table-without-pagination {
+  margin-top: 10px;
+}
+.ant-table-bordered .ant-table-header > table,
+.ant-table-bordered .ant-table-body > table,
+.ant-table-bordered .ant-table-fixed-left table,
+.ant-table-bordered .ant-table-fixed-right table {
+  border: 1px solid #e8e8e8;
+  border-right: 0;
+  border-bottom: 0;
+}
+.ant-table-bordered.ant-table-empty .ant-table-placeholder {
+  border-right: 1px solid #e8e8e8;
+  border-left: 1px solid #e8e8e8;
+}
+.ant-table-bordered.ant-table-fixed-header .ant-table-header > table {
+  border-bottom: 0;
+}
+.ant-table-bordered.ant-table-fixed-header .ant-table-body > table {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.ant-table-bordered.ant-table-fixed-header .ant-table-header + .ant-table-body > table,
+.ant-table-bordered.ant-table-fixed-header .ant-table-body-inner > table {
+  border-top: 0;
+}
+.ant-table-bordered .ant-table-thead > tr:not(:last-child) > th {
+  border-bottom: 1px solid #e8e8e8;
+}
+.ant-table-bordered .ant-table-thead > tr > th,
+.ant-table-bordered .ant-table-tbody > tr > td {
+  border-right: 1px solid #e8e8e8;
+}
+.ant-table-placeholder {
+  position: relative;
+  z-index: 1;
+  margin-top: -1px;
+  padding: 16px 16px;
+  color: rgba(0, 0, 0, 0.25);
+  font-size: 14px;
+  text-align: center;
+  background: #fff;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+  border-radius: 0 0 4px 4px;
+}
+.ant-table-pagination.ant-pagination {
+  float: right;
+  margin: 16px 0;
+}
+.ant-table-filter-dropdown {
+  position: relative;
+  min-width: 96px;
+  margin-left: -8px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.ant-table-filter-dropdown .ant-dropdown-menu {
+  max-height: calc(100vh - 130px);
+  overflow-x: hidden;
+  border: 0;
+  border-radius: 4px 4px 0 0;
+  box-shadow: none;
+}
+.ant-table-filter-dropdown .ant-dropdown-menu-item > label + span {
+  padding-right: 0;
+}
+.ant-table-filter-dropdown .ant-dropdown-menu-sub {
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.ant-table-filter-dropdown .ant-dropdown-menu .ant-dropdown-submenu-contain-selected .ant-dropdown-menu-submenu-title::after {
+  color: #1890ff;
+  font-weight: bold;
+  text-shadow: 0 0 2px #bae7ff;
+}
+.ant-table-filter-dropdown .ant-dropdown-menu-item {
+  overflow: hidden;
+}
+.ant-table-filter-dropdown > .ant-dropdown-menu > .ant-dropdown-menu-item:last-child,
+.ant-table-filter-dropdown > .ant-dropdown-menu > .ant-dropdown-menu-submenu:last-child .ant-dropdown-menu-submenu-title {
+  border-radius: 0;
+}
+.ant-table-filter-dropdown-btns {
+  padding: 7px 8px;
+  overflow: hidden;
+  border-top: 1px solid #e8e8e8;
+}
+.ant-table-filter-dropdown-link {
+  color: #1890ff;
+}
+.ant-table-filter-dropdown-link:hover {
+  color: #40a9ff;
+}
+.ant-table-filter-dropdown-link:active {
+  color: #096dd9;
+}
+.ant-table-filter-dropdown-link.confirm {
+  float: left;
+}
+.ant-table-filter-dropdown-link.clear {
+  float: right;
+}
+.ant-table-selection {
+  white-space: nowrap;
+}
+.ant-table-selection-select-all-custom {
+  margin-right: 4px !important;
+}
+.ant-table-selection .anticon-down {
+  color: #bfbfbf;
+  transition: all 0.3s;
+}
+.ant-table-selection-menu {
+  min-width: 96px;
+  margin-top: 5px;
+  margin-left: -30px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.ant-table-selection-menu .ant-action-down {
+  color: #bfbfbf;
+}
+.ant-table-selection-down {
+  display: inline-block;
+  padding: 0;
+  line-height: 1;
+  cursor: pointer;
+}
+.ant-table-selection-down:hover .anticon-down {
+  color: rgba(0, 0, 0, 0.6);
+}
+.ant-table-row-expand-icon {
+  color: #1890ff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  color: inherit;
+  line-height: 13px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 2px;
+  outline: none;
+  transition: all 0.3s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.ant-table-row-expand-icon:focus,
+.ant-table-row-expand-icon:hover {
+  color: #40a9ff;
+}
+.ant-table-row-expand-icon:active {
+  color: #096dd9;
+}
+.ant-table-row-expand-icon:focus,
+.ant-table-row-expand-icon:hover,
+.ant-table-row-expand-icon:active {
+  border-color: currentColor;
+}
+.ant-table-row-expanded::after {
+  content: '-';
+}
+.ant-table-row-collapsed::after {
+  content: '+';
+}
+.ant-table-row-spaced {
+  visibility: hidden;
+}
+.ant-table-row-spaced::after {
+  content: '.';
+}
+.ant-table-row-cell-ellipsis,
+.ant-table-row-cell-ellipsis .ant-table-column-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ant-table-row-cell-ellipsis .ant-table-column-title {
+  display: block;
+}
+.ant-table-row-cell-break-word {
+  word-wrap: break-word;
+  word-break: break-word;
+}
+tr.ant-table-expanded-row,
+tr.ant-table-expanded-row:hover {
+  background: #fbfbfb;
+}
+tr.ant-table-expanded-row td > .ant-table-wrapper {
+  margin: -16px -16px -17px;
+}
+.ant-table .ant-table-row-indent + .ant-table-row-expand-icon {
+  margin-right: 8px;
+}
+.ant-table-scroll {
+  overflow: auto;
+  overflow-x: hidden;
+}
+.ant-table-scroll table {
+  min-width: 100%;
+}
+.ant-table-scroll table .ant-table-fixed-columns-in-body:not([colspan]) {
+  color: transparent;
+}
+.ant-table-scroll table .ant-table-fixed-columns-in-body:not([colspan]) > * {
+  visibility: hidden;
+}
+.ant-table-body-inner {
+  height: 100%;
+}
+.ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body {
+  position: relative;
+  background: #fff;
+}
+.ant-table-fixed-header .ant-table-body-inner {
+  overflow: scroll;
+}
+.ant-table-fixed-header .ant-table-scroll .ant-table-header {
+  margin-bottom: -20px;
+  padding-bottom: 20px;
+  overflow: scroll;
+  opacity: 0.9999;
+}
+.ant-table-fixed-header .ant-table-scroll .ant-table-header::-webkit-scrollbar {
+  border: 1px solid #e8e8e8;
+  border-width: 0 0 1px 0;
+}
+.ant-table-hide-scrollbar {
+  scrollbar-color: transparent transparent;
+  min-width: unset;
+}
+.ant-table-hide-scrollbar::-webkit-scrollbar {
+  min-width: inherit;
+  background-color: transparent;
+}
+.ant-table-bordered.ant-table-fixed-header .ant-table-scroll .ant-table-header::-webkit-scrollbar {
+  border: 1px solid #e8e8e8;
+  border-width: 1px 1px 1px 0;
+}
+.ant-table-bordered.ant-table-fixed-header .ant-table-scroll .ant-table-header.ant-table-hide-scrollbar .ant-table-thead > tr:only-child > th:last-child {
+  border-right-color: transparent;
+}
+.ant-table-fixed-left,
+.ant-table-fixed-right {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 0;
+  transition: box-shadow 0.3s ease;
+}
+.ant-table-fixed-left table,
+.ant-table-fixed-right table {
+  width: auto;
+  background: #fff;
+}
+.ant-table-fixed-header .ant-table-fixed-left .ant-table-body-outer .ant-table-fixed,
+.ant-table-fixed-header .ant-table-fixed-right .ant-table-body-outer .ant-table-fixed {
+  border-radius: 0;
+}
+.ant-table-fixed-left {
+  left: 0;
+  box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.15);
+}
+.ant-table-fixed-left .ant-table-header {
+  overflow-y: hidden;
+}
+.ant-table-fixed-left .ant-table-body-inner {
+  margin-right: -20px;
+  padding-right: 20px;
+}
+.ant-table-fixed-header .ant-table-fixed-left .ant-table-body-inner {
+  padding-right: 0;
+}
+.ant-table-fixed-left,
+.ant-table-fixed-left table {
+  border-radius: 4px 0 0 0;
+}
+.ant-table-fixed-left .ant-table-thead > tr > th:last-child {
+  border-top-right-radius: 0;
+}
+.ant-table-fixed-right {
+  right: 0;
+  box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
+}
+.ant-table-fixed-right,
+.ant-table-fixed-right table {
+  border-radius: 0 4px 0 0;
+}
+.ant-table-fixed-right .ant-table-expanded-row {
+  color: transparent;
+  pointer-events: none;
+}
+.ant-table-fixed-right .ant-table-thead > tr > th:first-child {
+  border-top-left-radius: 0;
+}
+.ant-table.ant-table-scroll-position-left .ant-table-fixed-left {
+  box-shadow: none;
+}
+.ant-table.ant-table-scroll-position-right .ant-table-fixed-right {
+  box-shadow: none;
+}
+.ant-table colgroup > col.ant-table-selection-col {
+  width: 60px;
+}
+.ant-table-thead > tr > th.ant-table-selection-column-custom .ant-table-selection {
+  margin-right: -15px;
+}
+.ant-table-thead > tr > th.ant-table-selection-column,
+.ant-table-tbody > tr > td.ant-table-selection-column {
+  text-align: center;
+}
+.ant-table-thead > tr > th.ant-table-selection-column .ant-radio-wrapper,
+.ant-table-tbody > tr > td.ant-table-selection-column .ant-radio-wrapper {
+  margin-right: 0;
+}
+.ant-table-row[class*='ant-table-row-level-0'] .ant-table-selection-column > span {
+  display: inline-block;
+}
+.ant-table-filter-dropdown .ant-checkbox-wrapper + span,
+.ant-table-filter-dropdown-submenu .ant-checkbox-wrapper + span {
+  padding-left: 8px;
+}
+/**
+* Another fix of Firefox:
+*/
+@supports (-moz-appearance: meterbar) {
+  .ant-table-thead > tr > th.ant-table-column-has-actions {
+    background-clip: padding-box;
+  }
+}
+.ant-table-middle > .ant-table-title,
+.ant-table-middle > .ant-table-content > .ant-table-footer {
+  padding: 12px 8px;
+}
+.ant-table-middle > .ant-table-content > .ant-table-header > table > .ant-table-thead > tr > th,
+.ant-table-middle > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th,
+.ant-table-middle > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-thead > tr > th,
+.ant-table-middle > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-thead > tr > th,
+.ant-table-middle > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-thead > tr > th,
+.ant-table-middle > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-thead > tr > th,
+.ant-table-middle > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th,
+.ant-table-middle > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th,
+.ant-table-middle > .ant-table-content > .ant-table-header > table > .ant-table-tbody > tr > td,
+.ant-table-middle > .ant-table-content > .ant-table-body > table > .ant-table-tbody > tr > td,
+.ant-table-middle > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-tbody > tr > td,
+.ant-table-middle > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-tbody > tr > td,
+.ant-table-middle > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-tbody > tr > td,
+.ant-table-middle > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-tbody > tr > td,
+.ant-table-middle > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-tbody > tr > td,
+.ant-table-middle > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-tbody > tr > td {
+  padding: 12px 8px;
+}
+.ant-table-middle tr.ant-table-expanded-row td > .ant-table-wrapper {
+  margin: -12px -8px -13px;
+}
+.ant-table-small {
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+}
+.ant-table-small > .ant-table-title,
+.ant-table-small > .ant-table-content > .ant-table-footer {
+  padding: 8px 8px;
+}
+.ant-table-small > .ant-table-title {
+  top: 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+.ant-table-small > .ant-table-content > .ant-table-footer {
+  background-color: transparent;
+  border-top: 1px solid #e8e8e8;
+}
+.ant-table-small > .ant-table-content > .ant-table-footer::before {
+  background-color: transparent;
+}
+.ant-table-small > .ant-table-content > .ant-table-body {
+  margin: 0 8px;
+}
+.ant-table-small > .ant-table-content > .ant-table-header > table,
+.ant-table-small > .ant-table-content > .ant-table-body > table,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table {
+  border: 0;
+}
+.ant-table-small > .ant-table-content > .ant-table-header > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-header > table > .ant-table-tbody > tr > td,
+.ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-tbody > tr > td,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-tbody > tr > td,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-tbody > tr > td,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-tbody > tr > td,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-tbody > tr > td,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-tbody > tr > td,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-tbody > tr > td {
+  padding: 8px 8px;
+}
+.ant-table-small > .ant-table-content > .ant-table-header > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th {
+  background-color: transparent;
+}
+.ant-table-small > .ant-table-content > .ant-table-header > table > .ant-table-thead > tr,
+.ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-thead > tr,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-thead > tr,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-thead > tr,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-thead > tr,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr {
+  border-bottom: 1px solid #e8e8e8;
+}
+.ant-table-small > .ant-table-content > .ant-table-header > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th.ant-table-column-sort {
+  background-color: rgba(0, 0, 0, 0.01);
+}
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table {
+  padding: 0;
+}
+.ant-table-small > .ant-table-content .ant-table-header {
+  background-color: transparent;
+  border-radius: 4px 4px 0 0;
+}
+.ant-table-small > .ant-table-content .ant-table-placeholder,
+.ant-table-small > .ant-table-content .ant-table-row:last-child td {
+  border-bottom: 0;
+}
+.ant-table-small.ant-table-bordered {
+  border-right: 0;
+}
+.ant-table-small.ant-table-bordered .ant-table-title {
+  border: 0;
+  border-right: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+}
+.ant-table-small.ant-table-bordered .ant-table-content {
+  border-right: 1px solid #e8e8e8;
+}
+.ant-table-small.ant-table-bordered .ant-table-footer {
+  border: 0;
+  border-top: 1px solid #e8e8e8;
+}
+.ant-table-small.ant-table-bordered .ant-table-footer::before {
+  display: none;
+}
+.ant-table-small.ant-table-bordered .ant-table-placeholder {
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+}
+.ant-table-small.ant-table-bordered .ant-table-thead > tr > th.ant-table-row-cell-last,
+.ant-table-small.ant-table-bordered .ant-table-tbody > tr > td:last-child {
+  border-right: none;
+}
+.ant-table-small.ant-table-bordered .ant-table-fixed-left .ant-table-thead > tr > th:last-child,
+.ant-table-small.ant-table-bordered .ant-table-fixed-left .ant-table-tbody > tr > td:last-child {
+  border-right: 1px solid #e8e8e8;
+}
+.ant-table-small.ant-table-bordered .ant-table-fixed-right {
+  border-right: 1px solid #e8e8e8;
+  border-left: 1px solid #e8e8e8;
+}
+.ant-table-small tr.ant-table-expanded-row td > .ant-table-wrapper {
+  margin: -8px -8px -9px;
+}
+.ant-table-small.ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body {
+  border-radius: 0 0 4px 4px;
+}

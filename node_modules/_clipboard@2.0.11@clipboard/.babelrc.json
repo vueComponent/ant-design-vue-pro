@@ -1,0 +1,11 @@
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "forceAllTransforms": true,
+        "modules": false
+      }
+    ]
+  ]
+}

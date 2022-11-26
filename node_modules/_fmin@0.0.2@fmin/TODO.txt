@@ -1,0 +1,7 @@
+15) visualizations:
+?display whether or not the optimization succeeeded (?? even necessary)
+
+16) cities vis:
+ * links to: slow ass GD, crazy osicalling gd, neldermead failing 
+
+goal: finished sunday, uploaded to github

@@ -1,0 +1,90 @@
+<html>
+<head>
+<style>
+.vis {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	font-family: sans-serif;
+	font-size: 10pt;
+}
+</style>
+</head>
+<body>
+<div id="oddr" class="vis"><p>Odd R</p></div>
+<div id="evenr" class="vis"><p>Even R</p></div>
+<div id="oddq" class="vis"><p>Odd Q</p></div>
+<div id="evenq" class="vis"><p>Even Q</p></div>
+<script src="d3.min.js"></script>
+<script src="../build/d3-hexjson.min.js"></script>
+<script>
+
+d3.json("example.hexjson", function(error, hexjson) {
+
+	var oddr = {id: "#oddr"},
+		evenr = {id: "#evenr"},
+		oddq = {id: "#oddq"},
+		evenq = {id: "#evenq"};
+
+	// Set the size and margins of the svg
+	var margin = {top: 10, right: 10, bottom: 10, left: 10},
+		width = 500 - margin.left - margin.right,
+		height = 420 - margin.top - margin.bottom;
+
+
+	hexjson.layout = "odd-r";
+	drawHexmap(oddr);
+
+	hexjson.layout = "even-r";
+	drawHexmap(evenr);
+
+	hexjson.layout = "odd-q";
+	drawHexmap(oddq);
+
+	hexjson.layout = "even-q";
+	drawHexmap(evenq);
+
+	function drawHexmap(layout) {
+
+		// Create the svg element
+		layout.svg = d3
+			.select(layout.id)
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Render the hexes
+		var hexes = d3.renderHexJSON(hexjson, width, height);
+
+		// Bind the hexes to g elements of the svg and position them
+		layout.hexmap = layout.svg
+			.selectAll("g")
+			.data(hexes)
+			.enter()
+			.append("g")
+			.attr("transform", function(hex) {
+				return "translate(" + hex.x + "," + hex.y + ")";
+			});
+
+		// Draw the polygons around each hex's centre
+		layout.hexmap
+			.append("polygon")
+			.attr("points", function(hex) {return hex.points;})
+			.attr("stroke", "white")
+			.attr("stroke-width", "2")
+			.attr("fill", "#b0e8f0");
+
+		// Add the hex codes as labels
+		layout.hexmap
+			.append("text")
+			.append("tspan")
+			.attr("text-anchor", "middle")
+			.text(function(hex) {return hex.key;});
+	}
+});
+
+</script>
+</body>
+</html>

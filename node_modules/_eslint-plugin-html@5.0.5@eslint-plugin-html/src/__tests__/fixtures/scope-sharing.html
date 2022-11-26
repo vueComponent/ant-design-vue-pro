@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test</title>
+  </head>
+  <body>
+    <script>
+      var varGloballyDeclared = 1
+      let letGloballyDeclared = 1
+      function functionGloballyDeclared() {}
+      class ClassGloballyDeclared {}
+
+      varNotYetGloballyDeclared
+      letNotYetGloballyDeclared
+      functionNotYetGloballyDeclared
+      ClassNotYetGloballyDeclared
+    </script>
+
+    <script>
+      var varNotYetGloballyDeclared = 2
+      let letNotYetGloballyDeclared = 2
+      function functionNotYetGloballyDeclared() {}
+      class ClassNotYetGloballyDeclared {}
+
+      varGloballyDeclared
+      letGloballyDeclared
+      functionGloballyDeclared
+      ClassGloballyDeclared
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+{"version":3,"file":"commit-message.d.ts","sourceRoot":"","sources":["../src/commit-message.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,iBAAiB;IACjC,MAAM,EAAE,MAAM,CAAC;IACf,IAAI,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;IACrB,MAAM,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;CACvB;AAED,eAAO,MAAM,iBAAiB,8BAI3B,iBAAiB,KAAG,MAOtB,CAAC"}

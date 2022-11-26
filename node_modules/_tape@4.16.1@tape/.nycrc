@@ -1,0 +1,11 @@
+{
+	"all": true,
+	"check-coverage": false,
+	"reporter": ["text-summary", "text", "html", "json"],
+	"exclude": [
+		"bin/import-or-require.js",
+		"coverage",
+		"example",
+		"test"
+	]
+}
