@@ -95,6 +95,7 @@
         isLoading: true,
         form: this.$form.createForm(this),
         question: {},
+        questionTask: {},
         orgTree: [],
         questionList: [],
         disBlock: {
