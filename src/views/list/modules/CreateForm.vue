@@ -638,7 +638,7 @@ export default {
     },
     disabledDate(current) {
       // Can not select days before today and today
-      return current && (current > moment().endOf('day') || current.get('year') < 2020)
+      return current && (current > moment().endOf('day') || current.get('year') < 1930)
     },
     download() {
       window.open(this.baseUrl + '/patient/downLoad')
