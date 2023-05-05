@@ -21,34 +21,34 @@ export default {
   props: {
     prefixCls: {
       type: String,
-      default: 'ant-pro-number-info'
+      default: 'ant-pro-number-info',
     },
     total: {
       type: Number,
-      required: true
+      required: true,
     },
     subTotal: {
       type: Number,
-      required: true
+      required: true,
     },
     subTitle: {
       type: [String, Function],
-      default: ''
+      default: '',
     },
     status: {
       type: String,
-      default: 'up'
-    }
+      default: 'up',
+    },
   },
   components: {
-    Icon
+    Icon,
   },
-  data () {
+  data() {
     return {}
-  }
+  },
 }
 </script>
 
 <style lang="less" scoped>
-  @import "index";
+// @import "index";
 </style>
