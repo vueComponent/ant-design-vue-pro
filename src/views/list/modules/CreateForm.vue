@@ -157,6 +157,22 @@
         <a-form-item label="推荐医生" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['doctorName', requiredRule]" />
         </a-form-item>
+        <a-form-item label="是否去世" v-if="options.title == '编辑患者'" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-radio-group v-decorator="['deathFlag']" @change="changeRadio($event, 'isDeath')">
+            <a-radio value="0">否</a-radio>
+            <a-radio value="1">是</a-radio>
+          </a-radio-group>
+        </a-form-item>
+        <div v-if="isDeath">
+          <a-form-item label="去世时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-date-picker
+              style="width: 100%"
+              format="YYYY-MM-DD"
+              v-decorator="['deathDate', requiredRule]"
+              :disabledDate="disabledDate"
+            />
+          </a-form-item>
+        </div>
         <a-form-item :wrapperCol="agrWrapperCol">
           <a-checkbox
             v-decorator="[
@@ -196,6 +212,7 @@ export default {
       maskClosable: false,
       payTypeList: [],
       isShowPat: false,
+      isDeath: false,
       labelCol: {
         xs: { span: 24 },
         sm: { span: 10 },
@@ -343,6 +360,11 @@ export default {
       } else {
         this.isShowPat = false
       }
+      if (value.deathFlag == 1) {
+        this.isDeath = true
+      } else {
+        this.isDeath = false
+      }
       setTimeout(() => {
         this.form.setFieldsValue({
           card: value.card,
@@ -360,6 +382,7 @@ export default {
           payType: value.payType,
           telephone1: value.telephone1,
           telephone2: value.telephone2,
+          deathFlag: String(value.deathFlag),
           telephone3: value.telephone3,
           agreeMent: JSON.parse(value.agreeMent),
           doctorName: value.doctorName,
@@ -373,6 +396,12 @@ export default {
             isshiyan: '-1',
             istongyi: '-1',
             iconJoinDate: value.iconJoinDate ? moment(value.iconJoinDate, 'YYYY-MM-DD') : null,
+          })
+        }
+        if (value.deathFlag == 1) {
+          console.log(value.deathDate)
+          this.form.setFieldsValue({
+            deathDate: value.deathDate ? moment(value.deathDate, 'YYYY-MM-DD') : null,
           })
         }
         if (value.startDate)
@@ -414,6 +443,10 @@ export default {
           }
           if (fieldsValue['iconJoinDate']) {
             values.iconJoinDate = fieldsValue['iconJoinDate'].format('YYYY-MM-DD')
+          }
+          if (fieldsValue['deathDate']) {
+            console.log(values.deathDate)
+            values.deathDate = fieldsValue['deathDate'].format('YYYY-MM-DD')
           }
           if (fieldsValue['coughDate']) {
             values.coughDate = fieldsValue['coughDate'].format('YYYY-MM-DD')
