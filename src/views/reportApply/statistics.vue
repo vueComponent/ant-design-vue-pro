@@ -79,6 +79,10 @@ export default {
           dataIndex: 'submitTelephone',
           width: '120px'
         },{
+          title: '去世时间',
+          dataIndex: 'deathDate',
+          width: '120px'
+        },{
           title: '支扩病史资料',
           dataIndex: 'pbm1Status',
           width: '120px'
