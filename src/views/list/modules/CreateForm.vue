@@ -382,7 +382,7 @@ export default {
           payType: value.payType,
           telephone1: value.telephone1,
           telephone2: value.telephone2,
-          deathFlag: String(value.deathFlag),
+          deathFlag: value.deathFlag,
           telephone3: value.telephone3,
           agreeMent: JSON.parse(value.agreeMent),
           doctorName: value.doctorName,
@@ -399,7 +399,6 @@ export default {
         //   })
         // }
         if (value.deathFlag == 1) {
-          console.log(value.deathDate)
           this.form.setFieldsValue({
             deathDate: value.deathDate ? moment(value.deathDate, 'YYYY-MM-DD') : null,
           })
