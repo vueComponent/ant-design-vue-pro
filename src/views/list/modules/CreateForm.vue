@@ -28,7 +28,7 @@
         <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['name', requiredRule]" />
         </a-form-item>
-        <a-form-item label="是否ICON患者" :labelCol="labelCol" :wrapperCol="wrapperCol" class="aaa">
+        <!-- <a-form-item label="是否ICON患者" :labelCol="labelCol" :wrapperCol="wrapperCol" class="aaa">
           <a-popover>
             <template slot="content">
               入选标准：1、临床诊断为支气管扩张症（根据中国2021年《成人支气管扩张症诊治专家共识》，患者既往胸部CT检查必须存在影像学上支气管扩张的表现）。2、年龄≥18岁的患者。<br />
@@ -43,7 +43,7 @@
             <a-radio value="1">是</a-radio>
             <a-radio value="-1">否</a-radio>
           </a-radio-group>
-        </a-form-item>
+        </a-form-item> -->
         <div v-if="isShowPat">
           <a-form-item label="ICON入组时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
             <a-date-picker
@@ -158,7 +158,7 @@
           <a-input v-decorator="['doctorName', requiredRule]" />
         </a-form-item>
         <a-form-item label="是否去世" v-if="options.title == '编辑患者'" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-radio-group v-decorator="['deathFlag']" @change="changeRadio($event, 'isDeath')">
+          <a-radio-group v-decorator="['deathFlag', requiredRule]" @change="changeRadio($event, 'isDeath')">
             <a-radio value="0">否</a-radio>
             <a-radio value="1">是</a-radio>
           </a-radio-group>
@@ -355,11 +355,11 @@ export default {
       this.options.title = '编辑患者'
       this.patientId = value.patientId
       value.residence = [value.addressP, value.addressC]
-      if (value.isIcon === 1) {
-        this.isShowPat = true
-      } else {
-        this.isShowPat = false
-      }
+      // if (value.isIcon === 1) {
+      //   this.isShowPat = true
+      // } else {
+      //   this.isShowPat = false
+      // }
       if (value.deathFlag == 1) {
         this.isDeath = true
       } else {
@@ -386,18 +386,18 @@ export default {
           telephone3: value.telephone3,
           agreeMent: JSON.parse(value.agreeMent),
           doctorName: value.doctorName,
-          isIcon: String(value.isIcon)
+          // isIcon: String(value.isIcon)
         })
-        if (value.isIcon == 1) {
-          this.form.setFieldsValue({
-            isbiaoxian: String(value.isIcon),
-            iskuozhang: '-1',
-            isjiazhong: '-1',
-            isshiyan: '-1',
-            istongyi: '-1',
-            iconJoinDate: value.iconJoinDate ? moment(value.iconJoinDate, 'YYYY-MM-DD') : null,
-          })
-        }
+        // if (value.isIcon == 1) {
+        //   this.form.setFieldsValue({
+        //     isbiaoxian: String(value.isIcon),
+        //     iskuozhang: '-1',
+        //     isjiazhong: '-1',
+        //     isshiyan: '-1',
+        //     istongyi: '-1',
+        //     iconJoinDate: value.iconJoinDate ? moment(value.iconJoinDate, 'YYYY-MM-DD') : null,
+        //   })
+        // }
         if (value.deathFlag == 1) {
           console.log(value.deathDate)
           this.form.setFieldsValue({
@@ -417,15 +417,15 @@ export default {
         var submitPatientPendingId = this.patientPendingId || ''
         var submitWxPatientId = this.wxPatientId || ''
         this.form.validateFieldsAndScroll((errors, fieldsValue) => {
-          if (
-            this.form.getFieldValue('birthDate') &&
-            new Date().getFullYear() - this.form.getFieldValue('birthDate')._d.getFullYear() < 18 &&
-            this.form.getFieldValue('isIcon') == 1
-          ) {
-            this.$message.warning('患者不满18岁，不符合ICON患者条件')
-            this.confirmLoading = false
-            return false
-          }
+          // if (
+          //   this.form.getFieldValue('birthDate') &&
+          //   new Date().getFullYear() - this.form.getFieldValue('birthDate')._d.getFullYear() < 18 &&
+          //   this.form.getFieldValue('isIcon') == 1
+          // ) {
+          //   this.$message.warning('患者不满18岁，不符合ICON患者条件')
+          //   this.confirmLoading = false
+          //   return false
+          // }
           const that = this
           if (errors) {
             this.confirmLoading = false
@@ -487,17 +487,17 @@ export default {
       }
       callback()
     },
-    isiconRule(rule, value, callback) {
-      if (!value) {
-        callback('该选项必填！')
-        return
-      }
-      if (this.form.getFieldValue('isbiaoxian') == -1) {
-        callback('患者ICON研究必须符合入选标准，请仔细核对入选标准后再选择。')
-        return
-      }
-      callback()
-    },
+    // isiconRule(rule, value, callback) {
+    //   if (!value) {
+    //     callback('该选项必填！')
+    //     return
+    //   }
+    //   if (this.form.getFieldValue('isbiaoxian') == -1) {
+    //     callback('患者ICON研究必须符合入选标准，请仔细核对入选标准后再选择。')
+    //     return
+    //   }
+    //   callback()
+    // },
     isbiaoxianRule(rule, value, callback) {
       if (!value) {
         callback('该选项必填！')
