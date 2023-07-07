@@ -71,7 +71,7 @@
     "postcss": "^8.3.5",
     "postcss-less": "^6.0.0",
     "regenerator-runtime": "^0.13.9",
-    "stylelint": "^14.8.5",
+    "stylelint": "^15.10.1",
     "stylelint-config-css-modules": "^4.1.0",
     "stylelint-config-recess-order": "^3.0.0",
     "stylelint-config-recommended": "^7.0.0",
