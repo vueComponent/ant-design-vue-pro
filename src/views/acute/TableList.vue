@@ -143,12 +143,6 @@ export default {
           }
         },
         {
-          title: '急性加重日期',
-          dataIndex: 'createDate',
-          width: 120,
-          customRender: createDate => moment(createDate).format('YYYY-MM-DD')
-        },
-        {
           title: '创建人',
           dataIndex: 'creatorName',
           width: 100

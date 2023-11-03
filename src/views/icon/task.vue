@@ -196,7 +196,7 @@
                 </a-radio-group>
               </a-form-item>
               <div v-if="controle">
-                <a-form-item label="7-1 CT检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="7-1 检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['e1', {...dateRequire, initialValue: initValue('e1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
                 <a-form-item label="7-2 FVC:" :labelCol="labelColHor" :wrapperCol="wrapperHor">

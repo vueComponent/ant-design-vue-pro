@@ -38,7 +38,7 @@
             <div class="baselineForm" :style="baselineFormStyle">
               <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!（ICON患者，必须填写实际检测值。基线访视辅助检查可使用入组前6个月内的检查结果，但要求从检查日期到入组日期之间未发生急性加重，否则需要在基线数据收集时重新辅助检查）</p>
               <div class="title">1.CT基本信息
-                <!-- <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" /> -->
+                <a-icon type="zoom-in" style="float: right;margin-top: 12px;margin-right: 12px;color: #ccc;" @click="changeOcr" />
               </div>
               <a-form-item label="(1) CT检查日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a1', {...dateRequire, initialValue: initValue('a1', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
@@ -57,7 +57,7 @@
                       <div class="ant-upload-text">Upload</div>
                     </div>
                   </a-upload>
-                  <a-button style="position: absolute;top: 84px;left: 120px;font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1 && showOcr">OCR识别</a-button>
+                  <a-button style="font-size: 12px;padding: 0 5px;height: 30px;" @click="_import" v-if="fileList.length === 1 && showOcr">OCR识别</a-button>
                   <!-- <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
                     <img alt="example" style="width: 100%" :src="previewImage" />
                   </a-modal> -->
@@ -615,7 +615,7 @@ export default {
       this.spinning = true
       var params = new URLSearchParams()
       params.append('type', 6)
-      params.append('url', this.fileList[0].response.data.src)
+      params.append('url', this.fileList[0].url || this.fileList[0].response.data.src)
       var that = this
       getOcrResult(params)
         .then(res => {

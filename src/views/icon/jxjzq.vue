@@ -516,9 +516,9 @@ export default {
         that.patient = res.data.patient
         that.patientBasis = res.data.patientBasis
         that.orgTree = res.data.list
-        that.maskId = res.data.list[0].basisMarkId
+        that.maskId = res.data.list[1].basisMarkId
         that.defaultSelectedKeys = [that.maskId]
-        that.executeStatus = res.data.list[0].executeStatus
+        that.executeStatus = res.data.list[1].executeStatus
         that.canEdit = that.$ls.get(ACCESS_TOKEN).centerId === that.patient.targetCenterId
         that.getFormData()
       })
@@ -645,9 +645,9 @@ export default {
               getPatientBasis(params)
                 .then(res => {
                   that.orgTree = res.data.list
-                  that.maskId = res.data.list[0].basisMarkId
+                  that.maskId = res.data.list[1].basisMarkId
                   that.defaultSelectedKeys = [that.maskId]
-                  that.executeStatus = res.data.list[0].executeStatus
+                  that.executeStatus = res.data.list[1].executeStatus
                 })
             })
             .catch(error => {
@@ -820,9 +820,9 @@ export default {
           getPatientBasis(params)
             .then(res => {
               that.orgTree = res.data.list
-              that.maskId = res.data.list[0].basisMarkId
+              that.maskId = res.data.list[1].basisMarkId
               that.defaultSelectedKeys = [that.maskId]
-              that.executeStatus = res.data.list[0].executeStatus
+              that.executeStatus = res.data.list[1].executeStatus
             })
         })
         .catch(error => {

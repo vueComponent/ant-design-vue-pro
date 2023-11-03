@@ -375,7 +375,7 @@ export default {
       this.spinning = true
       var params = new URLSearchParams()
       params.append('type', 5)
-      params.append('url', this.fileList[0].response.data.src)
+      params.append('url', this.fileList[0].url || this.fileList[0].response.data.src)
       var that = this
       getOcrResult(params)
         .then(res => {

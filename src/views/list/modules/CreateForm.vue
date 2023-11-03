@@ -1,16 +1,5 @@
 <template>
-  <a-modal
-    :title="options.title"
-    :width="800"
-    :bodyStyle="bodyStyle"
-    :maskClosable="maskClosable"
-    :destroyOnClose="destroyOnClose"
-    :centered="centered"
-    :visible="visible"
-    :confirmLoading="confirmLoading"
-    @ok="handleSubmit"
-    @cancel="handleCancel"
-  >
+  <a-modal :title="options.title" :width="800" :bodyStyle="bodyStyle" :maskClosable="maskClosable" :destroyOnClose="destroyOnClose" :centered="centered" :visible="visible" :confirmLoading="confirmLoading" @ok="handleSubmit" @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="病例识别号" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -18,12 +7,7 @@
         </a-form-item>
         <!-- <a-form-item label="病例入组编号" :labelCol="labelCol" :wrapperCol="wrapperCol"><a-input v-decorator="['card', { rules: [{ required: true }] }]" /></a-form-item> -->
         <a-form-item label="患者同意注册日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker
-            style="width: 100%"
-            format="YYYY-MM-DD"
-            v-decorator="['registerDate', requiredRule]"
-            :disabledDate="disabledDate"
-          />
+          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['registerDate', requiredRule]" :disabledDate="disabledDate" />
         </a-form-item>
         <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['name', requiredRule]" />
@@ -46,12 +30,7 @@
         </a-form-item> -->
         <div v-if="isShowPat">
           <a-form-item label="ICON入组时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-            <a-date-picker
-              style="width: 100%"
-              format="YYYY-MM-DD"
-              v-decorator="['iconJoinDate', requiredRule]"
-              :disabledDate="disabledDate"
-            />
+            <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['iconJoinDate', requiredRule]" :disabledDate="disabledDate" />
           </a-form-item>
           <a-form-item label="既往胸部CT是否存在影像学上支气管扩张的表现" :labelCol="labelCol" :wrapperCol="wrapperCol">
             <a-radio-group v-decorator="['isbiaoxian', { rules: [{ validator: isbiaoxianRule }] }]">
@@ -85,12 +64,7 @@
           </a-form-item>
         </div>
         <a-form-item label="出现咳嗽咳痰等呼吸相关症状时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker
-            style="width: 100%"
-            format="YYYY-MM-DD"
-            v-decorator="['coughDate']"
-            :disabledDate="disabledDate"
-          />
+          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['coughDate']" :disabledDate="disabledDate" />
         </a-form-item>
         <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['sex', requiredRule]">
@@ -105,12 +79,7 @@
           <a-row :gutter="8">
             <a-col :span="12">
               <a-form-item>
-                <a-cascader
-                  v-decorator="['residence', requiredRule]"
-                  :options="residences"
-                  :fieldNames="{ label: 'city', value: 'cityId', children: 'children' }"
-                  placeholder="选择省/市"
-                />
+                <a-cascader v-decorator="['residence', requiredRule]" :options="residences" :fieldNames="{ label: 'city', value: 'cityId', children: 'children' }" placeholder="选择省/市" />
               </a-form-item>
             </a-col>
             <a-col :span="12">
@@ -147,10 +116,7 @@
         <a-form-item label="随访开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol" class="aaa">
           <a-popover>
             <template slot="content"> 第一次半年随访根据此时间生成 </template>
-            <a-icon
-              type="exclamation-circle"
-              style="position: relative; left: -20px; color: #0399ec; cursor: pointer"
-            />
+            <a-icon type="exclamation-circle" style="position: relative; left: -20px; color: #0399ec; cursor: pointer" />
           </a-popover>
           <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['startDate', requiredRule]" />
         </a-form-item>
@@ -165,22 +131,14 @@
         </a-form-item>
         <div v-if="isDeath">
           <a-form-item label="去世时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-            <a-date-picker
-              style="width: 100%"
-              format="YYYY-MM-DD"
-              v-decorator="['deathDate', requiredRule]"
-              :disabledDate="disabledDate"
-            />
+            <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['deathDate', requiredRule]" :disabledDate="disabledDate" />
           </a-form-item>
         </div>
         <a-form-item :wrapperCol="agrWrapperCol">
-          <a-checkbox
-            v-decorator="[
+          <a-checkbox v-decorator="[
               'agreeMent',
               { rules: [{ required: true, validator: agrValidator }], valuePropName: 'checked' },
-            ]"
-            :disabled="options.title == '编辑患者'"
-          >
+            ]" :disabled="options.title == '编辑患者'">
             患者是否已签署
             <a href="javascript:;" @click="download">知情同意书</a>
           </a-checkbox>
@@ -246,11 +204,11 @@ export default {
       wxPatientId: undefined
     }
   },
-  created () {
+  created() {
     const that = this
     getProvinceAndCity().then((res) => {
       const keyMap = { province: 'city', provinceId: 'cityId' }
-      _.each(res.data, function (item, index) {
+      _.each(res.data, function(item, index) {
         that.residences[index] = Object.keys(item).reduce((newData, key) => {
           let newKey = keyMap[key] || key
           newData[newKey] = item[key]
@@ -260,7 +218,7 @@ export default {
     })
     getNation().then((res) => {
       const keyMap = { name: 'title', nationId: 'value' }
-      _.each(res.data, function (item, index) {
+      _.each(res.data, function(item, index) {
         that.nationList[index] = Object.keys(item).reduce((newData, key) => {
           let newKey = keyMap[key] || key
           newData[newKey] = item[key]
@@ -273,7 +231,7 @@ export default {
     dictionary1.append('status', 1)
     getDictionaryAttributeByDictionaryId(dictionary1).then((res) => {
       const keyMap = { name: 'label', dictionaryAttributeId: 'value' }
-      _.each(res.data, function (item, index) {
+      _.each(res.data, function(item, index) {
         that.professionList[index] = Object.keys(item).reduce((newData, key) => {
           let newKey = keyMap[key] || key
           newData[newKey] = item[key]
@@ -286,7 +244,7 @@ export default {
     dictionary2.append('status', 1)
     getDictionaryAttributeByDictionaryId(dictionary2).then((res) => {
       const keyMap = { name: 'label', dictionaryAttributeId: 'value' }
-      _.each(res.data, function (item, index) {
+      _.each(res.data, function(item, index) {
         that.censusList[index] = Object.keys(item).reduce((newData, key) => {
           let newKey = keyMap[key] || key
           newData[newKey] = item[key]
@@ -300,7 +258,7 @@ export default {
     dictionary3.append('status', 1)
     getDictionaryAttributeByDictionaryId(dictionary3).then((res) => {
       const keyMap = { name: 'label', dictionaryAttributeId: 'value' }
-      _.each(res.data, function (item, index) {
+      _.each(res.data, function(item, index) {
         that.payTypeList[index] = Object.keys(item).reduce((newData, key) => {
           let newKey = keyMap[key] || key
           newData[newKey] = item[key]
@@ -322,7 +280,7 @@ export default {
         this[t] = false
       }
     },
-    dataEcho (value) {
+    dataEcho(value) {
       this.options.title = '患者入组信息'
       this.patientPendingId = value.patientPendingId
       this.wxPatientId = value.wxPatientId
@@ -410,7 +368,7 @@ export default {
       }, 0)
       this.visible = true
     },
-    handleSubmit () {
+    handleSubmit() {
       if (!this.confirmLoading) {
         this.confirmLoading = true
         var submitPatientPendingId = this.patientPendingId || ''
@@ -566,6 +524,11 @@ export default {
         return
       }
       let num = value.toUpperCase()
+      const reg = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+      if (!reg.test(num)) {
+        callback('请输入正确的身份证号！')
+        return
+      }
       if (num.length === 18) {
         //验证城市
         let aCity = {
@@ -665,6 +628,36 @@ export default {
           })
         }
       }
+      if (num.length === 15) {
+        const arr = num.match(/^\d{6}(\d{2})(\d{2})(\d{2})\d{3}$/)
+        // 回显性别、生日
+        if (!this.patientId && !this.patientPendingId) {
+          this.form.resetFields(['birthDate'])
+          this.confirmLoading = true
+          const params = new FormData()
+          params.append('card', num)
+          validateCard(params).then((res) => {
+            this.confirmLoading = false
+            switch (res.code) {
+              case 2:
+                callback(res.msg)
+                break
+              case 3:
+                let birthDate = new Date(arr[1] + '/' + arr[2] + '/' + arr[3]).getTime()
+                this.form.setFieldsValue({
+                  birthDate: moment(birthDate, 'x')
+                })
+                callback()
+                break
+              case 4:
+                callback('该患者已存在，请在列表内搜索！')
+                break
+              default:
+                callback()
+            }
+          })
+        }
+      }
       callback()
       return
     },
@@ -688,7 +681,7 @@ export default {
   left: -18px;
 }
 
-.aaa .ant-form-item-children > i {
+.aaa .ant-form-item-children>i {
   position: absolute !important;
   left: -22px !important;
   top: 4px;

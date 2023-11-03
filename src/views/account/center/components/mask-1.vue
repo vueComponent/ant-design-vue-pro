@@ -480,6 +480,23 @@
                   <a-input style="width: 240px;" v-decorator="['b212', {...inputRequired, initialValue: initValue('b212')}]" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
+              <a-form-item label="(14) 是否CF筛查" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-radio-group v-decorator="['c1', {...require1, initialValue: initValue('c1')}]" @change="changeRadio($event, 'controlc1')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <div v-if="controlc1">
+                <a-form-item label="CF筛查是否正常 " :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                  <a-radio-group v-decorator="['c11', {...selectRequired, initialValue: initValue('c11')}]" @change="changeRadio($event, 'controlc11')">
+                    <a-radio value="1">正常</a-radio>
+                    <a-radio value="-1">异常</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+                <a-form-item class="no-border" label="异常数值" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlc1 && controlc11">
+                  <a-input style="width: 240px;" v-decorator="['c111', {...inputRequired, initialValue: initValue('c111')}]" autocomplete="off"></a-input>
+                </a-form-item>
+              </div>
             </div>
           </a-form>
         </a-col>
@@ -626,7 +643,9 @@ export default {
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId == 1 || false,
       canEdit: false,
       submitInfo: undefined,
-      totalStatus: 1
+      totalStatus: 1,
+      controlc1: false,
+      controlc11: false
     }
   },
   created() {
@@ -869,6 +888,12 @@ export default {
             that.controlb202 = true
           }
         }
+        if(answer.c1 === 1) {
+          that.controlc1 = true
+        }
+        if(answer.c11 === -1) {
+          that.controlc11 = true
+        }
       }
       return answer
     },
@@ -906,7 +931,7 @@ export default {
             b13: '-1',
             b14: '-1',
             b15: '-1',
-            b161: ['1'],
+            b161: ['1']
           })
         })
       }
@@ -916,7 +941,13 @@ export default {
         } else {
           this[t] = false
         }
-      } else if (e.target.value === '1') {
+      } else if (t === 'controlc11'){
+        if (e.target.value === '-1') {
+          this[t] = true
+        } else {
+          this[t] = false
+        }
+      } else if(e.target.value === '1') {
         this[t] = true
       } else {
         this[t] = false
