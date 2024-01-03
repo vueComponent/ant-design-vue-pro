@@ -427,6 +427,11 @@ export default {
       getBasisForm(params)
         .then(res => {
           if (res.data && res.data.xbyxx) {
+            for (let key of Object.keys(res.data.xbyxx)) {
+              if (res.data.xbyxx[key] === 0) {
+                res.data.xbyxx[key] = "0";
+              }
+            }
             that.xbyxx = that.dealAnswers(res.data.xbyxx)
           }
           if (res.data && res.data.annexListXbyxx) {
