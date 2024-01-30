@@ -136,7 +136,7 @@
               </a-form-item>
               <a-form-item label="(2) 支气管壁增厚情况" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-show="!collap">
                 <a-radio-group v-decorator="['a11', {initialValue: initValue('a11')}]" @change="computeBhalla" style="line-height: 30px;">
-                  <a-radio value="0">无</a-radio>
+                  <a-radio :value="'0'">无</a-radio>
                   <a-radio value="1">轻度（支气管壁的厚度相当于临近血管壁厚度）</a-radio>
                   <a-radio value="2">中度（支气管壁的厚度相当于临近血管壁厚度的1-2倍）</a-radio>
                   <a-radio value="3">重度（支气管壁的厚度相当于临近血管壁厚度的2倍）</a-radio>
@@ -152,7 +152,7 @@
               </a-form-item>
               <a-form-item label="(4) 支气管管腔黏液阻塞范围(肺段数):" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-show="!collap">
                 <a-radio-group v-decorator="['a13', {initialValue: initValue('a13')}]" @change="computeBhalla">
-                  <a-radio value="0">无</a-radio>
+                  <a-radio :value="'0'">无</a-radio>
                   <a-radio value="1">1-5</a-radio>
                   <a-radio value="2">6-9</a-radio>
                   <a-radio value="3">&gt;9</a-radio>
@@ -435,6 +435,11 @@ export default {
       getBasisForm(params)
         .then(res => {
           if (res.data && res.data.xbyxx) {
+            for (let key of Object.keys(res.data.xbyxx)) {
+              if (res.data.xbyxx[key] === 0) {
+                res.data.xbyxx[key] = "0";
+              }
+            }
             that.xbyxx = that.dealAnswers(res.data.xbyxx)
           } else {
             that.form.resetFields()

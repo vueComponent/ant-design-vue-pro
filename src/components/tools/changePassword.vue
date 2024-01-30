@@ -32,6 +32,7 @@ export default {
       destroyOnClose: false,
       form: this.$form.createForm(this),
       ModalText: {},
+      password: ''
     };
   },
   created() {
@@ -47,6 +48,10 @@ export default {
       Params.append('doctorId', id);
       getDetailById(Params).then(res => {
         this.ModalText = res.data.doctor
+        this.password = res.data.doctor.password
+        if (this.password == 'zklm2020' || this.password == 'zklm2023' || this.password == 'zklm2024') {
+          this.visible = true;
+        }
       });
     },
     showModal() {
@@ -132,6 +137,9 @@ export default {
       }
     },
     handleCancel(e) {
+      if (this.password == 'zklm2020' || this.password == 'zklm2023' || this.password == 'zklm2024') {
+        return false
+      }
       this.visible = false;
     }
   }
