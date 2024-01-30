@@ -824,9 +824,21 @@ export default {
       this.submitInfo = v
       this.$refs.submitBtn.$el.click()
     },
+    getBirthdayByIdNO (IdNO){
+      let birthday = "";
+      if (IdNO.length==18) {
+        birthday = IdNO.substr(6,8);
+        return birthday.replace(/(.{4})(.{2})/,"$1-$2-");
+      }else if(IdNO.length==15){
+        birthday = "19"+IdNO.substr(6,6);
+        return birthday.replace(/(.{4})(.{2})/,"$1-$2-");
+      }else{
+        return "";
+      }
+    },
     disabledDate(current) {
-      // Can not select days before today and today
-      return current && current > moment().endOf('day');
+      let date = this.getBirthdayByIdNO(this.patient.card)
+      return current && current > moment().endOf('day') || moment(date).endOf('day') > current;
     },
     getFormData() {
       this.spinning = true

@@ -21,7 +21,7 @@
       </a-radio-group>
     </a-form-item>
     <a-form-item label="(3) 患者支扩确诊时间:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-      <a-date-picker placeholder="请选择" v-decorator="['a_3', dateRequire]"></a-date-picker style="width: 200px;">
+      <a-date-picker placeholder="请选择" @change="changeDate" :disabled-date="disabledDate" v-decorator="['a_3', dateRequire]" style="width: 200px;"></a-date-picker>
     </a-form-item>
     <a-form-item label="(4) 主要临床症状（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
       <a-checkbox-group v-decorator="['a_4', selectRequired]">
@@ -314,7 +314,7 @@
     </a-form-item>
     <a-row v-if="controlList[maskId].control_b_17_1">
       <a-col :span="18" :push="6">
-        <a-form-item label="他汀类" :labelCol="labelColHor" :wrapperCol="wrapper18"class="border-dotted">
+        <a-form-item label="他汀类" :labelCol="labelColHor" :wrapperCol="wrapper18" class="border-dotted">
             <a-radio-group v-decorator="['b_17_1_1', require1]">
               <a-radio value="1">是</a-radio>
               <a-radio value="-1">否</a-radio>
@@ -570,6 +570,31 @@ export default{
   		}
   	},
   	methods: {
+      getBirthdayByIdNO (IdNO){
+        let birthday = "";
+        if (IdNO.length==18) {
+          birthday = IdNO.substr(6,8);
+          return birthday.replace(/(.{4})(.{2})/,"$1-$2-");
+        }else if(IdNO.length==15){
+          birthday = "19"+IdNO.substr(6,6);
+          return birthday.replace(/(.{4})(.{2})/,"$1-$2-");
+        }else{
+          return "";
+        }
+      },
+      disabledDate(current) {
+        let date = this.getBirthdayByIdNO(this.patient.card)
+        return current && current > moment().endOf('day') || moment(date).endOf('day') > current;
+      },
+      changeDate(date) {
+        let timeDiff = Math.abs(new Date(date._d) - new Date(this.getBirthdayByIdNO(this.patient.card)));
+        // 将毫秒数转换为年数
+        let yearDiff = timeDiff / (1000 * 3600 * 24 * 365.25); // 考虑闰年
+        // 判断年数是否大于 10 年
+        if (yearDiff < 10) {
+          this.$message.warning('是否为儿童确诊支扩');
+        }
+      },
   		changeSelect(e, t) {
 	      this.controlList[this.maskId][t] = e.target.checked
 	    },

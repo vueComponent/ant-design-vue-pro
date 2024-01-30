@@ -45,7 +45,7 @@
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item label="(2) 患者支扩确诊时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-month-picker placeholder="请选择" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-month-picker>
+                <a-month-picker placeholder="请选择" @change="changeDate" v-decorator="['a3', {...dateRequire, initialValue: initValue('a3', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-month-picker>
               </a-form-item>
               <a-form-item label="(3) 访视类型" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b23', {...selectRequired, initialValue: initValue('b23')}]">
@@ -718,9 +718,42 @@ export default {
         return this.zkbszl[key] + ''
       }
     },
+    getBirthdayByIdNO (IdNO){
+      let birthday = "";
+      if (IdNO.length==18) {
+        birthday = IdNO.substr(6,8);
+        return birthday.replace(/(.{4})(.{2})/,"$1-$2-");
+      }else if(IdNO.length==15){
+        birthday = "19"+IdNO.substr(6,6);
+        return birthday.replace(/(.{4})(.{2})/,"$1-$2-");
+      }else{
+        return "";
+      }
+    },
+    getBirthdayByIdNO (IdNO){
+      let birthday = "";
+      if (IdNO.length==18) {
+        birthday = IdNO.substr(6,8);
+        return birthday.replace(/(.{4})(.{2})/,"$1-$2-");
+      }else if(IdNO.length==15){
+        birthday = "19"+IdNO.substr(6,6);
+        return birthday.replace(/(.{4})(.{2})/,"$1-$2-");
+      }else{
+        return "";
+      }
+    },
     disabledDate(current) {
-      // Can not select days before today and today
-      return current && current > moment().endOf('day');
+      let date = this.getBirthdayByIdNO(this.patient.card)
+      return current && current > moment().endOf('day') || moment(date).endOf('day') > current;
+    },
+    changeDate(date) {
+      let timeDiff = Math.abs(new Date(date._d) - new Date(this.getBirthdayByIdNO(this.patient.card)));
+      // 将毫秒数转换为年数
+      let yearDiff = timeDiff / (1000 * 3600 * 24 * 365.25); // 考虑闰年
+      // 判断年数是否大于 10 年
+      if (yearDiff < 10) {
+        this.$message.warning('是否为儿童确诊支扩');
+      }
     },
     handleChange(valus) {
       if (valus.indexOf('3') >= 0) {
