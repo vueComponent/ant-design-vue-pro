@@ -81,7 +81,7 @@
                 <span>随访摘要：</span>
                 {{item.typeName}}
               </p>
-              <a @click="exec(item.patientBasisId)">
+              <a @click="exec(item.type, item.patientBasisId)">
                 <a-button type="primary" size="small" style="float:right;">
                   <my-icon type="iconxiangqing_huaban" />
                   执行
@@ -381,9 +381,13 @@ export default {
       this.visible = false
       this.$router.push('/jxjzq/' + id)
     },
-    exec(id) {
+    exec(type, id) {
       this.visible = false
-      this.$router.push('/list/task/' + id)
+      if (type === 6) {
+        this.$router.push('/icon/task/' + id)
+      } else {
+        this.$router.push('/list/task/' + id)
+      }
     }
   }
 };

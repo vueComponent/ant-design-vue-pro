@@ -56,8 +56,6 @@
         <template>
           <div v-if="record.targetCenterId === centerId">
             <a @click="exec(record)">编辑</a>
-            <a-divider type="vertical" />
-            <a @click="del(record)">删除</a>
           </div>
         </template>
       </span>
