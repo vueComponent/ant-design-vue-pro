@@ -433,6 +433,10 @@ export default {
         if (!errors) {
           var re = this.form.getFieldsValue()
           var that = this
+          if(re.b4 === '1' && re.b41.indexOf('0') > -1 && re.b43.indexOf('0') > -1 && re.b48.indexOf('0') > -1 ) {
+            that.$message.error('有规律的呼吸疾病药物治疗不可同时勾选三项无')
+            return false
+          }
           re = {
             ...re,
             'b31': typeof re['b31'] !== 'undefined' ? re['b31'].join(',') : '',
