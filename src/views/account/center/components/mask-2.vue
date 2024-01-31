@@ -39,13 +39,13 @@
               <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
               <div class="title">1.体格检查</div>
               <a-form-item label="(1) 经皮血氧饱和度SpO2:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a5', {...inputRequired, initialValue: initValue('a5')}]" style="width: 240px;" addonAfter="%" autocomplete="off"></a-input>
+                <a-input @blur="handleSpO2" v-decorator="['a5', {...inputRequired, initialValue: initValue('a5')}]" style="width: 240px;" addonAfter="%" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(2) 身高:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a6', {...inputRequired, initialValue: initValue('a6')}]" style="width: 240px;" addonAfter="cm" @change="changeHeight($event)" autocomplete="off"></a-input>
+                <a-input @blur="handleHeight" v-decorator="['a6', {...inputRequired, initialValue: initValue('a6')}]" style="width: 240px;" addonAfter="cm" @change="changeHeight($event)" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(3) 体重:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-input v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="changeWeight($event)" autocomplete="off"></a-input>
+                <a-input @blur="handleWeight" v-decorator="['a7', {...inputRequired, initialValue: initValue('a7')}]" style="width: 240px;" addonAfter="kg" @change="changeWeight($event)" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(4) BMI(自动演算出):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input v-decorator="['a8', {initialValue: initValue('a8')}]" :readOnly="true" style="width: 240px;" autocomplete="off"></a-input>
@@ -204,6 +204,21 @@ export default {
     moment,
     changeSelect(e, t) {
       this[t] = e.target.checked
+    },
+    handleSpO2(e) {
+      if (e.target.value && e.target.value < 50) {
+        this.$message.warning('请确认输入数值是否正确');
+      }
+    },
+    handleHeight(e) {
+      if (e.target.value && e.target.value < 130) {
+        this.$message.warning('请确认输入数值是否正确');
+      }
+    },
+    handleWeight(e) {
+      if (e.target.value && e.target.value < 30) {
+        this.$message.warning('请确认输入数值是否正确');
+      }
     },
     changeRadio(e, t) {
       if (t === 'controlb191') {
