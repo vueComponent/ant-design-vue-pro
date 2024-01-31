@@ -177,6 +177,9 @@
               <a-form-item class="no-border" label="中耳炎具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb68">
                 <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b66', {...dateRequire, initialValue: initValue('b66', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
               </a-form-item>
+              <a-form-item label="疾病名称" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb67">
+                <a-input style="width: 240px;" v-decorator="['b67', {...inputRequired, initialValue: initValue('b67')}]" autocomplete="off"></a-input>
+              </a-form-item>
               <a-form-item label="(7) 有无其他疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b70', {...require2, initialValue: initValue('b70')}]" @change="changeRadio($event, 'controlb70')">
                   <a-radio value="1">有</a-radio>
@@ -710,6 +713,13 @@ export default {
     disabledDate(current) {
       let date = this.getBirthdayByIdNO(this.patient.card)
       return current && current > moment().endOf('day') || moment(date).endOf('day') > current;
+    },
+    detect(d, v) {
+      if(Array.isArray(this.form.getFieldValue(d)) && this.form.getFieldValue(d).indexOf(v) > -1) {
+        return true
+      } else {
+        return false
+      }
     },
     handleNone(e, d, v, arr) {
       if(e.target.checked){

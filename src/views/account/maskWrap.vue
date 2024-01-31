@@ -604,7 +604,7 @@ export default{
         } else {
           return false
         }
-      }
+      },
       changeDate(date) {
         let timeDiff = Math.abs(new Date(date._d) - new Date(this.getBirthdayByIdNO(this.patient.card)));
         // 将毫秒数转换为年数
