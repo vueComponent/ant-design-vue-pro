@@ -58,15 +58,15 @@
     <a-form-item label="(4) 过去一年的门诊急性加重次数:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
       <a-date-picker placeholder="请选择" style="width: 200px;" v-decorator="['b_4', dateRequire]"></a-date-picker>
     </a-form-item>
-    <a-form-item label="(5) 有无以下疾病及事件（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+    <a-form-item label="(5) 有无病因相关的病史及事件（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
       <a-checkbox-group v-decorator="['b_5', selectRequired]">
-        <a-checkbox value="1">既往有无麻疹</a-checkbox>
-        <a-checkbox value="2">百日咳</a-checkbox>
-        <a-checkbox value="3">肺结核</a-checkbox>
-        <a-checkbox value="4">NTM</a-checkbox>
-        <a-checkbox value="5">溺水</a-checkbox>
-        <a-checkbox value="6">其他</a-checkbox>
-        <a-checkbox value="7">无</a-checkbox>
+        <a-checkbox value="1" :disabled="detect('b_5', '7')">既往有无麻疹</a-checkbox>
+        <a-checkbox value="2" :disabled="detect('b_5', '7')">百日咳</a-checkbox>
+        <a-checkbox value="3" :disabled="detect('b_5', '7')">肺结核</a-checkbox>
+        <a-checkbox value="4" :disabled="detect('b_5', '7')">NTM</a-checkbox>
+        <a-checkbox value="5" :disabled="detect('b_5', '7')">溺水</a-checkbox>
+        <a-checkbox value="6" :disabled="detect('b_5', '7')">其他</a-checkbox>
+        <a-checkbox value="7" @change="handleNone($event, 'b_5', '7')">无</a-checkbox>
       </a-checkbox-group>
     </a-form-item>
     <a-form-item label="(6) 目前合并呼吸系统相关疾病:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -586,6 +586,25 @@ export default{
         let date = this.getBirthdayByIdNO(this.patient.card)
         return current && current > moment().endOf('day') || moment(date).endOf('day') > current;
       },
+      handleNone(e, d, v, arr) {
+        if(e.target.checked){
+          let data = {}
+          data[d] = [v]
+          this.$nextTick(() => {
+            this.form.setFieldsValue(data)
+            arr.forEach((t) => {
+              this[t] = false
+            })
+          })
+        }
+      },
+      detect(d, v) {
+        if(Array.isArray(this.form.getFieldValue(d)) && this.form.getFieldValue(d).indexOf(v) > -1) {
+          return true
+        } else {
+          return false
+        }
+      }
       changeDate(date) {
         let timeDiff = Math.abs(new Date(date._d) - new Date(this.getBirthdayByIdNO(this.patient.card)));
         // 将毫秒数转换为年数
