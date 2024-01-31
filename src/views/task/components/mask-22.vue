@@ -59,23 +59,23 @@
               </a-form-item>
               <a-form-item label="FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx" class="requireIcon">
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
-                  <a-input style="width: 240px;" v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" addonAfter="L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['a21', {...inputRequired, initialValue: initValue('a21')}]" addonAfter="L" autocomplete="off" @change="notice($event, 'FVC', 0.5, 6)"></a-input>
                 </a-form-item>
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
-                  <a-input style="width: 240px;" v-decorator="['a22', {...inputRequired, initialValue: initValue('a22')}]" addonAfter="%" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['a22', {...inputRequired, initialValue: initValue('a22')}]" addonAfter="%" autocomplete="off" @change="notice($event, 'FVC%', 20, 150)"></a-input>
                 </a-form-item>
               </a-form-item>
               <a-form-item label="FEV1::" :labelCol="labelXs" :wrapperCol="wrapperMx" class="requireIcon">
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
-                  <a-input style="width: 240px;" v-decorator="['a31', {...inputRequired, initialValue: initValue('a31')}]" addonAfter="L" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['a31', {...inputRequired, initialValue: initValue('a31')}]" addonAfter="L" autocomplete="off" @change="notice($event, 'FEV1', 0.2, 5)"></a-input>
                 </a-form-item>
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
-                  <a-input style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]" addonAfter="%" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]" addonAfter="%" autocomplete="off" @change="notice($event, 'FEV%', 20, 150)"></a-input>
                 </a-form-item>
               </a-form-item>
               <a-form-item label="FEV1%FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx" class="requireIcon">
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
-                  <a-input style="width: 240px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" addonAfter="%" autocomplete="off"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['a41', {...inputRequired, initialValue: initValue('a41')}]" addonAfter="%" autocomplete="off" @change="notice($event, 'FEV1%FVC', undefined, 100)"></a-input>
                 </a-form-item>
               </a-form-item>
               <a-form-item label="FEV1%VC MAX::" :labelCol="labelXs" :wrapperCol="wrapperMx">
@@ -496,6 +496,7 @@ import { MyIcon } from '@/components/_util/util'
 import { getOcrResult } from '@/api/basis'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import ContactForm from '@/views/account/ContactForm'
+import _ from 'lodash'
 export default {
   name: 'task22',
   components: {
@@ -637,6 +638,8 @@ export default {
         that.canEdit = that.$ls.get(ACCESS_TOKEN).centerId === that.patient.targetCenterId
       })
     this.getFormData()
+    // 创建节流版本，防止触发过快
+    this.notice = _.debounce(this.notice, 300)
   },
   methods: {
     ...mapActions(['CloseSidebar']),
@@ -1031,6 +1034,20 @@ export default {
             })
         }
       })
+    },
+    notice(e, name, low, high) {
+      let v = parseFloat(e.target.value)
+      if(Number.isNaN(v)) {
+        this.$message.error('请输入数字')
+        e.target.value = ''
+      } else {
+        if(low && v < low) {
+          this.$message.info(`请确认${name}的值`)
+        }
+        if(high && v > high) {
+          this.$message.info(`请确认${name}的值`)
+        }
+      }
     }
   }
 }
