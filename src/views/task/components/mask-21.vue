@@ -108,7 +108,7 @@
                   <!-- <a-form-item label="ABPA检查时间" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-date-picker placeholder="请选择" v-decorator="['b1', {...dateRequire, initialValue: initValue('b1', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
                   </a-form-item> -->
-                  <a-form-item label="外周血嗜酸细胞:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-form-item label="外周血嗜酸细胞(绝对值):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-form-item :style="{ display: 'inline-block'}">
                       <a-input addonAfter="*10^9/L" style="width: 240px; margin-right: 20px;" v-decorator="['a11', { initialValue: initValue('a11')}]" autocomplete="off"></a-input>
                     </a-form-item>
@@ -168,9 +168,8 @@
                 </div>
                 <a-form-item label="(3) 自身免疫抗体检查:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a2', {...selectRequired, initialValue: initValue('a2')}]" @change="changeRadio($event, 'controla2')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                    <a-radio value="-2">未做</a-radio>
+                    <a-radio value="1">已做</a-radio>
+                    <a-radio value="-1">未做</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controla2">
@@ -205,9 +204,8 @@
                 </div>
                 <a-form-item label="(4) 球蛋白缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a3', {...selectRequired, initialValue: initValue('a3')}]" @change="changeRadio($event, 'controla3')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                    <a-radio value="-2">未做</a-radio>
+                    <a-radio value="1">已做</a-radio>
+                    <a-radio value="-1">未做</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controla3">
@@ -256,9 +254,8 @@
                 </div>
                 <a-form-item label="(5) 补体缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a4', {...selectRequired, initialValue: initValue('a4')}]" @change="changeRadio($event, 'controla4')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="-1">否</a-radio>
-                    <a-radio value="-2">未做</a-radio>
+                    <a-radio value="1">已做</a-radio>
+                    <a-radio value="-1">未做</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controla4">
@@ -294,9 +291,8 @@
                 </div>
                 <a-form-item label="(6) α-1 抗蛋白酶缺乏:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a5', {...selectRequired, initialValue: initValue('a5')}]" @change="changeRadio($event, 'controla5')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="2">否</a-radio>
-                    <a-radio value="3">未做</a-radio>
+                    <a-radio value="1">已做</a-radio>
+                    <a-radio value="-1">未做</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controla5">
@@ -315,9 +311,8 @@
                 </div>
                 <a-form-item label="(7) 囊性纤维化:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a6', {...selectRequired, initialValue: initValue('a6')}]" @change="changeRadio($event, 'controla6')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="2">否</a-radio>
-                    <a-radio value="3">未做</a-radio>
+                    <a-radio value="1">已做</a-radio>
+                    <a-radio value="-1">未做</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controla6">
@@ -342,9 +337,8 @@
                 </div>
                 <a-form-item label="(8) 纤毛功能检测:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['a7', {...selectRequired, initialValue: initValue('a7')}]" @change="changeRadio($event, 'controla7')">
-                    <a-radio value="1">是</a-radio>
-                    <a-radio value="2">否</a-radio>
-                    <a-radio value="3">未做</a-radio>
+                    <a-radio value="1">已做</a-radio>
+                    <a-radio value="-1">未做</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <div v-if="controla7">
