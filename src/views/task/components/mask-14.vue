@@ -148,7 +148,7 @@
                   <a-checkbox value="4" :disabled="detect('b6', '6')" :checked="controlb64" @change="changeSelect($event, 'controlb64')">哮喘</a-checkbox>
                   <a-checkbox value="5" :disabled="detect('b6', '6')" :checked="controlb65" @change="changeSelect($event, 'controlb65')">慢阻肺</a-checkbox>
                   <a-checkbox value="8" :disabled="detect('b6', '6')" :checked="controlb68" @change="changeSelect($event, 'controlb68')">中耳炎</a-checkbox>
-                  <a-checkbox value="6" @change="handleNone($event, 'b6', '6', ['controlb61', 'controlb62', 'controlb63', 'controlb64', 'controlb65', 'controlb68'])" :checked="controlb66" @change="changeSelect($event, 'controlb66')">无</a-checkbox>
+                  <a-checkbox value="6" @change="handleNone($event, 'b6', '6', ['controlb61', 'controlb62', 'controlb63', 'controlb64', 'controlb65', 'controlb68'])">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item class="no-border" label="鼻炎具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb61">
@@ -707,6 +707,22 @@ export default {
     disabledDate(current) {
       let date = this.getBirthdayByIdNO(this.patient.card)
       return current && current > moment().endOf('day') || moment(date).endOf('day') > current;
+    },
+    disabledDate(current) {
+      let date = this.getBirthdayByIdNO(this.patient.card)
+      return current && current > moment().endOf('day') || moment(date).endOf('day') > current;
+    },
+    handleNone(e, d, v, arr) {
+      if(e.target.checked){
+        let data = {}
+        data[d] = [v]
+        this.$nextTick(() => {
+          this.form.setFieldsValue(data)
+          arr.forEach((t) => {
+            this[t] = false
+          })
+        })
+      }
     },
     changeDate(date) {
       let timeDiff = Math.abs(new Date(date._d) - new Date(this.getBirthdayByIdNO(this.patient.card)));

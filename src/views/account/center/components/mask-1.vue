@@ -156,7 +156,7 @@
                   <a-checkbox value="5" :disabled="detect('b6', '6')" :checked="controlb65" @change="changeSelect($event, 'controlb65')">慢阻肺</a-checkbox>
                   <a-checkbox value="8" :disabled="detect('b6', '6')" :checked="controlb68" @change="changeSelect($event, 'controlb68')">中耳炎</a-checkbox>
                   <a-checkbox value="7" :disabled="detect('b6', '6')" :checked="controlb67" @change="changeSelect($event, 'controlb67')">其他</a-checkbox>
-                  <a-checkbox value="6" @change="handleNone($event, 'b6', '6', ['controlb61''controlb62','controlb63','controlb64','controlb65','controlb68','controlb67'])" :checked="controlb66" @change="changeSelect($event, 'controlb66')">无</a-checkbox>
+                  <a-checkbox value="6" @change="handleNone($event, 'b6', '6', ['controlb61','controlb62','controlb63','controlb64','controlb65','controlb68','controlb67'])">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item class="no-border" label="鼻炎具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb61">
