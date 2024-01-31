@@ -73,7 +73,7 @@
           </a-radio-group>
         </a-form-item>
         <a-form-item label="出生日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker style="width: 100%" format="YYYY-MM-DD" v-decorator="['birthDate', requiredRule]" />
+          <a-date-picker style="width: 100%" format="YYYY-MM-DD" :disabled="true" v-decorator="['birthDate', requiredRule]" />
         </a-form-item>
         <a-form-item label="常居住地" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-row :gutter="8">
