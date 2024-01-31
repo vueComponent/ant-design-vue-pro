@@ -79,19 +79,19 @@
       </a-checkbox-group>
     </a-form-item>
     <a-form-item class="no-border" label="鼻炎具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlList[maskId].control_b_6_1">
-      <a-date-picker placeholder="请选择" style="width: 200px;" v-decorator="['b_6_1', dateRequire]"></a-date-picker>
+      <a-date-picker placeholder="请选择" style="width: 200px;" v-decorator="['b_6_1']"></a-date-picker>
     </a-form-item>
     <a-form-item class="no-border" label="鼻窦炎具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlList[maskId].control_b_6_2">
-      <a-date-picker placeholder="请选择" style="width: 200px;" v-decorator="['b_6_2', dateRequire]"></a-date-picker>
+      <a-date-picker placeholder="请选择" style="width: 200px;" v-decorator="['b_6_2']"></a-date-picker>
     </a-form-item>
     <a-form-item class="no-border" label="鼻息肉具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlList[maskId].control_b_6_3">
-      <a-date-picker placeholder="请选择" style="width: 200px;" v-decorator="['b_6_3', dateRequire]"></a-date-picker>
+      <a-date-picker placeholder="请选择" style="width: 200px;" v-decorator="['b_6_3']"></a-date-picker>
     </a-form-item>
     <a-form-item class="no-border" label="哮喘具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlList[maskId].control_b_6_4">
-      <a-date-picker placeholder="请选择" style="width: 200px;" v-decorator="['b_6_4', dateRequire]"></a-date-picker>
+      <a-date-picker placeholder="请选择" style="width: 200px;" v-decorator="['b_6_4']"></a-date-picker>
     </a-form-item>
     <a-form-item class="no-border" label="慢阻肺具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlList[maskId].control_b_6_5">
-      <a-date-picker placeholder="请选择" style="width: 200px;" v-decorator="['b_6_5', dateRequire]"></a-date-picker>
+      <a-date-picker placeholder="请选择" style="width: 200px;" v-decorator="['b_6_5']"></a-date-picker>
     </a-form-item>
     <a-form-item label="(7) 心血管系统" :labelCol="labelColHor" :wrapperCol="wrapperHor">
       <a-radio-group v-decorator="['b_7', require2]" @change="changeRadio($event, 'control_b_7')">

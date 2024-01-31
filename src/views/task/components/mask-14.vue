@@ -152,19 +152,19 @@
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item class="no-border" label="鼻炎具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb61">
-                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b61', {...dateRequire, initialValue: initValue('b61', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
+                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b61', { initialValue: initValue('b61', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
               </a-form-item>
               <a-form-item class="no-border" label="鼻窦炎具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb62">
-                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b62', {...dateRequire, initialValue: initValue('b62', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
+                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b62', { initialValue: initValue('b62', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
               </a-form-item>
               <a-form-item class="no-border" label="鼻息肉具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb63">
-                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b63', {...dateRequire, initialValue: initValue('b63', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
+                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b63', { initialValue: initValue('b63', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
               </a-form-item>
               <a-form-item class="no-border" label="哮喘具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb64">
-                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b64', {...dateRequire, initialValue: initValue('b64', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
+                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b64', { initialValue: initValue('b64', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
               </a-form-item>
               <a-form-item class="no-border" label="慢阻肺具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb65">
-                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b65', {...dateRequire, initialValue: initValue('b65', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
+                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b65', { initialValue: initValue('b65', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
               </a-form-item>
               <a-form-item label="(7) 有无其他疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b70', {...require2, initialValue: initValue('b70')}]" @change="changeRadio($event, 'controlb70')">
