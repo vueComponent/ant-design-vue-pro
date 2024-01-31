@@ -233,6 +233,12 @@
                 <a-form-item label="时间::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb7 && controlb72">
                   <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b721', {...dateRequire, initialValue: initValue('b721', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
+                <a-form-item label="流感疫苗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-radio-group v-decorator="['b10', {...require1, initialValue: initValue('b10')}]">
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="-1">否</a-radio>
+                  </a-radio-group>
+                </a-form-item>
               </div>
               <a-form-item label="(8) 患者是否曾接受免疫调节治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b8', {...require1, initialValue: initValue('b8')}]" @change="changeRadio($event, 'controlb8')">
@@ -254,12 +260,6 @@
                   <a-input style="width: 240px;" v-decorator="['b82', {...inputRequired, initialValue: initValue('b82')}]" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
-              <a-form-item label="(9) 过去1年，患者是否曾接受流感疫苗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-radio-group v-decorator="['b10', {...require1, initialValue: initValue('b10')}]">
-                  <a-radio value="1">是</a-radio>
-                  <a-radio value="-1">否</a-radio>
-                </a-radio-group>
-              </a-form-item>
               <a-form-item label="(10) 患者是否接受肺康复治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b11', {...require1, initialValue: initValue('b11')}]">
                   <a-radio value="1">是</a-radio>
