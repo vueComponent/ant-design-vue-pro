@@ -61,12 +61,12 @@
                 </a-form-item>
                 <a-form-item label="治疗方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb3">
                   <a-checkbox-group v-decorator="['b31', {...selectRequired, initialValue: initValue('b31', 'array')}]">
-                    <a-checkbox value="1">手动拍击背部排痰</a-checkbox>
-                    <a-checkbox value="2">体位引流</a-checkbox>
-                    <a-checkbox value="3">规律锻炼身体</a-checkbox>
-                    <a-checkbox value="4">借助排痰仪器</a-checkbox>
-                    <a-checkbox value="6">主动循环呼吸</a-checkbox>
-                    <a-checkbox value="5">无</a-checkbox>
+                    <a-checkbox value="1" :disabled="detect('b31', '5')">手动拍击背部排痰</a-checkbox>
+                    <a-checkbox value="2" :disabled="detect('b31', '5')">体位引流</a-checkbox>
+                    <a-checkbox value="3" :disabled="detect('b31', '5')">规律锻炼身体</a-checkbox>
+                    <a-checkbox value="4" :disabled="detect('b31', '5')">借助排痰仪器</a-checkbox>
+                    <a-checkbox value="6" :disabled="detect('b31', '5')">主动循环呼吸</a-checkbox>
+                    <a-checkbox value="5" @change="handleNone($event, 'b31', '5')">无</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="(4) 有规律的呼吸疾病药物治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -78,19 +78,19 @@
                 <div v-if="controlb4">
                   <a-form-item label="4-1 规律抗生素治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-checkbox-group v-decorator="['b41', {...selectRequired, initialValue: initValue('b41', 'array')}]">
-                      <a-checkbox value="0">无</a-checkbox>
-                      <a-checkbox value="1" :checked="controlb411" @change="changeSelect($event, 'controlb411')">口服</a-checkbox>
-                      <a-checkbox value="2" :checked="controlb412" @change="changeSelect($event, 'controlb412')">吸入/雾化</a-checkbox>
+                      <a-checkbox value="0" @change="handleNone($event, 'b41', '0', ['controlb411', 'controlb412'])">无</a-checkbox>
+                      <a-checkbox value="1" :disabled="detect('b41', '0')" :checked="controlb411" @change="changeSelect($event, 'controlb411')">口服</a-checkbox>
+                      <a-checkbox value="2" :disabled="detect('b41', '0')" :checked="controlb412" @change="changeSelect($event, 'controlb412')">吸入/雾化</a-checkbox>
                     </a-checkbox-group>
                   </a-form-item>
                   <div v-if="controlb4 && controlb411">
                     <a-form-item label="长期性口服抗生素治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                       <a-checkbox-group v-decorator="['b414', {...selectRequired, initialValue: initValue('b414', 'array')}]">
-                        <a-checkbox value="0">无</a-checkbox>
-                        <a-checkbox value="1">阿奇霉素</a-checkbox>
-                        <a-checkbox value="2">克拉霉素</a-checkbox>
-                        <a-checkbox value="3">红霉素</a-checkbox>
-                        <a-checkbox value="4" @change="changeSelect($event, 'controlb41')">其他</a-checkbox>
+                        <a-checkbox value="0" @change="handleNone($event, 'b414', '0', ['controlb41'])">无</a-checkbox>
+                        <a-checkbox value="1" :disabled="detect('b414', '0')">阿奇霉素</a-checkbox>
+                        <a-checkbox value="2" :disabled="detect('b414', '0')">克拉霉素</a-checkbox>
+                        <a-checkbox value="3" :disabled="detect('b414', '0')">红霉素</a-checkbox>
+                        <a-checkbox value="4" :disabled="detect('b414', '0')" @change="changeSelect($event, 'controlb41')">其他</a-checkbox>
                       </a-checkbox-group>
                     </a-form-item>
                     <a-form-item label="其他口服抗生素:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb4 && controlb411 && controlb41">
@@ -112,9 +112,9 @@
                   </div>
                   <a-form-item label="4-2 祛痰药物治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-checkbox-group v-decorator="['b43', {...selectRequired, initialValue: initValue('b43', 'array')}]">
-                      <a-checkbox value="0">无</a-checkbox>
-                      <a-checkbox value="1" :checked="controlb431" @change="changeSelect($event, 'controlb431')">口服</a-checkbox>
-                      <a-checkbox value="2" :checked="controlb432" @change="changeSelect($event, 'controlb432')">雾化</a-checkbox>
+                      <a-checkbox value="0" @change="handleNone($event, 'b43', '0', ['controlb431', 'controlb432'])">无</a-checkbox>
+                      <a-checkbox value="1" :disabled="detect('b43', '0')" :checked="controlb431" @change="changeSelect($event, 'controlb431')">口服</a-checkbox>
+                      <a-checkbox value="2" :disabled="detect('b43', '0')" :checked="controlb432" @change="changeSelect($event, 'controlb432')">雾化</a-checkbox>
                     </a-checkbox-group>
                   </a-form-item>
                   <div v-if="controlb431">
@@ -148,18 +148,18 @@
                   </div>
                   <a-form-item label="4-3 支气管扩张剂/吸入激素:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-checkbox-group v-decorator="['b48', {...selectRequired, initialValue: initValue('b48', 'array')}]" class="center">
-                      <a-checkbox value="0">无</a-checkbox>
-                      <a-checkbox value="1">LAMA</a-checkbox>
-                      <a-checkbox value="2">LABA</a-checkbox>
-                      <a-checkbox value="3">LABA/LAMA</a-checkbox>
-                      <a-checkbox value="4">ICS/LABA/LAMA</a-checkbox>
-                      <a-checkbox value="5">ICS/LABA</a-checkbox>
-                      <a-checkbox value="6">SABA</a-checkbox>
-                      <a-checkbox value="7">SAMA</a-checkbox>
-                      <a-checkbox value="8">白三烯受体拮抗剂</a-checkbox>
-                      <a-checkbox value="9">口服茶碱</a-checkbox>
-                      <a-checkbox value="10">雾化吸入支气管舒张剂</a-checkbox>
-                      <a-checkbox value="11" @change="changeSelect($event, 'controlb48')">其他</a-checkbox>
+                      <a-checkbox value="0" @change="handleNone($event, 'b48', '0', ['controlb48'])">无</a-checkbox>
+                      <a-checkbox value="1" :disabled="detect('b48', '0')">LAMA</a-checkbox>
+                      <a-checkbox value="2" :disabled="detect('b48', '0')">LABA</a-checkbox>
+                      <a-checkbox value="3" :disabled="detect('b48', '0')">LABA/LAMA</a-checkbox>
+                      <a-checkbox value="4" :disabled="detect('b48', '0')">ICS/LABA/LAMA</a-checkbox>
+                      <a-checkbox value="5" :disabled="detect('b48', '0')">ICS/LABA</a-checkbox>
+                      <a-checkbox value="6" :disabled="detect('b48', '0')">SABA</a-checkbox>
+                      <a-checkbox value="7" :disabled="detect('b48', '0')">SAMA</a-checkbox>
+                      <a-checkbox value="8" :disabled="detect('b48', '0')">白三烯受体拮抗剂</a-checkbox>
+                      <a-checkbox value="9" :disabled="detect('b48', '0')">口服茶碱</a-checkbox>
+                      <a-checkbox value="10" :disabled="detect('b48', '0')">雾化吸入支气管舒张剂</a-checkbox>
+                      <a-checkbox value="11" :disabled="detect('b48', '0')" @change="changeSelect($event, 'controlb48')">其他</a-checkbox>
                     </a-checkbox-group>
                   </a-form-item>
                   <a-form-item label="其他支气管扩张剂/吸入激素:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb48">
@@ -181,10 +181,10 @@
                 <div v-if="controlb5">
                   <a-form-item label="抗真菌药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-checkbox-group v-decorator="['b52', {...selectRequired, initialValue: initValue('b52', 'array')}]">
-                      <a-checkbox value="0">无</a-checkbox>
-                      <a-checkbox value="1">伊曲康唑</a-checkbox>
-                      <a-checkbox value="2">伏立康唑</a-checkbox>
-                      <a-checkbox value="3" :checked="controlb52" @change="changeSelect($event, 'controlb52')">其他</a-checkbox>
+                      <a-checkbox value="0" @change="handleNone($event, 'b52', '0', ['controlb52'])">无</a-checkbox>
+                      <a-checkbox value="1" :disabled="detect('b52', '0')">伊曲康唑</a-checkbox>
+                      <a-checkbox value="2" :disabled="detect('b52', '0')">伏立康唑</a-checkbox>
+                      <a-checkbox value="3" :disabled="detect('b52', '0')" :checked="controlb52" @change="changeSelect($event, 'controlb52')">其他</a-checkbox>
                     </a-checkbox-group>
                   </a-form-item>
                   <a-form-item label="其他抗真菌药物::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb5 && controlb52">
@@ -431,6 +431,10 @@ export default {
         if (!errors) {
           var re = this.form.getFieldsValue()
           var that = this
+          if(re.b4 === '1' && re.b41.indexOf('0') > -1 && re.b43.indexOf('0') > -1 && re.b48.indexOf('0') > -1 ) {
+            that.$message.error('有规律的呼吸疾病药物治疗不可同时勾选三项无')
+            return false
+          }
           re = {
             ...re,
             'b31': typeof re['b31'] !== 'undefined' ? re['b31'].join(',') : '',
@@ -676,6 +680,25 @@ export default {
             })
         }
       })
+    },
+    handleNone(e, d, v, arr) {
+      if(e.target.checked){
+        let data = {}
+        data[d] = [v]
+        this.$nextTick(() => {
+          this.form.setFieldsValue(data)
+          arr.forEach((t) => {
+            this[t] = false
+          })
+        })
+      }
+    },
+    detect(d, v) {
+      if(Array.isArray(this.form.getFieldValue(d)) && this.form.getFieldValue(d).indexOf(v) > -1) {
+        return true
+      } else {
+        return false
+      }
     }
   }
 }
