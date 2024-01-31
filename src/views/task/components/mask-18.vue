@@ -181,10 +181,10 @@
                 <div v-if="controlb5">
                   <a-form-item label="抗真菌药物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-checkbox-group v-decorator="['b52', {...selectRequired, initialValue: initValue('b52', 'array')}]">
-                      <a-checkbox value="0">无</a-checkbox>
-                      <a-checkbox value="1">伊曲康唑</a-checkbox>
-                      <a-checkbox value="2">伏立康唑</a-checkbox>
-                      <a-checkbox value="3" :checked="controlb52" @change="changeSelect($event, 'controlb52')">其他</a-checkbox>
+                      <a-checkbox value="0" @change="handleNone($event, 'b52', '0', ['controlb52'])">无</a-checkbox>
+                      <a-checkbox value="1" :disabled="detect('b52', '0')">伊曲康唑</a-checkbox>
+                      <a-checkbox value="2" :disabled="detect('b52', '0')">伏立康唑</a-checkbox>
+                      <a-checkbox value="3" :disabled="detect('b52', '0')" :checked="controlb52" @change="changeSelect($event, 'controlb52')">其他</a-checkbox>
                     </a-checkbox-group>
                   </a-form-item>
                   <a-form-item label="其他抗真菌药物::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb5 && controlb52">
