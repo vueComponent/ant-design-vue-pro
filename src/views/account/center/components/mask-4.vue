@@ -83,11 +83,10 @@
                 <div v-if="controlb4 && controlb411">
                   <a-form-item label="长期性口服抗生素治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-checkbox-group v-decorator="['b414', {...selectRequired, initialValue: initValue('b414', 'array')}]">
-                      <a-checkbox value="0" @change="handleNone($event, 'b414', '0', ['controlb41'])">无</a-checkbox>
-                      <a-checkbox value="1" :disabled="detect('b414', '0')">阿奇霉素</a-checkbox>
-                      <a-checkbox value="2" :disabled="detect('b414', '0')">克拉霉素</a-checkbox>
-                      <a-checkbox value="3" :disabled="detect('b414', '0')">红霉素</a-checkbox>
-                      <a-checkbox value="4" :disabled="detect('b414', '0')" @change="changeSelect($event, 'controlb41')">其他</a-checkbox>
+                      <a-checkbox value="1" >阿奇霉素</a-checkbox>
+                      <a-checkbox value="2" >克拉霉素</a-checkbox>
+                      <a-checkbox value="3" >红霉素</a-checkbox>
+                      <a-checkbox value="4"  @change="changeSelect($event, 'controlb41')">其他</a-checkbox>
                     </a-checkbox-group>
                   </a-form-item>
                   <a-form-item label="其他口服抗生素:" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb4 && controlb411 && controlb41">
