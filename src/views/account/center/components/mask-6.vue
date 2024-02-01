@@ -39,11 +39,11 @@
               <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!（ICON患者，必须填写实际检测值。基线访视辅助检查可使用入组前6个月内的检查结果，但要求从检查日期到入组日期之间未发生急性加重，否则需要在基线数据收集时重新辅助检查）</p>
               <a-form-item label="采样性质（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a', {...selectRequired, initialValue: initValue('a', 'array')}]">
-                  <a-checkbox value="1" :disabled="detect('a', '4')" @change="changeSelect($event, 'control1')">细菌</a-checkbox>
-                  <a-checkbox value="2" :disabled="detect('a', '4')" @change="changeSelect($event, 'control2')">真菌</a-checkbox>
-                  <a-checkbox value="3" :disabled="detect('a', '4')" @change="changeSelect($event, 'control3')">分枝杆菌</a-checkbox>
-                  <a-checkbox value="5" :disabled="detect('a', '4')" @change="changeSelect($event, 'control5')">其他</a-checkbox>
-                  <a-checkbox value="4" @change="handleNone($event, 'a', '4', ['control1', 'control2', 'control3', 'control5'])">无</a-checkbox>
+                  <a-checkbox value="1" @change="changeSelect($event, 'control1')" :disabled="detect('a', '4')">细菌</a-checkbox>
+                  <a-checkbox value="2" @change="changeSelect($event, 'control2')" :disabled="detect('a', '4')">真菌</a-checkbox>
+                  <a-checkbox value="3" @change="changeSelect($event, 'control3')" :disabled="detect('a', '4')">分枝杆菌</a-checkbox>
+                  <a-checkbox value="5" @change="changeSelect($event, 'control5')" :disabled="detect('a', '4')">其他</a-checkbox>
+                  <a-checkbox value="4" @change="handleNone($event, 'a', '4', [], 'control4')">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
               <div v-if="control1">
@@ -142,6 +142,7 @@
                 </a-form-item>
                 <a-form-item label="真菌:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb4">
                   <a-checkbox-group v-decorator="['b42', {...selectRequired, initialValue: initValue('b42', 'array')}]">
+                    <a-checkbox value="0">白色念珠菌</a-checkbox>
                     <a-checkbox value="1">曲霉</a-checkbox>
                     <a-checkbox value="2" :checked="controlb42" @change="changeSelect($event, 'controlb42')">其他</a-checkbox>
                   </a-checkbox-group>
@@ -904,6 +905,30 @@ export default {
             })
         }
       })
+    },
+    handleNone(e, d, v, arr, extra) {
+      if(e.target.checked){
+        let data = {}
+        data[d] = [v]
+        this.control1 = false
+        this.control2 = false
+        this.control3 = false
+        this.control5 = false
+        this[extra] = true
+        this.$nextTick(() => {
+          this.form.setFieldsValue(data)
+          arr.forEach((t) => {
+            this[t] = false
+          })
+        })
+      }
+    },
+    detect(d, v) {
+      if(Array.isArray(this.form.getFieldValue(d)) && this.form.getFieldValue(d).indexOf(v) > -1) {
+        return true
+      } else {
+        return false
+      }
     }
   }
 }
