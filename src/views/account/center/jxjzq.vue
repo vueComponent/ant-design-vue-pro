@@ -100,10 +100,10 @@
               </a-form-item>
               <a-form-item label="(10) 采样性质（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a', {...selectRequired, initialValue: initValue('a', 'array')}]">
-                  <a-checkbox value="1" @change="changeSelect($event, 'control1')">细菌</a-checkbox>
-                  <a-checkbox value="2" @change="changeSelect($event, 'control2')">真菌</a-checkbox>
-                  <a-checkbox value="3" @change="changeSelect($event, 'control3')">分枝杆菌</a-checkbox>
-                  <a-checkbox value="4" @change="changeSelect($event, 'control4')">无</a-checkbox>
+                  <a-checkbox value="1" :disabled="detect('a', '4')" @change="changeSelect($event, 'control1')">细菌</a-checkbox>
+                  <a-checkbox value="2" :disabled="detect('a', '4')" @change="changeSelect($event, 'control2')">真菌</a-checkbox>
+                  <a-checkbox value="3" :disabled="detect('a', '4')" @change="changeSelect($event, 'control3')">分枝杆菌</a-checkbox>
+                  <a-checkbox value="4" @change="handleNone($event, 'a', '4', ['control1', 'control2', 'control3', 'control5'])">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
               <div v-if="control1">
@@ -657,6 +657,25 @@ export default {
         }
       }
       return answer
+    },
+    detect(d, v) {
+      if(Array.isArray(this.form.getFieldValue(d)) && this.form.getFieldValue(d).indexOf(v) > -1) {
+        return true
+      } else {
+        return false
+      }
+    },
+    handleNone(e, d, v, arr) {
+      if(e.target.checked){
+        let data = {}
+        data[d] = [v]
+        this.$nextTick(() => {
+          this.form.setFieldsValue(data)
+          arr.forEach((t) => {
+            this[t] = false
+          })
+        })
+      }
     },
     save() {
       var re = this.form.getFieldsValue()

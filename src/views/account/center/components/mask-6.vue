@@ -493,6 +493,25 @@ export default {
           console.log(error)
         })
     },
+    detect(d, v) {
+      if(Array.isArray(this.form.getFieldValue(d)) && this.form.getFieldValue(d).indexOf(v) > -1) {
+        return true
+      } else {
+        return false
+      }
+    },
+    handleNone(e, d, v, arr) {
+      if(e.target.checked){
+        let data = {}
+        data[d] = [v]
+        this.$nextTick(() => {
+          this.form.setFieldsValue(data)
+          arr.forEach((t) => {
+            this[t] = false
+          })
+        })
+      }
+    },
     changeSelect(e, t) {
       var that = this
       this[t] = e.target.checked

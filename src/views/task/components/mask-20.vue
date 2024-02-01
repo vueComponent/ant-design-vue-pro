@@ -479,6 +479,25 @@ export default {
         this[t] = false
       }
     },
+    detect(d, v) {
+      if(Array.isArray(this.form.getFieldValue(d)) && this.form.getFieldValue(d).indexOf(v) > -1) {
+        return true
+      } else {
+        return false
+      }
+    },
+    handleNone(e, d, v, arr) {
+      if(e.target.checked){
+        let data = {}
+        data[d] = [v]
+        this.$nextTick(() => {
+          this.form.setFieldsValue(data)
+          arr.forEach((t) => {
+            this[t] = false
+          })
+        })
+      }
+    },
     handleClick(e) {
       if ((e.key >= 37 && e.key <= 42) || (e.key >= 45 && e.key <= 50)) {
         this.$router.replace('/basis/question/' + this.patientBasisId + '/' + e.key)
