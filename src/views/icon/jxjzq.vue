@@ -96,6 +96,7 @@
                   </a-form-item>
                   <a-form-item label="(2) 种类:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                     <a-checkbox-group v-decorator="['a21', { initialValue: initValue('a21', 'array')}]">
+                      <a-checkbox value="0">白色念珠菌</a-checkbox>
                       <a-checkbox value="1">曲霉</a-checkbox>
                       <a-checkbox value="2" @change="changeSelect($event, 'controla212')">其他</a-checkbox>
                     </a-checkbox-group>
