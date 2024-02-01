@@ -467,7 +467,7 @@
                 </a-checkbox-group>
               </a-form-item>
               <a-form-item label="其他手术名称" :labelCol="labelColOffset2" :wrapperCol="wrapperOffset" class="border-dotted" v-if="controlb20 && controlb202">
-                <a-input style="width: 240px;" v-decorator="['b202', {...inputRequired, initialValue: initValue('b202')}]" autocomplete="off"></a-input>
+                <a-input style="width: 240px;" v-decorator="['b202', {initialValue: initValue('b202')}]" autocomplete="off"></a-input>
               </a-form-item>
               <a-form-item label="(13) 支气管动脉栓塞病史" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-radio-group v-decorator="['b21', {...require2, initialValue: initValue('b21')}]" @change="changeRadio($event, 'controlb21')">
