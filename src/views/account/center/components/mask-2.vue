@@ -207,17 +207,17 @@ export default {
     },
     handleSpO2(e) {
       if (e.target.value && e.target.value < 50) {
-        this.$message.warning('请确认输入数值是否正确');
+        this.$message.warning('请确认经皮血氧饱和度SpO2数值是否正确');
       }
     },
     handleHeight(e) {
       if (e.target.value && e.target.value < 130) {
-        this.$message.warning('请确认输入数值是否正确');
+        this.$message.warning('请确认身高数值是否正确');
       }
     },
     handleWeight(e) {
       if (e.target.value && e.target.value < 30) {
-        this.$message.warning('请确认输入数值是否正确');
+        this.$message.warning('请确认体重数值是否正确');
       }
     },
     changeRadio(e, t) {

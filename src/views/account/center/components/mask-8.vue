@@ -82,7 +82,7 @@
                   <a-input style="width: 240px;" v-decorator="['a31', {...inputRequired, initialValue: initValue('a31')}]" addonAfter="L" autocomplete="off" @change="notice($event, 'FEV1', 0.2, 5)"></a-input>
                 </a-form-item>
                 <a-form-item :labelCol="labelXs" :wrapperCol="wrapperMx" :style="{ display: 'inline-block', width: '50%',border: 'none' }">
-                  <a-input style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]" addonAfter="%" autocomplete="off" @change="notice($event, 'FEV%', 20, 150)"></a-input>
+                  <a-input style="width: 240px;" v-decorator="['a32', {...inputRequired, initialValue: initValue('a32')}]" addonAfter="%" autocomplete="off" @change="notice($event, 'FEV1%', 20, 150)"></a-input>
                 </a-form-item>
               </a-form-item>
               <a-form-item label="FEV1%FVC::" :labelCol="labelXs" :wrapperCol="wrapperMx" class="requireIcon">
@@ -1094,10 +1094,7 @@ export default {
     },
     notice(e, name, low, high) {
       let v = parseFloat(e.target.value)
-      if(Number.isNaN(v)) {
-        this.$message.error('请输入数字')
-        e.target.value = ''
-      } else {
+      if(!Number.isNaN(v)) {
         if(low && v < low) {
           this.$message.info(`请确认${name}的值`)
         }

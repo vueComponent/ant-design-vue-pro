@@ -232,7 +232,7 @@
                 <a-form-item label="时间::" :labelCol="labelColOffset" :wrapperCol="wrapperOffset" v-if="controlb7 && controlb72">
                   <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['b721', {...dateRequire, initialValue: initValue('b721', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
                 </a-form-item>
-                <a-form-item label="流感疫苗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-form-item label="过去1年，患者是否曾接受流感疫苗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-radio-group v-decorator="['b10', {...require1, initialValue: initValue('b10')}]">
                     <a-radio value="1">是</a-radio>
                     <a-radio value="-1">否</a-radio>

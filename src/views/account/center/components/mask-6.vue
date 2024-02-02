@@ -39,10 +39,10 @@
               <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!（ICON患者，必须填写实际检测值。基线访视辅助检查可使用入组前6个月内的检查结果，但要求从检查日期到入组日期之间未发生急性加重，否则需要在基线数据收集时重新辅助检查）</p>
               <a-form-item label="采样性质（多选）:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['a', {...selectRequired, initialValue: initValue('a', 'array')}]">
-                  <a-checkbox value="1" @change="changeSelect($event, 'control1')" :disabled="detect('a', '4')">细菌</a-checkbox>
-                  <a-checkbox value="2" @change="changeSelect($event, 'control2')" :disabled="detect('a', '4')">真菌</a-checkbox>
-                  <a-checkbox value="3" @change="changeSelect($event, 'control3')" :disabled="detect('a', '4')">分枝杆菌</a-checkbox>
-                  <a-checkbox value="5" @change="changeSelect($event, 'control5')" :disabled="detect('a', '4')">其他</a-checkbox>
+                  <a-checkbox value="1" @change="changeSelect($event, 'control1')" :disabled="detect('a', '4') || control4">细菌</a-checkbox>
+                  <a-checkbox value="2" @change="changeSelect($event, 'control2')" :disabled="detect('a', '4') || control4">真菌</a-checkbox>
+                  <a-checkbox value="3" @change="changeSelect($event, 'control3')" :disabled="detect('a', '4') || control4">分枝杆菌</a-checkbox>
+                  <a-checkbox value="5" @change="changeSelect($event, 'control5')" :disabled="detect('a', '4') || control4">其他</a-checkbox>
                   <a-checkbox value="4" @change="handleNone($event, 'a', '4', [], 'control4')">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
@@ -68,28 +68,28 @@
                     <a-checkbox value="4" @change="changeSelect($event, 'controla34')">血标本</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
-                <a-form-item label="痰液是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla31">
+                <a-form-item label="痰液培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla31">
                   <a-radio-group v-decorator="['a31', {...selectRequired, initialValue: initValue('a31')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="诱导痰是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla32">
+                <a-form-item label="诱导痰培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla32">
                   <a-radio-group v-decorator="['a32', {...selectRequired, initialValue: initValue('a32')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="支气管肺泡灌洗液是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla33">
+                <a-form-item label=" 支气管肺泡灌洗液培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla33">
                   <a-radio-group v-decorator="['a33', {...selectRequired, initialValue: initValue('a33')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="血标本是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla34">
+                <a-form-item label="血标本培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla34">
                   <a-radio-group v-decorator="['a34', {...selectRequired, initialValue: initValue('a34')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="(4) 是否分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -158,28 +158,28 @@
                     <a-checkbox value="4" @change="changeSelect($event, 'controlb34')">血标本</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
-                <a-form-item label="痰液是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb31">
+                <a-form-item label="痰液培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb31">
                   <a-radio-group v-decorator="['b31', {...selectRequired, initialValue: initValue('b31')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="诱导痰是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb32">
+                <a-form-item label="诱导痰培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb32">
                   <a-radio-group v-decorator="['b32', {...selectRequired, initialValue: initValue('b32')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="支气管肺泡灌洗液是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb33">
+                <a-form-item label=" 支气管肺泡灌洗液培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb33">
                   <a-radio-group v-decorator="['b33', {...selectRequired, initialValue: initValue('b33')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="血标本是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb34">
+                <a-form-item label="血标本培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb34">
                   <a-radio-group v-decorator="['b34', {...selectRequired, initialValue: initValue('b34')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="是否分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -221,28 +221,28 @@
                     <a-checkbox value="4" @change="changeSelect($event, 'controlc34')">血标本</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
-                <a-form-item label="痰液是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlc31">
+                <a-form-item label="痰液培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlc31">
                   <a-radio-group v-decorator="['c31', {...selectRequired, initialValue: initValue('c31')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="诱导痰是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlc32">
+                <a-form-item label="诱导痰培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlc32">
                   <a-radio-group v-decorator="['c32', {...selectRequired, initialValue: initValue('c32')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="支气管肺泡灌洗液是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlc33">
+                <a-form-item label=" 支气管肺泡灌洗液培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlc33">
                   <a-radio-group v-decorator="['c33', {...selectRequired, initialValue: initValue('c33')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="血标本是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlc34">
+                <a-form-item label="血标本培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlc34">
                   <a-radio-group v-decorator="['c34', {...selectRequired, initialValue: initValue('c34')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
                 <a-form-item label="(4) 分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -283,28 +283,28 @@
                     <a-checkbox value="4" @change="changeSelect($event, 'controld31')">血标本</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
-                <a-form-item label="痰液是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controld31">
+                <a-form-item label="痰液培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controld31">
                   <a-radio-group v-decorator="['d31', {...selectRequired, initialValue: initValue('d31')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="诱导痰是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controld32">
+                <a-form-item label="诱导痰培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controld32">
                   <a-radio-group v-decorator="['d32', {...selectRequired, initialValue: initValue('d32')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="支气管肺泡灌洗液是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controld33">
+                <a-form-item label=" 支气管肺泡灌洗液培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controld33">
                   <a-radio-group v-decorator="['d33', {...selectRequired, initialValue: initValue('d33')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
-                <a-form-item label="血标本是否阳性:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controld34">
+                <a-form-item label="血标本培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controld34">
                   <a-radio-group v-decorator="['d34', {...selectRequired, initialValue: initValue('d34')}]">
-                    <a-radio value="0">阴性</a-radio>
                     <a-radio value="1">阳性</a-radio>
+                    <a-radio value="0">阴性</a-radio>
                   </a-radio-group>
                 </a-form-item>
               </div>
@@ -492,25 +492,6 @@ export default {
           this.spinning = false
           console.log(error)
         })
-    },
-    detect(d, v) {
-      if(Array.isArray(this.form.getFieldValue(d)) && this.form.getFieldValue(d).indexOf(v) > -1) {
-        return true
-      } else {
-        return false
-      }
-    },
-    handleNone(e, d, v, arr) {
-      if(e.target.checked){
-        let data = {}
-        data[d] = [v]
-        this.$nextTick(() => {
-          this.form.setFieldsValue(data)
-          arr.forEach((t) => {
-            this[t] = false
-          })
-        })
-      }
     },
     changeSelect(e, t) {
       var that = this
@@ -1102,6 +1083,10 @@ export default {
             this[t] = false
           })
         })
+      } else {
+        if(d === 'a') {
+          this.control4 = false
+        }
       }
     },
     detect(d, v) {

@@ -598,65 +598,62 @@ export default {
           callback('身份证号不正确或不符合规定！')
           return
         }
+        debugger
         // 回显性别、生日
-        if (!this.patientId && !this.patientPendingId) {
-          this.form.resetFields(['birthDate', 'sex'])
-          this.confirmLoading = true
-          const params = new FormData()
-          params.append('card', num)
-          validateCard(params).then((res) => {
-            this.confirmLoading = false
-            switch (res.code) {
-              case 2:
-                callback(res.msg)
-                break
-              case 3:
-                let birthDate = new Date(num.substr(6, 8).replace(/(.{4})(.{2})/, '$1-$2-')).getTime()
-                let sex = parseInt(num.charAt(16) / 2) * 2 != num.charAt(16) ? '1' : '0'
-                this.form.setFieldsValue({
-                  birthDate: moment(birthDate, 'x'),
-                  sex,
-                })
-                callback()
-                break
-              case 4:
-                callback('该患者已存在，请在列表内搜索！')
-                break
-              default:
-                callback()
-            }
-          })
-        }
+        this.form.resetFields(['birthDate', 'sex'])
+        this.confirmLoading = true
+        const params = new FormData()
+        params.append('card', num)
+        validateCard(params).then((res) => {
+          this.confirmLoading = false
+          switch (res.code) {
+            case 2:
+              callback(res.msg)
+              break
+            case 3:
+              let birthDate = new Date(num.substr(6, 8).replace(/(.{4})(.{2})/, '$1-$2-')).getTime()
+              let sex = parseInt(num.charAt(16) / 2) * 2 != num.charAt(16) ? '1' : '0'
+              this.form.setFieldsValue({
+                birthDate: moment(birthDate, 'x'),
+                sex,
+              })
+              callback()
+              break
+            case 4:
+              callback('该患者已存在，请在列表内搜索！')
+              break
+            default:
+              callback()
+          }
+        })
       }
       if (num.length === 15) {
         const arr = num.match(/^\d{6}(\d{2})(\d{2})(\d{2})\d{3}$/)
         // 回显性别、生日
-        if (!this.patientId && !this.patientPendingId) {
-          this.form.resetFields(['birthDate'])
-          this.confirmLoading = true
-          const params = new FormData()
-          params.append('card', num)
-          validateCard(params).then((res) => {
-            this.confirmLoading = false
-            switch (res.code) {
-              case 2:
-                callback(res.msg)
-                break
-              case 3:
-                let birthDate = new Date(arr[1] + '/' + arr[2] + '/' + arr[3]).getTime()
-                this.form.setFieldsValue({
-                  birthDate: moment(birthDate, 'x')
-                })
-                callback()
-                break
-              case 4:
-                callback('该患者已存在，请在列表内搜索！')
-                break
-              default:
-                callback()
-            }
-          })
-        }
+        this.form.resetFields(['birthDate'])
+        this.confirmLoading = true
+        const params = new FormData()
+        params.append('card', num)
+        validateCard(params).then((res) => {
+          this.confirmLoading = false
+          switch (res.code) {
+            case 2:
+              callback(res.msg)
+              break
+            case 3:
+              let birthDate = new Date(arr[1] + '/' + arr[2] + '/' + arr[3]).getTime()
+              this.form.setFieldsValue({
+                birthDate: moment(birthDate, 'x')
+              })
+              callback()
+              break
+            case 4:
+              callback('该患者已存在，请在列表内搜索！')
+              break
+            default:
+              callback()
+          }
+        })
       }
       callback()
       return

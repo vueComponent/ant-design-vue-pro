@@ -132,7 +132,7 @@
                 <span slot="label"><span>最后一次急性加重出院的时间</span><span style="color: red;"> (yyyy-mm-dd)</span></span>
                 <a-input style="width: 240px;" v-decorator="['b41', {initialValue: initValue('b41')}]" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(5) 有无病因相关的病史及事件病史（可多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <a-form-item label="(5) 有无病因相关的病史及事件（可多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-checkbox-group v-decorator="['b5', {...selectRequired, initialValue: initValue('b5', 'array')}]">
                   <a-checkbox value="1" :disabled="detect('b5', '7')">麻疹</a-checkbox>
                   <a-checkbox value="2" :disabled="detect('b5', '7')">百日咳</a-checkbox>
@@ -169,10 +169,10 @@
                 <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b63', {initialValue: initValue('b63', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
               </a-form-item>
               <a-form-item class="no-border" label="哮喘具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb64">
-                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b64', {initialValue: initValue('b64', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
+                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b64', {...dateRequire, initialValue: initValue('b64', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
               </a-form-item>
               <a-form-item class="no-border" label="慢阻肺具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb65">
-                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b65', {initialValue: initValue('b65', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
+                <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b65', {...dateRequire, initialValue: initValue('b65', 'time')}]" :disabledDate="disabledDate"></a-month-picker>
               </a-form-item>
               <a-form-item class="no-border" label="中耳炎具体诊断日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb68">
                 <a-month-picker placeholder="请选择" style="width: 240px;" v-decorator="['b66', {initialValue: initValue('b66', 'time')}]" :disabledDate="disabledDate"></a-month-picker>

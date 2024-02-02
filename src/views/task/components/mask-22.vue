@@ -1037,10 +1037,7 @@ export default {
     },
     notice(e, name, low, high) {
       let v = parseFloat(e.target.value)
-      if(Number.isNaN(v)) {
-        this.$message.error('请输入数字')
-        e.target.value = ''
-      } else {
+      if(!Number.isNaN(v)) {
         if(low && v < low) {
           this.$message.info(`请确认${name}的值`)
         }
