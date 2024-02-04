@@ -127,13 +127,13 @@
               </a-form-item>
               <a-form-item label="(5) 有无病因相关的病史及事件（可多选）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-checkbox-group v-decorator="['b5', {...selectRequired, initialValue: initValue('b5', 'array')}]">
-                  <a-checkbox value="1" :disabled="detect('b5', '7')">麻疹</a-checkbox>
-                  <a-checkbox value="2" :disabled="detect('b5', '7')">百日咳</a-checkbox>
-                  <a-checkbox value="3" :disabled="detect('b5', '7')">肺结核</a-checkbox>
-                  <a-checkbox value="4" :disabled="detect('b5', '7')">NTM</a-checkbox>
-                  <a-checkbox value="5" :disabled="detect('b5', '7')">溺水</a-checkbox>
-                  <a-checkbox value="8" :disabled="detect('b5', '7')">肺炎</a-checkbox>
-                  <a-checkbox value="6" :disabled="detect('b5', '7')" :checked="controlb51" @change="changeSelect($event, 'controlb51')">其他</a-checkbox>
+                  <a-checkbox value="1" :disabled="detect('b5', '7') || initB5">麻疹</a-checkbox>
+                  <a-checkbox value="2" :disabled="detect('b5', '7') || initB5">百日咳</a-checkbox>
+                  <a-checkbox value="3" :disabled="detect('b5', '7') || initB5">肺结核</a-checkbox>
+                  <a-checkbox value="4" :disabled="detect('b5', '7') || initB5">NTM</a-checkbox>
+                  <a-checkbox value="5" :disabled="detect('b5', '7') || initB5">溺水</a-checkbox>
+                  <a-checkbox value="8" :disabled="detect('b5', '7') || initB5">肺炎</a-checkbox>
+                  <a-checkbox value="6" :disabled="detect('b5', '7') || initB5" :checked="controlb51" @change="changeSelect($event, 'controlb51')">其他</a-checkbox>
                   <a-checkbox value="7" @change="handleNone($event, 'b5', '7', ['controlb51'])">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
@@ -142,12 +142,12 @@
               </a-form-item>
               <a-form-item label="(6) 目前合并呼吸系统相关疾病" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['b6', {...selectRequired, initialValue: initValue('b6', 'array')}]">
-                  <a-checkbox value="1" :disabled="detect('b6', '6')" :checked="controlb61" @change="changeSelect($event, 'controlb61')">鼻炎</a-checkbox>
-                  <a-checkbox value="2" :disabled="detect('b6', '6')" :checked="controlb62" @change="changeSelect($event, 'controlb62')">鼻窦炎</a-checkbox>
-                  <a-checkbox value="3" :disabled="detect('b6', '6')" :checked="controlb63" @change="changeSelect($event, 'controlb63')">鼻息肉</a-checkbox>
-                  <a-checkbox value="4" :disabled="detect('b6', '6')" :checked="controlb64" @change="changeSelect($event, 'controlb64')">哮喘</a-checkbox>
-                  <a-checkbox value="5" :disabled="detect('b6', '6')" :checked="controlb65" @change="changeSelect($event, 'controlb65')">慢阻肺</a-checkbox>
-                  <a-checkbox value="8" :disabled="detect('b6', '6')" :checked="controlb68" @change="changeSelect($event, 'controlb68')">中耳炎</a-checkbox>
+                  <a-checkbox value="1" :disabled="detect('b6', '6') || initB6" :checked="controlb61" @change="changeSelect($event, 'controlb61')">鼻炎</a-checkbox>
+                  <a-checkbox value="2" :disabled="detect('b6', '6') || initB6" :checked="controlb62" @change="changeSelect($event, 'controlb62')">鼻窦炎</a-checkbox>
+                  <a-checkbox value="3" :disabled="detect('b6', '6') || initB6" :checked="controlb63" @change="changeSelect($event, 'controlb63')">鼻息肉</a-checkbox>
+                  <a-checkbox value="4" :disabled="detect('b6', '6') || initB6" :checked="controlb64" @change="changeSelect($event, 'controlb64')">哮喘</a-checkbox>
+                  <a-checkbox value="5" :disabled="detect('b6', '6') || initB6" :checked="controlb65" @change="changeSelect($event, 'controlb65')">慢阻肺</a-checkbox>
+                  <a-checkbox value="8" :disabled="detect('b6', '6') || initB6" :checked="controlb68" @change="changeSelect($event, 'controlb68')">中耳炎</a-checkbox>
                   <a-checkbox value="6" @change="handleNone($event, 'b6', '6', ['controlb61', 'controlb62', 'controlb63', 'controlb64', 'controlb65', 'controlb68'])">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
@@ -386,15 +386,15 @@
               </div>
               <a-form-item label="(8) 其他系统相关治疗（非呼吸系统治疗）" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-checkbox-group v-decorator="['b17', {...selectRequired, initialValue: initValue('b17', 'array')}]" class="center">
-                  <a-checkbox value="1" :disabled="detect('b17', '10')">他汀类药物</a-checkbox>
-                  <a-checkbox value="2" :disabled="detect('b17', '10')">二甲双胍</a-checkbox>
-                  <a-checkbox value="3" :disabled="detect('b17', '10')">血管紧张素转换酶抑制剂</a-checkbox>
-                  <a-checkbox value="4" :disabled="detect('b17', '10')">血管紧张素受体拮抗剂</a-checkbox>
-                  <a-checkbox value="5" :disabled="detect('b17', '10')">阿司匹林</a-checkbox>
-                  <a-checkbox value="6" :disabled="detect('b17', '10')">非阿司匹林血小板抑制剂，如氯吡格雷</a-checkbox>
-                  <a-checkbox value="7" :disabled="detect('b17', '10')">华法林 /口服抗凝剂</a-checkbox>
-                  <a-checkbox value="8" :disabled="detect('b17', '10')">β-受体阻滞剂</a-checkbox>
-                  <a-checkbox value="9" :disabled="detect('b17', '10')">质子泵抑制剂</a-checkbox>
+                  <a-checkbox value="1" :disabled="detect('b17', '10') || initB17">他汀类药物</a-checkbox>
+                  <a-checkbox value="2" :disabled="detect('b17', '10') || initB17">二甲双胍</a-checkbox>
+                  <a-checkbox value="3" :disabled="detect('b17', '10') || initB17">血管紧张素转换酶抑制剂</a-checkbox>
+                  <a-checkbox value="4" :disabled="detect('b17', '10') || initB17">血管紧张素受体拮抗剂</a-checkbox>
+                  <a-checkbox value="5" :disabled="detect('b17', '10') || initB17">阿司匹林</a-checkbox>
+                  <a-checkbox value="6" :disabled="detect('b17', '10') || initB17">非阿司匹林血小板抑制剂，如氯吡格雷</a-checkbox>
+                  <a-checkbox value="7" :disabled="detect('b17', '10') || initB17">华法林 /口服抗凝剂</a-checkbox>
+                  <a-checkbox value="8" :disabled="detect('b17', '10') || initB17">β-受体阻滞剂</a-checkbox>
+                  <a-checkbox value="9" :disabled="detect('b17', '10') || initB17">质子泵抑制剂</a-checkbox>
                   <a-checkbox value="10" @change="handleNone($event, 'b17', '10')">无</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
@@ -629,7 +629,10 @@ export default {
       submitInfo: undefined,
       a3Init: undefined,
       controlc1: false,
-      controlc11: false
+      controlc11: false,
+      initB5: false,
+      initB6: false,
+      initB17: false
     }
   },
   created() {
@@ -729,6 +732,16 @@ export default {
             this[t] = false
           })
         })
+      } else {
+        if(d === 'b5') {
+          this.initB5 = false
+        }
+        if(d === 'b6') {
+          this.initB6 = false
+        }
+        if(d === 'b17') {
+          this.initB17 = false
+        }
       }
     },
     changeDate(date) {
