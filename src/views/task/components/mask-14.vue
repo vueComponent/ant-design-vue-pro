@@ -712,6 +712,13 @@ export default {
       let date = this.getBirthdayByIdNO(this.patient.card)
       return current && current > moment().endOf('day') || moment(date).endOf('day') > current;
     },
+    detect(d, v) {
+      if(Array.isArray(this.form.getFieldValue(d)) && this.form.getFieldValue(d).indexOf(v) > -1) {
+        return true
+      } else {
+        return false
+      }
+    },
     handleNone(e, d, v, arr) {
       if(e.target.checked){
         let data = {}

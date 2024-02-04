@@ -485,6 +485,11 @@ export default {
       getBasisForm(params)
         .then(res => {
           this.spinning = false
+          Object.keys(res.data.bywsw).forEach(key => {
+            if (res.data.bywsw[key] === 0) {
+              res.data.bywsw[key] = "0";
+            }
+          });
           if (res.data && res.data.bywsw)
             that.bywsw = that.dealAnswers(res.data)
         })
