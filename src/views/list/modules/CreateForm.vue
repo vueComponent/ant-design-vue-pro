@@ -598,9 +598,8 @@ export default {
           callback('身份证号不正确或不符合规定！')
           return
         }
-        debugger
         // 回显性别、生日
-        this.form.resetFields(['birthDate', 'sex'])
+        // this.form.resetFields(['birthDate', 'sex'])
         this.confirmLoading = true
         const params = new FormData()
         params.append('card', num)
@@ -620,7 +619,11 @@ export default {
               callback()
               break
             case 4:
-              callback('该患者已存在，请在列表内搜索！')
+              if(this.patientId) {
+                callback()
+              } else {
+                callback('该患者已存在，请在列表内搜索！')
+              }
               break
             default:
               callback()

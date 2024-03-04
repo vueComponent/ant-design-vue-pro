@@ -247,8 +247,8 @@
                 </a-form-item>
                 <a-form-item label="(4) 分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['c4', {...selectRequired, initialValue: initValue('c4', 'array')}]">
-                    <a-checkbox value="0" :disabled="detect('c4', '2')">结核分枝杆菌</a-checkbox>
-                    <a-checkbox value="1" :disabled="detect('c4', '2')" @change="changeSelect($event, 'controlc4')">非结核分枝杆菌</a-checkbox>
+                    <a-checkbox value="0" :disabled="detect('c4', '2') || initC4">结核分枝杆菌</a-checkbox>
+                    <a-checkbox value="1" :disabled="detect('c4', '2') || initC4" @change="changeSelect($event, 'controlc4')">非结核分枝杆菌</a-checkbox>
                     <a-checkbox value="2" @change="handleNone($event, 'c4', '2', ['controlc4'])">阴性</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
@@ -455,7 +455,8 @@ export default {
       picList1: [],
       isGroup: this.$ls.get(ACCESS_TOKEN).roleId === 1 || false,
       canEdit: false,
-      submitInfo: undefined
+      submitInfo: undefined,
+      initC4: false
     }
   },
   created() {
@@ -781,6 +782,9 @@ export default {
           if (splitArr.indexOf('1') > -1) {
             this.controlc4 = true
           }
+          if (splitArr.indexOf('2') > -1) {
+            this.initC4 = true
+          }
         }
         if (answer.a3) {
           splitArr = answer.a3.split(',')
@@ -1091,6 +1095,9 @@ export default {
       } else {
         if(d === 'a') {
           this.control4 = false
+        }
+        if(d === 'c4') {
+          this.initC4 = false
         }
       }
     },
