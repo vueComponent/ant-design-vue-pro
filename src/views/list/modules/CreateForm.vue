@@ -444,17 +444,6 @@ export default {
       }
       callback()
     },
-    // isiconRule(rule, value, callback) {
-    //   if (!value) {
-    //     callback('该选项必填！')
-    //     return
-    //   }
-    //   if (this.form.getFieldValue('isbiaoxian') == -1) {
-    //     callback('患者ICON研究必须符合入选标准，请仔细核对入选标准后再选择。')
-    //     return
-    //   }
-    //   callback()
-    // },
     isbiaoxianRule(rule, value, callback) {
       if (!value) {
         callback('该选项必填！')
@@ -608,6 +597,8 @@ export default {
           switch (res.code) {
             case 2:
               callback(res.msg)
+              this.form.setFieldsValue({card: ''})
+              this.$message.warning(res.msg)
               break
             case 3:
               let birthDate = new Date(num.substr(6, 8).replace(/(.{4})(.{2})/, '$1-$2-')).getTime()
@@ -623,6 +614,8 @@ export default {
                 callback()
               } else {
                 callback('该患者已存在，请在列表内搜索！')
+                this.form.setFieldsValue({card: ''})
+                this.$message.warning('该患者已存在，请在列表内搜索！')
               }
               break
             default:
