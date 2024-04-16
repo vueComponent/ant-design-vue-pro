@@ -73,7 +73,7 @@
             </a-col>
             <a-col :md="2" :sm="24" :offset="11">
               <a-form-item>
-                <a-button type="primary" @click="handleExport">导出数据</a-button>
+                <a-button type="primary" @click="handleExport" v-if="canExport">导出数据</a-button>
               </a-form-item>
             </a-col>
           </a-row>
