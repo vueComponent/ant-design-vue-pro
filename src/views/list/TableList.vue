@@ -1,121 +1,126 @@
 <template>
   <a-card :bordered="false" :bodyStyle="bodyStyle">
-    <div class="table-page-search-wrapper">
-      <a-form :form="form" layout="inline">
-        <a-row :gutter="16">
-          <a-col :md="5" :sm="24">
-            <a-form-item>
-              <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、身份证号、入组编号" />
-            </a-form-item>
-          </a-col>
-          <a-col :md="6" :sm="24">
-            <a-form-item>
-              <a-button type="primary" @click="refreshTable">查询</a-button>
-              <a @click="toggleAdvanced" style="margin-left: 8px" class="toggleAdvanced">
-                {{ advanced ? '更多筛选' : '更多筛选' }}
-                <a-icon :type="advanced ? 'up' : 'down'" />
-              </a>
-            </a-form-item>
-          </a-col>
-          <a-col v-if="advanced" class="tableSearch" :md="8">
-            <div>
-              <a-tabs defaultActiveKey="1">
-                <a-tab-pane tab="常用检索" key="1">
-                  <div class="commonRetrieval">
-                    <p @click="tableSearch(3)">全部病例</p>
-                    <p @click="tableSearch(1)">本月新增病例</p>
-                    <p @click="tableSearch(2)">本年新增病例</p>
-                  </div>
-                </a-tab-pane>
-                <a-tab-pane tab="自定义检索" key="2" forceRender>
-                  <a-card :bordered="false">
-                    <a-form>
-                      <a-row>
-                        <a-col :md="12">
-                          <a-form-item label="是否ICON">
-                            <a-radio-group v-model="queryParam.isIcon">
-                              <a-radio value="-1">否</a-radio>
-                              <a-radio value="1">是</a-radio>
-                            </a-radio-group>
-                          </a-form-item>
-                        </a-col>
-                        <a-col :md="12">
-                          <a-form-item label="是否CF筛查" class="wider-label">
-                            <a-radio-group v-model="queryParam.c1">
-                              <a-radio value="-1">否</a-radio>
-                              <a-radio value="1">是</a-radio>
-                            </a-radio-group>
-                          </a-form-item>
-                        </a-col>
-                      </a-row>
-                      
-                      
-                      <a-form-item label="入组编号">
-                        <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
-                      </a-form-item>
-                      <a-form-item label="姓名">
-                        <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
-                      </a-form-item>
-                      <a-form-item label="身份证号">
-                        <a-input v-model.trim="queryParam.card" style="width: 100%" />
-                      </a-form-item>
-                      <a-form-item label="创建日期" style="margin-bottom:0;">
-                        <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
-                      </a-form-item>
-                      <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
-                        <a-button type="primary" @click="clearForm()">清空</a-button>
-                        <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
-                      </a-form-item>
-                    </a-form>
-                  </a-card>
-                </a-tab-pane>
-              </a-tabs>
-            </div>
-          </a-col>
-        </a-row>
-      </a-form>
-    </div>
-    <s-table ref="table" size="small" :scroll="{ x: 1600 }" rowKey="tId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
-      <span slot="name" slot-scope="text, record" @click="showUser(record)">
-        <p class="userName">{{modifyName(text)}}</p>
-      </span>
-      <span slot="unSubmitquestion" slot-scope="text, record">
-        <p>{{ record.unSubmitquestion }}</p>
-      </span>
-      <span slot="submitStatus" slot-scope="text">
-        <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
-      <span slot="questionStatus" slot-scope="text">
-        <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
-      <span slot="basisList" slot-scope="basisList" v-if="basisList.length">
-        <div class="progressTag">
-          <router-link :to="{path:'/list/basis/' + basisList[0].patientBasisId}">
-            <p class="progressTagTitle">{{ basisList[0].typeName }}</p>
-            <div style="margin-right: 15px;display: inline-block;width: 130px;">
-              <div class="progressTagContent">
-                <a-progress class="progressline" :strokeColor="basisList[0].progress == 100 ? '#4BC5AC' : '#00A0E9'" :showInfo="false" :percent="parseInt(basisList[0].progress)" size="small" />
+    <a-spin :spinning="confirmLoading">
+      <div class="table-page-search-wrapper">
+        <a-form :form="form" layout="inline">
+          <a-row :gutter="16">
+            <a-col :md="5" :sm="24">
+              <a-form-item>
+                <a-input v-model.trim="queryParam.keyWord" placeholder="搜索患者姓名、身份证号、入组编号" />
+              </a-form-item>
+            </a-col>
+            <a-col :md="6" :sm="24">
+              <a-form-item>
+                <a-button type="primary" @click="refreshTable">查询</a-button>
+                <a @click="toggleAdvanced" style="margin-left: 8px" class="toggleAdvanced">
+                  {{ advanced ? '更多筛选' : '更多筛选' }}
+                  <a-icon :type="advanced ? 'up' : 'down'" />
+                </a>
+              </a-form-item>
+            </a-col>
+            <a-col v-if="advanced" class="tableSearch" :md="8">
+              <div>
+                <a-tabs defaultActiveKey="1">
+                  <a-tab-pane tab="常用检索" key="1">
+                    <div class="commonRetrieval">
+                      <p @click="tableSearch(3)">全部病例</p>
+                      <p @click="tableSearch(1)">本月新增病例</p>
+                      <p @click="tableSearch(2)">本年新增病例</p>
+                    </div>
+                  </a-tab-pane>
+                  <a-tab-pane tab="自定义检索" key="2" forceRender>
+                    <a-card :bordered="false">
+                      <a-form>
+                        <a-row>
+                          <a-col :md="12">
+                            <a-form-item label="是否ICON">
+                              <a-radio-group v-model="queryParam.isIcon">
+                                <a-radio value="-1">否</a-radio>
+                                <a-radio value="1">是</a-radio>
+                              </a-radio-group>
+                            </a-form-item>
+                          </a-col>
+                          <a-col :md="12">
+                            <a-form-item label="是否CF筛查" class="wider-label">
+                              <a-radio-group v-model="queryParam.c1">
+                                <a-radio value="-1">否</a-radio>
+                                <a-radio value="1">是</a-radio>
+                              </a-radio-group>
+                            </a-form-item>
+                          </a-col>
+                        </a-row>
+                        <a-form-item label="入组编号">
+                          <a-input v-model.trim="queryParam.fileCode" style="width: 100%" />
+                        </a-form-item>
+                        <a-form-item label="姓名">
+                          <a-input v-model.trim="queryParam.patientName" style="width: 100%" />
+                        </a-form-item>
+                        <a-form-item label="身份证号">
+                          <a-input v-model.trim="queryParam.card" style="width: 100%" />
+                        </a-form-item>
+                        <a-form-item label="创建日期" style="margin-bottom:0;">
+                          <a-range-picker @change="changeTime" style="width: 100%" :value="dateArr" />
+                        </a-form-item>
+                        <a-form-item style="text-align: right;margin-bottom: 0;margin-top: 15px;">
+                          <a-button type="primary" @click="clearForm()">清空</a-button>
+                          <a-button type="primary" style="margin-left: 10px;" @click="refreshTable">查询</a-button>
+                        </a-form-item>
+                      </a-form>
+                    </a-card>
+                  </a-tab-pane>
+                </a-tabs>
               </div>
-              <a-icon v-if="basisList[0].executeStatus != 3" type="clock-circle" theme="filled" style="color:#00A0E9" />
-              <!-- <span class="ant-progress-span" v-if="basisList[0].executeStatus == 2">{{basisList[0].progress}}%</span> -->
-              <a-icon v-else-if="basisList[0].executeStatus == 3" type="check-circle" theme="filled" style="color:#4BC5AC" />
-            </div>
-          </router-link>
-          <Visit :patientId="basisList[0].patientId"></Visit>
-        </div>
-      </span>
-      <span slot="description" slot-scope="text">
-        <ellipsis :length="8" tooltip>{{ text }}</ellipsis>
-      </span>
-      <span slot="action" slot-scope="text, record" style="text-align: center;">
-        <template>
-          <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical" />
-          <a @click="handleSubmit(record)" v-if="record.basisList[0].executeStatus == 3 && record.basisList[0].submitStatus == 0">提交</a>
-          <span v-else style="color:rgba(0, 0, 0, 0.25)">提交</span>
-          <a-divider type="vertical" />
-          <a @click="handleOut(record)" :disabled="record.visit != 1">退组</a>
-        </template>
-      </span>
-    </s-table>
+            </a-col>
+            <a-col :md="2" :sm="24" :offset="11">
+              <a-form-item>
+                <a-button type="primary" @click="handleExport">导出数据</a-button>
+              </a-form-item>
+            </a-col>
+          </a-row>
+        </a-form>
+      </div>
+      <s-table ref="table" size="small" :scroll="{ x: 1600 }" rowKey="tId" :columns="columns" :data="loadData" :alert="options.alert" :rowSelection="options.rowSelection" showPagination="auto">
+        <span slot="name" slot-scope="text, record" @click="showUser(record)">
+          <p class="userName">{{modifyName(text)}}</p>
+        </span>
+        <span slot="unSubmitquestion" slot-scope="text, record">
+          <p>{{ record.unSubmitquestion }}</p>
+        </span>
+        <span slot="submitStatus" slot-scope="text">
+          <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
+        <span slot="questionStatus" slot-scope="text">
+          <a-badge :status="text | visitTypeFilter" :text="text | visitFilter" /></span>
+        <span slot="basisList" slot-scope="basisList" v-if="basisList.length">
+          <div class="progressTag">
+            <router-link :to="{path:'/list/basis/' + basisList[0].patientBasisId}">
+              <p class="progressTagTitle">{{ basisList[0].typeName }}</p>
+              <div style="margin-right: 15px;display: inline-block;width: 130px;">
+                <div class="progressTagContent">
+                  <a-progress class="progressline" :strokeColor="basisList[0].progress == 100 ? '#4BC5AC' : '#00A0E9'" :showInfo="false" :percent="parseInt(basisList[0].progress)" size="small" />
+                </div>
+                <a-icon v-if="basisList[0].executeStatus != 3" type="clock-circle" theme="filled" style="color:#00A0E9" />
+                <!-- <span class="ant-progress-span" v-if="basisList[0].executeStatus == 2">{{basisList[0].progress}}%</span> -->
+                <a-icon v-else-if="basisList[0].executeStatus == 3" type="check-circle" theme="filled" style="color:#4BC5AC" />
+              </div>
+            </router-link>
+            <Visit :patientId="basisList[0].patientId"></Visit>
+          </div>
+        </span>
+        <span slot="description" slot-scope="text">
+          <ellipsis :length="8" tooltip>{{ text }}</ellipsis>
+        </span>
+        <span slot="action" slot-scope="text, record" style="text-align: center;">
+          <template>
+            <a @click="handleEdit(record)">编辑</a>
+            <a-divider type="vertical" />
+            <a @click="handleSubmit(record)" v-if="record.basisList[0].executeStatus == 3 && record.basisList[0].submitStatus == 0">提交</a>
+            <span v-else style="color:rgba(0, 0, 0, 0.25)">提交</span>
+            <a-divider type="vertical" />
+            <a @click="handleOut(record)" :disabled="record.visit != 1">退组</a>
+          </template>
+        </span>
+      </s-table>
+    </a-spin>
     <create-form ref="createModal" @ok="handleOk" />
     <user-detail ref="detailModal" />
     <a-modal :visible="visible" title="退组" @ok="outSubmit" :confirmLoading="confirmLoading" :centered="centered" :destroyOnClose="destroyOnClose" @cancel="handleClose">
@@ -300,7 +305,8 @@ import {
   addVasit,
   outGroup,
   getJxDataList,
-  submitCheck
+  submitCheck,
+  exportAllData
 } from '@/api/basis'
 import {
   mapGetters,
@@ -448,6 +454,7 @@ export default {
   },
   data() {
     return {
+      confirmLoading: false,
       patientBasisId: '',
       dateArr: [],
       mdl: {},
@@ -549,7 +556,8 @@ export default {
       requiredRule: { rules: [{ required: true, message: '该选项必填！' }] },
       patientId: null,
       confirmLoading: false,
-      detailVisible: false
+      detailVisible: false,
+      canExport: this.$ls.get(ACCESS_TOKEN).purviewType === 1
     }
   },
   created() {
@@ -686,6 +694,9 @@ export default {
             })
         }
       })
+    },
+    handleExport() {
+      window.open(this.baseUrl + 'patientReport/exportAllDate')
     }
   }
 };
