@@ -31,6 +31,9 @@
             <div class="btn-array" v-if="executeStatus === 2 && canEdit">
               <a-button class="btn fr" type="primary" @click="withdraw">撤回</a-button>
             </div>
+            <div class="clearfix" style="position: relative; top: 20px;">
+              <a-button class="btn fr" type="primary" @click="_importData">导入数据</a-button>
+            </div>
             <div class="baselineForm" :style="baselineFormStyle">
               <p class="tip">必填项如数据缺失无法提交，请一律用"/"来填写!</p>
               <a-form-item label="有无新增呼吸系统相关治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
@@ -258,7 +261,7 @@
 import STree from '@/components/Tree/Tree'
 import moment from 'moment'
 import { mapActions } from 'vuex'
-import { getPatientBasis, saveBasis, getBasisForm, recoverSubmit } from '@/api/basis'
+import { getPatientBasis, saveBasis, getBasisForm, recoverSubmit, exportFormData } from '@/api/basis'
 import { MyIcon } from '@/components/_util/util'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import ContactForm from '@/views/account/ContactForm'
@@ -698,6 +701,27 @@ export default {
       } else {
         return false
       }
+    },
+    _importData() {
+      var that = this
+      this.$confirm({
+        title: '是否确定导入数据？',
+        onOk() {
+          that.spinning = true
+          var params = new URLSearchParams()
+          params.append('basisMarkId', that.maskId)
+          params.append('patientBasisId', that.patientBasisId)
+          exportFormData(params)
+            .then(res => {
+              that.spinning = false
+              that.$message.success(res.msg)
+              that.hxxt = _.extend(that.hxxt || {}, that.dealAnswers(res.data.data.hxxt))
+            }).catch(error => {
+              that.spinning = false
+              console.log(error)
+            })
+        }
+      })
     }
   }
 }

@@ -35,7 +35,10 @@
               <a-form-item label="(1) 急性加重日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['t', {...dateRequire, initialValue: initValue('t', 'time')}]"></a-date-picker>
               </a-form-item>
-              <a-form-item label="(2) 急性加重的症状(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+              <a-form-item label="(2) 急性加重结束日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                <a-date-picker placeholder="请选择" style="width: 240px;" :disabledDate="disabledDate" v-decorator="['t4', {...dateRequire, initialValue: initValue('t4', 'time')}]"></a-date-picker>
+              </a-form-item>
+              <a-form-item label="(3) 急性加重的症状(多选):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-checkbox-group v-decorator="['t1', {...selectRequired, initialValue: initValue('t1', 'array')}]" class="control-m-line">
                   <a-checkbox value="1">咳嗽</a-checkbox>
                   <a-checkbox value="2">咳痰</a-checkbox>
@@ -52,7 +55,7 @@
                   <a-checkbox value="13">消瘦</a-checkbox>
                 </a-checkbox-group>
               </a-form-item>
-              <a-form-item label="(3) 气道分泌物微生物培养" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <a-form-item label="(4) 气道分泌物微生物培养" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-radio-group v-decorator="['t2', {nitialValue: initValue('t2')}]" @change="changeRadio($event, 'controlt2')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
@@ -127,7 +130,7 @@
                   </a-form-item>
                 </div>
               </div>
-              <a-form-item label="(4) 其他方法获得的病原学信息" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <a-form-item label="(5) 其他方法获得的病原学信息" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
               </a-form-item>
               <a-form-item label="取样日期:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-date-picker placeholder="请选择" style="width: 240px;" v-decorator="['a5', {initialValue: initValue('a5', 'time')}]" :disabledDate="disabledDate"></a-date-picker>
@@ -135,7 +138,7 @@
               <a-form-item label="种类:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                 <a-input style="width: 240px;" v-decorator="['a51', {initialValue: initValue('a51')}]" autocomplete="off"></a-input>
               </a-form-item>
-              <a-form-item label="(5) 血常规检测结果" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <a-form-item label="(6) 血常规检测结果" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-radio-group v-decorator="['b1', {initialValue: initValue('b1')}]" @change="changeRadio($event, 'controlb1')">
                   <a-radio value="1">有</a-radio>
                   <a-radio value="-1">无</a-radio>
@@ -158,13 +161,21 @@
                   <a-input style="width: 240px;" v-decorator="['b15', { initialValue: initValue('b15')}]" addonAfter="mg/L" autocomplete="off"></a-input>
                 </a-form-item>
               </div>
-              <a-form-item label="(6) 本次支气管扩张急性加重的住院日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
-                <a-date-picker placeholder="请选择" v-decorator="['b21', {initialValue: initValue('b21', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+              <a-form-item label="(7) 急性加重是否住院" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                <a-radio-group v-decorator="['b2', {initialValue: initValue('b2')}]" @change="changeRadio($event, 'controlb2')">
+                  <a-radio value="1">是</a-radio>
+                  <a-radio value="-1">否</a-radio>
+                </a-radio-group>
               </a-form-item>
-              <a-form-item label="本次支气管扩张急性加重的出院日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
-                <a-date-picker placeholder="请选择" v-decorator="['b22', {initialValue: initValue('b22', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
-              </a-form-item>
-              <a-form-item label="(7) 本次支气管扩张急性加重时的抗生素治疗" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+              <div v-if="controlb2">
+                <a-form-item label="(7-1) 本次支气管扩张急性加重的住院日期" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
+                  <a-date-picker placeholder="请选择" v-decorator="['b21', {initialValue: initValue('b21', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                </a-form-item>
+                <a-form-item label="(7-2) 本次支气管扩张急性加重的出院日期" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                  <a-date-picker placeholder="请选择" v-decorator="['b22', {initialValue: initValue('b22', 'time')}]" :disabledDate="disabledDate" style="width: 240px;"></a-date-picker>
+                </a-form-item>
+              </div>
+              <a-form-item label="(8) 本次支气管扩张急性加重时的抗生素治疗" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted">
                 <a-checkbox-group v-decorator="['b3', {...selectRequired, initialValue: initValue('b3', 'array')}]" class="control-m-line">
                   <a-checkbox value="1" @change="changeSelect($event, 'controlb31')">哌拉西林</a-checkbox>
                   <a-checkbox value="2" @change="changeSelect($event, 'controlb32')">哌拉西林/他唑巴坦</a-checkbox>
@@ -484,6 +495,7 @@ export default {
       controla118: false,
       controla212: false,
       controlb1: false,
+      controlb2: false,
       controlb31: false,
       controlb32: false,
       controlb33: false,
@@ -572,6 +584,7 @@ export default {
             'b3': typeof re['b3'] !== 'undefined' ? re['b3'].join(',') : '',
             'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
             't': typeof re['t'] !== 'undefined' ? re['t'].format('YYYY-MM-DD') : '',
+            't4': typeof re['t4'] !== 'undefined' ? re['t4'].format('YYYY-MM-DD') : '',
             'a2': typeof re['a2'] !== 'undefined' ? re['a2'].format('YYYY-MM-DD') : '',
             'a3': typeof re['a3'] !== 'undefined' ? re['a3'].format('YYYY-MM-DD') : '',
             'a4': typeof re['a4'] !== 'undefined' ? re['a4'].format('YYYY-MM-DD') : '',
@@ -723,6 +736,9 @@ export default {
         if (answer.b1 == 1) {
           this.controlb1 = true
         }
+        if (answer.b2 == 1) {
+          this.controlb2 = true
+        }
         if (answer.t2 == 1) {
           this.controlt2 = true
         }
@@ -747,6 +763,7 @@ export default {
         'b3': typeof re['b3'] !== 'undefined' ? re['b3'].join(',') : '',
         'a1': typeof re['a1'] !== 'undefined' ? re['a1'].format('YYYY-MM-DD') : '',
         't': typeof re['t'] !== 'undefined' ? re['t'].format('YYYY-MM-DD') : '',
+        't4': typeof re['t4'] !== 'undefined' ? re['t4'].format('YYYY-MM-DD') : '',
         'a2': typeof re['a2'] !== 'undefined' ? re['a2'].format('YYYY-MM-DD') : '',
         'a3': typeof re['a3'] !== 'undefined' ? re['a3'].format('YYYY-MM-DD') : '',
         'a4': typeof re['a4'] !== 'undefined' ? re['a4'].format('YYYY-MM-DD') : '',
