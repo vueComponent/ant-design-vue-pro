@@ -87,7 +87,7 @@
                     </a-checkbox-group>
                   </a-form-item>
                   <div v-if="controlb4 && controlb411">
-                    <a-form-item label="长期性口服抗生素治疗:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
+                    <a-form-item label="长期性口服抗生素治疗(连续使用大于三个月的治疗):" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                       <a-checkbox-group v-decorator="['b414', {...selectRequired, initialValue: initValue('b414', 'array')}]">
                         <a-checkbox value="1">阿奇霉素</a-checkbox>
                         <a-checkbox value="2">克拉霉素</a-checkbox>
