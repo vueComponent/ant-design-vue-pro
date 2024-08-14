@@ -66,6 +66,7 @@
                     <a-checkbox value="2" @change="changeSelect($event, 'controla32')">诱导痰</a-checkbox>
                     <a-checkbox value="3" @change="changeSelect($event, 'controla33')">支气管肺泡灌洗液</a-checkbox>
                     <a-checkbox value="4" @change="changeSelect($event, 'controla34')">血标本</a-checkbox>
+                    <a-checkbox value="5">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="痰液培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controla31">
@@ -233,6 +234,7 @@
                     <a-checkbox value="2" @change="changeSelect($event, 'controlc32')">诱导痰</a-checkbox>
                     <a-checkbox value="3" @change="changeSelect($event, 'controlc33')">支气管肺泡灌洗液</a-checkbox>
                     <a-checkbox value="4" @change="changeSelect($event, 'controlc34')">血标本</a-checkbox>
+                    <a-checkbox value="5">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
                 <a-form-item label="痰液培养结果:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlc31">
