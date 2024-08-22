@@ -1,7 +1,7 @@
 <template>
   <span class="editMcroorganism">
     <p @click="showMicroorganism">
-      <a-icon type="edit" class="mcroorganism" /><span>编辑</span>
+      <a-icon type="edit" class="mcroorganism" /><span>编辑药敏结果</span>
     </p>
     <a-modal ref="picUpload" title="药敏检查" width="800px" :visible="visible" :footer="null" :maskClosable="false" :centered="centered" @cancel="handleCancel" :bodyStyle="bodyStyle">
       <a-spin :spinning="confirmLoading">

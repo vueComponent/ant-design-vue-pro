@@ -169,12 +169,6 @@
       <a-col :sm="48" :md="24" :lg="10" :style="{ marginBottom: '10px' }">
           <a-card :loading="loading" title="资料下载" :tab-list="tabList" :active-tab-key="key"
       @tabChange="key => onTabChange(key, 'key')" :bordered="false" :body-style="{ padding: '0' }" :style="{ height: '208px' }">
-            <div class="card-wrap" v-if="key === '1'">
-              <rank-list :list="rankList1" />
-            </div>
-            <div class="card-wrap" v-if="key === '2'">
-              <rank-list :list="rankList2" />
-            </div>
             <div class="card-wrap" v-if="key === '3'">
               <rank-list :list="rankList3" />
             </div>
@@ -263,8 +257,8 @@ export default {
       fileName:'',
       current: '',
       file:"text-align: center; padding: 10px 0 10px 25px;",
-      tabList: [{key: '1', tab: '支扩'},{key: '2', tab: 'ICON'},{key: '3', tab: '伦理'},{key: '4', tab: '操作手册'},{key: '5', tab: '其他'}],
-      key: '1'
+      tabList: [{key: '3', tab: '伦理'},{key: '4', tab: '操作手册'},{key: '5', tab: '其他'}],
+      key: '3'
     };
   },
   created() {
