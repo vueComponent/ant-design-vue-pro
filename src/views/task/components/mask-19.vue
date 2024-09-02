@@ -203,9 +203,9 @@
               <div class="title">4.支扩类型</div>
                 <a-form-item label="支扩类型" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="no-border">
                   <a-radio-group v-decorator="['a20', {...selectRequired, initialValue: initValue('a20')}]" @change="computeBhalla">
-                    <a-radio value="1">囊状</a-radio>
                     <a-radio value="2">柱状</a-radio>
                     <a-radio value="3">静脉曲张型(混合型)</a-radio>
+                    <a-radio value="1">囊状</a-radio>
                   </a-radio-group>
                 </a-form-item>
             </div>
@@ -548,6 +548,21 @@ export default {
             that.form.setFieldsValue({
               a9: res.data.a9
             })
+            let arr = _.values(that.form.getFieldsValue(['a3', 'a4', 'a5', 'a6', 'a7', 'a8']))
+            
+            if(_.some(arr, function(v){ return v === 3 || v === '3' })) {
+              that.form.setFieldsValue({
+                a20: '1'
+              })
+            } else if(_.some(arr, function(v){ return v === 2 || v === '2' })) {
+              that.form.setFieldsValue({
+                a20: '3'
+              })
+            } else {
+              that.form.setFieldsValue({
+                a20: '2'
+              })
+            }
           })
           .catch(error => {
             console.log(error)

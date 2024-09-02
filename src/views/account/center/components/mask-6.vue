@@ -344,31 +344,13 @@
                 </a-form-item>
                 <a-form-item label="真菌:" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb4">
                   <a-checkbox-group v-decorator="['b42', {...selectRequired, initialValue: initValue('b42', 'array')}]">
-                    <a-checkbox value="0" @change="changeSelect($event, 'controlb420')">白色念珠菌</a-checkbox>
-                    <a-checkbox value="1" @change="changeSelect($event, 'controlb421')">曲霉</a-checkbox>
+                    <a-checkbox value="0">白色念珠菌</a-checkbox>
+                    <a-checkbox value="1">曲霉</a-checkbox>
                     <a-checkbox value="2" @change="changeSelect($event, 'controlb422')">其他</a-checkbox>
                   </a-checkbox-group>
                 </a-form-item>
-                <a-form-item label="白色念珠菌检测方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb420">
-                  <a-radio-group v-decorator="['b421', {...require1, initialValue: initValue('b421')}]">
-                    <a-radio value="1">MIC</a-radio>
-                    <a-radio value="2">纸片法</a-radio>
-                  </a-radio-group>
-                </a-form-item>
-                <a-form-item label="曲霉检测方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb421">
-                  <a-radio-group v-decorator="['b422', {...require1, initialValue: initValue('b422')}]">
-                    <a-radio value="1">MIC</a-radio>
-                    <a-radio value="2">纸片法</a-radio>
-                  </a-radio-group>
-                </a-form-item>
                 <a-form-item class="border-dotted" label="其他真菌" :labelCol="labelColHor" :wrapperCol="wrapperHor" v-if="controlb422">
                   <a-input style="width: 240px;" v-decorator="['b43', {...inputRequired, initialValue: initValue('b43')}]" autocomplete="off"></a-input>
-                </a-form-item>
-                <a-form-item label="其他真菌检测方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlb422">
-                  <a-radio-group v-decorator="['b423', {...require1, initialValue: initValue('b423')}]">
-                    <a-radio value="1">MIC</a-radio>
-                    <a-radio value="2">纸片法</a-radio>
-                  </a-radio-group>
                 </a-form-item>
               </div>
               <div v-if="control3">
@@ -460,16 +442,10 @@
                 </a-form-item>
                 <a-form-item label="分离到微生物:" :labelCol="labelColHor" :wrapperCol="wrapperHor">
                   <a-checkbox-group v-decorator="['c4', {...selectRequired, initialValue: initValue('c4', 'array')}]">
-                    <a-checkbox value="0" :disabled="detect('c4', '2') || initC4" @change="changeSelect($event, 'controlc40')">结核分枝杆菌</a-checkbox>
+                    <a-checkbox value="0" :disabled="detect('c4', '2') || initC4">结核分枝杆菌</a-checkbox>
                     <a-checkbox value="1" :disabled="detect('c4', '2') || initC4" @change="changeSelect($event, 'controlc41')">非结核分枝杆菌</a-checkbox>
-                    <a-checkbox value="2" @change="handleNone($event, 'c4', '2', ['controlc40', 'controlc41'])">阴性</a-checkbox>
+                    <a-checkbox value="2" @change="handleNone($event, 'c4', '2', ['controlc41'])">阴性</a-checkbox>
                   </a-checkbox-group>
-                </a-form-item>
-                <a-form-item label="结核分枝杆菌检测方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlc40">
-                  <a-radio-group v-decorator="['c421', {...require1, initialValue: initValue('c421')}]">
-                    <a-radio value="1">MIC</a-radio>
-                    <a-radio value="2">纸片法</a-radio>
-                  </a-radio-group>
                 </a-form-item>
                 <a-form-item label="非结核分枝杆菌检测方式:" :labelCol="labelColHor" :wrapperCol="wrapperHor" class="border-dotted" v-if="controlc41">
                   <a-radio-group v-decorator="['c422', {...require1, initialValue: initValue('c422')}]">
@@ -636,7 +612,6 @@ export default {
       controlb2: false,
       controlb4: false,
       controlc2: false,
-      controlc40: false,
       controlc41: false,
       controla420: false,
       controla421: false,
@@ -651,8 +626,6 @@ export default {
       controla4210: false,
       controla4211: false,
       controla4212: false,
-      controlb420: false,
-      controlb421: false,
       controlb422: false,
       controlc415: false,
       controla31: false,
@@ -778,8 +751,6 @@ export default {
         // this.controla4212 = false
       } else if (t === 'controlb4' && e.target.value === '-1') {
         this.controlb4 = false
-        this.controlb420 = false
-        this.controlb421 = false
         this.controlb422 = false
       } else if ((t !== 'controla3113' && t !== 'controla3213' && t !== 'controla3313' && t !== 'controla3413' && t !== 'controlb3113' && t !== 'controlb3213' && t !== 'controlb3313' && t !== 'controlb3413' && t !== 'controlc3113' && t !== 'controlc3213' && t !== 'controlc3313' && t !== 'controlc3413') && e.target.value === '1') {
         this[t] = true
@@ -1029,9 +1000,6 @@ export default {
         }
         if (answer.c4) {
           splitArr = answer.c4.split(',')
-          if (splitArr.indexOf('0') > -1) {
-            this.controlc40 = true
-          }
           if (splitArr.indexOf('1') > -1) {
             this.controlc41 = true
           }
@@ -1206,13 +1174,6 @@ export default {
           }
         }
         if (answer.b42) {
-          splitArr = answer.b42.split(',')
-          if (splitArr.indexOf('0') > -1) {
-            this.controlb420 = true
-          }
-          if (splitArr.indexOf('1') > -1) {
-            this.controlb421 = true
-          }
           if (splitArr.indexOf('2') > -1) {
             this.controlb422 = true
           }
