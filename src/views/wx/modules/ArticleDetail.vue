@@ -31,7 +31,7 @@
         <a-form-item label="文章发布人" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['publisher', requiredRule]" />
         </a-form-item>
-        <a-form-item class="textarea" label="文章内容" :labelCol="labelCol" :wrapperCol="wrapperCol" style="margin-bottom:0">
+        <a-form-item class="textarea" label="文章内容" :labelCol="labelCol" :wrapperCol="wrapperCol" style="margin-bottom: 0">
           <quill-editor v-decorator="['text', { ...requiredRule, valuePropName: 'value', getValueFromEvent: normEditor }]" :options="editorOption"></quill-editor>
         </a-form-item>
       </a-form>
@@ -41,9 +41,11 @@
 
 <script>
   import { getArticleDetail, addOrEdit } from '@/api/text'
-  import { quillEditor } from 'vue-quill-editor'
+  import { quillEditor, Quill } from 'vue-quill-editor'
+  import Video from '@/utils/quill-video.js'
   import 'quill/dist/quill.snow.css'
   import quillConfig from '@/utils/quillConfig'
+  Quill.register(Video, true)
   export default {
     components: {
       quillEditor
@@ -197,5 +199,11 @@
   }
   /deep/ .ql-editor {
     height: 350px;
+  }
+  /deep/ .ql-video[type='file'] {
+    display: none;
+  }
+  /deep/ .ql-editor .ql-video {
+    width: 100%;
   }
 </style>

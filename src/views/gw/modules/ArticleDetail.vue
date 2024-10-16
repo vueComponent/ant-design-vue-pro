@@ -45,9 +45,11 @@
 </template>
 <script>
 import { getArticleDetail, addOrEdit } from '@/api/text'
-import { quillEditor } from 'vue-quill-editor'
+import { quillEditor, Quill } from 'vue-quill-editor'
+import Video from '@/utils/quill-video.js'
 import 'quill/dist/quill.snow.css'
 import quillConfig from '@/utils/quillConfig'
+Quill.register(Video, true)
 export default {
   components: {
     quillEditor
@@ -233,5 +235,11 @@ export default {
 
 /deep/ .ql-editor {
   height: 350px;
+}
+/deep/ .ql-video[type='file'] {
+  display: none;
+}
+/deep/ .ql-editor .ql-video {
+  width: 100%;
 }
 </style>
