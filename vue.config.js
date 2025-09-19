@@ -43,11 +43,8 @@ const vueConfig = {
   configureWebpack: {
     // webpack plugins
     plugins: [
-      // Ignore all locale files of moment.js
-      new webpack.IgnorePlugin({
-        contextRegExp: /^\.\/locale$/,
-        resourceRegExp: /moment$/
-      }),
+      // Ignore all locale files of moment.js - disabled for webpack 5 compatibility
+      // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.DefinePlugin({
         APP_VERSION: `"${packageJson.version}"`,
         GIT_HASH: JSON.stringify(getGitHash()),
@@ -61,6 +58,9 @@ const vueConfig = {
 
   chainWebpack: config => {
     config.resolve.alias.set('@$', resolve('src'))
+    
+    // Ignore moment.js locale files to reduce bundle size (webpack 5 compatible)
+    config.resolve.alias.set('moment/locale', false)
 
     // fixed svg-loader by https://github.com/damianstasik/vue-svg-loader/issues/185#issuecomment-1126721069
 		const svgRule = config.module.rule('svg')
@@ -123,7 +123,7 @@ const vueConfig = {
 
   devServer: {
     // development server port 8000
-    port: 8000
+    port: 8000,
     // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
     // proxy: {
     //   '/api': {

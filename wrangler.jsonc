@@ -1,0 +1,14 @@
+{
+  "name": "antdv-vue2-pro-preview",
+  "compatibility_date": "2025-09-19",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  },
+  "routes": [
+    {
+      "pattern": "preview.pro.antdv.com/*",
+      "zone_name": "antdv.com"
+    }
+  ]
+}
