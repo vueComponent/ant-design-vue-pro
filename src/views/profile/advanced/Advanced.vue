@@ -20,8 +20,8 @@
 
     <!-- actions -->
     <template v-slot:extra>
-      <a-button-group style="margin-right: 4px;">
-        <a-button>操作</a-button>
+      <a-button-group v-action:add style="margin-right: 4px;">
+        <a-button v-action:add>操作111</a-button>
         <a-button>操作</a-button>
         <a-button><a-icon type="ellipsis"/></a-button>
       </a-button-group>

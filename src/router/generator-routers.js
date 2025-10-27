@@ -15,10 +15,85 @@ const constantRouterComponents = {
   '500': () => import(/* webpackChunkName: "error" */ '@/views/exception/500'),
 
   // 你需要动态引入的页面组件
+  // 首页
   Workplace: () => import('@/views/dashboard/Workplace'),
   Analysis: () => import('@/views/dashboard/Analysis'),
+  Monitor: () => import('@/views/dashboard/Monitor'),
 
+  // 会员管理
+  UserList: () => import('@/views/user/UserList'),
+  BossVersion: () => import('@/views/user/BossVersion'),
+  UserAuth: () => import('@/views/user/UserAuth'),
+
+  // 节点
+  NodeList: () => import('@/views/node/NodeList'),
+  NodePrice: () => import('@/views/node/NodePrice'),
+
+  // 工单
+  TicketList: () => import('@/views/ticket/TicketList'),
+  /* 上游管理 */
+  // 接口配置
+  UpstreamApiConfig: () => import('@/views/upstream/UpstreamApiConfig'),
+  
+  // 购买记录
+  BuyRecord: () => import('@/views/buy/BuyRecord'),
+  
+  // 财务
+  FinanceDetail: () => import('@/views/finance/FinanceDetail'),
+  // 设备列表
+  Device: () => import('@/views/device/Device'),
+  DeviceServiceApi: () => import('@/views/device/DeviceServiceApi'),
+
+  // 提现管理
+  WithdrawalRecord: () => import('@/views/withdrawal/WithdrawalRecord'),
+  WithdrawalBankAccount: () => import('@/views/withdrawal/WithdrawalBankAccount'),
+  WithdrawalConfig: () => import('@/views/withdrawal/WithdrawalConfig'),
+  WithdrawalAllRecord: () => import('@/views/withdrawal/WithdrawalAllRecord'),
+  /* 业务管理 */
+  // 业务列表
+  BusinessList: () => import('@/views/business/BusinessList'),
+  // 价格
+  BizPrice: () => import('@/views/business/BizPrice'),
+  // 价格分组
+  BusinessPriceGroup: () => import('@/views/business/BusinessPriceGroup'),
+  // 业务分类
+  BusinessScript: () => import('@/views/business/BusinessScript'),
+  
+  // 公告
+  NoticeManage: () => import('@/views/notice/NoticeManage'),
+  // 上机说明
+  NodebindDesc: () => import('@/views/notice/NodebindDesc'),
+  // 网站配置
+  WebBasic: () => import('@/views/web/WebBasic'),
+  WebService: () => import('@/views/web/WebService'),
+  WebBeian: () => import('@/views/web/WebBeian'),
+  WebDomain: () => import('@/views/web/WebDomain'),
+  // 域名
+  DomainBasic: () => import('@/views/domain/DomainBasic'),
+  DomainManage: () => import('@/views/domain/DomainManage'),
+  // 短信
+  SmsSendRecord: () => import('@/views/sms/SmsSendRecord'),
+  SmsPlan: () => import('@/views/sms/SmsPlan'),
+  SmsBalance: () => import('@/views/sms/SmsBalance'),
+  SmsConfig: () => import('@/views/sms/SmsConfig'),
+
+  // 接口配置
+  RealnameVerifi: () => import('@/views/apiConfig/RealnameVerifi'),
+  SmsApiConfig: () => import('@/views/apiConfig/SmsApiConfig'),
+  // 日志
+  LogUser: () => import('@/views/log/LogUser'),
+  LogSystem: () => import('@/views/log/LogSystem'),
+
+  // 其他
+  OtherSegment: () => import('@/views/other/OtherSegment'),
+  OtherIp: () => import('@/views/other/OtherIp'),
+  // 员工
+  StaffManage: () => import('@/views/staff/StaffManage'),
+  StaffPost: () => import('@/views/staff/StaffPost'),
+  // 系统
+  Security: () => import('@/views/system/Security'),
   // form
+  /*
   BasicForm: () => import('@/views/form/basicForm'),
   StepForm: () => import('@/views/form/stepForm/StepForm'),
   AdvanceForm: () => import('@/views/form/advancedForm/AdvancedForm'),
@@ -26,24 +101,25 @@ const constantRouterComponents = {
   // list
   TableList: () => import('@/views/list/TableList'),
   StandardList: () => import('@/views/list/BasicList'),
-  CardList: () => import('@/views/list/CardList'),
+  // CardList: () => import('@/views/list/CardList'),
   SearchLayout: () => import('@/views/list/search/SearchLayout'),
   SearchArticles: () => import('@/views/list/search/Article'),
   SearchProjects: () => import('@/views/list/search/Projects'),
   SearchApplications: () => import('@/views/list/search/Applications'),
   ProfileBasic: () => import('@/views/profile/basic'),
   ProfileAdvanced: () => import('@/views/profile/advanced/Advanced'),
-
+*/
   // result
-  ResultSuccess: () => import(/* webpackChunkName: "result" */ '@/views/result/Success'),
-  ResultFail: () => import(/* webpackChunkName: "result" */ '@/views/result/Error'),
+  // ResultSuccess: () => import(/* webpackChunkName: "result" */ '@/views/result/Success'),
+  // ResultFail: () => import(/* webpackChunkName: "result" */ '@/views/result/Error'),
 
   // exception
   Exception403: () => import(/* webpackChunkName: "fail" */ '@/views/exception/403'),
   Exception404: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404'),
-  Exception500: () => import(/* webpackChunkName: "fail" */ '@/views/exception/500'),
+  Exception500: () => import(/* webpackChunkName: "fail" */ '@/views/exception/500')
 
   // account
+  /*
   AccountCenter: () => import('@/views/account/center'),
   AccountSettings: () => import('@/views/account/settings/Index'),
   BasicSetting: () => import('@/views/account/settings/BasicSetting'),
@@ -51,7 +127,7 @@ const constantRouterComponents = {
   CustomSettings: () => import('@/views/account/settings/Custom'),
   BindingSettings: () => import('@/views/account/settings/Binding'),
   NotificationSettings: () => import('@/views/account/settings/Notification')
-
+  */
   // 'TestWork': () => import(/* webpackChunkName: "TestWork" */ '@/views/dashboard/TestWork')
 }
 
@@ -85,18 +161,19 @@ export const generatorDynamicRouter = token => {
     loginService
       .getCurrentUserNav(token)
       .then(res => {
-        console.log('generatorDynamicRouter response:', res)
-        const { result } = res
+        // console.log('generatorDynamicRouter response:', JSON.stringify(res.data))
+        // const { result } = res
         const menuNav = []
         const childrenNav = []
         //      后端数据, 根级树数组,  根级 PID
-        listToTree(result, childrenNav, 0)
+        listToTree(res.result, childrenNav, 0)
+        // alert('childrenNav' + JSON.stringify(result))
         rootRouter.children = childrenNav
         menuNav.push(rootRouter)
-        console.log('menuNav', menuNav)
+        // alert('menuNav' + JSON.stringify(menuNav))
         const routers = generator(menuNav)
         routers.push(notFoundRouter)
-        console.log('routers', routers)
+        // alert('routers' + JSON.stringify(routers))
         resolve(routers)
       })
       .catch(err => {
@@ -113,7 +190,10 @@ export const generatorDynamicRouter = token => {
  * @returns {*}
  */
 export const generator = (routerMap, parent) => {
+  // console.log('routerMap', JSON.stringify(routerMap))
   return routerMap.map(item => {
+    // alert(JSON.stringify(constantRouterComponents[item.component || item.key]))
+    // alert(JSON.stringify(constantRouterComponents[item.component || item.key] || (() => import(`@/views/${item.component}`))))
     const { title, show, hideChildren, hiddenHeaderContent, target, icon } = item.meta || {}
     const currentRouter = {
       // 如果路由设置了 path，则作为默认 path，否则 路由地址 动态拼接生成如 /dashboard/workplace
@@ -132,6 +212,30 @@ export const generator = (routerMap, parent) => {
         hiddenHeaderContent: hiddenHeaderContent,
         target: target,
         permission: item.name
+        /*
+        actionEntitySet: [
+          {
+            action: 'add',
+            describe: '新增',
+            defaultCheck: false
+          },
+          {
+            action: 'get',
+            describe: '详情',
+            defaultCheck: false
+          },
+          {
+            action: 'update',
+            describe: '修改',
+            defaultCheck: false
+          },
+          {
+            action: 'delete',
+            describe: '删除',
+            defaultCheck: false
+          }
+        ]
+        */
       }
     }
     // 是否设置了隐藏菜单
@@ -153,6 +257,7 @@ export const generator = (routerMap, parent) => {
       // Recursion
       currentRouter.children = generator(item.children, currentRouter)
     }
+    // console.log('currentRouter', JSON.stringify(currentRouter))
     return currentRouter
   })
 }
@@ -164,6 +269,7 @@ export const generator = (routerMap, parent) => {
  * @param parentId 父ID
  */
 const listToTree = (list, tree, parentId) => {
+  // alert('child' + JSON.stringify(list))
   list.forEach(item => {
     // 判断是否为父级菜单
     if (item.parentId === parentId) {

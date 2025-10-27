@@ -6,7 +6,7 @@
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
               <a-form-item label="规则编号">
-                <a-input v-model="queryParam.id" placeholder=""/>
+                <a-input v-model="queryParam.userId" placeholder=""/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
@@ -63,8 +63,9 @@
       </div>
 
       <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
-        <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
+        <a-button v-action:add type="primary" icon="plus" @click="handleAdd">新建111</a-button>
+        <a-button style="margin-left: 8px">批量操作 <a-icon type="down" /></a-button>
+        <a-dropdown v-action:add v-if="selectedRowKeys.length > 0">
           <a-menu slot="overlay">
             <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
             <!-- lock | unlock -->
@@ -120,42 +121,64 @@
 
 <script>
 import moment from 'moment'
+// import { mapState } from 'vuex'
 import { STable, Ellipsis } from '@/components'
-import { getRoleList, getServiceList } from '@/api/manage'
+import { getRoleList } from '@/api/manage'
 
 import StepByStepModal from './modules/StepByStepModal'
 import CreateForm from './modules/CreateForm'
-
+import { page } from '@/api/user/list'
 const columns = [
+  /*
   {
     title: '#',
     scopedSlots: { customRender: 'serial' }
   },
+  */
   {
-    title: '规则编号',
-    dataIndex: 'no'
+    title: '用户ID',
+    dataIndex: 'user_id'
   },
   {
-    title: '描述',
-    dataIndex: 'description',
-    scopedSlots: { customRender: 'description' }
+    title: '账号',
+    dataIndex: 'user_name',
+    scopedSlots: { customRender: 'user_name' }
   },
   {
-    title: '服务调用次数',
-    dataIndex: 'callNo',
-    sorter: true,
-    needTotal: true,
-    customRender: (text) => text + ' 次'
+    title: '姓名',
+    dataIndex: 'sex_name'
+    // sorter: true,
+    // needTotal: true,
+    // customRender: (text) => text + '<p>我是p标签</p>'
+  },
+  {
+    title: '余额',
+    dataIndex: 'money'
+  },
+  {
+    title: '佣金余额',
+    dataIndex: 'cmn_money'
+  },
+  {
+    title: '佣金总收入',
+    dataIndex: 'cmn_total_money'
+  },
+  {
+    title: '地址',
+    dataIndex: 'full_address'
+  },
+  {
+    title: '会员类型',
+    key: 'userType',
+    dataIndex: 'userTypeName'
   },
   {
     title: '状态',
-    dataIndex: 'status',
-    scopedSlots: { customRender: 'status' }
+    dataIndex: 'stateName'
   },
   {
-    title: '更新时间',
-    dataIndex: 'updatedAt',
-    sorter: true
+    title: '注册时间',
+    dataIndex: 'reg_time'
   },
   {
     title: '操作',
@@ -207,7 +230,7 @@ export default {
       loadData: parameter => {
         const requestParameters = Object.assign({}, parameter, this.queryParam)
         console.log('loadData request parameters:', requestParameters)
-        return getServiceList(requestParameters)
+        return page(requestParameters)
           .then(res => {
             return res.result
           })
@@ -225,6 +248,10 @@ export default {
     }
   },
   created () {
+    // this.$store.commit('SET_NAME', { name: 'result.name', welcome: 'welcome()' })
+    // const routes = this.mainMenu.find(item => item.path === '/')
+    // alert('routes' + JSON.stringify(this.welcome.name))
+    // console.log('this.$route', this.$auth())
     getRoleList({ t: new Date() })
   },
   computed: {
@@ -234,6 +261,13 @@ export default {
         onChange: this.onSelectChange
       }
     }
+    /*
+    ...mapState({
+      nickname: state => state.roles,
+      welcome: state => state.user.roles,
+      mainMenu: state => state.permission.addRouters
+    })
+    */
   },
   methods: {
     handleAdd () {
@@ -248,6 +282,7 @@ export default {
       const form = this.$refs.createModal.form
       this.confirmLoading = true
       form.validateFields((errors, values) => {
+        console.log('validateFields', JSON.stringify(values))
         if (!errors) {
           console.log('values', values)
           if (values.id > 0) {

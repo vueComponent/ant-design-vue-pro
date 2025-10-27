@@ -2,24 +2,22 @@
 
   <div id="userLayout" :class="['user-layout-wrapper', isMobile && 'mobile']">
     <div class="container">
+      <!--
       <div class="user-layout-lang">
         <select-lang class="select-lang-trigger" />
       </div>
+      -->
       <div class="user-layout-content">
         <div class="top">
           <div class="header">
-            <a href="/">
-              <img src="~@/assets/logo.svg" class="logo" alt="logo">
-              <span class="title">Ant Design</span>
-            </a>
+            <span class="title">PCDN 管理系统</span>
           </div>
           <div class="desc">
-            {{ $t('layouts.userLayout.title') }}
           </div>
         </div>
 
         <router-view />
-
+        <!--
         <div class="footer">
           <div class="links">
             <a href="_self">帮助</a>
@@ -30,6 +28,7 @@
             Copyright &copy; 2018 vueComponent
           </div>
         </div>
+        -->
       </div>
     </div>
   </div>

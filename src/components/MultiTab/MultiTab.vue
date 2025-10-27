@@ -25,7 +25,7 @@ export default {
       }
       this.closeThat(val)
     }).$on('rename', ({ key, name }) => {
-      console.log('rename', key, name)
+      // console.log('rename', key, name)
       try {
         const item = this.pages.find(item => item.path === key)
         item.meta.customTitle = name
@@ -33,7 +33,6 @@ export default {
       } catch (e) {
       }
     })
-
     this.pages.push(this.$route)
     this.fullPathList.push(this.$route.fullPath)
     this.selectedLastPath()
@@ -111,19 +110,20 @@ export default {
     // render
     renderTabPane (title, keyPath) {
       const menu = this.renderTabPaneMenu(keyPath)
-
       return (
         <a-dropdown overlay={menu} trigger={['contextmenu']}>
-          <span style={{ userSelect: 'none' }}>{ title }</span>
+          <span style={{ userSelect: 'none' }}>
+          { title }
+          </span>
         </a-dropdown>
       )
     }
   },
   watch: {
     '$route': function (newVal) {
-      this.activeKey = newVal.fullPath
-      if (this.fullPathList.indexOf(newVal.fullPath) < 0) {
-        this.fullPathList.push(newVal.fullPath)
+      this.activeKey = newVal.path
+      if (this.fullPathList.indexOf(newVal.path) < 0) {
+        this.fullPathList.push(newVal.path)
         this.pages.push(newVal)
       }
     },
@@ -137,12 +137,12 @@ export default {
       return (
         <a-tab-pane
           style={{ height: 0 }}
-          tab={this.renderTabPane(page.meta.customTitle || page.meta.title, page.fullPath)}
-          key={page.fullPath} closable={pages.length > 1}
+          tab={ this.renderTabPane(page.meta.customTitle || page.meta.title, page.path) }
+          key={page.path}
+          closable={pages.length > 1}
         >
         </a-tab-pane>)
     })
-
     return (
       <div class="ant-pro-multi-tab">
         <div class="ant-pro-multi-tab-wrapper">

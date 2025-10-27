@@ -1,3 +1,4 @@
+/*
 export const PERMISSION_ENUM = {
   'add': { key: 'add', label: '新增' },
   'delete': { key: 'delete', label: '删除' },
@@ -9,7 +10,7 @@ export const PERMISSION_ENUM = {
   'import': { key: 'import', label: '导入' },
   'export': { key: 'export', label: '导出' }
 }
-
+*/
 /**
  * <a-button v-if="$auth('form.edit')">Button</a-button>
  * @param Vue
@@ -18,7 +19,6 @@ function plugin (Vue) {
   if (plugin.installed) {
     return
   }
-
   !Vue.prototype.$auth && Object.defineProperties(Vue.prototype, {
     $auth: {
       get () {
@@ -27,15 +27,16 @@ function plugin (Vue) {
           const [permission, action] = permissions.split('.')
           const permissionList = _this.$store.getters.roles.permissions
           return permissionList.find((val) => {
-            return val.permissionId === permission
+              return val.permissionId === permission
           }).actionList.findIndex((val) => {
-            return val === action
+            // console.log('permissionList', val)
+              return val === action
           }) > -1
         }
       }
     }
   })
-
+  /*
   !Vue.prototype.$enum && Object.defineProperties(Vue.prototype, {
     $enum: {
       get () {
@@ -50,6 +51,7 @@ function plugin (Vue) {
       }
     }
   })
+  */
 }
 
 export default plugin

@@ -22,18 +22,18 @@ const isProd = process.env.NODE_ENV === 'production'
 const assetsCDN = {
   // webpack build externals
   externals: {
-    vue: 'Vue',
-    'vue-router': 'VueRouter',
-    vuex: 'Vuex',
-    axios: 'axios'
+    // vue: 'Vue',
+    // 'vue-router': 'VueRouter',
+    // vuex: 'Vuex',
+    // axios: 'axios'
   },
   css: [],
   // https://unpkg.com/browse/vue@2.6.10/
   js: [
-    '//cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
-    '//cdn.jsdelivr.net/npm/vue-router@3.5.1/dist/vue-router.min.js',
-    '//cdn.jsdelivr.net/npm/vuex@3.1.1/dist/vuex.min.js',
-    '//cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js'
+    // '//cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
+    // '//cdn.jsdelivr.net/npm/vue-router@3.5.1/dist/vue-router.min.js',
+    // '//cdn.jsdelivr.net/npm/vuex@3.1.1/dist/vuex.min.js',
+    // '//cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js'
   ]
 }
 
@@ -43,7 +43,7 @@ const vueConfig = {
     // webpack plugins
     plugins: [
       // Ignore all locale files of moment.js
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.DefinePlugin({
         APP_VERSION: `"${require('./package.json').version}"`,
         GIT_HASH: JSON.stringify(getGitHash()),
@@ -100,8 +100,16 @@ const vueConfig = {
   },
 
   devServer: {
+    allowedHosts: [
+      'zicp.fun', // 允许访问的域名地址，即花生壳内网穿透的地址
+      '.zicp.fun'   // .是二级域名的通配符   
+    ],
     // development server port 8000
-    port: 8000
+    port: 8000,
+    proxy: 'http://127.0.0.1:9696',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
     // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
     // proxy: {
     //   '/api': {

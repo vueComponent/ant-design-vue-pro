@@ -40,27 +40,27 @@ const info = options => {
           {
             action: 'add',
             describe: '新增',
-            defaultCheck: false
+            defaultCheck: true
           },
           {
             action: 'query',
             describe: '查询',
-            defaultCheck: false
+            defaultCheck: true
           },
           {
             action: 'get',
             describe: '详情',
-            defaultCheck: false
+            defaultCheck: true
           },
           {
             action: 'update',
             describe: '修改',
-            defaultCheck: false
+            defaultCheck: true
           },
           {
             action: 'delete',
             describe: '删除',
-            defaultCheck: false
+            defaultCheck: true
           }
         ],
         actionList: null,
@@ -76,17 +76,17 @@ const info = options => {
           {
             action: 'add',
             describe: '新增',
-            defaultCheck: false
+            defaultCheck: true
           },
           {
             action: 'query',
             describe: '查询',
-            defaultCheck: false
+            defaultCheck: true
           },
           {
             action: 'get',
             describe: '详情',
-            defaultCheck: false
+            defaultCheck: true
           },
           {
             action: 'update',
@@ -145,11 +145,51 @@ const info = options => {
         actions:
           '[{"action":"add","defaultCheck":false,"describe":"新增"},{"action":"query","defaultCheck":false,"describe":"查询"},{"action":"get","defaultCheck":false,"describe":"详情"},{"action":"update","defaultCheck":false,"describe":"修改"},{"action":"delete","defaultCheck":false,"describe":"删除"}]',
         actionEntitySet: [
+          /*
           {
             action: 'add',
             describe: '新增',
             defaultCheck: false
           },
+          */
+          {
+            action: 'query',
+            describe: '查询',
+            defaultCheck: false
+          },
+          {
+            action: 'get',
+            describe: '详情',
+            defaultCheck: false
+          },
+          {
+            action: 'update',
+            describe: '修改',
+            defaultCheck: false
+          },
+          {
+            action: 'delete',
+            describe: '删除',
+            defaultCheck: false
+          }
+        ],
+        actionList: null,
+        dataAccess: null
+      },
+      {
+        roleId: 'admin',
+        permissionId: 'advanced',
+        permissionName: '详细页权限',
+        actions:
+          '[{"action":"add","defaultCheck":false,"describe":"新增"},{"action":"query","defaultCheck":false,"describe":"查询"},{"action":"get","defaultCheck":false,"describe":"详情"},{"action":"update","defaultCheck":false,"describe":"修改"},{"action":"delete","defaultCheck":false,"describe":"删除"}]',
+        actionEntitySet: [
+          /*
+          {
+            action: 'add',
+            describe: '新增',
+            defaultCheck: false
+          },
+          */
           {
             action: 'query',
             describe: '查询',
@@ -179,22 +219,24 @@ const info = options => {
         permissionId: 'table',
         permissionName: '表格权限',
         actions:
-          '[{"action":"add","defaultCheck":false,"describe":"新增"},{"action":"import","defaultCheck":false,"describe":"导入"},{"action":"get","defaultCheck":false,"describe":"详情"},{"action":"update","defaultCheck":false,"describe":"修改"}]',
+          '[{"action":"add","defaultCheck":false,"describe":"新增"},{"action":"import","defaultCheck":true,"describe":"导入"},{"action":"get","defaultCheck":false,"describe":"详情"},{"action":"update","defaultCheck":false,"describe":"修改"}]',
         actionEntitySet: [
+          /*
           {
             action: 'add',
             describe: '新增',
             defaultCheck: false
           },
+          */
           {
             action: 'import',
             describe: '导入',
-            defaultCheck: false
+            defaultCheck: true
           },
           {
             action: 'get',
             describe: '详情',
-            defaultCheck: false
+            defaultCheck: true
           },
           {
             action: 'update',
@@ -341,42 +383,6 @@ const info = options => {
       },
       {
         roleId: 'admin',
-        permissionId: 'table',
-        permissionName: '桌子管理',
-        actions:
-          '[{"action":"add","defaultCheck":false,"describe":"新增"},{"action":"get","defaultCheck":false,"describe":"详情"},{"action":"query","defaultCheck":false,"describe":"查询"},{"action":"update","defaultCheck":false,"describe":"修改"},{"action":"delete","defaultCheck":false,"describe":"删除"}]',
-        actionEntitySet: [
-          {
-            action: 'add',
-            describe: '新增',
-            defaultCheck: false
-          },
-          {
-            action: 'get',
-            describe: '详情',
-            defaultCheck: false
-          },
-          {
-            action: 'query',
-            describe: '查询',
-            defaultCheck: false
-          },
-          {
-            action: 'update',
-            describe: '修改',
-            defaultCheck: false
-          },
-          {
-            action: 'delete',
-            describe: '删除',
-            defaultCheck: false
-          }
-        ],
-        actionList: null,
-        dataAccess: null
-      },
-      {
-        roleId: 'admin',
         permissionId: 'user',
         permissionName: '用户管理',
         actions:
@@ -474,7 +480,7 @@ const userNav = options => {
       id: 1,
       meta: {
         icon: 'dashboard',
-        title: '仪表盘',
+        title: '仪表盘11',
         show: true
       },
       component: 'RouteView',
@@ -483,13 +489,14 @@ const userNav = options => {
     {
       name: 'workplace',
       parentId: 1,
-      id: 7,
+      id: 8,
       meta: {
-        title: '工作台',
+        title: '工作台3',
         show: true
       },
       component: 'Workplace'
     },
+    /*
     {
       name: 'monitor',
       path: 'https://www.baidu.com/',
@@ -501,6 +508,7 @@ const userNav = options => {
         show: true
       }
     },
+    */
     {
       name: 'Analysis',
       parentId: 1,
@@ -512,7 +520,17 @@ const userNav = options => {
       component: 'Analysis',
       path: '/dashboard/analysis'
     },
-
+    {
+      name: 'Zhuomian',
+      parentId: 1,
+      id: 3,
+      meta: {
+        title: '桌面',
+        show: false
+      },
+      component: 'Analysis',
+      path: '/dashboard/zhuomian'
+    },
     // form
     {
       name: 'form',

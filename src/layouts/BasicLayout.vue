@@ -13,15 +13,23 @@
       广告代码 真实项目中请移除
       production remove this Ads
     -->
+    <!--
     <ads v-if="isProPreviewSite && !collapsed"/>
+    -->
     <!-- Ads end -->
 
+    <!-- layout content -->
+    <a-layout-content :style="{ height: '100%', margin: '0 0 20px 0', paddingTop: fixedHeader ? '64px' : '0' }">
+      <multi-tab v-if="multiTab"></multi-tab>
+      <transition name="page-transition">
+      </transition>
+    </a-layout-content>
     <!-- 1.0.0+ 版本 pro-layout 提供 API，
           我们推荐使用这种方式进行 LOGO 和 title 自定义
     -->
     <template v-slot:menuHeaderRender>
       <div>
-        <logo-svg />
+        <!--<logo-svg />-->
         <h1>{{ title }}</h1>
       </div>
     </template>
@@ -29,24 +37,20 @@
           增加 Header 左侧内容区自定义
     -->
     <template v-slot:headerContentRender>
-      <div>
-        <a-tooltip title="刷新页面">
-          <a-icon type="reload" style="font-size: 18px;cursor: pointer;" @click="() => { $message.info('只是一个DEMO') }" />
-        </a-tooltip>
-      </div>
     </template>
-
+    <!--
     <setting-drawer v-if="isDev" :settings="settings" @change="handleSettingChange">
       <div style="margin: 12px 0;">
         This is SettingDrawer custom footer content.
       </div>
     </setting-drawer>
+    -->
     <template v-slot:rightContentRender>
       <right-content :top-menu="settings.layout === 'topmenu'" :is-mobile="isMobile" :theme="settings.theme" />
     </template>
     <!-- custom footer / 自定义Footer -->
     <template v-slot:footerRender>
-      <global-footer />
+      <global-footer :version="version" />
     </template>
     <router-view />
   </pro-layout>
@@ -60,18 +64,18 @@ import { CONTENT_WIDTH_TYPE, SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mu
 
 import defaultSettings from '@/config/defaultSettings'
 import RightContent from '@/components/GlobalHeader/RightContent'
+import MultiTab from '@/components/MultiTab'
 import GlobalFooter from '@/components/GlobalFooter'
 import Ads from '@/components/Other/CarbonAds'
-import LogoSvg from '../assets/logo.svg?inline'
-
+// import LogoSvg from '../assets/logo.svg?inline'
 export default {
   name: 'BasicLayout',
   components: {
     SettingDrawer,
     RightContent,
     GlobalFooter,
-    LogoSvg,
-    Ads
+    Ads,
+    MultiTab
   },
   data () {
     return {
@@ -79,7 +83,8 @@ export default {
       isProPreviewSite: process.env.VUE_APP_PREVIEW === 'true' && process.env.NODE_ENV !== 'development',
       // end
       isDev: process.env.NODE_ENV === 'development' || process.env.VUE_APP_PREVIEW === 'true',
-
+      multiTab: defaultSettings.multiTab,
+      fixedHeader: defaultSettings.fixedHeader, // sticky header
       // base
       menus: [],
       // 侧栏收起状态
@@ -105,17 +110,20 @@ export default {
       query: {},
 
       // 是否手机模式
-      isMobile: false
+      isMobile: true,
+      version: {}
     }
   },
   computed: {
     ...mapState({
       // 动态主路由
-      mainMenu: state => state.permission.addRouters
+      mainMenu: state => state.permission.addRouters,
+      versionData: state => state.user.versionData
     })
   },
   created () {
     const routes = this.mainMenu.find(item => item.path === '/')
+    // alert('routes' + JSON.stringify(routes.children))
     this.menus = (routes && routes.children) || []
     // 处理侧栏收起状态
     this.$watch('collapsed', () => {
@@ -141,6 +149,7 @@ export default {
     if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'true') {
       updateTheme(this.settings.primaryColor)
     }
+    this.version = this.versionData
   },
   methods: {
     i18nRender,

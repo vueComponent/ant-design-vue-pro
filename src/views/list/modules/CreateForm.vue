@@ -4,6 +4,8 @@
     :width="640"
     :visible="visible"
     :confirmLoading="loading"
+    okText="确定"
+    cancelText="取消"
     @ok="() => { $emit('ok') }"
     @cancel="() => { $emit('cancel') }"
   >

@@ -18,12 +18,13 @@ export default {
   layout: 'sidemenu', // nav menu position: `sidemenu` or `topmenu`
   contentWidth: 'Fluid', // layout of content: `Fluid` or `Fixed`, only works when layout is topmenu
   fixedHeader: false, // sticky header
-  fixSiderbar: false, // sticky siderbar
+  fixSiderbar: true, // sticky siderbar
   colorWeak: false,
+  multiTab: true,
   menu: {
-    locale: true
+    locale: false
   },
-  title: 'Ant Design Pro',
+  title: 'PCDN管理系统',
   pwa: false,
   iconfontUrl: '',
   production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'
